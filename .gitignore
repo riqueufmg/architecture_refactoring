@@ -1,3 +1,6 @@
-data/repositories/
+ArchAgent/data/repositories
+ArchAgent/.env
+data/repositories
+src/tools/java
 .env
 venv/

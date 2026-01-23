@@ -1,0 +1,2529 @@
+{
+  "project": "jsoup",
+  "summary": {
+    "total_packages": 1,
+    "total_classes": 1
+  },
+  "packages": [
+    {
+      "package": "org.jsoup.nodes",
+      "metrics": {
+        "num_classes": 34,
+        "loc": 5498,
+        "Ce": 5,
+        "Ca": 7
+      },
+      "classes": [
+        {
+          "package": "org.jsoup.nodes",
+          "class": "Element",
+          "file": "data/repositories/jsoup/src/main/java/org/jsoup/nodes/Element.java",
+          "metrics": {
+            "nof": 11,
+            "nopf": 0,
+            "nom": 157,
+            "nopm": 133,
+            "loc": 1571,
+            "wmc": 241,
+            "nc": 3,
+            "dit": 1,
+            "lcom": 0.3439490445859872,
+            "fanin": 62,
+            "fanout": 28
+          },
+          "methods": [
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "Element(String tag, String namespace)",
+              "type": "constructor",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 64,
+              "types_used": [
+                "Element",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "Element(String tag)",
+              "type": "constructor",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 73,
+              "types_used": [
+                "Element",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 7,
+                "cc": 2
+              },
+              "signature": "Element(Tag tag, String baseUri, Attributes attributes)",
+              "type": "constructor",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 86,
+              "types_used": [
+                "Attributes",
+                "Element",
+                "String",
+                "Tag"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "Element(Tag tag, String baseUri)",
+              "type": "constructor",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 101,
+              "types_used": [
+                "Element",
+                "String",
+                "Tag"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "boolean hasChildNodes()",
+              "type": "method",
+              "visibility": "protected",
+              "is_static": false,
+              "begin_line": 108,
+              "types_used": [
+                "boolean"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 6,
+                "cc": 2
+              },
+              "signature": "List<Node> ensureChildNodes()",
+              "type": "method",
+              "visibility": "protected",
+              "is_static": false,
+              "begin_line": 112,
+              "types_used": [
+                "List",
+                "Node",
+                "NodeList"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "boolean hasAttributes()",
+              "type": "method",
+              "visibility": "protected",
+              "is_static": false,
+              "begin_line": 119,
+              "types_used": [
+                "boolean"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 4,
+                "cc": 2
+              },
+              "signature": "Attributes attributes()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 124,
+              "types_used": [
+                "Attributes"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 4,
+                "cc": 1
+              },
+              "signature": "String baseUri()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 131,
+              "types_used": [
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 8,
+                "cc": 3
+              },
+              "signature": "String searchUpForAttribute(Element start, String key)",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": true,
+              "begin_line": 137,
+              "types_used": [
+                "Element",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void doSetBaseUri(String baseUri)",
+              "type": "method",
+              "visibility": "protected",
+              "is_static": false,
+              "begin_line": 148,
+              "types_used": [
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "int childNodeSize()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 153,
+              "types_used": [
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "String nodeName()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 158,
+              "types_used": [
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "String tagName()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 169,
+              "types_used": [
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "String normalName()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 179,
+              "types_used": [
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "boolean elementIs(String normalName, String namespace)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 191,
+              "types_used": [
+                "String",
+                "boolean"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "Element tagName(String tagName)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 203,
+              "types_used": [
+                "Element",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 7,
+                "cc": 1
+              },
+              "signature": "Element tagName(String tagName, String namespace)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 216,
+              "types_used": [
+                "Element",
+                "Parser",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "Tag tag()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 229,
+              "types_used": [
+                "Tag"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 5,
+                "cc": 1
+              },
+              "signature": "Element tag(Tag tag)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 239,
+              "types_used": [
+                "Element",
+                "Tag"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "boolean isBlock()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 251,
+              "types_used": [
+                "boolean"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "String id()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 260,
+              "types_used": [
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 5,
+                "cc": 1
+              },
+              "signature": "Element id(String id)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 269,
+              "types_used": [
+                "Element",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 4,
+                "cc": 1
+              },
+              "signature": "Element attr(String attributeKey, String attributeValue)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 281,
+              "types_used": [
+                "Element",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 4,
+                "cc": 1
+              },
+              "signature": "Element attr(String attributeKey, boolean attributeValue)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 296,
+              "types_used": [
+                "Element",
+                "String",
+                "boolean"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "Attribute attribute(String key)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 308,
+              "types_used": [
+                "Attribute",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "Map<String, String> dataset()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 325,
+              "types_used": [
+                "Map",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "Element parent()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 329,
+              "types_used": [
+                "Element"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 9,
+                "cc": 2
+              },
+              "signature": "Elements parents()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 338,
+              "types_used": [
+                "Element",
+                "Elements"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 13,
+                "cc": 5
+              },
+              "signature": "Element child(int index)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 359,
+              "types_used": [
+                "Element",
+                "IndexOutOfBoundsException",
+                "List",
+                "Node",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 4,
+                "cc": 2
+              },
+              "signature": "int childrenSize()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 385,
+              "types_used": [
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "Elements children()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 398,
+              "types_used": [
+                "Elements"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 11,
+                "cc": 3
+              },
+              "signature": "List<Element> childElementsList()",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 406,
+              "types_used": [
+                "Element",
+                "List"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 13,
+                "cc": 5
+              },
+              "signature": "List<Element> cachedChildren()",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 423,
+              "types_used": [
+                "Element",
+                "Integer",
+                "List",
+                "Map",
+                "Object",
+                "String",
+                "WeakReference>"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 6,
+                "cc": 1
+              },
+              "signature": "void stashChildren(List<Element> els)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 440,
+              "types_used": [
+                "Element",
+                "List",
+                "Map",
+                "Object",
+                "String",
+                "WeakReference",
+                "WeakReference>"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "Stream<Element> stream()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 453,
+              "types_used": [
+                "Element",
+                "Stream"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "List<T> filterNodes(Class<T> clazz)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 457,
+              "types_used": [
+                "Class",
+                "Collections",
+                "List",
+                "T",
+                "clazz"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "List<TextNode> textNodes()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 480,
+              "types_used": [
+                "List",
+                "TextNode"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "List<DataNode> dataNodes()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 493,
+              "types_used": [
+                "DataNode",
+                "List"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "Elements select(String cssQuery)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 518,
+              "types_used": [
+                "Elements",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "Elements select(Evaluator evaluator)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 530,
+              "types_used": [
+                "Elements",
+                "Evaluator"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "Stream<Element> selectStream(String cssQuery)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 552,
+              "types_used": [
+                "Element",
+                "Stream",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "Stream<Element> selectStream(Evaluator evaluator)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 564,
+              "types_used": [
+                "Element",
+                "Evaluator",
+                "Stream"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "Element selectFirst(String cssQuery)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 577,
+              "types_used": [
+                "Element",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "Element selectFirst(Evaluator evaluator)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 589,
+              "types_used": [
+                "Element",
+                "Evaluator"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "Element expectFirst(String cssQuery)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 601,
+              "types_used": [
+                "Element",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "Nodes<Node> selectNodes(Evaluator evaluator)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 619,
+              "types_used": [
+                "Evaluator",
+                "Node",
+                "Nodes"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "Nodes<Node> selectNodes(String cssQuery)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 633,
+              "types_used": [
+                "Node",
+                "Nodes",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 4,
+                "cc": 1
+              },
+              "signature": "Nodes<T> selectNodes(Evaluator evaluator, Class<T> type)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 647,
+              "types_used": [
+                "Class",
+                "Evaluator",
+                "Node",
+                "Nodes",
+                "T",
+                "T extends Node"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 4,
+                "cc": 1
+              },
+              "signature": "Nodes<T> selectNodes(String cssQuery, Class<T> type)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 665,
+              "types_used": [
+                "Class",
+                "Node",
+                "Nodes",
+                "String",
+                "T",
+                "T extends Node"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "T selectFirstNode(String cssQuery, Class<T> type)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 682,
+              "types_used": [
+                "Class",
+                "Node",
+                "String",
+                "T",
+                "T extends Node"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "T selectFirstNode(Evaluator evaluator, Class<T> type)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 695,
+              "types_used": [
+                "Class",
+                "Evaluator",
+                "Node",
+                "T",
+                "T extends Node"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "T expectFirstNode(String cssQuery, Class<T> type)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 708,
+              "types_used": [
+                "Class",
+                "Node",
+                "String",
+                "T",
+                "T extends Node"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "boolean is(String cssQuery)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 725,
+              "types_used": [
+                "String",
+                "boolean"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "boolean is(Evaluator evaluator)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 734,
+              "types_used": [
+                "Evaluator",
+                "boolean"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "Element closest(String cssQuery)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 745,
+              "types_used": [
+                "Element",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 11,
+                "cc": 3
+              },
+              "signature": "Element closest(Evaluator evaluator)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 756,
+              "types_used": [
+                "Element",
+                "Evaluator"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "Elements selectXpath(String xpath)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 786,
+              "types_used": [
+                "Element",
+                "Elements",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "List<T> selectXpath(String xpath, Class<T> nodeType)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 803,
+              "types_used": [
+                "Class",
+                "List",
+                "Node",
+                "String",
+                "T",
+                "T extends Node"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 8,
+                "cc": 1
+              },
+              "signature": "Element appendChild(Node child)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 815,
+              "types_used": [
+                "Element",
+                "Node"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 4,
+                "cc": 1
+              },
+              "signature": "Element appendChildren(Collection<? extends Node> children)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 833,
+              "types_used": [
+                "Collection",
+                "Element",
+                "Node",
+                "extends Node"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 5,
+                "cc": 1
+              },
+              "signature": "Element appendTo(Element parent)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 844,
+              "types_used": [
+                "Element"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 5,
+                "cc": 1
+              },
+              "signature": "Element prependChild(Node child)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 856,
+              "types_used": [
+                "Element",
+                "Node"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 4,
+                "cc": 1
+              },
+              "signature": "Element prependChildren(Collection<? extends Node> children)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 870,
+              "types_used": [
+                "Collection",
+                "Element",
+                "Node",
+                "extends Node"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 8,
+                "cc": 2
+              },
+              "signature": "Element insertChildren(int index, Collection<? extends Node> children)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 885,
+              "types_used": [
+                "Collection",
+                "Element",
+                "Node",
+                "extends Node",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 8,
+                "cc": 2
+              },
+              "signature": "Element insertChildren(int index, Node... children)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 903,
+              "types_used": [
+                "Element",
+                "Node",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "Element appendElement(String tagName)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 920,
+              "types_used": [
+                "Element",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 6,
+                "cc": 1
+              },
+              "signature": "Element appendElement(String tagName, String namespace)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 931,
+              "types_used": [
+                "Element",
+                "Parser",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "Element prependElement(String tagName)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 945,
+              "types_used": [
+                "Element",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 6,
+                "cc": 1
+              },
+              "signature": "Element prependElement(String tagName, String namespace)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 956,
+              "types_used": [
+                "Element",
+                "Parser",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 6,
+                "cc": 1
+              },
+              "signature": "Element appendText(String text)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 969,
+              "types_used": [
+                "Element",
+                "String",
+                "TextNode"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 6,
+                "cc": 1
+              },
+              "signature": "Element prependText(String text)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 982,
+              "types_used": [
+                "Element",
+                "String",
+                "TextNode"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 6,
+                "cc": 1
+              },
+              "signature": "Element append(String html)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 995,
+              "types_used": [
+                "Element",
+                "List",
+                "Node",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 6,
+                "cc": 1
+              },
+              "signature": "Element prepend(String html)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1008,
+              "types_used": [
+                "Element",
+                "List",
+                "Node",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "Element before(String html)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1022,
+              "types_used": [
+                "Element",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "Element before(Node node)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1033,
+              "types_used": [
+                "Element",
+                "Node"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "Element after(String html)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1045,
+              "types_used": [
+                "Element",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "Element after(Node node)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1056,
+              "types_used": [
+                "Element",
+                "Node"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 6,
+                "cc": 2
+              },
+              "signature": "Element empty()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1066,
+              "types_used": [
+                "Element",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "Element wrap(String html)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1082,
+              "types_used": [
+                "Element",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 14,
+                "cc": 4
+              },
+              "signature": "String uniqueIdSelector(Document ownerDoc)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 1092,
+              "types_used": [
+                "Document",
+                "Elements",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 17,
+                "cc": 4
+              },
+              "signature": "String cssSelector()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1115,
+              "types_used": [
+                "Document",
+                "Element",
+                "String",
+                "StringBuilder"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 10,
+                "cc": 4
+              },
+              "signature": "String cssSelectorComponent()",
+              "type": "method",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 1135,
+              "types_used": [
+                "Document",
+                "String",
+                "StringBuilder",
+                "TokenQueue"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 7,
+                "cc": 4
+              },
+              "signature": "Elements siblingElements()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1160,
+              "types_used": [
+                "Element",
+                "Elements",
+                "List"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "Elements nextElementSiblings()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1179,
+              "types_used": [
+                "Elements"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "Elements previousElementSiblings()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1188,
+              "types_used": [
+                "Elements"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 6,
+                "cc": 2
+              },
+              "signature": "Elements nextElementSiblings(boolean next)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 1192,
+              "types_used": [
+                "Elements",
+                "boolean"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 6,
+                "cc": 2
+              },
+              "signature": "Element firstElementSibling()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1204,
+              "types_used": [
+                "Element"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 4,
+                "cc": 2
+              },
+              "signature": "int elementSiblingIndex()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1217,
+              "types_used": [
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 6,
+                "cc": 2
+              },
+              "signature": "Element lastElementSibling()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1226,
+              "types_used": [
+                "Element"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 7,
+                "cc": 3
+              },
+              "signature": "int indexInList(Element search, List<E> elements)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": true,
+              "begin_line": 1234,
+              "types_used": [
+                "E",
+                "E extends Element",
+                "Element",
+                "List",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 8,
+                "cc": 3
+              },
+              "signature": "Element firstElementChild()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1250,
+              "types_used": [
+                "Element",
+                "Node",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 7,
+                "cc": 3
+              },
+              "signature": "Element lastElementChild()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1266,
+              "types_used": [
+                "Element",
+                "Node",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 5,
+                "cc": 1
+              },
+              "signature": "Elements getElementsByTag(String tagName)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1281,
+              "types_used": [
+                "Elements",
+                "Evaluator",
+                "Evaluator.Tag",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 4,
+                "cc": 1
+              },
+              "signature": "Element getElementById(String id)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1297,
+              "types_used": [
+                "Element",
+                "Evaluator",
+                "Evaluator.Id",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 4,
+                "cc": 1
+              },
+              "signature": "Elements getElementsByClass(String className)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1313,
+              "types_used": [
+                "Elements",
+                "Evaluator",
+                "Evaluator.Class",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 5,
+                "cc": 1
+              },
+              "signature": "Elements getElementsByAttribute(String key)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1325,
+              "types_used": [
+                "Elements",
+                "Evaluator",
+                "Evaluator.Attribute",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 5,
+                "cc": 1
+              },
+              "signature": "Elements getElementsByAttributeStarting(String keyPrefix)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1338,
+              "types_used": [
+                "Elements",
+                "Evaluator",
+                "Evaluator.AttributeStarting",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "Elements getElementsByAttributeValue(String key, String value)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1352,
+              "types_used": [
+                "Elements",
+                "Evaluator",
+                "Evaluator.AttributeWithValue",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "Elements getElementsByAttributeValueNot(String key, String value)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1363,
+              "types_used": [
+                "Elements",
+                "Evaluator",
+                "Evaluator.AttributeWithValueNot",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "Elements getElementsByAttributeValueStarting(String key, String valuePrefix)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1374,
+              "types_used": [
+                "Elements",
+                "Evaluator",
+                "Evaluator.AttributeWithValueStarting",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "Elements getElementsByAttributeValueEnding(String key, String valueSuffix)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1385,
+              "types_used": [
+                "Elements",
+                "Evaluator",
+                "Evaluator.AttributeWithValueEnding",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "Elements getElementsByAttributeValueContaining(String key, String match)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1396,
+              "types_used": [
+                "Elements",
+                "Evaluator",
+                "Evaluator.AttributeWithValueContaining",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "Elements getElementsByAttributeValueMatching(String key, Pattern pattern)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1406,
+              "types_used": [
+                "Elements",
+                "Evaluator",
+                "Evaluator.AttributeWithValueMatching",
+                "Pattern",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 10,
+                "cc": 1
+              },
+              "signature": "Elements getElementsByAttributeValueMatching(String key, String regex)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1416,
+              "types_used": [
+                "Elements",
+                "Evaluator",
+                "Evaluator.AttributeWithValueMatching",
+                "IllegalArgumentException",
+                "PatternSyntaxException",
+                "Regex",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "Elements getElementsByIndexLessThan(int index)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1431,
+              "types_used": [
+                "Elements",
+                "Evaluator",
+                "Evaluator.IndexLessThan",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "Elements getElementsByIndexGreaterThan(int index)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1440,
+              "types_used": [
+                "Elements",
+                "Evaluator",
+                "Evaluator.IndexGreaterThan",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "Elements getElementsByIndexEquals(int index)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1449,
+              "types_used": [
+                "Elements",
+                "Evaluator",
+                "Evaluator.IndexEquals",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "Elements getElementsContainingText(String searchText)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1460,
+              "types_used": [
+                "Elements",
+                "Evaluator",
+                "Evaluator.ContainsText",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "Elements getElementsContainingOwnText(String searchText)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1471,
+              "types_used": [
+                "Elements",
+                "Evaluator",
+                "Evaluator.ContainsOwnText",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "Elements getElementsMatchingText(Pattern pattern)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1481,
+              "types_used": [
+                "Elements",
+                "Evaluator",
+                "Evaluator.Matches",
+                "Pattern"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 10,
+                "cc": 1
+              },
+              "signature": "Elements getElementsMatchingText(String regex)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1491,
+              "types_used": [
+                "Elements",
+                "Evaluator",
+                "Evaluator.Matches",
+                "IllegalArgumentException",
+                "PatternSyntaxException",
+                "Regex",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "Elements getElementsMatchingOwnText(Pattern pattern)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1507,
+              "types_used": [
+                "Elements",
+                "Evaluator",
+                "Evaluator.MatchesOwn",
+                "Pattern"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 10,
+                "cc": 1
+              },
+              "signature": "Elements getElementsMatchingOwnText(String regex)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1517,
+              "types_used": [
+                "Elements",
+                "Evaluator",
+                "Evaluator.MatchesOwn",
+                "IllegalArgumentException",
+                "PatternSyntaxException",
+                "Regex",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "Elements getAllElements()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1532,
+              "types_used": [
+                "Elements",
+                "Evaluator",
+                "Evaluator.AllElements"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 5,
+                "cc": 1
+              },
+              "signature": "String text()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1552,
+              "types_used": [
+                "String",
+                "StringBuilder",
+                "TextAccumulator"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "String wholeText()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1597,
+              "types_used": [
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "String nodeValue()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1604,
+              "types_used": [
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 8,
+                "cc": 3
+              },
+              "signature": "String wholeTextOf(Stream<Node> stream)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": true,
+              "begin_line": 1609,
+              "types_used": [
+                "Node",
+                "Stream",
+                "String",
+                "TextNode"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "String wholeOwnText()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1626,
+              "types_used": [
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 5,
+                "cc": 1
+              },
+              "signature": "String ownText()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1641,
+              "types_used": [
+                "String",
+                "StringBuilder"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 12,
+                "cc": 4
+              },
+              "signature": "void ownText(StringBuilder accum)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 1647,
+              "types_used": [
+                "Node",
+                "StringBuilder",
+                "TextNode",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 5,
+                "cc": 2
+              },
+              "signature": "void appendNormalisedText(StringBuilder accum, TextNode textNode)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": true,
+              "begin_line": 1659,
+              "types_used": [
+                "CDataNode",
+                "String",
+                "StringBuilder",
+                "TextNode"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 13,
+                "cc": 4
+              },
+              "signature": "boolean preserveWhitespace(Node node)",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": true,
+              "begin_line": 1667,
+              "types_used": [
+                "Element",
+                "Node",
+                "boolean",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 7,
+                "cc": 2
+              },
+              "signature": "Element text(String text)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1689,
+              "types_used": [
+                "DataNode",
+                "Element",
+                "String",
+                "TextNode"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 15,
+                "cc": 3
+              },
+              "signature": "boolean hasText()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1705,
+              "types_used": [
+                "AtomicBoolean",
+                "TextNode",
+                "boolean"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 19,
+                "cc": 4
+              },
+              "signature": "String data()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1729,
+              "types_used": [
+                "CDataNode",
+                "Comment",
+                "DataNode",
+                "String",
+                "StringBuilder"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "String className()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1753,
+              "types_used": [
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 6,
+                "cc": 1
+              },
+              "signature": "Set<String> classNames()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1763,
+              "types_used": [
+                "LinkedHashSet",
+                "Set",
+                "String",
+                "String[]"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 10,
+                "cc": 2
+              },
+              "signature": "Element classNames(Set<String> classNames)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1776,
+              "types_used": [
+                "Element",
+                "Set",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 34,
+                "cc": 10
+              },
+              "signature": "boolean hasClass(String className)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1792,
+              "types_used": [
+                "String",
+                "boolean",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 7,
+                "cc": 1
+              },
+              "signature": "Element addClass(String className)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1843,
+              "types_used": [
+                "Element",
+                "Set",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 7,
+                "cc": 1
+              },
+              "signature": "Element removeClass(String className)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1858,
+              "types_used": [
+                "Element",
+                "Set",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 8,
+                "cc": 2
+              },
+              "signature": "Element toggleClass(String className)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1873,
+              "types_used": [
+                "Element",
+                "Set",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 4,
+                "cc": 2
+              },
+              "signature": "String val()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1890,
+              "types_used": [
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 5,
+                "cc": 2
+              },
+              "signature": "Element val(String value)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1902,
+              "types_used": [
+                "Element",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "Range endSourceRange()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1919,
+              "types_used": [
+                "Range"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 20,
+                "cc": 5
+              },
+              "signature": "void outerHtmlHead(QuietAppendable accum, Document.OutputSettings out)",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 1923,
+              "types_used": [
+                "Document",
+                "Document.OutputSettings",
+                "QuietAppendable",
+                "String",
+                "boolean"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 2
+              },
+              "signature": "void outerHtmlTail(QuietAppendable accum, Document.OutputSettings out)",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 1943,
+              "types_used": [
+                "Document",
+                "Document.OutputSettings",
+                "QuietAppendable"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "String safeTagName(Document.OutputSettings.Syntax syntax)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 1951,
+              "types_used": [
+                "Document",
+                "Document.OutputSettings",
+                "Document.OutputSettings.Syntax",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 6,
+                "cc": 1
+              },
+              "signature": "String html()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1962,
+              "types_used": [
+                "String",
+                "StringBuilder"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 11,
+                "cc": 3
+              },
+              "signature": "T html(T accum)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1969,
+              "types_used": [
+                "Appendable",
+                "Node",
+                "Printer",
+                "T",
+                "T extends Appendable"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 5,
+                "cc": 1
+              },
+              "signature": "Element html(String html)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1988,
+              "types_used": [
+                "Element",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "Element clone()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1994,
+              "types_used": [
+                "Element"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 5,
+                "cc": 2
+              },
+              "signature": "Element shallowClone()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1999,
+              "types_used": [
+                "Element",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 10,
+                "cc": 2
+              },
+              "signature": "Element doClone(Node parent)",
+              "type": "method",
+              "visibility": "protected",
+              "is_static": false,
+              "begin_line": 2007,
+              "types_used": [
+                "Element",
+                "Node",
+                "NodeList"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 7,
+                "cc": 3
+              },
+              "signature": "Element clearAttributes()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 2022,
+              "types_used": [
+                "Element"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "Element removeAttr(String attributeKey)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 2033,
+              "types_used": [
+                "Element",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "Element root()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 2038,
+              "types_used": [
+                "Element"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "Element traverse(NodeVisitor nodeVisitor)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 2043,
+              "types_used": [
+                "Element",
+                "NodeVisitor"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "Element forEachNode(Consumer<? super Node> action)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 2048,
+              "types_used": [
+                "Consumer",
+                "Element",
+                "Node",
+                "super Node"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void forEach(Consumer<? super Element> action)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 2059,
+              "types_used": [
+                "Consumer",
+                "Element",
+                "super Element"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "Iterator<Element> iterator()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 2068,
+              "types_used": [
+                "Element",
+                "Iterator",
+                "NodeIterator"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "Element filter(NodeFilter nodeFilter)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 2073,
+              "types_used": [
+                "Element",
+                "NodeFilter"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 7,
+                "cc": 2
+              },
+              "signature": "void reindexChildren()",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 2096,
+              "types_used": [
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void invalidateChildren()",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 2104,
+              "types_used": []
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "boolean hasValidChildren()",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 2108,
+              "types_used": [
+                "boolean"
+              ]
+            }
+          ],
+          "dependencies": []
+        }
+      ],
+      "dependencies": []
+    }
+  ],
+  "smell_type": "Hub-like Modularization",
+  "filter_level": "class",
+  "targets_count": 1
+}

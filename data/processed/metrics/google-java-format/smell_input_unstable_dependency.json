@@ -1,0 +1,11 @@
+{
+  "project": "google-java-format",
+  "summary": {
+    "total_packages": 0,
+    "total_classes": 0
+  },
+  "packages": [],
+  "smell_type": "Unstable Dependency",
+  "filter_level": "package",
+  "targets_count": 0
+}

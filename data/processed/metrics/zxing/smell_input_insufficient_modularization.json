@@ -1,0 +1,5410 @@
+{
+  "project": "zxing",
+  "summary": {
+    "total_packages": 10,
+    "total_classes": 13
+  },
+  "packages": [
+    {
+      "package": "com.google.zxing.client.android",
+      "metrics": {
+        "num_classes": 33,
+        "loc": 2328,
+        "Ce": 6,
+        "Ca": 7
+      },
+      "classes": [
+        {
+          "package": "com.google.zxing.client.android",
+          "class": "CaptureActivity",
+          "file": "data/repositories/zxing/android/src/com/google/zxing/client/android/CaptureActivity.java",
+          "metrics": {
+            "nof": 25,
+            "nopf": 0,
+            "nom": 29,
+            "nopm": 12,
+            "loc": 529,
+            "wmc": 112,
+            "nc": 0,
+            "dit": 0,
+            "lcom": 0.1034482758620689,
+            "fanin": 5,
+            "fanout": 22
+          },
+          "methods": [
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "ViewfinderView getViewfinderView()",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 118,
+              "types_used": [
+                "ViewfinderView"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "Handler getHandler()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 122,
+              "types_used": [
+                "Handler"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "CameraManager getCameraManager()",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 126,
+              "types_used": [
+                "CameraManager"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 11,
+                "cc": 1
+              },
+              "signature": "void onCreate(Bundle icicle)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 130,
+              "types_used": [
+                "AmbientLightManager",
+                "BeepManager",
+                "Bundle",
+                "InactivityTimer",
+                "Window"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 78,
+                "cc": 12
+              },
+              "signature": "void onResume()",
+              "type": "method",
+              "visibility": "protected",
+              "is_static": false,
+              "begin_line": 146,
+              "types_used": [
+                "CameraManager",
+                "HistoryManager",
+                "Intent",
+                "ScanFromWebPageManager",
+                "SharedPreferences",
+                "String",
+                "SurfaceHolder",
+                "SurfaceView",
+                "TextView",
+                "Uri",
+                "ViewfinderView",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 15,
+                "cc": 6
+              },
+              "signature": "int getCurrentOrientation()",
+              "type": "method",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 267,
+              "types_used": [
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 11,
+                "cc": 4
+              },
+              "signature": "boolean isZXingURL(String dataString)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": true,
+              "begin_line": 288,
+              "types_used": [
+                "String",
+                "boolean"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 16,
+                "cc": 3
+              },
+              "signature": "void onPause()",
+              "type": "method",
+              "visibility": "protected",
+              "is_static": false,
+              "begin_line": 300,
+              "types_used": [
+                "SurfaceHolder",
+                "SurfaceView"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 4,
+                "cc": 1
+              },
+              "signature": "void onDestroy()",
+              "type": "method",
+              "visibility": "protected",
+              "is_static": false,
+              "begin_line": 319,
+              "types_used": []
+            },
+            {
+              "metrics": {
+                "loc": 20,
+                "cc": 8
+              },
+              "signature": "boolean onKeyDown(int keyCode, KeyEvent event)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 325,
+              "types_used": [
+                "KeyEvent",
+                "boolean",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 5,
+                "cc": 1
+              },
+              "signature": "boolean onCreateOptionsMenu(Menu menu)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 354,
+              "types_used": [
+                "Menu",
+                "MenuInflater",
+                "boolean"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 20,
+                "cc": 5
+              },
+              "signature": "boolean onOptionsItemSelected(MenuItem item)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 361,
+              "types_used": [
+                "HelpActivity",
+                "HistoryActivity",
+                "Intent",
+                "MenuItem",
+                "PreferencesActivity",
+                "ShareActivity",
+                "boolean"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 9,
+                "cc": 3
+              },
+              "signature": "void onActivityResult(int requestCode, int resultCode, Intent intent)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 388,
+              "types_used": [
+                "HistoryItem",
+                "Intent",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 15,
+                "cc": 4
+              },
+              "signature": "void decodeOrStoreSavedBitmap(Bitmap bitmap, Result result)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 399,
+              "types_used": [
+                "Bitmap",
+                "Message",
+                "Result"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 9,
+                "cc": 3
+              },
+              "signature": "void surfaceCreated(SurfaceHolder holder)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 415,
+              "types_used": [
+                "SurfaceHolder"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void surfaceDestroyed(SurfaceHolder holder)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 426,
+              "types_used": [
+                "SurfaceHolder"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 2,
+                "cc": 1
+              },
+              "signature": "void surfaceChanged(SurfaceHolder holder, int format, int width, int height)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 431,
+              "types_used": [
+                "SurfaceHolder",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 32,
+                "cc": 8
+              },
+              "signature": "void handleDecode(Result rawResult, Bitmap barcode, float scaleFactor)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 443,
+              "types_used": [
+                "Bitmap",
+                "Result",
+                "ResultHandler",
+                "SharedPreferences",
+                "boolean",
+                "float"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 24,
+                "cc": 6
+              },
+              "signature": "void drawResultPoints(Bitmap barcode, float scaleFactor, Result rawResult)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 491,
+              "types_used": [
+                "Bitmap",
+                "Canvas",
+                "Paint",
+                "Result",
+                "ResultPoint",
+                "ResultPoint[]",
+                "float"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 5,
+                "cc": 2
+              },
+              "signature": "void drawLine(Canvas canvas, Paint paint, ResultPoint a, ResultPoint b, float scaleFactor)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": true,
+              "begin_line": 517,
+              "types_used": [
+                "Canvas",
+                "Paint",
+                "ResultPoint",
+                "float"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 69,
+                "cc": 10
+              },
+              "signature": "void handleDecodeInternally(Result rawResult, ResultHandler resultHandler, Bitmap barcode)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 528,
+              "types_used": [
+                "Bitmap",
+                "CharSequence",
+                "DateFormat",
+                "ImageView",
+                "Map",
+                "Map.Entry",
+                "Object",
+                "Result",
+                "ResultButtonListener",
+                "ResultHandler",
+                "ResultMetadataType",
+                "SharedPreferences",
+                "StringBuilder",
+                "TextView",
+                "View",
+                "ViewGroup",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 64,
+                "cc": 16
+              },
+              "signature": "void handleDecodeExternally(Result rawResult, ResultHandler resultHandler, Bitmap barcode)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 616,
+              "types_used": [
+                "Bitmap",
+                "Intent",
+                "Iterable",
+                "Map",
+                "Number",
+                "Result",
+                "ResultHandler",
+                "ResultMetadataType",
+                "String",
+                "byte",
+                "byte[]",
+                "int",
+                "long"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 5,
+                "cc": 2
+              },
+              "signature": "void maybeSetClipboard(ResultHandler resultHandler)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 698,
+              "types_used": [
+                "ResultHandler"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 11,
+                "cc": 3
+              },
+              "signature": "void sendReplyMessage(int id, Object arg, long delayMS)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 704,
+              "types_used": [
+                "Message",
+                "Object",
+                "int",
+                "long"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 24,
+                "cc": 4
+              },
+              "signature": "void initCamera(SurfaceHolder surfaceHolder)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 715,
+              "types_used": [
+                "CaptureActivityHandler",
+                "IOException",
+                "IllegalStateException",
+                "RuntimeException",
+                "SurfaceHolder"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 8,
+                "cc": 1
+              },
+              "signature": "void displayFrameworkBugMessageAndExit()",
+              "type": "method",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 741,
+              "types_used": [
+                "AlertDialog",
+                "AlertDialog.Builder",
+                "FinishListener"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 6,
+                "cc": 2
+              },
+              "signature": "void restartPreviewAfterDelay(long delayMS)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 750,
+              "types_used": [
+                "long"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 7,
+                "cc": 1
+              },
+              "signature": "void resetStatusView()",
+              "type": "method",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 757,
+              "types_used": []
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void drawViewfinder()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 765,
+              "types_used": []
+            }
+          ],
+          "dependencies": [
+            "com.google.zxing.client.android.result.ResultHandler"
+          ]
+        }
+      ],
+      "dependencies": [
+        "com.google.zxing.client.android.result"
+      ]
+    },
+    {
+      "package": "com.google.zxing.client.android.result",
+      "metrics": {
+        "num_classes": 14,
+        "loc": 965,
+        "Ce": 3,
+        "Ca": 2
+      },
+      "classes": [
+        {
+          "package": "com.google.zxing.client.android.result",
+          "class": "ResultHandler",
+          "file": "data/repositories/zxing/android/src/com/google/zxing/client/android/result/ResultHandler.java",
+          "metrics": {
+            "nof": 13,
+            "nopf": 1,
+            "nom": 43,
+            "nopm": 9,
+            "loc": 361,
+            "wmc": 80,
+            "nc": 11,
+            "dit": 0,
+            "lcom": 0.1860465116279069,
+            "fanin": 5,
+            "fanout": 8
+          },
+          "methods": [
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "ResultHandler(Activity activity, ParsedResult result)",
+              "type": "constructor",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 91,
+              "types_used": [
+                "Activity",
+                "ParsedResult",
+                "ResultHandler"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 6,
+                "cc": 1
+              },
+              "signature": "ResultHandler(Activity activity, ParsedResult result, Result rawResult)",
+              "type": "constructor",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 95,
+              "types_used": [
+                "Activity",
+                "ParsedResult",
+                "Result",
+                "ResultHandler"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "ParsedResult getResult()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 102,
+              "types_used": [
+                "ParsedResult"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "boolean hasCustomProductSearch()",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 106,
+              "types_used": [
+                "boolean"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "Activity getActivity()",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 110,
+              "types_used": [
+                "Activity"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 0,
+                "cc": 1
+              },
+              "signature": "int getButtonCount()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 119,
+              "types_used": [
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 0,
+                "cc": 1
+              },
+              "signature": "int getButtonText(int index)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 127,
+              "types_used": [
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "Integer getDefaultButtonID()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 129,
+              "types_used": [
+                "Integer"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 0,
+                "cc": 1
+              },
+              "signature": "void handleButtonPress(int index)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 138,
+              "types_used": [
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "boolean areContentsSecure()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 146,
+              "types_used": [
+                "boolean"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 4,
+                "cc": 1
+              },
+              "signature": "CharSequence getDisplayContents()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 155,
+              "types_used": [
+                "CharSequence",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 0,
+                "cc": 1
+              },
+              "signature": "int getDisplayTitle()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 165,
+              "types_used": [
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "ParsedResultType getType()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 172,
+              "types_used": [
+                "ParsedResultType"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void addPhoneOnlyContact(String[] phoneNumbers, String[] phoneTypes)",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 176,
+              "types_used": [
+                "String",
+                "String[]"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void addEmailOnlyContact(String[] emails, String[] emailTypes)",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 181,
+              "types_used": [
+                "String",
+                "String[]"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 91,
+                "cc": 23
+              },
+              "signature": "void addContact(String[] names, String[] nicknames, String pronunciation, String[] phoneNumbers, String[] phoneTypes, String[] emails, String[] emailTypes, String note, String instantMessenger, String address, String addressType, String org, String title, String[] urls, String birthday, String[] geo)",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 185,
+              "types_used": [
+                "ArrayList",
+                "ContentValues",
+                "Intent",
+                "String",
+                "StringBuilder",
+                "String[]",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "int toEmailContractType(String typeString)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": true,
+              "begin_line": 306,
+              "types_used": [
+                "String",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "int toPhoneContractType(String typeString)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": true,
+              "begin_line": 310,
+              "types_used": [
+                "String",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "int toAddressContractType(String typeString)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": true,
+              "begin_line": 314,
+              "types_used": [
+                "String",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 12,
+                "cc": 4
+              },
+              "signature": "int doToContractType(String typeString, String[] types, int[] values)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": true,
+              "begin_line": 318,
+              "types_used": [
+                "String",
+                "String[]",
+                "int",
+                "int[]"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void shareByEmail(String contents)",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 331,
+              "types_used": [
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 16,
+                "cc": 4
+              },
+              "signature": "void sendEmail(String[] to, String[] cc, String[] bcc, String subject, String body)",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 335,
+              "types_used": [
+                "Intent",
+                "String",
+                "String[]"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void shareBySMS(String contents)",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 356,
+              "types_used": [
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void sendSMS(String phoneNumber, String body)",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 360,
+              "types_used": [
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 6,
+                "cc": 1
+              },
+              "signature": "void sendSMSFromUri(String uri, String body)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 364,
+              "types_used": [
+                "Intent",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void sendMMS(String phoneNumber, String subject, String body)",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 372,
+              "types_used": [
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 12,
+                "cc": 2
+              },
+              "signature": "void sendMMSFromUri(String uri, String subject, String body)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 376,
+              "types_used": [
+                "Intent",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void dialPhone(String phoneNumber)",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 389,
+              "types_used": [
+                "Intent",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void dialPhoneFromUri(String uri)",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 393,
+              "types_used": [
+                "Intent",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void openMap(String geoURI)",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 397,
+              "types_used": [
+                "Intent",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void searchMap(String address)",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 406,
+              "types_used": [
+                "Intent",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void getDirections(double latitude, double longitude)",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 410,
+              "types_used": [
+                "Intent",
+                "double"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 4,
+                "cc": 1
+              },
+              "signature": "void openProductSearch(String upc)",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 416,
+              "types_used": [
+                "Intent",
+                "String",
+                "Uri"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 4,
+                "cc": 1
+              },
+              "signature": "void openBookSearch(String isbn)",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 422,
+              "types_used": [
+                "Intent",
+                "String",
+                "Uri"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 6,
+                "cc": 1
+              },
+              "signature": "void searchBookContents(String isbnOrUrl)",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 428,
+              "types_used": [
+                "Intent",
+                "SearchBookContentsActivity",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 15,
+                "cc": 3
+              },
+              "signature": "void openURL(String url)",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 435,
+              "types_used": [
+                "ActivityNotFoundException",
+                "Intent",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 5,
+                "cc": 1
+              },
+              "signature": "void webSearch(String query)",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 451,
+              "types_used": [
+                "Intent",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 6,
+                "cc": 2
+              },
+              "signature": "void rawLaunchIntent(Intent intent)",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 463,
+              "types_used": [
+                "Intent"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 12,
+                "cc": 1
+              },
+              "signature": "void launchIntent(Intent intent)",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 473,
+              "types_used": [
+                "ActivityNotFoundException",
+                "AlertDialog",
+                "AlertDialog.Builder",
+                "Intent"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 5,
+                "cc": 2
+              },
+              "signature": "void putExtra(Intent intent, String key, String value)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": true,
+              "begin_line": 485,
+              "types_used": [
+                "Intent",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 8,
+                "cc": 2
+              },
+              "signature": "String parseCustomSearchURL()",
+              "type": "method",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 491,
+              "types_used": [
+                "SharedPreferences",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 19,
+                "cc": 4
+              },
+              "signature": "String fillInCustomSearchURL(String text)",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 501,
+              "types_used": [
+                "ParsedResult",
+                "String",
+                "UnsupportedEncodingException"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "String formatPhone(String phoneData)",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": true,
+              "begin_line": 524,
+              "types_used": [
+                "String"
+              ]
+            }
+          ],
+          "dependencies": []
+        }
+      ],
+      "dependencies": [
+        "com.google.zxing.client.android"
+      ]
+    },
+    {
+      "package": "com.google.zxing.common",
+      "metrics": {
+        "num_classes": 17,
+        "loc": 2224,
+        "Ce": 1,
+        "Ca": 29
+      },
+      "classes": [
+        {
+          "package": "com.google.zxing.common",
+          "class": "BitMatrix",
+          "file": "data/repositories/zxing/core/src/main/java/com/google/zxing/common/BitMatrix.java",
+          "metrics": {
+            "nof": 4,
+            "nopf": 0,
+            "nom": 31,
+            "nopm": 29,
+            "loc": 442,
+            "wmc": 89,
+            "nc": 0,
+            "dit": 0,
+            "lcom": 0.064516129032258,
+            "fanin": 69,
+            "fanout": 1
+          },
+          "methods": [
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "BitMatrix(int dimension)",
+              "type": "constructor",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 48,
+              "types_used": [
+                "BitMatrix",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 9,
+                "cc": 2
+              },
+              "signature": "BitMatrix(int width, int height)",
+              "type": "constructor",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 58,
+              "types_used": [
+                "BitMatrix",
+                "IllegalArgumentException",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 6,
+                "cc": 1
+              },
+              "signature": "BitMatrix(int width, int height, int rowSize, int[] bits)",
+              "type": "constructor",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 68,
+              "types_used": [
+                "BitMatrix",
+                "int",
+                "int[]"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 14,
+                "cc": 4
+              },
+              "signature": "BitMatrix parse(boolean[][] image)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": true,
+              "begin_line": 81,
+              "types_used": [
+                "BitMatrix",
+                "boolean",
+                "boolean[]",
+                "boolean[][]",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 55,
+                "cc": 14
+              },
+              "signature": "BitMatrix parse(String stringRepresentation, String setString, String unsetString)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": true,
+              "begin_line": 96,
+              "types_used": [
+                "BitMatrix",
+                "IllegalArgumentException",
+                "String",
+                "boolean",
+                "boolean[]",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 4,
+                "cc": 1
+              },
+              "signature": "boolean get(int x, int y)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 160,
+              "types_used": [
+                "boolean",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 4,
+                "cc": 1
+              },
+              "signature": "void set(int x, int y)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 171,
+              "types_used": [
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 4,
+                "cc": 1
+              },
+              "signature": "void unset(int x, int y)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 176,
+              "types_used": [
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 4,
+                "cc": 1
+              },
+              "signature": "void flip(int x, int y)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 187,
+              "types_used": [
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 6,
+                "cc": 2
+              },
+              "signature": "void flip()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 195,
+              "types_used": [
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 13,
+                "cc": 4
+              },
+              "signature": "void xor(BitMatrix mask)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 208,
+              "types_used": [
+                "BitArray",
+                "BitMatrix",
+                "IllegalArgumentException",
+                "int",
+                "int[]"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 6,
+                "cc": 2
+              },
+              "signature": "void clear()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 225,
+              "types_used": [
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 19,
+                "cc": 6
+              },
+              "signature": "void setRegion(int left, int top, int width, int height)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 240,
+              "types_used": [
+                "IllegalArgumentException",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 13,
+                "cc": 3
+              },
+              "signature": "BitArray getRow(int y, BitArray row)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 268,
+              "types_used": [
+                "BitArray",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void setRow(int y, BitArray row)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 285,
+              "types_used": [
+                "BitArray",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 13,
+                "cc": 5
+              },
+              "signature": "void rotate(int degrees)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 294,
+              "types_used": [
+                "IllegalArgumentException",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 14,
+                "cc": 2
+              },
+              "signature": "void rotate180()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 315,
+              "types_used": [
+                "BitArray",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 19,
+                "cc": 4
+              },
+              "signature": "void rotate90()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 333,
+              "types_used": [
+                "int",
+                "int[]"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 41,
+                "cc": 13
+              },
+              "signature": "int[] getEnclosingRectangle()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 359,
+              "types_used": [
+                "int",
+                "int[]"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 18,
+                "cc": 4
+              },
+              "signature": "int[] getTopLeftOnBit()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 409,
+              "types_used": [
+                "int",
+                "int[]"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 18,
+                "cc": 4
+              },
+              "signature": "int[] getBottomRightOnBit()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 429,
+              "types_used": [
+                "int",
+                "int[]"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "int getWidth()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 454,
+              "types_used": [
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "int getHeight()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 461,
+              "types_used": [
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "int getRowSize()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 468,
+              "types_used": [
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 7,
+                "cc": 2
+              },
+              "signature": "boolean equals(Object o)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 472,
+              "types_used": [
+                "BitMatrix",
+                "Object",
+                "boolean"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 8,
+                "cc": 1
+              },
+              "signature": "int hashCode()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 482,
+              "types_used": [
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "String toString()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 495,
+              "types_used": [
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "String toString(String setString, String unsetString)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 505,
+              "types_used": [
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "String toString(String setString, String unsetString, String lineSeparator)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 516,
+              "types_used": [
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 10,
+                "cc": 3
+              },
+              "signature": "String buildToString(String setString, String unsetString, String lineSeparator)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 521,
+              "types_used": [
+                "String",
+                "StringBuilder",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "BitMatrix clone()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 532,
+              "types_used": [
+                "BitMatrix"
+              ]
+            }
+          ],
+          "dependencies": [
+            "com.google.zxing.common.BitArray"
+          ]
+        },
+        {
+          "package": "com.google.zxing.common",
+          "class": "DecoderResult",
+          "file": "data/repositories/zxing/core/src/main/java/com/google/zxing/common/DecoderResult.java",
+          "metrics": {
+            "nof": 11,
+            "nopf": 0,
+            "nom": 20,
+            "nopm": 20,
+            "loc": 113,
+            "wmc": 20,
+            "nc": 0,
+            "dit": 0,
+            "lcom": 0.2,
+            "fanin": 19,
+            "fanout": 0
+          },
+          "methods": [
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "DecoderResult(byte[] rawBytes, String text, List<byte[]> byteSegments, String ecLevel)",
+              "type": "constructor",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 42,
+              "types_used": [
+                "DecoderResult",
+                "List",
+                "String",
+                "byte",
+                "byte[]"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "DecoderResult(byte[] rawBytes, String text, List<byte[]> byteSegments, String ecLevel, int symbologyModifier)",
+              "type": "constructor",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 49,
+              "types_used": [
+                "DecoderResult",
+                "List",
+                "String",
+                "byte",
+                "byte[]",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "DecoderResult(byte[] rawBytes, String text, List<byte[]> byteSegments, String ecLevel, int saSequence, int saParity)",
+              "type": "constructor",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 57,
+              "types_used": [
+                "DecoderResult",
+                "List",
+                "String",
+                "byte",
+                "byte[]",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 10,
+                "cc": 1
+              },
+              "signature": "DecoderResult(byte[] rawBytes, String text, List<byte[]> byteSegments, String ecLevel, int saSequence, int saParity, int symbologyModifier)",
+              "type": "constructor",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 66,
+              "types_used": [
+                "DecoderResult",
+                "List",
+                "String",
+                "byte",
+                "byte[]",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "byte[] getRawBytes()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 86,
+              "types_used": [
+                "byte",
+                "byte[]"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "int getNumBits()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 94,
+              "types_used": [
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void setNumBits(int numBits)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 102,
+              "types_used": [
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "String getText()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 109,
+              "types_used": [
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "List<byte[]> getByteSegments()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 116,
+              "types_used": [
+                "List",
+                "byte",
+                "byte[]"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "String getECLevel()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 123,
+              "types_used": [
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "Integer getErrorsCorrected()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 130,
+              "types_used": [
+                "Integer"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void setErrorsCorrected(Integer errorsCorrected)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 134,
+              "types_used": [
+                "Integer"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "Integer getErasures()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 141,
+              "types_used": [
+                "Integer"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void setErasures(Integer erasures)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 145,
+              "types_used": [
+                "Integer"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "Object getOther()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 152,
+              "types_used": [
+                "Object"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void setOther(Object other)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 156,
+              "types_used": [
+                "Object"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "boolean hasStructuredAppend()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 160,
+              "types_used": [
+                "boolean"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "int getStructuredAppendParity()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 164,
+              "types_used": [
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "int getStructuredAppendSequenceNumber()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 168,
+              "types_used": [
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "int getSymbologyModifier()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 172,
+              "types_used": [
+                "int"
+              ]
+            }
+          ],
+          "dependencies": []
+        },
+        {
+          "package": "com.google.zxing.common",
+          "class": "BitArray",
+          "file": "data/repositories/zxing/core/src/main/java/com/google/zxing/common/BitArray.java",
+          "metrics": {
+            "nof": 4,
+            "nopf": 0,
+            "nom": 27,
+            "nopm": 24,
+            "loc": 279,
+            "wmc": 58,
+            "nc": 0,
+            "dit": 0,
+            "lcom": 0.0,
+            "fanin": 65,
+            "fanout": 0
+          },
+          "methods": [
+            {
+              "metrics": {
+                "loc": 4,
+                "cc": 1
+              },
+              "signature": "BitArray()",
+              "type": "constructor",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 34,
+              "types_used": [
+                "BitArray"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 4,
+                "cc": 1
+              },
+              "signature": "BitArray(int size)",
+              "type": "constructor",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 39,
+              "types_used": [
+                "BitArray",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 4,
+                "cc": 1
+              },
+              "signature": "BitArray(int[] bits, int size)",
+              "type": "constructor",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 45,
+              "types_used": [
+                "BitArray",
+                "int",
+                "int[]"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "int getSize()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 50,
+              "types_used": [
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "int getSizeInBytes()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 54,
+              "types_used": [
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 7,
+                "cc": 2
+              },
+              "signature": "void ensureCapacity(int newSize)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 58,
+              "types_used": [
+                "int",
+                "int[]"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "boolean get(int i)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 70,
+              "types_used": [
+                "boolean",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void set(int i)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 79,
+              "types_used": [
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void flip(int i)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 88,
+              "types_used": [
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 16,
+                "cc": 4
+              },
+              "signature": "int getNextSet(int from)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 98,
+              "types_used": [
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 16,
+                "cc": 4
+              },
+              "signature": "int getNextUnset(int from)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 121,
+              "types_used": [
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void setBulk(int i, int newBits)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 146,
+              "types_used": [
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 17,
+                "cc": 4
+              },
+              "signature": "void setRange(int start, int end)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 156,
+              "types_used": [
+                "IllegalArgumentException",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 6,
+                "cc": 2
+              },
+              "signature": "void clear()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 178,
+              "types_used": [
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 20,
+                "cc": 5
+              },
+              "signature": "boolean isRange(int start, int end, boolean value)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 194,
+              "types_used": [
+                "IllegalArgumentException",
+                "boolean",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 7,
+                "cc": 2
+              },
+              "signature": "void appendBit(boolean bit)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 219,
+              "types_used": [
+                "boolean"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 14,
+                "cc": 4
+              },
+              "signature": "void appendBits(int value, int numBits)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 235,
+              "types_used": [
+                "IllegalArgumentException",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 7,
+                "cc": 2
+              },
+              "signature": "void appendBitArray(BitArray other)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 250,
+              "types_used": [
+                "BitArray",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 8,
+                "cc": 3
+              },
+              "signature": "void xor(BitArray other)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 258,
+              "types_used": [
+                "BitArray",
+                "IllegalArgumentException",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 12,
+                "cc": 4
+              },
+              "signature": "void toBytes(int bitOffset, byte[] array, int offset, int numBytes)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 277,
+              "types_used": [
+                "byte",
+                "byte[]",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "int[] getBitArray()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 294,
+              "types_used": [
+                "int",
+                "int[]"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 20,
+                "cc": 4
+              },
+              "signature": "void reverse()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 301,
+              "types_used": [
+                "int",
+                "int[]"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "int[] makeArray(int size)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": true,
+              "begin_line": 324,
+              "types_used": [
+                "int",
+                "int[]"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 7,
+                "cc": 2
+              },
+              "signature": "boolean equals(Object o)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 328,
+              "types_used": [
+                "BitArray",
+                "Object",
+                "boolean"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "int hashCode()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 337,
+              "types_used": [
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 10,
+                "cc": 3
+              },
+              "signature": "String toString()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 342,
+              "types_used": [
+                "String",
+                "StringBuilder",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "BitArray clone()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 354,
+              "types_used": [
+                "BitArray"
+              ]
+            }
+          ],
+          "dependencies": []
+        }
+      ],
+      "dependencies": []
+    },
+    {
+      "package": "com.google.zxing.oned.rss.expanded.decoders",
+      "metrics": {
+        "num_classes": 21,
+        "loc": 1080,
+        "Ce": 3,
+        "Ca": 1
+      },
+      "classes": [
+        {
+          "package": "com.google.zxing.oned.rss.expanded.decoders",
+          "class": "GeneralAppIdDecoder",
+          "file": "data/repositories/zxing/core/src/main/java/com/google/zxing/oned/rss/expanded/decoders/GeneralAppIdDecoder.java",
+          "metrics": {
+            "nof": 3,
+            "nopf": 0,
+            "nom": 18,
+            "nopm": 0,
+            "loc": 350,
+            "wmc": 102,
+            "nc": 0,
+            "dit": 0,
+            "lcom": 0.0,
+            "fanin": 1,
+            "fanout": 9
+          },
+          "methods": [
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "GeneralAppIdDecoder(BitArray information)",
+              "type": "constructor",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 43,
+              "types_used": [
+                "BitArray",
+                "GeneralAppIdDecoder"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 23,
+                "cc": 5
+              },
+              "signature": "String decodeAllCodes(StringBuilder buff, int initialPosition) throws NotFoundException, FormatException",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 47,
+              "types_used": [
+                "DecodedInformation",
+                "FormatException",
+                "NotFoundException",
+                "String",
+                "StringBuilder",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 11,
+                "cc": 4
+              },
+              "signature": "boolean isStillNumeric(int pos)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 71,
+              "types_used": [
+                "boolean",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 13,
+                "cc": 3
+              },
+              "signature": "DecodedNumeric decodeNumeric(int pos) throws FormatException",
+              "type": "method",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 87,
+              "types_used": [
+                "DecodedNumeric",
+                "FormatException",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "int extractNumericValueFromBitArray(int pos, int bits)",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 103,
+              "types_used": [
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 9,
+                "cc": 3
+              },
+              "signature": "int extractNumericValueFromBitArray(BitArray information, int pos, int bits)",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": true,
+              "begin_line": 107,
+              "types_used": [
+                "BitArray",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 12,
+                "cc": 3
+              },
+              "signature": "DecodedInformation decodeGeneralPurposeField(int pos, String remaining) throws FormatException",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 118,
+              "types_used": [
+                "DecodedInformation",
+                "FormatException",
+                "String",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 25,
+                "cc": 5
+              },
+              "signature": "DecodedInformation parseBlocks() throws FormatException",
+              "type": "method",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 135,
+              "types_used": [
+                "BlockParsedResult",
+                "DecodedInformation",
+                "FormatException",
+                "boolean",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 27,
+                "cc": 6
+              },
+              "signature": "BlockParsedResult parseNumericBlock() throws FormatException",
+              "type": "method",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 161,
+              "types_used": [
+                "BlockParsedResult",
+                "DecodedInformation",
+                "DecodedNumeric",
+                "FormatException"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 25,
+                "cc": 6
+              },
+              "signature": "BlockParsedResult parseIsoIec646Block() throws FormatException",
+              "type": "method",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 191,
+              "types_used": [
+                "BlockParsedResult",
+                "DecodedChar",
+                "DecodedInformation",
+                "FormatException"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 25,
+                "cc": 6
+              },
+              "signature": "BlockParsedResult parseAlphaBlock()",
+              "type": "method",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 218,
+              "types_used": [
+                "BlockParsedResult",
+                "DecodedChar",
+                "DecodedInformation"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 21,
+                "cc": 6
+              },
+              "signature": "boolean isStillIsoIec646(int pos)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 246,
+              "types_used": [
+                "boolean",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 64,
+                "cc": 26
+              },
+              "signature": "DecodedChar decodeIsoIec646(int pos) throws FormatException",
+              "type": "method",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 274,
+              "types_used": [
+                "DecodedChar",
+                "FormatException",
+                "char",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 14,
+                "cc": 4
+              },
+              "signature": "boolean isStillAlpha(int pos)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 366,
+              "types_used": [
+                "boolean",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 28,
+                "cc": 9
+              },
+              "signature": "DecodedChar decodeAlphanumeric(int pos)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 385,
+              "types_used": [
+                "DecodedChar",
+                "IllegalStateException",
+                "char",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 16,
+                "cc": 6
+              },
+              "signature": "boolean isAlphaTo646ToAlphaLatch(int pos)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 424,
+              "types_used": [
+                "boolean",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 11,
+                "cc": 4
+              },
+              "signature": "boolean isAlphaOr646ToNumericLatch(int pos)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 442,
+              "types_used": [
+                "boolean",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 11,
+                "cc": 4
+              },
+              "signature": "boolean isNumericToAlphaNumericLatch(int pos)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 456,
+              "types_used": [
+                "boolean",
+                "int"
+              ]
+            }
+          ],
+          "dependencies": [
+            "com.google.zxing.common.BitArray"
+          ]
+        }
+      ],
+      "dependencies": [
+        "com.google.zxing.common",
+        "com.google.zxing.oned.rss.expanded"
+      ]
+    },
+    {
+      "package": "com.google.zxing.oned.rss.expanded",
+      "metrics": {
+        "num_classes": 4,
+        "loc": 726,
+        "Ce": 7,
+        "Ca": 1
+      },
+      "classes": [
+        {
+          "package": "com.google.zxing.oned.rss.expanded",
+          "class": "RSSExpandedReader",
+          "file": "data/repositories/zxing/core/src/main/java/com/google/zxing/oned/rss/expanded/RSSExpandedReader.java",
+          "metrics": {
+            "nof": 20,
+            "nopf": 0,
+            "nom": 21,
+            "nopm": 2,
+            "loc": 607,
+            "wmc": 123,
+            "nc": 0,
+            "dit": 3,
+            "lcom": 0.0,
+            "fanin": 5,
+            "fanout": 16
+          },
+          "methods": [
+            {
+              "metrics": {
+                "loc": 10,
+                "cc": 1
+              },
+              "signature": "Result decodeRow(int rowNumber, BitArray row, Map<DecodeHintType, ?> hints) throws NotFoundException, FormatException",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 132,
+              "types_used": [
+                "BitArray",
+                "DecodeHintType",
+                "FormatException",
+                "Map",
+                "NotFoundException",
+                "Result",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 4,
+                "cc": 1
+              },
+              "signature": "void reset()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 148,
+              "types_used": []
+            },
+            {
+              "metrics": {
+                "loc": 31,
+                "cc": 7
+              },
+              "signature": "List<ExpandedPair> decodeRow2pairs(int rowNumber, BitArray row) throws NotFoundException",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 155,
+              "types_used": [
+                "BitArray",
+                "ExpandedPair",
+                "List",
+                "NotFoundException",
+                "boolean",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 20,
+                "cc": 4
+              },
+              "signature": "List<ExpandedPair> checkRows(boolean reverse)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 192,
+              "types_used": [
+                "ArrayList",
+                "ExpandedPair",
+                "List",
+                "NotFoundException",
+                "boolean"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 24,
+                "cc": 4
+              },
+              "signature": "List<ExpandedPair> checkRows(List<ExpandedRow> collectedRows, int currentRow) throws NotFoundException",
+              "type": "method",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 222,
+              "types_used": [
+                "ExpandedPair",
+                "ExpandedRow",
+                "List",
+                "NotFoundException",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 18,
+                "cc": 6
+              },
+              "signature": "boolean isValidSequence(List<ExpandedPair> pairs, boolean complete)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": true,
+              "begin_line": 250,
+              "types_used": [
+                "ExpandedPair",
+                "List",
+                "boolean",
+                "int",
+                "int[]"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 26,
+                "cc": 9
+              },
+              "signature": "boolean mayFollow(List<ExpandedPair> pairs, int value)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": true,
+              "begin_line": 273,
+              "types_used": [
+                "ExpandedPair",
+                "List",
+                "boolean",
+                "int",
+                "int[]"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 22,
+                "cc": 5
+              },
+              "signature": "void storeRow(int rowNumber)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 307,
+              "types_used": [
+                "ExpandedRow",
+                "boolean",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 17,
+                "cc": 6
+              },
+              "signature": "void removePartialRows(Collection<ExpandedPair> pairs, Collection<ExpandedRow> rows)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": true,
+              "begin_line": 340,
+              "types_used": [
+                "Collection",
+                "ExpandedPair",
+                "ExpandedRow",
+                "Iterator",
+                "boolean"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 22,
+                "cc": 7
+              },
+              "signature": "boolean isPartialRow(Iterable<ExpandedPair> pairs, Iterable<ExpandedRow> rows)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": true,
+              "begin_line": 360,
+              "types_used": [
+                "ExpandedPair",
+                "ExpandedRow",
+                "Iterable",
+                "boolean"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "List<ExpandedRow> getRows()",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 385,
+              "types_used": [
+                "ExpandedRow",
+                "List"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 10,
+                "cc": 1
+              },
+              "signature": "Result constructResult(List<ExpandedPair> pairs) throws NotFoundException, FormatException",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": true,
+              "begin_line": 390,
+              "types_used": [
+                "AbstractExpandedDecoder",
+                "BitArray",
+                "ExpandedPair",
+                "FormatException",
+                "List",
+                "NotFoundException",
+                "Result",
+                "ResultPoint",
+                "ResultPoint[]",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 23,
+                "cc": 4
+              },
+              "signature": "boolean checkChecksum()",
+              "type": "method",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 409,
+              "types_used": [
+                "DataCharacter",
+                "ExpandedPair",
+                "boolean",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 12,
+                "cc": 2
+              },
+              "signature": "int getNextSecondBar(BitArray row, int initialPos)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": true,
+              "begin_line": 439,
+              "types_used": [
+                "BitArray",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 38,
+                "cc": 5
+              },
+              "signature": "ExpandedPair retrieveNextPair(BitArray row, List<ExpandedPair> previousPairs, int rowNumber) throws NotFoundException",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 452,
+              "types_used": [
+                "BitArray",
+                "DataCharacter",
+                "ExpandedPair",
+                "FinderPattern",
+                "List",
+                "NotFoundException",
+                "boolean",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 65,
+                "cc": 12
+              },
+              "signature": "void findNextPair(BitArray row, List<ExpandedPair> previousPairs, int forcedOffset) throws NotFoundException",
+              "type": "method",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 495,
+              "types_used": [
+                "BitArray",
+                "ExpandedPair",
+                "List",
+                "NotFoundException",
+                "boolean",
+                "int",
+                "int[]"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 8,
+                "cc": 2
+              },
+              "signature": "void reverseCounters(int[] counters)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": true,
+              "begin_line": 565,
+              "types_used": [
+                "int",
+                "int[]"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 46,
+                "cc": 6
+              },
+              "signature": "FinderPattern parseFoundFinderPattern(BitArray row, int rowNumber, boolean oddPattern, List<ExpandedPair> previousPairs)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 574,
+              "types_used": [
+                "BitArray",
+                "ExpandedPair",
+                "FinderPattern",
+                "List",
+                "NotFoundException",
+                "boolean",
+                "float",
+                "int",
+                "int[]"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 81,
+                "cc": 15
+              },
+              "signature": "DataCharacter decodeDataCharacter(BitArray row, FinderPattern pattern, boolean isOddPattern, boolean leftChar) throws NotFoundException",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 641,
+              "types_used": [
+                "BitArray",
+                "DataCharacter",
+                "FinderPattern",
+                "NotFoundException",
+                "boolean",
+                "float",
+                "float[]",
+                "int",
+                "int[]"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "boolean isNotA1left(FinderPattern pattern, boolean isOddPattern, boolean leftChar)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": true,
+              "begin_line": 736,
+              "types_used": [
+                "FinderPattern",
+                "boolean"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 89,
+                "cc": 24
+              },
+              "signature": "void adjustOddEvenCounts(int numModules) throws NotFoundException",
+              "type": "method",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 741,
+              "types_used": [
+                "NotFoundException",
+                "boolean",
+                "int"
+              ]
+            }
+          ],
+          "dependencies": [
+            "com.google.zxing.common.BitArray"
+          ]
+        }
+      ],
+      "dependencies": [
+        "com.google.zxing.common",
+        "com.google.zxing.oned.rss.expanded.decoders"
+      ]
+    },
+    {
+      "package": "com.google.zxing.pdf417",
+      "metrics": {
+        "num_classes": 4,
+        "loc": 353,
+        "Ce": 7,
+        "Ca": 4
+      },
+      "classes": [
+        {
+          "package": "com.google.zxing.pdf417",
+          "class": "PDF417ResultMetadata",
+          "file": "data/repositories/zxing/core/src/main/java/com/google/zxing/pdf417/PDF417ResultMetadata.java",
+          "metrics": {
+            "nof": 11,
+            "nopf": 0,
+            "nom": 22,
+            "nopm": 22,
+            "loc": 120,
+            "wmc": 22,
+            "nc": 0,
+            "dit": 0,
+            "lcom": 0.5,
+            "fanin": 4,
+            "fanout": 0
+          },
+          "methods": [
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "int getSegmentIndex()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 41,
+              "types_used": [
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void setSegmentIndex(int segmentIndex)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 45,
+              "types_used": [
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "String getFileId()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 54,
+              "types_used": [
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void setFileId(String fileId)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 58,
+              "types_used": [
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "int[] getOptionalData()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 66,
+              "types_used": [
+                "int",
+                "int[]"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void setOptionalData(int[] optionalData)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 75,
+              "types_used": [
+                "int",
+                "int[]"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "boolean isLastSegment()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 84,
+              "types_used": [
+                "boolean"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void setLastSegment(boolean lastSegment)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 88,
+              "types_used": [
+                "boolean"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "int getSegmentCount()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 95,
+              "types_used": [
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void setSegmentCount(int segmentCount)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 99,
+              "types_used": [
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "String getSender()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 103,
+              "types_used": [
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void setSender(String sender)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 107,
+              "types_used": [
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "String getAddressee()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 111,
+              "types_used": [
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void setAddressee(String addressee)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 115,
+              "types_used": [
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "String getFileName()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 124,
+              "types_used": [
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void setFileName(String fileName)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 128,
+              "types_used": [
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "long getFileSize()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 137,
+              "types_used": [
+                "long"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void setFileSize(long fileSize)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 141,
+              "types_used": [
+                "long"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "int getChecksum()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 150,
+              "types_used": [
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void setChecksum(int checksum)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 154,
+              "types_used": [
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "long getTimestamp()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 163,
+              "types_used": [
+                "long"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void setTimestamp(long timestamp)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 167,
+              "types_used": [
+                "long"
+              ]
+            }
+          ],
+          "dependencies": []
+        }
+      ],
+      "dependencies": [
+        "com.google.zxing.common",
+        "com.google.zxing.pdf417.decoder"
+      ]
+    },
+    {
+      "package": "com.google.zxing.pdf417.decoder",
+      "metrics": {
+        "num_classes": 11,
+        "loc": 1750,
+        "Ce": 6,
+        "Ca": 1
+      },
+      "classes": [
+        {
+          "package": "com.google.zxing.pdf417.decoder",
+          "class": "DecodedBitStreamParser",
+          "file": "data/repositories/zxing/core/src/main/java/com/google/zxing/pdf417/decoder/DecodedBitStreamParser.java",
+          "metrics": {
+            "nof": 30,
+            "nopf": 0,
+            "nom": 8,
+            "nopm": 0,
+            "loc": 479,
+            "wmc": 115,
+            "nc": 0,
+            "dit": 0,
+            "lcom": 0.25,
+            "fanin": 2,
+            "fanout": 5
+          },
+          "methods": [
+            {
+              "metrics": {
+                "loc": 2,
+                "cc": 1
+              },
+              "signature": "DecodedBitStreamParser()",
+              "type": "constructor",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 97,
+              "types_used": [
+                "DecodedBitStreamParser"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 36,
+                "cc": 14
+              },
+              "signature": "DecoderResult decode(int[] codewords, String ecLevel) throws FormatException",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": true,
+              "begin_line": 100,
+              "types_used": [
+                "DecoderResult",
+                "ECIStringBuilder",
+                "FormatException",
+                "PDF417ResultMetadata",
+                "String",
+                "char",
+                "int",
+                "int[]"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 105,
+                "cc": 20
+              },
+              "signature": "int decodeMacroBlock(int[] codewords, int codeIndex, PDF417ResultMetadata resultMetadata) throws FormatException",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": true,
+              "begin_line": 155,
+              "types_used": [
+                "ECIStringBuilder",
+                "FormatException",
+                "NumberFormatException",
+                "PDF417ResultMetadata",
+                "String",
+                "StringBuilder",
+                "int",
+                "int[]"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 40,
+                "cc": 13
+              },
+              "signature": "int textCompaction(int[] codewords, int codeIndex, ECIStringBuilder result) throws FormatException",
+              "type": "method",
+              "visibility": "private",
+              "is_static": true,
+              "begin_line": 295,
+              "types_used": [
+                "ECIStringBuilder",
+                "FormatException",
+                "Mode",
+                "boolean",
+                "int",
+                "int[]"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 128,
+                "cc": 42
+              },
+              "signature": "Mode decodeTextCompaction(int[] textCompactionData, int[] byteCompactionData, int length, ECIStringBuilder result, Mode startMode)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": true,
+              "begin_line": 372,
+              "types_used": [
+                "ECIStringBuilder",
+                "Mode",
+                "char",
+                "int",
+                "int[]"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 43,
+                "cc": 10
+              },
+              "signature": "int byteCompaction(int mode, int[] codewords, int codeIndex, ECIStringBuilder result) throws FormatException",
+              "type": "method",
+              "visibility": "private",
+              "is_static": true,
+              "begin_line": 566,
+              "types_used": [
+                "ECIStringBuilder",
+                "FormatException",
+                "boolean",
+                "byte",
+                "int",
+                "int[]",
+                "long"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 27,
+                "cc": 12
+              },
+              "signature": "int numericCompaction(int[] codewords, int codeIndex, ECIStringBuilder result) throws FormatException",
+              "type": "method",
+              "visibility": "private",
+              "is_static": true,
+              "begin_line": 624,
+              "types_used": [
+                "ECIStringBuilder",
+                "FormatException",
+                "boolean",
+                "int",
+                "int[]"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 11,
+                "cc": 3
+              },
+              "signature": "String decodeBase900toBase10(int[] codewords, int count) throws FormatException",
+              "type": "method",
+              "visibility": "private",
+              "is_static": true,
+              "begin_line": 707,
+              "types_used": [
+                "BigInteger",
+                "FormatException",
+                "String",
+                "int",
+                "int[]"
+              ]
+            }
+          ],
+          "dependencies": [
+            "com.google.zxing.common.DecoderResult",
+            "com.google.zxing.pdf417.PDF417ResultMetadata"
+          ]
+        },
+        {
+          "package": "com.google.zxing.pdf417.decoder",
+          "class": "PDF417ScanningDecoder",
+          "file": "data/repositories/zxing/core/src/main/java/com/google/zxing/pdf417/decoder/PDF417ScanningDecoder.java",
+          "metrics": {
+            "nof": 4,
+            "nopf": 0,
+            "nom": 25,
+            "nopm": 2,
+            "loc": 455,
+            "wmc": 108,
+            "nc": 0,
+            "dit": 0,
+            "lcom": 0.16,
+            "fanin": 1,
+            "fanout": 18
+          },
+          "methods": [
+            {
+              "metrics": {
+                "loc": 2,
+                "cc": 1
+              },
+              "signature": "PDF417ScanningDecoder()",
+              "type": "constructor",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 45,
+              "types_used": [
+                "PDF417ScanningDecoder"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 63,
+                "cc": 13
+              },
+              "signature": "DecoderResult decode(BitMatrix image, ResultPoint imageTopLeft, ResultPoint imageBottomLeft, ResultPoint imageTopRight, ResultPoint imageBottomRight, int minCodewordWidth, int maxCodewordWidth) throws NotFoundException, FormatException, ChecksumException",
+              "type": "method",
+              "visibility": "public",
+              "is_static": true,
+              "begin_line": 52,
+              "types_used": [
+                "BitMatrix",
+                "BoundingBox",
+                "ChecksumException",
+                "Codeword",
+                "DecoderResult",
+                "DetectionResult",
+                "DetectionResultColumn",
+                "DetectionResultRowIndicatorColumn",
+                "FormatException",
+                "NotFoundException",
+                "ResultPoint",
+                "boolean",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 11,
+                "cc": 3
+              },
+              "signature": "DetectionResult merge(DetectionResultRowIndicatorColumn leftRowIndicatorColumn, DetectionResultRowIndicatorColumn rightRowIndicatorColumn) throws NotFoundException",
+              "type": "method",
+              "visibility": "private",
+              "is_static": true,
+              "begin_line": 128,
+              "types_used": [
+                "BarcodeMetadata",
+                "BoundingBox",
+                "DetectionResult",
+                "DetectionResultRowIndicatorColumn",
+                "NotFoundException"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 32,
+                "cc": 9
+              },
+              "signature": "BoundingBox adjustBoundingBox(DetectionResultRowIndicatorColumn rowIndicatorColumn) throws NotFoundException",
+              "type": "method",
+              "visibility": "private",
+              "is_static": true,
+              "begin_line": 143,
+              "types_used": [
+                "BoundingBox",
+                "Codeword",
+                "Codeword[]",
+                "DetectionResultRowIndicatorColumn",
+                "NotFoundException",
+                "int",
+                "int[]"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 7,
+                "cc": 2
+              },
+              "signature": "int getMax(int[] values)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": true,
+              "begin_line": 178,
+              "types_used": [
+                "int",
+                "int[]"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 14,
+                "cc": 4
+              },
+              "signature": "BarcodeMetadata getBarcodeMetadata(DetectionResultRowIndicatorColumn leftRowIndicatorColumn, DetectionResultRowIndicatorColumn rightRowIndicatorColumn)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": true,
+              "begin_line": 186,
+              "types_used": [
+                "BarcodeMetadata",
+                "DetectionResultRowIndicatorColumn"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 20,
+                "cc": 5
+              },
+              "signature": "DetectionResultRowIndicatorColumn getRowIndicatorColumn(BitMatrix image, BoundingBox boundingBox, ResultPoint startPoint, boolean leftToRight, int minCodewordWidth, int maxCodewordWidth)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": true,
+              "begin_line": 207,
+              "types_used": [
+                "BitMatrix",
+                "BoundingBox",
+                "Codeword",
+                "DetectionResultRowIndicatorColumn",
+                "ResultPoint",
+                "boolean",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 14,
+                "cc": 4
+              },
+              "signature": "void adjustCodewordCount(DetectionResult detectionResult, BarcodeValue[][] barcodeMatrix) throws NotFoundException",
+              "type": "method",
+              "visibility": "private",
+              "is_static": true,
+              "begin_line": 235,
+              "types_used": [
+                "BarcodeValue",
+                "BarcodeValue[]",
+                "BarcodeValue[][]",
+                "DetectionResult",
+                "NotFoundException",
+                "int",
+                "int[]"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 29,
+                "cc": 6
+              },
+              "signature": "DecoderResult createDecoderResult(DetectionResult detectionResult) throws FormatException, ChecksumException, NotFoundException",
+              "type": "method",
+              "visibility": "private",
+              "is_static": true,
+              "begin_line": 255,
+              "types_used": [
+                "ArrayList",
+                "BarcodeValue",
+                "BarcodeValue[]",
+                "BarcodeValue[][]",
+                "ChecksumException",
+                "Collection",
+                "DecoderResult",
+                "DetectionResult",
+                "FormatException",
+                "Integer",
+                "List",
+                "NotFoundException",
+                "int",
+                "int[]",
+                "int[][]"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 30,
+                "cc": 7
+              },
+              "signature": "DecoderResult createDecoderResultFromAmbiguousValues(int ecLevel, int[] codewords, int[] erasureArray, int[] ambiguousIndexes, int[][] ambiguousIndexValues) throws FormatException, ChecksumException",
+              "type": "method",
+              "visibility": "private",
+              "is_static": true,
+              "begin_line": 298,
+              "types_used": [
+                "ChecksumException",
+                "DecoderResult",
+                "FormatException",
+                "int",
+                "int[]",
+                "int[][]"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 26,
+                "cc": 9
+              },
+              "signature": "BarcodeValue[][] createBarcodeMatrix(DetectionResult detectionResult)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": true,
+              "begin_line": 334,
+              "types_used": [
+                "BarcodeValue",
+                "BarcodeValue[]",
+                "BarcodeValue[][]",
+                "Codeword",
+                "DetectionResult",
+                "DetectionResultColumn",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "boolean isValidBarcodeColumn(DetectionResult detectionResult, int barcodeColumn)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": true,
+              "begin_line": 364,
+              "types_used": [
+                "DetectionResult",
+                "boolean",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 31,
+                "cc": 9
+              },
+              "signature": "int getStartColumn(DetectionResult detectionResult, int barcodeColumn, int imageRow, boolean leftToRight)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": true,
+              "begin_line": 368,
+              "types_used": [
+                "Codeword",
+                "DetectionResult",
+                "boolean",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 30,
+                "cc": 6
+              },
+              "signature": "Codeword detectCodeword(BitMatrix image, int minColumn, int maxColumn, boolean leftToRight, int startColumn, int imageRow, int minCodewordWidth, int maxCodewordWidth)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": true,
+              "begin_line": 407,
+              "types_used": [
+                "BitMatrix",
+                "Codeword",
+                "boolean",
+                "int",
+                "int[]"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 21,
+                "cc": 4
+              },
+              "signature": "int[] getModuleBitCount(BitMatrix image, int minColumn, int maxColumn, boolean leftToRight, int startColumn, int imageRow)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": true,
+              "begin_line": 465,
+              "types_used": [
+                "BitMatrix",
+                "boolean",
+                "int",
+                "int[]"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "int getNumberOfECCodeWords(int barcodeECLevel)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": true,
+              "begin_line": 494,
+              "types_used": [
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 15,
+                "cc": 4
+              },
+              "signature": "int adjustCodewordStartColumn(BitMatrix image, int minColumn, int maxColumn, boolean leftToRight, int codewordStartColumn, int imageRow)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": true,
+              "begin_line": 498,
+              "types_used": [
+                "BitMatrix",
+                "boolean",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "boolean checkCodewordSkew(int codewordSize, int minCodewordWidth, int maxCodewordWidth)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": true,
+              "begin_line": 521,
+              "types_used": [
+                "boolean",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 12,
+                "cc": 2
+              },
+              "signature": "DecoderResult decodeCodewords(int[] codewords, int ecLevel, int[] erasures) throws FormatException, ChecksumException",
+              "type": "method",
+              "visibility": "private",
+              "is_static": true,
+              "begin_line": 526,
+              "types_used": [
+                "ChecksumException",
+                "DecoderResult",
+                "FormatException",
+                "int",
+                "int[]"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 6,
+                "cc": 2
+              },
+              "signature": "int correctErrors(int[] codewords, int[] erasures, int numECCodewords) throws ChecksumException",
+              "type": "method",
+              "visibility": "private",
+              "is_static": true,
+              "begin_line": 552,
+              "types_used": [
+                "ChecksumException",
+                "int",
+                "int[]"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 17,
+                "cc": 5
+              },
+              "signature": "void verifyCodewordCount(int[] codewords, int numECCodewords) throws FormatException",
+              "type": "method",
+              "visibility": "private",
+              "is_static": true,
+              "begin_line": 566,
+              "types_used": [
+                "FormatException",
+                "int",
+                "int[]"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 17,
+                "cc": 4
+              },
+              "signature": "int[] getBitCountForCodeword(int codeword)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": true,
+              "begin_line": 589,
+              "types_used": [
+                "int",
+                "int[]"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "int getCodewordBucketNumber(int codeword)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": true,
+              "begin_line": 607,
+              "types_used": [
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "int getCodewordBucketNumber(int[] moduleBitCount)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": true,
+              "begin_line": 611,
+              "types_used": [
+                "int",
+                "int[]"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 18,
+                "cc": 4
+              },
+              "signature": "String toString(BarcodeValue[][] barcodeMatrix)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": true,
+              "begin_line": 615,
+              "types_used": [
+                "BarcodeValue",
+                "BarcodeValue[]",
+                "BarcodeValue[][]",
+                "Formatter",
+                "Object",
+                "Object[]",
+                "String",
+                "int"
+              ]
+            }
+          ],
+          "dependencies": [
+            "com.google.zxing.common.BitMatrix",
+            "com.google.zxing.common.DecoderResult",
+            "com.google.zxing.pdf417.decoder.DecodedBitStreamParser"
+          ]
+        }
+      ],
+      "dependencies": [
+        "com.google.zxing.common",
+        "com.google.zxing.pdf417"
+      ]
+    },
+    {
+      "package": "com.google.zxing.qrcode.detector",
+      "metrics": {
+        "num_classes": 7,
+        "loc": 1072,
+        "Ce": 4,
+        "Ca": 2
+      },
+      "classes": [
+        {
+          "package": "com.google.zxing.qrcode.detector",
+          "class": "FinderPatternFinder",
+          "file": "data/repositories/zxing/core/src/main/java/com/google/zxing/qrcode/detector/FinderPatternFinder.java",
+          "metrics": {
+            "nof": 9,
+            "nopf": 0,
+            "nom": 22,
+            "nopm": 2,
+            "loc": 536,
+            "wmc": 107,
+            "nc": 1,
+            "dit": 0,
+            "lcom": 0.0,
+            "fanin": 2,
+            "fanout": 8
+          },
+          "methods": [
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "FinderPatternFinder(BitMatrix image)",
+              "type": "constructor",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 60,
+              "types_used": [
+                "BitMatrix",
+                "FinderPatternFinder"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 6,
+                "cc": 1
+              },
+              "signature": "FinderPatternFinder(BitMatrix image, ResultPointCallback resultPointCallback)",
+              "type": "constructor",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 64,
+              "types_used": [
+                "ArrayList",
+                "BitMatrix",
+                "FinderPatternFinder",
+                "ResultPointCallback",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "BitMatrix getImage()",
+              "type": "method",
+              "visibility": "protected",
+              "is_static": false,
+              "begin_line": 71,
+              "types_used": [
+                "BitMatrix"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "List<FinderPattern> getPossibleCenters()",
+              "type": "method",
+              "visibility": "protected",
+              "is_static": false,
+              "begin_line": 75,
+              "types_used": [
+                "FinderPattern",
+                "List"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 74,
+                "cc": 15
+              },
+              "signature": "FinderPatternInfo find(Map<DecodeHintType, ?> hints) throws NotFoundException",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 79,
+              "types_used": [
+                "DecodeHintType",
+                "FinderPattern",
+                "FinderPatternInfo",
+                "FinderPattern[]",
+                "Map",
+                "NotFoundException",
+                "boolean",
+                "int",
+                "int[]"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "float centerFromEnd(int[] stateCount, int end)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": true,
+              "begin_line": 176,
+              "types_used": [
+                "float",
+                "int",
+                "int[]"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 16,
+                "cc": 4
+              },
+              "signature": "boolean foundPatternCross(int[] stateCount)",
+              "type": "method",
+              "visibility": "protected",
+              "is_static": true,
+              "begin_line": 185,
+              "types_used": [
+                "boolean",
+                "float",
+                "int",
+                "int[]"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 16,
+                "cc": 4
+              },
+              "signature": "boolean foundPatternDiagonal(int[] stateCount)",
+              "type": "method",
+              "visibility": "protected",
+              "is_static": true,
+              "begin_line": 213,
+              "types_used": [
+                "boolean",
+                "float",
+                "int",
+                "int[]"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 4,
+                "cc": 1
+              },
+              "signature": "int[] getCrossCheckStateCount()",
+              "type": "method",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 236,
+              "types_used": [
+                "int",
+                "int[]"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void clearCounts(int[] counts)",
+              "type": "method",
+              "visibility": "protected",
+              "is_static": false,
+              "begin_line": 241,
+              "types_used": [
+                "int",
+                "int[]"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void shiftCounts2(int[] stateCount)",
+              "type": "method",
+              "visibility": "protected",
+              "is_static": false,
+              "begin_line": 246,
+              "types_used": [
+                "int",
+                "int[]"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void doClearCounts(int[] counts)",
+              "type": "method",
+              "visibility": "protected",
+              "is_static": true,
+              "begin_line": 251,
+              "types_used": [
+                "int",
+                "int[]"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 7,
+                "cc": 1
+              },
+              "signature": "void doShiftCounts2(int[] stateCount)",
+              "type": "method",
+              "visibility": "protected",
+              "is_static": true,
+              "begin_line": 255,
+              "types_used": [
+                "int",
+                "int[]"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 47,
+                "cc": 12
+              },
+              "signature": "boolean crossCheckDiagonal(int centerI, int centerJ)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 272,
+              "types_used": [
+                "boolean",
+                "int",
+                "int[]"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 54,
+                "cc": 14
+              },
+              "signature": "float crossCheckVertical(int startI, int centerJ, int maxCount, int originalStateCountTotal)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 343,
+              "types_used": [
+                "BitMatrix",
+                "float",
+                "int",
+                "int[]"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 54,
+                "cc": 14
+              },
+              "signature": "float crossCheckHorizontal(int startJ, int centerI, int maxCount, int originalStateCountTotal)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 415,
+              "types_used": [
+                "BitMatrix",
+                "float",
+                "int",
+                "int[]"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "boolean handlePossibleCenter(int[] stateCount, int i, int j, boolean pureBarcode)",
+              "type": "method",
+              "visibility": "protected",
+              "is_static": false,
+              "begin_line": 488,
+              "types_used": [
+                "boolean",
+                "int",
+                "int[]"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 29,
+                "cc": 7
+              },
+              "signature": "boolean handlePossibleCenter(int[] stateCount, int i, int j)",
+              "type": "method",
+              "visibility": "protected",
+              "is_static": false,
+              "begin_line": 510,
+              "types_used": [
+                "FinderPattern",
+                "boolean",
+                "float",
+                "int",
+                "int[]"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 19,
+                "cc": 5
+              },
+              "signature": "int findRowSkip()",
+              "type": "method",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 549,
+              "types_used": [
+                "FinderPattern",
+                "ResultPoint",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 20,
+                "cc": 5
+              },
+              "signature": "boolean haveMultiplyConfirmedCenters()",
+              "type": "method",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 579,
+              "types_used": [
+                "FinderPattern",
+                "boolean",
+                "float",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 5,
+                "cc": 1
+              },
+              "signature": "double squaredDistance(FinderPattern a, FinderPattern b)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": true,
+              "begin_line": 607,
+              "types_used": [
+                "FinderPattern",
+                "double"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 78,
+                "cc": 15
+              },
+              "signature": "FinderPattern[] selectBestPatterns() throws NotFoundException",
+              "type": "method",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 618,
+              "types_used": [
+                "FinderPattern",
+                "FinderPattern[]",
+                "Iterator",
+                "NotFoundException",
+                "double",
+                "float",
+                "int"
+              ]
+            }
+          ],
+          "dependencies": [
+            "com.google.zxing.common.BitMatrix"
+          ]
+        }
+      ],
+      "dependencies": [
+        "com.google.zxing.common"
+      ]
+    },
+    {
+      "package": "com.google.zxing.datamatrix.decoder",
+      "metrics": {
+        "num_classes": 8,
+        "loc": 1102,
+        "Ce": 3,
+        "Ca": 1
+      },
+      "classes": [
+        {
+          "package": "com.google.zxing.datamatrix.decoder",
+          "class": "DecodedBitStreamParser",
+          "file": "data/repositories/zxing/core/src/main/java/com/google/zxing/datamatrix/decoder/DecodedBitStreamParser.java",
+          "metrics": {
+            "nof": 5,
+            "nopf": 0,
+            "nom": 11,
+            "nopm": 0,
+            "loc": 432,
+            "wmc": 103,
+            "nc": 0,
+            "dit": 0,
+            "lcom": 0.1818181818181818,
+            "fanin": 2,
+            "fanout": 5
+          },
+          "methods": [
+            {
+              "metrics": {
+                "loc": 2,
+                "cc": 1
+              },
+              "signature": "DecodedBitStreamParser()",
+              "type": "constructor",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 86,
+              "types_used": [
+                "DecodedBitStreamParser"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 61,
+                "cc": 15
+              },
+              "signature": "DecoderResult decode(byte[] bytes) throws FormatException",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": true,
+              "begin_line": 89,
+              "types_used": [
+                "ArrayList",
+                "BitSource",
+                "DecoderResult",
+                "ECIStringBuilder",
+                "FormatException",
+                "HashSet",
+                "Integer",
+                "List",
+                "Mode",
+                "Set",
+                "StringBuilder",
+                "boolean",
+                "byte",
+                "byte[]",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 54,
+                "cc": 21
+              },
+              "signature": "Mode decodeAsciiSegment(BitSource bits, ECIStringBuilder result, StringBuilder resultTrailer, Set<Integer> fnc1positions) throws FormatException",
+              "type": "method",
+              "visibility": "private",
+              "is_static": true,
+              "begin_line": 162,
+              "types_used": [
+                "BitSource",
+                "ECIStringBuilder",
+                "FormatException",
+                "Integer",
+                "Mode",
+                "Set",
+                "StringBuilder",
+                "boolean",
+                "char",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 79,
+                "cc": 18
+              },
+              "signature": "void decodeC40Segment(BitSource bits, ECIStringBuilder result, Set<Integer> fnc1positions) throws FormatException",
+              "type": "method",
+              "visibility": "private",
+              "is_static": true,
+              "begin_line": 236,
+              "types_used": [
+                "BitSource",
+                "ECIStringBuilder",
+                "FormatException",
+                "Integer",
+                "Set",
+                "boolean",
+                "char",
+                "int",
+                "int[]"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 85,
+                "cc": 19
+              },
+              "signature": "void decodeTextSegment(BitSource bits, ECIStringBuilder result, Set<Integer> fnc1positions) throws FormatException",
+              "type": "method",
+              "visibility": "private",
+              "is_static": true,
+              "begin_line": 328,
+              "types_used": [
+                "BitSource",
+                "ECIStringBuilder",
+                "FormatException",
+                "Integer",
+                "Set",
+                "boolean",
+                "char",
+                "int",
+                "int[]"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 37,
+                "cc": 11
+              },
+              "signature": "void decodeAnsiX12Segment(BitSource bits, ECIStringBuilder result) throws FormatException",
+              "type": "method",
+              "visibility": "private",
+              "is_static": true,
+              "begin_line": 425,
+              "types_used": [
+                "BitSource",
+                "ECIStringBuilder",
+                "FormatException",
+                "char",
+                "int",
+                "int[]"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 9,
+                "cc": 1
+              },
+              "signature": "void parseTwoBytes(int firstByte, int secondByte, int[] result)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": true,
+              "begin_line": 472,
+              "types_used": [
+                "int",
+                "int[]"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 22,
+                "cc": 7
+              },
+              "signature": "void decodeEdifactSegment(BitSource bits, ECIStringBuilder result)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": true,
+              "begin_line": 485,
+              "types_used": [
+                "BitSource",
+                "ECIStringBuilder",
+                "char",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 26,
+                "cc": 6
+              },
+              "signature": "void decodeBase256Segment(BitSource bits, ECIStringBuilder result, Collection<byte[]> byteSegments) throws FormatException",
+              "type": "method",
+              "visibility": "private",
+              "is_static": true,
+              "begin_line": 516,
+              "types_used": [
+                "BitSource",
+                "Collection",
+                "ECIStringBuilder",
+                "FormatException",
+                "String",
+                "byte",
+                "byte[]",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 9,
+                "cc": 3
+              },
+              "signature": "void decodeECISegment(BitSource bits, ECIStringBuilder result) throws FormatException",
+              "type": "method",
+              "visibility": "private",
+              "is_static": true,
+              "begin_line": 553,
+              "types_used": [
+                "BitSource",
+                "ECIStringBuilder",
+                "FormatException",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 5,
+                "cc": 1
+              },
+              "signature": "int unrandomize255State(int randomizedBase256Codeword, int base256CodewordPosition)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": true,
+              "begin_line": 583,
+              "types_used": [
+                "int"
+              ]
+            }
+          ],
+          "dependencies": [
+            "com.google.zxing.common.DecoderResult"
+          ]
+        }
+      ],
+      "dependencies": [
+        "com.google.zxing.common"
+      ]
+    },
+    {
+      "package": "com.google.zxing.integration.android",
+      "metrics": {
+        "num_classes": 2,
+        "loc": 380,
+        "Ce": 0,
+        "Ca": 0
+      },
+      "classes": [
+        {
+          "package": "com.google.zxing.integration.android",
+          "class": "IntentIntegrator",
+          "file": "data/repositories/zxing/android-integration/src/main/java/com/google/zxing/integration/android/IntentIntegrator.java",
+          "metrics": {
+            "nof": 24,
+            "nopf": 12,
+            "nom": 34,
+            "nopm": 27,
+            "loc": 325,
+            "wmc": 61,
+            "nc": 0,
+            "dit": 0,
+            "lcom": 0.0588235294117647,
+            "fanin": 0,
+            "fanout": 1
+          },
+          "methods": [
+            {
+              "metrics": {
+                "loc": 5,
+                "cc": 1
+              },
+              "signature": "IntentIntegrator(Activity activity)",
+              "type": "constructor",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 160,
+              "types_used": [
+                "Activity",
+                "IntentIntegrator"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 5,
+                "cc": 1
+              },
+              "signature": "IntentIntegrator(Fragment fragment)",
+              "type": "constructor",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 171,
+              "types_used": [
+                "Fragment",
+                "IntentIntegrator"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 7,
+                "cc": 1
+              },
+              "signature": "void initializeConfiguration()",
+              "type": "method",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 177,
+              "types_used": []
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "String getTitle()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 185,
+              "types_used": [
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void setTitle(String title)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 189,
+              "types_used": [
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void setTitleByID(int titleID)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 193,
+              "types_used": [
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "String getMessage()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 197,
+              "types_used": [
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void setMessage(String message)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 201,
+              "types_used": [
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void setMessageByID(int messageID)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 205,
+              "types_used": [
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "String getButtonYes()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 209,
+              "types_used": [
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void setButtonYes(String buttonYes)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 213,
+              "types_used": [
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void setButtonYesByID(int buttonYesID)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 217,
+              "types_used": [
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "String getButtonNo()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 221,
+              "types_used": [
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void setButtonNo(String buttonNo)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 225,
+              "types_used": [
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void setButtonNoByID(int buttonNoID)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 229,
+              "types_used": [
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "Collection<String> getTargetApplications()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 233,
+              "types_used": [
+                "Collection",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 6,
+                "cc": 2
+              },
+              "signature": "void setTargetApplications(List<String> targetApplications)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 237,
+              "types_used": [
+                "IllegalArgumentException",
+                "List",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void setSingleTargetApplication(String targetApplication)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 244,
+              "types_used": [
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "Map<String, ?> getMoreExtras()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 248,
+              "types_used": [
+                "Map",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void addExtra(String key, Object value)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 252,
+              "types_used": [
+                "Object",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "AlertDialog initiateScan()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 262,
+              "types_used": [
+                "AlertDialog"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "AlertDialog initiateScan(int cameraId)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 273,
+              "types_used": [
+                "AlertDialog",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "AlertDialog initiateScan(Collection<String> desiredBarcodeFormats)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 286,
+              "types_used": [
+                "AlertDialog",
+                "Collection",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 27,
+                "cc": 6
+              },
+              "signature": "AlertDialog initiateScan(Collection<String> desiredBarcodeFormats, int cameraId)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 300,
+              "types_used": [
+                "AlertDialog",
+                "Collection",
+                "Intent",
+                "String",
+                "StringBuilder",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 8,
+                "cc": 2
+              },
+              "signature": "void startActivityForResult(Intent intent, int code)",
+              "type": "method",
+              "visibility": "protected",
+              "is_static": false,
+              "begin_line": 343,
+              "types_used": [
+                "Intent",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 12,
+                "cc": 4
+              },
+              "signature": "String findTargetAppPackage(Intent intent)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 351,
+              "types_used": [
+                "Intent",
+                "List",
+                "PackageManager",
+                "ResolveInfo",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 9,
+                "cc": 3
+              },
+              "signature": "boolean contains(Iterable<ResolveInfo> availableApps, String targetApp)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": true,
+              "begin_line": 364,
+              "types_used": [
+                "Iterable",
+                "ResolveInfo",
+                "String",
+                "boolean"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 33,
+                "cc": 3
+              },
+              "signature": "AlertDialog showDownloadDialog()",
+              "type": "method",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 374,
+              "types_used": [
+                "ActivityNotFoundException",
+                "AlertDialog",
+                "AlertDialog.Builder",
+                "DialogInterface",
+                "DialogInterface.OnClickListener",
+                "Intent",
+                "String",
+                "Uri",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 22,
+                "cc": 3
+              },
+              "signature": "void onClick(DialogInterface dialogInterface, int i)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 379,
+              "types_used": [
+                "ActivityNotFoundException",
+                "DialogInterface",
+                "Intent",
+                "String",
+                "Uri",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 15,
+                "cc": 3
+              },
+              "signature": "IntentResult parseActivityResult(int requestCode, int resultCode, Intent intent)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": true,
+              "begin_line": 420,
+              "types_used": [
+                "Integer",
+                "Intent",
+                "IntentResult",
+                "String",
+                "byte",
+                "byte[]",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "AlertDialog shareText(CharSequence text)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 449,
+              "types_used": [
+                "AlertDialog",
+                "CharSequence"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 22,
+                "cc": 3
+              },
+              "signature": "AlertDialog shareText(CharSequence text, CharSequence type)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 462,
+              "types_used": [
+                "AlertDialog",
+                "CharSequence",
+                "Intent",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "List<String> list(String... values)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": true,
+              "begin_line": 484,
+              "types_used": [
+                "List",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 27,
+                "cc": 8
+              },
+              "signature": "void attachMoreExtras(Intent intent)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 488,
+              "types_used": [
+                "Boolean",
+                "Bundle",
+                "Double",
+                "Float",
+                "Integer",
+                "Intent",
+                "Long",
+                "Map",
+                "Map.Entry",
+                "Object",
+                "String"
+              ]
+            }
+          ],
+          "dependencies": []
+        }
+      ],
+      "dependencies": []
+    }
+  ],
+  "smell_type": "Insufficient Modularization",
+  "filter_level": "class",
+  "targets_count": 13
+}

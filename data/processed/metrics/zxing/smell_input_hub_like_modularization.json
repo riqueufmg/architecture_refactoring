@@ -1,0 +1,11 @@
+{
+  "project": "zxing",
+  "summary": {
+    "total_packages": 0,
+    "total_classes": 0
+  },
+  "packages": [],
+  "smell_type": "Hub-like Modularization",
+  "filter_level": "class",
+  "targets_count": 0
+}

@@ -1,0 +1,2683 @@
+{
+  "project": "google-java-format",
+  "summary": {
+    "total_packages": 3,
+    "total_classes": 3
+  },
+  "packages": [
+    {
+      "package": "com.google.googlejavaformat.java",
+      "metrics": {
+        "num_classes": 76,
+        "loc": 8184,
+        "Ce": 2,
+        "Ca": 2
+      },
+      "classes": [
+        {
+          "package": "com.google.googlejavaformat.java",
+          "class": "JavaInputAstVisitor",
+          "file": "data/repositories/google-java-format/core/src/main/java/com/google/googlejavaformat/java/JavaInputAstVisitor.java",
+          "metrics": {
+            "nof": 17,
+            "nopf": 0,
+            "nom": 167,
+            "nopm": 75,
+            "loc": 3233,
+            "wmc": 560,
+            "nc": 0,
+            "dit": 0,
+            "lcom": 0.0359281437125748,
+            "fanin": 6,
+            "fanout": 21
+          },
+          "methods": [
+            {
+              "method_name": "typeAnnotations",
+              "line_num": 298,
+              "metrics": {
+                "loc": 8,
+                "cc": 2,
+                "pc": 0
+              }
+            },
+            {
+              "method_name": "breakList",
+              "line_num": 324,
+              "metrics": {
+                "loc": 3,
+                "cc": 1,
+                "pc": 1
+              }
+            },
+            {
+              "method_name": "breakFillList",
+              "line_num": 328,
+              "metrics": {
+                "loc": 3,
+                "cc": 1,
+                "pc": 1
+              }
+            },
+            {
+              "method_name": "forceBreakList",
+              "line_num": 335,
+              "metrics": {
+                "loc": 3,
+                "cc": 1,
+                "pc": 1
+              }
+            },
+            {
+              "method_name": "JavaInputAstVisitor",
+              "line_num": 345,
+              "metrics": {
+                "loc": 8,
+                "cc": 1,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "inExpression",
+              "line_num": 362,
+              "metrics": {
+                "loc": 3,
+                "cc": 1,
+                "pc": 0
+              }
+            },
+            {
+              "method_name": "scan",
+              "line_num": 366,
+              "metrics": {
+                "loc": 22,
+                "cc": 2,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "visitCompilationUnit",
+              "line_num": 389,
+              "metrics": {
+                "loc": 39,
+                "cc": 8,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "handleModule",
+              "line_num": 433,
+              "metrics": {
+                "loc": 11,
+                "cc": 3,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "dropEmptyDeclarations",
+              "line_num": 445,
+              "metrics": {
+                "loc": 9,
+                "cc": 3,
+                "pc": 0
+              }
+            },
+            {
+              "method_name": "visitClass",
+              "line_num": 456,
+              "metrics": {
+                "loc": 10,
+                "cc": 5,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "visitAnnotationType",
+              "line_num": 468,
+              "metrics": {
+                "loc": 21,
+                "cc": 2,
+                "pc": 1
+              }
+            },
+            {
+              "method_name": "visitArrayAccess",
+              "line_num": 489,
+              "metrics": {
+                "loc": 5,
+                "cc": 1,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "visitNewArray",
+              "line_num": 496,
+              "metrics": {
+                "loc": 26,
+                "cc": 4,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "visitArrayInitializer",
+              "line_num": 528,
+              "metrics": {
+                "loc": 78,
+                "cc": 15,
+                "pc": 1
+              }
+            },
+            {
+              "method_name": "hasOnlyShortItems",
+              "line_num": 609,
+              "metrics": {
+                "loc": 9,
+                "cc": 3,
+                "pc": 1
+              }
+            },
+            {
+              "method_name": "visitArrayType",
+              "line_num": 621,
+              "metrics": {
+                "loc": 5,
+                "cc": 1,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "visitAnnotatedArrayType",
+              "line_num": 628,
+              "metrics": {
+                "loc": 9,
+                "cc": 1,
+                "pc": 1
+              }
+            },
+            {
+              "method_name": "visitAssert",
+              "line_num": 638,
+              "metrics": {
+                "loc": 18,
+                "cc": 2,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "visitAssignment",
+              "line_num": 658,
+              "metrics": {
+                "loc": 11,
+                "cc": 1,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "visitBlock",
+              "line_num": 671,
+              "metrics": {
+                "loc": 4,
+                "cc": 1,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "visitCompoundAssignment",
+              "line_num": 677,
+              "metrics": {
+                "loc": 11,
+                "cc": 1,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "visitBreak",
+              "line_num": 690,
+              "metrics": {
+                "loc": 12,
+                "cc": 2,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "visitTypeCast",
+              "line_num": 704,
+              "metrics": {
+                "loc": 11,
+                "cc": 1,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "visitNewClass",
+              "line_num": 717,
+              "metrics": {
+                "loc": 23,
+                "cc": 4,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "visitConditionalExpression",
+              "line_num": 745,
+              "metrics": {
+                "loc": 15,
+                "cc": 1,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "visitContinue",
+              "line_num": 762,
+              "metrics": {
+                "loc": 12,
+                "cc": 2,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "visitDoWhileLoop",
+              "line_num": 776,
+              "metrics": {
+                "loc": 18,
+                "cc": 2,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "visitEmptyStatement",
+              "line_num": 799,
+              "metrics": {
+                "loc": 5,
+                "cc": 1,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "visitEnhancedForLoop",
+              "line_num": 806,
+              "metrics": {
+                "loc": 14,
+                "cc": 1,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "visitEnumConstantDeclaration",
+              "line_num": 832,
+              "metrics": {
+                "loc": 18,
+                "cc": 4,
+                "pc": 1
+              }
+            },
+            {
+              "method_name": "visitEnumDeclaration",
+              "line_num": 851,
+              "metrics": {
+                "loc": 104,
+                "cc": 13,
+                "pc": 1
+              }
+            },
+            {
+              "method_name": "visitRecordDeclaration",
+              "line_num": 954,
+              "metrics": {
+                "loc": 50,
+                "cc": 8,
+                "pc": 1
+              }
+            },
+            {
+              "method_name": "recordVariables",
+              "line_num": 1009,
+              "metrics": {
+                "loc": 3,
+                "cc": 1,
+                "pc": 1
+              }
+            },
+            {
+              "method_name": "visitMemberReference",
+              "line_num": 1017,
+              "metrics": {
+                "loc": 13,
+                "cc": 3,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "visitExpressionStatement",
+              "line_num": 1032,
+              "metrics": {
+                "loc": 6,
+                "cc": 1,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "visitVariable",
+              "line_num": 1040,
+              "metrics": {
+                "loc": 5,
+                "cc": 1,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "visitVariables",
+              "line_num": 1050,
+              "metrics": {
+                "loc": 9,
+                "cc": 2,
+                "pc": 3
+              }
+            },
+            {
+              "method_name": "variableFragmentDims",
+              "line_num": 1074,
+              "metrics": {
+                "loc": 10,
+                "cc": 3,
+                "pc": 3
+              }
+            },
+            {
+              "method_name": "visitForLoop",
+              "line_num": 1087,
+              "metrics": {
+                "loc": 59,
+                "cc": 9,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "visitIf",
+              "line_num": 1155,
+              "metrics": {
+                "loc": 53,
+                "cc": 8,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "visitImport",
+              "line_num": 1218,
+              "metrics": {
+                "loc": 18,
+                "cc": 3,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "getIsModuleMethod",
+              "line_num": 1241,
+              "metrics": {
+                "loc": 8,
+                "cc": 1,
+                "pc": 0
+              }
+            },
+            {
+              "method_name": "isModuleImport",
+              "line_num": 1249,
+              "metrics": {
+                "loc": 11,
+                "cc": 2,
+                "pc": 1
+              }
+            },
+            {
+              "method_name": "checkForTypeAnnotation",
+              "line_num": 1260,
+              "metrics": {
+                "loc": 7,
+                "cc": 2,
+                "pc": 1
+              }
+            },
+            {
+              "method_name": "getSimpleName",
+              "line_num": 1269,
+              "metrics": {
+                "loc": 3,
+                "cc": 1,
+                "pc": 1
+              }
+            },
+            {
+              "method_name": "visitBinary",
+              "line_num": 1275,
+              "metrics": {
+                "loc": 18,
+                "cc": 2,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "visitInstanceOf",
+              "line_num": 1298,
+              "metrics": {
+                "loc": 18,
+                "cc": 2,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "visitIntersectionType",
+              "line_num": 1317,
+              "metrics": {
+                "loc": 16,
+                "cc": 3,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "visitLabeledStatement",
+              "line_num": 1335,
+              "metrics": {
+                "loc": 10,
+                "cc": 1,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "visitLambdaExpression",
+              "line_num": 1347,
+              "metrics": {
+                "loc": 39,
+                "cc": 7,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "visitAnnotation",
+              "line_num": 1393,
+              "metrics": {
+                "loc": 44,
+                "cc": 8,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "isArrayValue",
+              "line_num": 1443,
+              "metrics": {
+                "loc": 7,
+                "cc": 2,
+                "pc": 1
+              }
+            },
+            {
+              "method_name": "visitAnnotationArgument",
+              "line_num": 1451,
+              "metrics": {
+                "loc": 16,
+                "cc": 2,
+                "pc": 1
+              }
+            },
+            {
+              "method_name": "visitAnnotatedType",
+              "line_num": 1467,
+              "metrics": {
+                "loc": 21,
+                "cc": 3,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "visitMethod",
+              "line_num": 1494,
+              "metrics": {
+                "loc": 150,
+                "cc": 25,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "methodBody",
+              "line_num": 1665,
+              "metrics": {
+                "loc": 16,
+                "cc": 2,
+                "pc": 1
+              }
+            },
+            {
+              "method_name": "visitMethodInvocation",
+              "line_num": 1681,
+              "metrics": {
+                "loc": 8,
+                "cc": 2,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "handleLogStatement",
+              "line_num": 1691,
+              "metrics": {
+                "loc": 21,
+                "cc": 5,
+                "pc": 1
+              }
+            },
+            {
+              "method_name": "handleStream",
+              "line_num": 1750,
+              "metrics": {
+                "loc": 10,
+                "cc": 2,
+                "pc": 1
+              }
+            },
+            {
+              "method_name": "indexes",
+              "line_num": 1764,
+              "metrics": {
+                "loc": 3,
+                "cc": 1,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "visitMemberSelect",
+              "line_num": 1768,
+              "metrics": {
+                "loc": 5,
+                "cc": 1,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "visitLiteral",
+              "line_num": 1775,
+              "metrics": {
+                "loc": 22,
+                "cc": 4,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "isUnaryMinusLiteral",
+              "line_num": 1808,
+              "metrics": {
+                "loc": 3,
+                "cc": 1,
+                "pc": 1
+              }
+            },
+            {
+              "method_name": "visitPackage",
+              "line_num": 1812,
+              "metrics": {
+                "loc": 15,
+                "cc": 3,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "visitParameterizedType",
+              "line_num": 1829,
+              "metrics": {
+                "loc": 28,
+                "cc": 4,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "visitParenthesized",
+              "line_num": 1858,
+              "metrics": {
+                "loc": 6,
+                "cc": 1,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "visitUnary",
+              "line_num": 1866,
+              "metrics": {
+                "loc": 16,
+                "cc": 3,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "splitToken",
+              "line_num": 1883,
+              "metrics": {
+                "loc": 5,
+                "cc": 2,
+                "pc": 1
+              }
+            },
+            {
+              "method_name": "ambiguousUnaryOperator",
+              "line_num": 1889,
+              "metrics": {
+                "loc": 20,
+                "cc": 5,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "unaryTag",
+              "line_num": 1909,
+              "metrics": {
+                "loc": 9,
+                "cc": 3,
+                "pc": 1
+              }
+            },
+            {
+              "method_name": "visitPrimitiveType",
+              "line_num": 1920,
+              "metrics": {
+                "loc": 16,
+                "cc": 10,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "visit",
+              "line_num": 1938,
+              "metrics": {
+                "loc": 4,
+                "cc": 1,
+                "pc": 1
+              }
+            },
+            {
+              "method_name": "visitReturn",
+              "line_num": 1943,
+              "metrics": {
+                "loc": 10,
+                "cc": 2,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "visitSingleMemberAnnotation",
+              "line_num": 1956,
+              "metrics": {
+                "loc": 21,
+                "cc": 4,
+                "pc": 1
+              }
+            },
+            {
+              "method_name": "visitCase",
+              "line_num": 1978,
+              "metrics": {
+                "loc": 59,
+                "cc": 8,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "visitSwitch",
+              "line_num": 2045,
+              "metrics": {
+                "loc": 5,
+                "cc": 1,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "visitSwitch",
+              "line_num": 2052,
+              "metrics": {
+                "loc": 23,
+                "cc": 3,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "visitSynchronized",
+              "line_num": 2076,
+              "metrics": {
+                "loc": 14,
+                "cc": 1,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "visitThrow",
+              "line_num": 2092,
+              "metrics": {
+                "loc": 8,
+                "cc": 1,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "visitTry",
+              "line_num": 2102,
+              "metrics": {
+                "loc": 50,
+                "cc": 9,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "visitClassDeclaration",
+              "line_num": 2175,
+              "metrics": {
+                "loc": 36,
+                "cc": 5,
+                "pc": 1
+              }
+            },
+            {
+              "method_name": "visitTypeParameter",
+              "line_num": 2215,
+              "metrics": {
+                "loc": 27,
+                "cc": 4,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "visitUnionType",
+              "line_num": 2244,
+              "metrics": {
+                "loc": 3,
+                "cc": 1,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "visitWhileLoop",
+              "line_num": 2249,
+              "metrics": {
+                "loc": 10,
+                "cc": 1,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "visitWildcard",
+              "line_num": 2265,
+              "metrics": {
+                "loc": 15,
+                "cc": 2,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "visitAnnotations",
+              "line_num": 2284,
+              "metrics": {
+                "loc": 18,
+                "cc": 6,
+                "pc": 3
+              }
+            },
+            {
+              "method_name": "verticalAnnotations",
+              "line_num": 2305,
+              "metrics": {
+                "loc": 7,
+                "cc": 2,
+                "pc": 1
+              }
+            },
+            {
+              "method_name": "visitBlock",
+              "line_num": 2313,
+              "metrics": {
+                "loc": 40,
+                "cc": 6,
+                "pc": 4
+              }
+            },
+            {
+              "method_name": "visitStatement",
+              "line_num": 2356,
+              "metrics": {
+                "loc": 15,
+                "cc": 2,
+                "pc": 4
+              }
+            },
+            {
+              "method_name": "visitStatements",
+              "line_num": 2377,
+              "metrics": {
+                "loc": 21,
+                "cc": 4,
+                "pc": 1
+              }
+            },
+            {
+              "method_name": "typeDeclarationModifiers",
+              "line_num": 2401,
+              "metrics": {
+                "loc": 4,
+                "cc": 1,
+                "pc": 1
+              }
+            },
+            {
+              "method_name": "visitAndBreakModifiers",
+              "line_num": 2408,
+              "metrics": {
+                "loc": 4,
+                "cc": 1,
+                "pc": 3
+              }
+            },
+            {
+              "method_name": "visitModifiers",
+              "line_num": 2418,
+              "metrics": {
+                "loc": 3,
+                "cc": 1,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "visitModifiers",
+              "line_num": 2423,
+              "metrics": {
+                "loc": 3,
+                "cc": 1,
+                "pc": 3
+              }
+            },
+            {
+              "method_name": "visitModifiers",
+              "line_num": 2436,
+              "metrics": {
+                "loc": 4,
+                "cc": 1,
+                "pc": 4
+              }
+            },
+            {
+              "method_name": "visitModifiers",
+              "line_num": 2447,
+              "metrics": {
+                "loc": 38,
+                "cc": 8,
+                "pc": 3
+              }
+            },
+            {
+              "method_name": "splitModifiers",
+              "line_num": 2574,
+              "metrics": {
+                "loc": 22,
+                "cc": 5,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "formatAnnotationOrModifier",
+              "line_num": 2622,
+              "metrics": {
+                "loc": 13,
+                "cc": 4,
+                "pc": 1
+              }
+            },
+            {
+              "method_name": "isTypeAnnotation",
+              "line_num": 2636,
+              "metrics": {
+                "loc": 7,
+                "cc": 2,
+                "pc": 1
+              }
+            },
+            {
+              "method_name": "isModifier",
+              "line_num": 2644,
+              "metrics": {
+                "loc": 7,
+                "cc": 2,
+                "pc": 1
+              }
+            },
+            {
+              "method_name": "visitCatch",
+              "line_num": 2666,
+              "metrics": {
+                "loc": 3,
+                "cc": 1,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "visitCatchClause",
+              "line_num": 2671,
+              "metrics": {
+                "loc": 24,
+                "cc": 2,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "visitUnionType",
+              "line_num": 2698,
+              "metrics": {
+                "loc": 25,
+                "cc": 3,
+                "pc": 1
+              }
+            },
+            {
+              "method_name": "walkInfix",
+              "line_num": 2738,
+              "metrics": {
+                "loc": 16,
+                "cc": 3,
+                "pc": 4
+              }
+            },
+            {
+              "method_name": "visitFormals",
+              "line_num": 2758,
+              "metrics": {
+                "loc": 20,
+                "cc": 5,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "visitThrowsClause",
+              "line_num": 2799,
+              "metrics": {
+                "loc": 13,
+                "cc": 3,
+                "pc": 1
+              }
+            },
+            {
+              "method_name": "visitIdentifier",
+              "line_num": 2813,
+              "metrics": {
+                "loc": 5,
+                "cc": 1,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "visitModule",
+              "line_num": 2820,
+              "metrics": {
+                "loc": 36,
+                "cc": 5,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "visitDirective",
+              "line_num": 2860,
+              "metrics": {
+                "loc": 25,
+                "cc": 4,
+                "pc": 4
+              }
+            },
+            {
+              "method_name": "visitExports",
+              "line_num": 2889,
+              "metrics": {
+                "loc": 4,
+                "cc": 1,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "visitOpens",
+              "line_num": 2895,
+              "metrics": {
+                "loc": 4,
+                "cc": 1,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "visitProvides",
+              "line_num": 2901,
+              "metrics": {
+                "loc": 4,
+                "cc": 1,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "visitRequires",
+              "line_num": 2907,
+              "metrics": {
+                "loc": 20,
+                "cc": 4,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "visitUses",
+              "line_num": 2927,
+              "metrics": {
+                "loc": 7,
+                "cc": 1,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "visitName",
+              "line_num": 2936,
+              "metrics": {
+                "loc": 15,
+                "cc": 4,
+                "pc": 1
+              }
+            },
+            {
+              "method_name": "visitToDeclare",
+              "line_num": 2953,
+              "metrics": {
+                "loc": 15,
+                "cc": 2,
+                "pc": 6
+              }
+            },
+            {
+              "method_name": "typeParametersRest",
+              "line_num": 2985,
+              "metrics": {
+                "loc": 17,
+                "cc": 3,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "visitDot",
+              "line_num": 3007,
+              "metrics": {
+                "loc": 81,
+                "cc": 18,
+                "pc": 1
+              }
+            },
+            {
+              "method_name": "visitRegularDot",
+              "line_num": 3131,
+              "metrics": {
+                "loc": 29,
+                "cc": 7,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "fillFirstArgument",
+              "line_num": 3177,
+              "metrics": {
+                "loc": 23,
+                "cc": 4,
+                "pc": 3
+              }
+            },
+            {
+              "method_name": "visitDotWithPrefix",
+              "line_num": 3206,
+              "metrics": {
+                "loc": 34,
+                "cc": 6,
+                "pc": 4
+              }
+            },
+            {
+              "method_name": "simpleNames",
+              "line_num": 3261,
+              "metrics": {
+                "loc": 22,
+                "cc": 6,
+                "pc": 1
+              }
+            },
+            {
+              "method_name": "dotExpressionUpToArgs",
+              "line_num": 3287,
+              "metrics": {
+                "loc": 21,
+                "cc": 5,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "getArrayBase",
+              "line_num": 3310,
+              "metrics": {
+                "loc": 6,
+                "cc": 2,
+                "pc": 1
+              }
+            },
+            {
+              "method_name": "getMethodReceiver",
+              "line_num": 3321,
+              "metrics": {
+                "loc": 4,
+                "cc": 1,
+                "pc": 1
+              }
+            },
+            {
+              "method_name": "dotExpressionArgsAndParen",
+              "line_num": 3326,
+              "metrics": {
+                "loc": 15,
+                "cc": 2,
+                "pc": 3
+              }
+            },
+            {
+              "method_name": "formatArrayIndices",
+              "line_num": 3342,
+              "metrics": {
+                "loc": 14,
+                "cc": 3,
+                "pc": 1
+              }
+            },
+            {
+              "method_name": "getArrayIndices",
+              "line_num": 3357,
+              "metrics": {
+                "loc": 9,
+                "cc": 2,
+                "pc": 1
+              }
+            },
+            {
+              "method_name": "addTypeArguments",
+              "line_num": 3371,
+              "metrics": {
+                "loc": 18,
+                "cc": 4,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "addArguments",
+              "line_num": 3391,
+              "metrics": {
+                "loc": 44,
+                "cc": 6,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "argList",
+              "line_num": 3442,
+              "metrics": {
+                "loc": 14,
+                "cc": 3,
+                "pc": 1
+              }
+            },
+            {
+              "method_name": "isFormatMethod",
+              "line_num": 3457,
+              "metrics": {
+                "loc": 6,
+                "cc": 2,
+                "pc": 1
+              }
+            },
+            {
+              "method_name": "isStringConcat",
+              "line_num": 3485,
+              "metrics": {
+                "loc": 25,
+                "cc": 6,
+                "pc": 1
+              }
+            },
+            {
+              "method_name": "scan",
+              "line_num": 3489,
+              "metrics": {
+                "loc": 17,
+                "cc": 6,
+                "pc": 1
+              }
+            },
+            {
+              "method_name": "argumentsAreTabular",
+              "line_num": 3510,
+              "metrics": {
+                "loc": 58,
+                "cc": 16,
+                "pc": 1
+              }
+            },
+            {
+              "method_name": "rowLength",
+              "line_num": 3572,
+              "metrics": {
+                "loc": 16,
+                "cc": 4,
+                "pc": 1
+              }
+            },
+            {
+              "method_name": "actualColumn",
+              "line_num": 3589,
+              "metrics": {
+                "loc": 4,
+                "cc": 1,
+                "pc": 1
+              }
+            },
+            {
+              "method_name": "expressionsAreParallel",
+              "line_num": 3594,
+              "metrics": {
+                "loc": 20,
+                "cc": 6,
+                "pc": 3
+              }
+            },
+            {
+              "method_name": "declareOne",
+              "line_num": 3627,
+              "metrics": {
+                "loc": 83,
+                "cc": 10,
+                "pc": 11
+              }
+            },
+            {
+              "method_name": "variableName",
+              "line_num": 3752,
+              "metrics": {
+                "loc": 8,
+                "cc": 2,
+                "pc": 1
+              }
+            },
+            {
+              "method_name": "maybeAddDims",
+              "line_num": 3760,
+              "metrics": {
+                "loc": 3,
+                "cc": 1,
+                "pc": 1
+              }
+            },
+            {
+              "method_name": "maybeAddDims",
+              "line_num": 3764,
+              "metrics": {
+                "loc": 49,
+                "cc": 11,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "declareMany",
+              "line_num": 3825,
+              "metrics": {
+                "loc": 44,
+                "cc": 5,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "addBodyDeclarations",
+              "line_num": 3874,
+              "metrics": {
+                "loc": 60,
+                "cc": 10,
+                "pc": 3
+              }
+            },
+            {
+              "method_name": "classDeclarationTypeList",
+              "line_num": 3939,
+              "metrics": {
+                "loc": 19,
+                "cc": 4,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "variableFragments",
+              "line_num": 3959,
+              "metrics": {
+                "loc": 11,
+                "cc": 3,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "hasJavaDoc",
+              "line_num": 3981,
+              "metrics": {
+                "loc": 12,
+                "cc": 4,
+                "pc": 1
+              }
+            },
+            {
+              "method_name": "getNextToken",
+              "line_num": 3995,
+              "metrics": {
+                "loc": 3,
+                "cc": 1,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "hasTrailingToken",
+              "line_num": 3999,
+              "metrics": {
+                "loc": 8,
+                "cc": 2,
+                "pc": 3
+              }
+            },
+            {
+              "method_name": "canLocalHaveHorizontalAnnotations",
+              "line_num": 4010,
+              "metrics": {
+                "loc": 9,
+                "cc": 3,
+                "pc": 1
+              }
+            },
+            {
+              "method_name": "fieldAnnotationDirection",
+              "line_num": 4030,
+              "metrics": {
+                "loc": 8,
+                "cc": 3,
+                "pc": 1
+              }
+            },
+            {
+              "method_name": "token",
+              "line_num": 4043,
+              "metrics": {
+                "loc": 3,
+                "cc": 1,
+                "pc": 1
+              }
+            },
+            {
+              "method_name": "token",
+              "line_num": 4056,
+              "metrics": {
+                "loc": 3,
+                "cc": 1,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "tokenBreakTrailingComment",
+              "line_num": 4070,
+              "metrics": {
+                "loc": 3,
+                "cc": 1,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "markForPartialFormat",
+              "line_num": 4076,
+              "metrics": {
+                "loc": 5,
+                "cc": 2,
+                "pc": 0
+              }
+            },
+            {
+              "method_name": "sync",
+              "line_num": 4082,
+              "metrics": {
+                "loc": 3,
+                "cc": 1,
+                "pc": 1
+              }
+            },
+            {
+              "method_name": "genSym",
+              "line_num": 4092,
+              "metrics": {
+                "loc": 3,
+                "cc": 1,
+                "pc": 0
+              }
+            },
+            {
+              "method_name": "toString",
+              "line_num": 4096,
+              "metrics": {
+                "loc": 3,
+                "cc": 1,
+                "pc": 0
+              }
+            },
+            {
+              "method_name": "visitBindingPattern",
+              "line_num": 4101,
+              "metrics": {
+                "loc": 6,
+                "cc": 1,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "visitYield",
+              "line_num": 4120,
+              "metrics": {
+                "loc": 8,
+                "cc": 1,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "visitSwitchExpression",
+              "line_num": 4130,
+              "metrics": {
+                "loc": 5,
+                "cc": 1,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "visitDefaultCaseLabel",
+              "line_num": 4137,
+              "metrics": {
+                "loc": 4,
+                "cc": 1,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "visitPatternCaseLabel",
+              "line_num": 4143,
+              "metrics": {
+                "loc": 4,
+                "cc": 1,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "visitConstantCaseLabel",
+              "line_num": 4149,
+              "metrics": {
+                "loc": 4,
+                "cc": 1,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "visitDeconstructionPattern",
+              "line_num": 4155,
+              "metrics": {
+                "loc": 18,
+                "cc": 3,
+                "pc": 2
+              }
+            },
+            {
+              "method_name": "visitJcAnyPattern",
+              "line_num": 4175,
+              "metrics": {
+                "loc": 3,
+                "cc": 1,
+                "pc": 1
+              }
+            }
+          ],
+          "dependencies": [
+            "com.google.googlejavaformat.OpsBuilder"
+          ]
+        }
+      ],
+      "dependencies": [
+        "com.google.googlejavaformat",
+        "com.google.googlejavaformat.java.javadoc"
+      ]
+    },
+    {
+      "package": "com.google.googlejavaformat",
+      "metrics": {
+        "num_classes": 32,
+        "loc": 2478,
+        "Ce": 0,
+        "Ca": 1
+      },
+      "classes": [
+        {
+          "package": "com.google.googlejavaformat",
+          "class": "OpsBuilder",
+          "file": "data/repositories/google-java-format/core/src/main/java/com/google/googlejavaformat/OpsBuilder.java",
+          "metrics": {
+            "nof": 14,
+            "nopf": 3,
+            "nom": 36,
+            "nopm": 33,
+            "loc": 504,
+            "wmc": 89,
+            "nc": 0,
+            "dit": 0,
+            "lcom": 0.1666666666666666,
+            "fanin": 2,
+            "fanout": 9
+          },
+          "methods": [
+            {
+              "metrics": {
+                "loc": 17,
+                "cc": 5
+              },
+              "signature": "int actualSize(int position, int length)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 42,
+              "types_used": [
+                "Tok",
+                "Token",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 14,
+                "cc": 4
+              },
+              "signature": "Integer actualStartColumn(int position)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 61,
+              "types_used": [
+                "Integer",
+                "Tok",
+                "Token",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 12,
+                "cc": 4
+              },
+              "signature": "void add(Op op)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 162,
+              "types_used": [
+                "AssertionError",
+                "CloseOp",
+                "Op",
+                "OpenOp"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 5,
+                "cc": 2
+              },
+              "signature": "void addAll(List<Op> ops)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 175,
+              "types_used": [
+                "List",
+                "Op"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 4,
+                "cc": 1
+              },
+              "signature": "OpsBuilder(Input input, Output output)",
+              "type": "constructor",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 187,
+              "types_used": [
+                "Input",
+                "OpsBuilder",
+                "Output"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "Input getInput()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 193,
+              "types_used": [
+                "Input"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "int depth()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 198,
+              "types_used": [
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 5,
+                "cc": 2
+              },
+              "signature": "void checkClosed(int previous)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 207,
+              "types_used": [
+                "FormattingError",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "FormatterDiagnostic diagnostic(String message)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 214,
+              "types_used": [
+                "FormatterDiagnostic",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 11,
+                "cc": 3
+              },
+              "signature": "void sync(int inputPosition)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 224,
+              "types_used": [
+                "FormattingError",
+                "ImmutableList",
+                "Input",
+                "Input.Token",
+                "extends Input.Token",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 13,
+                "cc": 3
+              },
+              "signature": "void drain()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 239,
+              "types_used": [
+                "ImmutableList",
+                "Input",
+                "Input.Token",
+                "extends Input.Token",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void open(Indent plusIndent)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 263,
+              "types_used": [
+                "Indent"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void close()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 268,
+              "types_used": []
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "Optional<String> peekToken()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 273,
+              "types_used": [
+                "Optional",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 5,
+                "cc": 1
+              },
+              "signature": "Optional<String> peekToken(int skip)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 278,
+              "types_used": [
+                "ImmutableList",
+                "Input",
+                "Input.Token",
+                "Optional",
+                "String",
+                "extends Input.Token",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 13,
+                "cc": 3
+              },
+              "signature": "ImmutableList<Tok> peekTokens(int startPosition, Predicate<Input.Tok> predicate)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 290,
+              "types_used": [
+                "ImmutableList",
+                "ImmutableList.Builder",
+                "Input",
+                "Input.Tok",
+                "Input.Token",
+                "Predicate",
+                "Tok",
+                "extends Input.Token",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void guessToken(String token)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 314,
+              "types_used": [
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 11,
+                "cc": 3
+              },
+              "signature": "void token(String token, Doc.Token.RealOrImaginary realOrImaginary, Indent plusIndentCommentsBefore, Optional<Indent> breakAndIndentTrailingComment)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 322,
+              "types_used": [
+                "Doc",
+                "Doc.Token",
+                "Doc.Token.RealOrImaginary",
+                "FormattingError",
+                "ImmutableList",
+                "Indent",
+                "Input",
+                "Input.Token",
+                "Optional",
+                "String",
+                "extends Input.Token"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 6,
+                "cc": 2
+              },
+              "signature": "void op(String op)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 355,
+              "types_used": [
+                "String",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void space()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 367,
+              "types_used": []
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void breakOp()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 372,
+              "types_used": []
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void breakOp(Indent plusIndent)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 381,
+              "types_used": [
+                "Indent"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void breakToFill()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 386,
+              "types_used": []
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void forcedBreak()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 391,
+              "types_used": []
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void forcedBreak(Indent plusIndent)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 400,
+              "types_used": [
+                "Indent"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void breakOp(String flat)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 409,
+              "types_used": [
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void breakToFill(String flat)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 418,
+              "types_used": [
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void breakOp(Doc.FillMode fillMode, String flat, Indent plusIndent)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 429,
+              "types_used": [
+                "Doc",
+                "Doc.FillMode",
+                "Indent",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void breakOp(Doc.FillMode fillMode, String flat, Indent plusIndent, Optional<BreakTag> optionalTag)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 441,
+              "types_used": [
+                "BreakTag",
+                "Doc",
+                "Doc.FillMode",
+                "Indent",
+                "Optional",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 13,
+                "cc": 3
+              },
+              "signature": "void markForPartialFormat()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 452,
+              "types_used": [
+                "Token"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void blankLineWanted(BlankLineWanted wanted)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 471,
+              "types_used": [
+                "BlankLineWanted"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 8,
+                "cc": 3
+              },
+              "signature": "int getI(Input.Token token)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": true,
+              "begin_line": 475,
+              "types_used": [
+                "Input",
+                "Input.Tok",
+                "Input.Token",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 111,
+                "cc": 29
+              },
+              "signature": "ImmutableList<Op> build()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 491,
+              "types_used": [
+                "CloseOp",
+                "Doc",
+                "Doc.Break",
+                "Doc.Space",
+                "Doc.Token",
+                "ImmutableList",
+                "ImmutableList.Builder",
+                "Input",
+                "Input.Tok",
+                "Input.Token",
+                "Integer",
+                "Multimap",
+                "Op",
+                "OpenOp",
+                "boolean",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "boolean isForcedBreak(Op op)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": true,
+              "begin_line": 638,
+              "types_used": [
+                "Doc",
+                "Doc.Break",
+                "Op",
+                "boolean"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "List<Op> makeComment(Input.Tok comment)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": true,
+              "begin_line": 642,
+              "types_used": [
+                "Input",
+                "Input.Tok",
+                "List",
+                "Op"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "String toString()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 648,
+              "types_used": [
+                "String"
+              ]
+            }
+          ],
+          "dependencies": []
+        }
+      ],
+      "dependencies": []
+    },
+    {
+      "package": "com.google.googlejavaformat.java.javadoc",
+      "metrics": {
+        "num_classes": 10,
+        "loc": 888,
+        "Ce": 0,
+        "Ca": 1
+      },
+      "classes": [
+        {
+          "package": "com.google.googlejavaformat.java.javadoc",
+          "class": "JavadocWriter",
+          "file": "data/repositories/google-java-format/core/src/main/java/com/google/googlejavaformat/java/javadoc/JavadocWriter.java",
+          "metrics": {
+            "nof": 14,
+            "nopf": 0,
+            "nom": 36,
+            "nopm": 1,
+            "loc": 247,
+            "wmc": 50,
+            "nc": 0,
+            "dit": 0,
+            "lcom": 0.0,
+            "fanin": 1,
+            "fanout": 5
+          },
+          "methods": [
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "JavadocWriter(int blockIndent)",
+              "type": "constructor",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 62,
+              "types_used": [
+                "JavadocWriter",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void requestWhitespace()",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 71,
+              "types_used": []
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void requestMoeBeginStripComment(Token token)",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 75,
+              "types_used": [
+                "Token"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 4,
+                "cc": 1
+              },
+              "signature": "void writeBeginJavadoc()",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 80,
+              "types_used": []
+            },
+            {
+              "metrics": {
+                "loc": 5,
+                "cc": 1
+              },
+              "signature": "void writeEndJavadoc()",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 89,
+              "types_used": []
+            },
+            {
+              "metrics": {
+                "loc": 17,
+                "cc": 3
+              },
+              "signature": "void writeFooterJavadocTagStart(Token token)",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 95,
+              "types_used": [
+                "Token"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 4,
+                "cc": 1
+              },
+              "signature": "void writeSnippetBegin(Token token)",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 127,
+              "types_used": [
+                "Token"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 4,
+                "cc": 1
+              },
+              "signature": "void writeSnippetEnd(Token token)",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 141,
+              "types_used": [
+                "Token"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 8,
+                "cc": 1
+              },
+              "signature": "void writeListOpen(Token token)",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 159,
+              "types_used": [
+                "Token"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 8,
+                "cc": 1
+              },
+              "signature": "void writeListClose(Token token)",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 170,
+              "types_used": [
+                "Token"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 10,
+                "cc": 2
+              },
+              "signature": "void writeListItemOpen(Token token)",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 181,
+              "types_used": [
+                "Token"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 4,
+                "cc": 1
+              },
+              "signature": "void writeHeaderOpen(Token token)",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 193,
+              "types_used": [
+                "Token"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 4,
+                "cc": 1
+              },
+              "signature": "void writeHeaderClose(Token token)",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 199,
+              "types_used": [
+                "Token"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 7,
+                "cc": 2
+              },
+              "signature": "void writeParagraphOpen(Token token)",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 205,
+              "types_used": [
+                "Token"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 5,
+                "cc": 1
+              },
+              "signature": "void writeBlockquoteOpenOrClose(Token token)",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 219,
+              "types_used": [
+                "Token"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 4,
+                "cc": 1
+              },
+              "signature": "void writePreOpen(Token token)",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 227,
+              "types_used": [
+                "Token"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 4,
+                "cc": 1
+              },
+              "signature": "void writePreClose(Token token)",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 233,
+              "types_used": [
+                "Token"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void writeCodeOpen(Token token)",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 239,
+              "types_used": [
+                "Token"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void writeCodeClose(Token token)",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 243,
+              "types_used": [
+                "Token"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 4,
+                "cc": 1
+              },
+              "signature": "void writeTableOpen(Token token)",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 247,
+              "types_used": [
+                "Token"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 4,
+                "cc": 1
+              },
+              "signature": "void writeTableClose(Token token)",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 253,
+              "types_used": [
+                "Token"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 6,
+                "cc": 1
+              },
+              "signature": "void writeMoeEndStripComment(Token token)",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 259,
+              "types_used": [
+                "Token"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 5,
+                "cc": 1
+              },
+              "signature": "void writeHtmlComment(Token token)",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 269,
+              "types_used": [
+                "Token"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 4,
+                "cc": 1
+              },
+              "signature": "void writeBr(Token token)",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 277,
+              "types_used": [
+                "Token"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void writeLineBreakNoAutoIndent()",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 283,
+              "types_used": []
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void writeLiteral(Token token)",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 287,
+              "types_used": [
+                "Token"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "String toString()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 291,
+              "types_used": [
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void requestBlankLine()",
+              "type": "method",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 296,
+              "types_used": []
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void requestNewline()",
+              "type": "method",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 300,
+              "types_used": []
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void requestWhitespace(RequestedWhitespace requestedWhitespace)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 304,
+              "types_used": [
+                "RequestedWhitespace"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 39,
+                "cc": 9
+              },
+              "signature": "void writeToken(Token token)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 322,
+              "types_used": [
+                "Token",
+                "boolean"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 6,
+                "cc": 1
+              },
+              "signature": "void writeBlankLine()",
+              "type": "method",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 391,
+              "types_used": []
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void writeNewline()",
+              "type": "method",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 398,
+              "types_used": []
+            },
+            {
+              "metrics": {
+                "loc": 12,
+                "cc": 2
+              },
+              "signature": "void writeNewline(AutoIndent autoIndent)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 402,
+              "types_used": [
+                "AutoIndent"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 7,
+                "cc": 2
+              },
+              "signature": "int innerIndent()",
+              "type": "method",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 420,
+              "types_used": [
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void appendSpaces(int count)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 429,
+              "types_used": [
+                "int"
+              ]
+            }
+          ],
+          "dependencies": []
+        }
+      ],
+      "dependencies": []
+    }
+  ],
+  "smell_type": "Insufficient Modularization",
+  "filter_level": "class",
+  "targets_count": 3
+}

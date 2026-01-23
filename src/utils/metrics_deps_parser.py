@@ -12,10 +12,10 @@ class MetricsDepsParser:
     def __init__(self, project_name: str, classes_path: str | None = None):
         self.project_name = project_name
 
-        self.output_path = Path(os.getenv("METRICS_PATH"), project_name)
+        self.metrics_path = Path(os.getenv("METRICS_PATH"), project_name)
         self.project_path = Path(os.getenv("REPOSITORIES_PATH"), project_name)
 
-        self.runner = DesigniteRunner(self.project_path, self.output_path, classes_path)
+        self.runner = DesigniteRunner(self.project_path, self.metrics_path, classes_path)
 
     @staticmethod
     def normalize_columns(df: pd.DataFrame):
@@ -124,7 +124,7 @@ class MetricsDepsParser:
         return ".".join(parts)
 
     @staticmethod
-    def parser_dependencies(graph_path: str | Path):
+    def parse_dependencies(graph_path: str | Path):
         tree = ET.parse(str(graph_path))
         root = tree.getroot()
         ns = {"g": "http://graphml.graphdrawing.org/xmlns"}
@@ -242,16 +242,35 @@ class MetricsDepsParser:
                 not_attached += 1
 
         if not_attached:
-            print(f"Warning: {not_attached} métodos não foram anexados (package/class não encontrados).")
+            print(f"Warning: {not_attached} methods were not attached (package/class not found).")
 
         return packages
+    
+    @staticmethod
+    def increase_data(json_metrics_path: str) -> str:
+
+        output_file = Path(json_metrics_path).parent / "project_metrics_improved.json"
+
+        result = subprocess.run(
+            [
+                "java",
+                "-jar",
+                "src/tools/code-parser-1.0.0.jar",
+                str(json_metrics_path),
+                str(output_file),
+            ],
+            check=True,
+            text=True,
+            capture_output=True,
+        )
+        return str(output_file)
 
     def collect_metrics(self) -> dict:
         try:
             # Run Designite
             self.runner.run()
 
-            out_dir = Path(self.output_path)
+            out_dir = Path(self.metrics_path)
             class_csv = out_dir / "TypeMetrics.csv"
             method_csv = out_dir / "MethodMetrics.csv"
             graph_path = out_dir / "DependencyGraph.graphml"
@@ -287,7 +306,7 @@ class MetricsDepsParser:
             packages = self.attach_methods_to_classes(packages, method_rows)
 
             # ---- Dependencies
-            package_dependencies, class_dependencies = self.parser_dependencies(graph_path)
+            package_dependencies, class_dependencies = self.parse_dependencies(graph_path)
             packages = self.attach_dependencies(packages, package_dependencies, class_dependencies)
 
             final_json = {
@@ -302,9 +321,13 @@ class MetricsDepsParser:
             output_file = out_dir / "project_metrics.json"
             with open(output_file, "w", encoding="utf-8") as f:
                 json.dump(final_json, f, indent=4, ensure_ascii=False)
+            
+            increased_file = self.increase_data(str(output_file))
 
-            print(f"Metrics collected and saved to {output_file}")
-            return final_json
+            with open(increased_file, "r", encoding="utf-8") as f:
+                improved_json = json.load(f)
+
+            return improved_json
 
         except subprocess.CalledProcessError as e:
             print("Designite failed to run.")

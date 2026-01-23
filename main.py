@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 from src.utils.prompt import Prompt
 from pathlib import Path
 from src.utils.metrics_deps_parser import MetricsDepsParser
+from src.utils.filter_smells import FilterSmells
 
 def main():
     load_dotenv()
@@ -51,8 +52,17 @@ def main():
     ]
 
     for project_data in projects_list:
-        mdp = MetricsDepsParser(project_data['project_name'])
-        mdp.collect_metrics()
+        #mdp = MetricsDepsParser(project_data['project_name'])
+        #mdp.collect_metrics()
+
+        fs = FilterSmells(project_data['project_name'])
+        # pacote-level
+        fs.filter_by_smell("God Component")
+        fs.filter_by_smell("Unstable Dependency")
+
+        # classe-level
+        fs.filter_by_smell("Insufficient Modularization")
+        fs.filter_by_smell("Hub-like Modularization")
 
     '''prompt_manager = Prompt()
 

@@ -1,0 +1,968 @@
+{
+  "project": "gson",
+  "summary": {
+    "total_packages": 1,
+    "total_classes": 1
+  },
+  "packages": [
+    {
+      "package": "com.google.gson",
+      "metrics": {
+        "num_classes": 32,
+        "loc": 3235,
+        "Ce": 5,
+        "Ca": 12
+      },
+      "classes": [
+        {
+          "package": "com.google.gson",
+          "class": "Gson",
+          "file": "data/repositories/gson/gson/src/main/java/com/google/gson/Gson.java",
+          "metrics": {
+            "nof": 39,
+            "nopf": 0,
+            "nom": 51,
+            "nopm": 43,
+            "loc": 826,
+            "wmc": 104,
+            "nc": 0,
+            "dit": 0,
+            "lcom": 0.4313725490196078,
+            "fanin": 122,
+            "fanout": 31
+          },
+          "methods": [
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "Gson()",
+              "type": "constructor",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 252,
+              "types_used": [
+                "Gson"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 76,
+                "cc": 3
+              },
+              "signature": "Gson(Excluder excluder, FieldNamingStrategy fieldNamingStrategy, Map<Type, InstanceCreator<?>> instanceCreators, boolean serializeNulls, boolean complexMapKeySerialization, boolean generateNonExecutableGson, boolean htmlSafe, FormattingStyle formattingStyle, Strictness strictness, boolean serializeSpecialFloatingPointValues, boolean useJdkUnsafe, LongSerializationPolicy longSerializationPolicy, String datePattern, int dateStyle, int timeStyle, List<TypeAdapterFactory> builderFactories, List<TypeAdapterFactory> builderHierarchyFactories, List<TypeAdapterFactory> factoriesToBeAdded, ToNumberStrategy objectToNumberStrategy, ToNumberStrategy numberToNumberStrategy, List<ReflectionAccessFilter> reflectionFilters)",
+              "type": "constructor",
+              "visibility": "package-private",
+              "is_static": false,
+              "begin_line": 277,
+              "types_used": [
+                "ArrayList",
+                "AtomicLong",
+                "AtomicLongArray",
+                "BigDecimal",
+                "BigInteger",
+                "CollectionTypeAdapterFactory",
+                "ConstructorConstructor",
+                "Double",
+                "Excluder",
+                "FieldNamingStrategy",
+                "Float",
+                "FormattingStyle",
+                "Gson",
+                "InstanceCreator",
+                "JsonAdapterAnnotationTypeAdapterFactory",
+                "LazilyParsedNumber",
+                "List",
+                "Long",
+                "LongSerializationPolicy",
+                "Map>",
+                "MapTypeAdapterFactory",
+                "Number",
+                "ReflectionAccessFilter",
+                "ReflectiveTypeAdapterFactory",
+                "Strictness",
+                "String",
+                "ToNumberStrategy",
+                "Type",
+                "TypeAdapter",
+                "TypeAdapterFactory",
+                "boolean",
+                "double",
+                "float",
+                "int",
+                "long"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "GsonBuilder newBuilder()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 411,
+              "types_used": [
+                "GsonBuilder"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "Excluder excluder()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 419,
+              "types_used": [
+                "Excluder"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "FieldNamingStrategy fieldNamingStrategy()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 429,
+              "types_used": [
+                "FieldNamingStrategy"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "boolean serializeNulls()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 439,
+              "types_used": [
+                "boolean"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "boolean htmlSafe()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 449,
+              "types_used": [
+                "boolean"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 24,
+                "cc": 4
+              },
+              "signature": "TypeAdapter<Number> doubleAdapter(boolean serializeSpecialFloatingPointValues)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 453,
+              "types_used": [
+                "Double",
+                "IOException",
+                "JsonReader",
+                "JsonWriter",
+                "Number",
+                "TypeAdapter",
+                "boolean",
+                "double"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 7,
+                "cc": 2
+              },
+              "signature": "Double read(JsonReader in) throws IOException",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 458,
+              "types_used": [
+                "Double",
+                "IOException",
+                "JsonReader"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 9,
+                "cc": 2
+              },
+              "signature": "void write(JsonWriter out, Number value) throws IOException",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 467,
+              "types_used": [
+                "IOException",
+                "JsonWriter",
+                "Number",
+                "double"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 25,
+                "cc": 4
+              },
+              "signature": "TypeAdapter<Number> floatAdapter(boolean serializeSpecialFloatingPointValues)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": false,
+              "begin_line": 480,
+              "types_used": [
+                "Float",
+                "IOException",
+                "JsonReader",
+                "JsonWriter",
+                "Number",
+                "TypeAdapter",
+                "boolean",
+                "float"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 7,
+                "cc": 2
+              },
+              "signature": "Float read(JsonReader in) throws IOException",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 485,
+              "types_used": [
+                "Float",
+                "IOException",
+                "JsonReader",
+                "float"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 10,
+                "cc": 2
+              },
+              "signature": "void write(JsonWriter out, Number value) throws IOException",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 494,
+              "types_used": [
+                "Float",
+                "IOException",
+                "JsonWriter",
+                "Number",
+                "float"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 5,
+                "cc": 2
+              },
+              "signature": "void checkValidFloatingPoint(double value)",
+              "type": "method",
+              "visibility": "package-private",
+              "is_static": true,
+              "begin_line": 510,
+              "types_used": [
+                "IllegalArgumentException",
+                "double"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 22,
+                "cc": 4
+              },
+              "signature": "TypeAdapter<Number> longAdapter(LongSerializationPolicy longSerializationPolicy)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": true,
+              "begin_line": 519,
+              "types_used": [
+                "IOException",
+                "JsonReader",
+                "JsonWriter",
+                "LongSerializationPolicy",
+                "Number",
+                "TypeAdapter"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 7,
+                "cc": 2
+              },
+              "signature": "Number read(JsonReader in) throws IOException",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 524,
+              "types_used": [
+                "IOException",
+                "JsonReader",
+                "Number"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 7,
+                "cc": 2
+              },
+              "signature": "void write(JsonWriter out, Number value) throws IOException",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 533,
+              "types_used": [
+                "IOException",
+                "JsonWriter",
+                "Number"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 12,
+                "cc": 1
+              },
+              "signature": "TypeAdapter<AtomicLong> atomicLongAdapter(TypeAdapter<Number> longAdapter)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": true,
+              "begin_line": 544,
+              "types_used": [
+                "AtomicLong",
+                "IOException",
+                "JsonReader",
+                "JsonWriter",
+                "Number",
+                "TypeAdapter"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "void write(JsonWriter out, AtomicLong value) throws IOException",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 546,
+              "types_used": [
+                "AtomicLong",
+                "IOException",
+                "JsonWriter"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 4,
+                "cc": 1
+              },
+              "signature": "AtomicLong read(JsonReader in) throws IOException",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 551,
+              "types_used": [
+                "AtomicLong",
+                "IOException",
+                "JsonReader",
+                "Number"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 27,
+                "cc": 4
+              },
+              "signature": "TypeAdapter<AtomicLongArray> atomicLongArrayAdapter(TypeAdapter<Number> longAdapter)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": true,
+              "begin_line": 559,
+              "types_used": [
+                "ArrayList",
+                "AtomicLongArray",
+                "IOException",
+                "JsonReader",
+                "JsonWriter",
+                "List",
+                "Long",
+                "Number",
+                "TypeAdapter",
+                "int",
+                "long"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 7,
+                "cc": 2
+              },
+              "signature": "void write(JsonWriter out, AtomicLongArray value) throws IOException",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 562,
+              "types_used": [
+                "AtomicLongArray",
+                "IOException",
+                "JsonWriter",
+                "int"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 15,
+                "cc": 3
+              },
+              "signature": "AtomicLongArray read(JsonReader in) throws IOException",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 571,
+              "types_used": [
+                "ArrayList",
+                "AtomicLongArray",
+                "IOException",
+                "JsonReader",
+                "List",
+                "Long",
+                "int",
+                "long"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 46,
+                "cc": 9
+              },
+              "signature": "TypeAdapter<T> getAdapter(TypeToken<T> type)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 601,
+              "types_used": [
+                "FutureTypeAdapter",
+                "HashMap",
+                "IllegalArgumentException",
+                "Map,TypeAdapter>",
+                "T",
+                "TypeAdapter",
+                "TypeAdapterFactory",
+                "TypeToken",
+                "boolean"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "TypeAdapter<T> getAdapter(Class<T> type)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 668,
+              "types_used": [
+                "Class",
+                "T",
+                "TypeAdapter"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 26,
+                "cc": 7
+              },
+              "signature": "TypeAdapter<T> getDelegateAdapter(TypeAdapterFactory skipPast, TypeToken<T> type)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 733,
+              "types_used": [
+                "IllegalArgumentException",
+                "T",
+                "TypeAdapter",
+                "TypeAdapterFactory",
+                "TypeToken",
+                "boolean"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 6,
+                "cc": 2
+              },
+              "signature": "JsonElement toJsonTree(Object src)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 778,
+              "types_used": [
+                "JsonElement",
+                "Object"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 5,
+                "cc": 1
+              },
+              "signature": "JsonElement toJsonTree(Object src, Type typeOfSrc)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 803,
+              "types_used": [
+                "JsonElement",
+                "JsonTreeWriter",
+                "Object",
+                "Type"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 6,
+                "cc": 2
+              },
+              "signature": "String toJson(Object src)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 824,
+              "types_used": [
+                "Object",
+                "String"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 5,
+                "cc": 1
+              },
+              "signature": "String toJson(Object src, Type typeOfSrc)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 849,
+              "types_used": [
+                "Object",
+                "String",
+                "StringBuilder",
+                "Type"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 8,
+                "cc": 2
+              },
+              "signature": "void toJson(Object src, Appendable writer) throws JsonIOException",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 871,
+              "types_used": [
+                "Appendable",
+                "JsonIOException",
+                "Object"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 9,
+                "cc": 1
+              },
+              "signature": "void toJson(Object src, Type typeOfSrc, Appendable writer) throws JsonIOException",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 899,
+              "types_used": [
+                "Appendable",
+                "IOException",
+                "JsonIOException",
+                "JsonWriter",
+                "Object",
+                "Type"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 28,
+                "cc": 3
+              },
+              "signature": "void toJson(Object src, Type typeOfSrc, JsonWriter writer) throws JsonIOException",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 929,
+              "types_used": [
+                "AssertionError",
+                "IOException",
+                "JsonIOException",
+                "JsonWriter",
+                "Object",
+                "Strictness",
+                "Type",
+                "TypeAdapter",
+                "boolean"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 5,
+                "cc": 1
+              },
+              "signature": "String toJson(JsonElement jsonElement)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 967,
+              "types_used": [
+                "JsonElement",
+                "String",
+                "StringBuilder"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 9,
+                "cc": 1
+              },
+              "signature": "void toJson(JsonElement jsonElement, Appendable writer) throws JsonIOException",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 981,
+              "types_used": [
+                "Appendable",
+                "IOException",
+                "JsonElement",
+                "JsonIOException",
+                "JsonWriter"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 27,
+                "cc": 3
+              },
+              "signature": "void toJson(JsonElement jsonElement, JsonWriter writer) throws JsonIOException",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1010,
+              "types_used": [
+                "AssertionError",
+                "IOException",
+                "JsonElement",
+                "JsonIOException",
+                "JsonWriter",
+                "Strictness",
+                "boolean"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 11,
+                "cc": 2
+              },
+              "signature": "JsonWriter newJsonWriter(Writer writer) throws IOException",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1056,
+              "types_used": [
+                "IOException",
+                "JsonWriter",
+                "Writer"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 5,
+                "cc": 1
+              },
+              "signature": "JsonReader newJsonReader(Reader reader)",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1080,
+              "types_used": [
+                "JsonReader",
+                "Reader"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "T fromJson(String json, Class<T> classOfT) throws JsonSyntaxException",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1109,
+              "types_used": [
+                "Class",
+                "JsonSyntaxException",
+                "String",
+                "T"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "T fromJson(String json, Type typeOfT) throws JsonSyntaxException",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1137,
+              "types_used": [
+                "JsonSyntaxException",
+                "String",
+                "T",
+                "Type"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 7,
+                "cc": 2
+              },
+              "signature": "T fromJson(String json, TypeToken<T> typeOfT) throws JsonSyntaxException",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1168,
+              "types_used": [
+                "JsonSyntaxException",
+                "String",
+                "StringReader",
+                "T",
+                "TypeToken"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "T fromJson(Reader json, Class<T> classOfT) throws JsonSyntaxException, JsonIOException",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1199,
+              "types_used": [
+                "Class",
+                "JsonIOException",
+                "JsonSyntaxException",
+                "Reader",
+                "T"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "T fromJson(Reader json, Type typeOfT) throws JsonIOException, JsonSyntaxException",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1229,
+              "types_used": [
+                "JsonIOException",
+                "JsonSyntaxException",
+                "Reader",
+                "T",
+                "Type"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 6,
+                "cc": 1
+              },
+              "signature": "T fromJson(Reader json, TypeToken<T> typeOfT) throws JsonIOException, JsonSyntaxException",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1260,
+              "types_used": [
+                "JsonIOException",
+                "JsonReader",
+                "JsonSyntaxException",
+                "Reader",
+                "T",
+                "TypeToken"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "T fromJson(JsonReader reader, Type typeOfT) throws JsonIOException, JsonSyntaxException",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1304,
+              "types_used": [
+                "JsonIOException",
+                "JsonReader",
+                "JsonSyntaxException",
+                "T",
+                "Type"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 39,
+                "cc": 5
+              },
+              "signature": "T fromJson(JsonReader reader, TypeToken<T> typeOfT) throws JsonIOException, JsonSyntaxException",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1346,
+              "types_used": [
+                "AssertionError",
+                "Class",
+                "ClassCastException",
+                "EOFException",
+                "IOException",
+                "IllegalStateException",
+                "JsonIOException",
+                "JsonReader",
+                "JsonSyntaxException",
+                "JsonToken",
+                "Strictness",
+                "T",
+                "TypeAdapter",
+                "TypeToken",
+                "boolean"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "T fromJson(JsonElement json, Class<T> classOfT) throws JsonSyntaxException",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1418,
+              "types_used": [
+                "Class",
+                "JsonElement",
+                "JsonSyntaxException",
+                "T"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "T fromJson(JsonElement json, Type typeOfT) throws JsonSyntaxException",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1444,
+              "types_used": [
+                "JsonElement",
+                "JsonSyntaxException",
+                "T",
+                "Type"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 6,
+                "cc": 2
+              },
+              "signature": "T fromJson(JsonElement json, TypeToken<T> typeOfT) throws JsonSyntaxException",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1471,
+              "types_used": [
+                "JsonElement",
+                "JsonSyntaxException",
+                "JsonTreeReader",
+                "T",
+                "TypeToken"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 13,
+                "cc": 2
+              },
+              "signature": "void assertFullConsumption(Object obj, JsonReader reader)",
+              "type": "method",
+              "visibility": "private",
+              "is_static": true,
+              "begin_line": 1478,
+              "types_used": [
+                "IOException",
+                "JsonIOException",
+                "JsonReader",
+                "JsonSyntaxException",
+                "MalformedJsonException",
+                "Object"
+              ]
+            },
+            {
+              "metrics": {
+                "loc": 3,
+                "cc": 1
+              },
+              "signature": "String toString()",
+              "type": "method",
+              "visibility": "public",
+              "is_static": false,
+              "begin_line": 1537,
+              "types_used": [
+                "String"
+              ]
+            }
+          ],
+          "dependencies": []
+        }
+      ],
+      "dependencies": []
+    }
+  ],
+  "smell_type": "Hub-like Modularization",
+  "filter_level": "class",
+  "targets_count": 1
+}
