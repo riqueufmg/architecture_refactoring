@@ -1,0 +1,420 @@
+{
+    "smell type": "Insufficient Modularization",
+    "package": "org.jsoup",
+    "class": "Jsoup",
+    "file": "data/repositories/jsoup/src/main/java/org/jsoup/Jsoup.java",
+    "metrics": {
+    "nof": 0,
+    "nopf": 0,
+    "nom": 24,
+    "nopm": 23,
+    "loc": 269,
+    "wmc": 25,
+    "nc": 0,
+    "dit": 0,
+    "lcom": -1.0,
+    "fanin": 57,
+    "fanout": 7
+    },
+    "methods": [
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "Jsoup()",
+        "type": "constructor",
+        "visibility": "private",
+        "is_static": false,
+        "begin_line": 26,
+        "types_used": [
+        "Jsoup"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "Document parse(String html, String baseUri)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 36,
+        "types_used": [
+        "Document",
+        "String"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "Document parse(String html, String baseUri, Parser parser)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 50,
+        "types_used": [
+        "Document",
+        "Parser",
+        "String"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "Document parse(String html, Parser parser)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 64,
+        "types_used": [
+        "Document",
+        "Parser",
+        "String"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "Document parse(String html)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 77,
+        "types_used": [
+        "Document",
+        "String"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "Connection connect(String url)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 94,
+        "types_used": [
+        "Connection",
+        "String"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "Connection newSession()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 121,
+        "types_used": [
+        "Connection",
+        "HttpConnection"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "Document parse(File file, String charsetName, String baseUri) throws IOException",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 136,
+        "types_used": [
+        "Document",
+        "File",
+        "IOException",
+        "String"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "Document parse(File file, String charsetName) throws IOException",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 151,
+        "types_used": [
+        "Document",
+        "File",
+        "IOException",
+        "String"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "Document parse(File file) throws IOException",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 168,
+        "types_used": [
+        "Document",
+        "File",
+        "IOException"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "Document parse(File file, String charsetName, String baseUri, Parser parser) throws IOException",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 185,
+        "types_used": [
+        "Document",
+        "File",
+        "IOException",
+        "Parser",
+        "String"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "Document parse(Path path, String charsetName, String baseUri) throws IOException",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 201,
+        "types_used": [
+        "Document",
+        "IOException",
+        "Path",
+        "String"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "Document parse(Path path, String charsetName) throws IOException",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 217,
+        "types_used": [
+        "Document",
+        "IOException",
+        "Path",
+        "String"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "Document parse(Path path) throws IOException",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 234,
+        "types_used": [
+        "Document",
+        "IOException",
+        "Path"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "Document parse(Path path, String charsetName, String baseUri, Parser parser) throws IOException",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 251,
+        "types_used": [
+        "Document",
+        "IOException",
+        "Parser",
+        "Path",
+        "String"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "Document parse(InputStream in, String charsetName, String baseUri) throws IOException",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 266,
+        "types_used": [
+        "Document",
+        "IOException",
+        "InputStream",
+        "String"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "Document parse(InputStream in, String charsetName, String baseUri, Parser parser) throws IOException",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 283,
+        "types_used": [
+        "Document",
+        "IOException",
+        "InputStream",
+        "Parser",
+        "String"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "Document parseBodyFragment(String bodyHtml, String baseUri)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 296,
+        "types_used": [
+        "Document",
+        "String"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "Document parseBodyFragment(String bodyHtml)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 308,
+        "types_used": [
+        "Document",
+        "String"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 5,
+        "cc": 1
+        },
+        "signature": "Document parse(URL url, int timeoutMillis) throws IOException",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 329,
+        "types_used": [
+        "Connection",
+        "Document",
+        "IOException",
+        "URL",
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 9,
+        "cc": 2
+        },
+        "signature": "String clean(String bodyHtml, String baseUri, Safelist safelist)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 346,
+        "types_used": [
+        "Cleaner",
+        "Document",
+        "Safelist",
+        "String"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "String clean(String bodyHtml, Safelist safelist)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 387,
+        "types_used": [
+        "Safelist",
+        "String"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 7,
+        "cc": 1
+        },
+        "signature": "String clean(String bodyHtml, String baseUri, Safelist safelist, Document.OutputSettings outputSettings)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 405,
+        "types_used": [
+        "Cleaner",
+        "Document",
+        "Document.OutputSettings",
+        "Safelist",
+        "String"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean isValid(String bodyHtml, Safelist safelist)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 434,
+        "types_used": [
+        "Cleaner",
+        "Safelist",
+        "String",
+        "boolean"
+        ]
+    }
+    ],
+    "dependencies": [
+    "org.jsoup.Connection",
+    "org.jsoup.helper.HttpConnection",
+    "org.jsoup.nodes.Document",
+    "org.jsoup.parser.Parser",
+    "org.jsoup.safety.Safelist"
+    ]
+}

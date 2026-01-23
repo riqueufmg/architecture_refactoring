@@ -1,0 +1,10 @@
+diff --git a/src/main/java/org/apache/commons/lang3/builder/Builder.java b/src/main/java/org/apache/commons/lang3/builder/Builder.java
+index 0000000..1111111 100644
+--- a/src/main/java/org/apache/commons/lang3/builder/Builder.java
++++ b/src/main/java/org/apache/commons/lang3/builder/Builder.java
+@@ -81,4 +81,5 @@ public interface Builder<T> {
+      * @return the object constructed or result calculated by the builder.
+      */
+     T build();
++    // code
+ }
