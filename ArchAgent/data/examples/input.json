@@ -1,5 +1,5 @@
 {
-    "smell type": "Insufficient Modularization",
+    "smell_type": "Insufficient Modularization",
     "package": "org.jsoup",
     "class": "Jsoup",
     "file": "data/repositories/jsoup/src/main/java/org/jsoup/Jsoup.java",

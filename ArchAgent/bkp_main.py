@@ -13,6 +13,7 @@ from langchain_openai import ChatOpenAI
 from langchain_core.messages import SystemMessage, HumanMessage
 from langgraph.graph import StateGraph, END
 
+
 class State(TypedDict, total=False):
     repo_path: str
     msg: str
@@ -46,18 +47,6 @@ class State(TypedDict, total=False):
     executor_feedback: str
     max_attempts: int
 
-    executor_plan_json_text: str          # raw code
-    executor_plan: dict                   # plan for executor
-    executor_plan_ok: bool                # plan validation
-    executor_plan_error: str              # executor error data
-    executor_result: dict                 # executor result data
-    files_to_write: list[dict]            # each: {"path": "...", "content": "..."}
-    files_to_delete: list[str]            # repo-relative paths
-
-    # apply files node
-    apply_ok: bool
-    apply_error: str
-
     # patch application data
     patch_text: str
     patch_applied: bool
@@ -86,46 +75,25 @@ def _run(cmd: list[str], cwd: Path, env: dict | None = None) -> subprocess.Compl
         text=True,
     )
 
-# function to extract JSON from the plan
-def _extract_json_object_only(s: str) -> str:
+
+def _extract_json_only(s: str) -> str:
     s = (s or "").strip()
-    if not s:
-        return s
 
-    if s.startswith("{") and s.endswith("}"):
-        return s
-
-    i = s.find("{")
-    j = s.rfind("}")
-    if i != -1 and j != -1 and j > i:
-        return s[i : j + 1].strip()
+    # Extract from ```json ... ```
+    if "```" in s:
+        parts = s.split("```")
+        candidates: list[str] = []
+        for p in parts:
+            t = p.strip()
+            if t.startswith("json"):
+                t = t[4:].strip()
+            if t.startswith("{") and t.endswith("}"):
+                candidates.append(t)
+        if candidates:
+            return max(candidates, key=len)
 
     return s
 
-# function to validate the path
-def _is_safe_repo_rel_path(p: str) -> bool:
-
-    if not p or "\x00" in p:
-        return False
-    pp = Path(p)
-    if pp.is_absolute():
-        return False
-    if ":" in p.split("/")[0]:  # ex: C:\
-        return False
-    
-    parts = pp.as_posix().split("/")
-    if any(part == ".." for part in parts):
-        return False
-    return True
-
-
-def _validate_allowed_paths(rel_paths: list[str], allowed: set[str]) -> tuple[bool, str]:
-    for rp in rel_paths:
-        if not _is_safe_repo_rel_path(rp):
-            return False, f"unsafe path: {rp}"
-        if rp not in allowed:
-            return False, f"path not in allowed_paths: {rp}"
-    return True, ""
 
 def _load_meta_or_init(meta_path: Path, repo_path: Path, base_commit: str | None) -> dict:
     if meta_path.exists():
@@ -163,6 +131,83 @@ def _to_repo_rel(repo_path: Path, p: str) -> str:
             return str(pp.as_posix()).lstrip("/")
     return pp.as_posix()
 
+
+def _touched_paths_from_diff(patch_text: str) -> set[str]:
+    touched: set[str] = set()
+    for line in (patch_text or "").splitlines():
+        if line.startswith("diff --git "):
+            # diff --git a/xxx b/yyy
+            parts = line.split()
+            if len(parts) >= 4:
+                a_path = parts[2]
+                b_path = parts[3]
+                if a_path.startswith("a/"):
+                    touched.add(a_path[2:])
+                if b_path.startswith("b/"):
+                    touched.add(b_path[2:])
+    return touched
+
+
+def _validate_patch_basic(patch_text: str, allowed_paths: set[str]) -> tuple[bool, str]:
+    if not (patch_text or "").strip():
+        return False, "empty patch"
+
+    if not patch_text.endswith("\n"):
+        return False, "patch must end with trailing newline"
+
+    bad_markers = [
+        "```",
+        "*** Begin Patch",
+        "*** End Patch",
+        "*** Add File:",
+        "Index:",
+        "Explanation:",
+        "Here is",
+        "Patch:",
+    ]
+
+    if any(m in patch_text for m in bad_markers):
+        return False, "patch contains extra text/markdown"
+
+    if "diff --git " not in patch_text:
+        return False, "missing 'diff --git' header"
+
+    if "data/repositories/" in patch_text:
+        return False, "diff contains forbidden 'data/repositories/' prefix"
+
+    # proíbe paths absolutos nos headers (bem comum quando o modelo erra)
+    for line in patch_text.splitlines():
+        if line.startswith("diff --git "):
+            if " /" in line:  # casos tipo a//data/... ou a//abs
+                return False, "diff header seems to contain absolute path"
+
+    touched = _touched_paths_from_diff(patch_text)
+    if not touched:
+        return False, "could not parse touched file paths from diff headers"
+
+    # Só permitir tocar em arquivos do executor_files (relativos)
+    not_allowed = sorted([p for p in touched if p not in allowed_paths])
+    if not_allowed:
+        return False, "patch touches files not in allowed list: " + ", ".join(not_allowed[:10])
+
+    for line in patch_text.splitlines():
+        if line.startswith("--- ") or line.startswith("+++ "):
+            path = line.split(maxsplit=1)[1].strip()
+            # allow /dev/null
+            if path == "/dev/null":
+                continue
+            # must be a/<rel> or b/<rel>
+            if not (path.startswith("a/") or path.startswith("b/")):
+                return False, "invalid ---/+++ header (must start with a/ or b/)"
+            rel = path[2:]
+            if rel.startswith("/") or "data/repositories/" in rel:
+                return False, "forbidden path in ---/+++ header"
+            if rel not in allowed_paths:
+                return False, f"---/+++ touches file not allowed: {rel}"
+
+    return True, ""
+
+
 def route_node(state: State) -> State:
     state["msg"] = f"route ok: repo_path={state.get('repo_path')}"
     return state
@@ -170,10 +215,6 @@ def route_node(state: State) -> State:
 
 def init_run_node(state: State) -> State:
     repo_path = Path(state["repo_path"]).resolve()
-
-    # defines base commit if not set
-    if not state.get("base_commit"):
-        state["base_commit"] = _git_current_commit(repo_path)
 
     runs_root = repo_path / "agent_runs"
     runs_root.mkdir(parents=True, exist_ok=True)
@@ -248,9 +289,7 @@ def planner_node(state: State) -> State:
         state["plan_json_text"] = raw
         (run_dir / "planner.raw.txt").write_text(raw, encoding="utf-8")
 
-        #json_text = _extract_json_only(raw) # TODO: remove this function?
-        json_text = _extract_json_object_only(raw)
-
+        json_text = _extract_json_only(raw)
         plan = json.loads(json_text)
 
         if not isinstance(plan, dict) or "blocks" not in plan:
@@ -394,35 +433,21 @@ def lock_workspace_node(state: State) -> State:
         encoding="utf-8",
     )
 
-    # clean old tries state
-    state["files_to_write"] = []
-    state["files_to_delete"] = []
-    state["apply_ok"] = False
-    state["apply_error"] = ""
-    state["rollback_reason"] = ""
-
     state["msg"] = state.get("msg", "") + f" | workspace locked @{state['workspace_commit'][:8]}"
     return state
 
+
 def executor_node(state: State) -> State:
-    # load log files
     repo_path = Path(state["repo_path"]).resolve()
     run_dir = Path(state["run_dir"])
     run_dir.mkdir(parents=True, exist_ok=True)
-    
-    meta_path = run_dir / "meta.json"
-    meta = _load_meta_or_init(meta_path, repo_path, state.get("base_commit"))
 
-    # get plan blocks and envolved files
     blk = state.get("staged_block") or {}
     files = state.get("executor_files") or []
 
-    # Read current file contents (for context)
     file_blobs: list[dict] = []
     for fp in files:
         p = Path(fp)
-        rel_path = _to_repo_rel(repo_path, str(p))
-
         if p.exists() and p.is_file():
             try:
                 content = p.read_text(encoding="utf-8", errors="replace")
@@ -431,34 +456,25 @@ def executor_node(state: State) -> State:
         else:
             content = "<<NEW FILE (does not exist yet)>>"
 
+        rel_path = _to_repo_rel(repo_path, str(p))
         file_blobs.append({"path": rel_path, "content": content})
 
-    allowed_paths = [f["path"] for f in file_blobs]
-
-    SYSTEM = """Return ONLY valid JSON (no markdown, no explanations, no backticks).
-Your job: produce the FINAL full contents of files after applying this refactoring block.
-
+    SYSTEM = """You are a tool that outputs ONLY a git-apply compatible unified diff.
 Rules (hard):
-- Output MUST be a single JSON object.
-- You may only write/delete files listed in allowed_paths.
-- Paths MUST be repository-relative (e.g., src/main/java/...).
-- For files_to_write: provide full file content (complete file text).
-- If you cannot comply perfectly, output: {} (an empty JSON object).
-
-JSON schema:
-{
-  "files_to_write": [
-    {"path": "src/....java", "content": "FULL FILE CONTENT HERE"}
-  ],
-  "files_to_delete": ["src/.../Old.java"]
-}
-"""
+- Output ONLY the patch text. No code fences, no explanations, no headers like "*** Begin Patch".
+- Every file must start with: diff --git a/<path> b/<path>
+- Must include: --- a/<path> and +++ b/<path>
+- Paths MUST be repository-relative and MUST be one of the allowed paths provided.
+- For new files: use --- /dev/null and +++ b/<path>
+- Patch must end with a trailing newline.
+If you cannot comply perfectly, output an empty string."""
 
     executor_prompt = {
-        "task": "Generate full-code file outputs for the staged refactoring block.",
+        "task": "Generate a git patch for the staged refactoring block.",
         "staged_block": blk,
-        "allowed_paths": allowed_paths,
-        "files_context": file_blobs,
+        "files": file_blobs,
+        "note": "You MUST only touch paths in allowed_paths. If you need a new file, it must also be in allowed_paths.",
+        "allowed_paths": [f["path"] for f in file_blobs],
         "feedback": state.get("executor_feedback", ""),
         "attempt": state.get("executor_attempt", 0),
         "max_attempts": state.get("max_attempts", 3),
@@ -472,10 +488,12 @@ JSON schema:
         api_key=os.environ.get("OPENAI_API_KEY"),
     )
 
-    res = llm.invoke([
-        SystemMessage(content=SYSTEM),
-        HumanMessage(content=state["executor_prompt"]),
-    ])
+    res = llm.invoke(
+        [
+            SystemMessage(content=SYSTEM),
+            HumanMessage(content=state["executor_prompt"]),
+        ]
+    )
 
     raw = (res.content or "").strip()
     state["executor_raw"] = raw
@@ -483,250 +501,172 @@ JSON schema:
     (run_dir / "executor.prompt.json").write_text(state["executor_prompt"], encoding="utf-8")
     (run_dir / "executor.raw.txt").write_text(raw, encoding="utf-8")
 
-    # ---- Parse JSON strictly ----
-    try:
-        json_text = _extract_json_object_only(raw)
-        data = json.loads(json_text) if json_text else {}
+    state["msg"] = state.get("msg", "") + " | executor ok"
+    return state
 
-        if not isinstance(data, dict):
-            raise ValueError("executor output is not a JSON object")
 
-        writes = data.get("files_to_write", [])
-        deletes = data.get("files_to_delete", [])
+def use_executor_patch_node(state: State) -> State:
+    raw = (state.get("executor_raw") or "")
+    if raw and not raw.endswith("\n"):
+        raw += "\n"
 
-        if writes is None:
-            writes = []
-        if deletes is None:
-            deletes = []
+    state["patch_text"] = raw
+    state["msg"] = state.get("msg", "") + f" | patch loaded (len={len(raw)})"
+    return state
 
-        if not isinstance(writes, list) or not isinstance(deletes, list):
-            raise ValueError("files_to_write/files_to_delete must be lists")
 
-        # Validate each write entry
-        cleaned_writes: list[dict] = []
-        for item in writes:
-            if not isinstance(item, dict):
-                raise ValueError("files_to_write entries must be objects")
-            path = (item.get("path") or "").strip()
-            content = item.get("content")
+def validate_patch_node(state: State) -> State:
+    repo_path = Path(state["repo_path"]).resolve()
+    patch_text = state.get("patch_text", "") or ""
 
-            if not path:
-                raise ValueError("files_to_write entry missing path")
-            if path not in allowed_paths:
-                raise ValueError(f"write path not allowed: {path}")
-            if content is None or not isinstance(content, str):
-                raise ValueError(f"write content must be string for: {path}")
+    allowed_abs = state.get("executor_files") or []
+    allowed_rel = set(_to_repo_rel(repo_path, p) for p in allowed_abs)
 
-            cleaned_writes.append({"path": path, "content": content})
+    ok, err = _validate_patch_basic(patch_text, allowed_rel)
 
-        # Validate deletes
-        cleaned_deletes: list[str] = []
-        for p in deletes:
-            if not isinstance(p, str):
-                raise ValueError("files_to_delete entries must be strings")
-            rp = p.strip()
-            if not rp:
-                continue
-            if rp not in allowed_paths:
-                raise ValueError(f"delete path not allowed: {rp}")
-            cleaned_deletes.append(rp)
+    state["patch_valid"] = ok
+    state["patch_validation_error"] = err
 
-        state["executor_result"] = data
-        state["files_to_write"] = cleaned_writes
-        state["files_to_delete"] = cleaned_deletes
+    run_dir = Path(state["run_dir"])
+    run_dir.mkdir(parents=True, exist_ok=True)
+    (run_dir / "patch.validation.json").write_text(
+        json.dumps(
+            {
+                "patch_valid": ok,
+                "error": err,
+                "allowed_rel_count": len(allowed_rel),
+                "touched": sorted(list(_touched_paths_from_diff(patch_text)))[:50],
+            },
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
 
-        (run_dir / "executor.result.json").write_text(
-            json.dumps(
-                {
-                    "files_to_write": [{"path": x["path"], "content_len": len(x["content"])} for x in cleaned_writes],
-                    "files_to_delete": cleaned_deletes,
-                },
-                indent=2,
-            ),
-            encoding="utf-8",
-        )
+    if ok:
+        state["msg"] = state.get("msg", "") + " | patch valid"
+    else:
+        state["msg"] = state.get("msg", "") + f" | patch INVALID: {err}"
+        state["rollback_reason"] = "invalid_patch"
+        state["executor_feedback"] = f"PATCH_INVALID: {err}"
 
-        state["msg"] = state.get("msg", "") + f" | executor ok (writes={len(cleaned_writes)} deletes={len(cleaned_deletes)})"
+    return state
 
-        state["rollback_reason"] = ""
 
-        #update meta file
-        meta.update({
-            "executor_ok": True,
-            "executor_attempt": state.get("executor_attempt", 0),
-            "executor_writes": len(state.get("files_to_write") or []),
-            "executor_deletes": len(state.get("files_to_delete") or []),
-        })
-        meta_path.write_text(json.dumps(meta, indent=2), encoding="utf-8")
+def after_validate_patch(state: State) -> str:
+    if state.get("patch_valid"):
+        return "apply_patch"
 
-        return state
+    state["executor_attempt"] = state.get("executor_attempt", 0) + 1
 
-    except Exception as e:
-        err = str(e)
-        state["executor_result"] = {}
-        state["files_to_write"] = []
-        state["files_to_delete"] = []
-        state["rollback_reason"] = "invalid_executor_json"
-        state["executor_feedback"] = f"EXECUTOR_INVALID_JSON: {err}"
-
-        (run_dir / "executor.parse_error.txt").write_text(err + "\n", encoding="utf-8")
-        state["msg"] = state.get("msg", "") + f" | executor FAIL(parse): {err}"
-
-        #update meta file
-        meta.update({
-            "executor_ok": False,
-            "executor_attempt": state.get("executor_attempt", 0),
-            "executor_error": err,
-            "rollback_reason": state.get("rollback_reason"),
-        })
-        meta_path.write_text(json.dumps(meta, indent=2), encoding="utf-8")
-
-        return state
-
-def after_executor(state: State) -> str:
-    # if executor not failed parsing JSON, and produced files to write/delete
-    if (state.get("rollback_reason") in (None, "", "unknown")
-        and ((state.get("files_to_write") or []) or (state.get("files_to_delete") or []))):
-        return "apply_files"
-
-    # if executor failed, retry
-    state["executor_attempt"] = state.get("executor_attempt", 0) + 1 # add attempt
-    if state["executor_attempt"] < state.get("max_attempts", 3): # check attempts
+    if state["executor_attempt"] < state.get("max_attempts", 3):
         return "retry_executor"
-    return "rollback" # if all attempts exhausted
+
+    return "rollback"
 
 def retry_executor_node(state: State) -> State:
     run_dir = Path(state["run_dir"])
     run_dir.mkdir(parents=True, exist_ok=True)
 
-    # create a unique retry log file
-    ts = datetime.now().strftime("%Y%m%d_%H%M%S_%f")
-    rid = uuid.uuid4().hex[:8]
-    attempt = state.get("executor_attempt", 0)
-    reason = state.get("rollback_reason", "")
-    fname = f"retry.attempt{attempt}.{ts}_{rid}.txt"
-
-    content = (
-        f"attempt={attempt}\n"
-        f"reason={reason}\n"
-        f"feedback={state.get('executor_feedback','')}\n"
+    (run_dir / f"retry.{state.get('executor_attempt', 0)}.txt").write_text(
+        f"reason={state.get('rollback_reason','')}\n\n{state.get('executor_feedback','')}\n",
+        encoding="utf-8",
     )
-    (run_dir / fname).write_text(content, encoding="utf-8")
-
-    index_line = json.dumps(
-        {
-            "file": fname,
-            "attempt": attempt,
-            "reason": reason,
-            "ts": ts,
-        },
-        ensure_ascii=False,
-    )
-    with open(run_dir / "retry.index.jsonl", "a", encoding="utf-8") as f:
-        f.write(index_line + "\n")
-
-    state["msg"] = state.get("msg", "") + f" | retry logged={fname}"
+    state["msg"] = state.get("msg", "") + f" | retry_executor attempt={state.get('executor_attempt', 0)}"
     return state
 
-def apply_files_node(state: State) -> State:
-    # load log files
+
+def apply_patch_node(state: State) -> State:
     repo_path = Path(state["repo_path"]).resolve()
+
+    if not state.get("base_commit"):
+        state["base_commit"] = _git_current_commit(repo_path)
+
     run_dir = Path(state["run_dir"])
     run_dir.mkdir(parents=True, exist_ok=True)
 
     meta_path = run_dir / "meta.json"
-    meta = _load_meta_or_init(meta_path, repo_path, state.get("base_commit"))
-
-    # load executor suggestions
-    files_to_write = state.get("files_to_write") or []
-    files_to_delete = state.get("files_to_delete") or []
-
-    # allowed paths
-    allowed = set()
-    for fp in (state.get("executor_files") or []):
-        allowed.add(_to_repo_rel(repo_path, fp))
-
-    write_paths = [f.get("path", "") for f in files_to_write]
-
-    # validate paths before applying (create or edit files)
-    ok, err = _validate_allowed_paths(write_paths, allowed)
-    if not ok:
-        state["apply_ok"] = False
-        state["apply_error"] = err
-        state["rollback_reason"] = "apply_files_invalid_paths"
-        state["executor_feedback"] = f"APPLY_FILES_INVALID_PATHS: {err}"
-        (run_dir / "apply_files.error.txt").write_text(err + "\n", encoding="utf-8")
-        meta.update({"apply_ok": False, "apply_error": err, "rollback_reason": state["rollback_reason"]})
+    if meta_path.exists():
+        meta = json.loads(meta_path.read_text(encoding="utf-8"))
+    else:
+        meta = {"repo_path": str(repo_path), "base_commit": state.get("base_commit")}
         meta_path.write_text(json.dumps(meta, indent=2), encoding="utf-8")
-        state["msg"] = state.get("msg","") + f" | apply_files FAIL: {err}"
+
+    meta["base_commit"] = state["base_commit"]
+    patch_text = state.get("patch_text", "") or ""
+
+    if not patch_text.strip():
+        state["patch_applied"] = False
+        state["patch_apply_log_tail"] = "No patch_text provided."
+        state["msg"] = state.get("msg", "") + " | apply SKIP(no patch)"
+        state["rollback_reason"] = "no_patch"
+
+        (run_dir / "patch.diff").write_text("", encoding="utf-8")
+        (run_dir / "apply.log").write_text("No patch_text provided.\n", encoding="utf-8")
+        (run_dir / "git_diff.patch").write_text("", encoding="utf-8")
+        (run_dir / "git_diff.stat").write_text("", encoding="utf-8")
+
+        meta.update(
+            {
+                "patch_applied": False,
+                "apply_skipped": True,
+                "apply_returncode": None,
+                "rollback_reason": "no_patch",
+            }
+        )
+        meta_path.write_text(json.dumps(meta, indent=2), encoding="utf-8")
         return state
 
-    # validate paths before applying (delete files)
-    ok, err = _validate_allowed_paths(files_to_delete, allowed)
-    if not ok:
-        state["apply_ok"] = False
-        state["apply_error"] = err
-        state["rollback_reason"] = "apply_files_invalid_delete_paths"
-        state["executor_feedback"] = f"APPLY_FILES_INVALID_DELETE_PATHS: {err}"
-        (run_dir / "apply_files.error.txt").write_text(err + "\n", encoding="utf-8")
-        meta.update({"apply_ok": False, "apply_error": err, "rollback_reason": state["rollback_reason"]})
+    patch_file = run_dir / "patch.diff"
+    patch_file.write_text(patch_text, encoding="utf-8")
+
+    p = _run(
+        ["git", "apply", "--recount", "--verbose", "--whitespace=nowarn", str(patch_file)],
+        cwd=repo_path,
+    )
+
+    combined = (p.stdout or "") + ("\n" if p.stdout else "") + (p.stderr or "")
+    (run_dir / "apply.log").write_text(combined, encoding="utf-8")
+    state["patch_apply_log_tail"] = _tail(combined, 60)
+
+    meta.update({"apply_skipped": False, "apply_returncode": p.returncode})
+
+    if p.returncode != 0:
+        state["patch_applied"] = False
+        state["msg"] = state.get("msg", "") + " | apply FAIL"
+        state["rollback_reason"] = "apply_failed"
+        state["executor_feedback"] = "APPLY_FAILED:\n" + state.get("patch_apply_log_tail", "")
+
+        diffp = _run(["git", "diff"], cwd=repo_path)
+        (run_dir / "git_diff.patch").write_text(diffp.stdout or "", encoding="utf-8")
+
+        statp = _run(["git", "diff", "--stat"], cwd=repo_path)
+        (run_dir / "git_diff.stat").write_text(statp.stdout or "", encoding="utf-8")
+        state["git_diff_tail"] = _tail(statp.stdout or "", 40)
+
+        if "patch does not apply" in (p.stderr or "").lower():
+            meta["apply_error_hint"] = "patch does not apply (context mismatch or already applied)"
+        elif "already exists" in (p.stderr or "").lower():
+            meta["apply_error_hint"] = "possible already applied / file state mismatch"
+
+        meta["patch_applied"] = False
+        meta["rollback_reason"] = state["rollback_reason"]
         meta_path.write_text(json.dumps(meta, indent=2), encoding="utf-8")
-        state["msg"] = state.get("msg","") + f" | apply_files FAIL: {err}"
         return state
 
-    # apply deletions to avoid conflicts
-    deleted = []
-    for rp in files_to_delete:
-        abs_p = (repo_path / rp).resolve()
-        if repo_path not in abs_p.parents and abs_p != repo_path:
-            continue
-        if abs_p.exists() and abs_p.is_file():
-            abs_p.unlink()
-            deleted.append(rp)
+    state["patch_applied"] = True
+    state["msg"] = state.get("msg", "") + " | apply ok"
 
-    # write or edit files
-    written = [] # create a list of written files
-    for f in files_to_write: # each file dict
-        rp = f["path"] # get (new?) path
-        content = f.get("content", "") # get new content
-        abs_p = (repo_path / rp).resolve() # get absolute path
-        if repo_path not in abs_p.parents and abs_p != repo_path: # guarantee inside repo
-            continue
-        abs_p.parent.mkdir(parents=True, exist_ok=True) # create new packages if needed
-        abs_p.write_text(content, encoding="utf-8") # create or edit file
-        written.append(rp) # register written file
+    diffp = _run(["git", "diff"], cwd=repo_path)
+    (run_dir / "git_diff.patch").write_text(diffp.stdout or "", encoding="utf-8")
 
-    # log do que foi aplicado
-    (run_dir / "apply_files.written.json").write_text(json.dumps(written, indent=2), encoding="utf-8")
-    (run_dir / "apply_files.deleted.json").write_text(json.dumps(deleted, indent=2), encoding="utf-8")
+    statp = _run(["git", "diff", "--stat"], cwd=repo_path)
+    (run_dir / "git_diff.stat").write_text(statp.stdout or "", encoding="utf-8")
+    state["git_diff_tail"] = _tail(statp.stdout or "", 40)
 
-    state["apply_ok"] = True
-    state["apply_error"] = ""
-    state["msg"] = state.get("msg","") + f" | apply_files ok (write={len(written)} del={len(deleted)})"
-
-    meta.update({
-        "apply_ok": True,
-        "apply_error": "",
-        "apply_written": len(written),
-        "apply_deleted": len(deleted),
-    })
+    meta["patch_applied"] = True
     meta_path.write_text(json.dumps(meta, indent=2), encoding="utf-8")
-
     return state
 
-def after_apply_files(state: State) -> str:
-    
-    # if files changed successfully, proceed to compile
-    if state.get("apply_ok"):
-        return "compile"
-
-    # failed to apply files; retry executor
-    state["executor_attempt"] = state.get("executor_attempt", 0) + 1 # add attempt
-    if state["executor_attempt"] < state.get("max_attempts", 3): # check attempts
-        return "retry_executor"
-    
-     # if all attempts exhausted
-    return "rollback"
 
 def after_apply(state: State) -> str:
     if not state.get("patch_text", "").strip():
@@ -779,18 +719,20 @@ def rollback_node(state: State) -> State:
 
     return state
 
-def after_rollback(state: State) -> str:
 
-    # consider quantity of attempts
-    if state.get("executor_attempt", 0) < state.get("max_attempts", 3):
-        # if executor, apply or compile failed, retry
-        if state.get("rollback_reason") in {
-            "invalid_executor_json",
-            "apply_files_invalid_paths",
-            "apply_files_invalid_delete_paths",
-            "compile_failed",
-        }:
+def after_rollback(state: State) -> str:
+    reason = state.get("rollback_reason", "")
+
+    # retry only for these reasons
+    if reason in {"invalid_patch", "apply_failed"}:
+        # executor_attempt already incremented in after_validate_patch for invalid_patch;
+        # but apply_failed comes from apply_patch, so increment here.
+        if reason == "apply_failed":
+            state["executor_attempt"] = state.get("executor_attempt", 0) + 1
+
+        if state["executor_attempt"] < state.get("max_attempts", 3):
             return "retry_executor"
+
     return END
 
 
@@ -839,9 +781,7 @@ def compile_node(state: State) -> State:
 
 
 def after_compile(state: State) -> str:
-    if state.get("compile_ok"):
-        return END
-    return "rollback"
+    return END if state.get("compile_ok") else "rollback"
 
 
 def build_graph():
@@ -854,8 +794,11 @@ def build_graph():
     g.add_node("resolve_files", resolve_files_for_block_node)
     g.add_node("lock_workspace", lock_workspace_node)
     g.add_node("executor", executor_node)
-    g.add_node("apply_files", apply_files_node)
+    g.add_node("use_executor_patch", use_executor_patch_node)
+    g.add_node("validate_patch", validate_patch_node)
     g.add_node("retry_executor", retry_executor_node)
+
+    g.add_node("apply_patch", apply_patch_node)
     g.add_node("compile", compile_node)
     g.add_node("rollback", rollback_node)
 
@@ -875,12 +818,14 @@ def build_graph():
     g.add_edge("stage_block", "resolve_files")
     g.add_edge("resolve_files", "lock_workspace")
     g.add_edge("lock_workspace", "executor")
+    g.add_edge("executor", "use_executor_patch")
+    g.add_edge("use_executor_patch", "validate_patch")
 
     g.add_conditional_edges(
-        "executor",
-        after_executor,
+        "validate_patch",
+        after_validate_patch,
         {
-            "apply_files": "apply_files",
+            "apply_patch": "apply_patch",
             "retry_executor": "retry_executor",
             "rollback": "rollback",
         },
@@ -889,12 +834,12 @@ def build_graph():
     g.add_edge("retry_executor", "lock_workspace")
 
     g.add_conditional_edges(
-        "apply_files",
-        after_apply_files,
+        "apply_patch",
+        after_apply,
         {
             "compile": "compile",
-            "retry_executor": "retry_executor",
             "rollback": "rollback",
+            END: END,
         },
     )
 
