@@ -843,6 +843,30 @@ def after_compile(state: State) -> str:
         return END
     return "rollback"
 
+def after_stage_block(state: State) -> str:
+    if state.get("done"):
+        return END
+    return "resolve_files"
+
+def advance_block_node(state: State) -> State:
+    # get next planned block
+    state["block_idx"] = state.get("block_idx", 0) + 1
+
+    # clean state
+    state["staged_block"] = {}
+    state["staged_block_ops"] = []
+    state["staged_block_files"] = []
+    state["executor_files"] = []
+    state["executor_existing_files"] = []
+    state["executor_new_files"] = []
+    state["files_to_write"] = []
+    state["files_to_delete"] = []
+    state["apply_ok"] = False
+    state["apply_error"] = ""
+    state["rollback_reason"] = ""
+
+    state["msg"] = state.get("msg", "") + f" | advance_block -> {state['block_idx']}"
+    return state
 
 def build_graph():
     g = StateGraph(State)
@@ -857,6 +881,7 @@ def build_graph():
     g.add_node("apply_files", apply_files_node)
     g.add_node("retry_executor", retry_executor_node)
     g.add_node("compile", compile_node)
+    g.add_node("advance_block", advance_block_node)
     g.add_node("rollback", rollback_node)
 
     g.set_entry_point("route")
@@ -872,7 +897,14 @@ def build_graph():
         },
     )
 
-    g.add_edge("stage_block", "resolve_files")
+    g.add_conditional_edges(
+        "stage_block",
+        after_stage_block,
+        {
+            "resolve_files": "resolve_files",
+            END: END,
+        },
+    )
     g.add_edge("resolve_files", "lock_workspace")
     g.add_edge("lock_workspace", "executor")
 
@@ -902,10 +934,12 @@ def build_graph():
         "compile",
         after_compile,
         {
-            END: END,
-            "rollback": "rollback",
+            END: "advance_block",       # compile_ok
+            "rollback": "rollback",     # compile_fail 
         },
     )
+
+    g.add_edge("advance_block", "stage_block")
 
     g.add_conditional_edges(
         "rollback",
@@ -936,7 +970,7 @@ if __name__ == "__main__":
             "repo_path": "data/repositories/jsoup",
             "planner_prompt": YOUR_PROMPT_TEMPLATE_STRING,
             "planner_input_json": json.dumps(YOUR_INPUT_DICT, indent=2),
-            "max_attempts": 5,
+            "max_attempts": 20,
         }
     )
     pprint(out)
