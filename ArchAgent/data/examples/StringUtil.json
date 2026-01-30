@@ -1,0 +1,422 @@
+{
+  "package": "org.jsoup.internal",
+  "class": "StringUtil",
+  "file": "data/repositories/jsoup/src/main/java/org/jsoup/internal/StringUtil.java",
+  "metrics": {
+    "nof": 10,
+    "nopf": 0,
+    "nom": 26,
+    "nopm": 25,
+    "loc": 322,
+    "wmc": 50,
+    "nc": 0,
+    "dit": 0,
+    "lcom": 0.5,
+    "fanin": 30,
+    "fanout": 3
+  },
+  "methods": [
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "String join(Collection<?> strings, String sep)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": true,
+      "begin_line": 31,
+      "types_used": [
+        "Collection",
+        "String"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 11,
+        "cc": 4
+      },
+      "signature": "String join(Iterator<?> strings, String sep)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": true,
+      "begin_line": 41,
+      "types_used": [
+        "Iterator",
+        "String",
+        "StringJoiner"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "String join(String[] strings, String sep)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": true,
+      "begin_line": 63,
+      "types_used": [
+        "String",
+        "String[]"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "String padding(int width)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": true,
+      "begin_line": 123,
+      "types_used": [
+        "String",
+        "int"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 9,
+        "cc": 4
+      },
+      "signature": "String padding(int width, int maxPaddingWidth)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": true,
+      "begin_line": 133,
+      "types_used": [
+        "String",
+        "char",
+        "char[]",
+        "int"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 8,
+        "cc": 4
+      },
+      "signature": "boolean isBlank(String string)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": true,
+      "begin_line": 151,
+      "types_used": [
+        "String",
+        "boolean",
+        "int"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 4,
+        "cc": 2
+      },
+      "signature": "boolean startsWithNewline(String string)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": true,
+      "begin_line": 168,
+      "types_used": [
+        "String",
+        "boolean"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 8,
+        "cc": 4
+      },
+      "signature": "boolean isNumeric(String string)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": true,
+      "begin_line": 179,
+      "types_used": [
+        "String",
+        "boolean",
+        "int"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "boolean isWhitespace(int c)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": true,
+      "begin_line": 197,
+      "types_used": [
+        "boolean",
+        "int"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "boolean isActuallyWhitespace(int c)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": true,
+      "begin_line": 206,
+      "types_used": [
+        "boolean",
+        "int"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "boolean isInvisibleChar(int c)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": true,
+      "begin_line": 211,
+      "types_used": [
+        "boolean",
+        "int"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 5,
+        "cc": 1
+      },
+      "signature": "String normaliseWhitespace(String string)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": true,
+      "begin_line": 222,
+      "types_used": [
+        "String",
+        "StringBuilder"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 19,
+        "cc": 5
+      },
+      "signature": "void appendNormalisedWhitespace(StringBuilder accum, String string, boolean stripLeading)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": true,
+      "begin_line": 234,
+      "types_used": [
+        "String",
+        "StringBuilder",
+        "boolean",
+        "int"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 7,
+        "cc": 3
+      },
+      "signature": "boolean in(String needle, String... haystack)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": true,
+      "begin_line": 256,
+      "types_used": [
+        "String",
+        "boolean",
+        "int"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "boolean inSorted(String needle, String[] haystack)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": true,
+      "begin_line": 265,
+      "types_used": [
+        "String",
+        "String[]",
+        "boolean"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 10,
+        "cc": 3
+      },
+      "signature": "boolean isAscii(String string)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": true,
+      "begin_line": 274,
+      "types_used": [
+        "String",
+        "boolean",
+        "int"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 10,
+        "cc": 3
+      },
+      "signature": "URL resolve(URL base, String relUrl) throws MalformedURLException",
+      "type": "method",
+      "visibility": "public",
+      "is_static": true,
+      "begin_line": 293,
+      "types_used": [
+        "MalformedURLException",
+        "String",
+        "URL"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 18,
+        "cc": 1
+      },
+      "signature": "String resolve(String baseUrl, String relUrl)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": true,
+      "begin_line": 313,
+      "types_used": [
+        "MalformedURLException",
+        "String",
+        "URL"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "String stripControlChars(String input)",
+      "type": "method",
+      "visibility": "private",
+      "is_static": true,
+      "begin_line": 335,
+      "types_used": [
+        "String"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "StringBuilder borrowBuilder()",
+      "type": "method",
+      "visibility": "public",
+      "is_static": true,
+      "begin_line": 351,
+      "types_used": [
+        "StringBuilder"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 6,
+        "cc": 1
+      },
+      "signature": "String releaseBuilder(StringBuilder sb)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": true,
+      "begin_line": 361,
+      "types_used": [
+        "String",
+        "StringBuilder"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 6,
+        "cc": 2
+      },
+      "signature": "void releaseBuilderVoid(StringBuilder sb)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": true,
+      "begin_line": 373,
+      "types_used": [
+        "StringBuilder"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 7,
+        "cc": 1
+      },
+      "signature": "Collector<CharSequence, ?, String> joining(String delimiter)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": true,
+      "begin_line": 388,
+      "types_used": [
+        "CharSequence",
+        "Collector",
+        "String",
+        "StringJoiner"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "boolean isAsciiLetter(char c)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": true,
+      "begin_line": 398,
+      "types_used": [
+        "boolean",
+        "char"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "boolean isDigit(char c)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": true,
+      "begin_line": 402,
+      "types_used": [
+        "boolean",
+        "char"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "boolean isHexDigit(char c)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": true,
+      "begin_line": 406,
+      "types_used": [
+        "boolean",
+        "char"
+      ]
+    }
+  ],
+  "dependencies": []
+}

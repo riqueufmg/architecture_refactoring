@@ -1,0 +1,536 @@
+{
+    "package": "org.jsoup.parser",
+    "class": "TokenQueue",
+    "file": "data/repositories/jsoup/src/main/java/org/jsoup/parser/TokenQueue.java",
+    "metrics": {
+    "nof": 7,
+    "nopf": 0,
+    "nom": 34,
+    "nopm": 23,
+    "loc": 396,
+    "wmc": 86,
+    "nc": 0,
+    "dit": 0,
+    "lcom": 0.0588235294117647,
+    "fanin": 4,
+    "fanout": 3
+    },
+    "methods": [
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "TokenQueue(String data)",
+        "type": "constructor",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 22,
+        "types_used": [
+        "CharacterReader",
+        "String",
+        "TokenQueue"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean isEmpty()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 30,
+        "types_used": [
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "char consume()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 38,
+        "types_used": [
+        "char"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 2
+        },
+        "signature": "void advance()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 45,
+        "types_used": []
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "char current()",
+        "type": "method",
+        "visibility": "package-private",
+        "is_static": false,
+        "begin_line": 49,
+        "types_used": [
+        "char"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean matches(String seq)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 58,
+        "types_used": [
+        "String",
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean matches(char c)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 63,
+        "types_used": [
+        "boolean",
+        "char"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean matchesAny(char... seq)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 72,
+        "types_used": [
+        "boolean",
+        "char"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean matchChomp(String seq)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 81,
+        "types_used": [
+        "String",
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 7,
+        "cc": 2
+        },
+        "signature": "boolean matchChomp(char c)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 86,
+        "types_used": [
+        "boolean",
+        "char"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean matchesWhitespace()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 98,
+        "types_used": [
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean matchesWord()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 106,
+        "types_used": [
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 4,
+        "cc": 2
+        },
+        "signature": "void consume(String seq)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 116,
+        "types_used": [
+        "IllegalStateException",
+        "String",
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "String consumeTo(String seq)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 126,
+        "types_used": [
+        "String"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 10,
+        "cc": 4
+        },
+        "signature": "String consumeToAny(String... seq)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 135,
+        "types_used": [
+        "String",
+        "StringBuilder"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 44,
+        "cc": 14
+        },
+        "signature": "String chompBalanced(char open, char close)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 156,
+        "types_used": [
+        "String",
+        "StringBuilder",
+        "boolean",
+        "char",
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 16,
+        "cc": 5
+        },
+        "signature": "String unescape(String in)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 204,
+        "types_used": [
+        "String",
+        "StringBuilder",
+        "char"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 39,
+        "cc": 10
+        },
+        "signature": "String escapeCssIdentifier(String in)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 229,
+        "types_used": [
+        "String",
+        "StringBuilder",
+        "TokenQueue",
+        "char"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "void appendEscaped(StringBuilder out, char c)",
+        "type": "method",
+        "visibility": "private",
+        "is_static": true,
+        "begin_line": 284,
+        "types_used": [
+        "StringBuilder",
+        "char"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "void appendEscapedCodepoint(StringBuilder out, char c)",
+        "type": "method",
+        "visibility": "private",
+        "is_static": true,
+        "begin_line": 288,
+        "types_used": [
+        "StringBuilder",
+        "char"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 8,
+        "cc": 2
+        },
+        "signature": "boolean consumeWhitespace()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 296,
+        "types_used": [
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "String consumeElementSelector()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 310,
+        "types_used": [
+        "String"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 36,
+        "cc": 9
+        },
+        "signature": "String consumeCssIdentifier()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 326,
+        "types_used": [
+        "IllegalArgumentException",
+        "String",
+        "StringBuilder",
+        "TokenQueue",
+        "char"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 37,
+        "cc": 8
+        },
+        "signature": "void consumeCssEscapeSequenceInto(StringBuilder out)",
+        "type": "method",
+        "visibility": "private",
+        "is_static": false,
+        "begin_line": 368,
+        "types_used": [
+        "IllegalArgumentException",
+        "NumberFormatException",
+        "String",
+        "StringBuilder",
+        "StringUtil",
+        "char",
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean isNonAscii(char c)",
+        "type": "method",
+        "visibility": "private",
+        "is_static": true,
+        "begin_line": 409,
+        "types_used": [
+        "boolean",
+        "char"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean isIdentStart(char c)",
+        "type": "method",
+        "visibility": "private",
+        "is_static": true,
+        "begin_line": 414,
+        "types_used": [
+        "boolean",
+        "char"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean isIdent(char c)",
+        "type": "method",
+        "visibility": "private",
+        "is_static": true,
+        "begin_line": 419,
+        "types_used": [
+        "boolean",
+        "char"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean isNewline(char c)",
+        "type": "method",
+        "visibility": "private",
+        "is_static": true,
+        "begin_line": 425,
+        "types_used": [
+        "boolean",
+        "char"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean isValidCodePoint(int codePoint)",
+        "type": "method",
+        "visibility": "private",
+        "is_static": true,
+        "begin_line": 430,
+        "types_used": [
+        "boolean",
+        "char",
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 19,
+        "cc": 5
+        },
+        "signature": "String consumeEscapedCssIdentifier(char... matches)",
+        "type": "method",
+        "visibility": "private",
+        "is_static": false,
+        "begin_line": 436,
+        "types_used": [
+        "String",
+        "StringBuilder",
+        "char"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean matchesCssIdentifier(char... matches)",
+        "type": "method",
+        "visibility": "private",
+        "is_static": false,
+        "begin_line": 454,
+        "types_used": [
+        "boolean",
+        "char"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "String remainder()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 462,
+        "types_used": [
+        "String"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "String toString()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 466,
+        "types_used": [
+        "String"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "void close()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 471,
+        "types_used": []
+    }
+    ],
+    "dependencies": [
+    "org.jsoup.internal.StringUtil",
+    "org.jsoup.parser.CharacterReader"
+    ]
+}

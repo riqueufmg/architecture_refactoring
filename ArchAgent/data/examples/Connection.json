@@ -1,0 +1,677 @@
+{
+  "package": "org.jsoup",
+  "class": "Connection",
+  "file": "data/repositories/jsoup/src/main/java/org/jsoup/Connection.java",
+  "metrics": {
+    "nof": 1,
+    "nopf": 0,
+    "nom": 43,
+    "nopm": 0,
+    "loc": 772,
+    "wmc": 43,
+    "nc": 1,
+    "dit": 0,
+    "lcom": -1.0,
+    "fanin": 22,
+    "fanout": 8
+  },
+  "methods": [
+    {
+      "metrics": {
+        "loc": 0,
+        "cc": 1
+      },
+      "signature": "Connection newRequest()",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 87,
+      "types_used": [
+        "Connection"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "Connection newRequest(String url)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 96,
+      "types_used": [
+        "Connection",
+        "String"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "Connection newRequest(URL url)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 107,
+      "types_used": [
+        "Connection",
+        "URL"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 0,
+        "cc": 1
+      },
+      "signature": "Connection url(URL url)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 116,
+      "types_used": [
+        "Connection",
+        "URL"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 0,
+        "cc": 1
+      },
+      "signature": "Connection url(String url)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 123,
+      "types_used": [
+        "Connection",
+        "String"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 0,
+        "cc": 1
+      },
+      "signature": "Connection proxy(Proxy proxy)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 130,
+      "types_used": [
+        "Connection",
+        "Proxy"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 0,
+        "cc": 1
+      },
+      "signature": "Connection proxy(String host, int port)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 138,
+      "types_used": [
+        "Connection",
+        "String",
+        "int"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 0,
+        "cc": 1
+      },
+      "signature": "Connection userAgent(String userAgent)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 146,
+      "types_used": [
+        "Connection",
+        "String"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 0,
+        "cc": 1
+      },
+      "signature": "Connection timeout(int millis)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 160,
+      "types_used": [
+        "Connection",
+        "int"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 0,
+        "cc": 1
+      },
+      "signature": "Connection maxBodySize(int bytes)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 171,
+      "types_used": [
+        "Connection",
+        "int"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 0,
+        "cc": 1
+      },
+      "signature": "Connection referrer(String referrer)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 178,
+      "types_used": [
+        "Connection",
+        "String"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 0,
+        "cc": 1
+      },
+      "signature": "Connection followRedirects(boolean followRedirects)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 185,
+      "types_used": [
+        "Connection",
+        "boolean"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 0,
+        "cc": 1
+      },
+      "signature": "Connection method(Method method)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 192,
+      "types_used": [
+        "Connection",
+        "Method"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 0,
+        "cc": 1
+      },
+      "signature": "Connection ignoreHttpErrors(boolean ignoreHttpErrors)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 201,
+      "types_used": [
+        "Connection",
+        "boolean"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 0,
+        "cc": 1
+      },
+      "signature": "Connection ignoreContentType(boolean ignoreContentType)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 211,
+      "types_used": [
+        "Connection",
+        "boolean"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 0,
+        "cc": 1
+      },
+      "signature": "Connection sslSocketFactory(SSLSocketFactory sslSocketFactory)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 223,
+      "types_used": [
+        "Connection",
+        "SSLSocketFactory"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "Connection sslContext(SSLContext sslContext)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 235,
+      "types_used": [
+        "Connection",
+        "SSLContext",
+        "UnsupportedOperationException"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 0,
+        "cc": 1
+      },
+      "signature": "Connection data(String key, String value)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 246,
+      "types_used": [
+        "Connection",
+        "String"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 0,
+        "cc": 1
+      },
+      "signature": "Connection data(String key, String filename, InputStream inputStream)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 260,
+      "types_used": [
+        "Connection",
+        "InputStream",
+        "String"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 0,
+        "cc": 1
+      },
+      "signature": "Connection data(String key, String filename, InputStream inputStream, String contentType)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 273,
+      "types_used": [
+        "Connection",
+        "InputStream",
+        "String"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 0,
+        "cc": 1
+      },
+      "signature": "Connection data(Collection<KeyVal> data)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 280,
+      "types_used": [
+        "Collection",
+        "Connection",
+        "KeyVal"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 0,
+        "cc": 1
+      },
+      "signature": "Connection data(Map<String, String> data)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 287,
+      "types_used": [
+        "Connection",
+        "Map",
+        "String"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 0,
+        "cc": 1
+      },
+      "signature": "Connection data(String... keyvals)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 301,
+      "types_used": [
+        "Connection",
+        "String"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 0,
+        "cc": 1
+      },
+      "signature": "KeyVal data(String key)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 308,
+      "types_used": [
+        "KeyVal",
+        "String"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 0,
+        "cc": 1
+      },
+      "signature": "Connection requestBody(String body)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 321,
+      "types_used": [
+        "Connection",
+        "String"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "Connection requestBodyStream(InputStream stream)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 339,
+      "types_used": [
+        "Connection",
+        "InputStream",
+        "UnsupportedOperationException"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 0,
+        "cc": 1
+      },
+      "signature": "Connection header(String name, String value)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 351,
+      "types_used": [
+        "Connection",
+        "String"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 0,
+        "cc": 1
+      },
+      "signature": "Connection headers(Map<String, String> headers)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 360,
+      "types_used": [
+        "Connection",
+        "Map",
+        "String"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 0,
+        "cc": 1
+      },
+      "signature": "Connection cookie(String name, String value)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 368,
+      "types_used": [
+        "Connection",
+        "String"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 0,
+        "cc": 1
+      },
+      "signature": "Connection cookies(Map<String, String> cookies)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 375,
+      "types_used": [
+        "Connection",
+        "Map",
+        "String"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 0,
+        "cc": 1
+      },
+      "signature": "Connection cookieStore(CookieStore cookieStore)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 383,
+      "types_used": [
+        "Connection",
+        "CookieStore"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 0,
+        "cc": 1
+      },
+      "signature": "CookieStore cookieStore()",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 390,
+      "types_used": [
+        "CookieStore"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 0,
+        "cc": 1
+      },
+      "signature": "Connection parser(Parser parser)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 399,
+      "types_used": [
+        "Connection",
+        "Parser"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 0,
+        "cc": 1
+      },
+      "signature": "Connection postDataCharset(String charset)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 406,
+      "types_used": [
+        "Connection",
+        "String"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "Connection auth(RequestAuthenticator authenticator)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 462,
+      "types_used": [
+        "Connection",
+        "RequestAuthenticator",
+        "UnsupportedOperationException"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 0,
+        "cc": 1
+      },
+      "signature": "Document get() throws IOException",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 475,
+      "types_used": [
+        "Document",
+        "IOException"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 0,
+        "cc": 1
+      },
+      "signature": "Document post() throws IOException",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 486,
+      "types_used": [
+        "Document",
+        "IOException"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 0,
+        "cc": 1
+      },
+      "signature": "Response execute() throws IOException",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 497,
+      "types_used": [
+        "IOException",
+        "Response"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 0,
+        "cc": 1
+      },
+      "signature": "Request request()",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 503,
+      "types_used": [
+        "Request"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 0,
+        "cc": 1
+      },
+      "signature": "Connection request(Request request)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 510,
+      "types_used": [
+        "Connection",
+        "Request"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 0,
+        "cc": 1
+      },
+      "signature": "Response response()",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 517,
+      "types_used": [
+        "Response"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 0,
+        "cc": 1
+      },
+      "signature": "Connection response(Response response)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 524,
+      "types_used": [
+        "Connection",
+        "Response"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "Connection onResponseProgress(Progress<Response> handler)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 534,
+      "types_used": [
+        "Connection",
+        "Progress",
+        "Response",
+        "UnsupportedOperationException"
+      ]
+    }
+  ],
+  "dependencies": [
+    "org.jsoup.nodes.Document",
+    "org.jsoup.parser.Parser"
+  ]
+}

@@ -1,0 +1,467 @@
+{
+    "smell_type": "Insufficient Modularization",
+    "package": "org.jsoup.helper",
+    "class": "HttpConnection",
+    "file": "data/repositories/jsoup/src/main/java/org/jsoup/helper/HttpConnection.java",
+    "metrics": {
+        "nof": 56,
+        "nopf": 5,
+        "nom": 48,
+        "nopm": 44,
+        "loc": 1021,
+        "wmc": 58,
+        "nc": 0,
+        "dit": 1,
+        "lcom": 0.0416666666666666,
+        "fanin": 10,
+        "fanout": 12
+    },
+    "methods": [
+        {
+            "method_name": "connect",
+            "line_num": 81,
+            "metrics": {
+                "loc": 5,
+                "cc": 1,
+                "pc": 1
+            }
+        },
+        {
+            "method_name": "connect",
+            "line_num": 92,
+            "metrics": {
+                "loc": 5,
+                "cc": 1,
+                "pc": 1
+            }
+        },
+        {
+            "method_name": "HttpConnection",
+            "line_num": 103,
+            "metrics": {
+                "loc": 4,
+                "cc": 1,
+                "pc": 0
+            }
+        },
+        {
+            "method_name": "HttpConnection",
+            "line_num": 111,
+            "metrics": {
+                "loc": 3,
+                "cc": 1,
+                "pc": 1
+            }
+        },
+        {
+            "method_name": "encodeMimeName",
+            "line_num": 120,
+            "metrics": {
+                "loc": 3,
+                "cc": 1,
+                "pc": 1
+            }
+        },
+        {
+            "method_name": "newRequest",
+            "line_num": 124,
+            "metrics": {
+                "loc": 3,
+                "cc": 1,
+                "pc": 0
+            }
+        },
+        {
+            "method_name": "HttpConnection",
+            "line_num": 130,
+            "metrics": {
+                "loc": 4,
+                "cc": 1,
+                "pc": 2
+            }
+        },
+        {
+            "method_name": "url",
+            "line_num": 136,
+            "metrics": {
+                "loc": 4,
+                "cc": 1,
+                "pc": 1
+            }
+        },
+        {
+            "method_name": "url",
+            "line_num": 142,
+            "metrics": {
+                "loc": 10,
+                "cc": 1,
+                "pc": 1
+            }
+        },
+        {
+            "method_name": "proxy",
+            "line_num": 153,
+            "metrics": {
+                "loc": 4,
+                "cc": 1,
+                "pc": 1
+            }
+        },
+        {
+            "method_name": "proxy",
+            "line_num": 159,
+            "metrics": {
+                "loc": 4,
+                "cc": 1,
+                "pc": 2
+            }
+        },
+        {
+            "method_name": "userAgent",
+            "line_num": 165,
+            "metrics": {
+                "loc": 5,
+                "cc": 1,
+                "pc": 1
+            }
+        },
+        {
+            "method_name": "timeout",
+            "line_num": 172,
+            "metrics": {
+                "loc": 4,
+                "cc": 1,
+                "pc": 1
+            }
+        },
+        {
+            "method_name": "maxBodySize",
+            "line_num": 178,
+            "metrics": {
+                "loc": 4,
+                "cc": 1,
+                "pc": 1
+            }
+        },
+        {
+            "method_name": "followRedirects",
+            "line_num": 184,
+            "metrics": {
+                "loc": 4,
+                "cc": 1,
+                "pc": 1
+            }
+        },
+        {
+            "method_name": "referrer",
+            "line_num": 190,
+            "metrics": {
+                "loc": 5,
+                "cc": 1,
+                "pc": 1
+            }
+        },
+        {
+            "method_name": "method",
+            "line_num": 197,
+            "metrics": {
+                "loc": 4,
+                "cc": 1,
+                "pc": 1
+            }
+        },
+        {
+            "method_name": "ignoreHttpErrors",
+            "line_num": 203,
+            "metrics": {
+                "loc": 4,
+                "cc": 1,
+                "pc": 1
+            }
+        },
+        {
+            "method_name": "ignoreContentType",
+            "line_num": 209,
+            "metrics": {
+                "loc": 4,
+                "cc": 1,
+                "pc": 1
+            }
+        },
+        {
+            "method_name": "data",
+            "line_num": 215,
+            "metrics": {
+                "loc": 4,
+                "cc": 1,
+                "pc": 2
+            }
+        },
+        {
+            "method_name": "sslSocketFactory",
+            "line_num": 221,
+            "metrics": {
+                "loc": 4,
+                "cc": 1,
+                "pc": 1
+            }
+        },
+        {
+            "method_name": "sslContext",
+            "line_num": 227,
+            "metrics": {
+                "loc": 4,
+                "cc": 1,
+                "pc": 1
+            }
+        },
+        {
+            "method_name": "data",
+            "line_num": 233,
+            "metrics": {
+                "loc": 4,
+                "cc": 1,
+                "pc": 3
+            }
+        },
+        {
+            "method_name": "data",
+            "line_num": 239,
+            "metrics": {
+                "loc": 4,
+                "cc": 1,
+                "pc": 4
+            }
+        },
+        {
+            "method_name": "data",
+            "line_num": 245,
+            "metrics": {
+                "loc": 7,
+                "cc": 2,
+                "pc": 1
+            }
+        },
+        {
+            "method_name": "data",
+            "line_num": 254,
+            "metrics": {
+                "loc": 12,
+                "cc": 2,
+                "pc": 1
+            }
+        },
+        {
+            "method_name": "data",
+            "line_num": 268,
+            "metrics": {
+                "loc": 7,
+                "cc": 2,
+                "pc": 1
+            }
+        },
+        {
+            "method_name": "data",
+            "line_num": 277,
+            "metrics": {
+                "loc": 7,
+                "cc": 3,
+                "pc": 1
+            }
+        },
+        {
+            "method_name": "requestBody",
+            "line_num": 287,
+            "metrics": {
+                "loc": 4,
+                "cc": 1,
+                "pc": 1
+            }
+        },
+        {
+            "method_name": "requestBodyStream",
+            "line_num": 293,
+            "metrics": {
+                "loc": 4,
+                "cc": 1,
+                "pc": 1
+            }
+        },
+        {
+            "method_name": "header",
+            "line_num": 299,
+            "metrics": {
+                "loc": 4,
+                "cc": 1,
+                "pc": 2
+            }
+        },
+        {
+            "method_name": "headers",
+            "line_num": 305,
+            "metrics": {
+                "loc": 7,
+                "cc": 2,
+                "pc": 1
+            }
+        },
+        {
+            "method_name": "cookie",
+            "line_num": 314,
+            "metrics": {
+                "loc": 4,
+                "cc": 1,
+                "pc": 2
+            }
+        },
+        {
+            "method_name": "cookies",
+            "line_num": 320,
+            "metrics": {
+                "loc": 7,
+                "cc": 2,
+                "pc": 1
+            }
+        },
+        {
+            "method_name": "cookieStore",
+            "line_num": 329,
+            "metrics": {
+                "loc": 4,
+                "cc": 1,
+                "pc": 1
+            }
+        },
+        {
+            "method_name": "cookieStore",
+            "line_num": 336,
+            "metrics": {
+                "loc": 3,
+                "cc": 1,
+                "pc": 0
+            }
+        },
+        {
+            "method_name": "parser",
+            "line_num": 341,
+            "metrics": {
+                "loc": 4,
+                "cc": 1,
+                "pc": 1
+            }
+        },
+        {
+            "method_name": "get",
+            "line_num": 347,
+            "metrics": {
+                "loc": 6,
+                "cc": 1,
+                "pc": 0
+            }
+        },
+        {
+            "method_name": "post",
+            "line_num": 355,
+            "metrics": {
+                "loc": 6,
+                "cc": 1,
+                "pc": 0
+            }
+        },
+        {
+            "method_name": "execute",
+            "line_num": 363,
+            "metrics": {
+                "loc": 4,
+                "cc": 1,
+                "pc": 0
+            }
+        },
+        {
+            "method_name": "request",
+            "line_num": 369,
+            "metrics": {
+                "loc": 3,
+                "cc": 1,
+                "pc": 0
+            }
+        },
+        {
+            "method_name": "request",
+            "line_num": 374,
+            "metrics": {
+                "loc": 4,
+                "cc": 1,
+                "pc": 1
+            }
+        },
+        {
+            "method_name": "response",
+            "line_num": 380,
+            "metrics": {
+                "loc": 6,
+                "cc": 2,
+                "pc": 0
+            }
+        },
+        {
+            "method_name": "response",
+            "line_num": 388,
+            "metrics": {
+                "loc": 4,
+                "cc": 1,
+                "pc": 1
+            }
+        },
+        {
+            "method_name": "postDataCharset",
+            "line_num": 394,
+            "metrics": {
+                "loc": 4,
+                "cc": 1,
+                "pc": 1
+            }
+        },
+        {
+            "method_name": "auth",
+            "line_num": 400,
+            "metrics": {
+                "loc": 4,
+                "cc": 1,
+                "pc": 1
+            }
+        },
+        {
+            "method_name": "onResponseProgress",
+            "line_num": 405,
+            "metrics": {
+                "loc": 4,
+                "cc": 1,
+                "pc": 1
+            }
+        },
+        {
+            "method_name": "needsMultipart",
+            "line_num": 1334,
+            "metrics": {
+                "loc": 6,
+                "cc": 3,
+                "pc": 1
+            }
+        }
+    ],
+    "dependencies": [
+        "org.jsoup.Connection",
+        "org.jsoup.Progress",
+        "org.jsoup.helper.AuthenticationHandler",
+        "org.jsoup.helper.DataUtil",
+        "org.jsoup.helper.HttpConnection.Request",
+        "org.jsoup.helper.HttpConnection.Response",
+        "org.jsoup.helper.RequestAuthenticator",
+        "org.jsoup.helper.RequestExecutor",
+        "org.jsoup.helper.Validate",
+        "org.jsoup.internal.ControllableInputStream",
+        "org.jsoup.nodes.Document",
+        "org.jsoup.parser.Parser"
+    ]
+}

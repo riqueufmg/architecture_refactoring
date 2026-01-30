@@ -7,7 +7,7 @@ import uuid
 from datetime import datetime
 from pathlib import Path
 from pprint import pprint
-from typing import TypedDict
+from typing import TypedDict, Tuple
 
 from langchain_openai import ChatOpenAI
 from langchain_core.messages import SystemMessage, HumanMessage
@@ -19,12 +19,13 @@ class State(TypedDict, total=False):
     run_dir: str
 
     # planning data
-    planner_prompt: str
-    planner_input_json: str
-    plan_json_text: str
-    plan: dict
-    plan_ok: bool
-    plan_error: str
+    planner_prompt: str # plan prompt template
+    planner_input_json: str # input data
+    plan_json_text: str 
+    plan: dict # the plan
+    plan_ok: bool # status after try to generate plan
+    plan_error: str # tail when plan generation failed
+    plan_files_manifest: list[str] # list of files that can be affected by LLM
 
     # blocks of plan
     block_idx: int
@@ -46,10 +47,6 @@ class State(TypedDict, total=False):
     executor_feedback: str
     max_attempts: int
 
-    executor_plan_json_text: str          # raw code
-    executor_plan: dict                   # plan for executor
-    executor_plan_ok: bool                # plan validation
-    executor_plan_error: str              # executor error data
     executor_result: dict                 # executor result data
     files_to_write: list[dict]            # each: {"path": "...", "content": "..."}
     files_to_delete: list[str]            # repo-relative paths
@@ -59,20 +56,18 @@ class State(TypedDict, total=False):
     apply_error: str
 
     # patch application data
-    patch_text: str
-    patch_applied: bool
-    patch_apply_log_tail: str
-    git_diff_tail: str
     base_commit: str
-
-    patch_valid: bool
-    patch_validation_error: str
 
     # compilation data
     compile_ok: bool
     compile_returncode: int
     compile_log_tail: str
     maven_tmp_dir: str
+
+    # designite data
+    designite_analysis_dir: str
+    designite_ok: bool
+    designite_log: str
 
     rollback_reason: str
 
@@ -284,7 +279,10 @@ def planner_node(state: State) -> State:
 
 
 def after_planner(state: State) -> str:
-    return "stage_block" if state.get("plan_ok") else END
+    if state.get("plan_ok"):
+        return "stage_block"
+    else:
+        return END
 
 
 def stage_block_node(state: State) -> State:
@@ -329,12 +327,13 @@ def stage_block_node(state: State) -> State:
     state["msg"] = state.get("msg", "") + f" | staged block_idx={idx} id={blk.get('id')} ops={len(ops)}"
     return state
 
-
+# based on the plan, define what files can be affected by the LLM
 def resolve_files_for_block_node(state: State) -> State:
     repo_path = Path(state["repo_path"]).resolve()
     run_dir = Path(state["run_dir"])
     run_dir.mkdir(parents=True, exist_ok=True)
 
+    # get dic of blocks and list of operations
     blk = state.get("staged_block") or {}
     ops = blk.get("ops", []) or []
 
@@ -728,14 +727,6 @@ def after_apply_files(state: State) -> str:
      # if all attempts exhausted
     return "rollback"
 
-def after_apply(state: State) -> str:
-    if not state.get("patch_text", "").strip():
-        return END
-    if state.get("patch_applied"):
-        return "compile"
-    return "rollback"
-
-
 def rollback_node(state: State) -> State:
     repo_path = Path(state["repo_path"]).resolve()
     base = state.get("base_commit")
@@ -761,7 +752,6 @@ def rollback_node(state: State) -> State:
     if run_dir:
         run_dir.mkdir(parents=True, exist_ok=True)
 
-    state["patch_applied"] = False
     state["msg"] = state.get("msg", "") + " | rollback done"
 
     if run_dir:
@@ -868,6 +858,166 @@ def advance_block_node(state: State) -> State:
     state["msg"] = state.get("msg", "") + f" | advance_block -> {state['block_idx']}"
     return state
 
+# promote baseline node, to maintain updated baseline after successful run
+def promote_baseline_node(state: State) -> State:
+    repo_path = Path(state["repo_path"]).resolve()
+    run_dir = Path(state["run_dir"])
+    run_dir.mkdir(parents=True, exist_ok=True)
+
+    # if compile failed, skip
+    if not state.get("compile_ok"):
+        state["msg"] = state.get("msg", "") + " | promote_baseline skipped (compile not ok)"
+        return state
+
+    # get the current block idx and id
+    idx = state.get("block_idx", 0)
+    block_id = state.get("staged_block_id", idx)
+
+    # check if any change
+    status = _run(["git", "status", "--porcelain=v1"], cwd=repo_path)
+    dirty = bool((status.stdout or "").strip())
+
+    promoted = False
+
+    # if had uncommitted changes, commit them as new baseline
+    if dirty:
+        _run(
+            ["git", "add", "-A", "--", ".", ":!agent_runs/", ":!tmp/"],
+            cwd=repo_path,
+        )
+        msg = f"agent: apply block {block_id} (idx={idx})"
+        c = _run(["git", "commit", "-m", msg], cwd=repo_path)
+        if c.returncode != 0:
+            err = _tail((c.stdout or "") + "\n" + (c.stderr or ""), 80)
+            state["rollback_reason"] = "baseline_commit_failed"
+            state["msg"] = state.get("msg", "") + " | promote_baseline FAIL(commit)"
+            (run_dir / "baseline.commit.error.txt").write_text(err + "\n", encoding="utf-8")
+            raise RuntimeError(f"Baseline commit failed:\n{err}")
+        promoted = True
+
+    # define new baseline commit
+    new_base = _git_current_commit(repo_path)
+    state["base_commit"] = new_base
+
+    # upload meta.json and logs
+    meta_path = run_dir / "meta.json"
+    meta = _load_meta_or_init(meta_path, repo_path, new_base)
+    meta.update(
+        {
+            "base_commit": new_base,
+            "baseline_promoted": promoted,
+            "baseline_promoted_at": datetime.now().isoformat(),
+            "baseline_block_idx": idx,
+            "baseline_block_id": block_id,
+            "baseline_dirty_before_commit": dirty,
+        }
+    )
+    meta_path.write_text(json.dumps(meta, indent=2), encoding="utf-8")
+
+    (run_dir / "baseline.promoted.txt").write_text(
+        f"base_commit={new_base}\npromoted={promoted}\n", encoding="utf-8"
+    )
+
+    state["msg"] = state.get("msg", "") + f" | baseline promoted={promoted} @{new_base[:8]}"
+    return state
+
+def _run_designite(
+    repo_path: Path,
+    out_dir: Path,
+    jar_path: Path,
+) -> Tuple[Path, list[str]]:
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    cmd = [
+        "java", "-jar", str(jar_path),
+        "-i", str(repo_path),
+        "-o", str(out_dir),
+    ]
+
+    p = _run(cmd, cwd=repo_path)
+
+    log = (p.stdout or "") + ("\n" if p.stdout else "") + (p.stderr or "")
+    (out_dir / "designite.log").write_text(log, encoding="utf-8")
+
+    if p.returncode != 0:
+        raise RuntimeError(
+            f"Designite failed (rc={p.returncode}). See log at {out_dir / 'designite.log'}"
+        )
+
+    return out_dir, cmd
+
+def designite_node(state: State) -> State:
+    repo_path = Path(state["repo_path"]).resolve()
+    run_dir = Path(state["run_dir"])
+    run_dir.mkdir(parents=True, exist_ok=True)
+
+    # meta.json
+    meta_path = run_dir / "meta.json"
+    if meta_path.exists():
+        meta = json.loads(meta_path.read_text(encoding="utf-8"))
+    else:
+        meta = {
+            "repo_path": str(repo_path),
+            "base_commit": state.get("base_commit"),
+        }
+
+    # define early so except can reference it safely
+    analysis_out = run_dir / "designite_analysis"
+
+    try:
+        jar_env = os.getenv("DESIGNITE_JAR_PATH")
+        if not jar_env:
+            raise RuntimeError("DESIGNITE_JAR_PATH is not set")
+
+        designite_jar = Path(jar_env).expanduser().resolve()
+        if not designite_jar.exists() or not designite_jar.is_file():
+            raise RuntimeError(f"Designite JAR not found at {designite_jar}")
+
+        analysis_out.mkdir(parents=True, exist_ok=True)
+
+        out_dir, cmd = _run_designite(repo_path, analysis_out, designite_jar)
+
+        # update state
+        state["designite_analysis_dir"] = str(out_dir)
+        state["designite_ok"] = True
+        state["designite_log"] = str(out_dir / "designite.log")
+        state["msg"] = state.get("msg", "") + " | designite done"
+
+        # persist command
+        (run_dir / "designite.cmd.txt").write_text(" ".join(cmd), encoding="utf-8")
+
+        # update meta.json
+        meta.update(
+            {
+                "designite_ok": True,
+                "designite_analysis_dir": str(out_dir),
+                "designite_log": str(out_dir / "designite.log"),
+            }
+        )
+        meta_path.write_text(json.dumps(meta, indent=2), encoding="utf-8")
+
+        return state
+
+    except Exception as e:
+        state["designite_ok"] = False
+        state["designite_analysis_dir"] = str(analysis_out)
+        state["designite_log"] = str(analysis_out / "designite.log")
+        state["rollback_reason"] = "designite_failed"
+        state["msg"] = state.get("msg", "") + f" | designite FAIL: {e}"
+
+        meta.update(
+            {
+                "designite_ok": False,
+                "designite_analysis_dir": str(analysis_out),
+                "designite_log": str(analysis_out / "designite.log"),
+                "designite_error": str(e),
+                "rollback_reason": "designite_failed",
+            }
+        )
+        meta_path.write_text(json.dumps(meta, indent=2), encoding="utf-8")
+
+        raise
+    
 def build_graph():
     g = StateGraph(State)
 
@@ -881,6 +1031,8 @@ def build_graph():
     g.add_node("apply_files", apply_files_node)
     g.add_node("retry_executor", retry_executor_node)
     g.add_node("compile", compile_node)
+    g.add_node("promote_baseline", promote_baseline_node)
+    g.add_node("designite", designite_node)
     g.add_node("advance_block", advance_block_node)
     g.add_node("rollback", rollback_node)
 
@@ -905,6 +1057,7 @@ def build_graph():
             END: END,
         },
     )
+    
     g.add_edge("resolve_files", "lock_workspace")
     g.add_edge("lock_workspace", "executor")
 
@@ -934,11 +1087,12 @@ def build_graph():
         "compile",
         after_compile,
         {
-            END: "advance_block",       # compile_ok
-            "rollback": "rollback",     # compile_fail 
+            END: "promote_baseline",   # compile ok
+            "rollback": "rollback",
         },
     )
 
+    g.add_edge("promote_baseline", "advance_block")
     g.add_edge("advance_block", "stage_block")
 
     g.add_conditional_edges(
@@ -958,11 +1112,10 @@ if __name__ == "__main__":
 
     app = build_graph()
 
-    # Example: run planner->executor->apply->compile pipeline
     with open("data/prompts/planner_agent.prompt", "r", encoding="utf-8") as f:
         YOUR_PROMPT_TEMPLATE_STRING = f.read()
 
-    with open("data/examples/input.json", "r", encoding="utf-8") as f:
+    with open("data/examples/StringUtil.json", "r", encoding="utf-8") as f:
         YOUR_INPUT_DICT = json.loads(f.read())
 
     out = app.invoke(
