@@ -1,0 +1,336 @@
+{
+    "package": "org.apache.fesod.sheet.write.builder",
+    "class": "ExcelWriterBuilder",
+    "file": "data/repositories/fesod/fesod-sheet/src/main/java/org/apache/fesod/sheet/write/builder/ExcelWriterBuilder.java",
+    "metrics": {
+    "nof": 1,
+    "nopf": 0,
+    "nom": 21,
+    "nopm": 20,
+    "loc": 123,
+    "wmc": 23,
+    "nc": 0,
+    "dit": 2,
+    "lcom": 0.1428571428571428,
+    "fanin": 3,
+    "fanout": 5
+    },
+    "methods": [
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "ExcelWriterBuilder()",
+        "type": "constructor",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 41,
+        "types_used": [
+        "ExcelWriterBuilder",
+        "WriteWorkbook"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 4,
+        "cc": 1
+        },
+        "signature": "ExcelWriterBuilder autoCloseStream(Boolean autoCloseStream)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 51,
+        "types_used": [
+        "Boolean",
+        "ExcelWriterBuilder"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 4,
+        "cc": 1
+        },
+        "signature": "ExcelWriterBuilder password(String password)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 64,
+        "types_used": [
+        "ExcelWriterBuilder",
+        "String"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 4,
+        "cc": 1
+        },
+        "signature": "ExcelWriterBuilder inMemory(Boolean inMemory)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 74,
+        "types_used": [
+        "Boolean",
+        "ExcelWriterBuilder"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 4,
+        "cc": 1
+        },
+        "signature": "ExcelWriterBuilder writeExcelOnException(Boolean writeExcelOnException)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 82,
+        "types_used": [
+        "Boolean",
+        "ExcelWriterBuilder"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 4,
+        "cc": 1
+        },
+        "signature": "ExcelWriterBuilder excelType(ExcelTypeEnum excelType)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 87,
+        "types_used": [
+        "ExcelTypeEnum",
+        "ExcelWriterBuilder"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 4,
+        "cc": 1
+        },
+        "signature": "ExcelWriterBuilder file(OutputStream outputStream)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 92,
+        "types_used": [
+        "ExcelWriterBuilder",
+        "OutputStream"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 4,
+        "cc": 1
+        },
+        "signature": "ExcelWriterBuilder file(File outputFile)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 97,
+        "types_used": [
+        "ExcelWriterBuilder",
+        "File"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "ExcelWriterBuilder file(String outputPathName)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 102,
+        "types_used": [
+        "ExcelWriterBuilder",
+        "File",
+        "String"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 4,
+        "cc": 1
+        },
+        "signature": "ExcelWriterBuilder charset(Charset charset)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 110,
+        "types_used": [
+        "Charset",
+        "ExcelWriterBuilder"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 4,
+        "cc": 1
+        },
+        "signature": "ExcelWriterBuilder withBom(Boolean withBom)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 119,
+        "types_used": [
+        "Boolean",
+        "ExcelWriterBuilder"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 4,
+        "cc": 1
+        },
+        "signature": "ExcelWriterBuilder withTemplate(InputStream templateInputStream)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 128,
+        "types_used": [
+        "ExcelWriterBuilder",
+        "InputStream"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 4,
+        "cc": 1
+        },
+        "signature": "ExcelWriterBuilder withTemplate(File templateFile)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 137,
+        "types_used": [
+        "ExcelWriterBuilder",
+        "File"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "ExcelWriterBuilder withTemplate(String pathName)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 146,
+        "types_used": [
+        "ExcelWriterBuilder",
+        "File",
+        "String"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "ExcelWriter build()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 150,
+        "types_used": [
+        "ExcelWriter"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "ExcelWriterSheetBuilder sheet()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 154,
+        "types_used": [
+        "ExcelWriterSheetBuilder"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "ExcelWriterSheetBuilder sheet(Integer sheetNo)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 158,
+        "types_used": [
+        "ExcelWriterSheetBuilder",
+        "Integer"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "ExcelWriterSheetBuilder sheet(String sheetName)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 162,
+        "types_used": [
+        "ExcelWriterSheetBuilder",
+        "String"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 11,
+        "cc": 3
+        },
+        "signature": "ExcelWriterSheetBuilder sheet(Integer sheetNo, String sheetName)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 166,
+        "types_used": [
+        "ExcelWriter",
+        "ExcelWriterSheetBuilder",
+        "Integer",
+        "String"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 4,
+        "cc": 1
+        },
+        "signature": "CsvWriterBuilder csv()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 178,
+        "types_used": [
+        "CsvWriterBuilder"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "WriteWorkbook parameter()",
+        "type": "method",
+        "visibility": "protected",
+        "is_static": false,
+        "begin_line": 183,
+        "types_used": [
+        "WriteWorkbook"
+        ]
+    }
+    ],
+    "dependencies": []
+}

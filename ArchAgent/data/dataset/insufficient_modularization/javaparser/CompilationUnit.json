@@ -1,0 +1,1650 @@
+{
+  "package": "com.github.javaparser.ast",
+  "class": "CompilationUnit",
+  "file": "data/repositories/javaparser/javaparser-core/src/main/java/com/github/javaparser/ast/CompilationUnit.java",
+  "metrics": {
+    "nof": 9,
+    "nopf": 0,
+    "nom": 59,
+    "nopm": 55,
+    "loc": 615,
+    "wmc": 100,
+    "nc": 0,
+    "dit": 3,
+    "lcom": 0.2542372881355932,
+    "fanin": 377,
+    "fanout": 25
+  },
+  "methods": [
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "CompilationUnit()",
+      "type": "constructor",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 96,
+      "types_used": [
+        "CompilationUnit",
+        "NodeList"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "CompilationUnit(String packageDeclaration)",
+      "type": "constructor",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 100,
+      "types_used": [
+        "CompilationUnit",
+        "Name",
+        "NodeList",
+        "PackageDeclaration",
+        "String"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "CompilationUnit(PackageDeclaration packageDeclaration, NodeList<ImportDeclaration> imports, NodeList<TypeDeclaration<?>> types, ModuleDeclaration module)",
+      "type": "constructor",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 104,
+      "types_used": [
+        "CompilationUnit",
+        "ImportDeclaration",
+        "ModuleDeclaration",
+        "NodeList",
+        "NodeList>",
+        "PackageDeclaration",
+        "TypeDeclaration"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 8,
+        "cc": 1
+      },
+      "signature": "CompilationUnit(TokenRange tokenRange, PackageDeclaration packageDeclaration, NodeList<ImportDeclaration> imports, NodeList<TypeDeclaration<?>> types, ModuleDeclaration module)",
+      "type": "constructor",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 116,
+      "types_used": [
+        "CompilationUnit",
+        "ImportDeclaration",
+        "ModuleDeclaration",
+        "NodeList",
+        "NodeList>",
+        "PackageDeclaration",
+        "TokenRange",
+        "TypeDeclaration"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "R accept(GenericVisitor<R, A> v, A arg)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 131,
+      "types_used": [
+        "A",
+        "GenericVisitor",
+        "R"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "void accept(VoidVisitor<A> v, A arg)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 137,
+      "types_used": [
+        "A",
+        "VoidVisitor"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 4,
+        "cc": 1
+      },
+      "signature": "CompilationUnit printer(Printer printer)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 146,
+      "types_used": [
+        "CompilationUnit",
+        "Printer"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 7,
+        "cc": 2
+      },
+      "signature": "Printer getPrinter()",
+      "type": "method",
+      "visibility": "protected",
+      "is_static": false,
+      "begin_line": 154,
+      "types_used": [
+        "Printer"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 8,
+        "cc": 2
+      },
+      "signature": "Printer getPrinter(PrinterConfiguration config)",
+      "type": "method",
+      "visibility": "protected",
+      "is_static": false,
+      "begin_line": 167,
+      "types_used": [
+        "ConfigurablePrinter",
+        "Printer",
+        "PrinterConfiguration"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 5,
+        "cc": 1
+      },
+      "signature": "List<Comment> getComments()",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 182,
+      "types_used": [
+        "Comment",
+        "List",
+        "comments"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 5,
+        "cc": 1
+      },
+      "signature": "List<Comment> getAllComments()",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 200,
+      "types_used": [
+        "Comment",
+        "List",
+        "comments"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "NodeList<ImportDeclaration> getImports()",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 212,
+      "types_used": [
+        "ImportDeclaration",
+        "NodeList"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "ImportDeclaration getImport(int i)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 217,
+      "types_used": [
+        "ImportDeclaration",
+        "int"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "Optional<PackageDeclaration> getPackageDeclaration()",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 228,
+      "types_used": [
+        "Optional",
+        "PackageDeclaration"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "NodeList<TypeDeclaration<?>> getTypes()",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 242,
+      "types_used": [
+        "NodeList>",
+        "TypeDeclaration"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "TypeDeclaration<?> getType(int i)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 253,
+      "types_used": [
+        "TypeDeclaration",
+        "int"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 11,
+        "cc": 3
+      },
+      "signature": "CompilationUnit setImports(NodeList<ImportDeclaration> imports)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 263,
+      "types_used": [
+        "CompilationUnit",
+        "ImportDeclaration",
+        "NodeList"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 4,
+        "cc": 1
+      },
+      "signature": "CompilationUnit setImport(int i, ImportDeclaration imports)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 276,
+      "types_used": [
+        "CompilationUnit",
+        "ImportDeclaration",
+        "int"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 9,
+        "cc": 3
+      },
+      "signature": "CompilationUnit addImport(ImportDeclaration importDeclaration)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 288,
+      "types_used": [
+        "CompilationUnit",
+        "ImportDeclaration"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 14,
+        "cc": 4
+      },
+      "signature": "boolean isImplicitImport(ImportDeclaration importDeclaration)",
+      "type": "method",
+      "visibility": "private",
+      "is_static": false,
+      "begin_line": 312,
+      "types_used": [
+        "ImportDeclaration",
+        "Name",
+        "Optional",
+        "boolean"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "Optional<Name> getImportPackageName(ImportDeclaration importDeclaration)",
+      "type": "method",
+      "visibility": "private",
+      "is_static": true,
+      "begin_line": 329,
+      "types_used": [
+        "ImportDeclaration",
+        "Name",
+        "Optional"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 10,
+        "cc": 3
+      },
+      "signature": "CompilationUnit setPackageDeclaration(PackageDeclaration packageDeclaration)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 341,
+      "types_used": [
+        "CompilationUnit",
+        "PackageDeclaration"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 11,
+        "cc": 3
+      },
+      "signature": "CompilationUnit setTypes(NodeList<TypeDeclaration<?>> types)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 356,
+      "types_used": [
+        "CompilationUnit",
+        "NodeList>",
+        "TypeDeclaration"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 7,
+        "cc": 1
+      },
+      "signature": "CompilationUnit setType(int i, TypeDeclaration<?> type)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 369,
+      "types_used": [
+        "CompilationUnit",
+        "NodeList",
+        "NodeList>",
+        "TypeDeclaration",
+        "int"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 7,
+        "cc": 1
+      },
+      "signature": "CompilationUnit addType(TypeDeclaration<?> type)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 377,
+      "types_used": [
+        "CompilationUnit",
+        "NodeList",
+        "NodeList>",
+        "TypeDeclaration"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 4,
+        "cc": 1
+      },
+      "signature": "CompilationUnit setPackageDeclaration(String name)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 391,
+      "types_used": [
+        "CompilationUnit",
+        "PackageDeclaration",
+        "String"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "CompilationUnit addImport(String name)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 403,
+      "types_used": [
+        "CompilationUnit",
+        "String"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 8,
+        "cc": 4
+      },
+      "signature": "CompilationUnit addImport(Class<?> clazz)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 415,
+      "types_used": [
+        "Class",
+        "CompilationUnit",
+        "IllegalArgumentException"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 6,
+        "cc": 2
+      },
+      "signature": "CompilationUnit addImport(String name, boolean isStatic, boolean isAsterisk)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 436,
+      "types_used": [
+        "CompilationUnit",
+        "ImportDeclaration",
+        "String",
+        "boolean"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 6,
+        "cc": 2
+      },
+      "signature": "CompilationUnit addImport(String name, boolean isStatic, boolean isAsterisk, boolean isModule)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 453,
+      "types_used": [
+        "CompilationUnit",
+        "ImportDeclaration",
+        "String",
+        "boolean"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "ClassOrInterfaceDeclaration addClass(String name)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 466,
+      "types_used": [
+        "ClassOrInterfaceDeclaration",
+        "String"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 5,
+        "cc": 1
+      },
+      "signature": "ClassOrInterfaceDeclaration addClass(String name, Modifier.Keyword... modifiers)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 477,
+      "types_used": [
+        "ClassOrInterfaceDeclaration",
+        "Modifier",
+        "Modifier.Keyword",
+        "String"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "ClassOrInterfaceDeclaration addInterface(String name)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 490,
+      "types_used": [
+        "ClassOrInterfaceDeclaration",
+        "String"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 5,
+        "cc": 1
+      },
+      "signature": "ClassOrInterfaceDeclaration addInterface(String name, Modifier.Keyword... modifiers)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 501,
+      "types_used": [
+        "ClassOrInterfaceDeclaration",
+        "Modifier",
+        "Modifier.Keyword",
+        "String"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "EnumDeclaration addEnum(String name)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 514,
+      "types_used": [
+        "EnumDeclaration",
+        "String"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 5,
+        "cc": 1
+      },
+      "signature": "EnumDeclaration addEnum(String name, Modifier.Keyword... modifiers)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 525,
+      "types_used": [
+        "EnumDeclaration",
+        "Modifier",
+        "Modifier.Keyword",
+        "String"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "AnnotationDeclaration addAnnotationDeclaration(String name)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 537,
+      "types_used": [
+        "AnnotationDeclaration",
+        "String"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 5,
+        "cc": 1
+      },
+      "signature": "AnnotationDeclaration addAnnotationDeclaration(String name, Modifier.Keyword... modifiers)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 548,
+      "types_used": [
+        "AnnotationDeclaration",
+        "Modifier",
+        "Modifier.Keyword",
+        "String"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "Optional<ClassOrInterfaceDeclaration> getClassByName(String className)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 559,
+      "types_used": [
+        "ClassOrInterfaceDeclaration",
+        "Optional",
+        "String"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "List<ClassOrInterfaceDeclaration> getLocalDeclarationFromClassname(String className)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 573,
+      "types_used": [
+        "ClassOrInterfaceDeclaration",
+        "List",
+        "String"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "Optional<ClassOrInterfaceDeclaration> getInterfaceByName(String interfaceName)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 584,
+      "types_used": [
+        "ClassOrInterfaceDeclaration",
+        "Optional",
+        "String"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "Optional<EnumDeclaration> getEnumByName(String enumName)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 598,
+      "types_used": [
+        "EnumDeclaration",
+        "Optional",
+        "String"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "Optional<String> getPrimaryTypeName()",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 609,
+      "types_used": [
+        "Optional",
+        "Storage",
+        "String",
+        "Utils"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "Optional<TypeDeclaration<?>> getPrimaryType()",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 618,
+      "types_used": [
+        "Optional>",
+        "TypeDeclaration"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "Optional<AnnotationDeclaration> getAnnotationDeclarationByName(String annotationName)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 629,
+      "types_used": [
+        "AnnotationDeclaration",
+        "Optional",
+        "String"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "Optional<RecordDeclaration> getRecordByName(String recordName)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 641,
+      "types_used": [
+        "Optional",
+        "RecordDeclaration",
+        "String"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 30,
+        "cc": 10
+      },
+      "signature": "boolean remove(Node node)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 648,
+      "types_used": [
+        "Node",
+        "boolean",
+        "int"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "CompilationUnit removePackageDeclaration()",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 681,
+      "types_used": [
+        "CompilationUnit",
+        "PackageDeclaration"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "Optional<ModuleDeclaration> getModule()",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 689,
+      "types_used": [
+        "ModuleDeclaration",
+        "Optional"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 10,
+        "cc": 3
+      },
+      "signature": "CompilationUnit setModule(ModuleDeclaration module)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 694,
+      "types_used": [
+        "CompilationUnit",
+        "ModuleDeclaration"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "CompilationUnit removeModule()",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 706,
+      "types_used": [
+        "CompilationUnit",
+        "ModuleDeclaration"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "Optional<Storage> getStorage()",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 714,
+      "types_used": [
+        "Optional",
+        "Storage"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 4,
+        "cc": 1
+      },
+      "signature": "CompilationUnit setStorage(Path path)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 718,
+      "types_used": [
+        "CompilationUnit",
+        "Path",
+        "Storage"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 4,
+        "cc": 1
+      },
+      "signature": "CompilationUnit setStorage(Path path, Charset charset)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 723,
+      "types_used": [
+        "Charset",
+        "CompilationUnit",
+        "Path",
+        "Storage"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 5,
+        "cc": 1
+      },
+      "signature": "ModuleDeclaration setModule(String name)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 733,
+      "types_used": [
+        "ModuleDeclaration",
+        "String"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 16,
+        "cc": 4
+      },
+      "signature": "void recalculatePositions()",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 743,
+      "types_used": [
+        "IllegalStateException",
+        "JavaToken",
+        "Position",
+        "int"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "CompilationUnit clone()",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 868,
+      "types_used": [
+        "CloneVisitor",
+        "CompilationUnit"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "CompilationUnitMetaModel getMetaModel()",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 874,
+      "types_used": [
+        "CompilationUnitMetaModel"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 30,
+        "cc": 10
+      },
+      "signature": "boolean replace(Node node, Node replacementNode)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 880,
+      "types_used": [
+        "ImportDeclaration",
+        "ModuleDeclaration",
+        "Node",
+        "PackageDeclaration",
+        "TypeDeclaration",
+        "boolean",
+        "int"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 2,
+        "cc": 1
+      },
+      "signature": "CompilationUnit()",
+      "type": "constructor",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 96,
+      "types_used": [
+        "CompilationUnit",
+        "NodeList"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 5,
+        "cc": 1
+      },
+      "signature": "CompilationUnit()",
+      "type": "constructor",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 96,
+      "types_used": [
+        "CompilationUnit",
+        "NodeList"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 6,
+        "cc": 1
+      },
+      "signature": "CompilationUnit()",
+      "type": "constructor",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 96,
+      "types_used": [
+        "CompilationUnit",
+        "NodeList"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "CompilationUnit()",
+      "type": "constructor",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 96,
+      "types_used": [
+        "CompilationUnit",
+        "NodeList"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "CompilationUnit()",
+      "type": "constructor",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 96,
+      "types_used": [
+        "CompilationUnit",
+        "NodeList"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "CompilationUnit(String packageDeclaration)",
+      "type": "constructor",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 100,
+      "types_used": [
+        "CompilationUnit",
+        "Name",
+        "NodeList",
+        "PackageDeclaration",
+        "String"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 4,
+        "cc": 1
+      },
+      "signature": "CompilationUnit(TokenRange tokenRange, PackageDeclaration packageDeclaration, NodeList<ImportDeclaration> imports, NodeList<TypeDeclaration<?>> types, ModuleDeclaration module)",
+      "type": "constructor",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 116,
+      "types_used": [
+        "CompilationUnit",
+        "ImportDeclaration",
+        "ModuleDeclaration",
+        "NodeList",
+        "NodeList>",
+        "PackageDeclaration",
+        "TokenRange",
+        "TypeDeclaration"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "CompilationUnit(TokenRange tokenRange, PackageDeclaration packageDeclaration, NodeList<ImportDeclaration> imports, NodeList<TypeDeclaration<?>> types, ModuleDeclaration module)",
+      "type": "constructor",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 116,
+      "types_used": [
+        "CompilationUnit",
+        "ImportDeclaration",
+        "ModuleDeclaration",
+        "NodeList",
+        "NodeList>",
+        "PackageDeclaration",
+        "TokenRange",
+        "TypeDeclaration"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 4,
+        "cc": 1
+      },
+      "signature": "void accept(VoidVisitor<A> v, A arg)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 137,
+      "types_used": [
+        "A",
+        "VoidVisitor"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "Printer getPrinter()",
+      "type": "method",
+      "visibility": "protected",
+      "is_static": false,
+      "begin_line": 154,
+      "types_used": [
+        "Printer"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 5,
+        "cc": 1
+      },
+      "signature": "Printer getPrinter(PrinterConfiguration config)",
+      "type": "method",
+      "visibility": "protected",
+      "is_static": false,
+      "begin_line": 167,
+      "types_used": [
+        "ConfigurablePrinter",
+        "Printer",
+        "PrinterConfiguration"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 5,
+        "cc": 1
+      },
+      "signature": "List<Comment> getComments()",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 182,
+      "types_used": [
+        "Comment",
+        "List",
+        "comments"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 5,
+        "cc": 1
+      },
+      "signature": "List<Comment> getAllComments()",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 200,
+      "types_used": [
+        "Comment",
+        "List",
+        "comments"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 4,
+        "cc": 1
+      },
+      "signature": "List<Comment> getAllComments()",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 200,
+      "types_used": [
+        "Comment",
+        "List",
+        "comments"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "NodeList<ImportDeclaration> getImports()",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 212,
+      "types_used": [
+        "ImportDeclaration",
+        "NodeList"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 5,
+        "cc": 3
+      },
+      "signature": "Optional<PackageDeclaration> getPackageDeclaration()",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 228,
+      "types_used": [
+        "Optional",
+        "PackageDeclaration"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 9,
+        "cc": 2
+      },
+      "signature": "NodeList<TypeDeclaration<?>> getTypes()",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 242,
+      "types_used": [
+        "NodeList>",
+        "TypeDeclaration"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "CompilationUnit setImports(NodeList<ImportDeclaration> imports)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 263,
+      "types_used": [
+        "CompilationUnit",
+        "ImportDeclaration",
+        "NodeList"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 6,
+        "cc": 1
+      },
+      "signature": "CompilationUnit setImports(NodeList<ImportDeclaration> imports)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 263,
+      "types_used": [
+        "CompilationUnit",
+        "ImportDeclaration",
+        "NodeList"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "CompilationUnit addImport(ImportDeclaration importDeclaration)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 288,
+      "types_used": [
+        "CompilationUnit",
+        "ImportDeclaration"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 6,
+        "cc": 1
+      },
+      "signature": "CompilationUnit addImport(ImportDeclaration importDeclaration)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 288,
+      "types_used": [
+        "CompilationUnit",
+        "ImportDeclaration"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "boolean isImplicitImport(ImportDeclaration importDeclaration)",
+      "type": "method",
+      "visibility": "private",
+      "is_static": false,
+      "begin_line": 312,
+      "types_used": [
+        "ImportDeclaration",
+        "Name",
+        "Optional",
+        "boolean"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 6,
+        "cc": 1
+      },
+      "signature": "boolean isImplicitImport(ImportDeclaration importDeclaration)",
+      "type": "method",
+      "visibility": "private",
+      "is_static": false,
+      "begin_line": 312,
+      "types_used": [
+        "ImportDeclaration",
+        "Name",
+        "Optional",
+        "boolean"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "CompilationUnit setPackageDeclaration(PackageDeclaration packageDeclaration)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 341,
+      "types_used": [
+        "CompilationUnit",
+        "PackageDeclaration"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 6,
+        "cc": 1
+      },
+      "signature": "CompilationUnit setPackageDeclaration(PackageDeclaration packageDeclaration)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 341,
+      "types_used": [
+        "CompilationUnit",
+        "PackageDeclaration"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "CompilationUnit setTypes(NodeList<TypeDeclaration<?>> types)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 356,
+      "types_used": [
+        "CompilationUnit",
+        "NodeList>",
+        "TypeDeclaration"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "CompilationUnit addType(TypeDeclaration<?> type)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 377,
+      "types_used": [
+        "CompilationUnit",
+        "NodeList",
+        "NodeList>",
+        "TypeDeclaration"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "CompilationUnit setPackageDeclaration(String name)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 391,
+      "types_used": [
+        "CompilationUnit",
+        "PackageDeclaration",
+        "String"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "CompilationUnit addImport(String name)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 403,
+      "types_used": [
+        "CompilationUnit",
+        "String"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 2,
+        "cc": 1
+      },
+      "signature": "CompilationUnit()",
+      "type": "constructor",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 96,
+      "types_used": [
+        "CompilationUnit",
+        "NodeList"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 5,
+        "cc": 1
+      },
+      "signature": "CompilationUnit()",
+      "type": "constructor",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 96,
+      "types_used": [
+        "CompilationUnit",
+        "NodeList"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 6,
+        "cc": 1
+      },
+      "signature": "CompilationUnit()",
+      "type": "constructor",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 96,
+      "types_used": [
+        "CompilationUnit",
+        "NodeList"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "CompilationUnit()",
+      "type": "constructor",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 96,
+      "types_used": [
+        "CompilationUnit",
+        "NodeList"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "CompilationUnit()",
+      "type": "constructor",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 96,
+      "types_used": [
+        "CompilationUnit",
+        "NodeList"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "CompilationUnit()",
+      "type": "constructor",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 96,
+      "types_used": [
+        "CompilationUnit",
+        "NodeList"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "CompilationUnit(String packageDeclaration)",
+      "type": "constructor",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 100,
+      "types_used": [
+        "CompilationUnit",
+        "Name",
+        "NodeList",
+        "PackageDeclaration",
+        "String"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "CompilationUnit(PackageDeclaration packageDeclaration, NodeList<ImportDeclaration> imports, NodeList<TypeDeclaration<?>> types, ModuleDeclaration module)",
+      "type": "constructor",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 104,
+      "types_used": [
+        "CompilationUnit",
+        "ImportDeclaration",
+        "ModuleDeclaration",
+        "NodeList",
+        "NodeList>",
+        "PackageDeclaration",
+        "TypeDeclaration"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "CompilationUnit(TokenRange tokenRange, PackageDeclaration packageDeclaration, NodeList<ImportDeclaration> imports, NodeList<TypeDeclaration<?>> types, ModuleDeclaration module)",
+      "type": "constructor",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 116,
+      "types_used": [
+        "CompilationUnit",
+        "ImportDeclaration",
+        "ModuleDeclaration",
+        "NodeList",
+        "NodeList>",
+        "PackageDeclaration",
+        "TokenRange",
+        "TypeDeclaration"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 3,
+        "cc": 1
+      },
+      "signature": "void accept(VoidVisitor<A> v, A arg)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 137,
+      "types_used": [
+        "A",
+        "VoidVisitor"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 4,
+        "cc": 1
+      },
+      "signature": "CompilationUnit printer(Printer printer)",
+      "type": "method",
+      "visibility": "public",
+      "is_static": false,
+      "begin_line": 146,
+      "types_used": [
+        "CompilationUnit",
+        "Printer"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 4,
+        "cc": 1
+      },
+      "signature": "Printer getPrinter()",
+      "type": "method",
+      "visibility": "protected",
+      "is_static": false,
+      "begin_line": 154,
+      "types_used": [
+        "Printer"
+      ]
+    },
+    {
+      "metrics": {
+        "loc": 4,
+        "cc": 1
+      },
+      "signature": "Printer getPrinter(PrinterConfiguration config)",
+      "type": "method",
+      "visibility": "protected",
+      "is_static": false,
+      "begin_line": 167,
+      "types_used": [
+        "ConfigurablePrinter",
+        "Printer",
+        "PrinterConfiguration"
+      ]
+    }
+  ],
+  "dependencies": [
+    "com.github.javaparser.Range",
+    "com.github.javaparser.StaticJavaParser",
+    "com.github.javaparser.ast.Modifier",
+    "com.github.javaparser.ast.Node",
+    "com.github.javaparser.ast.NodeList",
+    "com.github.javaparser.ast.body.ClassOrInterfaceDeclaration",
+    "com.github.javaparser.ast.body.EnumDeclaration",
+    "com.github.javaparser.ast.body.TypeDeclaration",
+    "com.github.javaparser.ast.modules.ModuleDeclaration",
+    "com.github.javaparser.ast.visitor.GenericVisitor",
+    "com.github.javaparser.ast.visitor.VoidVisitor"
+  ]
+}

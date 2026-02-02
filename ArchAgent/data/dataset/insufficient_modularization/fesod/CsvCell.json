@@ -1,0 +1,583 @@
+{
+    "package": "org.apache.fesod.sheet.metadata.csv",
+    "class": "CsvCell",
+    "file": "data/repositories/fesod/fesod-sheet/src/main/java/org/apache/fesod/sheet/metadata/csv/CsvCell.java",
+    "metrics": {
+    "nof": 13,
+    "nopf": 0,
+    "nom": 40,
+    "nopm": 30,
+    "loc": 221,
+    "wmc": 50,
+    "nc": 0,
+    "dit": 0,
+    "lcom": 0.35,
+    "fanin": 2,
+    "fanout": 5
+    },
+    "methods": [
+    {
+        "metrics": {
+        "loc": 10,
+        "cc": 2
+        },
+        "signature": "CsvCell(CsvWorkbook csvWorkbook, CsvSheet csvSheet, CsvRow csvRow, Integer columnIndex, CellType cellType)",
+        "type": "constructor",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 121,
+        "types_used": [
+        "CellType",
+        "CsvCell",
+        "CsvRow",
+        "CsvSheet",
+        "CsvWorkbook",
+        "Integer"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "void setCellTypeImpl(CellType cellType)",
+        "type": "method",
+        "visibility": "protected",
+        "is_static": false,
+        "begin_line": 132,
+        "types_used": [
+        "CellType"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 6,
+        "cc": 1
+        },
+        "signature": "void setCellFormulaImpl(String formula)",
+        "type": "method",
+        "visibility": "protected",
+        "is_static": false,
+        "begin_line": 137,
+        "types_used": [
+        "FormulaData",
+        "String"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "void removeFormulaImpl()",
+        "type": "method",
+        "visibility": "protected",
+        "is_static": false,
+        "begin_line": 145,
+        "types_used": []
+    },
+    {
+        "metrics": {
+        "loc": 4,
+        "cc": 1
+        },
+        "signature": "void setCellValueImpl(double value)",
+        "type": "method",
+        "visibility": "protected",
+        "is_static": false,
+        "begin_line": 150,
+        "types_used": [
+        "double"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 8,
+        "cc": 2
+        },
+        "signature": "void setCellValueImpl(Date value)",
+        "type": "method",
+        "visibility": "protected",
+        "is_static": false,
+        "begin_line": 156,
+        "types_used": [
+        "Date"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 5,
+        "cc": 1
+        },
+        "signature": "void setCellValueImpl(LocalDateTime value)",
+        "type": "method",
+        "visibility": "protected",
+        "is_static": false,
+        "begin_line": 166,
+        "types_used": [
+        "LocalDateTime"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 7,
+        "cc": 2
+        },
+        "signature": "void setCellValueImpl(Calendar value)",
+        "type": "method",
+        "visibility": "protected",
+        "is_static": false,
+        "begin_line": 173,
+        "types_used": [
+        "Calendar"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 4,
+        "cc": 1
+        },
+        "signature": "void setCellValueImpl(String value)",
+        "type": "method",
+        "visibility": "protected",
+        "is_static": false,
+        "begin_line": 182,
+        "types_used": [
+        "String"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 4,
+        "cc": 1
+        },
+        "signature": "void setCellValueImpl(RichTextString value)",
+        "type": "method",
+        "visibility": "protected",
+        "is_static": false,
+        "begin_line": 188,
+        "types_used": [
+        "RichTextString"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 7,
+        "cc": 2
+        },
+        "signature": "void setCellValue(String value)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 194,
+        "types_used": [
+        "String"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 7,
+        "cc": 2
+        },
+        "signature": "void setCellValue(RichTextString value)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 203,
+        "types_used": [
+        "RichTextString"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "SpreadsheetVersion getSpreadsheetVersion()",
+        "type": "method",
+        "visibility": "protected",
+        "is_static": false,
+        "begin_line": 212,
+        "types_used": [
+        "SpreadsheetVersion"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "int getColumnIndex()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 217,
+        "types_used": [
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "int getRowIndex()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 222,
+        "types_used": [
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "Sheet getSheet()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 227,
+        "types_used": [
+        "Sheet"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "Row getRow()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 232,
+        "types_used": [
+        "Row"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "CellType getCellType()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 237,
+        "types_used": [
+        "CellType"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "CellType getCachedFormulaResultType()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 242,
+        "types_used": [
+        "CellType"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 6,
+        "cc": 2
+        },
+        "signature": "String getCellFormula()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 247,
+        "types_used": [
+        "String"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 6,
+        "cc": 2
+        },
+        "signature": "double getNumericCellValue()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 255,
+        "types_used": [
+        "double"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 6,
+        "cc": 2
+        },
+        "signature": "Date getDateCellValue()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 263,
+        "types_used": [
+        "Date"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "LocalDateTime getLocalDateTimeCellValue()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 271,
+        "types_used": [
+        "LocalDateTime"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "RichTextString getRichStringCellValue()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 276,
+        "types_used": [
+        "RichTextString"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "String getStringCellValue()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 281,
+        "types_used": [
+        "String"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 4,
+        "cc": 1
+        },
+        "signature": "void setCellValue(boolean value)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 286,
+        "types_used": [
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 4,
+        "cc": 1
+        },
+        "signature": "void setCellErrorValue(byte value)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 292,
+        "types_used": [
+        "byte"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 6,
+        "cc": 2
+        },
+        "signature": "boolean getBooleanCellValue()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 298,
+        "types_used": [
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 6,
+        "cc": 2
+        },
+        "signature": "byte getErrorCellValue()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 306,
+        "types_used": [
+        "byte"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "void setCellStyle(CellStyle style)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 314,
+        "types_used": [
+        "CellStyle"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "CellStyle getCellStyle()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 319,
+        "types_used": [
+        "CellStyle"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setAsActiveCell()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 324,
+        "types_used": []
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setCellComment(Comment comment)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 327,
+        "types_used": [
+        "Comment"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "Comment getCellComment()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 330,
+        "types_used": [
+        "Comment"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void removeCellComment()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 335,
+        "types_used": []
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "Hyperlink getHyperlink()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 338,
+        "types_used": [
+        "Hyperlink"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setHyperlink(Hyperlink link)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 343,
+        "types_used": [
+        "Hyperlink"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void removeHyperlink()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 346,
+        "types_used": []
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "CellRangeAddress getArrayFormulaRange()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 349,
+        "types_used": [
+        "CellRangeAddress"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean isPartOfArrayFormulaGroup()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 354,
+        "types_used": [
+        "boolean"
+        ]
+    }
+    ],
+    "dependencies": [
+    "org.apache.fesod.sheet.metadata.csv.CsvRow",
+    "org.apache.fesod.sheet.metadata.csv.CsvSheet",
+    "org.apache.fesod.sheet.metadata.csv.CsvWorkbook"
+    ]
+}

@@ -1,0 +1,399 @@
+{
+    "package": "org.apache.fesod.sheet.util",
+    "class": "WriteHandlerUtils",
+    "file": "data/repositories/fesod/fesod-sheet/src/main/java/org/apache/fesod/sheet/util/WriteHandlerUtils.java",
+    "metrics": {
+    "nof": 0,
+    "nopf": 0,
+    "nom": 24,
+    "nopm": 21,
+    "loc": 130,
+    "wmc": 39,
+    "nc": 0,
+    "dit": 0,
+    "lcom": -1.0,
+    "fanin": 5,
+    "fanout": 12
+    },
+    "methods": [
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "WriteHandlerUtils()",
+        "type": "constructor",
+        "visibility": "private",
+        "is_static": false,
+        "begin_line": 45,
+        "types_used": [
+        "WriteHandlerUtils"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 5,
+        "cc": 1
+        },
+        "signature": "WorkbookWriteHandlerContext createWorkbookWriteHandlerContext(WriteContext writeContext)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 47,
+        "types_used": [
+        "WorkbookWriteHandlerContext",
+        "WriteContext"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "void beforeWorkbookCreate(WorkbookWriteHandlerContext context)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 54,
+        "types_used": [
+        "WorkbookWriteHandlerContext"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 6,
+        "cc": 2
+        },
+        "signature": "void beforeWorkbookCreate(WorkbookWriteHandlerContext context, boolean runOwn)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 58,
+        "types_used": [
+        "WorkbookHandlerExecutionChain",
+        "WorkbookWriteHandlerContext",
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "void afterWorkbookCreate(WorkbookWriteHandlerContext context)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 65,
+        "types_used": [
+        "WorkbookWriteHandlerContext"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 6,
+        "cc": 2
+        },
+        "signature": "void afterWorkbookCreate(WorkbookWriteHandlerContext context, boolean runOwn)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 69,
+        "types_used": [
+        "WorkbookHandlerExecutionChain",
+        "WorkbookWriteHandlerContext",
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 9,
+        "cc": 2
+        },
+        "signature": "WorkbookHandlerExecutionChain getWorkbookHandlerExecutionChain(WorkbookWriteHandlerContext context, boolean runOwn)",
+        "type": "method",
+        "visibility": "private",
+        "is_static": true,
+        "begin_line": 76,
+        "types_used": [
+        "AbstractWriteHolder",
+        "WorkbookHandlerExecutionChain",
+        "WorkbookWriteHandlerContext",
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 6,
+        "cc": 2
+        },
+        "signature": "void afterWorkbookDispose(WorkbookWriteHandlerContext context)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 87,
+        "types_used": [
+        "WorkbookHandlerExecutionChain",
+        "WorkbookWriteHandlerContext"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "SheetWriteHandlerContext createSheetWriteHandlerContext(WriteContext writeContext)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 94,
+        "types_used": [
+        "SheetWriteHandlerContext",
+        "WriteContext"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "void beforeSheetCreate(SheetWriteHandlerContext context)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 99,
+        "types_used": [
+        "SheetWriteHandlerContext"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 6,
+        "cc": 2
+        },
+        "signature": "void beforeSheetCreate(SheetWriteHandlerContext context, boolean runOwn)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 103,
+        "types_used": [
+        "SheetHandlerExecutionChain",
+        "SheetWriteHandlerContext",
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "void afterSheetCreate(SheetWriteHandlerContext context)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 110,
+        "types_used": [
+        "SheetWriteHandlerContext"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 6,
+        "cc": 2
+        },
+        "signature": "void afterSheetCreate(SheetWriteHandlerContext context, boolean runOwn)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 114,
+        "types_used": [
+        "SheetHandlerExecutionChain",
+        "SheetWriteHandlerContext",
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 9,
+        "cc": 2
+        },
+        "signature": "SheetHandlerExecutionChain getSheetHandlerExecutionChain(SheetWriteHandlerContext context, boolean runOwn)",
+        "type": "method",
+        "visibility": "private",
+        "is_static": true,
+        "begin_line": 121,
+        "types_used": [
+        "AbstractWriteHolder",
+        "SheetHandlerExecutionChain",
+        "SheetWriteHandlerContext",
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "CellWriteHandlerContext createCellWriteHandlerContext(WriteContext writeContext, Row row, Integer rowIndex, Head head, Integer columnIndex, Integer relativeRowIndex, Boolean isHead, ExcelContentProperty excelContentProperty)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 132,
+        "types_used": [
+        "Boolean",
+        "CellWriteHandlerContext",
+        "ExcelContentProperty",
+        "Head",
+        "Integer",
+        "Row",
+        "WriteContext"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 6,
+        "cc": 2
+        },
+        "signature": "void beforeCellCreate(CellWriteHandlerContext context)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 158,
+        "types_used": [
+        "AbstractWriteHolder",
+        "CellHandlerExecutionChain",
+        "CellWriteHandlerContext"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 6,
+        "cc": 2
+        },
+        "signature": "void afterCellCreate(CellWriteHandlerContext context)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 166,
+        "types_used": [
+        "AbstractWriteHolder",
+        "CellHandlerExecutionChain",
+        "CellWriteHandlerContext"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 6,
+        "cc": 2
+        },
+        "signature": "void afterCellDataConverted(CellWriteHandlerContext context)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 174,
+        "types_used": [
+        "AbstractWriteHolder",
+        "CellHandlerExecutionChain",
+        "CellWriteHandlerContext"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 6,
+        "cc": 2
+        },
+        "signature": "void afterCellDispose(CellWriteHandlerContext context)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 182,
+        "types_used": [
+        "AbstractWriteHolder",
+        "CellHandlerExecutionChain",
+        "CellWriteHandlerContext"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "RowWriteHandlerContext createRowWriteHandlerContext(WriteContext writeContext, Integer rowIndex, Integer relativeRowIndex, Boolean isHead)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 190,
+        "types_used": [
+        "Boolean",
+        "Integer",
+        "RowWriteHandlerContext",
+        "WriteContext"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 6,
+        "cc": 2
+        },
+        "signature": "void beforeRowCreate(RowWriteHandlerContext context)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 203,
+        "types_used": [
+        "AbstractWriteHolder",
+        "RowHandlerExecutionChain",
+        "RowWriteHandlerContext"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 6,
+        "cc": 2
+        },
+        "signature": "void afterRowCreate(RowWriteHandlerContext context)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 211,
+        "types_used": [
+        "AbstractWriteHolder",
+        "RowHandlerExecutionChain",
+        "RowWriteHandlerContext"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 6,
+        "cc": 2
+        },
+        "signature": "void afterRowDispose(RowWriteHandlerContext context)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 219,
+        "types_used": [
+        "AbstractWriteHolder",
+        "RowHandlerExecutionChain",
+        "RowWriteHandlerContext"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 7,
+        "cc": 2
+        },
+        "signature": "void afterSheetDispose(WriteContext writeContext)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 227,
+        "types_used": [
+        "SheetHandlerExecutionChain",
+        "SheetWriteHandlerContext",
+        "WriteContext"
+        ]
+    }
+    ],
+    "dependencies": []
+}

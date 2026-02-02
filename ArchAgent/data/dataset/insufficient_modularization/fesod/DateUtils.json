@@ -1,0 +1,405 @@
+{
+    "package": "org.apache.fesod.sheet.util",
+    "class": "DateUtils",
+    "file": "data/repositories/fesod/fesod-sheet/src/main/java/org/apache/fesod/sheet/util/DateUtils.java",
+    "metrics": {
+    "nof": 25,
+    "nopf": 14,
+    "nom": 24,
+    "nopm": 22,
+    "loc": 408,
+    "wmc": 83,
+    "nc": 0,
+    "dit": 0,
+    "lcom": 0.2916666666666667,
+    "fanin": 27,
+    "fanout": 3
+    },
+    "methods": [
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "DateUtils()",
+        "type": "constructor",
+        "visibility": "private",
+        "is_static": false,
+        "begin_line": 94,
+        "types_used": [
+        "DateUtils"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 6,
+        "cc": 2
+        },
+        "signature": "Date parseDate(String dateString, String dateFormat) throws ParseException",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 104,
+        "types_used": [
+        "Date",
+        "ParseException",
+        "String"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 11,
+        "cc": 3
+        },
+        "signature": "LocalDateTime parseLocalDateTime(String dateString, String dateFormat, Locale local)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 119,
+        "types_used": [
+        "LocalDateTime",
+        "Locale",
+        "String"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 11,
+        "cc": 3
+        },
+        "signature": "LocalDate parseLocalDate(String dateString, String dateFormat, Locale local)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 138,
+        "types_used": [
+        "LocalDate",
+        "Locale",
+        "String"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "Date parseDate(String dateString) throws ParseException",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 156,
+        "types_used": [
+        "Date",
+        "ParseException",
+        "String"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 21,
+        "cc": 8
+        },
+        "signature": "String switchDateFormat(String dateString)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 166,
+        "types_used": [
+        "IllegalArgumentException",
+        "String",
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "String format(Date date)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 200,
+        "types_used": [
+        "Date",
+        "String"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 9,
+        "cc": 3
+        },
+        "signature": "String format(Date date, String dateFormat)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 211,
+        "types_used": [
+        "Date",
+        "String"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 14,
+        "cc": 4
+        },
+        "signature": "String format(LocalDateTime date, String dateFormat, Locale local)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 228,
+        "types_used": [
+        "LocalDateTime",
+        "Locale",
+        "String"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "String format(LocalDate date, String dateFormat)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 249,
+        "types_used": [
+        "LocalDate",
+        "String"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 14,
+        "cc": 4
+        },
+        "signature": "String format(LocalDate date, String dateFormat, Locale local)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 260,
+        "types_used": [
+        "LocalDate",
+        "Locale",
+        "String"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "String format(LocalDateTime date, String dateFormat)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 281,
+        "types_used": [
+        "LocalDateTime",
+        "String"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 7,
+        "cc": 2
+        },
+        "signature": "String format(BigDecimal date, Boolean use1904windowing, String dateFormat)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 292,
+        "types_used": [
+        "BigDecimal",
+        "Boolean",
+        "LocalDateTime",
+        "String"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 16,
+        "cc": 3
+        },
+        "signature": "DateFormat getCacheDateFormat(String dateFormat)",
+        "type": "method",
+        "visibility": "private",
+        "is_static": true,
+        "begin_line": 301,
+        "types_used": [
+        "DateFormat",
+        "HashMap",
+        "Map",
+        "SimpleDateFormat",
+        "String"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 4,
+        "cc": 1
+        },
+        "signature": "Date getJavaDate(double date, boolean use1904windowing)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 331,
+        "types_used": [
+        "Calendar",
+        "Date",
+        "boolean",
+        "double"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 16,
+        "cc": 3
+        },
+        "signature": "Calendar getJavaCalendar(double date, boolean use1904windowing, TimeZone timeZone, boolean roundSeconds)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 345,
+        "types_used": [
+        "Calendar",
+        "TimeZone",
+        "boolean",
+        "double",
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 20,
+        "cc": 5
+        },
+        "signature": "void setCalendar(Calendar calendar, int wholeDays, int millisecondsInDay, boolean use1904windowing, boolean roundSeconds)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 362,
+        "types_used": [
+        "Calendar",
+        "boolean",
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean isValidExcelDate(double value)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 392,
+        "types_used": [
+        "boolean",
+        "double"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "LocalDateTime getLocalDateTime(double date, boolean use1904windowing)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 410,
+        "types_used": [
+        "LocalDateTime",
+        "boolean",
+        "double"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 4,
+        "cc": 1
+        },
+        "signature": "LocalDate getLocalDate(double date, boolean use1904windowing)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 428,
+        "types_used": [
+        "LocalDate",
+        "LocalDateTime",
+        "boolean",
+        "double"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 19,
+        "cc": 4
+        },
+        "signature": "boolean isADateFormat(Short formatIndex, String formatString)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 440,
+        "types_used": [
+        "Boolean",
+        "Map",
+        "Short",
+        "String",
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 47,
+        "cc": 16
+        },
+        "signature": "boolean isADateFormatUncached(Short formatIndex, String formatString)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 466,
+        "types_used": [
+        "Short",
+        "String",
+        "StringBuilder",
+        "boolean",
+        "char",
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 6,
+        "cc": 13
+        },
+        "signature": "boolean isInternalDateFormat(short format)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 544,
+        "types_used": [
+        "boolean",
+        "short"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 4,
+        "cc": 1
+        },
+        "signature": "void removeThreadLocalCache()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": true,
+        "begin_line": 567,
+        "types_used": []
+    }
+    ],
+    "dependencies": []
+}

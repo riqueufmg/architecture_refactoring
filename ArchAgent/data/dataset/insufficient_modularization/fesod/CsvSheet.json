@@ -1,0 +1,1874 @@
+{
+    "package": "org.apache.fesod.sheet.metadata.csv",
+    "class": "CsvSheet",
+    "file": "data/repositories/fesod/fesod-sheet/src/main/java/org/apache/fesod/sheet/metadata/csv/CsvSheet.java",
+    "metrics": {
+    "nof": 7,
+    "nopf": 1,
+    "nom": 128,
+    "nopm": 126,
+    "loc": 455,
+    "wmc": 150,
+    "nc": 0,
+    "dit": 0,
+    "lcom": 0.8984375,
+    "fanin": 3,
+    "fanout": 10
+    },
+    "methods": [
+    {
+        "metrics": {
+        "loc": 7,
+        "cc": 1
+        },
+        "signature": "CsvSheet(CsvWorkbook csvWorkbook, Appendable out)",
+        "type": "constructor",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 106,
+        "types_used": [
+        "Appendable",
+        "CsvSheet",
+        "CsvWorkbook"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 9,
+        "cc": 1
+        },
+        "signature": "Row createRow(int rownum)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 114,
+        "types_used": [
+        "CsvRow",
+        "Row",
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 18,
+        "cc": 4
+        },
+        "signature": "void initSheet()",
+        "type": "method",
+        "visibility": "private",
+        "is_static": false,
+        "begin_line": 127,
+        "types_used": [
+        "ByteOrderMarkEnum",
+        "ExcelGenerateException",
+        "IOException"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "void removeRow(Row row)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 146,
+        "types_used": [
+        "Row",
+        "UnsupportedOperationException"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 7,
+        "cc": 2
+        },
+        "signature": "Row getRow(int rownum)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 151,
+        "types_used": [
+        "Row",
+        "UnsupportedOperationException",
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "int getPhysicalNumberOfRows()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 160,
+        "types_used": [
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 6,
+        "cc": 2
+        },
+        "signature": "int getFirstRowNum()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 165,
+        "types_used": [
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "int getLastRowNum()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 173,
+        "types_used": [
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setColumnHidden(int columnIndex, boolean hidden)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 178,
+        "types_used": [
+        "boolean",
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean isColumnHidden(int columnIndex)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 181,
+        "types_used": [
+        "boolean",
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setRightToLeft(boolean value)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 186,
+        "types_used": [
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean isRightToLeft()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 189,
+        "types_used": [
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setColumnWidth(int columnIndex, int width)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 194,
+        "types_used": [
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "int getColumnWidth(int columnIndex)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 197,
+        "types_used": [
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "float getColumnWidthInPixels(int columnIndex)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 202,
+        "types_used": [
+        "float",
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setDefaultColumnWidth(int width)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 207,
+        "types_used": [
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "int getDefaultColumnWidth()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 210,
+        "types_used": [
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "short getDefaultRowHeight()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 215,
+        "types_used": [
+        "short"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "float getDefaultRowHeightInPoints()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 220,
+        "types_used": [
+        "float"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setDefaultRowHeight(short height)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 225,
+        "types_used": [
+        "short"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setDefaultRowHeightInPoints(float height)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 228,
+        "types_used": [
+        "float"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "CellStyle getColumnStyle(int column)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 231,
+        "types_used": [
+        "CellStyle",
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "int addMergedRegion(CellRangeAddress region)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 236,
+        "types_used": [
+        "CellRangeAddress",
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "int addMergedRegionUnsafe(CellRangeAddress region)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 241,
+        "types_used": [
+        "CellRangeAddress",
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void validateMergedRegions()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 246,
+        "types_used": []
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setVerticallyCenter(boolean value)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 249,
+        "types_used": [
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setHorizontallyCenter(boolean value)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 252,
+        "types_used": [
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean getHorizontallyCenter()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 255,
+        "types_used": [
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean getVerticallyCenter()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 260,
+        "types_used": [
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void removeMergedRegion(int index)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 265,
+        "types_used": [
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void removeMergedRegions(Collection<Integer> indices)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 268,
+        "types_used": [
+        "Collection",
+        "Integer"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "int getNumMergedRegions()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 271,
+        "types_used": [
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "CellRangeAddress getMergedRegion(int index)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 276,
+        "types_used": [
+        "CellRangeAddress",
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "List<CellRangeAddress> getMergedRegions()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 281,
+        "types_used": [
+        "CellRangeAddress",
+        "List"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "Iterator<Row> rowIterator()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 286,
+        "types_used": [
+        "Iterator",
+        "Row",
+        "extends Row"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setForceFormulaRecalculation(boolean value)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 291,
+        "types_used": [
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean getForceFormulaRecalculation()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 294,
+        "types_used": [
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setAutobreaks(boolean value)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 299,
+        "types_used": [
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setDisplayGuts(boolean value)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 302,
+        "types_used": [
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setDisplayZeros(boolean value)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 305,
+        "types_used": [
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean isDisplayZeros()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 308,
+        "types_used": [
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setFitToPage(boolean value)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 313,
+        "types_used": [
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setRowSumsBelow(boolean value)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 316,
+        "types_used": [
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setRowSumsRight(boolean value)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 319,
+        "types_used": [
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean getAutobreaks()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 322,
+        "types_used": [
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean getDisplayGuts()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 327,
+        "types_used": [
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean getFitToPage()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 332,
+        "types_used": [
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean getRowSumsBelow()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 337,
+        "types_used": [
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean getRowSumsRight()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 342,
+        "types_used": [
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean isPrintGridlines()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 347,
+        "types_used": [
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setPrintGridlines(boolean show)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 352,
+        "types_used": [
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean isPrintRowAndColumnHeadings()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 355,
+        "types_used": [
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setPrintRowAndColumnHeadings(boolean show)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 360,
+        "types_used": [
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "PrintSetup getPrintSetup()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 363,
+        "types_used": [
+        "PrintSetup"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "Header getHeader()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 368,
+        "types_used": [
+        "Header"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "Footer getFooter()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 373,
+        "types_used": [
+        "Footer"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setSelected(boolean value)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 378,
+        "types_used": [
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "double getMargin(short margin)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 381,
+        "types_used": [
+        "double",
+        "short"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "double getMargin(PageMargin pageMargin)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 386,
+        "types_used": [
+        "PageMargin",
+        "double"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setMargin(short margin, double size)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 391,
+        "types_used": [
+        "double",
+        "short"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setMargin(PageMargin pageMargin, double v)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 394,
+        "types_used": [
+        "PageMargin",
+        "double"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean getProtect()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 397,
+        "types_used": [
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void protectSheet(String password)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 402,
+        "types_used": [
+        "String"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean getScenarioProtect()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 405,
+        "types_used": [
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setZoom(int scale)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 410,
+        "types_used": [
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "short getTopRow()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 413,
+        "types_used": [
+        "short"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "short getLeftCol()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 418,
+        "types_used": [
+        "short"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void showInPane(int topRow, int leftCol)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 423,
+        "types_used": [
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void shiftRows(int startRow, int endRow, int n)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 426,
+        "types_used": [
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void shiftRows(int startRow, int endRow, int n, boolean copyRowHeight, boolean resetOriginalRowHeight)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 429,
+        "types_used": [
+        "boolean",
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void shiftColumns(int startColumn, int endColumn, int n)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 432,
+        "types_used": [
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void createFreezePane(int colSplit, int rowSplit, int leftmostColumn, int topRow)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 435,
+        "types_used": [
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void createFreezePane(int colSplit, int rowSplit)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 438,
+        "types_used": [
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void createSplitPane(int xSplitPos, int ySplitPos, int leftmostColumn, int topRow, int activePane)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 441,
+        "types_used": [
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void createSplitPane(int i, int i1, int i2, int i3, PaneType paneType)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 444,
+        "types_used": [
+        "PaneType",
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "PaneInformation getPaneInformation()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 447,
+        "types_used": [
+        "PaneInformation"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setDisplayGridlines(boolean show)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 452,
+        "types_used": [
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean isDisplayGridlines()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 455,
+        "types_used": [
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setDisplayFormulas(boolean show)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 460,
+        "types_used": [
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean isDisplayFormulas()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 463,
+        "types_used": [
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setDisplayRowColHeadings(boolean show)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 468,
+        "types_used": [
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean isDisplayRowColHeadings()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 471,
+        "types_used": [
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setRowBreak(int row)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 476,
+        "types_used": [
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean isRowBroken(int row)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 479,
+        "types_used": [
+        "boolean",
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void removeRowBreak(int row)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 484,
+        "types_used": [
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "int[] getRowBreaks()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 487,
+        "types_used": [
+        "int",
+        "int[]"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "int[] getColumnBreaks()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 492,
+        "types_used": [
+        "int",
+        "int[]"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setColumnBreak(int column)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 497,
+        "types_used": [
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean isColumnBroken(int column)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 500,
+        "types_used": [
+        "boolean",
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void removeColumnBreak(int column)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 505,
+        "types_used": [
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setColumnGroupCollapsed(int columnNumber, boolean collapsed)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 508,
+        "types_used": [
+        "boolean",
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void groupColumn(int fromColumn, int toColumn)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 511,
+        "types_used": [
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void ungroupColumn(int fromColumn, int toColumn)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 514,
+        "types_used": [
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void groupRow(int fromRow, int toRow)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 517,
+        "types_used": [
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void ungroupRow(int fromRow, int toRow)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 520,
+        "types_used": [
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setRowGroupCollapsed(int row, boolean collapse)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 523,
+        "types_used": [
+        "boolean",
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setDefaultColumnStyle(int column, CellStyle style)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 526,
+        "types_used": [
+        "CellStyle",
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void autoSizeColumn(int column)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 529,
+        "types_used": [
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void autoSizeColumn(int column, boolean useMergedCells)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 532,
+        "types_used": [
+        "boolean",
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "Comment getCellComment(CellAddress ref)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 535,
+        "types_used": [
+        "CellAddress",
+        "Comment"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "Map<CellAddress, ? extends Comment> getCellComments()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 540,
+        "types_used": [
+        "CellAddress",
+        "Comment",
+        "Map",
+        "extends Comment"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "Drawing<?> getDrawingPatriarch()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 545,
+        "types_used": [
+        "Drawing"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "Drawing<?> createDrawingPatriarch()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 550,
+        "types_used": [
+        "Drawing"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "Workbook getWorkbook()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 555,
+        "types_used": [
+        "Workbook"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "String getSheetName()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 560,
+        "types_used": [
+        "String"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean isSelected()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 565,
+        "types_used": [
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "CellRange<? extends Cell> setArrayFormula(String formula, CellRangeAddress range)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 570,
+        "types_used": [
+        "Cell",
+        "CellRange",
+        "CellRangeAddress",
+        "String",
+        "extends Cell"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "CellRange<? extends Cell> removeArrayFormula(Cell cell)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 575,
+        "types_used": [
+        "Cell",
+        "CellRange",
+        "extends Cell"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "DataValidationHelper getDataValidationHelper()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 580,
+        "types_used": [
+        "DataValidationHelper"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "List<? extends DataValidation> getDataValidations()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 585,
+        "types_used": [
+        "DataValidation",
+        "List",
+        "extends DataValidation"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void addValidationData(DataValidation dataValidation)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 590,
+        "types_used": [
+        "DataValidation"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "AutoFilter setAutoFilter(CellRangeAddress range)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 593,
+        "types_used": [
+        "AutoFilter",
+        "CellRangeAddress"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "SheetConditionalFormatting getSheetConditionalFormatting()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 598,
+        "types_used": [
+        "SheetConditionalFormatting"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "CellRangeAddress getRepeatingRows()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 603,
+        "types_used": [
+        "CellRangeAddress"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "CellRangeAddress getRepeatingColumns()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 608,
+        "types_used": [
+        "CellRangeAddress"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setRepeatingRows(CellRangeAddress rowRangeRef)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 613,
+        "types_used": [
+        "CellRangeAddress"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setRepeatingColumns(CellRangeAddress columnRangeRef)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 616,
+        "types_used": [
+        "CellRangeAddress"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "int getColumnOutlineLevel(int columnIndex)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 619,
+        "types_used": [
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "Hyperlink getHyperlink(int row, int column)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 624,
+        "types_used": [
+        "Hyperlink",
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "Hyperlink getHyperlink(CellAddress addr)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 629,
+        "types_used": [
+        "CellAddress",
+        "Hyperlink"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "List<? extends Hyperlink> getHyperlinkList()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 634,
+        "types_used": [
+        "Hyperlink",
+        "List",
+        "extends Hyperlink"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "CellAddress getActiveCell()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 639,
+        "types_used": [
+        "CellAddress"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setActiveCell(CellAddress address)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 644,
+        "types_used": [
+        "CellAddress"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "Iterator<Row> iterator()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 647,
+        "types_used": [
+        "Iterator",
+        "Row"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 6,
+        "cc": 1
+        },
+        "signature": "void close() throws IOException",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 652,
+        "types_used": [
+        "IOException"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 5,
+        "cc": 2
+        },
+        "signature": "void printData()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 662,
+        "types_used": []
+    },
+    {
+        "metrics": {
+        "loc": 20,
+        "cc": 4
+        },
+        "signature": "void flushData()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 668,
+        "types_used": [
+        "Cell",
+        "CsvCell",
+        "CsvRow",
+        "ExcelGenerateException",
+        "IOException",
+        "Iterator",
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 40,
+        "cc": 14
+        },
+        "signature": "String buildCellValue(CsvCell csvCell)",
+        "type": "method",
+        "visibility": "private",
+        "is_static": false,
+        "begin_line": 688,
+        "types_used": [
+        "CsvCell",
+        "Short",
+        "String"
+        ]
+    }
+    ],
+    "dependencies": [
+    "org.apache.fesod.sheet.metadata.csv.CsvCell",
+    "org.apache.fesod.sheet.metadata.csv.CsvRow",
+    "org.apache.fesod.sheet.metadata.csv.CsvWorkbook",
+    "org.apache.fesod.sheet.util.DateUtils"
+    ]
+}

@@ -1,0 +1,941 @@
+{
+    "package": "org.apache.fesod.sheet.metadata.csv",
+    "class": "CsvWorkbook",
+    "file": "data/repositories/fesod/fesod-sheet/src/main/java/org/apache/fesod/sheet/metadata/csv/CsvWorkbook.java",
+    "metrics": {
+    "nof": 10,
+    "nopf": 0,
+    "nom": 62,
+    "nopm": 62,
+    "loc": 235,
+    "wmc": 65,
+    "nc": 0,
+    "dit": 0,
+    "lcom": 0.8709677419354839,
+    "fanin": 5,
+    "fanout": 3
+    },
+    "methods": [
+    {
+        "metrics": {
+        "loc": 8,
+        "cc": 1
+        },
+        "signature": "CsvWorkbook(Appendable out, Locale locale, Boolean use1904windowing, Boolean useScientificFormat, Charset charset, Boolean withBom)",
+        "type": "constructor",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 110,
+        "types_used": [
+        "Appendable",
+        "Boolean",
+        "Charset",
+        "CsvWorkbook",
+        "Locale"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "int getActiveSheetIndex()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 125,
+        "types_used": [
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setActiveSheet(int sheetIndex)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 130,
+        "types_used": [
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "int getFirstVisibleTab()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 133,
+        "types_used": [
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setFirstVisibleTab(int sheetIndex)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 138,
+        "types_used": [
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setSheetOrder(String sheetname, int pos)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 141,
+        "types_used": [
+        "String",
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setSelectedTab(int index)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 144,
+        "types_used": [
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setSheetName(int sheet, String name)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 147,
+        "types_used": [
+        "String",
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "String getSheetName(int sheet)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 150,
+        "types_used": [
+        "String",
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "int getSheetIndex(String name)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 155,
+        "types_used": [
+        "String",
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "int getSheetIndex(Sheet sheet)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 160,
+        "types_used": [
+        "Sheet",
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 5,
+        "cc": 1
+        },
+        "signature": "Sheet createSheet()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 165,
+        "types_used": [
+        "CsvSheet",
+        "Sheet"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 5,
+        "cc": 1
+        },
+        "signature": "Sheet createSheet(String sheetname)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 172,
+        "types_used": [
+        "CsvSheet",
+        "Sheet",
+        "String"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "Sheet cloneSheet(int sheetNum)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 179,
+        "types_used": [
+        "Sheet",
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "Iterator<Sheet> sheetIterator()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 184,
+        "types_used": [
+        "Iterator",
+        "Sheet"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "int getNumberOfSheets()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 189,
+        "types_used": [
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 4,
+        "cc": 1
+        },
+        "signature": "Sheet getSheetAt(int index)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 194,
+        "types_used": [
+        "Sheet",
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "Sheet getSheet(String name)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 200,
+        "types_used": [
+        "Sheet",
+        "String"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void removeSheetAt(int index)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 205,
+        "types_used": [
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "Font createFont()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 208,
+        "types_used": [
+        "Font"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "Font findFont(boolean bold, short color, short fontHeight, String name, boolean italic, boolean strikeout, short typeOffset, byte underline)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 213,
+        "types_used": [
+        "Font",
+        "String",
+        "boolean",
+        "byte",
+        "short"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "int getNumberOfFonts()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 226,
+        "types_used": [
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "int getNumberOfFontsAsInt()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 231,
+        "types_used": [
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "Font getFontAt(int idx)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 236,
+        "types_used": [
+        "Font",
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 8,
+        "cc": 2
+        },
+        "signature": "CellStyle createCellStyle()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 241,
+        "types_used": [
+        "CellStyle",
+        "CsvCellStyle",
+        "short"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "int getNumCellStyles()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 251,
+        "types_used": [
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 6,
+        "cc": 2
+        },
+        "signature": "CellStyle getCellStyleAt(int idx)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 256,
+        "types_used": [
+        "CellStyle",
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "void write(OutputStream stream) throws IOException",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 264,
+        "types_used": [
+        "IOException",
+        "OutputStream"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void close() throws IOException",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 269,
+        "types_used": [
+        "IOException"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "int getNumberOfNames()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 272,
+        "types_used": [
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "Name getName(String name)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 277,
+        "types_used": [
+        "Name",
+        "String"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "List<? extends Name> getNames(String name)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 282,
+        "types_used": [
+        "List",
+        "Name",
+        "String",
+        "extends Name"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "List<? extends Name> getAllNames()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 287,
+        "types_used": [
+        "List",
+        "Name",
+        "extends Name"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "Name createName()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 292,
+        "types_used": [
+        "Name"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void removeName(Name name)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 297,
+        "types_used": [
+        "Name"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "int linkExternalWorkbook(String name, Workbook workbook)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 300,
+        "types_used": [
+        "String",
+        "Workbook",
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setPrintArea(int sheetIndex, String reference)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 305,
+        "types_used": [
+        "String",
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setPrintArea(int sheetIndex, int startColumn, int endColumn, int startRow, int endRow)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 308,
+        "types_used": [
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "String getPrintArea(int sheetIndex)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 311,
+        "types_used": [
+        "String",
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void removePrintArea(int sheetIndex)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 316,
+        "types_used": [
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "MissingCellPolicy getMissingCellPolicy()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 319,
+        "types_used": [
+        "MissingCellPolicy"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setMissingCellPolicy(MissingCellPolicy missingCellPolicy)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 324,
+        "types_used": [
+        "MissingCellPolicy"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 7,
+        "cc": 2
+        },
+        "signature": "DataFormat createDataFormat()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 327,
+        "types_used": [
+        "CsvDataFormat",
+        "DataFormat"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "int addPicture(byte[] pictureData, int format)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 336,
+        "types_used": [
+        "byte",
+        "byte[]",
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "List<? extends PictureData> getAllPictures()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 341,
+        "types_used": [
+        "List",
+        "PictureData",
+        "extends PictureData"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "CreationHelper getCreationHelper()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 346,
+        "types_used": [
+        "CreationHelper"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean isHidden()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 351,
+        "types_used": [
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setHidden(boolean hiddenFlag)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 356,
+        "types_used": [
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean isSheetHidden(int sheetIx)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 359,
+        "types_used": [
+        "boolean",
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean isSheetVeryHidden(int sheetIx)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 364,
+        "types_used": [
+        "boolean",
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setSheetHidden(int sheetIx, boolean hidden)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 369,
+        "types_used": [
+        "boolean",
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "SheetVisibility getSheetVisibility(int sheetIx)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 372,
+        "types_used": [
+        "SheetVisibility",
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setSheetVisibility(int sheetIx, SheetVisibility visibility)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 377,
+        "types_used": [
+        "SheetVisibility",
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void addToolPack(UDFFinder toolpack)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 380,
+        "types_used": [
+        "UDFFinder"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setForceFormulaRecalculation(boolean value)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 383,
+        "types_used": [
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean getForceFormulaRecalculation()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 386,
+        "types_used": [
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "SpreadsheetVersion getSpreadsheetVersion()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 391,
+        "types_used": [
+        "SpreadsheetVersion"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "int addOlePackage(byte[] oleData, String label, String fileName, String command)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 396,
+        "types_used": [
+        "String",
+        "byte",
+        "byte[]",
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "EvaluationWorkbook createEvaluationWorkbook()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 401,
+        "types_used": [
+        "EvaluationWorkbook"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "CellReferenceType getCellReferenceType()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 406,
+        "types_used": [
+        "CellReferenceType"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setCellReferenceType(CellReferenceType cellReferenceType)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 411,
+        "types_used": [
+        "CellReferenceType"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "Iterator<Sheet> iterator()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 414,
+        "types_used": [
+        "Iterator",
+        "Sheet"
+        ]
+    }
+    ],
+    "dependencies": [
+    "org.apache.fesod.sheet.metadata.csv.CsvCellStyle",
+    "org.apache.fesod.sheet.metadata.csv.CsvSheet"
+    ]
+}

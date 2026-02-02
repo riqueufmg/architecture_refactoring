@@ -1,0 +1,403 @@
+{
+    "package": "org.apache.fesod.sheet.metadata.csv",
+    "class": "CsvRow",
+    "file": "data/repositories/fesod/fesod-sheet/src/main/java/org/apache/fesod/sheet/metadata/csv/CsvRow.java",
+    "metrics": {
+    "nof": 5,
+    "nopf": 0,
+    "nom": 26,
+    "nopm": 26,
+    "loc": 114,
+    "wmc": 29,
+    "nc": 0,
+    "dit": 0,
+    "lcom": 0.4615384615384615,
+    "fanin": 2,
+    "fanout": 3
+    },
+    "methods": [
+    {
+        "metrics": {
+        "loc": 6,
+        "cc": 1
+        },
+        "signature": "CsvRow(CsvWorkbook csvWorkbook, CsvSheet csvSheet, Integer rowIndex)",
+        "type": "constructor",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 70,
+        "types_used": [
+        "CsvRow",
+        "CsvSheet",
+        "CsvWorkbook",
+        "Integer"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 5,
+        "cc": 1
+        },
+        "signature": "Cell createCell(int column)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 77,
+        "types_used": [
+        "Cell",
+        "CsvCell",
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 5,
+        "cc": 1
+        },
+        "signature": "Cell createCell(int column, CellType type)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 84,
+        "types_used": [
+        "Cell",
+        "CellType",
+        "CsvCell",
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "void removeCell(Cell cell)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 91,
+        "types_used": [
+        "Cell"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "void setRowNum(int rowNum)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 96,
+        "types_used": [
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "int getRowNum()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 101,
+        "types_used": [
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 6,
+        "cc": 2
+        },
+        "signature": "Cell getCell(int cellnum)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 106,
+        "types_used": [
+        "Cell",
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "Cell getCell(int cellnum, MissingCellPolicy policy)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 114,
+        "types_used": [
+        "Cell",
+        "MissingCellPolicy",
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 6,
+        "cc": 2
+        },
+        "signature": "short getFirstCellNum()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 119,
+        "types_used": [
+        "short"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 6,
+        "cc": 2
+        },
+        "signature": "short getLastCellNum()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 127,
+        "types_used": [
+        "short"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "int getPhysicalNumberOfCells()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 135,
+        "types_used": [
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setHeight(short height)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 140,
+        "types_used": [
+        "short"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setZeroHeight(boolean zHeight)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 143,
+        "types_used": [
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean getZeroHeight()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 146,
+        "types_used": [
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setHeightInPoints(float height)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 151,
+        "types_used": [
+        "float"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "short getHeight()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 154,
+        "types_used": [
+        "short"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "float getHeightInPoints()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 159,
+        "types_used": [
+        "float"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean isFormatted()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 164,
+        "types_used": [
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "CellStyle getRowStyle()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 169,
+        "types_used": [
+        "CellStyle"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "void setRowStyle(CellStyle style)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 174,
+        "types_used": [
+        "CellStyle"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "Iterator<Cell> cellIterator()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 179,
+        "types_used": [
+        "Cell",
+        "Iterator",
+        "extends Cell"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "Sheet getSheet()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 184,
+        "types_used": [
+        "Sheet"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "int getOutlineLevel()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 189,
+        "types_used": [
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void shiftCellsRight(int firstShiftColumnIndex, int lastShiftColumnIndex, int step)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 194,
+        "types_used": [
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void shiftCellsLeft(int firstShiftColumnIndex, int lastShiftColumnIndex, int step)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 197,
+        "types_used": [
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "Iterator<Cell> iterator()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 200,
+        "types_used": [
+        "Cell",
+        "Iterator"
+        ]
+    }
+    ],
+    "dependencies": [
+    "org.apache.fesod.sheet.metadata.csv.CsvCell",
+    "org.apache.fesod.sheet.metadata.csv.CsvSheet",
+    "org.apache.fesod.sheet.metadata.csv.CsvWorkbook"
+    ]
+}

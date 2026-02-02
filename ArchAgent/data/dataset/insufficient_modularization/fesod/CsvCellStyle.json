@@ -1,0 +1,806 @@
+{
+    "package": "org.apache.fesod.sheet.metadata.csv",
+    "class": "CsvCellStyle",
+    "file": "data/repositories/fesod/fesod-sheet/src/main/java/org/apache/fesod/sheet/metadata/csv/CsvCellStyle.java",
+    "metrics": {
+    "nof": 2,
+    "nopf": 0,
+    "nom": 56,
+    "nopm": 55,
+    "loc": 165,
+    "wmc": 59,
+    "nc": 0,
+    "dit": 0,
+    "lcom": 0.9285714285714286,
+    "fanin": 1,
+    "fanout": 1
+    },
+    "methods": [
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "CsvCellStyle(Short index)",
+        "type": "constructor",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 57,
+        "types_used": [
+        "CsvCellStyle",
+        "Short"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "short getIndex()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 61,
+        "types_used": [
+        "short"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 4,
+        "cc": 1
+        },
+        "signature": "void setDataFormat(short fmt)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 66,
+        "types_used": [
+        "short"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 5,
+        "cc": 2
+        },
+        "signature": "void initDataFormatData()",
+        "type": "method",
+        "visibility": "private",
+        "is_static": false,
+        "begin_line": 72,
+        "types_used": [
+        "DataFormatData"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 6,
+        "cc": 2
+        },
+        "signature": "short getDataFormat()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 78,
+        "types_used": [
+        "short"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 6,
+        "cc": 2
+        },
+        "signature": "String getDataFormatString()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 86,
+        "types_used": [
+        "String"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setFont(Font font)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 94,
+        "types_used": [
+        "Font"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "int getFontIndex()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 97,
+        "types_used": [
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "int getFontIndexAsInt()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 102,
+        "types_used": [
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setHidden(boolean hidden)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 107,
+        "types_used": [
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean getHidden()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 110,
+        "types_used": [
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setLocked(boolean locked)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 115,
+        "types_used": [
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean getLocked()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 118,
+        "types_used": [
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setQuotePrefixed(boolean quotePrefix)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 123,
+        "types_used": [
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean getQuotePrefixed()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 126,
+        "types_used": [
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setAlignment(HorizontalAlignment align)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 131,
+        "types_used": [
+        "HorizontalAlignment"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "HorizontalAlignment getAlignment()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 134,
+        "types_used": [
+        "HorizontalAlignment"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setWrapText(boolean wrapped)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 139,
+        "types_used": [
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean getWrapText()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 142,
+        "types_used": [
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setVerticalAlignment(VerticalAlignment align)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 147,
+        "types_used": [
+        "VerticalAlignment"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "VerticalAlignment getVerticalAlignment()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 150,
+        "types_used": [
+        "VerticalAlignment"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setRotation(short rotation)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 155,
+        "types_used": [
+        "short"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "short getRotation()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 158,
+        "types_used": [
+        "short"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setIndention(short indent)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 163,
+        "types_used": [
+        "short"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "short getIndention()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 166,
+        "types_used": [
+        "short"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setBorderLeft(BorderStyle border)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 171,
+        "types_used": [
+        "BorderStyle"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "BorderStyle getBorderLeft()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 174,
+        "types_used": [
+        "BorderStyle"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setBorderRight(BorderStyle border)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 179,
+        "types_used": [
+        "BorderStyle"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "BorderStyle getBorderRight()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 182,
+        "types_used": [
+        "BorderStyle"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setBorderTop(BorderStyle border)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 187,
+        "types_used": [
+        "BorderStyle"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "BorderStyle getBorderTop()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 190,
+        "types_used": [
+        "BorderStyle"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setBorderBottom(BorderStyle border)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 195,
+        "types_used": [
+        "BorderStyle"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "BorderStyle getBorderBottom()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 198,
+        "types_used": [
+        "BorderStyle"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setLeftBorderColor(short color)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 203,
+        "types_used": [
+        "short"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "short getLeftBorderColor()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 206,
+        "types_used": [
+        "short"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setRightBorderColor(short color)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 211,
+        "types_used": [
+        "short"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "short getRightBorderColor()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 214,
+        "types_used": [
+        "short"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setTopBorderColor(short color)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 219,
+        "types_used": [
+        "short"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "short getTopBorderColor()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 222,
+        "types_used": [
+        "short"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setBottomBorderColor(short color)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 227,
+        "types_used": [
+        "short"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "short getBottomBorderColor()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 230,
+        "types_used": [
+        "short"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setFillPattern(FillPatternType fp)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 235,
+        "types_used": [
+        "FillPatternType"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "FillPatternType getFillPattern()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 238,
+        "types_used": [
+        "FillPatternType"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setFillBackgroundColor(short bg)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 243,
+        "types_used": [
+        "short"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setFillBackgroundColor(Color color)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 246,
+        "types_used": [
+        "Color"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "short getFillBackgroundColor()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 249,
+        "types_used": [
+        "short"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "Color getFillBackgroundColorColor()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 254,
+        "types_used": [
+        "Color"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setFillForegroundColor(short bg)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 259,
+        "types_used": [
+        "short"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setFillForegroundColor(Color color)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 262,
+        "types_used": [
+        "Color"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "short getFillForegroundColor()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 265,
+        "types_used": [
+        "short"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "Color getFillForegroundColorColor()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 270,
+        "types_used": [
+        "Color"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void cloneStyleFrom(CellStyle source)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 275,
+        "types_used": [
+        "CellStyle"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void setShrinkToFit(boolean shrinkToFit)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 278,
+        "types_used": [
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean getShrinkToFit()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 281,
+        "types_used": [
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "EnumMap<CellPropertyType, Object> getFormatProperties()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 286,
+        "types_used": [
+        "CellPropertyType",
+        "EnumMap",
+        "Object"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 2,
+        "cc": 1
+        },
+        "signature": "void invalidateCachedProperties()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 291,
+        "types_used": []
+    }
+    ],
+    "dependencies": []
+}

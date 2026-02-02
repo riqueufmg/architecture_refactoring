@@ -1,0 +1,1271 @@
+{
+    "smell_type": "Insufficient Modularization",
+    "package": "com.github.javaparser.symbolsolver.reflectionmodel",
+    "class": "ReflectionClassDeclaration",
+    "file": "data/repositories/javaparser/javaparser-symbol-solver-core/src/main/java/com/github/javaparser/symbolsolver/reflectionmodel/ReflectionClassDeclaration.java",
+    "metrics": {
+    "nof": 3,
+    "nopf": 0,
+    "nom": 35,
+    "nopm": 34,
+    "loc": 223,
+    "wmc": 64,
+    "nc": 0,
+    "dit": 6,
+    "lcom": 0.2,
+    "fanin": 13,
+    "fanout": 19
+    },
+    "methods": [
+    {
+        "metrics": {
+        "loc": 23,
+        "cc": 7
+        },
+        "signature": "ReflectionClassDeclaration(Class<?> clazz, TypeSolver typeSolver)",
+        "type": "constructor",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 66,
+        "types_used": [
+        "Class",
+        "IllegalArgumentException",
+        "ReflectionClassAdapter",
+        "ReflectionClassDeclaration",
+        "TypeSolver"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "Set<ResolvedMethodDeclaration> getDeclaredMethods()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 94,
+        "types_used": [
+        "ResolvedMethodDeclaration",
+        "Set"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "List<ResolvedReferenceType> getAncestors(boolean acceptIncompleteList)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 99,
+        "types_used": [
+        "List",
+        "ResolvedReferenceType",
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 6,
+        "cc": 3
+        },
+        "signature": "boolean equals(Object o)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 106,
+        "types_used": [
+        "Object",
+        "ReflectionClassDeclaration",
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "int hashCode()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 116,
+        "types_used": [
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 6,
+        "cc": 2
+        },
+        "signature": "String getPackageName()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 121,
+        "types_used": [
+        "String"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 7,
+        "cc": 2
+        },
+        "signature": "String getClassName()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 129,
+        "types_used": [
+        "String"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "String getQualifiedName()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 138,
+        "types_used": [
+        "String"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 32,
+        "cc": 7
+        },
+        "signature": "SymbolReference<ResolvedMethodDeclaration> solveMethod(String name, List<ResolvedType> argumentsTypes, boolean staticOnly)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 143,
+        "types_used": [
+        "ArrayList",
+        "List",
+        "Method",
+        "MethodComparator",
+        "Predicate",
+        "ReflectionMethodDeclaration",
+        "ResolvedMethodDeclaration",
+        "ResolvedReferenceType",
+        "ResolvedType",
+        "String",
+        "SymbolReference",
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "String toString()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 201,
+        "types_used": [
+        "String"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "ResolvedType getUsage(Node node)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 206,
+        "types_used": [
+        "Node",
+        "ReferenceTypeImpl",
+        "ResolvedType"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 32,
+        "cc": 6
+        },
+        "signature": "Optional<MethodUsage> solveMethodAsUsage(String name, List<ResolvedType> argumentsTypes, Context invokationContext, List<ResolvedType> typeParameterValues)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 211,
+        "types_used": [
+        "ArrayList",
+        "Context",
+        "List",
+        "Method",
+        "MethodComparator",
+        "MethodUsage",
+        "Optional",
+        "ReflectionMethodDeclaration",
+        "ResolvedMethodDeclaration",
+        "ResolvedReferenceType",
+        "ResolvedType",
+        "ResolvedTypeParameterDeclaration",
+        "String",
+        "int",
+        "methodUsages"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 17,
+        "cc": 6
+        },
+        "signature": "boolean canBeAssignedTo(ResolvedReferenceTypeDeclaration other)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 265,
+        "types_used": [
+        "Class",
+        "LambdaArgumentTypePlaceholder",
+        "ReflectionClassDeclaration",
+        "ReflectionInterfaceDeclaration",
+        "ResolvedReferenceTypeDeclaration",
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean isAssignableBy(ResolvedType type)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 286,
+        "types_used": [
+        "ResolvedType",
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean isTypeParameter()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 291,
+        "types_used": [
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "ResolvedFieldDeclaration getField(String name)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 296,
+        "types_used": [
+        "ResolvedFieldDeclaration",
+        "String"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "List<ResolvedFieldDeclaration> getAllFields()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 301,
+        "types_used": [
+        "List",
+        "ResolvedFieldDeclaration"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 8,
+        "cc": 3
+        },
+        "signature": "SymbolReference<? extends ResolvedValueDeclaration> solveSymbol(String name, TypeSolver typeSolver)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 306,
+        "types_used": [
+        "Field",
+        "ReflectionFieldDeclaration",
+        "ResolvedValueDeclaration",
+        "String",
+        "SymbolReference",
+        "TypeSolver",
+        "extends ResolvedValueDeclaration"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean hasDirectlyAnnotation(String canonicalName)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 316,
+        "types_used": [
+        "String",
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean hasField(String name)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 321,
+        "types_used": [
+        "String",
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean isAssignableBy(ResolvedReferenceTypeDeclaration other)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 326,
+        "types_used": [
+        "ReferenceTypeImpl",
+        "ResolvedReferenceTypeDeclaration",
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "String getName()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 331,
+        "types_used": [
+        "String"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean isField()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 336,
+        "types_used": [
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean isParameter()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 341,
+        "types_used": [
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean isType()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 346,
+        "types_used": [
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean isClass()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 351,
+        "types_used": [
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 6,
+        "cc": 2
+        },
+        "signature": "Optional<ResolvedReferenceType> getSuperClass()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 356,
+        "types_used": [
+        "Optional",
+        "ResolvedReferenceType"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "List<ResolvedReferenceType> getInterfaces()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 364,
+        "types_used": [
+        "List",
+        "ResolvedReferenceType"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean isInterface()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 369,
+        "types_used": [
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "List<ResolvedTypeParameterDeclaration> getTypeParameters()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 374,
+        "types_used": [
+        "List",
+        "ResolvedTypeParameterDeclaration"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "AccessSpecifier accessSpecifier()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 379,
+        "types_used": [
+        "AccessSpecifier"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "List<ResolvedConstructorDeclaration> getConstructors()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 384,
+        "types_used": [
+        "List",
+        "ResolvedConstructorDeclaration"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "Optional<ResolvedReferenceTypeDeclaration> containerType()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 389,
+        "types_used": [
+        "Optional",
+        "ResolvedReferenceTypeDeclaration"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "Set<ResolvedReferenceTypeDeclaration> internalTypes()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 394,
+        "types_used": [
+        "ResolvedReferenceTypeDeclaration",
+        "Set"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "ResolvedReferenceType object()",
+        "type": "method",
+        "visibility": "protected",
+        "is_static": false,
+        "begin_line": 405,
+        "types_used": [
+        "ReferenceTypeImpl",
+        "ResolvedReferenceType"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 20,
+        "cc": 6
+        },
+        "signature": "ReflectionClassDeclaration(Class<?> clazz, TypeSolver typeSolver)",
+        "type": "constructor",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 66,
+        "types_used": [
+        "Class",
+        "IllegalArgumentException",
+        "ReflectionClassAdapter",
+        "ReflectionClassDeclaration",
+        "TypeSolver"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "ReflectionClassDeclaration(Class<?> clazz, TypeSolver typeSolver)",
+        "type": "constructor",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 66,
+        "types_used": [
+        "Class",
+        "IllegalArgumentException",
+        "ReflectionClassAdapter",
+        "ReflectionClassDeclaration",
+        "TypeSolver"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "ReflectionClassDeclaration(Class<?> clazz, TypeSolver typeSolver)",
+        "type": "constructor",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 66,
+        "types_used": [
+        "Class",
+        "IllegalArgumentException",
+        "ReflectionClassAdapter",
+        "ReflectionClassDeclaration",
+        "TypeSolver"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 7,
+        "cc": 4
+        },
+        "signature": "Set<ResolvedMethodDeclaration> getDeclaredMethods()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 94,
+        "types_used": [
+        "ResolvedMethodDeclaration",
+        "Set"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean equals(Object o)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 106,
+        "types_used": [
+        "Object",
+        "ReflectionClassDeclaration",
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 6,
+        "cc": 2
+        },
+        "signature": "boolean equals(Object o)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 106,
+        "types_used": [
+        "Object",
+        "ReflectionClassDeclaration",
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 7,
+        "cc": 2
+        },
+        "signature": "int hashCode()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 116,
+        "types_used": [
+        "int"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "String getClassName()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 129,
+        "types_used": [
+        "String"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 23,
+        "cc": 7
+        },
+        "signature": "String getClassName()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 129,
+        "types_used": [
+        "String"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "SymbolReference<ResolvedMethodDeclaration> solveMethod(String name, List<ResolvedType> argumentsTypes, boolean staticOnly)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 143,
+        "types_used": [
+        "ArrayList",
+        "List",
+        "Method",
+        "MethodComparator",
+        "Predicate",
+        "ReflectionMethodDeclaration",
+        "ResolvedMethodDeclaration",
+        "ResolvedReferenceType",
+        "ResolvedType",
+        "String",
+        "SymbolReference",
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "SymbolReference<ResolvedMethodDeclaration> solveMethod(String name, List<ResolvedType> argumentsTypes, boolean staticOnly)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 143,
+        "types_used": [
+        "ArrayList",
+        "List",
+        "Method",
+        "MethodComparator",
+        "Predicate",
+        "ReflectionMethodDeclaration",
+        "ResolvedMethodDeclaration",
+        "ResolvedReferenceType",
+        "ResolvedType",
+        "String",
+        "SymbolReference",
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 29,
+        "cc": 8
+        },
+        "signature": "SymbolReference<ResolvedMethodDeclaration> solveMethod(String name, List<ResolvedType> argumentsTypes, boolean staticOnly)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 143,
+        "types_used": [
+        "ArrayList",
+        "List",
+        "Method",
+        "MethodComparator",
+        "Predicate",
+        "ReflectionMethodDeclaration",
+        "ResolvedMethodDeclaration",
+        "ResolvedReferenceType",
+        "ResolvedType",
+        "String",
+        "SymbolReference",
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 17,
+        "cc": 6
+        },
+        "signature": "String toString()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 201,
+        "types_used": [
+        "String"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "Optional<MethodUsage> solveMethodAsUsage(String name, List<ResolvedType> argumentsTypes, Context invokationContext, List<ResolvedType> typeParameterValues)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 211,
+        "types_used": [
+        "ArrayList",
+        "Context",
+        "List",
+        "Method",
+        "MethodComparator",
+        "MethodUsage",
+        "Optional",
+        "ReflectionMethodDeclaration",
+        "ResolvedMethodDeclaration",
+        "ResolvedReferenceType",
+        "ResolvedType",
+        "ResolvedTypeParameterDeclaration",
+        "String",
+        "int",
+        "methodUsages"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "Optional<MethodUsage> solveMethodAsUsage(String name, List<ResolvedType> argumentsTypes, Context invokationContext, List<ResolvedType> typeParameterValues)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 211,
+        "types_used": [
+        "ArrayList",
+        "Context",
+        "List",
+        "Method",
+        "MethodComparator",
+        "MethodUsage",
+        "Optional",
+        "ReflectionMethodDeclaration",
+        "ResolvedMethodDeclaration",
+        "ResolvedReferenceType",
+        "ResolvedType",
+        "ResolvedTypeParameterDeclaration",
+        "String",
+        "int",
+        "methodUsages"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "Optional<MethodUsage> solveMethodAsUsage(String name, List<ResolvedType> argumentsTypes, Context invokationContext, List<ResolvedType> typeParameterValues)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 211,
+        "types_used": [
+        "ArrayList",
+        "Context",
+        "List",
+        "Method",
+        "MethodComparator",
+        "MethodUsage",
+        "Optional",
+        "ReflectionMethodDeclaration",
+        "ResolvedMethodDeclaration",
+        "ResolvedReferenceType",
+        "ResolvedType",
+        "ResolvedTypeParameterDeclaration",
+        "String",
+        "int",
+        "methodUsages"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "Optional<MethodUsage> solveMethodAsUsage(String name, List<ResolvedType> argumentsTypes, Context invokationContext, List<ResolvedType> typeParameterValues)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 211,
+        "types_used": [
+        "ArrayList",
+        "Context",
+        "List",
+        "Method",
+        "MethodComparator",
+        "MethodUsage",
+        "Optional",
+        "ReflectionMethodDeclaration",
+        "ResolvedMethodDeclaration",
+        "ResolvedReferenceType",
+        "ResolvedType",
+        "ResolvedTypeParameterDeclaration",
+        "String",
+        "int",
+        "methodUsages"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 8,
+        "cc": 3
+        },
+        "signature": "Optional<MethodUsage> solveMethodAsUsage(String name, List<ResolvedType> argumentsTypes, Context invokationContext, List<ResolvedType> typeParameterValues)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 211,
+        "types_used": [
+        "ArrayList",
+        "Context",
+        "List",
+        "Method",
+        "MethodComparator",
+        "MethodUsage",
+        "Optional",
+        "ReflectionMethodDeclaration",
+        "ResolvedMethodDeclaration",
+        "ResolvedReferenceType",
+        "ResolvedType",
+        "ResolvedTypeParameterDeclaration",
+        "String",
+        "int",
+        "methodUsages"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "Optional<MethodUsage> solveMethodAsUsage(String name, List<ResolvedType> argumentsTypes, Context invokationContext, List<ResolvedType> typeParameterValues)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 211,
+        "types_used": [
+        "ArrayList",
+        "Context",
+        "List",
+        "Method",
+        "MethodComparator",
+        "MethodUsage",
+        "Optional",
+        "ReflectionMethodDeclaration",
+        "ResolvedMethodDeclaration",
+        "ResolvedReferenceType",
+        "ResolvedType",
+        "ResolvedTypeParameterDeclaration",
+        "String",
+        "int",
+        "methodUsages"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "Optional<MethodUsage> solveMethodAsUsage(String name, List<ResolvedType> argumentsTypes, Context invokationContext, List<ResolvedType> typeParameterValues)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 211,
+        "types_used": [
+        "ArrayList",
+        "Context",
+        "List",
+        "Method",
+        "MethodComparator",
+        "MethodUsage",
+        "Optional",
+        "ReflectionMethodDeclaration",
+        "ResolvedMethodDeclaration",
+        "ResolvedReferenceType",
+        "ResolvedType",
+        "ResolvedTypeParameterDeclaration",
+        "String",
+        "int",
+        "methodUsages"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "Optional<MethodUsage> solveMethodAsUsage(String name, List<ResolvedType> argumentsTypes, Context invokationContext, List<ResolvedType> typeParameterValues)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 211,
+        "types_used": [
+        "ArrayList",
+        "Context",
+        "List",
+        "Method",
+        "MethodComparator",
+        "MethodUsage",
+        "Optional",
+        "ReflectionMethodDeclaration",
+        "ResolvedMethodDeclaration",
+        "ResolvedReferenceType",
+        "ResolvedType",
+        "ResolvedTypeParameterDeclaration",
+        "String",
+        "int",
+        "methodUsages"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean canBeAssignedTo(ResolvedReferenceTypeDeclaration other)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 265,
+        "types_used": [
+        "Class",
+        "LambdaArgumentTypePlaceholder",
+        "ReflectionClassDeclaration",
+        "ReflectionInterfaceDeclaration",
+        "ResolvedReferenceTypeDeclaration",
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean canBeAssignedTo(ResolvedReferenceTypeDeclaration other)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 265,
+        "types_used": [
+        "Class",
+        "LambdaArgumentTypePlaceholder",
+        "ReflectionClassDeclaration",
+        "ReflectionInterfaceDeclaration",
+        "ResolvedReferenceTypeDeclaration",
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean canBeAssignedTo(ResolvedReferenceTypeDeclaration other)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 265,
+        "types_used": [
+        "Class",
+        "LambdaArgumentTypePlaceholder",
+        "ReflectionClassDeclaration",
+        "ReflectionInterfaceDeclaration",
+        "ResolvedReferenceTypeDeclaration",
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean canBeAssignedTo(ResolvedReferenceTypeDeclaration other)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 265,
+        "types_used": [
+        "Class",
+        "LambdaArgumentTypePlaceholder",
+        "ReflectionClassDeclaration",
+        "ReflectionInterfaceDeclaration",
+        "ResolvedReferenceTypeDeclaration",
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean isAssignableBy(ResolvedType type)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 286,
+        "types_used": [
+        "ResolvedType",
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean isTypeParameter()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 291,
+        "types_used": [
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "ResolvedFieldDeclaration getField(String name)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 296,
+        "types_used": [
+        "ResolvedFieldDeclaration",
+        "String"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "List<ResolvedFieldDeclaration> getAllFields()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 301,
+        "types_used": [
+        "List",
+        "ResolvedFieldDeclaration"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "SymbolReference<? extends ResolvedValueDeclaration> solveSymbol(String name, TypeSolver typeSolver)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 306,
+        "types_used": [
+        "Field",
+        "ReflectionFieldDeclaration",
+        "ResolvedValueDeclaration",
+        "String",
+        "SymbolReference",
+        "TypeSolver",
+        "extends ResolvedValueDeclaration"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "SymbolReference<? extends ResolvedValueDeclaration> solveSymbol(String name, TypeSolver typeSolver)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 306,
+        "types_used": [
+        "Field",
+        "ReflectionFieldDeclaration",
+        "ResolvedValueDeclaration",
+        "String",
+        "SymbolReference",
+        "TypeSolver",
+        "extends ResolvedValueDeclaration"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean hasDirectlyAnnotation(String canonicalName)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 316,
+        "types_used": [
+        "String",
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean hasField(String name)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 321,
+        "types_used": [
+        "String",
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean isAssignableBy(ResolvedReferenceTypeDeclaration other)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 326,
+        "types_used": [
+        "ReferenceTypeImpl",
+        "ResolvedReferenceTypeDeclaration",
+        "boolean"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "boolean isField()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 336,
+        "types_used": [
+        "boolean"
+        ]
+    }
+    ],
+    "dependencies": [
+    "com.github.javaparser.ast.Node",
+    "com.github.javaparser.resolution.MethodUsage",
+    "com.github.javaparser.resolution.declarations.ResolvedReferenceTypeDeclaration",
+    "com.github.javaparser.resolution.declarations.ResolvedTypeParameterDeclaration",
+    "com.github.javaparser.resolution.logic.MethodResolutionLogic",
+    "com.github.javaparser.resolution.types.ResolvedReferenceType"
+    ]
+}

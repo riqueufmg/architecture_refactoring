@@ -133,7 +133,8 @@ def _load_meta_or_init(meta_path: Path, repo_path: Path, base_commit: str | None
 
 def _java_fqn_to_path(repo_path: Path, class_fqn: str) -> str:
     # Ex: org.jsoup.internal.JsoupParser -> src/main/java/org/jsoup/internal/JsoupParser.java
-    rel = Path("src/main/java") / Path(class_fqn.replace(".", "/") + ".java")
+    #rel = Path("src/main/java") / Path(class_fqn.replace(".", "/") + ".java")
+    rel = Path("javaparser-core/src/main/java") / Path(class_fqn.replace(".", "/") + ".java")
     return str((repo_path / rel).resolve())
 
 
@@ -1113,16 +1114,18 @@ if __name__ == "__main__":
     app = build_graph()
 
     with open("data/prompts/planner_agent.prompt", "r", encoding="utf-8") as f:
-        YOUR_PROMPT_TEMPLATE_STRING = f.read()
+        PROMPT_TEMPLATE = f.read()
 
-    with open("data/examples/StringUtil.json", "r", encoding="utf-8") as f:
-        YOUR_INPUT_DICT = json.loads(f.read())
+    #with open("data/examples/StringUtil.json", "r", encoding="utf-8") as f:
+    with open("data/dataset/insufficient_modularization/javaparser/CompilationUnit.json", "r", encoding="utf-8") as f:
+        INPUT_DICT = json.loads(f.read())
 
     out = app.invoke(
         {
-            "repo_path": "data/repositories/jsoup",
-            "planner_prompt": YOUR_PROMPT_TEMPLATE_STRING,
-            "planner_input_json": json.dumps(YOUR_INPUT_DICT, indent=2),
+            #"repo_path": "data/repositories/jsoup",
+            "repo_path": "data/repositories/javaparser",
+            "planner_prompt": PROMPT_TEMPLATE,
+            "planner_input_json": json.dumps(INPUT_DICT, indent=2),
             "max_attempts": 20,
         }
     )

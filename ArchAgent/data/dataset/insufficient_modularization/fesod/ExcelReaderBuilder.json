@@ -1,0 +1,441 @@
+{
+    "package": "org.apache.fesod.sheet.read.builder",
+    "class": "ExcelReaderBuilder",
+    "file": "data/repositories/fesod/fesod-sheet/src/main/java/org/apache/fesod/sheet/read/builder/ExcelReaderBuilder.java",
+    "metrics": {
+    "nof": 1,
+    "nopf": 0,
+    "nom": 28,
+    "nopm": 27,
+    "loc": 204,
+    "wmc": 31,
+    "nc": 0,
+    "dit": 2,
+    "lcom": 0.0714285714285714,
+    "fanin": 5,
+    "fanout": 10
+    },
+    "methods": [
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "ExcelReaderBuilder()",
+        "type": "constructor",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 52,
+        "types_used": [
+        "ExcelReaderBuilder",
+        "ReadWorkbook"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 4,
+        "cc": 1
+        },
+        "signature": "ExcelReaderBuilder excelType(ExcelTypeEnum excelType)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 56,
+        "types_used": [
+        "ExcelReaderBuilder",
+        "ExcelTypeEnum"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 4,
+        "cc": 1
+        },
+        "signature": "ExcelReaderBuilder file(InputStream inputStream)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 66,
+        "types_used": [
+        "ExcelReaderBuilder",
+        "InputStream"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 4,
+        "cc": 1
+        },
+        "signature": "ExcelReaderBuilder file(File file)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 76,
+        "types_used": [
+        "ExcelReaderBuilder",
+        "File"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "ExcelReaderBuilder file(String pathName)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 86,
+        "types_used": [
+        "ExcelReaderBuilder",
+        "File",
+        "String"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 4,
+        "cc": 1
+        },
+        "signature": "ExcelReaderBuilder charset(Charset charset)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 94,
+        "types_used": [
+        "Charset",
+        "ExcelReaderBuilder"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 4,
+        "cc": 1
+        },
+        "signature": "ExcelReaderBuilder mandatoryUseInputStream(Boolean mandatoryUseInputStream)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 104,
+        "types_used": [
+        "Boolean",
+        "ExcelReaderBuilder"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 4,
+        "cc": 1
+        },
+        "signature": "ExcelReaderBuilder autoCloseStream(Boolean autoCloseStream)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 115,
+        "types_used": [
+        "Boolean",
+        "ExcelReaderBuilder"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 4,
+        "cc": 1
+        },
+        "signature": "ExcelReaderBuilder ignoreEmptyRow(Boolean ignoreEmptyRow)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 126,
+        "types_used": [
+        "Boolean",
+        "ExcelReaderBuilder"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 4,
+        "cc": 1
+        },
+        "signature": "ExcelReaderBuilder customObject(Object customObject)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 138,
+        "types_used": [
+        "ExcelReaderBuilder",
+        "Object"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 4,
+        "cc": 1
+        },
+        "signature": "ExcelReaderBuilder readCache(ReadCache readCache)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 149,
+        "types_used": [
+        "ExcelReaderBuilder",
+        "ReadCache"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 4,
+        "cc": 1
+        },
+        "signature": "ExcelReaderBuilder readCacheSelector(ReadCacheSelector readCacheSelector)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 160,
+        "types_used": [
+        "ExcelReaderBuilder",
+        "ReadCacheSelector"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 4,
+        "cc": 1
+        },
+        "signature": "ExcelReaderBuilder password(String password)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 171,
+        "types_used": [
+        "ExcelReaderBuilder",
+        "String"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 4,
+        "cc": 1
+        },
+        "signature": "ExcelReaderBuilder xlsxSAXParserFactoryName(String xlsxSAXParserFactoryName)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 188,
+        "types_used": [
+        "ExcelReaderBuilder",
+        "String"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 7,
+        "cc": 2
+        },
+        "signature": "ExcelReaderBuilder extraRead(CellExtraTypeEnum extraType)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 199,
+        "types_used": [
+        "CellExtraTypeEnum",
+        "ExcelReaderBuilder",
+        "HashSet"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 4,
+        "cc": 1
+        },
+        "signature": "ExcelReaderBuilder useDefaultListener(Boolean useDefaultListener)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 215,
+        "types_used": [
+        "Boolean",
+        "ExcelReaderBuilder"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 4,
+        "cc": 1
+        },
+        "signature": "ExcelReaderBuilder readDefaultReturn(ReadDefaultReturnEnum readDefaultReturn)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 226,
+        "types_used": [
+        "ExcelReaderBuilder",
+        "ReadDefaultReturnEnum"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 4,
+        "cc": 1
+        },
+        "signature": "ExcelReaderBuilder numRows(Integer numRows)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 231,
+        "types_used": [
+        "ExcelReaderBuilder",
+        "Integer"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "ExcelReader build()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 236,
+        "types_used": [
+        "ExcelReader"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 5,
+        "cc": 1
+        },
+        "signature": "void doReadAll()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 240,
+        "types_used": [
+        "ExcelReader"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 9,
+        "cc": 1
+        },
+        "signature": "List<T> doReadAllSync()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 251,
+        "types_used": [
+        "ExcelReader",
+        "List",
+        "SyncReadListener",
+        "T"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "ExcelReaderSheetBuilder sheet()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 261,
+        "types_used": [
+        "ExcelReaderSheetBuilder"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "ExcelReaderSheetBuilder sheet(Integer sheetNo)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 265,
+        "types_used": [
+        "ExcelReaderSheetBuilder",
+        "Integer"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "ExcelReaderSheetBuilder sheet(String sheetName)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 269,
+        "types_used": [
+        "ExcelReaderSheetBuilder",
+        "String"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 10,
+        "cc": 3
+        },
+        "signature": "ExcelReaderSheetBuilder sheet(Integer sheetNo, String sheetName)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 273,
+        "types_used": [
+        "ExcelReaderSheetBuilder",
+        "Integer",
+        "String"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 4,
+        "cc": 1
+        },
+        "signature": "CsvReaderBuilder csv()",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 284,
+        "types_used": [
+        "CsvReaderBuilder"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 3,
+        "cc": 1
+        },
+        "signature": "ReadWorkbook parameter()",
+        "type": "method",
+        "visibility": "protected",
+        "is_static": false,
+        "begin_line": 289,
+        "types_used": [
+        "ReadWorkbook"
+        ]
+    },
+    {
+        "metrics": {
+        "loc": 4,
+        "cc": 1
+        },
+        "signature": "ExcelReaderBuilder ignoreHiddenSheet(Boolean ignoreHiddenSheet)",
+        "type": "method",
+        "visibility": "public",
+        "is_static": false,
+        "begin_line": 300,
+        "types_used": [
+        "Boolean",
+        "ExcelReaderBuilder"
+        ]
+    }
+    ],
+    "dependencies": []
+}
