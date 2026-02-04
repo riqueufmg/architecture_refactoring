@@ -1,14 +1,12 @@
-import csv
-import dotenv
 import json
 import os
-import re
-import shutil
+import dotenv
 import subprocess
 import uuid
 
 from datetime import datetime
 from pathlib import Path
+from pprint import pprint
 from typing import TypedDict, Tuple
 
 from langchain_openai import ChatOpenAI
@@ -21,8 +19,6 @@ class State(TypedDict, total=False):
     run_dir: str
 
     target_file: str
-    target_class_fqn: str
-    target_source_root: str
 
     start_commit: str
     base_commit: str
@@ -34,6 +30,7 @@ class State(TypedDict, total=False):
     plan: dict # the plan
     plan_ok: bool # status after try to generate plan
     plan_error: str # tail when plan generation failed
+    plan_files_manifest: list[str] # list of files that can be affected by LLM
 
     # blocks of plan
     block_idx: int
@@ -69,14 +66,10 @@ class State(TypedDict, total=False):
     compile_log_tail: str
     maven_tmp_dir: str
 
-    # designite/smell data
-    designite_analysis_dir: str        # designite results folder
-    designite_ok: bool                 # if designite run successfully
-    designite_log: str                 # log from designite run
-    smell_type: str                    # eg: "Insufficient Modularization"
-    designite_smells_csv: str          # designite smell file eg: "DesignSmells.csv"
-    designite_smell_name: str          # smell label on designite output
-    smell_still_present: bool          # smell remove evaluation
+    # designite data
+    designite_analysis_dir: str
+    designite_ok: bool
+    designite_log: str
 
     rollback_reason: str
 
@@ -130,6 +123,7 @@ def _is_safe_repo_rel_path(p: str) -> bool:
     # if valid path
     return True
 
+
 def _validate_allowed_paths(rel_paths: list[str], allowed: set[str]) -> tuple[bool, str]:
     for rp in rel_paths:
         if not _is_safe_repo_rel_path(rp):
@@ -147,36 +141,12 @@ def _load_meta_or_init(meta_path: Path, repo_path: Path, base_commit: str | None
             pass
     return {"repo_path": str(repo_path), "base_commit": base_commit}
 
-def _infer_source_root_from_target(repo_path: Path, target_rel: str, target_fqn: str) -> str:
-    # target package path from FQN
-    pkg_parts = target_fqn.split(".")[:-1]          # ['org','jsoup']
-    pkg_path = "/".join(pkg_parts)                  # 'org/jsoup'
 
-    tr = Path(target_rel).as_posix()
-
-    # remove trailing '/org/jsoup/Jsoup.java' from the target path
-    suffix = f"{pkg_path}/{target_fqn.split('.')[-1]}.java"
-    if tr.endswith(suffix):
-        src_root = tr[: -len(suffix)].rstrip("/")
-        if src_root:
-            return src_root
-
-    # fallback: go up N dirs (package depth + 1 file)
-    p = Path(tr)
-    up = len(pkg_parts) + 1
-    for _ in range(up):
-        p = p.parent
-    return p.as_posix()
-
-def _java_fqn_to_path(repo_path: Path, class_fqn: str, source_root_rel: str) -> str:
-    rel = Path(source_root_rel) / Path(class_fqn.replace(".", "/") + ".java")
+def _java_fqn_to_path(repo_path: Path, class_fqn: str) -> str:
+    # Ex: org.jsoup.internal.JsoupParser -> src/main/java/org/jsoup/internal/JsoupParser.java
+    #rel = Path("src/main/java") / Path(class_fqn.replace(".", "/") + ".java")
+    rel = Path("javaparser-core/src/main/java") / Path(class_fqn.replace(".", "/") + ".java")
     return str((repo_path / rel).resolve())
-
-def _extract_fqn_from_java(code: str, filename: str) -> str:
-    m = re.search(r'^\s*package\s+([a-zA-Z0-9_.]+)\s*;', code, re.MULTILINE)
-    pkg = m.group(1) if m else ""
-    cls = Path(filename).stem
-    return f"{pkg}.{cls}" if pkg else cls
 
 def _tail(s: str, n: int = 40) -> str:
     lines = (s or "").splitlines()
@@ -196,51 +166,6 @@ def _to_repo_rel(repo_path: Path, p: str) -> str:
         except Exception:
             return str(pp.as_posix()).lstrip("/")
     return pp.as_posix()
-
-# get target file/class
-def _read_target_file(repo_path: Path, target_file: str) -> tuple[str, str]:
-
-    # if target file is invalid or null
-    if not target_file or "\x00" in target_file:
-        raise RuntimeError("target_file is empty/invalid")
-
-    tf = Path(target_file)
-
-    # treat if the path don't have data/repositories/...
-    if tf.is_absolute():
-        abs_p = tf.resolve()
-    else:
-        abs_p = (repo_path / tf).resolve()
-
-    # must be inside repo
-    if repo_path != abs_p and repo_path not in abs_p.parents:
-        raise RuntimeError(f"target_file is outside repo: {abs_p}")
-
-    # convert to repo-relative (for planner and logging)
-    rel = str(abs_p.relative_to(repo_path)).replace("\\", "/")
-
-    if not abs_p.exists() or not abs_p.is_file():
-        raise RuntimeError(f"target_file does not exist or is not a file: {rel}")
-
-    code = abs_p.read_text(encoding="utf-8", errors="replace")
-    return rel, code # return relative path and file content
-
-import csv
-
-def _designite_smell_present(designite_dir: Path, target_class_fqn: str, smell_name: str, csv_name: str = "DesignSmells.csv") -> bool:
-    csv_path = designite_dir / csv_name
-    if not csv_path.exists():
-        return False
-
-    # target_class_fqn: "org.jsoup.helper.HttpConnection"
-    target_cls = target_class_fqn.split(".")[-1]
-
-    with csv_path.open("r", encoding="utf-8", errors="replace", newline="") as f:
-        reader = csv.DictReader(f)
-        for row in reader:
-            if (row.get("Class") == target_cls) and (row.get("Smell") == smell_name):
-                return True
-    return False
 
 def route_node(state: State) -> State:
     state["msg"] = f"route ok: repo_path={state.get('repo_path')}"
@@ -262,13 +187,6 @@ def init_run_node(state: State) -> State:
     # create framework folder, if it not exists
     runs_root = repo_path / "agent_runs"
     runs_root.mkdir(parents=True, exist_ok=True)
-    
-    target_rel, code = _read_target_file(repo_path, state["target_file"])
-    state["target_file"] = target_rel
-    
-    target_fqn = _extract_fqn_from_java(code, target_rel)
-    state["target_class_fqn"] = target_fqn
-    state["target_source_root"] = _infer_source_root_from_target(repo_path, target_rel, target_fqn)
 
     # create log folder for a run
     ts = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -278,19 +196,11 @@ def init_run_node(state: State) -> State:
 
     state["run_dir"] = str(run_dir)
 
-    state.setdefault("smell_type", "")
-    state.setdefault("designite_smell_name", state["smell_type"])
-    state.setdefault("designite_smells_csv", "DesignSmells.csv")  # ou outro no futuro
-
     meta = {
         "repo_path": str(repo_path),
         "start_commit": state["start_commit"],
         "base_commit": state["base_commit"],
-        "smell_type": state.get("smell_type", ""),
-        "designite_smell_name": state.get("designite_smell_name", ""),
-        "designite_smells_csv": state.get("designite_smells_csv", "DesignSmells.csv"),
     }
-    (run_dir / "meta.json").write_text(json.dumps(meta, indent=2), encoding="utf-8")
 
     (run_dir / "meta.json").write_text(json.dumps(meta, indent=2), encoding="utf-8")
 
@@ -300,23 +210,8 @@ def init_run_node(state: State) -> State:
     state.setdefault("max_attempts", 3)
     state.setdefault("executor_feedback", "")
 
-    # smell config
-    smell_type = ""
-    try:
-        inp = json.loads(state.get("planner_input_json", "") or "{}")
-        smell_type = str(inp.get("smell", "")).strip()
-    except Exception:
-        smell_type = ""
-
-    state["smell_type"] = smell_type or state.get("smell_type", "Insufficient Modularization")
-    state["designite_smells_csv"] = state.get("designite_smells_csv", "DesignSmells.csv")
-
-    # Por padrão, assume que o nome do smell no Designite é igual ao "smell"
-    # (no futuro você pode mapear aqui, se os nomes divergirem)
-    state["designite_smell_name"] = state.get("designite_smell_name", state["smell_type"])
-
-
     return state
+
 
 def planner_node(state: State) -> State:
     repo_path = Path(state["repo_path"]).resolve()
@@ -366,6 +261,7 @@ def planner_node(state: State) -> State:
         state["plan_json_text"] = raw
         (run_dir / "planner.raw.txt").write_text(raw, encoding="utf-8")
 
+        #json_text = _extract_json_only(raw) # TODO: remove this function?
         json_text = _extract_json_object_only(raw)
 
         plan = json.loads(json_text)
@@ -398,6 +294,7 @@ def planner_node(state: State) -> State:
 
         state["msg"] = state.get("msg", "") + " | planner FAIL"
         return state
+
 
 def after_planner(state: State) -> str:
     if state.get("plan_ok"):
@@ -463,8 +360,10 @@ def resolve_files_for_block_node(state: State) -> State:
         p = Path(f)
         if p.is_absolute():
             existing.add(str(p))
-        else:
+        elif str(p).startswith("src/"):
             existing.add(str((repo_path / p).resolve()))
+        else:
+            existing.add(str(p.resolve()))
 
     new_files: set[str] = set()
     for op in ops:
@@ -474,16 +373,12 @@ def resolve_files_for_block_node(state: State) -> State:
             for out in (op.get("outputs") or []):
                 if isinstance(out, str) and "." in out and not out.endswith("/"):
                     if out.split(".")[-1][:1].isupper():
-                        new_files.add(
-                            _java_fqn_to_path(repo_path, out, state["target_source_root"])
-                        )
+                        new_files.add(_java_fqn_to_path(repo_path, out))
 
         if op_name == "MOVE_CLASS":
             for out in (op.get("outputs") or []):
                 if isinstance(out, str) and "." in out and out.split(".")[-1][:1].isupper():
-                    new_files.add(
-                        _java_fqn_to_path(repo_path, out, state["target_source_root"])
-                    )
+                    new_files.add(_java_fqn_to_path(repo_path, out))
 
     all_files = sorted(existing.union(new_files))
 
@@ -950,14 +845,15 @@ def compile_node(state: State) -> State:
 
     return state
 
+
 def after_compile(state: State) -> str:
     if state.get("compile_ok"):
-        return "promote_baseline"
+        return END
     return "rollback"
 
 def after_stage_block(state: State) -> str:
     if state.get("done"):
-        return "designite"
+        return END
     return "resolve_files"
 
 def advance_block_node(state: State) -> State:
@@ -1048,10 +944,6 @@ def _run_designite(
     out_dir: Path,
     jar_path: Path,
 ) -> Tuple[Path, list[str]]:
-
-    if out_dir.exists():
-        shutil.rmtree(out_dir)
-
     out_dir.mkdir(parents=True, exist_ok=True)
 
     cmd = [
@@ -1103,24 +995,6 @@ def designite_node(state: State) -> State:
 
         out_dir, cmd = _run_designite(repo_path, analysis_out, designite_jar)
 
-        # check if smell was removed
-        present = _designite_smell_present(
-            designite_dir=out_dir,
-            target_class_fqn=state.get("target_class_fqn", ""),
-            smell_name=state.get("designite_smell_name", state.get("smell_type", "")),
-            csv_name=state.get("designite_smells_csv", "DesignSmells.csv"),
-        )
-        state["smell_still_present"] = bool(present)
-
-        state["msg"] = state.get("msg", "") + f" | smell_present={state['smell_still_present']}"
-
-        meta.update({
-            "smell_still_present": state["smell_still_present"],
-            "smell_type": state.get("smell_type", ""),
-            "designite_smell_name": state.get("designite_smell_name", ""),
-        })
-        meta_path.write_text(json.dumps(meta, indent=2), encoding="utf-8")
-
         # update state
         state["designite_analysis_dir"] = str(out_dir)
         state["designite_ok"] = True
@@ -1161,57 +1035,6 @@ def designite_node(state: State) -> State:
         meta_path.write_text(json.dumps(meta, indent=2), encoding="utf-8")
 
         raise
-
-def after_designite(state: State) -> str:
-    if not state.get("designite_ok"):
-        return "rollback"
-
-    if state.get("smell_still_present"):
-        return "prepare_replan"
-
-    return END
-
-def prepare_replan_node(state: State) -> State:
-    repo_path = Path(state["repo_path"]).resolve()
-    run_dir = Path(state["run_dir"])
-    run_dir.mkdir(parents=True, exist_ok=True)
-
-    # 1) ler o código atualizado (já refatorado pelos blocos)
-    target_rel = state["target_file"]
-    code = (repo_path / target_rel).read_text(encoding="utf-8", errors="replace")
-
-    # 2) guardar o plano anterior que "falhou" (ou seja, não removeu o smell)
-    prev_plan = state.get("plan") or {}
-
-    # 3) reconstruir planner_input_json com mais contexto
-    try:
-        base_inp = json.loads(state.get("planner_input_json", "") or "{}")
-        if not isinstance(base_inp, dict):
-            base_inp = {}
-    except Exception:
-        base_inp = {}
-
-    base_inp.update({
-        "target_file": target_rel,
-        "target_code": code,
-        "previous_plan": prev_plan,
-        "designite_smell_present": bool(state.get("smell_still_present", False)),
-        "designite_smell_name": state.get("designite_smell_name", state.get("smell_type", "")),
-    })
-
-    state["planner_input_json"] = json.dumps(base_inp, indent=2)
-
-    # IMPORTANTE: resetar execução do plano (novo ciclo)
-    state["block_idx"] = 0
-    state["plan_ok"] = False
-    state["plan_error"] = ""
-    state["plan"] = {}
-
-    # log útil
-    (run_dir / "replan.input.json").write_text(state["planner_input_json"], encoding="utf-8")
-
-    state["msg"] = state.get("msg", "") + " | prepare_replan ok"
-    return state
     
 def build_graph():
     g = StateGraph(State)
@@ -1228,7 +1051,6 @@ def build_graph():
     g.add_node("compile", compile_node)
     g.add_node("promote_baseline", promote_baseline_node)
     g.add_node("designite", designite_node)
-    g.add_node("prepare_replan", prepare_replan_node)
     g.add_node("advance_block", advance_block_node)
     g.add_node("rollback", rollback_node)
 
@@ -1250,7 +1072,7 @@ def build_graph():
         after_stage_block,
         {
             "resolve_files": "resolve_files",
-            "designite": "designite",
+            END: END,
         },
     )
     
@@ -1283,26 +1105,13 @@ def build_graph():
         "compile",
         after_compile,
         {
-            "promote_baseline": "promote_baseline",   # compile ok
-            "rollback": "rollback",    # compile fail
+            END: "promote_baseline",   # compile ok
+            "rollback": "rollback",
         },
     )
 
     g.add_edge("promote_baseline", "advance_block")
-
-    g.add_conditional_edges(
-        "designite",
-        after_designite,
-        {
-            "prepare_replan": "prepare_replan",
-            "rollback": "rollback",
-            END: END,
-        },
-    )
-
     g.add_edge("advance_block", "stage_block")
-
-    g.add_edge("prepare_replan", "planner")
 
     g.add_conditional_edges(
         "rollback",
@@ -1324,24 +1133,17 @@ if __name__ == "__main__":
     with open("data/prompts/planner_agent.prompt", "r", encoding="utf-8") as f:
         PROMPT_TEMPLATE = f.read()
 
-    REPO_PATH = "data/repositories/jsoup"
-    TARGET_FILE = "src/main/java/org/jsoup/Jsoup.java"
-
-    repo_path = Path(REPO_PATH).resolve()
-    target_rel, target_code = _read_target_file(repo_path, TARGET_FILE)
-
-    planner_input = {
-        "smell": "Insufficient Modularization",
-        "target_file": target_rel,
-        "target_code": target_code,
-    }
+    #with open("data/examples/StringUtil.json", "r", encoding="utf-8") as f:
+    with open("data/dataset/insufficient_modularization/javaparser/CompilationUnit.json", "r", encoding="utf-8") as f:
+        INPUT_DICT = json.loads(f.read())
 
     out = app.invoke(
         {
-            "repo_path": str(repo_path),
-            "target_file": target_rel,
+            #"repo_path": "data/repositories/jsoup",
+            "repo_path": "data/repositories/javaparser",
             "planner_prompt": PROMPT_TEMPLATE,
-            "planner_input_json": json.dumps(planner_input, indent=2),
+            "planner_input_json": json.dumps(INPUT_DICT, indent=2),
             "max_attempts": 20,
         }
     )
+    pprint(out)
