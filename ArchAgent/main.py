@@ -27,6 +27,13 @@ class State(TypedDict, total=False):
     start_commit: str
     base_commit: str
 
+    # plan lifecycle
+    plan_idx: int # no of plan tries
+    plan_base_commit: str # commit before apply the plan
+    plan_dir: str # log dir of current plan
+    smell_persist_replans: int # replan counter
+    replan_trigger: str
+
     # planning data
     planner_prompt: str # plan prompt template
     planner_input_json: str # input data
@@ -43,6 +50,9 @@ class State(TypedDict, total=False):
     staged_block_ops: list[dict]
     done: bool
 
+    block_attempt: int # counter of tries per block
+    max_block_attempts: int # threshold tries
+
     # executor data
     executor_files: list[str]
     executor_new_files: list[str]
@@ -50,10 +60,7 @@ class State(TypedDict, total=False):
     workspace_commit: str
     executor_prompt: str
     executor_raw: str
-
-    executor_attempt: int
     executor_feedback: str
-    max_attempts: int
 
     executor_result: dict                 # executor result data
     files_to_write: list[dict]            # each: {"path": "...", "content": "..."}
@@ -70,15 +77,14 @@ class State(TypedDict, total=False):
     maven_tmp_dir: str
 
     # designite/smell data
-    designite_analysis_dir: str        # designite results folder
     designite_ok: bool                 # if designite run successfully
-    designite_log: str                 # log from designite run
     smell_type: str                    # eg: "Insufficient Modularization"
     designite_smells_csv: str          # designite smell file eg: "DesignSmells.csv"
     designite_smell_name: str          # smell label on designite output
     smell_still_present: bool          # smell remove evaluation
 
     rollback_reason: str
+    rollback_commit: str
 
 # execute a prompt command
 def _run(cmd: list[str], cwd: Path, env: dict | None = None) -> subprocess.CompletedProcess:
@@ -225,21 +231,44 @@ def _read_target_file(repo_path: Path, target_file: str) -> tuple[str, str]:
     code = abs_p.read_text(encoding="utf-8", errors="replace")
     return rel, code # return relative path and file content
 
-import csv
+def _get_plan_dir(state: State) -> Path:
+    run_dir = Path(state["run_dir"])
+    plan_idx = int(state.get("plan_idx", 0))
+    plan_dir = run_dir / f"plan_{plan_idx:02d}"
+    plan_dir.mkdir(parents=True, exist_ok=True)
+    return plan_dir
 
-def _designite_smell_present(designite_dir: Path, target_class_fqn: str, smell_name: str, csv_name: str = "DesignSmells.csv") -> bool:
+def _designite_smell_present(
+    designite_dir: Path,
+    target_class_fqn: str,
+    smell_name: str,
+    csv_name: str = "DesignSmells.csv"
+) -> bool:
+
+    #smell_name = "Insufficient Modularization" # TODO: remove after tests
+
     csv_path = designite_dir / csv_name
     if not csv_path.exists():
         return False
 
-    # target_class_fqn: "org.jsoup.helper.HttpConnection"
-    target_cls = target_class_fqn.split(".")[-1]
+    target_fqn = target_class_fqn.strip()
 
     with csv_path.open("r", encoding="utf-8", errors="replace", newline="") as f:
         reader = csv.DictReader(f)
         for row in reader:
-            if (row.get("Class") == target_cls) and (row.get("Smell") == smell_name):
+            pkg = (row.get("Package") or "").strip()
+            cls = (row.get("Class") or "").strip()
+
+            if not pkg or not cls:
+                continue
+
+            row_fqn = f"{pkg}.{cls}"
+
+            #print(row_fqn, target_fqn, row.get("Smell"), smell_name)
+
+            if row_fqn == target_fqn and (row.get("Smell") or "").strip() == smell_name:
                 return True
+
     return False
 
 def route_node(state: State) -> State:
@@ -262,6 +291,15 @@ def init_run_node(state: State) -> State:
     # create framework folder, if it not exists
     runs_root = repo_path / "agent_runs"
     runs_root.mkdir(parents=True, exist_ok=True)
+
+    # smell config
+    smell_type = ""
+    try:
+        inp = json.loads(state.get("planner_input_json", "") or "{}")
+        smell_type = str(inp.get("smell", "")).strip()
+    except Exception:
+        smell_type = ""
+    state["smell_type"] = smell_type
     
     target_rel, code = _read_target_file(repo_path, state["target_file"])
     state["target_file"] = target_rel
@@ -278,7 +316,6 @@ def init_run_node(state: State) -> State:
 
     state["run_dir"] = str(run_dir)
 
-    state.setdefault("smell_type", "")
     state.setdefault("designite_smell_name", state["smell_type"])
     state.setdefault("designite_smells_csv", "DesignSmells.csv")  # ou outro no futuro
 
@@ -292,21 +329,28 @@ def init_run_node(state: State) -> State:
     }
     (run_dir / "meta.json").write_text(json.dumps(meta, indent=2), encoding="utf-8")
 
-    (run_dir / "meta.json").write_text(json.dumps(meta, indent=2), encoding="utf-8")
-
     state["msg"] = state.get("msg", "") + f" | run_dir={run_dir.name}"
 
-    state.setdefault("executor_attempt", 0)
-    state.setdefault("max_attempts", 3)
     state.setdefault("executor_feedback", "")
 
-    # smell config
-    smell_type = ""
-    try:
-        inp = json.loads(state.get("planner_input_json", "") or "{}")
-        smell_type = str(inp.get("smell", "")).strip()
-    except Exception:
-        smell_type = ""
+    # plan lifecycle init
+    state.setdefault("plan_idx", 0)
+    state.setdefault("smell_persist_replans", 0)
+
+    ## give a workfull commit to the plan
+    state["plan_base_commit"] = state.get("base_commit") or head
+
+    plan_dir = _get_plan_dir(state)
+    #state["plan_dir"] = str(plan_dir)
+
+    ## update meta.json
+    meta.update({
+        "plan_idx": state["plan_idx"],
+        "plan_base_commit": state["plan_base_commit"],
+        "plan_dir": str(plan_dir),
+        "smell_persist_replans": state["smell_persist_replans"],
+    })
+    (Path(state["run_dir"]) / "meta.json").write_text(json.dumps(meta, indent=2), encoding="utf-8")
 
     state["smell_type"] = smell_type or state.get("smell_type", "Insufficient Modularization")
     state["designite_smells_csv"] = state.get("designite_smells_csv", "DesignSmells.csv")
@@ -315,13 +359,12 @@ def init_run_node(state: State) -> State:
     # (no futuro você pode mapear aqui, se os nomes divergirem)
     state["designite_smell_name"] = state.get("designite_smell_name", state["smell_type"])
 
-
     return state
 
 def planner_node(state: State) -> State:
     repo_path = Path(state["repo_path"]).resolve()
     run_dir = Path(state["run_dir"])
-    run_dir.mkdir(parents=True, exist_ok=True)
+    plan_dir = _get_plan_dir(state)
 
     meta_path = run_dir / "meta.json"
     meta = _load_meta_or_init(meta_path, repo_path, state.get("base_commit"))
@@ -343,8 +386,8 @@ def planner_node(state: State) -> State:
         meta_path.write_text(json.dumps(meta, indent=2), encoding="utf-8")
         return state
 
-    (run_dir / "planner.prompt.md").write_text(prompt, encoding="utf-8")
-    (run_dir / "planner.input.json").write_text(planner_input, encoding="utf-8")
+    (plan_dir / "planner.prompt.md").write_text(prompt, encoding="utf-8")
+    (plan_dir / "planner.input.json").write_text(planner_input, encoding="utf-8")
 
     llm = ChatOpenAI(
         model=os.getenv("PLANNER_MODEL", "gpt-5-mini"),
@@ -364,7 +407,7 @@ def planner_node(state: State) -> State:
 
         raw = (res.content or "").strip()
         state["plan_json_text"] = raw
-        (run_dir / "planner.raw.txt").write_text(raw, encoding="utf-8")
+        (plan_dir / "planner.raw.txt").write_text(raw, encoding="utf-8")
 
         json_text = _extract_json_object_only(raw)
 
@@ -379,7 +422,7 @@ def planner_node(state: State) -> State:
         state["plan_ok"] = True
         state["plan_error"] = ""
 
-        (run_dir / "plan.json").write_text(json.dumps(plan, indent=2), encoding="utf-8")
+        (plan_dir / "plan.json").write_text(json.dumps(plan, indent=2), encoding="utf-8")
 
         meta.update({"plan_ok": True, "plan_error": ""})
         meta_path.write_text(json.dumps(meta, indent=2), encoding="utf-8")
@@ -391,7 +434,7 @@ def planner_node(state: State) -> State:
         err = str(e)
         state["plan_ok"] = False
         state["plan_error"] = err
-        (run_dir / "planner.error.txt").write_text(err + "\n", encoding="utf-8")
+        (plan_dir / "planner.error.txt").write_text(err + "\n", encoding="utf-8")
 
         meta.update({"plan_ok": False, "plan_error": err})
         meta_path.write_text(json.dumps(meta, indent=2), encoding="utf-8")
@@ -408,9 +451,8 @@ def after_planner(state: State) -> str:
 
 def stage_block_node(state: State) -> State:
     run_dir = Path(state["run_dir"])
-    run_dir.mkdir(parents=True, exist_ok=True)
-
     plan = state.get("plan")
+    
     if not plan or not isinstance(plan, dict):
         raise RuntimeError("stage_block_node: missing/invalid state['plan']")
 
@@ -433,9 +475,10 @@ def stage_block_node(state: State) -> State:
     files = blk.get("files", []) or []
 
     # IMPORTANT: reset attempt/feedback for THIS block
-    state["executor_attempt"] = 0
     state["executor_feedback"] = ""
-    state.setdefault("max_attempts", 3)
+
+    state["block_attempt"] = 0
+    state.setdefault("max_block_attempts", 5)
 
     state["done"] = False
     state["staged_block"] = blk
@@ -443,7 +486,8 @@ def stage_block_node(state: State) -> State:
     state["staged_block_ops"] = ops
     state["staged_block_files"] = files
 
-    (run_dir / f"staged.block.{idx}.json").write_text(json.dumps(blk, indent=2), encoding="utf-8")
+    plan_dir = _get_plan_dir(state)
+    (plan_dir / f"staged.block.{idx}.json").write_text(json.dumps(blk, indent=2), encoding="utf-8")
 
     state["msg"] = state.get("msg", "") + f" | staged block_idx={idx} id={blk.get('id')} ops={len(ops)}"
     return state
@@ -452,7 +496,6 @@ def stage_block_node(state: State) -> State:
 def resolve_files_for_block_node(state: State) -> State:
     repo_path = Path(state["repo_path"]).resolve()
     run_dir = Path(state["run_dir"])
-    run_dir.mkdir(parents=True, exist_ok=True)
 
     # get dic of blocks and list of operations
     blk = state.get("staged_block") or {}
@@ -491,7 +534,8 @@ def resolve_files_for_block_node(state: State) -> State:
     state["executor_new_files"] = sorted(new_files)
     state["executor_files"] = all_files
 
-    (run_dir / "executor.files.json").write_text(json.dumps(all_files, indent=2), encoding="utf-8")
+    plan_dir = _get_plan_dir(state)
+    (plan_dir / "executor.files.json").write_text(json.dumps(all_files, indent=2), encoding="utf-8")
 
     state["msg"] = state.get("msg", "") + f" | files={len(all_files)} (new={len(new_files)})"
     return state
@@ -500,7 +544,7 @@ def resolve_files_for_block_node(state: State) -> State:
 def lock_workspace_node(state: State) -> State:
     repo_path = Path(state["repo_path"]).resolve()
     run_dir = Path(state["run_dir"])
-    run_dir.mkdir(parents=True, exist_ok=True)
+    plan_dir = _get_plan_dir(state)
 
     if not state.get("base_commit"):
         state["base_commit"] = _git_current_commit(repo_path)
@@ -511,7 +555,7 @@ def lock_workspace_node(state: State) -> State:
 
     state["workspace_commit"] = _git_current_commit(repo_path)
 
-    (run_dir / "workspace.lock.txt").write_text(
+    (plan_dir / "workspace.lock.txt").write_text(
         f"base_commit={base}\nworkspace_commit={state['workspace_commit']}\n",
         encoding="utf-8",
     )
@@ -527,10 +571,11 @@ def lock_workspace_node(state: State) -> State:
     return state
 
 def executor_node(state: State) -> State:
+
     # load log files
     repo_path = Path(state["repo_path"]).resolve()
     run_dir = Path(state["run_dir"])
-    run_dir.mkdir(parents=True, exist_ok=True)
+    plan_dir = _get_plan_dir(state)
     
     meta_path = run_dir / "meta.json"
     meta = _load_meta_or_init(meta_path, repo_path, state.get("base_commit"))
@@ -581,9 +626,7 @@ JSON schema:
         "staged_block": blk,
         "allowed_paths": allowed_paths,
         "files_context": file_blobs,
-        "feedback": state.get("executor_feedback", ""),
-        "attempt": state.get("executor_attempt", 0),
-        "max_attempts": state.get("max_attempts", 3),
+        "feedback": state.get("executor_feedback", "")
     }
 
     state["executor_prompt"] = json.dumps(executor_prompt, indent=2)
@@ -602,8 +645,8 @@ JSON schema:
     raw = (res.content or "").strip()
     state["executor_raw"] = raw
 
-    (run_dir / "executor.prompt.json").write_text(state["executor_prompt"], encoding="utf-8")
-    (run_dir / "executor.raw.txt").write_text(raw, encoding="utf-8")
+    (plan_dir / "executor.prompt.json").write_text(state["executor_prompt"], encoding="utf-8")
+    (plan_dir / "executor.raw.txt").write_text(raw, encoding="utf-8")
 
     # ---- Parse JSON strictly ----
     try:
@@ -657,7 +700,7 @@ JSON schema:
         state["files_to_write"] = cleaned_writes
         state["files_to_delete"] = cleaned_deletes
 
-        (run_dir / "executor.result.json").write_text(
+        (plan_dir / "executor.result.json").write_text(
             json.dumps(
                 {
                     "files_to_write": [{"path": x["path"], "content_len": len(x["content"])} for x in cleaned_writes],
@@ -675,7 +718,6 @@ JSON schema:
         #update meta file
         meta.update({
             "executor_ok": True,
-            "executor_attempt": state.get("executor_attempt", 0),
             "executor_writes": len(state.get("files_to_write") or []),
             "executor_deletes": len(state.get("files_to_delete") or []),
         })
@@ -691,13 +733,21 @@ JSON schema:
         state["rollback_reason"] = "invalid_executor_json"
         state["executor_feedback"] = f"EXECUTOR_INVALID_JSON: {err}"
 
-        (run_dir / "executor.parse_error.txt").write_text(err + "\n", encoding="utf-8")
+        # add block tries
+        state["block_attempt"] = state.get("block_attempt", 0) + 1
+
+        # if block tries exceed
+        if state["block_attempt"] >= state.get("max_block_attempts", 5):
+            state["rollback_reason"] = "block_attempt_exhausted"
+            state["rollback_commit"] = state["plan_base_commit"]
+            state["replan_trigger"] = "block_attempt_exhausted"
+
+        (plan_dir / "executor.parse_error.txt").write_text(err + "\n", encoding="utf-8")
         state["msg"] = state.get("msg", "") + f" | executor FAIL(parse): {err}"
 
         #update meta file
         meta.update({
             "executor_ok": False,
-            "executor_attempt": state.get("executor_attempt", 0),
             "executor_error": err,
             "rollback_reason": state.get("rollback_reason"),
         })
@@ -705,35 +755,56 @@ JSON schema:
 
         return state
 
-def after_executor(state: State) -> str:
+'''def after_executor(state: State) -> str:
     # if executor not failed parsing JSON, and produced files to write/delete
     if (state.get("rollback_reason") in (None, "", "unknown")
         and ((state.get("files_to_write") or []) or (state.get("files_to_delete") or []))):
         return "apply_files"
 
     # if executor failed, retry
-    state["executor_attempt"] = state.get("executor_attempt", 0) + 1 # add attempt
-    if state["executor_attempt"] < state.get("max_attempts", 3): # check attempts
+    state["block_attempt"] = state.get("block_attempt", 0) + 1 # add attempt
+    
+    if state["block_attempt"] < state.get("max_block_attempts", 5): # if not exceed attempts
         return "retry_executor"
-    return "rollback" # if all attempts exhausted
+    
+    state["rollback_reason"] = "block_attempt_exhausted"
+    state["rollback_commit"] = state["plan_base_commit"]
+    state["replan_trigger"] = "block_attempt_exhausted"
+    
+    return "rollback" # if all attempts exhausted, replan'''
+
+def after_executor(state: State) -> str:
+    # if executor not failed parsing JSON, and produced files to write/delete
+    if (state.get("rollback_reason") in (None, "", "unknown")
+        and ((state.get("files_to_write") or []) or (state.get("files_to_delete") or []))):
+        return "apply_files"
+
+    # block attempts are reached
+    if state.get("rollback_reason") == "block_attempt_exhausted":
+        return "rollback"
+
+    # if failed, retry
+    return "retry_executor"
 
 def retry_executor_node(state: State) -> State:
     run_dir = Path(state["run_dir"])
-    run_dir.mkdir(parents=True, exist_ok=True)
+    plan_dir = _get_plan_dir(state)
 
     # create a unique retry log file
     ts = datetime.now().strftime("%Y%m%d_%H%M%S_%f")
     rid = uuid.uuid4().hex[:8]
-    attempt = state.get("executor_attempt", 0)
+
     reason = state.get("rollback_reason", "")
-    fname = f"retry.attempt{attempt}.{ts}_{rid}.txt"
+    
+    attempt = state.get("block_attempt", 0)
+    fname = f"retry.block_attempt{attempt}.{ts}_{rid}.txt"
 
     content = (
         f"attempt={attempt}\n"
         f"reason={reason}\n"
         f"feedback={state.get('executor_feedback','')}\n"
     )
-    (run_dir / fname).write_text(content, encoding="utf-8")
+    (plan_dir / fname).write_text(content, encoding="utf-8")
 
     index_line = json.dumps(
         {
@@ -744,7 +815,7 @@ def retry_executor_node(state: State) -> State:
         },
         ensure_ascii=False,
     )
-    with open(run_dir / "retry.index.jsonl", "a", encoding="utf-8") as f:
+    with open(plan_dir / "retry.index.jsonl", "a", encoding="utf-8") as f:
         f.write(index_line + "\n")
 
     state["msg"] = state.get("msg", "") + f" | retry logged={fname}"
@@ -754,7 +825,7 @@ def apply_files_node(state: State) -> State:
     # load log files
     repo_path = Path(state["repo_path"]).resolve()
     run_dir = Path(state["run_dir"])
-    run_dir.mkdir(parents=True, exist_ok=True)
+    plan_dir = _get_plan_dir(state)
 
     meta_path = run_dir / "meta.json"
     meta = _load_meta_or_init(meta_path, repo_path, state.get("base_commit"))
@@ -777,10 +848,18 @@ def apply_files_node(state: State) -> State:
         state["apply_error"] = err
         state["rollback_reason"] = "apply_files_invalid_paths"
         state["executor_feedback"] = f"APPLY_FILES_INVALID_PATHS: {err}"
-        (run_dir / "apply_files.error.txt").write_text(err + "\n", encoding="utf-8")
+        (plan_dir / "apply_files.error.txt").write_text(err + "\n", encoding="utf-8")
         meta.update({"apply_ok": False, "apply_error": err, "rollback_reason": state["rollback_reason"]})
         meta_path.write_text(json.dumps(meta, indent=2), encoding="utf-8")
         state["msg"] = state.get("msg","") + f" | apply_files FAIL: {err}"
+
+        state["block_attempt"] = state.get("block_attempt", 0) + 1
+
+        if state["block_attempt"] >= state.get("max_block_attempts", 5):
+            state["rollback_reason"] = "block_attempt_exhausted"
+            state["rollback_commit"] = state["plan_base_commit"]
+            state["replan_trigger"] = "block_attempt_exhausted"
+
         return state
 
     # validate paths before applying (delete files)
@@ -790,7 +869,7 @@ def apply_files_node(state: State) -> State:
         state["apply_error"] = err
         state["rollback_reason"] = "apply_files_invalid_delete_paths"
         state["executor_feedback"] = f"APPLY_FILES_INVALID_DELETE_PATHS: {err}"
-        (run_dir / "apply_files.error.txt").write_text(err + "\n", encoding="utf-8")
+        (plan_dir / "apply_files.error.txt").write_text(err + "\n", encoding="utf-8")
         meta.update({"apply_ok": False, "apply_error": err, "rollback_reason": state["rollback_reason"]})
         meta_path.write_text(json.dumps(meta, indent=2), encoding="utf-8")
         state["msg"] = state.get("msg","") + f" | apply_files FAIL: {err}"
@@ -819,8 +898,8 @@ def apply_files_node(state: State) -> State:
         written.append(rp) # register written file
 
     # log do que foi aplicado
-    (run_dir / "apply_files.written.json").write_text(json.dumps(written, indent=2), encoding="utf-8")
-    (run_dir / "apply_files.deleted.json").write_text(json.dumps(deleted, indent=2), encoding="utf-8")
+    (plan_dir / "apply_files.written.json").write_text(json.dumps(written, indent=2), encoding="utf-8")
+    (plan_dir / "apply_files.deleted.json").write_text(json.dumps(deleted, indent=2), encoding="utf-8")
 
     state["apply_ok"] = True
     state["apply_error"] = ""
@@ -837,25 +916,28 @@ def apply_files_node(state: State) -> State:
     return state
 
 def after_apply_files(state: State) -> str:
-    
-    # if files changed successfully, proceed to compile
     if state.get("apply_ok"):
         return "compile"
 
-    # failed to apply files; retry executor
-    state["executor_attempt"] = state.get("executor_attempt", 0) + 1 # add attempt
-    if state["executor_attempt"] < state.get("max_attempts", 3): # check attempts
+    # decide based on current block_attempt
+    if state.get("block_attempt", 0) < state.get("max_block_attempts", 5):
         return "retry_executor"
-    
-     # if all attempts exhausted
+
     return "rollback"
 
 def rollback_node(state: State) -> State:
     repo_path = Path(state["repo_path"]).resolve()
-    base = state.get("base_commit")
+
+    if state.get("rollback_commit"):
+        base = state.get("rollback_commit")
+    else:
+        base = state.get("base_commit")
+
 
     run_dir_str = state.get("run_dir")
     run_dir = Path(run_dir_str) if run_dir_str else None
+
+    plan_dir = _get_plan_dir(state)
 
     if not base:
         state["msg"] = state.get("msg", "") + " | rollback skipped (no base_commit)"
@@ -864,7 +946,7 @@ def rollback_node(state: State) -> State:
     if run_dir:
         run_dir.mkdir(parents=True, exist_ok=True)
         statusp = _run(["git", "status", "--porcelain=v1"], cwd=repo_path)
-        (run_dir / "git_status_before_rollback.txt").write_text(
+        (plan_dir / "git_status_before_rollback.txt").write_text(
             (statusp.stdout or "") + ("\n" if statusp.stdout else "") + (statusp.stderr or ""),
             encoding="utf-8",
         )
@@ -888,32 +970,36 @@ def rollback_node(state: State) -> State:
         meta["rollback_reason"] = state.get("rollback_reason", "unknown")
         meta_path.write_text(json.dumps(meta, indent=2), encoding="utf-8")
 
-        (run_dir / "rollback.reason.txt").write_text(meta["rollback_reason"] + "\n", encoding="utf-8")
+        (plan_dir / "rollback.reason.txt").write_text(meta["rollback_reason"] + "\n", encoding="utf-8")
 
     return state
 
 def after_rollback(state: State) -> str:
-
-    # consider quantity of attempts
-    if state.get("executor_attempt", 0) < state.get("max_attempts", 3):
-        # if executor, apply or compile failed, retry
-        if state.get("rollback_reason") in {
-            "invalid_executor_json",
-            "apply_files_invalid_paths",
-            "apply_files_invalid_delete_paths",
-            "compile_failed",
-        }:
-            return "retry_executor"
+    if state.get("replan_trigger") or state.get("rollback_reason") in {
+        "block_attempt_exhausted",
+        "smell_persist_force_rollback",
+        "compile_failed",
+    }:
+        return "prepare_replan"
     return END
-
 
 def compile_node(state: State) -> State:
     repo_path = Path(state["repo_path"]).resolve()
 
+    run_dir = Path(state["run_dir"])
+    plan_dir = _get_plan_dir(state)
+
     tmp_dir = repo_path / "tmp"
     tmp_dir.mkdir(parents=True, exist_ok=True)
 
-    cmd = ["mvn", "-q", "-DskipTests", "-Drat.skip=true", "compile"]
+    cmd = ["mvn", "-q",
+       #"-DskipTests",
+       "-Drat.skip=true",
+       "-Dcheckstyle.skip=true",
+       "-Dspotbugs.skip=true",
+       "-Dpmd.skip=true",
+       "-DskipITs",
+       "clean", "verify"]
 
     env = os.environ.copy()
     env["MAVEN_OPTS"] = f"-Xshare:off -Djava.io.tmpdir={tmp_dir}"
@@ -926,8 +1012,7 @@ def compile_node(state: State) -> State:
 
     combined = (p.stdout or "") + "\n" + (p.stderr or "")
 
-    run_dir = Path(state["run_dir"])
-    (run_dir / "compile.log").write_text(combined, encoding="utf-8")
+    (plan_dir / "compile.log").write_text(combined, encoding="utf-8")
 
     state["compile_log_tail"] = _tail(combined, 40)
 
@@ -977,6 +1062,8 @@ def advance_block_node(state: State) -> State:
     state["apply_error"] = ""
     state["rollback_reason"] = ""
 
+    state["block_attempt"] = 0
+
     state["msg"] = state.get("msg", "") + f" | advance_block -> {state['block_idx']}"
     return state
 
@@ -984,7 +1071,7 @@ def advance_block_node(state: State) -> State:
 def promote_baseline_node(state: State) -> State:
     repo_path = Path(state["repo_path"]).resolve()
     run_dir = Path(state["run_dir"])
-    run_dir.mkdir(parents=True, exist_ok=True)
+    plan_dir = _get_plan_dir(state)
 
     # if compile failed, skip
     if not state.get("compile_ok"):
@@ -996,8 +1083,8 @@ def promote_baseline_node(state: State) -> State:
     block_id = state.get("staged_block_id", idx)
 
     # check if any change
-    status = _run(["git", "status", "--porcelain=v1"], cwd=repo_path)
-    dirty = bool((status.stdout or "").strip())
+    diff = _run(["git", "diff", "--name-only"], cwd=repo_path)
+    dirty = bool((diff.stdout or "").strip())
 
     promoted = False
 
@@ -1013,7 +1100,7 @@ def promote_baseline_node(state: State) -> State:
             err = _tail((c.stdout or "") + "\n" + (c.stderr or ""), 80)
             state["rollback_reason"] = "baseline_commit_failed"
             state["msg"] = state.get("msg", "") + " | promote_baseline FAIL(commit)"
-            (run_dir / "baseline.commit.error.txt").write_text(err + "\n", encoding="utf-8")
+            (plan_dir / "baseline.commit.error.txt").write_text(err + "\n", encoding="utf-8")
             raise RuntimeError(f"Baseline commit failed:\n{err}")
         promoted = True
 
@@ -1036,7 +1123,7 @@ def promote_baseline_node(state: State) -> State:
     )
     meta_path.write_text(json.dumps(meta, indent=2), encoding="utf-8")
 
-    (run_dir / "baseline.promoted.txt").write_text(
+    (plan_dir / "baseline.promoted.txt").write_text(
         f"base_commit={new_base}\npromoted={promoted}\n", encoding="utf-8"
     )
 
@@ -1075,7 +1162,7 @@ def _run_designite(
 def designite_node(state: State) -> State:
     repo_path = Path(state["repo_path"]).resolve()
     run_dir = Path(state["run_dir"])
-    run_dir.mkdir(parents=True, exist_ok=True)
+    plan_dir = _get_plan_dir(state)
 
     # meta.json
     meta_path = run_dir / "meta.json"
@@ -1088,7 +1175,7 @@ def designite_node(state: State) -> State:
         }
 
     # define early so except can reference it safely
-    analysis_out = run_dir / "designite_analysis"
+    analysis_out = plan_dir / "designite_analysis"
 
     try:
         jar_env = os.getenv("DESIGNITE_JAR_PATH")
@@ -1122,20 +1209,16 @@ def designite_node(state: State) -> State:
         meta_path.write_text(json.dumps(meta, indent=2), encoding="utf-8")
 
         # update state
-        state["designite_analysis_dir"] = str(out_dir)
         state["designite_ok"] = True
-        state["designite_log"] = str(out_dir / "designite.log")
         state["msg"] = state.get("msg", "") + " | designite done"
 
         # persist command
-        (run_dir / "designite.cmd.txt").write_text(" ".join(cmd), encoding="utf-8")
+        (plan_dir / "designite.cmd.txt").write_text(" ".join(cmd), encoding="utf-8")
 
         # update meta.json
         meta.update(
             {
                 "designite_ok": True,
-                "designite_analysis_dir": str(out_dir),
-                "designite_log": str(out_dir / "designite.log"),
             }
         )
         meta_path.write_text(json.dumps(meta, indent=2), encoding="utf-8")
@@ -1144,16 +1227,12 @@ def designite_node(state: State) -> State:
 
     except Exception as e:
         state["designite_ok"] = False
-        state["designite_analysis_dir"] = str(analysis_out)
-        state["designite_log"] = str(analysis_out / "designite.log")
         state["rollback_reason"] = "designite_failed"
         state["msg"] = state.get("msg", "") + f" | designite FAIL: {e}"
 
         meta.update(
             {
                 "designite_ok": False,
-                "designite_analysis_dir": str(analysis_out),
-                "designite_log": str(analysis_out / "designite.log"),
                 "designite_error": str(e),
                 "rollback_reason": "designite_failed",
             }
@@ -1163,55 +1242,109 @@ def designite_node(state: State) -> State:
         raise
 
 def after_designite(state: State) -> str:
-    if not state.get("designite_ok"):
-        return "rollback"
 
     if state.get("smell_still_present"):
-        return "prepare_replan"
+        run_dir = Path(state["run_dir"])
+        repo_path = Path(state["repo_path"]).resolve()
+
+        meta_path = run_dir / "meta.json"
+        meta = _load_meta_or_init(meta_path, repo_path, state.get("base_commit"))
+        
+        state["smell_persist_replans"] += 1
+        
+        meta.update(
+            {
+                "smell_persist_replans": state["smell_persist_replans"],
+            }
+        )
+        meta_path.write_text(json.dumps(meta, indent=2), encoding="utf-8")
+        
+        # quantity plan tries
+        if state["plan_idx"] <= 4:
+            state["replan_trigger"] = "smell_persist_keep_progress"
+            return "prepare_replan"
+        else:
+            state["rollback_commit"] = state["plan_base_commit"]
+            state["replan_trigger"] = "smell_persist_force_rollback"
+            return "rollback"
+    
+    if not state.get("designite_ok"):
+        return "rollback"
 
     return END
 
 def prepare_replan_node(state: State) -> State:
     repo_path = Path(state["repo_path"]).resolve()
     run_dir = Path(state["run_dir"])
-    run_dir.mkdir(parents=True, exist_ok=True)
 
-    # 1) ler o código atualizado (já refatorado pelos blocos)
-    target_rel = state["target_file"]
-    code = (repo_path / target_rel).read_text(encoding="utf-8", errors="replace")
+    if state.get("plan_idx", 0) > 4:
+        state["msg"] = state.get("msg", "") + " | stop: max plans reached"
+        return state
 
-    # 2) guardar o plano anterior que "falhou" (ou seja, não removeu o smell)
-    prev_plan = state.get("plan") or {}
-
-    # 3) reconstruir planner_input_json com mais contexto
-    try:
-        base_inp = json.loads(state.get("planner_input_json", "") or "{}")
-        if not isinstance(base_inp, dict):
-            base_inp = {}
-    except Exception:
-        base_inp = {}
-
-    base_inp.update({
-        "target_file": target_rel,
-        "target_code": code,
-        "previous_plan": prev_plan,
-        "designite_smell_present": bool(state.get("smell_still_present", False)),
-        "designite_smell_name": state.get("designite_smell_name", state.get("smell_type", "")),
-    })
-
-    state["planner_input_json"] = json.dumps(base_inp, indent=2)
-
-    # IMPORTANTE: resetar execução do plano (novo ciclo)
+    # new plan must start from block 0
     state["block_idx"] = 0
-    state["plan_ok"] = False
-    state["plan_error"] = ""
-    state["plan"] = {}
+    state["block_attempt"] = 0
 
-    # log útil
-    (run_dir / "replan.input.json").write_text(state["planner_input_json"], encoding="utf-8")
+    # clean per-block state (same idea as advance_block_node)
+    state["staged_block"] = {}
+    state["staged_block_ops"] = []
+    state["staged_block_files"] = []
+    state["executor_files"] = []
+    state["executor_existing_files"] = []
+    state["executor_new_files"] = []
+    state["files_to_write"] = []
+    state["files_to_delete"] = []
+    state["apply_ok"] = False
+    state["apply_error"] = ""
 
-    state["msg"] = state.get("msg", "") + " | prepare_replan ok"
+    # add plan counter
+    state["plan_idx"] = state.get("plan_idx", 0) + 1
+
+    # start-of-plan bookkeeping
+    state["plan_base_commit"] = state.get("base_commit")  # base_commit is the current baseline commit
+    state["rollback_commit"] = ""                         # prevent leaking rollback target
+    state["rollback_reason"] = ""                         # optional: avoid leaking into planner_input
+    state["replan_trigger"] = ""                          # very important: avoid infinite replan loop
+
+    # create new plan folder
+    plan_dir = _get_plan_dir(state)
+
+    # get target code
+    target_rel, target_code = _read_target_file(repo_path, state["target_file"])
+
+    # get old plan to pass for new prompt
+    previous_plan = state.get("plan") or {}
+
+    # input for the new plan
+    planner_input = {
+        "smell": state.get("smell_type", "Insufficient Modularization"),
+        "target_file": target_rel,
+        "target_code": target_code,
+        "previous_plan": previous_plan,
+        "replan_reason": state.get("rollback_reason") or state.get("replan_trigger") or "",
+        "last_error": state.get("executor_feedback", ""),
+    }
+
+    state["planner_input_json"] = json.dumps(planner_input, indent=2)
+
+    # meta.json update
+    meta_path = run_dir / "meta.json"
+    meta = _load_meta_or_init(meta_path, repo_path, state.get("base_commit"))
+    meta.update({
+        "plan_idx": state["plan_idx"],
+        "plan_dir": str(plan_dir),
+        "smell_persist_replans": state.get("smell_persist_replans", 0),
+        "replan_trigger": state.get("replan_trigger", ""),
+    })
+    meta_path.write_text(json.dumps(meta, indent=2), encoding="utf-8")
+
     return state
+
+def after_prepare_replan(state: State) -> str:
+    # max 5 plans total: plan_00..plan_04
+    if state.get("plan_idx", 0) > 4:
+        return END
+    return "planner"
     
 def build_graph():
     g = StateGraph(State)
@@ -1302,13 +1435,21 @@ def build_graph():
 
     g.add_edge("advance_block", "stage_block")
 
-    g.add_edge("prepare_replan", "planner")
+    g.add_conditional_edges(
+        "prepare_replan",
+        after_prepare_replan,
+        {
+            "planner": "planner",
+            END: END
+        },
+    )
+
 
     g.add_conditional_edges(
         "rollback",
         after_rollback,
         {
-            "retry_executor": "retry_executor",
+            "prepare_replan": "prepare_replan",
             END: END,
         },
     )
@@ -1324,8 +1465,8 @@ if __name__ == "__main__":
     with open("data/prompts/planner_agent.prompt", "r", encoding="utf-8") as f:
         PROMPT_TEMPLATE = f.read()
 
-    REPO_PATH = "data/repositories/jsoup"
-    TARGET_FILE = "src/main/java/org/jsoup/Jsoup.java"
+    REPO_PATH = "data/repositories/commons-lang"
+    TARGET_FILE = "src/main/java/org/apache/commons/lang3/time/FastDatePrinter.java"
 
     repo_path = Path(REPO_PATH).resolve()
     target_rel, target_code = _read_target_file(repo_path, TARGET_FILE)
@@ -1341,7 +1482,6 @@ if __name__ == "__main__":
             "repo_path": str(repo_path),
             "target_file": target_rel,
             "planner_prompt": PROMPT_TEMPLATE,
-            "planner_input_json": json.dumps(planner_input, indent=2),
-            "max_attempts": 20,
+            "planner_input_json": json.dumps(planner_input, indent=2)
         }
     )
