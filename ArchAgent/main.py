@@ -1,3 +1,4 @@
+import argparse
 import csv
 import dotenv
 import json
@@ -7,13 +8,18 @@ import shutil
 import subprocess
 import uuid
 
+from collections import defaultdict, deque
 from datetime import datetime
 from pathlib import Path
-from typing import TypedDict, Tuple
+from pprint import pprint
+from typing import TypedDict, Tuple, Dict, List, Any
+import xml.etree.ElementTree as ET
 
 from langchain_openai import ChatOpenAI
 from langchain_core.messages import SystemMessage, HumanMessage
 from langgraph.graph import StateGraph, END
+
+from tools.context_builder import extract_observed_external_calls
 
 class State(TypedDict, total=False):
     repo_path: str
@@ -76,13 +82,19 @@ class State(TypedDict, total=False):
     compile_log_tail: str
     maven_tmp_dir: str
 
+    # smell analysis data
+    smell_quality_ok: bool             # check if the LLM define why LLM wasn't remove
+    smell_quality_error: str           # check error in LLM inference
+    smell_quality_analysis: str        # LLM quality analysis answer
+    smell_quality_prompt_path: str     # prompt for LLM quality analysis
+
     # designite/smell data
     designite_ok: bool                 # if designite run successfully
     smell_type: str                    # eg: "Insufficient Modularization"
     designite_smells_csv: str          # designite smell file eg: "DesignSmells.csv"
     designite_smell_name: str          # smell label on designite output
     smell_still_present: bool          # smell remove evaluation
-
+    
     rollback_reason: str
     rollback_commit: str
 
@@ -245,8 +257,6 @@ def _designite_smell_present(
     csv_name: str = "DesignSmells.csv"
 ) -> bool:
 
-    #smell_name = "Insufficient Modularization" # TODO: remove after tests
-
     csv_path = designite_dir / csv_name
     if not csv_path.exists():
         return False
@@ -317,10 +327,16 @@ def init_run_node(state: State) -> State:
     state["run_dir"] = str(run_dir)
 
     state.setdefault("designite_smell_name", state["smell_type"])
-    state.setdefault("designite_smells_csv", "DesignSmells.csv")  # ou outro no futuro
+    
+    # TODO: improve this defaulting logic
+    if state["smell_type"] in {"Insufficient Modularization", "Hub-like Modularization"}:
+        state.setdefault("designite_smells_csv", "DesignSmells.csv")
+    else:
+        state.setdefault("designite_smells_csv", "ArchitectureSmells.csv")
 
     meta = {
         "repo_path": str(repo_path),
+        "target_file": state["target_file"],
         "start_commit": state["start_commit"],
         "base_commit": state["base_commit"],
         "smell_type": state.get("smell_type", ""),
@@ -335,7 +351,14 @@ def init_run_node(state: State) -> State:
 
     # plan lifecycle init
     state.setdefault("plan_idx", 0)
+    
+    # smell analysis states
     state.setdefault("smell_persist_replans", 0)
+    state.setdefault("smell_quality_analysis", "")
+    state.setdefault("smell_quality_ok", False)
+    state.setdefault("smell_quality_error", "")
+    #state.setdefault("smell_quality_prompt_path", "data/prompts/quality_checker.prompt")
+    state.setdefault("smell_quality_prompt_path", "data/prompts/quality_HM.prompt")
 
     ## give a workfull commit to the plan
     state["plan_base_commit"] = state.get("base_commit") or head
@@ -983,15 +1006,7 @@ def after_rollback(state: State) -> str:
         return "prepare_replan"
     return END
 
-def compile_node(state: State) -> State:
-    repo_path = Path(state["repo_path"]).resolve()
-
-    run_dir = Path(state["run_dir"])
-    plan_dir = _get_plan_dir(state)
-
-    tmp_dir = repo_path / "tmp"
-    tmp_dir.mkdir(parents=True, exist_ok=True)
-
+def _run_build(tmp_dir: Path) -> subprocess.CompletedProcess:
     cmd = ["mvn", "-q",
        #"-DskipTests",
        "-Drat.skip=true",
@@ -1004,7 +1019,32 @@ def compile_node(state: State) -> State:
     env = os.environ.copy()
     env["MAVEN_OPTS"] = f"-Xshare:off -Djava.io.tmpdir={tmp_dir}"
 
-    p = _run(cmd, cwd=repo_path, env=env)
+    return _run(cmd, cwd=repo_path, env=env)
+
+def compile_node(state: State) -> State:
+    repo_path = Path(state["repo_path"]).resolve()
+
+    run_dir = Path(state["run_dir"])
+    plan_dir = _get_plan_dir(state)
+
+    tmp_dir = repo_path / "tmp"
+    tmp_dir.mkdir(parents=True, exist_ok=True)
+
+    '''cmd = ["mvn", "-q",
+       #"-DskipTests",
+       "-Drat.skip=true",
+       "-Dcheckstyle.skip=true",
+       "-Dspotbugs.skip=true",
+       "-Dpmd.skip=true",
+       "-DskipITs",
+       "clean", "verify"]
+
+    env = os.environ.copy()
+    env["MAVEN_OPTS"] = f"-Xshare:off -Djava.io.tmpdir={tmp_dir}"
+
+    p = _run(cmd, cwd=repo_path, env=env)'''
+
+    p = _run_build(tmp_dir)
 
     state["compile_returncode"] = p.returncode
     state["compile_ok"] = (p.returncode == 0)
@@ -1141,11 +1181,15 @@ def _run_designite(
 
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    cmd = [
-        "java", "-jar", str(jar_path),
-        "-i", str(repo_path),
-        "-o", str(out_dir),
-    ]
+    java22 = "/usr/lib/jvm/jdk-22.0.2-oracle-x64/bin/java"
+
+    #cmd = [
+    #    "java", "-jar", str(jar_path),
+    #    "-i", str(repo_path),
+    #    "-o", str(out_dir),
+    #]
+
+    cmd = [java22, "-jar", str(jar_path), "-g", "-i", str(repo_path), "-o", str(out_dir)]
 
     p = _run(cmd, cwd=repo_path)
 
@@ -1241,28 +1285,17 @@ def designite_node(state: State) -> State:
 
         raise
 
+# case smell removed END
+# case smell persists and plans <= 4, replan
+# case smell persists and plans > 4, roolback
 def after_designite(state: State) -> str:
 
     if state.get("smell_still_present"):
-        run_dir = Path(state["run_dir"])
-        repo_path = Path(state["repo_path"]).resolve()
-
-        meta_path = run_dir / "meta.json"
-        meta = _load_meta_or_init(meta_path, repo_path, state.get("base_commit"))
-        
-        state["smell_persist_replans"] += 1
-        
-        meta.update(
-            {
-                "smell_persist_replans": state["smell_persist_replans"],
-            }
-        )
-        meta_path.write_text(json.dumps(meta, indent=2), encoding="utf-8")
         
         # quantity plan tries
         if state["plan_idx"] <= 4:
             state["replan_trigger"] = "smell_persist_keep_progress"
-            return "prepare_replan"
+            return "smell_quality_check"
         else:
             state["rollback_commit"] = state["plan_base_commit"]
             state["replan_trigger"] = "smell_persist_force_rollback"
@@ -1273,11 +1306,96 @@ def after_designite(state: State) -> str:
 
     return END
 
+# agent responsible to explain why smell wasn't removed
+def smell_quality_check_node(state: State) -> State:
+    # load log paths
+    repo_path = Path(state["repo_path"]).resolve()
+    run_dir = Path(state["run_dir"])
+    plan_dir = _get_plan_dir(state)
+
+    # load meta.json
+    meta_path = run_dir / "meta.json"
+    meta = _load_meta_or_init(meta_path, repo_path, state.get("base_commit"))
+
+    # get the prompt
+    with open(state["smell_quality_prompt_path"], "r", encoding="utf-8") as f:
+        PROMPT_TEMPLATE = f.read()
+
+    if not PROMPT_TEMPLATE:
+        state["smell_quality_ok"] = False
+        state["smell_quality_error"] = "smell quality prompt missing"
+        meta.update({"smell_quality_ok": False, "smell_quality_error": state["smell_quality_error"]})
+        meta_path.write_text(json.dumps(meta, indent=2), encoding="utf-8")
+        return state
+
+    # get plan
+    refactoring_plan = json.dumps(state.get("plan") or {}, indent=2)
+
+    # get target class (code)
+    target_file = state.get("target_file", "")
+    _, refactoring_code = _read_target_file(repo_path, target_file)
+
+    # reder the prompt
+    rendered = (
+        PROMPT_TEMPLATE
+        .replace("{refactoring_plan}", refactoring_plan)
+        .replace("{refactoring_code}", refactoring_code)
+    )
+
+    # define the LLM
+    llm = ChatOpenAI(
+        model=os.getenv("QUALITY_MODEL", "gpt-5-mini"),
+        temperature=0.0,
+        api_key=os.environ.get("OPENAI_API_KEY"),
+    )
+
+    try:
+        # run the inference
+        res = llm.invoke([
+            SystemMessage(content="Be concise. Follow the instructions exactly."),
+            HumanMessage(content=rendered),
+        ])
+
+        # set the state
+        analysis = (res.content or "").strip()
+        state["smell_quality_ok"] = True
+        state["smell_quality_analysis"] = analysis
+
+        # generate the log files
+        (plan_dir / "smell_quality.prompt.md").write_text(PROMPT_TEMPLATE, encoding="utf-8")
+        (plan_dir / "smell_quality.input.md").write_text(rendered, encoding="utf-8")
+        (plan_dir / "smell_quality.output.txt").write_text(analysis, encoding="utf-8")
+
+        # set meta.json
+        meta.update({
+            "smell_quality_ok": True,
+            "smell_quality_error": "",
+        })
+        meta_path.write_text(json.dumps(meta, indent=2), encoding="utf-8")
+
+        state["msg"] = state.get("msg", "") + " | smell_quality_check done"
+        return state
+
+    except Exception as e:
+        err = str(e)
+        state["smell_quality_ok"] = False
+        state["smell_quality_error"] = err
+        meta.update({"smell_quality_ok": False, "smell_quality_error": err})
+        meta_path.write_text(json.dumps(meta, indent=2), encoding="utf-8")
+        state["msg"] = state.get("msg", "") + f" | smell_quality_check FAIL: {err}"
+        return state
+
 def prepare_replan_node(state: State) -> State:
     repo_path = Path(state["repo_path"]).resolve()
     run_dir = Path(state["run_dir"])
 
+    # add plan counter
+    state["plan_idx"] = state.get("plan_idx", 0) + 1
+    state["smell_persist_replans"] += 1
+
+    # check if reach plan threshold
     if state.get("plan_idx", 0) > 4:
+        state["stop_reason"] = "max_plans_reached"
         state["msg"] = state.get("msg", "") + " | stop: max plans reached"
         return state
 
@@ -1297,9 +1415,6 @@ def prepare_replan_node(state: State) -> State:
     state["apply_ok"] = False
     state["apply_error"] = ""
 
-    # add plan counter
-    state["plan_idx"] = state.get("plan_idx", 0) + 1
-
     # start-of-plan bookkeeping
     state["plan_base_commit"] = state.get("base_commit")  # base_commit is the current baseline commit
     state["rollback_commit"] = ""                         # prevent leaking rollback target
@@ -1317,12 +1432,13 @@ def prepare_replan_node(state: State) -> State:
 
     # input for the new plan
     planner_input = {
-        "smell": state.get("smell_type", "Insufficient Modularization"),
+        "smell": state.get("smell_type"),
         "target_file": target_rel,
         "target_code": target_code,
         "previous_plan": previous_plan,
         "replan_reason": state.get("rollback_reason") or state.get("replan_trigger") or "",
         "last_error": state.get("executor_feedback", ""),
+        "smell_persist_analysis": state.get("smell_quality_analysis", ""),
     }
 
     state["planner_input_json"] = json.dumps(planner_input, indent=2)
@@ -1330,6 +1446,7 @@ def prepare_replan_node(state: State) -> State:
     # meta.json update
     meta_path = run_dir / "meta.json"
     meta = _load_meta_or_init(meta_path, repo_path, state.get("base_commit"))
+
     meta.update({
         "plan_idx": state["plan_idx"],
         "plan_dir": str(plan_dir),
@@ -1340,9 +1457,12 @@ def prepare_replan_node(state: State) -> State:
 
     return state
 
+# Is the max plans reached? STOP! Else, replan
 def after_prepare_replan(state: State) -> str:
-    # max 5 plans total: plan_00..plan_04
-    if state.get("plan_idx", 0) > 4:
+    # plan_00..plan_04
+    #if state.get("plan_idx", 0) > 4:
+    #    return END
+    if "stop: max plans reached" in (state.get("msg") or ""):
         return END
     return "planner"
     
@@ -1361,6 +1481,7 @@ def build_graph():
     g.add_node("compile", compile_node)
     g.add_node("promote_baseline", promote_baseline_node)
     g.add_node("designite", designite_node)
+    g.add_node("smell_quality_check", smell_quality_check_node)
     g.add_node("prepare_replan", prepare_replan_node)
     g.add_node("advance_block", advance_block_node)
     g.add_node("rollback", rollback_node)
@@ -1422,18 +1543,19 @@ def build_graph():
     )
 
     g.add_edge("promote_baseline", "advance_block")
+    g.add_edge("advance_block", "stage_block")
 
     g.add_conditional_edges(
         "designite",
         after_designite,
         {
-            "prepare_replan": "prepare_replan",
+            "smell_quality_check": "smell_quality_check",
             "rollback": "rollback",
             END: END,
         },
     )
 
-    g.add_edge("advance_block", "stage_block")
+    g.add_edge("smell_quality_check", "prepare_replan")
 
     g.add_conditional_edges(
         "prepare_replan",
@@ -1460,28 +1582,62 @@ def build_graph():
 if __name__ == "__main__":
     dotenv.load_dotenv()
 
+    # parse command line arguments for smell type
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--smell", required=True, help="Type of smell (GC, HM or IM)")
+    args = parser.parse_args()
+    smell = args.smell
+    if smell not in {"GC", "HM", "IM"}:
+        raise ValueError("Invalid smell type. Must be 'GC', 'HM' or 'IM'.")
+
     app = build_graph()
 
-    with open("data/prompts/planner_agent.prompt", "r", encoding="utf-8") as f:
+    with open(f"data/prompts/planner_{smell}.prompt", "r", encoding="utf-8") as f:
         PROMPT_TEMPLATE = f.read()
 
-    REPO_PATH = "data/repositories/commons-lang"
-    TARGET_FILE = "src/main/java/org/apache/commons/lang3/time/FastDatePrinter.java"
+    file = open(f"data/dataset/{smell.lower()}_smells.txt", "r", encoding="utf-8")
 
-    repo_path = Path(REPO_PATH).resolve()
-    target_rel, target_code = _read_target_file(repo_path, TARGET_FILE)
+    prefix = os.getenv("REPO_PATH")
 
-    planner_input = {
-        "smell": "Insufficient Modularization",
-        "target_file": target_rel,
-        "target_code": target_code,
-    }
+    for line in file:
+        PATH = line.strip()
+        PROJECT_PATH, TARGET_FILE = PATH.removeprefix(prefix).split("/", 1)
+        
+        repo_path = Path(prefix+PROJECT_PATH).resolve()
+        print(repo_path, TARGET_FILE)
 
-    out = app.invoke(
-        {
-            "repo_path": str(repo_path),
-            "target_file": target_rel,
-            "planner_prompt": PROMPT_TEMPLATE,
-            "planner_input_json": json.dumps(planner_input, indent=2)
-        }
-    )
+        target_rel, target_code = _read_target_file(repo_path, TARGET_FILE)
+
+        if smell == "IM":
+            planner_input = {
+                "smell": "Insufficient Modularization",
+                "target_file": target_rel,
+                "target_code": target_code,
+            }
+        elif smell == "HM":
+            observed_external_calls = extract_observed_external_calls(target_code)
+            planner_input = {
+                "smell": "Hub-like Modularization", # smell type
+                "target_file": target_rel, # path to the target class
+                "target_code": target_code, # raw code of target class
+                "observed_external_calls": observed_external_calls, # list of external calls
+            }
+        elif smell == "GC":
+            planner_input = {
+                "smell": "God Component", # smell type
+                "target_file": target_rel, # path to the target class
+                "target_code": target_code, # raw code of target class
+            }
+        else:
+            raise ValueError("Invalid smell type")
+
+        out = app.invoke(
+            {
+                "repo_path": str(repo_path),
+                "target_file": target_rel,
+                "planner_prompt": PROMPT_TEMPLATE,
+                "planner_input_json": json.dumps(planner_input, indent=2)
+            }
+        )
+
+        open(f"{repo_path}/state.json", "w", encoding="utf-8").write(json.dumps(out, indent=2))

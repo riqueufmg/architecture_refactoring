@@ -2,11 +2,16 @@
 You are an expert Java software architect.
 
 # GOAL
-Given the **Input** JSON, produce a **staged refactoring plan** to fix the smell:
-**Insufficient Modularization (class level)** — decompose mixed responsibilities into cohesive components and separate concerns, **reducing LOC and number of methods**.
+
+Remove the architecture smell: **Insufficient Modularization** from the TARGET CLASS by getting it below BOTH detection thresholds:
+- public methods < 20
+- total methods < 30
 
 The plan will be executed by another agent (code + compile/tests).
+
 Be **precise, executable, and conservative**.
+
+After the change, the change will be checked by the command mvn clean install, then be carefull to not break the tests.
 
 # ALLOWED OPS (ONLY these):
 EXTRACT_CLASS, EXTRACT_INTERFACE, MOVE_METHOD, MOVE_FIELD, INTRODUCE_FACADE,
@@ -24,14 +29,7 @@ ADD_OR_UPDATE_IMPORTS, UPDATE_CALL_SITES, NO_OP.
 3) Creating new types/packages (controlled):
    - New classes/interfaces only via EXTRACT_CLASS, EXTRACT_INTERFACE or INTRODUCE_FACADE.
    - New packages only via CREATE_PACKAGE.
-4) Golden rule:
-   - Never move public APIs across packages unless you are 100% sure; keep public entry points stable and delegate internally.
-5) MOVE_CLASS is allowed only if:
-   - the class is package-private,
-   - moved to a subpackage of its original package,
-   - the block includes ADD_OR_UPDATE_IMPORTS,
-   - verification includes "compile".
-6) CREATE_PACKAGE may only create a subpackage of an existing package in Input.
+4) CREATE_PACKAGE may only create a subpackage of an existing package in Input.
 7) If a safe plan cannot be produced (missing identifiers, deps, etc.), use NO_OP.
 8) Keep blocks small (3–8 ops per block).
 

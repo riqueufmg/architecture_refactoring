@@ -83,7 +83,7 @@ class MetricsDepsParser:
                 "fanin": MetricsDepsParser._safe_int(row.get("fan-in", 0), 0),
                 "fanout": MetricsDepsParser._safe_int(row.get("fan-out", 0), 0),
             },
-            "methods": [],
+            #"methods": [],
             "dependencies": [],
         }
 
@@ -160,7 +160,7 @@ class MetricsDepsParser:
                 afferent[target_pkg] += 1
         return dict(afferent)
 
-    @staticmethod
+    '''@staticmethod
     def attach_dependencies(packages: list[dict], package_dependencies: dict, class_dependencies: dict):
         package_index = {pkg["package"]: pkg for pkg in packages}
 
@@ -196,6 +196,61 @@ class MetricsDepsParser:
                 class_name = f'{pkg["package"]}.{cls_obj["class"]}'
                 raw_deps = class_dependencies.get(class_name, [])
                 cls_obj["dependencies"] = [dep for dep in raw_deps if dep in valid_classes]
+
+        return packages'''
+    
+    @staticmethod
+    def attach_dependencies(packages: list[dict], package_dependencies: dict, class_dependencies: dict):
+        package_index = {pkg["package"]: pkg for pkg in packages}
+
+        valid_classes = {
+            f'{pkg["package"]}.{cls["class"]}'
+            for pkg in packages
+            for cls in pkg.get("classes", [])
+            if pkg.get("package") and cls.get("class")
+        }
+
+        # Package outgoing deps + Ce
+        for source_pkg, targets in package_dependencies.items():
+            if source_pkg in package_index:
+                valid_targets = [t for t in targets if t in package_index]
+                package_index[source_pkg]["dependencies"] = valid_targets
+                package_index[source_pkg]["metrics"]["Ce"] = len(valid_targets)
+
+        # Package incoming deps + Ca
+        afferent_coupling = defaultdict(int)
+        for source_pkg, targets in package_dependencies.items():
+            if source_pkg not in package_index:
+                continue
+            for target_pkg in targets:
+                if target_pkg in package_index:
+                    afferent_coupling[target_pkg] += 1
+
+        for pkg_name, pkg in package_index.items():
+            pkg["metrics"]["Ca"] = afferent_coupling.get(pkg_name, 0)
+
+        # ---- Class deps (outgoing) filtered to valid classes
+        # Also build incoming deps (dependents)
+        incoming_by_class = defaultdict(set)
+
+        for pkg in packages:
+            for cls_obj in pkg.get("classes", []):
+                class_name = f'{pkg["package"]}.{cls_obj["class"]}'
+                raw_deps = class_dependencies.get(class_name, [])
+                outgoing = [dep for dep in raw_deps if dep in valid_classes]
+
+                cls_obj["dependencies"] = outgoing
+                cls_obj.setdefault("dependents", [])  # NEW FIELD
+
+                # fill reverse edges
+                for dep in outgoing:
+                    incoming_by_class[dep].add(class_name)
+
+        # Attach incoming deps to each class
+        for pkg in packages:
+            for cls_obj in pkg.get("classes", []):
+                class_name = f'{pkg["package"]}.{cls_obj["class"]}'
+                cls_obj["dependents"] = sorted(incoming_by_class.get(class_name, set()))
 
         return packages
 
@@ -275,7 +330,8 @@ class MetricsDepsParser:
             method_csv = out_dir / "MethodMetrics.csv"
             graph_path = out_dir / "DependencyGraph.graphml"
 
-            missing = [p.name for p in [class_csv, method_csv, graph_path] if not p.exists()]
+            #missing = [p.name for p in [class_csv, method_csv, graph_path] if not p.exists()]
+            missing = [p.name for p in [class_csv, graph_path] if not p.exists()]
             if missing:
                 raise FileNotFoundError(
                     f"Designite output missing files in {out_dir}: {', '.join(missing)}"
@@ -295,15 +351,15 @@ class MetricsDepsParser:
             packages = self.group_classes_by_package(class_dicts)
 
             # ---- Methods
-            method_df = pd.read_csv(method_csv)
-            method_df, _ = self.normalize_columns(method_df)
-            method_rows = [
-                row
-                for row in method_df.to_dict(orient="records")
-                if "/test/" not in ((row.get("file") or "").replace("\\", "/"))
-            ]
+            #method_df = pd.read_csv(method_csv)
+            #method_df, _ = self.normalize_columns(method_df)
+            #method_rows = [
+            #    row
+            #    for row in method_df.to_dict(orient="records")
+            #    if "/test/" not in ((row.get("file") or "").replace("\\", "/"))
+            #]
 
-            packages = self.attach_methods_to_classes(packages, method_rows)
+            #packages = self.attach_methods_to_classes(packages, method_rows)
 
             # ---- Dependencies
             package_dependencies, class_dependencies = self.parse_dependencies(graph_path)
