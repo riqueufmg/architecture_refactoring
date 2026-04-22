@@ -22,19 +22,29 @@ from langgraph.graph import StateGraph, END
 from tools.context_builder import extract_observed_external_calls
 
 class State(TypedDict, total=False):
-    repo_path: str
+    repo_path: str              # path to the repo to refactor
     msg: str
-    run_dir: str
+    run_dir: str                # path for log files
 
-    target_file: str
-    target_class_fqn: str
-    target_source_root: str
+    target_kind: str            # class or package
+
+    # state for classes
+    target_file: str            # primary target file for class mode
+    target_class_fqn: str       # class target FQN
+
+    # state for package
+    target_package_fqn: str     # package target FQN
+    target_files: list[str]     # package target files (repo-relative)
+
+    target_name: str            # class or package FQN
+    
+    target_source_root: str     
 
     start_commit: str
     base_commit: str
 
     # plan lifecycle
-    plan_idx: int # no of plan tries
+    plan_idx: int # num of plan tries
     plan_base_commit: str # commit before apply the plan
     plan_dir: str # log dir of current plan
     smell_persist_replans: int # replan counter
