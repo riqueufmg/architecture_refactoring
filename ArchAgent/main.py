@@ -21,12 +21,14 @@ from langgraph.graph import StateGraph, END
 
 from tools.context_builder import extract_observed_external_calls
 
+## State Class
+
 class State(TypedDict, total=False):
     repo_path: str              # path to the repo to refactor
     msg: str
     run_dir: str                # path for log files
 
-    target_kind: str            # class or package
+    target_type: str            # class or package
 
     # state for classes
     target_file: str            # primary target file for class mode
@@ -107,6 +109,8 @@ class State(TypedDict, total=False):
     
     rollback_reason: str
     rollback_commit: str
+
+## Helper functions
 
 # execute a prompt command
 def _run(cmd: list[str], cwd: Path, env: dict | None = None) -> subprocess.CompletedProcess:
@@ -291,8 +295,38 @@ def _designite_smell_present(
 
     return False
 
+# return target type (class or package) on state
+def _get_target_type(state: State) -> str:
+    target_type = (state.get("target_type") or "class").strip().lower()
+    if target_type not in {"class", "package"}:
+        return "class"
+    return target_type
+
+# set target name in State
+def _get_target_identity(state: State) -> str:
+    return (state.get("target_name") or "").strip()
+
+# return target scope
+def _resolve_target_scope(state: State) -> dict:
+    target_type = _get_target_type(state)
+
+    return {
+        "target_type": target_type,
+        "target_name": (state.get("target_name") or "").strip(),
+        "target_identity": _get_target_identity(state),
+        "target_file": (state.get("target_file") or "").strip(),
+        "target_files": list(state.get("target_files") or []),
+        "target_source_root": (state.get("target_source_root") or "").strip(),
+    }
+
+## Nodes
+
 def route_node(state: State) -> State:
-    state["msg"] = f"route ok: repo_path={state.get('repo_path')}"
+    state["msg"] = (
+        f"route ok: repo_path={state.get('repo_path')} "
+        f"target_type={_get_target_type(state)} "
+        f"target={_get_target_identity(state)}"
+    )
     return state
 
 def init_run_node(state: State) -> State:
@@ -1016,7 +1050,7 @@ def after_rollback(state: State) -> str:
         return "prepare_replan"
     return END
 
-def _run_build(tmp_dir: Path) -> subprocess.CompletedProcess:
+def _run_build(repo_path: Path, tmp_dir: Path) -> subprocess.CompletedProcess:
     cmd = ["mvn", "-q",
        #"-DskipTests",
        "-Drat.skip=true",
@@ -1054,7 +1088,7 @@ def compile_node(state: State) -> State:
 
     p = _run(cmd, cwd=repo_path, env=env)'''
 
-    p = _run_build(tmp_dir)
+    p = _run_build(repo_path, tmp_dir)
 
     state["compile_returncode"] = p.returncode
     state["compile_ok"] = (p.returncode == 0)

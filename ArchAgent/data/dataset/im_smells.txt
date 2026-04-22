@@ -1,8 +1,1 @@
 data/repositories/jsoup/src/main/java/org/jsoup/Connection.java
-data/repositories/jsoup/src/main/java/org/jsoup/nodes/Attribute.java
-data/repositories/jsoup/src/main/java/org/jsoup/select/QueryParser.java
-data/repositories/jsoup/src/main/java/org/jsoup/parser/CharacterReader.java
-data/repositories/jsoup/src/main/java/org/jsoup/parser/TokeniserState.java
-data/repositories/jsoup/src/main/java/org/jsoup/parser/HtmlTreeBuilderState.java
-data/repositories/jsoup/src/main/java/org/jsoup/parser/TreeBuilder.java
-data/repositories/jsoup/src/main/java/org/jsoup/parser/HtmlTreeBuilder.java
