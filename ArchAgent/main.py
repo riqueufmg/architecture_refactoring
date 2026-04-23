@@ -19,6 +19,8 @@ from langchain_openai import ChatOpenAI
 from langchain_core.messages import SystemMessage, HumanMessage
 from langgraph.graph import StateGraph, END
 
+from util.Fqn import Fqn # check if FQN exists and return the PATH for it
+
 from tools.context_builder import extract_observed_external_calls
 
 ## State Class
@@ -318,6 +320,17 @@ def _resolve_target_scope(state: State) -> dict:
         "target_files": list(state.get("target_files") or []),
         "target_source_root": (state.get("target_source_root") or "").strip(),
     }
+
+# args: read target argument and define if it is a package or class
+def _infer_target_type_from_name(target_name: str) -> str:
+    name = (target_name or "").strip()
+    if not name:
+        raise ValueError("target_name is empty")
+
+    last = name.split(".")[-1]
+    if last[:1].isupper():
+        return "class"
+    return "package"
 
 ## Nodes
 
@@ -1622,42 +1635,55 @@ def build_graph():
 
     return g.compile()
 
-
 if __name__ == "__main__":
+    # load environment variables from .env file
     dotenv.load_dotenv()
+    repo_path = Path(os.getenv("REPO_PATH")).resolve()
 
-    # parse command line arguments for smell type
+    # parse arguments
     parser = argparse.ArgumentParser()
     parser.add_argument("--smell", required=True, help="Type of smell (GC, HM or IM)")
+    parser.add_argument("--target", required=True, help="FQN of target class or package")
     args = parser.parse_args()
-    smell = args.smell
+    smell = (args.smell or "").strip() # --smell
+    target_name = (args.target or "").strip() # --target
+
+    # check valid smells
     if smell not in {"GC", "HM", "IM"}:
         raise ValueError("Invalid smell type. Must be 'GC', 'HM' or 'IM'.")
 
-    app = build_graph()
+    # return target data
+    target_type = _infer_target_type_from_name(target_name)
+    target_path = Fqn(target_name).find_in_repo(repo_path)
 
+    # check valid target FQN
+    if target_path is None:
+        raise ValueError(f"Target {target_name} not found in {repo_path}.")
+
+    # load planner prompt template
+    # TODO: read template inside planner node
     with open(f"data/prompts/planner_{smell}.prompt", "r", encoding="utf-8") as f:
         PROMPT_TEMPLATE = f.read()
+    
+    planner_input = {}
 
-    file = open(f"data/dataset/{smell.lower()}_smells.txt", "r", encoding="utf-8")
+    # prepare planner input based on smell type and target type
+    if target_type == "class":
+        # check if target path is a file
+        if not target_path.is_file():
+            raise ValueError(f"Class target must resolve to a file, got: {target_path}")
 
-    prefix = os.getenv("REPO_PATH")
+        target_file = str(target_path.relative_to(repo_path)).replace("\\", "/")
+        target_rel, target_code = _read_target_file(repo_path, target_file)
 
-    for line in file:
-        PATH = line.strip()
-        PROJECT_PATH, TARGET_FILE = PATH.removeprefix(prefix).split("/", 1)
-        
-        repo_path = Path(prefix+PROJECT_PATH).resolve()
-        print(repo_path, TARGET_FILE)
-
-        target_rel, target_code = _read_target_file(repo_path, TARGET_FILE)
-
+        # insufficient modularization
         if smell == "IM":
             planner_input = {
                 "smell": "Insufficient Modularization",
                 "target_file": target_rel,
                 "target_code": target_code,
             }
+        # hub-like modularization
         elif smell == "HM":
             observed_external_calls = extract_observed_external_calls(target_code)
             planner_input = {
@@ -1666,22 +1692,41 @@ if __name__ == "__main__":
                 "target_code": target_code, # raw code of target class
                 "observed_external_calls": observed_external_calls, # list of external calls
             }
-        elif smell == "GC":
+        else:
+            raise ValueError("Invalid smell type for class target. Must be 'IM' or 'HM'.")
+        
+        invoke_input = {
+            "repo_path": str(repo_path),
+            "target_name": target_name,
+            "target_type": target_type,
+            "target_file": target_rel,
+            "planner_prompt": PROMPT_TEMPLATE,
+            "planner_input_json": json.dumps(planner_input, indent=2),
+        }
+        
+    elif target_type == "package":
+        # check if target path is a directory
+        if not target_path.is_dir():
+            raise ValueError(f"Package target must resolve to a directory, got: {target_path}")
+        
+        # god component
+        if smell == "GC":
             planner_input = {
                 "smell": "God Component", # smell type
-                "target_file": target_rel, # path to the target class
-                "target_code": target_code, # raw code of target class
+                "target_name": target_name,
             }
         else:
-            raise ValueError("Invalid smell type")
+            raise ValueError("Invalid smell type for package target. Must be 'GC'.")
+        
+        invoke_input = {
+            "repo_path": str(repo_path),
+            "target_name": target_name,
+            "target_type": target_type,
+            "planner_prompt": PROMPT_TEMPLATE,
+            "planner_input_json": json.dumps(planner_input, indent=2),
+        }
 
-        out = app.invoke(
-            {
-                "repo_path": str(repo_path),
-                "target_file": target_rel,
-                "planner_prompt": PROMPT_TEMPLATE,
-                "planner_input_json": json.dumps(planner_input, indent=2)
-            }
-        )
+    app = build_graph()
+    out = app.invoke(invoke_input)
 
-        open(f"{repo_path}/state.json", "w", encoding="utf-8").write(json.dumps(out, indent=2))
+    open(f"{repo_path}/state.json", "w", encoding="utf-8").write(json.dumps(out, indent=2))
