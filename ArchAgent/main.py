@@ -20,97 +20,11 @@ from langchain_core.messages import SystemMessage, HumanMessage
 from langgraph.graph import StateGraph, END
 
 from util.Fqn import Fqn # check if FQN exists and return the PATH for it
+from util.FileSystem import FileSystem
+
+from State import State #langgraph state class
 
 from tools.context_builder import extract_observed_external_calls
-
-## State Class
-
-class State(TypedDict, total=False):
-    repo_path: str              # path to the repo to refactor
-    msg: str
-    run_dir: str                # path for log files
-
-    target_type: str            # class or package
-
-    # state for classes
-    target_file: str            # primary target file for class mode
-    target_class_fqn: str       # class target FQN
-
-    # state for package
-    target_package_fqn: str     # package target FQN
-    target_files: list[str]     # package target files (repo-relative)
-
-    target_name: str            # class or package FQN
-    
-    target_source_root: str     
-
-    start_commit: str
-    base_commit: str
-
-    # plan lifecycle
-    plan_idx: int # num of plan tries
-    plan_base_commit: str # commit before apply the plan
-    plan_dir: str # log dir of current plan
-    smell_persist_replans: int # replan counter
-    replan_trigger: str
-
-    # planning data
-    planner_prompt: str # plan prompt template
-    planner_input_json: str # input data
-    plan_json_text: str 
-    plan: dict # the plan
-    plan_ok: bool # status after try to generate plan
-    plan_error: str # tail when plan generation failed
-
-    # blocks of plan
-    block_idx: int
-    staged_block: dict
-    staged_block_id: int
-    staged_block_files: list[str]
-    staged_block_ops: list[dict]
-    done: bool
-
-    block_attempt: int # counter of tries per block
-    max_block_attempts: int # threshold tries
-
-    # executor data
-    executor_files: list[str]
-    executor_new_files: list[str]
-    executor_existing_files: list[str]
-    workspace_commit: str
-    executor_prompt: str
-    executor_raw: str
-    executor_feedback: str
-
-    executor_result: dict                 # executor result data
-    files_to_write: list[dict]            # each: {"path": "...", "content": "..."}
-    files_to_delete: list[str]            # repo-relative paths
-
-    # apply files node
-    apply_ok: bool
-    apply_error: str
-
-    # compilation data
-    compile_ok: bool
-    compile_returncode: int
-    compile_log_tail: str
-    maven_tmp_dir: str
-
-    # smell analysis data
-    smell_quality_ok: bool             # check if the LLM define why LLM wasn't remove
-    smell_quality_error: str           # check error in LLM inference
-    smell_quality_analysis: str        # LLM quality analysis answer
-    smell_quality_prompt_path: str     # prompt for LLM quality analysis
-
-    # designite/smell data
-    designite_ok: bool                 # if designite run successfully
-    smell_type: str                    # eg: "Insufficient Modularization"
-    designite_smells_csv: str          # designite smell file eg: "DesignSmells.csv"
-    designite_smell_name: str          # smell label on designite output
-    smell_still_present: bool          # smell remove evaluation
-    
-    rollback_reason: str
-    rollback_commit: str
 
 ## Helper functions
 
@@ -181,6 +95,7 @@ def _load_meta_or_init(meta_path: Path, repo_path: Path, base_commit: str | None
             pass
     return {"repo_path": str(repo_path), "base_commit": base_commit}
 
+# ex. receive src/main/java/org/jsoup/Jsoup.java, return src/main/java
 def _infer_source_root_from_target(repo_path: Path, target_rel: str, target_fqn: str) -> str:
     # target package path from FQN
     pkg_parts = target_fqn.split(".")[:-1]          # ['org','jsoup']
@@ -231,10 +146,10 @@ def _to_repo_rel(repo_path: Path, p: str) -> str:
             return str(pp.as_posix()).lstrip("/")
     return pp.as_posix()
 
-# get target file/class
+## get target file/class
 def _read_target_file(repo_path: Path, target_file: str) -> tuple[str, str]:
 
-    # if target file is invalid or null
+    ### check if target file is empty
     if not target_file or "\x00" in target_file:
         raise RuntimeError("target_file is empty/invalid")
 
@@ -256,7 +171,7 @@ def _read_target_file(repo_path: Path, target_file: str) -> tuple[str, str]:
     if not abs_p.exists() or not abs_p.is_file():
         raise RuntimeError(f"target_file does not exist or is not a file: {rel}")
 
-    code = abs_p.read_text(encoding="utf-8", errors="replace")
+    code = abs_p.read_text(encoding="utf-8", errors="replace") # get file content
     return rel, code # return relative path and file content
 
 def _get_plan_dir(state: State) -> Path:
@@ -332,8 +247,55 @@ def _infer_target_type_from_name(target_name: str) -> str:
         return "class"
     return "package"
 
-## Nodes
+def _run_build(repo_path: Path, tmp_dir: Path) -> subprocess.CompletedProcess:
+    cmd = ["mvn", "-q",
+       #"-DskipTests",
+       "-Drat.skip=true",
+       "-Dcheckstyle.skip=true",
+       "-Dspotbugs.skip=true",
+       "-Dpmd.skip=true",
+       "-DskipITs",
+       "clean", "verify"]
 
+    env = os.environ.copy()
+    env["MAVEN_OPTS"] = f"-Xshare:off -Djava.io.tmpdir={tmp_dir}"
+
+    return _run(cmd, cwd=repo_path, env=env)
+
+def _run_designite(
+    repo_path: Path,
+    out_dir: Path,
+    jar_path: Path,
+) -> Tuple[Path, list[str]]:
+
+    if out_dir.exists():
+        shutil.rmtree(out_dir)
+
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    java22 = "/usr/lib/jvm/jdk-22.0.2-oracle-x64/bin/java"
+
+    #cmd = [
+    #    "java", "-jar", str(jar_path),
+    #    "-i", str(repo_path),
+    #    "-o", str(out_dir),
+    #]
+
+    cmd = [java22, "-jar", str(jar_path), "-g", "-i", str(repo_path), "-o", str(out_dir)]
+
+    p = _run(cmd, cwd=repo_path)
+
+    log = (p.stdout or "") + ("\n" if p.stdout else "") + (p.stderr or "")
+    (out_dir / "designite.log").write_text(log, encoding="utf-8")
+
+    if p.returncode != 0:
+        raise RuntimeError(
+            f"Designite failed (rc={p.returncode}). See log at {out_dir / 'designite.log'}"
+        )
+
+    return out_dir, cmd
+
+# Nodes
 def route_node(state: State) -> State:
     state["msg"] = (
         f"route ok: repo_path={state.get('repo_path')} "
@@ -342,24 +304,33 @@ def route_node(state: State) -> State:
     )
     return state
 
+## Node to initiate the graph run
 def init_run_node(state: State) -> State:
     repo_path = Path(state["repo_path"]).resolve()
 
-    # get the start commit
-    head = _git_current_commit(repo_path)
+    ### defines start/base commit if not set
+    head = _git_current_commit(repo_path) # get the start commit
 
-    # defines start/base commit if not set
     if not state.get("start_commit"):
-        state["start_commit"] = head
-
+        state["start_commit"] = head # set current commit before refactoring
+    
     if not state.get("base_commit"):
-        state["base_commit"] = head
+        state["base_commit"] = head # set checkpoint commit
 
-    # create framework folder, if it not exists
+    ### create log directory in repo_path/agent_runs/
+    # TODO: create a function
     runs_root = repo_path / "agent_runs"
     runs_root.mkdir(parents=True, exist_ok=True)
 
-    # smell config
+    ### create run directory repo_path/agent_runs/run_timestamp
+    # TODO: create a function
+    ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+    run_id = uuid.uuid4().hex[:8]
+    run_dir = runs_root / f"{ts}_{run_id}"
+    run_dir.mkdir(parents=True, exist_ok=True)
+    state["run_dir"] = str(run_dir)
+
+    ### load smell type
     smell_type = ""
     try:
         inp = json.loads(state.get("planner_input_json", "") or "{}")
@@ -367,24 +338,8 @@ def init_run_node(state: State) -> State:
     except Exception:
         smell_type = ""
     state["smell_type"] = smell_type
-    
-    target_rel, code = _read_target_file(repo_path, state["target_file"])
-    state["target_file"] = target_rel
-    
-    target_fqn = _extract_fqn_from_java(code, target_rel)
-    state["target_class_fqn"] = target_fqn
-    state["target_source_root"] = _infer_source_root_from_target(repo_path, target_rel, target_fqn)
-
-    # create log folder for a run
-    ts = datetime.now().strftime("%Y%m%d_%H%M%S")
-    run_id = uuid.uuid4().hex[:8]
-    run_dir = runs_root / f"{ts}_{run_id}"
-    run_dir.mkdir(parents=True, exist_ok=True)
-
-    state["run_dir"] = str(run_dir)
-
     state.setdefault("designite_smell_name", state["smell_type"])
-    
+
     # TODO: improve this defaulting logic
     if state["smell_type"] in {"Insufficient Modularization", "Hub-like Modularization"}:
         state.setdefault("designite_smells_csv", "DesignSmells.csv")
@@ -393,7 +348,8 @@ def init_run_node(state: State) -> State:
 
     meta = {
         "repo_path": str(repo_path),
-        "target_file": state["target_file"],
+        "target_type": _get_target_type(state),
+        "target_name": _get_target_identity(state),
         "start_commit": state["start_commit"],
         "base_commit": state["base_commit"],
         "smell_type": state.get("smell_type", ""),
@@ -402,26 +358,33 @@ def init_run_node(state: State) -> State:
     }
     (run_dir / "meta.json").write_text(json.dumps(meta, indent=2), encoding="utf-8")
 
-    state["msg"] = state.get("msg", "") + f" | run_dir={run_dir.name}"
-
     state.setdefault("executor_feedback", "")
 
     # plan lifecycle init
     state.setdefault("plan_idx", 0)
     
-    # smell analysis states
+    # designite analysis states
     state.setdefault("smell_persist_replans", 0)
     state.setdefault("smell_quality_analysis", "")
     state.setdefault("smell_quality_ok", False)
     state.setdefault("smell_quality_error", "")
-    #state.setdefault("smell_quality_prompt_path", "data/prompts/quality_checker.prompt")
-    state.setdefault("smell_quality_prompt_path", "data/prompts/quality_HM.prompt")
+    
+    # prompts states
+    if state["smell_type"] == "Insufficient Modularization":
+        state.setdefault("smell_quality_prompt_path", "data/prompts/quality_IM.prompt")
+    elif state["smell_type"] == "Hub-like Modularization":
+        state.setdefault("smell_quality_prompt_path", "data/prompts/quality_HM.prompt")
 
     ## give a workfull commit to the plan
     state["plan_base_commit"] = state.get("base_commit") or head
 
+    state["designite_smells_csv"] = state.get("designite_smells_csv", "DesignSmells.csv")
+
+    # Por padrão, assume que o nome do smell no Designite é igual ao "smell"
+    # (no futuro você pode mapear aqui, se os nomes divergirem)
+    state["designite_smell_name"] = state.get("designite_smell_name", state["smell_type"])
+
     plan_dir = _get_plan_dir(state)
-    #state["plan_dir"] = str(plan_dir)
 
     ## update meta.json
     meta.update({
@@ -430,16 +393,120 @@ def init_run_node(state: State) -> State:
         "plan_dir": str(plan_dir),
         "smell_persist_replans": state["smell_persist_replans"],
     })
-    (Path(state["run_dir"]) / "meta.json").write_text(json.dumps(meta, indent=2), encoding="utf-8")
+    (run_dir / "meta.json").write_text(json.dumps(meta, indent=2), encoding="utf-8")
 
-    state["smell_type"] = smell_type or state.get("smell_type", "Insufficient Modularization")
-    state["designite_smells_csv"] = state.get("designite_smells_csv", "DesignSmells.csv")
-
-    # Por padrão, assume que o nome do smell no Designite é igual ao "smell"
-    # (no futuro você pode mapear aqui, se os nomes divergirem)
-    state["designite_smell_name"] = state.get("designite_smell_name", state["smell_type"])
+    ### Update state message
+    state["msg"] = (
+        state.get("msg", "")
+        + f" | init_run ok type={_get_target_type(state)} run_dir={run_dir.name}"
+    )
 
     return state
+
+## function to resolve class data for planner input
+def resolve_target_class_node(state: State) -> State:
+    ### initialize node
+    repo_path = Path(state["repo_path"]).resolve()
+    run_dir = Path(state["run_dir"])
+    plan_dir = _get_plan_dir(state)
+    meta_path = run_dir / "meta.json"
+    meta = _load_meta_or_init(meta_path, repo_path, state.get("base_commit"))
+
+    if not state["target_file"]: # check if target file is provided
+        raise RuntimeError("target_file is required for target_type=class")
+
+    target_rel, code = _read_target_file(repo_path, state["target_file"])
+    state["target_file"] = target_rel
+    
+    target_fqn = _extract_fqn_from_java(code, target_rel)
+    state["target_class_fqn"] = target_fqn
+    state["target_source_root"] = _infer_source_root_from_target(repo_path, target_rel, target_fqn)
+
+    ### update meta.json
+    meta.update({
+        "target_type": state["target_type"],
+        "target_name": state["target_name"],
+        "target_file": state["target_file"],
+        "target_source_root": state["target_source_root"]
+    })
+    meta_path.write_text(json.dumps(meta, indent=2), encoding="utf-8")
+
+    ### Update state message
+    state["msg"] = (
+        state.get("msg", "")
+        + f" | file content loaded for {state['target_file']}"
+    )
+
+    return state
+
+## function to resolve package data for planner input
+def resolve_target_package_node(state: State) -> State:
+    ### initialize node
+    repo_path = Path(state["repo_path"]).resolve()
+    run_dir = Path(state["run_dir"])
+    meta_path = run_dir / "meta.json"
+    meta = _load_meta_or_init(meta_path, repo_path, state.get("base_commit"))
+
+    ### get and check target_name
+    target_name = _get_target_identity(state)
+
+    if not target_name:
+        raise RuntimeError("target_name is required for target_type=package")
+    
+    ### get and check target path
+    target_path = Fqn(target_name).find_in_repo(repo_path)
+
+    if target_path is None:
+        raise RuntimeError(f"package target not found: {target_name}")
+
+    if not target_path.is_dir():
+        raise RuntimeError(f"package target must resolve to a directory: {target_path}")
+    
+    ### get package files, check them and save in state
+    target_files = FileSystem(str(repo_path), str(target_path)).list_java_files_in_dir()
+
+    if not target_files:
+        raise RuntimeError(f"package target has no .java files: {target_name}")
+
+    state["target_files"] = target_files
+
+    ### get source root and save on state
+    source_root_path = target_path.resolve()
+
+    for _ in target_name.split("."):
+        source_root_path = source_root_path.parent
+
+    state["target_source_root"] = str(
+        source_root_path.relative_to(repo_path)
+    ).replace("\\", "/")
+
+    ### update meta data
+    meta.update({
+        "target_type": state["target_type"],
+        "target_name": state["target_name"],
+        "target_files": state["target_files"],
+        "target_files_count": len(state["target_files"]),
+        "target_source_root": state["target_source_root"],
+    })
+    meta_path.write_text(json.dumps(meta, indent=2), encoding="utf-8")
+
+    ### update state message
+    state["msg"] = (
+        state.get("msg", "")
+        + f" | package target resolved files={len(state['target_files'])}"
+    )
+
+    return state
+
+def after_init_run(state: State) -> str:
+    target_type = _get_target_type(state)
+
+    if target_type == "class":
+        return "resolve_target_class"
+    elif target_type == "package":
+        return "resolve_target_package"
+    else:
+        raise RuntimeError(f"unsupported target_type: {target_type}")
 
 def planner_node(state: State) -> State:
     repo_path = Path(state["repo_path"]).resolve()
@@ -1063,21 +1130,6 @@ def after_rollback(state: State) -> str:
         return "prepare_replan"
     return END
 
-def _run_build(repo_path: Path, tmp_dir: Path) -> subprocess.CompletedProcess:
-    cmd = ["mvn", "-q",
-       #"-DskipTests",
-       "-Drat.skip=true",
-       "-Dcheckstyle.skip=true",
-       "-Dspotbugs.skip=true",
-       "-Dpmd.skip=true",
-       "-DskipITs",
-       "clean", "verify"]
-
-    env = os.environ.copy()
-    env["MAVEN_OPTS"] = f"-Xshare:off -Djava.io.tmpdir={tmp_dir}"
-
-    return _run(cmd, cwd=repo_path, env=env)
-
 def compile_node(state: State) -> State:
     repo_path = Path(state["repo_path"]).resolve()
 
@@ -1226,39 +1278,6 @@ def promote_baseline_node(state: State) -> State:
 
     state["msg"] = state.get("msg", "") + f" | baseline promoted={promoted} @{new_base[:8]}"
     return state
-
-def _run_designite(
-    repo_path: Path,
-    out_dir: Path,
-    jar_path: Path,
-) -> Tuple[Path, list[str]]:
-
-    if out_dir.exists():
-        shutil.rmtree(out_dir)
-
-    out_dir.mkdir(parents=True, exist_ok=True)
-
-    java22 = "/usr/lib/jvm/jdk-22.0.2-oracle-x64/bin/java"
-
-    #cmd = [
-    #    "java", "-jar", str(jar_path),
-    #    "-i", str(repo_path),
-    #    "-o", str(out_dir),
-    #]
-
-    cmd = [java22, "-jar", str(jar_path), "-g", "-i", str(repo_path), "-o", str(out_dir)]
-
-    p = _run(cmd, cwd=repo_path)
-
-    log = (p.stdout or "") + ("\n" if p.stdout else "") + (p.stderr or "")
-    (out_dir / "designite.log").write_text(log, encoding="utf-8")
-
-    if p.returncode != 0:
-        raise RuntimeError(
-            f"Designite failed (rc={p.returncode}). See log at {out_dir / 'designite.log'}"
-        )
-
-    return out_dir, cmd
 
 def designite_node(state: State) -> State:
     repo_path = Path(state["repo_path"]).resolve()
@@ -1528,6 +1547,8 @@ def build_graph():
 
     g.add_node("route", route_node)
     g.add_node("init_run", init_run_node)
+    g.add_node("resolve_target_class", resolve_target_class_node)
+    g.add_node("resolve_target_package", resolve_target_package_node)
     g.add_node("planner", planner_node)
     g.add_node("stage_block", stage_block_node)
     g.add_node("resolve_files", resolve_files_for_block_node)
@@ -1545,7 +1566,18 @@ def build_graph():
 
     g.set_entry_point("route")
     g.add_edge("route", "init_run")
-    g.add_edge("init_run", "planner")
+
+    g.add_conditional_edges(
+        "init_run",
+        after_init_run,
+        {
+            "resolve_target_class": "resolve_target_class",
+            "resolve_target_package": "resolve_target_package"
+        },
+    )
+
+    g.add_edge("resolve_target_class", "planner")
+    g.add_edge("resolve_target_package", "planner")
 
     g.add_conditional_edges(
         "planner",
@@ -1636,6 +1668,10 @@ def build_graph():
     return g.compile()
 
 if __name__ == "__main__":
+
+    # TODO: check if Java version pass by project build
+    # TODO: check if target has designite smell, if not, exit early
+
     # load environment variables from .env file
     dotenv.load_dotenv()
     repo_path = Path(os.getenv("REPO_PATH")).resolve()
