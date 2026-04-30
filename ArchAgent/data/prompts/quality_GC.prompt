@@ -1,0 +1,29 @@
+# ROLE
+You are an expert Java software architect.
+
+# GOAL
+You are given a **REFACTORING PLAN**, which describes the intended refactoring actions, and the resulting **REFACTORED CODE** produced after applying this plan.
+
+The goal of the plan was to remove the architectural smell **God Component (package-level)** by reducing the number of classes per package to fewer than 30.
+
+After a static analysis, it was detected that the **REFACTORED CODE** still presents the architectural smell **God Component (package-level)**.
+
+Your task is to critically analyze the **REFACTORING PLAN** and the **REFACTORED CODE** and explain why this smell still remains.
+
+Your explanation must:
+- explicitly relate what was proposed in the refactoring plan to what was actually implemented in the refactored code;
+- identify responsibilities that are still mixed or weakly cohesive;
+- mention, when applicable, structural indicators such as class size, number of methods, and dependencies.
+
+# REFACTORING PLAN
+```json
+{refactoring_plan}
+```
+
+# REFACTORED CODE
+```java
+{refactoring_code}
+```
+
+# OUTPUT
+Explain, in at most two paragraphs, why the smell **God Component (package-level)** is still present in the **REFACTORED CODE**.

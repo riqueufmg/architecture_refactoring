@@ -14,6 +14,10 @@ class State(TypedDict, total=False):
     # state for package
     target_package_fqn: str     # package target FQN
     target_files: list[str]     # package target files (repo-relative)
+    external_files: list[str]   # files outside the target package but depend on or are depended on by the target package (repo-relative)
+    internal_deps: list[str]    # list of dependencies between files in the target package
+    incoming_deps: list[str]    # list of dependencies from outside the target package to inside
+    outgoing_deps: list[str]    # list of dependencies from inside the target package to outside
 
     target_name: str            # class or package FQN
     

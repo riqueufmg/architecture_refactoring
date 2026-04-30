@@ -3,49 +3,87 @@ You are an expert Java software architect.
 
 # GOAL
 
-Remove the architecture smell: **Insufficient Modularization** from the TARGET CLASS by getting it below BOTH detection thresholds:
-- public methods < 20
-- total methods < 30
+Remove the **God Component** architecture smell by reducing the number of classes in the TARGET PACKAGE.
 
-The plan will be executed by another agent (code + compile/tests).
+The TARGET PACKAGE contains too many classes and internal dependencies. Your goal is to propose a package-level refactoring plan that moves small cohesive clusters into subpackages of the TARGET PACKAGE.
 
-Be **precise, executable, and conservative**.
+The plan will be executed by another agent (code + compile).
 
-After the change, the change will be checked by the command mvn clean install, then be carefull to not break the tests.
+Be **precise, executable, and incremental**.
+
+The result will be checked by compilation. Prefer plans that can compile after each block.
+
+# RUN SCOPE (HARD)
+- This run focuses ONLY on the TARGET PACKAGE.
+- Use `target_files` as the authoritative list of existing files in the target package.
+- Use `internal_deps` to identify small dependency clusters.
+- Do NOT require full source code in the planner input.
+- API changes are allowed when necessary to remove the God Component smell.
+- Do not promise API stability when moving public classes.
+- Every block must be independently compilable.
 
 # ALLOWED OPS (ONLY these):
-EXTRACT_CLASS, EXTRACT_INTERFACE, MOVE_METHOD, MOVE_FIELD, INTRODUCE_FACADE,
-DEPENDENCY_INVERSION, REPLACE_DEPENDENCY, CREATE_PACKAGE, MOVE_CLASS,
-ADD_OR_UPDATE_IMPORTS, UPDATE_CALL_SITES, NO_OP.
+CREATE_PACKAGE, MOVE_CLASS, ADD_OR_UPDATE_IMPORTS, UPDATE_CALL_SITES,
+INTRODUCE_FACADE, REPLACE_DEPENDENCY, NO_OP.
 
 # CONSTRAINTS:
 1) No invention of existing identifiers:
-   - Reference ONLY packages/classes/methods/fields present in Input.
-   - Methods must be referenced exactly as:
-     ClassFQN#<method.signature> (as in Input).
-2) Each block must be safe and independently compilable:
-   - Prefer delegation/wrappers.
-   - Do not remove or rename public APIs in early blocks.
-3) Creating new types/packages (controlled):
-   - New classes/interfaces only via EXTRACT_CLASS, EXTRACT_INTERFACE or INTRODUCE_FACADE.
-   - New packages only via CREATE_PACKAGE.
-4) CREATE_PACKAGE may only create a subpackage of an existing package in Input.
-7) If a safe plan cannot be produced (missing identifiers, deps, etc.), use NO_OP.
-8) Keep blocks small (3–8 ops per block).
+   - Reference ONLY packages/classes/files present in Input.
+   - Existing classes must be referenced exactly by their FQN as shown in `internal_deps` or derived from `target_files`.
+   - Existing files must be referenced exactly as paths shown in `target_files`.
+
+2) File scope:
+   - Each block's `files` list must contain only paths from `target_files`, plus new files implied by CREATE_PACKAGE, MOVE_CLASS, or INTRODUCE_FACADE.
+   - Do not include files from tests.
+   - Do not include files outside the repository.
+
+3) Package movement:
+   - MOVE_CLASS may move classes only from the TARGET PACKAGE into a subpackage of the TARGET PACKAGE.
+   - CREATE_PACKAGE may only create subpackages under the TARGET PACKAGE.
+   - Do not move classes to unrelated packages.
+   - Each MOVE_CLASS group must contain at most 3 classes.
+   - Prefer clusters of 1–2 classes whenever possible.
+
+4) API policy:
+   - API changes are allowed.
+   - If an operation changes a public FQN or public API, set `"api_change": true`.
+   - If an operation does not change public API, set `"api_change": false`.
+   - Do not introduce facades unless they are clearly necessary.
+   - Do not claim that public API is preserved when a public class is moved to a new package.
+
+5) Dependency reduction:
+   - Use `internal_deps` to identify cohesive clusters.
+   - Prioritize smaller clusters over large moves.
+   - Prefer moving leaf/helper/utility clusters before moving central classes.
+   - Avoid moving many central classes in the same block.
+   - Avoid splitting tightly coupled pairs unless one side remains a stable dependency.
+   - Avoid creating cycles between new subpackages.
+
+6) Safety:
+   - Keep each block small.
+   - Each block should contain at most ONE MOVE_CLASS group.
+   - Each block should move at most 3 classes total.
+   - Prefer one CREATE_PACKAGE + one MOVE_CLASS group + required import/call-site updates.
+   - If a safe package-level move cannot be inferred from the available graph, use NO_OP.
 
 # REASONING:
-- Use types_used to cluster responsibilities.
-- Use cc and loc to prioritize complex/large methods.
-- Use dependencies (fan-in/fan-out) to reduce coupling.
-- Prefer moving cohesive method groups together.
+- Treat `internal_deps` as a directed graph between classes in the target package.
+- Use the graph to find small cohesive clusters.
+- Prefer clusters with strong internal relationships and limited connections to the rest of the package.
+- Do not choose the largest or most central cluster first.
+- The first block should be the safest useful extraction, not the most aggressive one.
+- A good first move may reduce the package size only slightly.
+- Avoid plans that require understanding method bodies, since full source code is not provided to the planner.
+- If package-private access may be an issue, prefer moving the smallest tightly coupled cluster together.
+- Do not move unrelated utilities together just because they sound similar.
 
 # OUTPUT:
 Return ONLY valid JSON (no markdown, no comments, no explanations).
 
 {
   "smell_type": "<copied from input>",
-  "target_level": "package|class",
-  "target": "<package FQN or class FQN from input>",
+  "target_level": "package",
+  "target": "<target_name from input>",
   "blocks": [
     {
       "id": 1,
@@ -54,13 +92,13 @@ Return ONLY valid JSON (no markdown, no comments, no explanations).
       "ops": [
         {
           "op": "<allowed op>",
-          "inputs": ["<element paths from input>"],
-          "outputs": ["<new names or target container>"],
+          "inputs": ["<class FQNs or file paths from input>"],
+          "outputs": ["<new package FQN, moved class FQN, or facade FQN>"],
           "details": "<short, implementable instructions>",
-          "risk": "low|medium|high"
+          "risk": "low|medium|high",
+          "api_change": true
         }
-      ],
-      "verification": ["compile", "tests"]
+      ]
     }
   ]
 }
@@ -68,4 +106,3 @@ Return ONLY valid JSON (no markdown, no comments, no explanations).
 # INPUT
 ```json
 {input}
-```

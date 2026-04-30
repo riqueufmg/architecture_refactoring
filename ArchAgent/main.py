@@ -21,6 +21,7 @@ from langgraph.graph import StateGraph, END
 
 from util.Fqn import Fqn # check if FQN exists and return the PATH for it
 from util.FileSystem import FileSystem
+from util.Dependencies import Dependencies
 
 from State import State #langgraph state class
 
@@ -249,7 +250,7 @@ def _infer_target_type_from_name(target_name: str) -> str:
 
 def _run_build(repo_path: Path, tmp_dir: Path) -> subprocess.CompletedProcess:
     cmd = ["mvn", "-q",
-       #"-DskipTests",
+       "-DskipTests",
        "-Drat.skip=true",
        "-Dcheckstyle.skip=true",
        "-Dspotbugs.skip=true",
@@ -295,11 +296,16 @@ def _run_designite(
 
     return out_dir, cmd
 
+def _get_internal_package_dependencies(graphml_path: str, target_name: str) -> list[tuple[str, str]]:
+    deps = Dependencies(target_name)
+    internal, outgoing, incoming = deps._get_package_dependencies(graphml_path)
+    return internal
+
 # Nodes
 def route_node(state: State) -> State:
     state["msg"] = (
-        f"route ok: repo_path={state.get('repo_path')} "
-        f"target_type={_get_target_type(state)} "
+        f"route ok: repo_path={state.get('repo_path')}"
+        f"target_type={_get_target_type(state)}"
         f"target={_get_target_identity(state)}"
     )
     return state
@@ -329,6 +335,22 @@ def init_run_node(state: State) -> State:
     run_dir = runs_root / f"{ts}_{run_id}"
     run_dir.mkdir(parents=True, exist_ok=True)
     state["run_dir"] = str(run_dir)
+
+    ### run initial Designite
+    jar_env = os.getenv("DESIGNITE_JAR_PATH")
+    if not jar_env:
+        raise RuntimeError("DESIGNITE_JAR_PATH is not set")
+
+    designite_jar = Path(jar_env).expanduser().resolve()
+    if not designite_jar.exists() or not designite_jar.is_file():
+        raise RuntimeError(f"Designite JAR not found at {designite_jar}")
+
+    static_analysis_path = Path(state["run_dir"], "init_designite")
+    static_analysis_path.mkdir(parents=True, exist_ok=True)
+
+    out_dir, cmd = _run_designite(repo_path, static_analysis_path, designite_jar)
+    if not out_dir.exists():
+        raise RuntimeError("Designite did not produce output directory")
 
     ### load smell type
     smell_type = ""
@@ -464,7 +486,7 @@ def resolve_target_package_node(state: State) -> State:
     
     ### get package files, check them and save in state
     target_files = FileSystem(str(repo_path), str(target_path)).list_java_files_in_dir()
-
+    
     if not target_files:
         raise RuntimeError(f"package target has no .java files: {target_name}")
 
@@ -480,11 +502,52 @@ def resolve_target_package_node(state: State) -> State:
         source_root_path.relative_to(repo_path)
     ).replace("\\", "/")
 
+    ### list classes inside the directory
+    allowed_classes = Fqn(target_name)._java_files_to_fqns(
+        state["target_files"],
+        state["target_source_root"]
+    )
+    
+    ### get internal package dependencies
+    graphml_path = Path(run_dir, "init_designite", "DependencyGraph.graphml")
+    
+    internal_deps = _get_internal_package_dependencies( # get package internal deps
+        graphml_path=graphml_path,
+        target_name=target_name
+    )
+    
+    internal_deps = [ # remove not allowed classes
+        (src, dst)
+        for src, dst in internal_deps
+        if src in allowed_classes and dst in allowed_classes
+    ]
+
+    state["internal_deps"] = internal_deps
+
+    ### update internal input
+    # TODO: move it for a better place in the future
+    planner_input = {
+        "smell": state.get("smell_type", "God Component"),
+        "target_type": "package",
+        "target_name": target_name,
+        "target_source_root": state["target_source_root"],
+        "target_files": state["target_files"],
+        "internal_deps": state["internal_deps"],
+    }
+    state["planner_input_json"] = json.dumps(planner_input, indent=2)
+
+    plan_dir = _get_plan_dir(state)
+    (plan_dir / "planner.input.package.json").write_text(
+        state["planner_input_json"],
+        encoding="utf-8"
+    )
+
     ### update meta data
     meta.update({
         "target_type": state["target_type"],
         "target_name": state["target_name"],
         "target_files": state["target_files"],
+        "internal_deps": state["internal_deps"],
         "target_files_count": len(state["target_files"]),
         "target_source_root": state["target_source_root"],
     })
@@ -1475,6 +1538,10 @@ def prepare_replan_node(state: State) -> State:
         state["msg"] = state.get("msg", "") + " | stop: max plans reached"
         return state
 
+    old_rollback_reason = state.get("rollback_reason", "")
+    old_replan_trigger = state.get("replan_trigger", "")
+    last_error = state.get("executor_feedback", "")
+
     # new plan must start from block 0
     state["block_idx"] = 0
     state["block_attempt"] = 0
@@ -1494,12 +1561,13 @@ def prepare_replan_node(state: State) -> State:
     # start-of-plan bookkeeping
     state["plan_base_commit"] = state.get("base_commit")  # base_commit is the current baseline commit
     state["rollback_commit"] = ""                         # prevent leaking rollback target
-    state["rollback_reason"] = ""                         # optional: avoid leaking into planner_input
-    state["replan_trigger"] = ""                          # very important: avoid infinite replan loop
+    state["rollback_reason"] = old_rollback_reason        # optional: avoid leaking into planner_input
+    state["replan_trigger"] = old_replan_trigger          # very important: avoid infinite replan loop
 
     # create new plan folder
     plan_dir = _get_plan_dir(state)
 
+    '''
     # get target code
     target_rel, target_code = _read_target_file(repo_path, state["target_file"])
 
@@ -1516,8 +1584,48 @@ def prepare_replan_node(state: State) -> State:
         "last_error": state.get("executor_feedback", ""),
         "smell_persist_analysis": state.get("smell_quality_analysis", ""),
     }
+    '''
+
+    previous_plan = state.get("plan") or {}
+    target_type = _get_target_type(state)
+
+    if target_type == "class":
+        target_rel, target_code = _read_target_file(repo_path, state["target_file"])
+
+        planner_input = {
+            "smell": state.get("smell_type"),
+            "target_type": "class",
+            "target_name": state.get("target_name", ""),
+            "target_file": target_rel,
+            "target_code": target_code,
+            "previous_plan": previous_plan,
+            "replan_reason": old_rollback_reason or old_replan_trigger,
+            "last_error": last_error,
+            "smell_persist_analysis": state.get("smell_quality_analysis", ""),
+        }
+
+    elif target_type == "package":
+        planner_input = {
+            "smell": state.get("smell_type"),
+            "target_type": "package",
+            "target_name": state.get("target_name", ""),
+            "target_source_root": state.get("target_source_root", ""),
+            "target_files": state.get("target_files", []),
+            "internal_deps": state.get("internal_deps", []),
+            "previous_plan": previous_plan,
+            "replan_reason": old_rollback_reason or old_replan_trigger,
+            "last_error": last_error,
+            "smell_persist_analysis": state.get("smell_quality_analysis", ""),
+        }
+
+    else:
+        raise RuntimeError(f"unsupported target_type: {target_type}")
 
     state["planner_input_json"] = json.dumps(planner_input, indent=2)
+    (plan_dir / "planner.replan.input.json").write_text(
+        state["planner_input_json"],
+        encoding="utf-8"
+    )
 
     # meta.json update
     meta_path = run_dir / "meta.json"
