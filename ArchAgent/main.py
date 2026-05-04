@@ -296,10 +296,9 @@ def _run_designite(
 
     return out_dir, cmd
 
-def _get_internal_package_dependencies(graphml_path: str, target_name: str) -> list[tuple[str, str]]:
+def get_package_dependencies(graphml_path: str, target_name: str):
     deps = Dependencies(target_name)
-    internal, outgoing, incoming = deps._get_package_dependencies(graphml_path)
-    return internal
+    return deps._get_package_dependencies(graphml_path)
 
 # Nodes
 def route_node(state: State) -> State:
@@ -461,6 +460,41 @@ def resolve_target_class_node(state: State) -> State:
 
     return state
 
+## filter in the package only the classes that can be moved without breaking incoming dependencies from outside the package
+def _filter_movable_package_scope(
+    state: State,
+    target_name: str,
+    incoming_deps: list[Tuple[str, str]],
+    allowed_classes: set[str],
+    internal_deps: list[Tuple[str, str]],
+) -> tuple[list[Tuple[str, str]], list[str]]:
+    incoming_targets = {dst for _, dst in incoming_deps}
+
+    movable_classes = {
+        cls
+        for cls in allowed_classes
+        if cls not in incoming_targets
+    }
+
+    movable_internal_deps = [
+        (src, dst)
+        for src, dst in internal_deps
+        if src in movable_classes and dst in movable_classes
+    ]
+
+    movable_files = [
+        f for f in state["target_files"]
+        if Fqn(target_name)._java_file_to_fqn(
+            f,
+            state["target_source_root"]
+        ) in movable_classes
+    ]
+
+    if not movable_files:
+        raise RuntimeError(f"No movable classes found for package: {target_name}")
+
+    return movable_internal_deps, movable_files
+
 ## function to resolve package data for planner input
 def resolve_target_package_node(state: State) -> State:
     ### initialize node
@@ -508,14 +542,15 @@ def resolve_target_package_node(state: State) -> State:
         state["target_source_root"]
     )
     
-    ### get internal package dependencies
+    ### get package dependencies
     graphml_path = Path(run_dir, "init_designite", "DependencyGraph.graphml")
-    
-    internal_deps = _get_internal_package_dependencies( # get package internal deps
-        graphml_path=graphml_path,
-        target_name=target_name
+
+    internal_deps, outgoing_deps, incoming_deps = get_package_dependencies(
+        graphml_path,
+        target_name
     )
     
+    ### resolve internal deps
     internal_deps = [ # remove not allowed classes
         (src, dst)
         for src, dst in internal_deps
@@ -524,15 +559,41 @@ def resolve_target_package_node(state: State) -> State:
 
     state["internal_deps"] = internal_deps
 
+    ### resolve incoming deps
+    incoming_deps = [
+        (src, dst)
+        for src, dst in incoming_deps
+        if dst in allowed_classes
+    ]
+
+    state["incoming_deps"] = incoming_deps
+
+    ### list movable classes and files (those that can be moved together with the package without breaking incoming dependencies from outside)
+    movable_internal_deps, movable_files = _filter_movable_package_scope(
+        state=state,
+        target_name=target_name,
+        incoming_deps=incoming_deps,
+        allowed_classes=allowed_classes,
+        internal_deps=internal_deps,
+    )
+
     ### update internal input
     # TODO: move it for a better place in the future
     planner_input = {
+        #"smell": state.get("smell_type", "God Component"),
+        #"target_type": "package",
+        #"target_name": target_name,
+        #"target_source_root": state["target_source_root"],
+        #"target_files": state["target_files"],
+        #"internal_deps": state["internal_deps"],
+        #"incoming_deps": state["incoming_deps"],
+        #"external_files": state["external_files"],
         "smell": state.get("smell_type", "God Component"),
         "target_type": "package",
         "target_name": target_name,
         "target_source_root": state["target_source_root"],
-        "target_files": state["target_files"],
-        "internal_deps": state["internal_deps"],
+        "target_files": movable_files,
+        "internal_deps": movable_internal_deps,
     }
     state["planner_input_json"] = json.dumps(planner_input, indent=2)
 
@@ -550,6 +611,8 @@ def resolve_target_package_node(state: State) -> State:
         "internal_deps": state["internal_deps"],
         "target_files_count": len(state["target_files"]),
         "target_source_root": state["target_source_root"],
+        "planner_target_files": movable_files,
+        "planner_internal_deps": movable_internal_deps,
     })
     meta_path.write_text(json.dumps(meta, indent=2), encoding="utf-8")
 
@@ -711,13 +774,28 @@ def resolve_files_for_block_node(state: State) -> State:
     blk = state.get("staged_block") or {}
     ops = blk.get("ops", []) or []
 
-    existing: set[str] = set()
+    '''existing: set[str] = set()
     for f in (state.get("staged_block_files") or []):
         p = Path(f)
         if p.is_absolute():
             existing.add(str(p))
         else:
-            existing.add(str((repo_path / p).resolve()))
+            existing.add(str((repo_path / p).resolve()))'''
+
+    allowed_scope = set(state.get("target_files") or [])
+    allowed_scope.update(state.get("external_files") or [])
+
+    existing: set[str] = set()
+    rejected: list[str] = []
+
+    for f in (state.get("staged_block_files") or []):
+        rel = _to_repo_rel(repo_path, f)
+
+        if rel not in allowed_scope:
+            rejected.append(rel)
+            continue
+
+        existing.add(str((repo_path / rel).resolve()))
 
     new_files: set[str] = set()
     for op in ops:
@@ -743,6 +821,7 @@ def resolve_files_for_block_node(state: State) -> State:
     state["executor_existing_files"] = sorted(existing)
     state["executor_new_files"] = sorted(new_files)
     state["executor_files"] = all_files
+    state["executor_rejected_files"] = rejected
 
     plan_dir = _get_plan_dir(state)
     (plan_dir / "executor.files.json").write_text(json.dumps(all_files, indent=2), encoding="utf-8")

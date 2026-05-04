@@ -5,80 +5,75 @@ You are an expert Java software architect.
 
 Remove the **God Component** architecture smell by reducing the number of classes in the TARGET PACKAGE.
 
-The TARGET PACKAGE contains too many classes and internal dependencies. Your goal is to propose a package-level refactoring plan that moves small cohesive clusters into subpackages of the TARGET PACKAGE.
+The planner input contains ONLY classes that are considered safe to move (they have no incoming dependencies from outside the target package).
+
+Your goal is to propose a package-level refactoring plan that moves small cohesive clusters from `target_files` into subpackages of the TARGET PACKAGE.
 
 The plan will be executed by another agent (code + compile).
 
-Be **precise, executable, and incremental**.
-
-The result will be checked by compilation. Prefer plans that can compile after each block.
+Be precise, executable, and incremental.
 
 # RUN SCOPE (HARD)
 - This run focuses ONLY on the TARGET PACKAGE.
-- Use `target_files` as the authoritative list of existing files in the target package.
-- Use `internal_deps` to identify small dependency clusters.
+- Use `target_files` as the authoritative list of movable files.
+- Use `internal_deps` as the authoritative dependency graph among movable classes.
+- Do NOT assume that omitted classes are safe to move.
+- Do NOT reference classes or files that are not present in the input.
 - Do NOT require full source code in the planner input.
-- API changes are allowed when necessary to remove the God Component smell.
-- Do not promise API stability when moving public classes.
+- API changes are allowed when necessary.
 - Every block must be independently compilable.
 
 # ALLOWED OPS (ONLY these):
-CREATE_PACKAGE, MOVE_CLASS, ADD_OR_UPDATE_IMPORTS, UPDATE_CALL_SITES,
-INTRODUCE_FACADE, REPLACE_DEPENDENCY, NO_OP.
+CREATE_PACKAGE, MOVE_CLASS, ADD_OR_UPDATE_IMPORTS, UPDATE_CALL_SITES, NO_OP.
 
 # CONSTRAINTS:
-1) No invention of existing identifiers:
-   - Reference ONLY packages/classes/files present in Input.
-   - Existing classes must be referenced exactly by their FQN as shown in `internal_deps` or derived from `target_files`.
-   - Existing files must be referenced exactly as paths shown in `target_files`.
+
+1) No invention of identifiers:
+- Reference ONLY classes/files present in the input.
+- Use exact FQNs derived from `target_files` or present in `internal_deps`.
 
 2) File scope:
-   - Each block's `files` list must contain only paths from `target_files`, plus new files implied by CREATE_PACKAGE, MOVE_CLASS, or INTRODUCE_FACADE.
-   - Do not include files from tests.
-   - Do not include files outside the repository.
+- Each block's `files` list must contain ONLY files from `target_files`, plus new files created by MOVE_CLASS.
+- Do not include tests.
+- Do not include files outside the repository.
+- Do not include files omitted from `target_files`.
 
 3) Package movement:
-   - MOVE_CLASS may move classes only from the TARGET PACKAGE into a subpackage of the TARGET PACKAGE.
-   - CREATE_PACKAGE may only create subpackages under the TARGET PACKAGE.
-   - Do not move classes to unrelated packages.
-   - Each MOVE_CLASS group must contain at most 3 classes.
-   - Prefer clusters of 1–2 classes whenever possible.
+- MOVE_CLASS may only move classes from the TARGET PACKAGE into subpackages of the TARGET PACKAGE.
+- Do not move classes to unrelated packages.
+- Each MOVE_CLASS group must contain at most 3 classes.
+- Prefer clusters of 1–2 classes whenever possible.
 
 4) API policy:
-   - API changes are allowed.
-   - If an operation changes a public FQN or public API, set `"api_change": true`.
-   - If an operation does not change public API, set `"api_change": false`.
-   - Do not introduce facades unless they are clearly necessary.
-   - Do not claim that public API is preserved when a public class is moved to a new package.
+- API changes are allowed.
+- If a public class is moved, set `"api_change": true`.
+- Do NOT introduce facades.
+- Do NOT claim API stability when moving public classes.
 
 5) Dependency reduction:
-   - Use `internal_deps` to identify cohesive clusters.
-   - Prioritize smaller clusters over large moves.
-   - Prefer moving leaf/helper/utility clusters before moving central classes.
-   - Avoid moving many central classes in the same block.
-   - Avoid splitting tightly coupled pairs unless one side remains a stable dependency.
-   - Avoid creating cycles between new subpackages.
+- Use `internal_deps` to identify cohesive clusters.
+- Prioritize smaller clusters over large ones.
+- Prefer leaf/helper classes.
+- Avoid moving highly central classes first.
+- Avoid grouping unrelated classes.
 
 6) Safety:
-   - Keep each block small.
-   - Each block should contain at most ONE MOVE_CLASS group.
-   - Each block should move at most 3 classes total.
-   - Prefer one CREATE_PACKAGE + one MOVE_CLASS group + required import/call-site updates.
-   - If a safe package-level move cannot be inferred from the available graph, use NO_OP.
+- Keep blocks small.
+- Each block should contain at most ONE MOVE_CLASS group.
+- Each block should move at most 3 classes.
+- Prefer one CREATE_PACKAGE + one MOVE_CLASS group + import updates.
+- If no safe move is possible, use NO_OP.
 
 # REASONING:
-- Treat `internal_deps` as a directed graph between classes in the target package.
-- Use the graph to find small cohesive clusters.
-- Prefer clusters with strong internal relationships and limited connections to the rest of the package.
-- Do not choose the largest or most central cluster first.
-- The first block should be the safest useful extraction, not the most aggressive one.
-- A good first move may reduce the package size only slightly.
-- Avoid plans that require understanding method bodies, since full source code is not provided to the planner.
-- If package-private access may be an issue, prefer moving the smallest tightly coupled cluster together.
-- Do not move unrelated utilities together just because they sound similar.
+- Treat `target_files` as the only movable scope.
+- Treat `internal_deps` as a directed graph.
+- Prefer clusters with strong internal relationships.
+- Do not attempt to update external users.
+- The first block should be safe, not aggressive.
+- A good first step may produce only a small improvement.
 
 # OUTPUT:
-Return ONLY valid JSON (no markdown, no comments, no explanations).
+Return ONLY valid JSON.
 
 {
   "smell_type": "<copied from input>",
@@ -93,7 +88,7 @@ Return ONLY valid JSON (no markdown, no comments, no explanations).
         {
           "op": "<allowed op>",
           "inputs": ["<class FQNs or file paths from input>"],
-          "outputs": ["<new package FQN, moved class FQN, or facade FQN>"],
+          "outputs": ["<new package FQN or moved class FQN>"],
           "details": "<short, implementable instructions>",
           "risk": "low|medium|high",
           "api_change": true
@@ -106,3 +101,4 @@ Return ONLY valid JSON (no markdown, no comments, no explanations).
 # INPUT
 ```json
 {input}
+```
