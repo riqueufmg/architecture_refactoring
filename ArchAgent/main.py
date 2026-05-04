@@ -335,22 +335,6 @@ def init_run_node(state: State) -> State:
     run_dir.mkdir(parents=True, exist_ok=True)
     state["run_dir"] = str(run_dir)
 
-    ### run initial Designite
-    jar_env = os.getenv("DESIGNITE_JAR_PATH")
-    if not jar_env:
-        raise RuntimeError("DESIGNITE_JAR_PATH is not set")
-
-    designite_jar = Path(jar_env).expanduser().resolve()
-    if not designite_jar.exists() or not designite_jar.is_file():
-        raise RuntimeError(f"Designite JAR not found at {designite_jar}")
-
-    static_analysis_path = Path(state["run_dir"], "init_designite")
-    static_analysis_path.mkdir(parents=True, exist_ok=True)
-
-    out_dir, cmd = _run_designite(repo_path, static_analysis_path, designite_jar)
-    if not out_dir.exists():
-        raise RuntimeError("Designite did not produce output directory")
-
     ### load smell type
     smell_type = ""
     try:
@@ -542,9 +526,25 @@ def resolve_target_package_node(state: State) -> State:
         state["target_source_root"]
     )
     
-    ### get package dependencies
-    graphml_path = Path(run_dir, "init_designite", "DependencyGraph.graphml")
+    ### run Designite for the current package resolution
+    jar_env = os.getenv("DESIGNITE_JAR_PATH")
+    if not jar_env:
+        raise RuntimeError("DESIGNITE_JAR_PATH is not set")
 
+    designite_jar = Path(jar_env).expanduser().resolve()
+    if not designite_jar.exists() or not designite_jar.is_file():
+        raise RuntimeError(f"Designite JAR not found at {designite_jar}")
+
+    plan_dir = _get_plan_dir(state)
+    designite_scope_dir = plan_dir / "package_scope_designite"
+
+    out_dir, cmd = _run_designite(repo_path, designite_scope_dir, designite_jar)
+
+    graphml_path = out_dir / "DependencyGraph.graphml"
+    if not graphml_path.exists():
+        raise RuntimeError(f"DependencyGraph.graphml not found at {graphml_path}")
+
+    ### get package dependencies
     internal_deps, outgoing_deps, incoming_deps = get_package_dependencies(
         graphml_path,
         target_name
@@ -1684,7 +1684,20 @@ def prepare_replan_node(state: State) -> State:
         }
 
     elif target_type == "package":
-        planner_input = {
+
+        state = resolve_target_package_node(state)
+
+        planner_input = json.loads(state["planner_input_json"])
+        planner_input.update({
+            "previous_plan": previous_plan,
+            "replan_reason": old_rollback_reason or old_replan_trigger,
+            "last_error": last_error,
+            "smell_persist_analysis": state.get("smell_quality_analysis", ""),
+        })
+
+        state["planner_input_json"] = json.dumps(planner_input, indent=2)
+
+        '''planner_input = {
             "smell": state.get("smell_type"),
             "target_type": "package",
             "target_name": state.get("target_name", ""),
@@ -1695,7 +1708,7 @@ def prepare_replan_node(state: State) -> State:
             "replan_reason": old_rollback_reason or old_replan_trigger,
             "last_error": last_error,
             "smell_persist_analysis": state.get("smell_quality_analysis", ""),
-        }
+        }'''
 
     else:
         raise RuntimeError(f"unsupported target_type: {target_type}")
