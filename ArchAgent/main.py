@@ -445,7 +445,7 @@ def resolve_target_class_node(state: State) -> State:
     return state
 
 ## filter in the package only the classes that can be moved without breaking incoming dependencies from outside the package
-def _filter_movable_package_scope(
+'''def _filter_movable_package_scope(
     state: State,
     target_name: str,
     incoming_deps: list[Tuple[str, str]],
@@ -478,6 +478,90 @@ def _filter_movable_package_scope(
         raise RuntimeError(f"No movable classes found for package: {target_name}")
 
     return movable_internal_deps, movable_files
+'''
+
+def _filter_closed_movable_clusters(
+    state: State,
+    target_name: str,
+    incoming_deps: list[Tuple[str, str]],
+    allowed_classes: set[str],
+    internal_deps: list[Tuple[str, str]],
+    max_cluster_size: int = 3,
+) -> tuple[list[Tuple[str, str]], list[str], list[list[str]]]:
+    incoming_targets = {dst for _, dst in incoming_deps}
+
+    # classes sem dependência de entrada externa
+    candidate_classes = {
+        cls
+        for cls in allowed_classes
+        if cls not in incoming_targets
+    }
+
+    # mapa de outgoing deps internas
+    outgoing_map: dict[str, set[str]] = {}
+    for src, dst in internal_deps:
+        if src in candidate_classes and dst in allowed_classes:
+            outgoing_map.setdefault(src, set()).add(dst)
+
+    closed_clusters: list[list[str]] = []
+
+    for cls in sorted(candidate_classes):
+        cluster = {cls}
+        changed = True
+
+        while changed:
+            changed = False
+            for current in list(cluster):
+                for dep in outgoing_map.get(current, set()):
+                    if dep not in candidate_classes:
+                        cluster = set()
+                        changed = False
+                        break
+
+                    if dep not in cluster:
+                        cluster.add(dep)
+                        changed = True
+
+                if not cluster:
+                    break
+
+        if not cluster:
+            continue
+
+        if len(cluster) <= max_cluster_size:
+            closed_clusters.append(sorted(cluster))
+
+    # remover duplicatas
+    unique_clusters = []
+    seen = set()
+
+    for cluster in closed_clusters:
+        key = tuple(cluster)
+        if key not in seen:
+            seen.add(key)
+            unique_clusters.append(cluster)
+
+    movable_classes = {
+        cls
+        for cluster in unique_clusters
+        for cls in cluster
+    }
+
+    movable_internal_deps = [
+        (src, dst)
+        for src, dst in internal_deps
+        if src in movable_classes and dst in movable_classes
+    ]
+
+    movable_files = [
+        f for f in state["target_files"]
+        if Fqn(target_name)._java_file_to_fqn(
+            f,
+            state["target_source_root"]
+        ) in movable_classes
+    ]
+
+    return movable_internal_deps, movable_files, unique_clusters
 
 ## function to resolve package data for planner input
 def resolve_target_package_node(state: State) -> State:
@@ -568,32 +652,44 @@ def resolve_target_package_node(state: State) -> State:
 
     state["incoming_deps"] = incoming_deps
 
-    ### list movable classes and files (those that can be moved together with the package without breaking incoming dependencies from outside)
-    movable_internal_deps, movable_files = _filter_movable_package_scope(
-        state=state,
-        target_name=target_name,
-        incoming_deps=incoming_deps,
-        allowed_classes=allowed_classes,
-        internal_deps=internal_deps,
-    )
+    ### resolve outgoing deps
+    outgoing_deps = [
+        (src, dst)
+        for src, dst in outgoing_deps
+        if src in allowed_classes
+    ]
+
+    state["outgoing_deps"] = outgoing_deps
+
+    ### resolve external files that depend on classes from the target package
+    external_files = []
+
+    for src, _ in incoming_deps:
+        path = Fqn(src).find_in_repo(repo_path)
+
+        if path and path.is_file():
+            external_files.append(
+                str(path.relative_to(repo_path)).replace("\\", "/")
+            )
+
+    state["external_files"] = sorted(set(external_files))
 
     ### update internal input
     # TODO: move it for a better place in the future
     planner_input = {
-        #"smell": state.get("smell_type", "God Component"),
-        #"target_type": "package",
-        #"target_name": target_name,
-        #"target_source_root": state["target_source_root"],
-        #"target_files": state["target_files"],
-        #"internal_deps": state["internal_deps"],
-        #"incoming_deps": state["incoming_deps"],
-        #"external_files": state["external_files"],
         "smell": state.get("smell_type", "God Component"),
         "target_type": "package",
         "target_name": target_name,
         "target_source_root": state["target_source_root"],
-        "target_files": movable_files,
-        "internal_deps": movable_internal_deps,
+
+        # files/classes from the target package
+        "target_files": state["target_files"],
+        "internal_deps": state["internal_deps"],
+        "outgoing_deps": state["outgoing_deps"],
+
+        # external impact
+        "incoming_deps": state["incoming_deps"],
+        "external_files": state["external_files"],
     }
     state["planner_input_json"] = json.dumps(planner_input, indent=2)
 
@@ -611,8 +707,12 @@ def resolve_target_package_node(state: State) -> State:
         "internal_deps": state["internal_deps"],
         "target_files_count": len(state["target_files"]),
         "target_source_root": state["target_source_root"],
-        "planner_target_files": movable_files,
-        "planner_internal_deps": movable_internal_deps,
+        "incoming_deps": state["incoming_deps"],
+        "incoming_deps_count": len(state["incoming_deps"]),
+        "outgoing_deps": state["outgoing_deps"],
+        "outgoing_deps_count": len(state["outgoing_deps"]),
+        "external_files": state["external_files"],
+        "external_files_count": len(state["external_files"]),
     })
     meta_path.write_text(json.dumps(meta, indent=2), encoding="utf-8")
 
