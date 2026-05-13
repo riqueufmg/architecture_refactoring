@@ -300,6 +300,122 @@ def get_package_dependencies(graphml_path: str, target_name: str):
     deps = Dependencies(target_name)
     return deps._get_package_dependencies(graphml_path)
 
+## Function to add visibility update ops to the plan for related classes in the same package that are not moved but have internal dependencies with the moved classes (to keep compilation working after the move)
+def enrich_plan_with_visibility_ops(plan: dict, state: State) -> dict:
+    internal_deps = state.get("internal_deps") or []
+    target_files = state.get("target_files") or []
+    target_source_root = state.get("target_source_root") or ""
+    target_name = state.get("target_name") or ""
+    selected_cluster = set(plan.get("selected_cluster") or [])
+
+    # FQN -> file path
+    class_to_file = {}
+    for f in target_files:
+        fqn = Fqn(target_name)._java_file_to_fqn(f, target_source_root)
+        class_to_file[fqn] = f
+
+    # Build relation map in both directions:
+    # moved class -> related internal classes
+    related_by_class: dict[str, set[str]] = {}
+
+    for src, dst in internal_deps:
+        related_by_class.setdefault(src, set()).add(dst)
+        related_by_class.setdefault(dst, set()).add(src)
+
+    original_blocks = plan.get("blocks") or []
+    enriched_blocks = []
+
+    prepared_visibility_classes: set[str] = set()
+    next_id = 1
+
+    for block in original_blocks:
+        ops = block.get("ops") or []
+
+        move_op = None
+        moved_old_fqn = None
+
+        for op in ops:
+            if op.get("op") == "MOVE_CLASS":
+                inputs = op.get("inputs") or []
+                if inputs:
+                    move_op = op
+                    moved_old_fqn = inputs[0]
+                    break
+
+        if not move_op or not moved_old_fqn:
+            block["id"] = next_id
+            enriched_blocks.append(block)
+            next_id += 1
+            continue
+
+        related_classes = sorted(
+            cls
+            for cls in related_by_class.get(moved_old_fqn, set())
+            if cls in class_to_file
+            and cls not in selected_cluster
+        )
+
+        visibility_classes = [moved_old_fqn] + related_classes
+
+        visibility_classes = [
+            cls
+            for cls in visibility_classes
+            if cls in class_to_file
+            and cls not in prepared_visibility_classes
+        ]
+
+        if visibility_classes:
+            visibility_files = sorted({
+                class_to_file[cls]
+                for cls in visibility_classes
+                if cls in class_to_file
+            })
+
+            enriched_blocks.append({
+                "id": next_id,
+                "goal": f"Prepare visibility before moving {moved_old_fqn}.",
+                "files": visibility_files,
+                "ops": [
+                    {
+                        "op": "UPDATE_VISIBILITY",
+                        "inputs": visibility_classes,
+                        "outputs": [],
+                        "details": (
+                            "Update only the minimum required visibility in these "
+                            "target-package classes so moved cluster classes can "
+                            "compile from the new package."
+                        ),
+                        "risk": "medium",
+                        "api_change": True,
+                    }
+                ],
+            })
+
+            next_id += 1
+            prepared_visibility_classes.update(visibility_classes)
+
+        # Keep only CREATE_PACKAGE and MOVE_CLASS in the move block.
+        move_block_ops = [
+            op for op in ops
+            if op.get("op") in {"CREATE_PACKAGE", "MOVE_CLASS"}
+        ]
+
+        move_block_files = list(block.get("files") or [])
+
+        # Guarantee the moved source file is present.
+        if moved_old_fqn in class_to_file:
+            move_block_files.append(class_to_file[moved_old_fqn])
+
+        block["id"] = next_id
+        block["files"] = sorted(set(move_block_files))
+        block["ops"] = move_block_ops
+
+        enriched_blocks.append(block)
+        next_id += 1
+
+    plan["blocks"] = enriched_blocks
+    return plan
+
 # Nodes
 def route_node(state: State) -> State:
     state["msg"] = (
@@ -658,38 +774,19 @@ def resolve_target_package_node(state: State) -> State:
         for src, dst in outgoing_deps
         if src in allowed_classes
     ]
-
     state["outgoing_deps"] = outgoing_deps
 
-    ### resolve external files that depend on classes from the target package
-    external_files = []
+    ### update input
 
-    for src, _ in incoming_deps:
-        path = Fqn(src).find_in_repo(repo_path)
-
-        if path and path.is_file():
-            external_files.append(
-                str(path.relative_to(repo_path)).replace("\\", "/")
-            )
-
-    state["external_files"] = sorted(set(external_files))
-
-    ### update internal input
-    # TODO: move it for a better place in the future
     planner_input = {
-        "smell": state.get("smell_type", "God Component"),
+        "smell": state.get("smell_type"),
         "target_type": "package",
         "target_name": target_name,
         "target_source_root": state["target_source_root"],
-
-        # files/classes from the target package
         "target_files": state["target_files"],
         "internal_deps": state["internal_deps"],
-        "outgoing_deps": state["outgoing_deps"],
-
-        # external impact
         "incoming_deps": state["incoming_deps"],
-        "external_files": state["external_files"],
+        "outgoing_deps": state["outgoing_deps"],
     }
     state["planner_input_json"] = json.dumps(planner_input, indent=2)
 
@@ -711,8 +808,6 @@ def resolve_target_package_node(state: State) -> State:
         "incoming_deps_count": len(state["incoming_deps"]),
         "outgoing_deps": state["outgoing_deps"],
         "outgoing_deps_count": len(state["outgoing_deps"]),
-        "external_files": state["external_files"],
-        "external_files_count": len(state["external_files"]),
     })
     meta_path.write_text(json.dumps(meta, indent=2), encoding="utf-8")
 
@@ -785,6 +880,13 @@ def planner_node(state: State) -> State:
         json_text = _extract_json_object_only(raw)
 
         plan = json.loads(json_text)
+
+        # increase Plan with deps for God Component
+        if (
+            _get_target_type(state) == "package"
+            and state.get("smell_type") == "God Component"
+        ):
+            plan = enrich_plan_with_visibility_ops(plan, state)
 
         if not isinstance(plan, dict) or "blocks" not in plan:
             raise ValueError("plan JSON missing required top-level keys (expected dict with 'blocks').")
@@ -1143,24 +1245,6 @@ JSON schema:
         meta_path.write_text(json.dumps(meta, indent=2), encoding="utf-8")
 
         return state
-
-'''def after_executor(state: State) -> str:
-    # if executor not failed parsing JSON, and produced files to write/delete
-    if (state.get("rollback_reason") in (None, "", "unknown")
-        and ((state.get("files_to_write") or []) or (state.get("files_to_delete") or []))):
-        return "apply_files"
-
-    # if executor failed, retry
-    state["block_attempt"] = state.get("block_attempt", 0) + 1 # add attempt
-    
-    if state["block_attempt"] < state.get("max_block_attempts", 5): # if not exceed attempts
-        return "retry_executor"
-    
-    state["rollback_reason"] = "block_attempt_exhausted"
-    state["rollback_commit"] = state["plan_base_commit"]
-    state["replan_trigger"] = "block_attempt_exhausted"
-    
-    return "rollback" # if all attempts exhausted, replan'''
 
 def after_executor(state: State) -> str:
     # if executor not failed parsing JSON, and produced files to write/delete
@@ -1879,14 +1963,16 @@ def build_graph():
     g.add_edge("resolve_target_class", "planner")
     g.add_edge("resolve_target_package", "planner")
 
-    g.add_conditional_edges(
+    g.add_edge("planner", END)
+
+    '''g.add_conditional_edges(
         "planner",
         after_planner,
         {
             "stage_block": "stage_block",
             END: END,
         },
-    )
+    )'''
 
     g.add_conditional_edges(
         "stage_block",
