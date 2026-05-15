@@ -76,6 +76,11 @@ class State(TypedDict, total=False):
     apply_ok: bool
     apply_error: str
 
+    # openrewrite node
+    openrewrite_ok: bool
+    openrewrite_returncode: int
+    openrewrite_error: str
+
     # compilation data
     compile_ok: bool
     compile_returncode: int

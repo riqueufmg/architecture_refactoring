@@ -249,14 +249,26 @@ def _infer_target_type_from_name(target_name: str) -> str:
     return "package"
 
 def _run_build(repo_path: Path, tmp_dir: Path) -> subprocess.CompletedProcess:
-    cmd = ["mvn", "-q",
+    '''cmd = ["mvn", "-q",
        "-DskipTests",
        "-Drat.skip=true",
        "-Dcheckstyle.skip=true",
        "-Dspotbugs.skip=true",
        "-Dpmd.skip=true",
        "-DskipITs",
-       "clean", "verify"]
+       "clean", "verify"]'''
+
+    cmd = [
+        "mvn", "-q",
+        "-Dmaven.test.skip=true",
+        "-Djapicmp.skip=true",
+        "-Drat.skip=true",
+        "-Dcheckstyle.skip=true",
+        "-Dspotbugs.skip=true",
+        "-Dpmd.skip=true",
+        "-DskipITs",
+        "clean", "verify"
+    ]
 
     env = os.environ.copy()
     env["MAVEN_OPTS"] = f"-Xshare:off -Djava.io.tmpdir={tmp_dir}"
@@ -1400,7 +1412,7 @@ def apply_files_node(state: State) -> State:
 
     return state
 
-def after_apply_files(state: State) -> str:
+'''def after_apply_files(state: State) -> str:
     if state.get("apply_ok"):
         return "compile"
 
@@ -1408,7 +1420,24 @@ def after_apply_files(state: State) -> str:
     if state.get("block_attempt", 0) < state.get("max_block_attempts", 5):
         return "retry_executor"
 
-    return "rollback"
+    return "rollback"'''
+
+def after_apply_files(state: State) -> str:
+    if not state.get("apply_ok"):
+        if state.get("block_attempt", 0) < state.get("max_block_attempts", 5):
+            return "retry_executor"
+        return "rollback"
+
+    ops = state.get("staged_block_ops") or []
+    has_move_class = any(
+        (op.get("op") or "").strip() == "MOVE_CLASS"
+        for op in ops
+    )
+
+    if has_move_class:
+        return "openrewrite"
+
+    return "compile"
 
 def rollback_node(state: State) -> State:
     repo_path = Path(state["repo_path"]).resolve()
@@ -1638,7 +1667,20 @@ def openrewrite_node(state: State) -> State:
     state["openrewrite_returncode"] = p.returncode
     state["openrewrite_ok"] = p.returncode == 0
 
+    (plan_dir / f"openrewrite.status.block.{block_idx}.json").write_text(
+        json.dumps(
+            {
+                "returncode": p.returncode,
+                "openrewrite_ok": state["openrewrite_ok"],
+                "rollback_reason": state.get("rollback_reason", ""),
+            },
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
+
     if state["openrewrite_ok"]:
+        _run(["git", "checkout", "--", "src/test"], cwd=repo_path)
         state["msg"] = state.get("msg", "") + " | openrewrite ok"
         return state
 
@@ -1647,10 +1689,28 @@ def openrewrite_node(state: State) -> State:
     state["msg"] = state.get("msg", "") + " | openrewrite FAIL"
     return state
 
-def after_openrewrite(state: State) -> str:
+#TODO: uncomment after tests
+'''def after_openrewrite(state: State) -> str:
     if state.get("openrewrite_ok"):
         return "compile"
-    return "rollback"
+    return "rollback"'''
+
+def after_openrewrite(state: State) -> str:
+    plan_dir = _get_plan_dir(state)
+
+    route = "compile" if state.get("openrewrite_ok") else "rollback"
+
+    (plan_dir / f"after_openrewrite.block.{state.get('block_idx', 0)}.txt").write_text(
+        (
+            f"openrewrite_ok={state.get('openrewrite_ok')}\n"
+            f"openrewrite_returncode={state.get('openrewrite_returncode')}\n"
+            f"rollback_reason={state.get('rollback_reason')}\n"
+            f"route={route}\n"
+        ),
+        encoding="utf-8",
+    )
+
+    return route
 
 def compile_node(state: State) -> State:
     repo_path = Path(state["repo_path"]).resolve()
@@ -1660,20 +1720,6 @@ def compile_node(state: State) -> State:
 
     tmp_dir = repo_path / "tmp"
     tmp_dir.mkdir(parents=True, exist_ok=True)
-
-    '''cmd = ["mvn", "-q",
-       #"-DskipTests",
-       "-Drat.skip=true",
-       "-Dcheckstyle.skip=true",
-       "-Dspotbugs.skip=true",
-       "-Dpmd.skip=true",
-       "-DskipITs",
-       "clean", "verify"]
-
-    env = os.environ.copy()
-    env["MAVEN_OPTS"] = f"-Xshare:off -Djava.io.tmpdir={tmp_dir}"
-
-    p = _run(cmd, cwd=repo_path, env=env)'''
 
     p = _run_build(repo_path, tmp_dir)
 
@@ -1703,6 +1749,18 @@ def compile_node(state: State) -> State:
         }
     )
     meta_path.write_text(json.dumps(meta, indent=2), encoding="utf-8")
+
+    (plan_dir / f"compile.status.block.{state.get('block_idx', 0)}.json").write_text(
+        json.dumps(
+            {
+                "compile_returncode": state.get("compile_returncode"),
+                "compile_ok": state.get("compile_ok"),
+                "rollback_reason": state.get("rollback_reason", ""),
+            },
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
 
     return state
 
@@ -2184,8 +2242,8 @@ def build_graph():
         "apply_files",
         after_apply_files,
         {
-            #"compile": "compile",
-            "compile": "openrewrite", # TODO: Isso não ficou legal
+            "openrewrite": "openrewrite",
+            "compile": "compile",
             "retry_executor": "retry_executor",
             "rollback": "rollback",
         },
