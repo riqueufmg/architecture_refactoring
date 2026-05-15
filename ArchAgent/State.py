@@ -28,6 +28,10 @@ class State(TypedDict, total=False):
     start_commit: str
     base_commit: str
 
+    # prompts path
+    executor_prompt_path: str          # prompt for LLM executor
+    smell_quality_prompt_path: str     # prompt for LLM quality analysis
+
     # plan lifecycle
     plan_idx: int # num of plan tries
     plan_base_commit: str # commit before apply the plan
@@ -62,6 +66,7 @@ class State(TypedDict, total=False):
     executor_prompt: str
     executor_raw: str
     executor_feedback: str
+    executor_rejected_files: list[str]
 
     executor_result: dict                 # executor result data
     files_to_write: list[dict]            # each: {"path": "...", "content": "..."}
@@ -81,7 +86,6 @@ class State(TypedDict, total=False):
     smell_quality_ok: bool             # check if the LLM define why LLM wasn't remove
     smell_quality_error: str           # check error in LLM inference
     smell_quality_analysis: str        # LLM quality analysis answer
-    smell_quality_prompt_path: str     # prompt for LLM quality analysis
 
     # designite/smell data
     designite_ok: bool                 # if designite run successfully

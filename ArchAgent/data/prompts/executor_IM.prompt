@@ -1,0 +1,17 @@
+Return ONLY valid JSON (no markdown, no explanations, no backticks).
+Your job: produce the FINAL full contents of files after applying this refactoring block.
+
+Rules (hard):
+- Output MUST be a single JSON object.
+- You may only write/delete files listed in allowed_paths.
+- Paths MUST be repository-relative (e.g., src/main/java/...).
+- For files_to_write: provide full file content (complete file text).
+- If you cannot comply perfectly, output: {} (an empty JSON object).
+
+JSON schema:
+{
+  "files_to_write": [
+    {"path": "src/....java", "content": "FULL FILE CONTENT HERE"}
+  ],
+  "files_to_delete": ["src/.../Old.java"]
+}

@@ -492,10 +492,15 @@ def init_run_node(state: State) -> State:
     
     # prompts states
     if state["smell_type"] == "Insufficient Modularization":
+        state.setdefault("executor_prompt_path", "data/prompts/executor_IM.prompt")
         state.setdefault("smell_quality_prompt_path", "data/prompts/quality_IM.prompt")
     elif state["smell_type"] == "Hub-like Modularization":
+        state.setdefault("executor_prompt_path", "data/prompts/executor_HM.prompt")
         state.setdefault("smell_quality_prompt_path", "data/prompts/quality_HM.prompt")
-
+    elif state["smell_type"] == "God Component":
+        state.setdefault("executor_prompt_path", "data/prompts/executor_GC.prompt")
+        state.setdefault("smell_quality_prompt_path", "data/prompts/quality_GC.prompt")
+    
     ## give a workfull commit to the plan
     state["plan_base_commit"] = state.get("base_commit") or head
 
@@ -971,6 +976,7 @@ def stage_block_node(state: State) -> State:
 def resolve_files_for_block_node(state: State) -> State:
     repo_path = Path(state["repo_path"]).resolve()
     run_dir = Path(state["run_dir"])
+    plan_dir = _get_plan_dir(state)
 
     # get dic of blocks and list of operations
     blk = state.get("staged_block") or {}
@@ -984,8 +990,15 @@ def resolve_files_for_block_node(state: State) -> State:
         else:
             existing.add(str((repo_path / p).resolve()))'''
 
-    allowed_scope = set(state.get("target_files") or [])
-    allowed_scope.update(state.get("external_files") or [])
+    target_type = _get_target_type(state)
+    if target_type == "class":
+        allowed_scope = {state.get("target_file", "")}
+    elif target_type == "package":
+        allowed_scope = set(state.get("target_files") or [])
+    else:
+        allowed_scope = set()
+
+    allowed_scope.discard("")
 
     existing: set[str] = set()
     rejected: list[str] = []
@@ -998,6 +1011,12 @@ def resolve_files_for_block_node(state: State) -> State:
             continue
 
         existing.add(str((repo_path / rel).resolve()))
+    
+    state["executor_rejected_files"] = rejected
+    (plan_dir / "executor.rejected_files.json").write_text(
+        json.dumps(rejected, indent=2),
+        encoding="utf-8"
+    )
 
     new_files: set[str] = set()
     for op in ops:
@@ -1025,7 +1044,6 @@ def resolve_files_for_block_node(state: State) -> State:
     state["executor_files"] = all_files
     state["executor_rejected_files"] = rejected
 
-    plan_dir = _get_plan_dir(state)
     (plan_dir / "executor.files.json").write_text(json.dumps(all_files, indent=2), encoding="utf-8")
 
     state["msg"] = state.get("msg", "") + f" | files={len(all_files)} (new={len(new_files)})"
@@ -1093,24 +1111,17 @@ def executor_node(state: State) -> State:
 
     allowed_paths = [f["path"] for f in file_blobs]
 
-    SYSTEM = """Return ONLY valid JSON (no markdown, no explanations, no backticks).
-Your job: produce the FINAL full contents of files after applying this refactoring block.
+    ### get prompt path from state
+    executor_prompt_path = state.get("executor_prompt_path", "")
+    if not executor_prompt_path:
+        raise RuntimeError("executor_prompt_path missing")
 
-Rules (hard):
-- Output MUST be a single JSON object.
-- You may only write/delete files listed in allowed_paths.
-- Paths MUST be repository-relative (e.g., src/main/java/...).
-- For files_to_write: provide full file content (complete file text).
-- If you cannot comply perfectly, output: {} (an empty JSON object).
+    ### load prompt template from file
+    with open(executor_prompt_path, "r", encoding="utf-8") as f:
+        SYSTEM = f.read()
 
-JSON schema:
-{
-  "files_to_write": [
-    {"path": "src/....java", "content": "FULL FILE CONTENT HERE"}
-  ],
-  "files_to_delete": ["src/.../Old.java"]
-}
-"""
+    if not SYSTEM.strip():
+        raise RuntimeError(f"executor prompt is empty: {executor_prompt_path}")
 
     executor_prompt = {
         "task": "Generate full-code file outputs for the staged refactoring block.",
@@ -1135,6 +1146,7 @@ JSON schema:
 
     raw = (res.content or "").strip()
     state["executor_raw"] = raw
+
 
     (plan_dir / "executor.prompt.json").write_text(state["executor_prompt"], encoding="utf-8")
     (plan_dir / "executor.raw.txt").write_text(raw, encoding="utf-8")
@@ -1455,6 +1467,190 @@ def after_rollback(state: State) -> str:
     }:
         return "prepare_replan"
     return END
+
+# Called when a class is move for outside package
+'''def openrewrite_node(state: State) -> State:
+    repo_path = Path(state["repo_path"]).resolve()
+    plan_dir = _get_plan_dir(state)
+
+    blk = state.get("staged_block") or {}
+    ops = blk.get("ops") or []
+
+    move_ops = [op for op in ops if op.get("op") == "MOVE_CLASS"]
+
+    # If block has no MOVE_CLASS, skip OpenRewrite
+    if not move_ops:
+        state["openrewrite_ok"] = True
+        state["msg"] = state.get("msg", "") + " | openrewrite skipped"
+        return state
+
+    recipe_items = []
+
+    for op in move_ops:
+        inputs = op.get("inputs") or []
+        outputs = op.get("outputs") or []
+
+        if not inputs or not outputs:
+            raise RuntimeError("MOVE_CLASS op missing inputs or outputs")
+
+        old_fqn = inputs[0]
+        new_fqn = outputs[0]
+
+        recipe_items.append(
+            f"""  - org.openrewrite.java.ChangeType:
+      oldFullyQualifiedTypeName: {old_fqn}
+      newFullyQualifiedTypeName: {new_fqn}"""
+        )
+
+    recipe_name = f"archagent.MoveClassBlock{state.get('block_idx', 0)}"
+
+    rewrite_yml = (
+        "type: specs.openrewrite.org/v1beta/recipe\n"
+        f"name: {recipe_name}\n"
+        "recipeList:\n"
+        + "\n".join(recipe_items)
+        + "\n"
+    )
+
+    rewrite_path = plan_dir / f"rewrite.block.{state.get('block_idx', 0)}.yml"
+    rewrite_path.write_text(rewrite_yml, encoding="utf-8")
+
+    cmd = [
+        "mvn",
+        "-U",
+        "org.openrewrite.maven:rewrite-maven-plugin:run",
+        f"-Drewrite.configLocation={rewrite_path}",
+        f"-Drewrite.activeRecipes={recipe_name}",
+    ]
+
+    p = _run(cmd, cwd=repo_path)
+
+    log = (p.stdout or "") + "\n" + (p.stderr or "")
+    (plan_dir / f"openrewrite.block.{state.get('block_idx', 0)}.log").write_text(
+        log,
+        encoding="utf-8",
+    )
+
+    state["openrewrite_returncode"] = p.returncode
+    state["openrewrite_ok"] = p.returncode == 0
+
+    if state["openrewrite_ok"]:
+        state["msg"] = state.get("msg", "") + " | openrewrite ok"
+        return state
+
+    state["rollback_reason"] = "openrewrite_failed"
+    state["executor_feedback"] = "OPENREWRITE_FAILED:\n" + _tail(log, 40)
+    state["msg"] = state.get("msg", "") + " | openrewrite FAIL"
+    return state'''
+
+def openrewrite_node(state: State) -> State:
+    repo_path = Path(state["repo_path"]).resolve()
+    plan_dir = _get_plan_dir(state)
+    block_idx = state.get("block_idx", 0)
+
+    blk = state.get("staged_block") or {}
+    ops = blk.get("ops") or []
+
+    # Diagnostic log: confirms the node was reached
+    (plan_dir / f"openrewrite.enter.block.{block_idx}.json").write_text(
+        json.dumps(
+            {
+                "block_idx": block_idx,
+                "staged_block_id": state.get("staged_block_id"),
+                "ops": ops,
+                "staged_block": blk,
+            },
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
+
+    move_ops = [op for op in ops if op.get("op") == "MOVE_CLASS"]
+
+    # If block has no MOVE_CLASS, skip OpenRewrite
+    if not move_ops:
+        state["openrewrite_ok"] = True
+        state["msg"] = state.get("msg", "") + " | openrewrite skipped"
+
+        (plan_dir / f"openrewrite.skipped.block.{block_idx}.txt").write_text(
+            "No MOVE_CLASS op found. Skipping OpenRewrite.\n",
+            encoding="utf-8",
+        )
+
+        return state
+
+    recipe_items = []
+
+    for op in move_ops:
+        inputs = op.get("inputs") or []
+        outputs = op.get("outputs") or []
+
+        if not inputs or not outputs:
+            (plan_dir / f"openrewrite.invalid_move.block.{block_idx}.json").write_text(
+                json.dumps(op, indent=2),
+                encoding="utf-8",
+            )
+            raise RuntimeError("MOVE_CLASS op missing inputs or outputs")
+
+        old_fqn = inputs[0]
+        new_fqn = outputs[0]
+
+        recipe_items.append(
+            f"""  - org.openrewrite.java.ChangeType:
+      oldFullyQualifiedTypeName: {old_fqn}
+      newFullyQualifiedTypeName: {new_fqn}"""
+        )
+
+    recipe_name = f"archagent.MoveClassBlock{block_idx}"
+
+    rewrite_yml = (
+        "type: specs.openrewrite.org/v1beta/recipe\n"
+        f"name: {recipe_name}\n"
+        "recipeList:\n"
+        + "\n".join(recipe_items)
+        + "\n"
+    )
+
+    rewrite_path = plan_dir / f"rewrite.block.{block_idx}.yml"
+    rewrite_path.write_text(rewrite_yml, encoding="utf-8")
+
+    cmd = [
+        "mvn",
+        "-U",
+        "org.openrewrite.maven:rewrite-maven-plugin:run",
+        f"-Drewrite.configLocation={rewrite_path}",
+        f"-Drewrite.activeRecipes={recipe_name}",
+    ]
+
+    (plan_dir / f"openrewrite.cmd.block.{block_idx}.txt").write_text(
+        " ".join(cmd),
+        encoding="utf-8",
+    )
+
+    p = _run(cmd, cwd=repo_path)
+
+    log = (p.stdout or "") + "\n" + (p.stderr or "")
+    (plan_dir / f"openrewrite.block.{block_idx}.log").write_text(
+        log,
+        encoding="utf-8",
+    )
+
+    state["openrewrite_returncode"] = p.returncode
+    state["openrewrite_ok"] = p.returncode == 0
+
+    if state["openrewrite_ok"]:
+        state["msg"] = state.get("msg", "") + " | openrewrite ok"
+        return state
+
+    state["rollback_reason"] = "openrewrite_failed"
+    state["executor_feedback"] = "OPENREWRITE_FAILED:\n" + _tail(log, 40)
+    state["msg"] = state.get("msg", "") + " | openrewrite FAIL"
+    return state
+
+def after_openrewrite(state: State) -> str:
+    if state.get("openrewrite_ok"):
+        return "compile"
+    return "rollback"
 
 def compile_node(state: State) -> State:
     repo_path = Path(state["repo_path"]).resolve()
@@ -1881,19 +2077,6 @@ def prepare_replan_node(state: State) -> State:
 
         state["planner_input_json"] = json.dumps(planner_input, indent=2)
 
-        '''planner_input = {
-            "smell": state.get("smell_type"),
-            "target_type": "package",
-            "target_name": state.get("target_name", ""),
-            "target_source_root": state.get("target_source_root", ""),
-            "target_files": state.get("target_files", []),
-            "internal_deps": state.get("internal_deps", []),
-            "previous_plan": previous_plan,
-            "replan_reason": old_rollback_reason or old_replan_trigger,
-            "last_error": last_error,
-            "smell_persist_analysis": state.get("smell_quality_analysis", ""),
-        }'''
-
     else:
         raise RuntimeError(f"unsupported target_type: {target_type}")
 
@@ -1940,6 +2123,7 @@ def build_graph():
     g.add_node("executor", executor_node)
     g.add_node("apply_files", apply_files_node)
     g.add_node("retry_executor", retry_executor_node)
+    g.add_node("openrewrite", openrewrite_node)
     g.add_node("compile", compile_node)
     g.add_node("promote_baseline", promote_baseline_node)
     g.add_node("designite", designite_node)
@@ -1963,16 +2147,14 @@ def build_graph():
     g.add_edge("resolve_target_class", "planner")
     g.add_edge("resolve_target_package", "planner")
 
-    g.add_edge("planner", END)
-
-    '''g.add_conditional_edges(
+    g.add_conditional_edges(
         "planner",
         after_planner,
         {
             "stage_block": "stage_block",
             END: END,
         },
-    )'''
+    )
 
     g.add_conditional_edges(
         "stage_block",
@@ -2002,8 +2184,18 @@ def build_graph():
         "apply_files",
         after_apply_files,
         {
-            "compile": "compile",
+            #"compile": "compile",
+            "compile": "openrewrite", # TODO: Isso não ficou legal
             "retry_executor": "retry_executor",
+            "rollback": "rollback",
+        },
+    )
+
+    g.add_conditional_edges(
+        "openrewrite",
+        after_openrewrite,
+        {
+            "compile": "compile",
             "rollback": "rollback",
         },
     )
@@ -2018,6 +2210,7 @@ def build_graph():
     )
 
     g.add_edge("promote_baseline", "advance_block")
+    
     g.add_edge("advance_block", "stage_block")
 
     g.add_conditional_edges(
