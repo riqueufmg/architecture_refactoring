@@ -18,20 +18,22 @@ Produce the FINAL full contents of files after applying the staged refactoring b
 - Do not change method bodies unless strictly required by the staged block.
 - If you cannot comply perfectly, output: {}.
 
-# UPDATE_VISIBILITY BLOCKS
-If the block contains UPDATE_VISIBILITY:
-- Do NOT move classes.
-- Do NOT change package declarations.
-- Do NOT create files.
-- Do NOT delete files.
-- Do NOT update imports unless strictly required by a visibility change.
-- Only modify visibility modifiers in the allowed files.
-- Make package-private classes, constructors, methods, or fields accessible only when needed for moved classes in another package to compile.
-- For package-private methods that are inherited or overridden, prefer protected instead of public.
+# UPDATE_VISIBILITY OPS
+If the block contains UPDATE_VISIBILITY together with MOVE_CLASS:
+- First apply MOVE_CLASS.
+- Then update visibility in the final moved class and in related allowed files.
+- Do NOT create extra files beyond the moved class file.
+- Do NOT delete files other than the old source file from MOVE_CLASS.
+- Only modify visibility modifiers when needed for compilation after the move.
+- Make package-private classes, constructors, methods, or fields accessible only when needed.
+- Prefer protected for inherited or overridden methods.
+- Prefer public for top-level classes or members that must be accessed from another package and are not inheritance hooks.
 - If a superclass method is widened to protected, also update overriding methods in allowed files to protected when needed.
-- Do not make inherited/overridden methods public unless explicitly required.
+- Do not change method bodies.
+- Do not rename anything.
+- Preserve behavior.
 
-# MOVE_CLASS BLOCKS
+# MOVE_CLASS OPS
 If the block contains MOVE_CLASS:
 - Move exactly the class specified in the MOVE_CLASS operation.
 - Change the package declaration of the moved class to the destination package.
@@ -45,7 +47,7 @@ If the block contains MOVE_CLASS:
 - When moving a class to a subpackage, add explicit imports for all referenced types that remain in the original package.
 - Do not rely on same-package visibility after moving the class.
 
-# CREATE_PACKAGE
+# CREATE_PACKAGE OPS
 If CREATE_PACKAGE appears:
 - Do not create an empty file just to represent the package.
 - The package is created implicitly by writing the moved class to the destination directory.

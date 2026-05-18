@@ -326,8 +326,10 @@ def enrich_plan_with_visibility_ops(plan: dict, state: State) -> dict:
         fqn = Fqn(target_name)._java_file_to_fqn(f, target_source_root)
         class_to_file[fqn] = f
 
-    # Build relation map in both directions:
-    # moved class -> related internal classes
+    # Build relation map in both directions.
+    # This captures:
+    # - moved class depends on old-package classes
+    # - old-package classes depend on moved class
     related_by_class: dict[str, set[str]] = {}
 
     for src, dst in internal_deps:
@@ -345,21 +347,30 @@ def enrich_plan_with_visibility_ops(plan: dict, state: State) -> dict:
 
         move_op = None
         moved_old_fqn = None
+        moved_new_fqn = None
 
         for op in ops:
             if op.get("op") == "MOVE_CLASS":
                 inputs = op.get("inputs") or []
+                outputs = op.get("outputs") or []
+
                 if inputs:
                     move_op = op
                     moved_old_fqn = inputs[0]
-                    break
 
-        if not move_op or not moved_old_fqn:
+                if outputs:
+                    moved_new_fqn = outputs[0]
+
+                break
+
+        # If this block has no MOVE_CLASS, keep it unchanged.
+        if not move_op or not moved_old_fqn or not moved_new_fqn:
             block["id"] = next_id
             enriched_blocks.append(block)
             next_id += 1
             continue
 
+        # Related classes that remain in the original package.
         related_classes = sorted(
             cls
             for cls in related_by_class.get(moved_old_fqn, set())
@@ -367,58 +378,57 @@ def enrich_plan_with_visibility_ops(plan: dict, state: State) -> dict:
             and cls not in selected_cluster
         )
 
-        visibility_classes = [moved_old_fqn] + related_classes
+        # The moved class should be prepared using its NEW FQN,
+        # because executor will edit the final moved file.
+        visibility_classes = [moved_new_fqn] + [
+            cls
+            for cls in related_classes
+            if cls not in prepared_visibility_classes
+        ]
 
         visibility_classes = [
             cls
             for cls in visibility_classes
-            if cls in class_to_file
-            and cls not in prepared_visibility_classes
+            if cls not in prepared_visibility_classes
         ]
 
-        if visibility_classes:
-            visibility_files = sorted({
-                class_to_file[cls]
-                for cls in visibility_classes
-                if cls in class_to_file
-            })
-
-            enriched_blocks.append({
-                "id": next_id,
-                "goal": f"Prepare visibility before moving {moved_old_fqn}.",
-                "files": visibility_files,
-                "ops": [
-                    {
-                        "op": "UPDATE_VISIBILITY",
-                        "inputs": visibility_classes,
-                        "outputs": [],
-                        "details": (
-                            "Update only the minimum required visibility in these "
-                            "target-package classes so moved cluster classes can "
-                            "compile from the new package."
-                        ),
-                        "risk": "medium",
-                        "api_change": True,
-                    }
-                ],
-            })
-
-            next_id += 1
-            prepared_visibility_classes.update(visibility_classes)
-
-        # Keep only CREATE_PACKAGE and MOVE_CLASS in the move block.
+        # Keep only CREATE_PACKAGE and MOVE_CLASS from the original block.
         move_block_ops = [
-            op for op in ops
+            op
+            for op in ops
             if op.get("op") in {"CREATE_PACKAGE", "MOVE_CLASS"}
         ]
 
+        # Add UPDATE_VISIBILITY inside the SAME block, after MOVE_CLASS.
+        if visibility_classes:
+            move_block_ops.append({
+                "op": "UPDATE_VISIBILITY",
+                "inputs": visibility_classes,
+                "outputs": [],
+                "details": (
+                    "After moving the class, update only the minimum required "
+                    "visibility in the moved class and related allowed files so "
+                    "the project can compile from the new package."
+                ),
+                "risk": "medium",
+                "api_change": True,
+            })
+
+            prepared_visibility_classes.update(visibility_classes)
+
         move_block_files = list(block.get("files") or [])
 
-        # Guarantee the moved source file is present.
+        # Guarantee the old source file is available to the executor.
         if moved_old_fqn in class_to_file:
             move_block_files.append(class_to_file[moved_old_fqn])
 
+        # Add related old-package files that may need visibility changes.
+        for cls in related_classes:
+            if cls in class_to_file:
+                move_block_files.append(class_to_file[cls])
+
         block["id"] = next_id
+        block["goal"] = block.get("goal") or f"Move {moved_old_fqn} and update visibility."
         block["files"] = sorted(set(move_block_files))
         block["ops"] = move_block_ops
 
@@ -1643,10 +1653,33 @@ def openrewrite_node(state: State) -> State:
     rewrite_path = plan_dir / f"rewrite.block.{block_idx}.yml"
     rewrite_path.write_text(rewrite_yml, encoding="utf-8")
 
-    cmd = [
+    '''cmd = [
         "mvn",
         "-U",
         "org.openrewrite.maven:rewrite-maven-plugin:run",
+        f"-Drewrite.configLocation={rewrite_path}",
+        f"-Drewrite.activeRecipes={recipe_name}",
+    ]'''
+
+    cmd = [
+        "mvn",
+        "-U",
+        "-Dmaven.test.skip=true",
+        "-DskipTests",
+        "-DskipITs",
+        "-Djapicmp.skip=true",
+        "-Drat.skip=true",
+        "-Dcheckstyle.skip=true",
+        "-Dspotbugs.skip=true",
+        "-Dpmd.skip=true",
+        "-Danimal.sniffer.skip=true",
+        "-Dforbiddenapis.skip=true",
+        "-Denforcer.skip=true",
+        "-Dlicense.skip=true",
+        "-Dskip.npm=true",
+        "-Dskip.yarn=true",
+        #"org.openrewrite.maven:rewrite-maven-plugin:run",
+        "org.openrewrite.maven:rewrite-maven-plugin:runNoFork",
         f"-Drewrite.configLocation={rewrite_path}",
         f"-Drewrite.activeRecipes={recipe_name}",
     ]
