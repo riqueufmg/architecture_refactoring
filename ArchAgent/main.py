@@ -1101,6 +1101,19 @@ def lock_workspace_node(state: State) -> State:
     state["msg"] = state.get("msg", "") + f" | workspace locked @{state['workspace_commit'][:8]}"
     return state
 
+def after_lock_workspace(state: State) -> str:
+    ops = state.get("staged_block_ops") or []
+
+    has_move_class = any(
+        (op.get("op") or "").strip() == "MOVE_CLASS"
+        for op in ops
+    )
+
+    if has_move_class:
+        return "openrewrite"
+
+    return "executor"
+
 def executor_node(state: State) -> State:
 
     # load log files
@@ -1422,30 +1435,11 @@ def apply_files_node(state: State) -> State:
 
     return state
 
-'''def after_apply_files(state: State) -> str:
-    if state.get("apply_ok"):
-        return "compile"
-
-    # decide based on current block_attempt
-    if state.get("block_attempt", 0) < state.get("max_block_attempts", 5):
-        return "retry_executor"
-
-    return "rollback"'''
-
 def after_apply_files(state: State) -> str:
     if not state.get("apply_ok"):
         if state.get("block_attempt", 0) < state.get("max_block_attempts", 5):
             return "retry_executor"
         return "rollback"
-
-    ops = state.get("staged_block_ops") or []
-    has_move_class = any(
-        (op.get("op") or "").strip() == "MOVE_CLASS"
-        for op in ops
-    )
-
-    if has_move_class:
-        return "openrewrite"
 
     return "compile"
 
@@ -1722,16 +1716,10 @@ def openrewrite_node(state: State) -> State:
     state["msg"] = state.get("msg", "") + " | openrewrite FAIL"
     return state
 
-#TODO: uncomment after tests
-'''def after_openrewrite(state: State) -> str:
-    if state.get("openrewrite_ok"):
-        return "compile"
-    return "rollback"'''
-
 def after_openrewrite(state: State) -> str:
     plan_dir = _get_plan_dir(state)
 
-    route = "compile" if state.get("openrewrite_ok") else "rollback"
+    route = "executor" if state.get("openrewrite_ok") else "rollback"
 
     (plan_dir / f"after_openrewrite.block.{state.get('block_idx', 0)}.txt").write_text(
         (
@@ -2257,7 +2245,26 @@ def build_graph():
     )
     
     g.add_edge("resolve_files", "lock_workspace")
-    g.add_edge("lock_workspace", "executor")
+    
+    g.add_edge("resolve_files", "lock_workspace")
+
+    g.add_conditional_edges(
+        "lock_workspace",
+        after_lock_workspace,
+        {
+            "openrewrite": "openrewrite",
+            "executor": "executor",
+        },
+    )
+
+    g.add_conditional_edges(
+        "openrewrite",
+        after_openrewrite,
+        {
+            "executor": "executor",
+            "rollback": "rollback",
+        },
+    )
 
     g.add_conditional_edges(
         "executor",
@@ -2275,18 +2282,8 @@ def build_graph():
         "apply_files",
         after_apply_files,
         {
-            "openrewrite": "openrewrite",
             "compile": "compile",
             "retry_executor": "retry_executor",
-            "rollback": "rollback",
-        },
-    )
-
-    g.add_conditional_edges(
-        "openrewrite",
-        after_openrewrite,
-        {
-            "compile": "compile",
             "rollback": "rollback",
         },
     )
