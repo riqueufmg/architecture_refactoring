@@ -17,18 +17,34 @@ Choose exactly ONE cohesive cluster of classes from the target package.
 
 Then generate a refactoring plan where:
 - all classes in the cluster move to the same new subpackage;
-- each block moves exactly ONE class;
-- blocks are ordered from safest to riskiest.
+- the plan contains exactly ONE block;
+- that block moves all classes in the selected cluster together;
+- the block contains 2 to 10 MOVE_CLASS operations.
 
-# CLUSTER SELECTION RULES
-- Prefer medium clusters: 5 to 8 classes.
-- Avoid small clusters: less than 5 classes.
-- Prefer cohesive helper/leaf classes.
-- Avoid highly central classes, unless unavoidable.
-- If class A depends on class B inside the target package, prefer including B in the same cluster.
-- The selected cluster should minimize package-private breakage risk.
-- Avoid heterogeneous utility clusters.
-- All classes in the cluster should have strong cohesion.
+# CLUSTER MOVEMENT STRATEGY
+
+For God Component refactoring, each block must move one cohesive cluster, not a single isolated class.
+
+A cluster must contain 2 to 4 classes.
+
+All classes in the selected cluster must be moved to the same destination package.
+
+Prefer clusters whose classes have strong internal relationships and many package-private interactions with each other.
+
+Avoid moving highly central parser/state-machine classes alone.
+
+Avoid selecting clusters that would require exposing many package-private members from classes that remain in the original package.
+
+Each block must contain:
+- optionally one CREATE_PACKAGE operation;
+- two to four MOVE_CLASS operations;
+- no UPDATE_VISIBILITY operation. UPDATE_VISIBILITY will be added automatically later.
+
+Do not create one block per class.
+
+Do not move all package classes in one block.
+
+Prefer small cohesive clusters that can compile after limited visibility updates.
 
 # PACKAGE RULES
 - Move classes only from the TARGET PACKAGE to a subpackage of the TARGET PACKAGE.
@@ -38,10 +54,14 @@ Then generate a refactoring plan where:
 - API changes are allowed.
 
 # BLOCK RULES
-- Each block must contain exactly one MOVE_CLASS operation.
-- Each block may include CREATE_PACKAGE only in the first block.
-- Each block must include the original file of the moved class.
-- Each block must include the destination FQN of the moved class.
+- The plan must contain exactly ONE block.
+- This single block represents the whole selected cluster.
+- The block must contain 2 to 4 MOVE_CLASS operations.
+- All MOVE_CLASS operations must move classes to the same destination package.
+- The block may include one CREATE_PACKAGE operation before the MOVE_CLASS operations.
+- The block files list must include the original source file path of every moved class.
+- Do not create one block per class.
+- Do not split the selected cluster across multiple blocks.
 - Do not update external files in the plan; OpenRewrite will handle references/imports later.
 - The executor will handle minimal package-private visibility changes in related internal files.
 

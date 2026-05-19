@@ -318,18 +318,22 @@ def enrich_plan_with_visibility_ops(plan: dict, state: State) -> dict:
     target_files = state.get("target_files") or []
     target_source_root = state.get("target_source_root") or ""
     target_name = state.get("target_name") or ""
-    selected_cluster = set(plan.get("selected_cluster") or [])
 
-    # FQN -> file path
-    class_to_file = {}
+    # FQN -> current repository-relative file path
+    class_to_file: dict[str, str] = {}
     for f in target_files:
         fqn = Fqn(target_name)._java_file_to_fqn(f, target_source_root)
         class_to_file[fqn] = f
 
+    def fqn_to_java_path(fqn: str) -> str:
+        return str(
+            Path(target_source_root)
+            / Path(*fqn.split("."))
+        ) + ".java"
+
     # Build relation map in both directions.
-    # This captures:
-    # - moved class depends on old-package classes
-    # - old-package classes depend on moved class
+    # This is used to find classes that are still in the original package
+    # but have dependencies with moved classes.
     related_by_class: dict[str, set[str]] = {}
 
     for src, dst in internal_deps:
@@ -338,99 +342,109 @@ def enrich_plan_with_visibility_ops(plan: dict, state: State) -> dict:
 
     original_blocks = plan.get("blocks") or []
     enriched_blocks = []
-
-    prepared_visibility_classes: set[str] = set()
     next_id = 1
 
     for block in original_blocks:
         ops = block.get("ops") or []
 
-        move_op = None
-        moved_old_fqn = None
-        moved_new_fqn = None
+        move_ops = [
+            op for op in ops
+            if (op.get("op") or "").strip() == "MOVE_CLASS"
+        ]
 
-        for op in ops:
-            if op.get("op") == "MOVE_CLASS":
-                inputs = op.get("inputs") or []
-                outputs = op.get("outputs") or []
-
-                if inputs:
-                    move_op = op
-                    moved_old_fqn = inputs[0]
-
-                if outputs:
-                    moved_new_fqn = outputs[0]
-
-                break
-
-        # If this block has no MOVE_CLASS, keep it unchanged.
-        if not move_op or not moved_old_fqn or not moved_new_fqn:
+        # If there is no MOVE_CLASS, keep block unchanged.
+        if not move_ops:
             block["id"] = next_id
             enriched_blocks.append(block)
             next_id += 1
             continue
 
-        # Related classes that remain in the original package.
-        related_classes = sorted(
-            cls
-            for cls in related_by_class.get(moved_old_fqn, set())
-            if cls in class_to_file
-            and cls not in selected_cluster
-        )
+        moved_old_fqns: list[str] = []
+        moved_new_fqns: list[str] = []
+        old_to_new: dict[str, str] = {}
 
-        # The moved class should be prepared using its NEW FQN,
-        # because executor will edit the final moved file.
-        visibility_classes = [moved_new_fqn] + [
-            cls
-            for cls in related_classes
-            if cls not in prepared_visibility_classes
+        for op in move_ops:
+            inputs = op.get("inputs") or []
+            outputs = op.get("outputs") or []
+
+            if not inputs or not outputs:
+                continue
+
+            old_fqn = inputs[0]
+            new_fqn = outputs[0]
+
+            moved_old_fqns.append(old_fqn)
+            moved_new_fqns.append(new_fqn)
+            old_to_new[old_fqn] = new_fqn
+
+        moved_old_set = set(moved_old_fqns)
+        moved_new_set = set(moved_new_fqns)
+
+        if not moved_old_fqns:
+            block["id"] = next_id
+            enriched_blocks.append(block)
+            next_id += 1
+            continue
+
+        # Classes that remain in the original package and are related to moved classes.
+        # These may need visibility changes because moved classes will access them
+        # from another package, or because they will access moved classes after OpenRewrite.
+        related_remaining_classes: set[str] = set()
+
+        for old_fqn in moved_old_fqns:
+            for related in related_by_class.get(old_fqn, set()):
+                if related in class_to_file and related not in moved_old_set:
+                    related_remaining_classes.add(related)
+
+        # Keep CREATE_PACKAGE and all MOVE_CLASS ops.
+        new_ops = [
+            op for op in ops
+            if (op.get("op") or "").strip() in {"CREATE_PACKAGE", "MOVE_CLASS"}
         ]
 
-        visibility_classes = [
-            cls
-            for cls in visibility_classes
-            if cls not in prepared_visibility_classes
-        ]
+        # UPDATE_VISIBILITY now belongs to the same block as MOVE_CLASS.
+        # It includes:
+        # - moved classes using their NEW FQN;
+        # - related remaining classes using their original FQN.
+        visibility_inputs = sorted(moved_new_set | related_remaining_classes)
 
-        # Keep only CREATE_PACKAGE and MOVE_CLASS from the original block.
-        move_block_ops = [
-            op
-            for op in ops
-            if op.get("op") in {"CREATE_PACKAGE", "MOVE_CLASS"}
-        ]
+        new_ops.append({
+            "op": "UPDATE_VISIBILITY",
+            "inputs": visibility_inputs,
+            "outputs": [],
+            "details": (
+                "After moving the whole cluster to the destination package, "
+                "update only the minimum required visibility in moved classes "
+                "and related remaining classes so the project can compile. "
+                "Do not change behavior. Do not move additional classes."
+            ),
+            "risk": "medium",
+            "api_change": True,
+        })
 
-        # Add UPDATE_VISIBILITY inside the SAME block, after MOVE_CLASS.
-        if visibility_classes:
-            move_block_ops.append({
-                "op": "UPDATE_VISIBILITY",
-                "inputs": visibility_classes,
-                "outputs": [],
-                "details": (
-                    "After moving the class, update only the minimum required "
-                    "visibility in the moved class and related allowed files so "
-                    "the project can compile from the new package."
-                ),
-                "risk": "medium",
-                "api_change": True,
-            })
+        new_files = set(block.get("files") or [])
 
-            prepared_visibility_classes.update(visibility_classes)
+        # Add old source files of all moved classes.
+        for old_fqn in moved_old_fqns:
+            if old_fqn in class_to_file:
+                new_files.add(class_to_file[old_fqn])
 
-        move_block_files = list(block.get("files") or [])
+        # Add future output paths for all moved classes.
+        # These paths must be allowed because executor will write them.
+        for new_fqn in moved_new_fqns:
+            new_files.add(fqn_to_java_path(new_fqn))
 
-        # Guarantee the old source file is available to the executor.
-        if moved_old_fqn in class_to_file:
-            move_block_files.append(class_to_file[moved_old_fqn])
-
-        # Add related old-package files that may need visibility changes.
-        for cls in related_classes:
-            if cls in class_to_file:
-                move_block_files.append(class_to_file[cls])
+        # Add related remaining files that may need visibility changes.
+        for related in related_remaining_classes:
+            if related in class_to_file:
+                new_files.add(class_to_file[related])
 
         block["id"] = next_id
-        block["goal"] = block.get("goal") or f"Move {moved_old_fqn} and update visibility."
-        block["files"] = sorted(set(move_block_files))
-        block["ops"] = move_block_ops
+        block["goal"] = block.get("goal") or (
+            "Move cohesive cluster: " + ", ".join(moved_old_fqns)
+        )
+        block["files"] = sorted(new_files)
+        block["ops"] = new_ops
 
         enriched_blocks.append(block)
         next_id += 1

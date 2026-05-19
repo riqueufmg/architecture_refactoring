@@ -1,6 +1,6 @@
 project_name: jsoup
 
-repo_path: /data/henrique/langchain_prototype/ArchAgent/data/tests/jsoup
+repo_path: data/repositories/jsoup
 
 smell: GC
 smell_name: God Component

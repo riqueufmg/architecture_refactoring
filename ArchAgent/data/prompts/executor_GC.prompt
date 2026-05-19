@@ -19,33 +19,42 @@ Produce the FINAL full contents of files after applying the staged refactoring b
 - If you cannot comply perfectly, output: {}.
 
 # UPDATE_VISIBILITY OPS
+
 If the block contains UPDATE_VISIBILITY together with MOVE_CLASS:
-- First apply MOVE_CLASS.
-- Then update visibility in the final moved class and in related allowed files.
-- Do NOT create extra files beyond the moved class file.
-- Do NOT delete files other than the old source file from MOVE_CLASS.
-- Only modify visibility modifiers when needed for compilation after the move.
-- Make package-private classes, constructors, methods, or fields accessible only when needed.
-- Prefer protected for inherited or overridden methods.
-- Prefer public for top-level classes or members that must be accessed from another package and are not inheritance hooks.
-- If a superclass method is widened to protected, also update overriding methods in allowed files to protected when needed.
+- First apply all MOVE_CLASS operations.
+- Then update visibility in:
+  - moved classes, using their final package;
+  - related allowed files that remain in the original package.
+- Only modify files listed in allowed_paths.
+- Only modify visibility modifiers when needed for compilation after moving the cluster.
+- Make package-private top-level classes public only when they must be accessed from another package.
+- Make package-private constructors, methods, fields, nested classes, nested interfaces, and nested enums public only when needed from another package.
+- Prefer protected only for inheritance hooks or overridden methods.
+- If a superclass method is widened, ensure overriding methods in allowed files are not weaker.
 - Do not change method bodies.
 - Do not rename anything.
+- Do not reorder code.
+- Do not perform unrelated refactorings.
 - Preserve behavior.
 
-# MOVE_CLASS OPS
+# MOVE_CLASS BLOCKS
+
 If the block contains MOVE_CLASS:
-- Move exactly the class specified in the MOVE_CLASS operation.
-- Change the package declaration of the moved class to the destination package.
-- Write the moved class to its new repository-relative path.
-- Delete the old source file.
-- Do NOT update external call sites. OpenRewrite will handle references/imports later.
-- Do NOT move unrelated classes.
-- Do NOT introduce facades or wrappers.
-- Preserve the full class content.
-- Adjust imports inside the moved class only when necessary for compilation.
-- When moving a class to a subpackage, add explicit imports for all referenced types that remain in the original package.
-- Do not rely on same-package visibility after moving the class.
+- The block may contain multiple MOVE_CLASS operations.
+- For each MOVE_CLASS operation, move exactly the class listed in that operation.
+- All moved classes in the block must be moved to the same destination package.
+- Do NOT move classes that are not listed in MOVE_CLASS operations.
+- For every moved class:
+  - change its package declaration to the destination package;
+  - write the complete final file to the new repository-relative path;
+  - delete the old source file;
+  - preserve the full class content;
+  - do not rename the class;
+  - do not change behavior.
+- Adjust imports inside moved classes as needed.
+- If moved classes reference each other, prefer same-package references in the new package.
+- Do not introduce facades, wrappers, adapters, or compatibility classes.
+- Do not update external call sites. OpenRewrite handles external references before this executor runs.
 
 # CREATE_PACKAGE OPS
 If CREATE_PACKAGE appears:
