@@ -184,32 +184,53 @@ def _get_plan_dir(state: State) -> Path:
 
 def _designite_smell_present(
     designite_dir: Path,
-    target_class_fqn: str,
+    target_name: str,
     smell_name: str,
-    csv_name: str = "DesignSmells.csv"
+    csv_name: str = "DesignSmells.csv",
+    target_type: str = "class",
 ) -> bool:
-
     csv_path = designite_dir / csv_name
     if not csv_path.exists():
         return False
 
-    target_fqn = target_class_fqn.strip()
+    target = (target_name or "").strip()
+    smell = (smell_name or "").strip()
+
+    if not target or not smell:
+        return False
 
     with csv_path.open("r", encoding="utf-8", errors="replace", newline="") as f:
         reader = csv.DictReader(f)
+
         for row in reader:
+            row_smell = (row.get("Smell") or "").strip()
+            if row_smell != smell:
+                continue
+
             pkg = (row.get("Package") or "").strip()
             cls = (row.get("Class") or "").strip()
 
-            if not pkg or not cls:
-                continue
+            if target_type == "package":
+                # ArchitectureSmells.csv usually identifies package-level smells by Package.
+                if pkg == target:
+                    return True
 
-            row_fqn = f"{pkg}.{cls}"
+                # Defensive fallback for possible alternative Designite column names.
+                component = (
+                    row.get("Component")
+                    or row.get("Package Name")
+                    or row.get("Element")
+                    or ""
+                ).strip()
 
-            #print(row_fqn, target_fqn, row.get("Smell"), smell_name)
+                if component == target:
+                    return True
 
-            if row_fqn == target_fqn and (row.get("Smell") or "").strip() == smell_name:
-                return True
+            else:
+                if pkg and cls:
+                    row_fqn = f"{pkg}.{cls}"
+                    if row_fqn == target:
+                        return True
 
     return False
 
@@ -1926,11 +1947,19 @@ def designite_node(state: State) -> State:
         out_dir, cmd = _run_designite(repo_path, analysis_out, designite_jar)
 
         # check if smell was removed
+        target_type = _get_target_type(state)
+
+        if target_type == "package":
+            designite_target = state.get("target_name", "")
+        else:
+            designite_target = state.get("target_class_fqn", "")
+
         present = _designite_smell_present(
             designite_dir=out_dir,
-            target_class_fqn=state.get("target_class_fqn", ""),
+            target_name=designite_target,
             smell_name=state.get("designite_smell_name", state.get("smell_type", "")),
             csv_name=state.get("designite_smells_csv", "DesignSmells.csv"),
+            target_type=target_type,
         )
         state["smell_still_present"] = bool(present)
 
@@ -1945,6 +1974,7 @@ def designite_node(state: State) -> State:
 
         # update state
         state["designite_ok"] = True
+        state["rollback_reason"] = ""
         state["msg"] = state.get("msg", "") + " | designite done"
 
         # persist command
@@ -2022,9 +2052,24 @@ def smell_quality_check_node(state: State) -> State:
     # get plan
     refactoring_plan = json.dumps(state.get("plan") or {}, indent=2)
 
-    # get target class (code)
-    target_file = state.get("target_file", "")
-    _, refactoring_code = _read_target_file(repo_path, target_file)
+    target_type = _get_target_type(state)
+
+    if target_type == "class":
+        target_file = state.get("target_file", "")
+        _, refactoring_code = _read_target_file(repo_path, target_file)
+    else:
+        refactoring_code = json.dumps(
+            {
+                "target_type": "package",
+                "target_name": state.get("target_name", ""),
+                "target_files_count": len(state.get("target_files") or []),
+                "target_files": state.get("target_files") or [],
+                "internal_deps": state.get("internal_deps") or [],
+                "incoming_deps": state.get("incoming_deps") or [],
+                "outgoing_deps": state.get("outgoing_deps") or [],
+            },
+            indent=2,
+        )
 
     # reder the prompt
     rendered = (
@@ -2092,6 +2137,10 @@ def prepare_replan_node(state: State) -> State:
 
     old_rollback_reason = state.get("rollback_reason", "")
     old_replan_trigger = state.get("replan_trigger", "")
+
+    if old_replan_trigger == "smell_persist_keep_progress":
+        old_rollback_reason = ""
+
     last_error = state.get("executor_feedback", "")
 
     # new plan must start from block 0
@@ -2163,7 +2212,7 @@ def prepare_replan_node(state: State) -> State:
         planner_input = json.loads(state["planner_input_json"])
         planner_input.update({
             "previous_plan": previous_plan,
-            "replan_reason": old_rollback_reason or old_replan_trigger,
+            "replan_reason": old_replan_trigger or old_rollback_reason,
             "last_error": last_error,
             "smell_persist_analysis": state.get("smell_quality_analysis", ""),
         })
@@ -2257,8 +2306,6 @@ def build_graph():
             "designite": "designite",
         },
     )
-    
-    g.add_edge("resolve_files", "lock_workspace")
     
     g.add_edge("resolve_files", "lock_workspace")
 

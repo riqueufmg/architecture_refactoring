@@ -1,0 +1,12 @@
+2026-05-20T14:42:08.948743Z ERROR codex_core::tools::router: error=apply_patch verification failed: Failed to find expected lines in /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/main/java/org/jsoup/nodes/internal/Printer.java:
+            if (preserveWhitespace && el.tag.is(Tag.PreserveWhitespace)) {
+                for (Element parent = el.parent(); parent != null; parent = parent.parent()) {
+                    if (parent.tag().preserveWhitespace()) return; // keep
+                }
+2026-05-20T14:43:40.307649Z ERROR codex_core::tools::router: error=apply_patch verification failed: Failed to find expected lines in /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/main/java/org/jsoup/nodes/internal/EntitiesData.java:
+class EntitiesData {
+    static final String xmlPoints;
+    static final String basePoints;
+    static final String fullPoints;
+    static final String nameKeys;
+    static final String codeVals;

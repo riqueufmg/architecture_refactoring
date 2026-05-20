@@ -1,0 +1,6 @@
+2026-05-20T14:30:57.903320Z ERROR codex_core::tools::router: error=apply_patch verification failed: Failed to find expected lines in /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/main/java/org/jsoup/nodes/Element.java:
+import org.jsoup.internal.StringUtil;
+import org.jsoup.internal.Normalizer;
+import org.jsoup.helper.Validate;
+import org.jsoup.parser.ParseSettings;
+import org.jsoup.parser.Parser;
