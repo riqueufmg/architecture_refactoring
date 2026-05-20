@@ -1,18 +1,17 @@
 import argparse
 import csv
 import dotenv
+import subprocess
 import json
 import os
-import re
 import shutil
-import subprocess
 import uuid
 
 from collections import defaultdict, deque
 from datetime import datetime
 from pathlib import Path
 from pprint import pprint
-from typing import TypedDict, Tuple, Dict, List, Any
+from typing import Any, Dict, List, Tuple, TypedDict
 import xml.etree.ElementTree as ET
 
 from langchain_openai import ChatOpenAI
@@ -23,157 +22,38 @@ from util.Fqn import Fqn # check if FQN exists and return the PATH for it
 from util.FileSystem import FileSystem
 from util.Dependencies import Dependencies
 
+from util.subprocess_utils import (
+    _run,
+    _tail
+) 
+
+from util.json_utils import (
+    _extract_json_object_only,
+    _load_meta_or_init
+)
+
+from util.path_utils import (
+    _is_safe_repo_rel_path,
+    _validate_allowed_paths,
+    _infer_source_root_from_target,
+    _java_fqn_to_path,
+    _extract_fqn_from_java,
+    _to_repo_rel,
+    _read_target_file,
+    _infer_target_type_from_name,
+)
+
 from State import State #langgraph state class
 
 from tools.context_builder import extract_observed_external_calls
 
 ## Helper functions
 
-# execute a prompt command
-def _run(cmd: list[str], cwd: Path, env: dict | None = None) -> subprocess.CompletedProcess:
-    return subprocess.run(
-        cmd,
-        cwd=str(cwd),
-        env=env,
-        capture_output=True,
-        text=True,
-    )
-
-# function to extract JSON from the plan
-def _extract_json_object_only(s: str) -> str:
-    s = (s or "").strip()
-    if not s:
-        return s
-
-    if s.startswith("{") and s.endswith("}"):
-        return s
-
-    i = s.find("{")
-    j = s.rfind("}")
-    if i != -1 and j != -1 and j > i:
-        return s[i : j + 1].strip()
-
-    return s
-
-# function to validate the path
-def _is_safe_repo_rel_path(p: str) -> bool:
-
-    # if path is empty or null
-    if not p or "\x00" in p:
-        return False
-
-    # if p is an absolute path
-    pp = Path(p)
-    if pp.is_absolute():
-        return False
-
-    # to avoid DOS path
-    if ":" in p.split("/")[0]:  # ex: C:\
-        return False
-    
-    # if use return in the path
-    parts = pp.as_posix().split("/")
-    if any(part == ".." for part in parts):
-        return False
-    
-    # if valid path
-    return True
-
-def _validate_allowed_paths(rel_paths: list[str], allowed: set[str]) -> tuple[bool, str]:
-    for rp in rel_paths:
-        if not _is_safe_repo_rel_path(rp):
-            return False, f"unsafe path: {rp}"
-        if rp not in allowed:
-            return False, f"path not in allowed_paths: {rp}"
-    return True, ""
-
-# load meta,json file
-def _load_meta_or_init(meta_path: Path, repo_path: Path, base_commit: str | None) -> dict:
-    if meta_path.exists():
-        try:
-            return json.loads(meta_path.read_text(encoding="utf-8"))
-        except Exception:
-            pass
-    return {"repo_path": str(repo_path), "base_commit": base_commit}
-
-# ex. receive src/main/java/org/jsoup/Jsoup.java, return src/main/java
-def _infer_source_root_from_target(repo_path: Path, target_rel: str, target_fqn: str) -> str:
-    # target package path from FQN
-    pkg_parts = target_fqn.split(".")[:-1]          # ['org','jsoup']
-    pkg_path = "/".join(pkg_parts)                  # 'org/jsoup'
-
-    tr = Path(target_rel).as_posix()
-
-    # remove trailing '/org/jsoup/Jsoup.java' from the target path
-    suffix = f"{pkg_path}/{target_fqn.split('.')[-1]}.java"
-    if tr.endswith(suffix):
-        src_root = tr[: -len(suffix)].rstrip("/")
-        if src_root:
-            return src_root
-
-    # fallback: go up N dirs (package depth + 1 file)
-    p = Path(tr)
-    up = len(pkg_parts) + 1
-    for _ in range(up):
-        p = p.parent
-    return p.as_posix()
-
-def _java_fqn_to_path(repo_path: Path, class_fqn: str, source_root_rel: str) -> str:
-    rel = Path(source_root_rel) / Path(class_fqn.replace(".", "/") + ".java")
-    return str((repo_path / rel).resolve())
-
-def _extract_fqn_from_java(code: str, filename: str) -> str:
-    m = re.search(r'^\s*package\s+([a-zA-Z0-9_.]+)\s*;', code, re.MULTILINE)
-    pkg = m.group(1) if m else ""
-    cls = Path(filename).stem
-    return f"{pkg}.{cls}" if pkg else cls
-
-def _tail(s: str, n: int = 40) -> str:
-    lines = (s or "").splitlines()
-    return "\n".join(lines[-n:]).strip()
-
 def _git_current_commit(repo_path: Path) -> str:
     p = _run(["git", "rev-parse", "HEAD"], cwd=repo_path)
     if p.returncode != 0:
         raise RuntimeError("git rev-parse HEAD failed:\n" + _tail(p.stderr))
     return p.stdout.strip()
-
-def _to_repo_rel(repo_path: Path, p: str) -> str:
-    pp = Path(p)
-    if pp.is_absolute():
-        try:
-            return str(pp.resolve().relative_to(repo_path))
-        except Exception:
-            return str(pp.as_posix()).lstrip("/")
-    return pp.as_posix()
-
-## get target file/class
-def _read_target_file(repo_path: Path, target_file: str) -> tuple[str, str]:
-
-    ### check if target file is empty
-    if not target_file or "\x00" in target_file:
-        raise RuntimeError("target_file is empty/invalid")
-
-    tf = Path(target_file)
-
-    # treat if the path don't have data/repositories/...
-    if tf.is_absolute():
-        abs_p = tf.resolve()
-    else:
-        abs_p = (repo_path / tf).resolve()
-
-    # must be inside repo
-    if repo_path != abs_p and repo_path not in abs_p.parents:
-        raise RuntimeError(f"target_file is outside repo: {abs_p}")
-
-    # convert to repo-relative (for planner and logging)
-    rel = str(abs_p.relative_to(repo_path)).replace("\\", "/")
-
-    if not abs_p.exists() or not abs_p.is_file():
-        raise RuntimeError(f"target_file does not exist or is not a file: {rel}")
-
-    code = abs_p.read_text(encoding="utf-8", errors="replace") # get file content
-    return rel, code # return relative path and file content
 
 def _get_plan_dir(state: State) -> Path:
     run_dir = Path(state["run_dir"])
@@ -258,26 +138,7 @@ def _resolve_target_scope(state: State) -> dict:
         "target_source_root": (state.get("target_source_root") or "").strip(),
     }
 
-# args: read target argument and define if it is a package or class
-def _infer_target_type_from_name(target_name: str) -> str:
-    name = (target_name or "").strip()
-    if not name:
-        raise ValueError("target_name is empty")
-
-    last = name.split(".")[-1]
-    if last[:1].isupper():
-        return "class"
-    return "package"
-
 def _run_build(repo_path: Path, tmp_dir: Path) -> subprocess.CompletedProcess:
-    '''cmd = ["mvn", "-q",
-       "-DskipTests",
-       "-Drat.skip=true",
-       "-Dcheckstyle.skip=true",
-       "-Dspotbugs.skip=true",
-       "-Dpmd.skip=true",
-       "-DskipITs",
-       "clean", "verify"]'''
 
     cmd = [
         "mvn", "-q",
@@ -308,12 +169,6 @@ def _run_designite(
     out_dir.mkdir(parents=True, exist_ok=True)
 
     java22 = "/usr/lib/jvm/jdk-22.0.2-oracle-x64/bin/java"
-
-    #cmd = [
-    #    "java", "-jar", str(jar_path),
-    #    "-i", str(repo_path),
-    #    "-o", str(out_dir),
-    #]
 
     cmd = [java22, "-jar", str(jar_path), "-g", "-i", str(repo_path), "-o", str(out_dir)]
 
@@ -2167,25 +2022,6 @@ def prepare_replan_node(state: State) -> State:
 
     # create new plan folder
     plan_dir = _get_plan_dir(state)
-
-    '''
-    # get target code
-    target_rel, target_code = _read_target_file(repo_path, state["target_file"])
-
-    # get old plan to pass for new prompt
-    previous_plan = state.get("plan") or {}
-
-    # input for the new plan
-    planner_input = {
-        "smell": state.get("smell_type"),
-        "target_file": target_rel,
-        "target_code": target_code,
-        "previous_plan": previous_plan,
-        "replan_reason": state.get("rollback_reason") or state.get("replan_trigger") or "",
-        "last_error": state.get("executor_feedback", ""),
-        "smell_persist_analysis": state.get("smell_quality_analysis", ""),
-    }
-    '''
 
     previous_plan = state.get("plan") or {}
     target_type = _get_target_type(state)
