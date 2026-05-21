@@ -3,7 +3,7 @@ from typing import Any
 
 import yaml
 
-
+# load configuration file with experiment attributes
 def load_config(config_path: str | Path) -> dict[str, Any]:
     path = Path(config_path)
 

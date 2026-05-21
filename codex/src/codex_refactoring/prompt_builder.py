@@ -61,3 +61,53 @@ def build_prompt(config: dict[str, Any], prompts_dir: str | Path = "prompts") ->
 # save prompt in run directory
 def save_prompt(prompt: str, output_path: str | Path) -> None:
     Path(output_path).write_text(prompt, encoding="utf-8")
+
+def read_log_tail(log_path: str | Path, max_lines: int = 160) -> str:
+    path = Path(log_path)
+
+    if not path.exists():
+        return ""
+
+    lines = path.read_text(encoding="utf-8", errors="replace").splitlines()
+    return "\n".join(lines[-max_lines:])
+
+
+def build_compile_repair_prompt(
+    config: dict[str, Any],
+    maven_log_path: str | Path,
+    prompts_dir: str | Path = "prompts",
+) -> str:
+    template_path = Path(prompts_dir) / "codex_repair_compile.md"
+    template = read_text(template_path)
+
+    values = {
+        "smell_name": str(config["smell_name"]),
+        "smell": str(config["smell"]),
+        "target_type": str(config["target_type"]),
+        "target_name": str(config["target_name"]),
+        "maven_command": format_command(config["maven_command"]),
+        "maven_log_tail": read_log_tail(maven_log_path),
+    }
+
+    return render_template(template, values)
+
+def build_continue_smell_prompt(
+    config: dict[str, Any],
+    prompts_dir: str | Path = "prompts",
+) -> str:
+    template_path = Path(prompts_dir) / "codex_continue_smell_refactoring.md"
+    template = read_text(template_path)
+
+    smell_template_path = get_smell_prompt_path(config["smell"], prompts_dir)
+    smell_guidance = read_text(smell_template_path)
+
+    values = {
+        "smell_name": str(config["smell_name"]),
+        "smell": str(config["smell"]),
+        "target_type": str(config["target_type"]),
+        "target_name": str(config["target_name"]),
+        "maven_command": format_command(config["maven_command"]),
+        "smell_specific_guidance": smell_guidance,
+    }
+
+    return render_template(template, values)

@@ -31,13 +31,23 @@ After your changes, the project must compile and pass the following validation c
 - Prefer small, behavior-preserving refactorings.
 - Do not rewrite unrelated parts of the system.
 - Do not remove public APIs unless strictly necessary.
-- Do not change tests unless required by a behavior-preserving refactoring.
+- Update tests only when required to preserve compilation and behavior after the refactoring.
 - Do not disable Maven plugins.
 - Do not edit build files to hide failures.
 - Do not suppress smell detection artificially.
 - Do not delete source files only to reduce metrics.
 - Preserve package conventions and Java style.
 - Make the minimum set of changes needed to remove the smell.
+
+# Test update rules
+
+- Update test files when they are affected by the refactoring.
+- If moved classes are referenced in tests, update package declarations, imports, fully qualified names, and call sites in the tests.
+- Do not rewrite tests unnecessarily.
+- Do not remove or weaken assertions.
+- Do not delete tests to make the build pass.
+- Do not disable tests.
+- Keep test changes limited to what is required by the refactoring.
 
 # Smell-specific guidance
 

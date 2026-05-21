@@ -1,12 +1,12 @@
 project_name: jsoup
 
-repo_path: data/repositories/jsoup
+repo_path: data/repositories/commons-io
 
 smell: GC
 smell_name: God Component
 
 target_type: package
-target_name: org.jsoup.nodes
+target_name: org.apache.commons.io.channels
 
 maven_command:
   - mvn
@@ -22,7 +22,8 @@ maven_command:
   - verify
 
 designite:
-  jar_path: /path/to/DesigniteJava.jar
+  java_path: /usr/lib/jvm/jdk-22.0.2-oracle-x64/bin/java
+  jar_path: tools/DesigniteJava2.8.3.jar
   output_dir: designite_output
 
 codex:
@@ -30,5 +31,6 @@ codex:
     - npx
     - "@openai/codex"
   model: gpt-5.3-codex
-  max_attempts: 1
+  max_attempts: 3
+  max_smell_attempts: 5
   sandbox: workspace-write
