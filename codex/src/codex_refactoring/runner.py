@@ -8,6 +8,11 @@ from codex_refactoring.designite import (
     run_designite
 )
 
+from codex_refactoring.refactoring_miner import (
+    create_temporary_final_commit,
+    run_refactoring_miner,
+)
+
 from codex_refactoring.prompt_builder import (
     build_compile_repair_prompt,
     build_continue_smell_prompt,
@@ -279,11 +284,18 @@ def run_experiment(config: dict[str, Any]) -> Path:
 
         return run_dir
 
+    smell_detection_config = config.get("smell_detection", {})
+
     smell_before = find_target_smell(
         designite_output_dir=designite_before_dir,
         smell_name=config["smell_name"],
         smell_code=config["smell"],
         target_name=config["target_name"],
+        csv_file=smell_detection_config.get("csv_file"),
+        smell_column=smell_detection_config.get("smell_column"),
+        package_column=smell_detection_config.get("package_column"),
+        class_column=smell_detection_config.get("class_column"),
+        target_column=smell_detection_config.get("target_column"),
     )
 
     status_data.update(
@@ -523,6 +535,11 @@ def run_experiment(config: dict[str, Any]) -> Path:
             smell_name=config["smell_name"],
             smell_code=config["smell"],
             target_name=config["target_name"],
+            csv_file=smell_detection_config.get("csv_file"),
+            smell_column=smell_detection_config.get("smell_column"),
+            package_column=smell_detection_config.get("package_column"),
+            class_column=smell_detection_config.get("class_column"),
+            target_column=smell_detection_config.get("target_column"),
         )
 
         smell_removed = smell_before["present"] and not final_smell_after["present"]
@@ -535,9 +552,39 @@ def run_experiment(config: dict[str, Any]) -> Path:
 
         if smell_attempt_number < max_smell_attempts:
             current_prompt = build_continue_smell_prompt(config)
+    
+    # ------------------------------------------------------------
+    # 4. Run Refactoring Miner on final valid state
+    # ------------------------------------------------------------
+    refactoring_miner_result = None
+    final_commit_info = None
+
+    refactoring_miner_config = config.get("refactoring_miner", {})
+    refactoring_miner_enabled = bool(refactoring_miner_config.get("enabled", False))
+
+    if refactoring_miner_enabled and final_maven_result is not None and final_maven_result["ok"]:
+        try:
+            final_commit_info = create_temporary_final_commit(
+                repo_path=repo_path,
+                run_name=run_dir.name,
+            )
+
+            refactoring_miner_result = run_refactoring_miner(
+                repo_path=repo_path,
+                command=refactoring_miner_config["command"],
+                start_commit=initial_commit,
+                end_commit=final_commit_info["commit"],
+                output_json_path=run_dir / "refactoring_miner.json",
+                log_path=run_dir / "refactoring_miner.log",
+            )
+        except Exception as error:
+            refactoring_miner_result = {
+                "ok": False,
+                "error": str(error),
+            }
 
     # ------------------------------------------------------------
-    # 4. Save final status and metrics
+    # 5. Save final status and metrics
     # ------------------------------------------------------------
     if final_codex_result is None or final_diff_stats is None or final_maven_result is None:
         status_data.update(
@@ -547,6 +594,22 @@ def run_experiment(config: dict[str, Any]) -> Path:
                 "compile_success": False,
                 "smell_removed": False,
                 "attempts_count": len(all_attempts),
+                
+                "final_commit": None
+                if final_commit_info is None
+                else final_commit_info["commit"],
+                "temporary_final_commit_created": None
+                if final_commit_info is None
+                else final_commit_info["created"],
+                "refactoring_miner_success": None
+                if refactoring_miner_result is None
+                else refactoring_miner_result.get("ok"),
+                "refactorings_count": None
+                if refactoring_miner_result is None
+                else refactoring_miner_result.get("refactorings_count"),
+                "refactoring_types": None
+                if refactoring_miner_result is None
+                else refactoring_miner_result.get("refactoring_types"),
             }
         )
 
@@ -565,6 +628,8 @@ def run_experiment(config: dict[str, Any]) -> Path:
             "designite_after": final_designite_after_result,
             "smell_after": final_smell_after,
             "smell_removed": False,
+            "final_commit": final_commit_info,
+            "refactoring_miner": refactoring_miner_result,
         }
 
         write_json(run_dir / "status.json", status_data)
@@ -597,6 +662,26 @@ def run_experiment(config: dict[str, Any]) -> Path:
             "attempts_count": len(all_attempts),
             "final_smell_attempt": final_smell_attempt,
             "final_compile_attempt": final_compile_attempt,
+
+            "final_commit": None
+            if final_commit_info is None
+            else final_commit_info["commit"],
+            "temporary_final_commit_created": None
+            if final_commit_info is None
+            else final_commit_info["created"],
+            "refactoring_miner_success": None
+            if refactoring_miner_result is None
+            else refactoring_miner_result.get("ok"),
+            "refactorings_count": None
+            if refactoring_miner_result is None
+            else refactoring_miner_result.get("refactorings_count"),
+            "refactoring_types": None
+            if refactoring_miner_result is None
+            else refactoring_miner_result.get("refactoring_types"),
+            "refactoring_miner_error": None
+            if refactoring_miner_result is None
+            else refactoring_miner_result.get("error"),
+
             **final_diff_stats,
         }
     )
@@ -616,6 +701,8 @@ def run_experiment(config: dict[str, Any]) -> Path:
         "designite_after": final_designite_after_result,
         "smell_after": final_smell_after,
         "smell_removed": smell_removed,
+        "final_commit": final_commit_info,
+        "refactoring_miner": refactoring_miner_result,
     }
 
     write_json(run_dir / "status.json", status_data)

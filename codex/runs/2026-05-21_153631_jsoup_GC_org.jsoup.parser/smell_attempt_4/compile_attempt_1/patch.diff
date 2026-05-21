@@ -1,0 +1,3733 @@
+diff --git a/src/main/java/org/jsoup/Connection.java b/src/main/java/org/jsoup/Connection.java
+index f15cd73d..77a4db45 100644
+--- a/src/main/java/org/jsoup/Connection.java
++++ b/src/main/java/org/jsoup/Connection.java
+@@ -2,7 +2,7 @@ package org.jsoup;
+ 
+ import org.jsoup.helper.RequestAuthenticator;
+ import org.jsoup.nodes.Document;
+-import org.jsoup.parser.Parser;
++import org.jsoup.parser.config.Parser;
+ import org.jsoup.parser.StreamParser;
+ import org.jspecify.annotations.Nullable;
+ 
+diff --git a/src/main/java/org/jsoup/Jsoup.java b/src/main/java/org/jsoup/Jsoup.java
+index 959fbe7f..f0c21d9a 100644
+--- a/src/main/java/org/jsoup/Jsoup.java
++++ b/src/main/java/org/jsoup/Jsoup.java
+@@ -4,7 +4,7 @@ import org.jsoup.helper.DataUtil;
+ import org.jsoup.helper.HttpConnection;
+ import org.jsoup.nodes.Document;
+ import org.jsoup.nodes.Element;
+-import org.jsoup.parser.Parser;
++import org.jsoup.parser.config.Parser;
+ import org.jsoup.safety.Cleaner;
+ import org.jsoup.safety.Safelist;
+ import org.jspecify.annotations.Nullable;
+diff --git a/src/main/java/org/jsoup/helper/CookieUtil.java b/src/main/java/org/jsoup/helper/CookieUtil.java
+index eecd2f55..5fbd0127 100644
+--- a/src/main/java/org/jsoup/helper/CookieUtil.java
++++ b/src/main/java/org/jsoup/helper/CookieUtil.java
+@@ -2,7 +2,7 @@ package org.jsoup.helper;
+ 
+ import org.jsoup.Connection;
+ import org.jsoup.internal.StringUtil;
+-import org.jsoup.parser.CharacterReader;
++import org.jsoup.parser.lex.CharacterReader;
+ import org.jspecify.annotations.Nullable;
+ 
+ import java.io.IOException;
+diff --git a/src/main/java/org/jsoup/helper/DataUtil.java b/src/main/java/org/jsoup/helper/DataUtil.java
+index c5c4e43f..1c696d6a 100644
+--- a/src/main/java/org/jsoup/helper/DataUtil.java
++++ b/src/main/java/org/jsoup/helper/DataUtil.java
+@@ -10,7 +10,7 @@ import org.jsoup.nodes.Document;
+ import org.jsoup.nodes.Element;
+ import org.jsoup.nodes.Node;
+ import org.jsoup.nodes.XmlDeclaration;
+-import org.jsoup.parser.Parser;
++import org.jsoup.parser.config.Parser;
+ import org.jsoup.parser.StreamParser;
+ import org.jsoup.select.Elements;
+ import org.jsoup.select.Evaluator;
+diff --git a/src/main/java/org/jsoup/helper/HttpConnection.java b/src/main/java/org/jsoup/helper/HttpConnection.java
+index ed41fd40..ff1a440d 100644
+--- a/src/main/java/org/jsoup/helper/HttpConnection.java
++++ b/src/main/java/org/jsoup/helper/HttpConnection.java
+@@ -7,7 +7,7 @@ import org.jsoup.UnsupportedMimeTypeException;
+ import org.jsoup.internal.ControllableInputStream;
+ import org.jsoup.internal.StringUtil;
+ import org.jsoup.nodes.Document;
+-import org.jsoup.parser.Parser;
++import org.jsoup.parser.config.Parser;
+ import org.jsoup.parser.StreamParser;
+ import org.jspecify.annotations.Nullable;
+ 
+diff --git a/src/main/java/org/jsoup/helper/W3CDom.java b/src/main/java/org/jsoup/helper/W3CDom.java
+index f4d2150f..81763b9d 100644
+--- a/src/main/java/org/jsoup/helper/W3CDom.java
++++ b/src/main/java/org/jsoup/helper/W3CDom.java
+@@ -4,7 +4,7 @@ import org.jsoup.internal.Normalizer;
+ import org.jsoup.internal.StringUtil;
+ import org.jsoup.nodes.Attribute;
+ import org.jsoup.parser.HtmlTreeBuilder;
+-import org.jsoup.parser.Parser;
++import org.jsoup.parser.config.Parser;
+ import org.jsoup.select.NodeVisitor;
+ import org.jsoup.select.Selector;
+ import org.w3c.dom.Comment;
+diff --git a/src/main/java/org/jsoup/nodes/Attributes.java b/src/main/java/org/jsoup/nodes/Attributes.java
+index 15f34d16..2881f7c3 100644
+--- a/src/main/java/org/jsoup/nodes/Attributes.java
++++ b/src/main/java/org/jsoup/nodes/Attributes.java
+@@ -4,7 +4,7 @@ import org.jsoup.helper.Validate;
+ import org.jsoup.internal.QuietAppendable;
+ import org.jsoup.internal.SharedConstants;
+ import org.jsoup.internal.StringUtil;
+-import org.jsoup.parser.ParseSettings;
++import org.jsoup.parser.config.ParseSettings;
+ import org.jspecify.annotations.Nullable;
+ 
+ import java.util.AbstractMap;
+diff --git a/src/main/java/org/jsoup/nodes/Comment.java b/src/main/java/org/jsoup/nodes/Comment.java
+index 7815ee69..b3e9b864 100644
+--- a/src/main/java/org/jsoup/nodes/Comment.java
++++ b/src/main/java/org/jsoup/nodes/Comment.java
+@@ -1,7 +1,7 @@
+ package org.jsoup.nodes;
+ 
+ import org.jsoup.internal.QuietAppendable;
+-import org.jsoup.parser.Parser;
++import org.jsoup.parser.config.Parser;
+ import org.jspecify.annotations.Nullable;
+ 
+ import java.util.List;
+diff --git a/src/main/java/org/jsoup/nodes/Document.java b/src/main/java/org/jsoup/nodes/Document.java
+index db25382f..f18c77ce 100644
+--- a/src/main/java/org/jsoup/nodes/Document.java
++++ b/src/main/java/org/jsoup/nodes/Document.java
+@@ -5,9 +5,9 @@ import org.jsoup.Jsoup;
+ import org.jsoup.helper.DataUtil;
+ import org.jsoup.helper.Validate;
+ import org.jsoup.internal.StringUtil;
+-import org.jsoup.parser.ParseSettings;
+-import org.jsoup.parser.Parser;
+-import org.jsoup.parser.Tag;
++import org.jsoup.parser.config.ParseSettings;
++import org.jsoup.parser.config.Parser;
++import org.jsoup.parser.tagext.Tag;
+ import org.jsoup.select.Elements;
+ import org.jsoup.select.Evaluator;
+ import org.jsoup.select.Selector;
+@@ -16,7 +16,7 @@ import org.jspecify.annotations.Nullable;
+ import java.nio.charset.Charset;
+ import java.util.List;
+ 
+-import static org.jsoup.parser.Parser.NamespaceHtml;
++import static org.jsoup.parser.config.Parser.NamespaceHtml;
+ 
+ /**
+  A HTML Document.
+diff --git a/src/main/java/org/jsoup/nodes/Element.java b/src/main/java/org/jsoup/nodes/Element.java
+index 82e2d0ff..d8bc1b4c 100644
+--- a/src/main/java/org/jsoup/nodes/Element.java
++++ b/src/main/java/org/jsoup/nodes/Element.java
+@@ -5,10 +5,10 @@ import org.jsoup.internal.Normalizer;
+ import org.jsoup.internal.QuietAppendable;
+ import org.jsoup.helper.Regex;
+ import org.jsoup.internal.StringUtil;
+-import org.jsoup.parser.ParseSettings;
+-import org.jsoup.parser.Parser;
+-import org.jsoup.parser.Tag;
+-import org.jsoup.parser.TokenQueue;
++import org.jsoup.parser.config.ParseSettings;
++import org.jsoup.parser.config.Parser;
++import org.jsoup.parser.tagext.Tag;
++import org.jsoup.parser.lex.TokenQueue;
+ import org.jsoup.select.Collector;
+ import org.jsoup.select.Elements;
+ import org.jsoup.select.Evaluator;
+@@ -37,8 +37,8 @@ import java.util.stream.Stream;
+ import static org.jsoup.internal.Normalizer.normalize;
+ import static org.jsoup.nodes.Document.OutputSettings.Syntax.xml;
+ import static org.jsoup.nodes.TextNode.lastCharIsWhitespace;
+-import static org.jsoup.parser.Parser.NamespaceHtml;
+-import static org.jsoup.parser.TokenQueue.escapeCssIdentifier;
++import static org.jsoup.parser.config.Parser.NamespaceHtml;
++import static org.jsoup.parser.lex.TokenQueue.escapeCssIdentifier;
+ import static org.jsoup.select.Selector.evaluatorOf;
+ 
+ /**
+diff --git a/src/main/java/org/jsoup/nodes/Entities.java b/src/main/java/org/jsoup/nodes/Entities.java
+index f633cb64..12ccbe1b 100644
+--- a/src/main/java/org/jsoup/nodes/Entities.java
++++ b/src/main/java/org/jsoup/nodes/Entities.java
+@@ -5,8 +5,8 @@ import org.jsoup.internal.QuietAppendable;
+ import org.jsoup.internal.StringUtil;
+ import org.jsoup.helper.Validate;
+ import org.jsoup.nodes.Document.OutputSettings;
+-import org.jsoup.parser.CharacterReader;
+-import org.jsoup.parser.Parser;
++import org.jsoup.parser.lex.CharacterReader;
++import org.jsoup.parser.config.Parser;
+ 
+ import java.nio.charset.Charset;
+ import java.nio.charset.CharsetEncoder;
+diff --git a/src/main/java/org/jsoup/nodes/FormElement.java b/src/main/java/org/jsoup/nodes/FormElement.java
+index 5ee0ce87..02a41acc 100644
+--- a/src/main/java/org/jsoup/nodes/FormElement.java
++++ b/src/main/java/org/jsoup/nodes/FormElement.java
+@@ -6,7 +6,7 @@ import org.jsoup.helper.HttpConnection;
+ import org.jsoup.helper.Validate;
+ import org.jsoup.internal.SharedConstants;
+ import org.jsoup.internal.StringUtil;
+-import org.jsoup.parser.Tag;
++import org.jsoup.parser.tagext.Tag;
+ import org.jsoup.select.Elements;
+ import org.jsoup.select.Evaluator;
+ import org.jsoup.select.Selector;
+diff --git a/src/main/java/org/jsoup/nodes/Node.java b/src/main/java/org/jsoup/nodes/Node.java
+index 497aaa93..9697cd7f 100644
+--- a/src/main/java/org/jsoup/nodes/Node.java
++++ b/src/main/java/org/jsoup/nodes/Node.java
+@@ -3,7 +3,7 @@ package org.jsoup.nodes;
+ import org.jsoup.helper.Validate;
+ import org.jsoup.internal.QuietAppendable;
+ import org.jsoup.internal.StringUtil;
+-import org.jsoup.parser.ParseSettings;
++import org.jsoup.parser.config.ParseSettings;
+ import org.jsoup.select.NodeFilter;
+ import org.jsoup.select.NodeVisitor;
+ import org.jspecify.annotations.Nullable;
+diff --git a/src/main/java/org/jsoup/nodes/NodeUtils.java b/src/main/java/org/jsoup/nodes/NodeUtils.java
+index f56219cc..b1c2b3cf 100644
+--- a/src/main/java/org/jsoup/nodes/NodeUtils.java
++++ b/src/main/java/org/jsoup/nodes/NodeUtils.java
+@@ -3,7 +3,7 @@ package org.jsoup.nodes;
+ import org.jsoup.helper.Validate;
+ import org.jsoup.helper.W3CDom;
+ import org.jsoup.parser.HtmlTreeBuilder;
+-import org.jsoup.parser.Parser;
++import org.jsoup.parser.config.Parser;
+ import org.w3c.dom.NodeList;
+ 
+ import java.util.Iterator;
+diff --git a/src/main/java/org/jsoup/nodes/Printer.java b/src/main/java/org/jsoup/nodes/Printer.java
+index 6b83fdbf..078c86e5 100644
+--- a/src/main/java/org/jsoup/nodes/Printer.java
++++ b/src/main/java/org/jsoup/nodes/Printer.java
+@@ -3,7 +3,7 @@ package org.jsoup.nodes;
+ import org.jsoup.internal.QuietAppendable;
+ import org.jsoup.internal.StringUtil;
+ import org.jsoup.nodes.Document.OutputSettings;
+-import org.jsoup.parser.Tag;
++import org.jsoup.parser.tagext.Tag;
+ import org.jsoup.select.NodeVisitor;
+ import org.jspecify.annotations.Nullable;
+ 
+diff --git a/src/main/java/org/jsoup/nodes/PseudoTextElement.java b/src/main/java/org/jsoup/nodes/PseudoTextElement.java
+index 9ceb4150..966c8d18 100644
+--- a/src/main/java/org/jsoup/nodes/PseudoTextElement.java
++++ b/src/main/java/org/jsoup/nodes/PseudoTextElement.java
+@@ -1,7 +1,7 @@
+ package org.jsoup.nodes;
+ 
+ import org.jsoup.internal.QuietAppendable;
+-import org.jsoup.parser.Tag;
++import org.jsoup.parser.tagext.Tag;
+ 
+ /**
+  * Represents a {@link TextNode} as an {@link Element}, to enable text nodes to be selected with
+diff --git a/src/main/java/org/jsoup/parser/CharacterReader.java b/src/main/java/org/jsoup/parser/CharacterReader.java
+deleted file mode 100644
+index f8eca0ba..00000000
+--- a/src/main/java/org/jsoup/parser/CharacterReader.java
++++ /dev/null
+@@ -1,763 +0,0 @@
+-package org.jsoup.parser;
+-
+-import org.jsoup.helper.Validate;
+-import org.jsoup.internal.LineMap;
+-import org.jsoup.internal.SoftPool;
+-import org.jsoup.internal.StringUtil;
+-import org.jspecify.annotations.Nullable;
+-
+-import java.io.IOException;
+-import java.io.UncheckedIOException;
+-import java.io.Reader;
+-import java.io.StringReader;
+-import java.util.Arrays;
+-
+-/**
+- CharacterReader consumes tokens off a string. Used internally by jsoup. API subject to changes.
+- <p>If the underlying reader throws an IOException during any operation, the CharacterReader will throw an
+- {@link UncheckedIOException}. That won't happen with String / StringReader inputs.</p>
+- */
+-public final class CharacterReader implements AutoCloseable {
+-    static final char EOF = (char) -1;
+-    private static final int MaxStringCacheLen = 12;
+-    private static final int StringCacheSize = 512;
+-    private String[] stringCache; // holds reused strings in this doc, to lessen garbage
+-    private static final SoftPool<String[]> StringPool = new SoftPool<>(() -> new String[StringCacheSize]); // reuse cache between iterations
+-
+-    static final int BufferSize = 1024 * 2;         // visible for testing
+-    static final int RefillPoint = BufferSize / 2;  // when bufPos characters read, refill; visible for testing
+-    private static final int RewindLimit = 1024;    // the maximum we can rewind. No HTML entities can be larger than this.
+-
+-    private Reader reader;      // underlying Reader, will be backed by a buffered+controlled input stream, or StringReader
+-    private char[] charBuf;     // character buffer we consume from; filled from Reader
+-    private int bufPos;         // position in charBuf that's been consumed to
+-    private int bufLength;      // the num of characters actually buffered in charBuf, <= charBuf.length
+-    private int fillPoint = 0;  // how far into the charBuf we read before re-filling. 0.5 of charBuf.length after bufferUp
+-    private int consumed;       // how many characters total have been consumed from this CharacterReader (less the current bufPos)
+-    private int bufMark = -1;   // if not -1, the marked rewind position
+-    private boolean readFully;  // if the underlying stream has been completely read, no value in further buffering
+-
+-    private static final SoftPool<char[]> BufferPool = new SoftPool<>(() -> new char[BufferSize]); // recycled char buffer
+-
+-    @Nullable private LineMap lineMap = null; // optionally maps source offsets to line and column positions
+-
+-    public CharacterReader(Reader input, int sz) {
+-        this(input); // sz is no longer used
+-    }
+-
+-    public CharacterReader(Reader input) {
+-        Validate.notNull(input);
+-        reader = input;
+-        charBuf = BufferPool.borrow();
+-        stringCache = StringPool.borrow();
+-        bufferUp();
+-    }
+-
+-    public CharacterReader(String input) {
+-        this(new StringReader(input));
+-    }
+-
+-    @Override
+-    public void close() {
+-        if (reader == null)
+-            return;
+-        try {
+-            reader.close();
+-        } catch (IOException ignored) {
+-        } finally {
+-            reader = null;
+-            Arrays.fill(charBuf, (char) 0); // before release, clear the buffer. Not required, but acts as a safety net, and makes debug view clearer
+-            BufferPool.release(charBuf);
+-            charBuf = null;
+-            StringPool.release(stringCache); // conversely, we don't clear the string cache, so we can reuse the contents
+-            stringCache = null;
+-            lineMap = null;
+-        }
+-    }
+-
+-    private void bufferUp() {
+-        if (readFully || bufPos < fillPoint || bufMark != -1)
+-            return;
+-        doBufferUp(); // structured so bufferUp may become an intrinsic candidate
+-    }
+-
+-    /**
+-     Reads into the buffer. Will throw an UncheckedIOException if the underling reader throws an IOException.
+-     @throws UncheckedIOException if the underlying reader throws an IOException
+-     */
+-    private void doBufferUp() {
+-        /*
+-        The flow:
+-        - if read fully, or if bufPos < fillPoint, or if marked - do not fill.
+-        - update readerPos (total amount consumed from this CharacterReader) += bufPos
+-        - shift charBuf contents such that bufPos = 0; set next read offset (bufLength) -= shift amount
+-        - loop read the Reader until we fill charBuf. bufLength += read.
+-        - readFully = true when read = -1
+-         */
+-        consumed += bufPos;
+-        bufLength -= bufPos;
+-        if (bufLength > 0)
+-            System.arraycopy(charBuf, bufPos, charBuf, 0, bufLength);
+-        bufPos = 0;
+-        while (bufLength < BufferSize) {
+-            try {
+-                int read = reader.read(charBuf, bufLength, charBuf.length - bufLength);
+-                if (read == -1) {
+-                    readFully = true;
+-                    break;
+-                }
+-                if (read == 0) {
+-                    break; // if we have a surrogate on the buffer boundary and trying to read 1; will have enough in our buffer to proceed
+-                }
+-                bufLength += read;
+-            } catch (IOException e) {
+-                throw new UncheckedIOException(e);
+-            }
+-        }
+-        fillPoint = Math.min(bufLength, RefillPoint);
+-
+-        scanBufferForNewlines(); // if enabled, we index newline positions for line number tracking
+-        lastIcSeq = null; // cache for last containsIgnoreCase(seq)
+-    }
+-
+-    void mark() {
+-        // make sure there is enough look ahead capacity
+-        if (bufLength - bufPos < RewindLimit)
+-            fillPoint = 0;
+-
+-        bufferUp();
+-        bufMark = bufPos;
+-    }
+-
+-    void unmark() {
+-        bufMark = -1;
+-    }
+-
+-    void rewindToMark() {
+-        if (bufMark == -1)
+-            throw new UncheckedIOException(new IOException("Mark invalid"));
+-
+-        bufPos = bufMark;
+-        unmark();
+-    }
+-
+-    /**
+-     * Gets the position currently read to in the content. Starts at 0.
+-     * @return current position
+-     */
+-    public int pos() {
+-        return consumed + bufPos;
+-    }
+-
+-    /** Tests if the buffer has been fully read. */
+-    boolean readFully() {
+-        return readFully;
+-    }
+-
+-    /**
+-     Enables or disables line number tracking. By default, will be <b>off</b>.Tracking line numbers improves the
+-     legibility of parser error messages, for example. Tracking should be enabled before any content is read to be of
+-     use.
+-
+-     @param track set tracking on|off
+-     @since 1.14.3
+-     */
+-    public void trackNewlines(boolean track) {
+-        if (track && lineMap == null) {
+-            lineMap = new LineMap();
+-            scanBufferForNewlines(); // first pass when enabled; subsequently called during bufferUp
+-        }
+-        else if (!track)
+-            lineMap = null;
+-    }
+-
+-    /**
+-     Check if the tracking of newlines is enabled.
+-     @return the current newline tracking state
+-     @since 1.14.3
+-     */
+-    public boolean isTrackNewlines() {
+-        return lineMap != null;
+-    }
+-
+-    /**
+-     Get the line map enabled by {@link #trackNewlines(boolean)}.
+-     */
+-    LineMap lineMap() {
+-        assert lineMap != null;
+-        return lineMap;
+-    }
+-
+-    /**
+-     Get the current line number (that the reader has consumed to). Starts at line #1.
+-     @return the current line number, or 1 if line tracking is not enabled.
+-     @since 1.14.3
+-     @see #trackNewlines(boolean)
+-     */
+-    public int lineNumber() {
+-        return lineNumber(pos());
+-    }
+-
+-    int lineNumber(int pos) {
+-        if (!isTrackNewlines())
+-            return 1;
+-
+-        return lineMap().lineNumber(pos);
+-    }
+-
+-    /**
+-     Get the current column number (that the reader has consumed to). Starts at column #1.
+-     @return the current column number
+-     @since 1.14.3
+-     @see #trackNewlines(boolean)
+-     */
+-    public int columnNumber() {
+-        return columnNumber(pos());
+-    }
+-
+-    int columnNumber(int pos) {
+-        if (!isTrackNewlines())
+-            return pos + 1;
+-
+-        return lineMap().columnNumber(pos);
+-    }
+-
+-    /**
+-     Get a formatted string representing the current line and column positions. E.g. <code>5:10</code> indicating line
+-     number 5 and column number 10.
+-     @return line:col position
+-     @since 1.14.3
+-     @see #trackNewlines(boolean)
+-     */
+-    String posLineCol() {
+-        return lineNumber() + ":" + columnNumber();
+-    }
+-
+-    /**
+-     Scans the buffer for newline positions and records line starts.
+-     */
+-    private void scanBufferForNewlines() {
+-        if (!isTrackNewlines())
+-            return;
+-
+-        for (int i = bufPos; i < bufLength; i++) {
+-            if (charBuf[i] == '\n') {
+-                int lineStart = 1 + consumed + i;
+-                lineMap().addLineStart(lineStart);
+-            }
+-        }
+-    }
+-
+-    /**
+-     * Tests if all the content has been read.
+-     * @return true if nothing left to read.
+-     */
+-    public boolean isEmpty() {
+-        bufferUp();
+-        return bufPos >= bufLength;
+-    }
+-
+-    private boolean isEmptyNoBufferUp() {
+-        return bufPos >= bufLength;
+-    }
+-
+-    /**
+-     * Get the char at the current position.
+-     * @return char
+-     */
+-    public char current() {
+-        bufferUp();
+-        return isEmptyNoBufferUp() ? EOF : charBuf[bufPos];
+-    }
+-
+-    /**
+-     Consume one character off the queue.
+-     @return first character on queue, or EOF if the queue is empty.
+-     */
+-    public char consume() {
+-        bufferUp();
+-        char val = isEmptyNoBufferUp() ? EOF : charBuf[bufPos];
+-        bufPos++;
+-        return val;
+-    }
+-
+-    /**
+-     Unconsume one character (bufPos--). MUST only be called directly after a consume(), and no chance of a bufferUp.
+-     */
+-    void unconsume() {
+-        if (bufPos < 1)
+-            throw new UncheckedIOException(new IOException("WTF: No buffer left to unconsume.")); // a bug if this fires, need to trace it.
+-
+-        bufPos--;
+-    }
+-
+-    /**
+-     * Moves the current position by one.
+-     */
+-    public void advance() {
+-        bufPos++;
+-    }
+-
+-    /**
+-     * Returns the number of characters between the current position and the next instance of the input char
+-     * @param c scan target
+-     * @return offset between current position and next instance of target. -1 if not found.
+-     */
+-    int nextIndexOf(char c) {
+-        // doesn't handle scanning for surrogates
+-        bufferUp();
+-        for (int i = bufPos; i < bufLength; i++) {
+-            if (c == charBuf[i])
+-                return i - bufPos;
+-        }
+-        return -1;
+-    }
+-
+-    /**
+-     * Returns the number of characters between the current position and the next instance of the input sequence
+-     *
+-     * @param seq scan target
+-     * @return offset between current position and next instance of target. -1 if not found.
+-     */
+-    int nextIndexOf(CharSequence seq) {
+-        bufferUp();
+-        // doesn't handle scanning for surrogates
+-        char startChar = seq.charAt(0);
+-        for (int offset = bufPos; offset < bufLength; offset++) {
+-            // scan to first instance of startchar:
+-            if (startChar != charBuf[offset])
+-                while(++offset < bufLength && startChar != charBuf[offset]) { /* empty */ }
+-            int i = offset + 1;
+-            int last = i + seq.length()-1;
+-            if (offset < bufLength && last <= bufLength) {
+-                for (int j = 1; i < last && seq.charAt(j) == charBuf[i]; i++, j++) { /* empty */ }
+-                if (i == last) // found full sequence
+-                    return offset - bufPos;
+-            }
+-        }
+-        return -1;
+-    }
+-
+-    /**
+-     * Reads characters up to the specific char.
+-     * @param c the delimiter
+-     * @return the chars read
+-     */
+-    public String consumeTo(char c) {
+-        int offset = nextIndexOf(c);
+-        if (offset != -1) {
+-            String consumed = cacheString(charBuf, stringCache, bufPos, offset);
+-            bufPos += offset;
+-            return consumed;
+-        } else {
+-            return consumeToEnd();
+-        }
+-    }
+-
+-    /**
+-     Reads the characters up to (but not including) the specified case-sensitive string.
+-     <p>If the sequence is not found in the buffer, will return the remainder of the current buffered amount, less the
+-     length of the sequence, such that this call may be repeated.
+-     @param seq the delimiter
+-     @return the chars read
+-     */
+-    public String consumeTo(String seq) {
+-        int offset = nextIndexOf(seq);
+-        if (offset != -1) {
+-            String consumed = cacheString(charBuf, stringCache, bufPos, offset);
+-            bufPos += offset;
+-            return consumed;
+-        } else if (bufLength - bufPos < seq.length()) {
+-            // nextIndexOf() did a bufferUp(), so if the buffer is shorter than the search string, we must be at EOF
+-            return consumeToEnd();
+-        } else {
+-            // the string we're looking for may be straddling a buffer boundary, so keep (length - 1) characters
+-            // unread in case they contain the beginning of the search string
+-            int endPos = bufLength - seq.length() + 1;
+-            String consumed = cacheString(charBuf, stringCache, bufPos, endPos - bufPos);
+-            bufPos = endPos;
+-            return consumed;
+-        }
+-    }
+-
+-    /**
+-     Read characters while the input predicate returns true.
+-     @return characters read
+-     */
+-    String consumeMatching(CharPredicate func) {
+-        return consumeMatching(func, -1);
+-    }
+-
+-    /**
+-     Read characters while the input predicate returns true, up to a maximum length.
+-     @param func predicate to test
+-     @param maxLength maximum length to read. -1 indicates no maximum
+-     @return characters read
+-     */
+-    String consumeMatching(CharPredicate func, int maxLength) {
+-        bufferUp();
+-        int pos = bufPos;
+-        final int start = pos;
+-        final int remaining = bufLength;
+-        final char[] val = charBuf;
+-
+-        while (pos < remaining && (maxLength == -1 || pos - start < maxLength) && func.test(val[pos])) {
+-            pos++;
+-        }
+-
+-        bufPos = pos;
+-        return pos > start ? cacheString(charBuf, stringCache, start, pos -start) : "";
+-    }
+-
+-    /**
+-     Read characters until the first of any delimiters is found.
+-     @param chars delimiters to scan for
+-     @return characters read up to the matched delimiter.
+-     */
+-    public String consumeToAny(final char... chars) {
+-        bufferUp();
+-        int pos = bufPos;
+-        final int start = pos;
+-        final int remaining = bufLength;
+-        final char[] val = charBuf;
+-
+-        scan:
+-        while (pos < remaining) {
+-            char c = val[pos];
+-            for (char seek : chars)
+-                if (c == seek) break scan;
+-            pos++;
+-        }
+-
+-        return consumeRange(start, pos);
+-    }
+-
+-    /**
+-     Read characters until either delimiter is found.
+-     */
+-    String consumeToAny(char c1, char c2) {
+-        // monomorhpic to allow JIT to avoid virtual dispatch of e.g. consumeMatching(CharPredicate func)
+-        bufferUp();
+-        int pos = bufPos;
+-        final int start = pos;
+-        final int remaining = bufLength;
+-        final char[] val = charBuf;
+-
+-        while (pos < remaining) {
+-            char c = val[pos];
+-            if (c == c1 || c == c2) break;
+-            pos++;
+-        }
+-
+-        return consumeRange(start, pos);
+-    }
+-
+-    /**
+-     Read characters until any delimiter is found.
+-     */
+-    String consumeToAny(char c1, char c2, char c3) {
+-        bufferUp();
+-        int pos = bufPos;
+-        final int start = pos;
+-        final int remaining = bufLength;
+-        final char[] val = charBuf;
+-
+-        while (pos < remaining) {
+-            char c = val[pos];
+-            if (c == c1 || c == c2 || c == c3) break;
+-            pos++;
+-        }
+-
+-        return consumeRange(start, pos);
+-    }
+-
+-    String consumeToAnySorted(final char... chars) {
+-        bufferUp();
+-        int pos = bufPos;
+-        final int start = pos;
+-        final int remaining = bufLength;
+-        final char[] val = charBuf;
+-
+-        while (pos < remaining && Arrays.binarySearch(chars, val[pos]) < 0) {
+-            pos++;
+-        }
+-
+-        return consumeRange(start, pos);
+-    }
+-
+-    String consumeData() {
+-        // consumes until &, <, null
+-        return consumeToAny('&', '<', TokeniserState.nullChar);
+-    }
+-
+-    String consumeAttributeQuoted(final boolean single) {
+-        // null, " or ', &
+-        char quote = single ? '\'' : '"';
+-        return consumeToAny(TokeniserState.nullChar, '&', quote);
+-    }
+-
+-    String consumeRawData() {
+-        // <, null
+-        return consumeToAny('<', TokeniserState.nullChar);
+-    }
+-
+-    String consumeTagName() {
+-        // '\t', '\n', '\r', '\f', ' ', '/', '>'
+-        // NOTE: out of spec; does not stop and append on nullChar but eats
+-        bufferUp();
+-        int pos = bufPos;
+-        final int start = pos;
+-        final int remaining = bufLength;
+-        final char[] val = charBuf;
+-
+-        while (pos < remaining) {
+-            char c = val[pos];
+-            switch (c) {
+-                case '\t':
+-                case '\n':
+-                case '\r':
+-                case '\f':
+-                case ' ':
+-                case '/':
+-                case '>':
+-                    return consumeRange(start, pos);
+-            }
+-            pos++;
+-        }
+-
+-        return consumeRange(start, pos);
+-    }
+-
+-    String consumeToEnd() {
+-        bufferUp();
+-        String data = cacheString(charBuf, stringCache, bufPos, bufLength - bufPos);
+-        bufPos = bufLength;
+-        return data;
+-    }
+-
+-    String consumeLetterSequence() {
+-        return consumeMatching(Character::isLetter);
+-    }
+-
+-    String consumeLetterThenDigitSequence() {
+-        bufferUp();
+-        int start = bufPos;
+-        while (bufPos < bufLength) {
+-            if (StringUtil.isAsciiLetter(charBuf[bufPos])) bufPos++;
+-            else break;
+-        }
+-        while (!isEmptyNoBufferUp()) {
+-            if (StringUtil.isDigit(charBuf[bufPos])) bufPos++;
+-            else break;
+-        }
+-
+-        return cacheString(charBuf, stringCache, start, bufPos - start);
+-    }
+-
+-    String consumeHexSequence() {
+-        return consumeMatching(StringUtil::isHexDigit);
+-    }
+-
+-    String consumeDigitSequence() {
+-        return consumeMatching(c -> c >= '0' && c <= '9');
+-    }
+-
+-    /**
+-     Complete a scan by moving the reader and returning the matched range.
+-     */
+-    private String consumeRange(int start, int pos) {
+-        bufPos = pos;
+-        return pos > start ? cacheString(charBuf, stringCache, start, pos - start) : "";
+-    }
+-
+-    boolean matches(char c) {
+-        return !isEmpty() && charBuf[bufPos] == c;
+-    }
+-
+-    boolean matches(String seq) {
+-        bufferUp();
+-        int scanLength = seq.length();
+-        if (scanLength > bufLength - bufPos)
+-            return false;
+-
+-        for (int offset = 0; offset < scanLength; offset++)
+-            if (seq.charAt(offset) != charBuf[bufPos +offset])
+-                return false;
+-        return true;
+-    }
+-
+-    /**
+-     Checks if the current buffer position matches the sequence case-insensitively.
+-     */
+-    boolean matchesIgnoreCase(String seq) {
+-        bufferUp();
+-        int scanLength = seq.length();
+-        if (scanLength > bufLength - bufPos)
+-            return false;
+-
+-        return rangeMatchesIgnoreCase(seq, bufPos);
+-    }
+-
+-    private boolean rangeMatchesIgnoreCase(String seq, int start) {
+-        for (int offset = 0; offset < seq.length(); offset++) {
+-            char scan = seq.charAt(offset);
+-            char target = charBuf[start + offset];
+-            if (scan == target) continue;
+-
+-            scan = Character.toUpperCase(scan);
+-            target = Character.toUpperCase(target);
+-            if (scan != target) return false;
+-        }
+-        return true;
+-    }
+-
+-    /**
+-     Tests if the next character in the queue matches any of the characters in the sequence, case sensitively.
+-     @param seq list of characters to check for
+-     @return true if any matched, false if none did
+-     */
+-    boolean matchesAny(char... seq) {
+-        if (isEmpty())
+-            return false;
+-
+-        bufferUp();
+-        char c = charBuf[bufPos];
+-        for (char seek : seq) {
+-            if (seek == c)
+-                return true;
+-        }
+-        return false;
+-    }
+-
+-    boolean matchesAnySorted(char[] seq) {
+-        bufferUp();
+-        return !isEmpty() && Arrays.binarySearch(seq, charBuf[bufPos]) >= 0;
+-    }
+-
+-    /**
+-     Checks if the current pos matches an ascii alpha (A-Z a-z) per https://infra.spec.whatwg.org/#ascii-alpha
+-     @return if it matches or not
+-     */
+-    boolean matchesAsciiAlpha() {
+-        if (isEmpty()) return false;
+-        return StringUtil.isAsciiLetter(charBuf[bufPos]);
+-    }
+-
+-    boolean matchesDigit() {
+-        if (isEmpty()) return false;
+-        return StringUtil.isDigit(charBuf[bufPos]);
+-    }
+-
+-    boolean matchConsume(String seq) {
+-        bufferUp();
+-        if (matches(seq)) {
+-            bufPos += seq.length();
+-            return true;
+-        } else {
+-            return false;
+-        }
+-    }
+-
+-    boolean matchConsumeIgnoreCase(String seq) {
+-        if (matchesIgnoreCase(seq)) {
+-            bufPos += seq.length();
+-            return true;
+-        } else {
+-            return false;
+-        }
+-    }
+-
+-    // we maintain a cache of the previously scanned sequence, and return that if applicable on repeated scans.
+-    // that improves the situation where there is a sequence of <p<p<p<p<p<p<p...</title> and we're bashing on the <p
+-    // looking for the </title>. Resets in bufferUp()
+-    @Nullable private String lastIcSeq; // scan cache
+-    private int lastIcIndex; // nearest found indexOf
+-
+-    /** Used to check presence of </title>, </style> when we're in RCData and see a <xxx. */
+-    boolean containsIgnoreCase(String seq) {
+-        bufferUp();
+-        if (seq.equals(lastIcSeq)) {
+-            if (lastIcIndex == -1) return false;
+-            if (lastIcIndex >= bufPos) return true;
+-        }
+-        lastIcSeq = seq;
+-
+-        int scanLength = seq.length();
+-        int maxStart = bufLength - scanLength;
+-        for (int scan = bufPos; scan <= maxStart; scan++) {
+-            if (rangeMatchesIgnoreCase(seq, scan)) {
+-                lastIcIndex = scan;
+-                return true;
+-            }
+-        }
+-
+-        lastIcIndex = -1;
+-        return false;
+-    }
+-
+-    @Override
+-    public String toString() {
+-        if (bufLength - bufPos < 0) return "";
+-        return new String(charBuf, bufPos, bufLength - bufPos);
+-    }
+-
+-    /**
+-     * Caches short strings, as a flyweight pattern, to reduce GC load. Just for this doc, to prevent leaks.
+-     * <p />
+-     * Simplistic, and on hash collisions just falls back to creating a new string, vs a full HashMap with Entry list.
+-     * That saves both having to create objects as hash keys, and running through the entry list, at the expense of
+-     * some more duplicates.
+-     */
+-    private static String cacheString(final char[] charBuf, final String[] stringCache, final int start, final int count) {
+-        if (count > MaxStringCacheLen) // don't cache strings that are too big
+-            return new String(charBuf, start, count);
+-        if (count < 1)
+-            return "";
+-
+-        // calculate hash:
+-        int hash = 0;
+-        int end = count + start;
+-        for (int i = start; i < end; i++) {
+-            hash = 31 * hash + charBuf[i];
+-        }
+-
+-        // get from cache
+-        final int index = hash & StringCacheSize - 1;
+-        String cached = stringCache[index];
+-
+-        if (cached != null && rangeEquals(charBuf, start, count, cached)) // positive hit
+-            return cached;
+-        else {
+-            cached = new String(charBuf, start, count);
+-            stringCache[index] = cached; // add or replace, assuming most recently used are most likely to recur next
+-        }
+-
+-        return cached;
+-    }
+-
+-    /**
+-     * Check if the value of the provided range equals the string.
+-     */
+-    static boolean rangeEquals(final char[] charBuf, final int start, int count, final String cached) {
+-        if (count == cached.length()) {
+-            int i = start;
+-            int j = 0;
+-            while (count-- != 0) {
+-                if (charBuf[i++] != cached.charAt(j++))
+-                    return false;
+-            }
+-            return true;
+-        }
+-        return false;
+-    }
+-
+-    // just used for testing
+-    boolean rangeEquals(final int start, final int count, final String cached) {
+-        return rangeEquals(charBuf, start, count, cached);
+-    }
+-
+-    @FunctionalInterface
+-    interface CharPredicate {
+-        boolean test(char c);
+-    }
+-}
+diff --git a/src/main/java/org/jsoup/parser/HtmlTagOptions.java b/src/main/java/org/jsoup/parser/HtmlTagOptions.java
+deleted file mode 100644
+index 1dd5e84c..00000000
+--- a/src/main/java/org/jsoup/parser/HtmlTagOptions.java
++++ /dev/null
+@@ -1,73 +0,0 @@
+-package org.jsoup.parser;
+-
+-import org.jsoup.internal.StringUtil;
+-
+-import static org.jsoup.parser.Parser.*;
+-
+-/**
+- Parser-only tag options used by the HTML tree builder.
+- <p>These are cached on {@link Tag} so hot stack walks can check an option instead of searching
+- the same sorted arrays repeatedly.</p>
+- */
+-final class HtmlTagOptions {
+-    static final int Scope              = 1;
+-    static final int ListScope          = 1 << 1;
+-    static final int ButtonScope        = 1 << 2;
+-    static final int TableScope         = 1 << 3;
+-    static final int SelectScopeMember  = 1 << 4;
+-    static final int ImpliedEnd         = 1 << 5;
+-    static final int ThoroughImpliedEnd = 1 << 6;
+-    static final int Special            = 1 << 7;
+-
+-    static final String[] ScopeTags = new String[]{ // a particular element in scope
+-            "applet", "caption", "html", "marquee", "object", "select", "table", "td", "template", "th"};
+-    static final String[] MathScopeTags = new String[]{"annotation-xml", "mi", "mn", "mo", "ms", "mtext"};
+-    static final String[] SvgScopeTags = new String[]{"desc", "foreignobject", "title"};
+-    static final String[] ListScopeTags = new String[]{"ol", "ul"};
+-    static final String[] ButtonScopeTags = new String[]{"button"};
+-    static final String[] TableScopeTags = new String[]{"html", "table", "template"};
+-    static final String[] SelectScopeMemberTags = new String[]{"optgroup", "option"};
+-    static final String[] ImpliedEndTags = new String[]{
+-            "dd", "dt", "li", "optgroup", "option", "p", "rb", "rp", "rt", "rtc"};
+-    static final String[] ThoroughImpliedEndTags = new String[]{
+-            "caption", "colgroup", "dd", "dt", "li", "optgroup", "option", "p", "rb", "rp", "rt", "rtc", "tbody", "td",
+-            "tfoot", "th", "thead", "tr"};
+-    static final String[] SpecialTags = new String[]{
+-            "address", "applet", "area", "article", "aside", "base", "basefont", "bgsound", "blockquote", "body", "br",
+-            "button", "caption", "center", "col", "colgroup", "dd", "details", "dir", "div", "dl", "dt", "embed",
+-            "fieldset", "figcaption", "figure", "footer", "form", "frame", "frameset", "h1", "h2", "h3", "h4", "h5",
+-            "h6", "head", "header", "hgroup", "hr", "html", "iframe", "img", "input", "keygen", "li", "link", "listing",
+-            "main", "marquee", "menu", "meta", "nav", "noembed", "noframes", "noscript", "object", "ol", "p", "param",
+-            "plaintext", "pre", "script", "search", "section", "select", "source", "style", "summary", "table", "tbody",
+-            "td", "template", "textarea", "tfoot", "th", "thead", "title", "tr", "track", "ul", "wbr", "xmp"};
+-
+-    private HtmlTagOptions() {}
+-
+-    /**
+-     Get parser options for a tag's normalized name and namespace.
+-     */
+-    static int optionsFor(String normalName, String namespace) {
+-        int options = 0;
+-
+-        switch (namespace) {
+-            case NamespaceHtml:
+-                if (StringUtil.inSorted(normalName, ImpliedEndTags))         options |= ImpliedEnd;
+-                if (StringUtil.inSorted(normalName, ThoroughImpliedEndTags)) options |= ThoroughImpliedEnd;
+-                if (StringUtil.inSorted(normalName, SelectScopeMemberTags))  options |= SelectScopeMember;
+-                if (StringUtil.inSorted(normalName, ScopeTags))              options |= Scope;
+-                if (StringUtil.inSorted(normalName, ListScopeTags))          options |= ListScope;
+-                if (StringUtil.inSorted(normalName, ButtonScopeTags))        options |= ButtonScope;
+-                if (StringUtil.inSorted(normalName, TableScopeTags))         options |= TableScope;
+-                if (StringUtil.inSorted(normalName, SpecialTags))            options |= Special;
+-                break;
+-            case NamespaceMathml:
+-                if (StringUtil.inSorted(normalName, MathScopeTags))          options |= Scope | Special;
+-                break;
+-            case NamespaceSvg:
+-                if (StringUtil.inSorted(normalName, SvgScopeTags))           options |= Scope | Special;
+-                break;
+-        }
+-
+-        return options;
+-    }
+-}
+diff --git a/src/main/java/org/jsoup/parser/HtmlTreeBuilder.java b/src/main/java/org/jsoup/parser/HtmlTreeBuilder.java
+index f31f6f19..a5caad2c 100644
+--- a/src/main/java/org/jsoup/parser/HtmlTreeBuilder.java
++++ b/src/main/java/org/jsoup/parser/HtmlTreeBuilder.java
+@@ -12,6 +12,9 @@ import org.jsoup.nodes.Element;
+ import org.jsoup.nodes.FormElement;
+ import org.jsoup.nodes.Node;
+ import org.jsoup.nodes.TextNode;
++import org.jsoup.parser.error.ParseError;
++import org.jsoup.parser.tagext.HtmlTagOptions;
++import org.jsoup.parser.tagext.Tag;
+ import org.jspecify.annotations.Nullable;
+ 
+ import java.io.Reader;
+@@ -22,7 +25,10 @@ import static org.jsoup.internal.StringUtil.inSorted;
+ import static org.jsoup.parser.HtmlTreeBuilderState.Constants.Headings;
+ import static org.jsoup.parser.HtmlTreeBuilderState.Constants.InTableFoster;
+ import static org.jsoup.parser.HtmlTreeBuilderState.ForeignContent;
+-import static org.jsoup.parser.Parser.*;
++import org.jsoup.parser.config.ParseSettings;
++import org.jsoup.parser.config.Parser;
++
++import static org.jsoup.parser.config.Parser.*;
+ 
+ /**
+  * HTML Tree Builder; creates a DOM from Tokens.
+@@ -54,17 +60,17 @@ public class HtmlTreeBuilder extends TreeBuilder {
+     private boolean fosterInserts; // if next inserts should be fostered
+     private boolean fragmentParsing; // if parsing a fragment of html
+ 
+-    @Override ParseSettings defaultSettings() {
++    @Override public ParseSettings defaultSettings() {
+         return ParseSettings.htmlDefault;
+     }
+ 
+     @Override
+-    HtmlTreeBuilder newInstance() {
++    public HtmlTreeBuilder newInstance() {
+         return new HtmlTreeBuilder();
+     }
+ 
+     @Override
+-    protected void initialiseParse(Reader input, String baseUri, Parser parser) {
++    public void initialiseParse(Reader input, String baseUri, Parser parser) {
+         super.initialiseParse(input, baseUri, parser);
+ 
+         // this is a bit mucky. todo - probably just create new parser objects to ensure all reset.
+@@ -371,7 +377,7 @@ public class HtmlTreeBuilder extends TreeBuilder {
+     private void doInsertElement(Element el) {
+         enforceStackDepthLimit();
+ 
+-        if (formElement != null && el.tag().namespace.equals(NamespaceHtml) && StringUtil.inSorted(el.normalName(), TagFormListed))
++        if (formElement != null && el.tag().namespace().equals(NamespaceHtml) && StringUtil.inSorted(el.normalName(), TagFormListed))
+             formElement.addElement(el); // connect form controls to their form element
+ 
+         // in HTML, the xmlns attribute if set must match what the parser set the tag's namespace to
+diff --git a/src/main/java/org/jsoup/parser/HtmlTreeBuilderState.java b/src/main/java/org/jsoup/parser/HtmlTreeBuilderState.java
+index eef814bc..1f4b1025 100644
+--- a/src/main/java/org/jsoup/parser/HtmlTreeBuilderState.java
++++ b/src/main/java/org/jsoup/parser/HtmlTreeBuilderState.java
+@@ -1,5 +1,8 @@
+ package org.jsoup.parser;
+ 
++import org.jsoup.parser.config.ParseSettings;
++import org.jsoup.parser.config.Parser;
++
+ import org.jsoup.helper.Validate;
+ import org.jsoup.internal.StringUtil;
+ import org.jsoup.nodes.Attribute;
+@@ -10,6 +13,7 @@ import org.jsoup.nodes.Element;
+ import org.jsoup.nodes.Node;
+ import org.jsoup.nodes.NodeInternals;
+ import org.jsoup.nodes.Range;
++import org.jsoup.parser.tagext.Tag;
+ import org.jspecify.annotations.Nullable;
+ 
+ import java.util.ArrayList;
+diff --git a/src/main/java/org/jsoup/parser/ParseError.java b/src/main/java/org/jsoup/parser/ParseError.java
+deleted file mode 100644
+index a82b7835..00000000
+--- a/src/main/java/org/jsoup/parser/ParseError.java
++++ /dev/null
+@@ -1,63 +0,0 @@
+-package org.jsoup.parser;
+-
+-/**
+- * A Parse Error records an error in the input HTML that occurs in either the tokenisation or the tree building phase.
+- */
+-public class ParseError {
+-    private final int pos;
+-    private final String cursorPos;
+-    private final String errorMsg;
+-
+-    ParseError(CharacterReader reader, String errorMsg) {
+-        pos = reader.pos();
+-        cursorPos = reader.posLineCol();
+-        this.errorMsg = errorMsg;
+-    }
+-
+-    ParseError(CharacterReader reader, String errorFormat, Object... args) {
+-        pos = reader.pos();
+-        cursorPos = reader.posLineCol();
+-        this.errorMsg = String.format(errorFormat, args);
+-    }
+-
+-    ParseError(int pos, String errorMsg) {
+-        this.pos = pos;
+-        cursorPos = String.valueOf(pos);
+-        this.errorMsg = errorMsg;
+-    }
+-
+-    ParseError(int pos, String errorFormat, Object... args) {
+-        this.pos = pos;
+-        cursorPos = String.valueOf(pos);
+-        this.errorMsg = String.format(errorFormat, args);
+-    }
+-
+-    /**
+-     * Retrieve the error message.
+-     * @return the error message.
+-     */
+-    public String getErrorMessage() {
+-        return errorMsg;
+-    }
+-
+-    /**
+-     * Retrieves the offset of the error.
+-     * @return error offset within input
+-     */
+-    public int getPosition() {
+-        return pos;
+-    }
+-
+-    /**
+-     Get the formatted line:column cursor position where the error occurred.
+-     @return line:number cursor position
+-     */
+-    public String getCursorPos() {
+-        return cursorPos;
+-    }
+-
+-    @Override
+-    public String toString() {
+-        return "<" + cursorPos + ">: " + errorMsg;
+-    }
+-}
+diff --git a/src/main/java/org/jsoup/parser/ParseErrorList.java b/src/main/java/org/jsoup/parser/ParseErrorList.java
+deleted file mode 100644
+index 969c862d..00000000
+--- a/src/main/java/org/jsoup/parser/ParseErrorList.java
++++ /dev/null
+@@ -1,50 +0,0 @@
+-package org.jsoup.parser;
+-
+-import java.util.ArrayList;
+-
+-/**
+- * A container for ParseErrors.
+- * 
+- * @author Jonathan Hedley
+- */
+-public class ParseErrorList extends ArrayList<ParseError>{
+-    private static final int INITIAL_CAPACITY = 16;
+-    private final int initialCapacity;
+-    private final int maxSize;
+-    
+-    ParseErrorList(int initialCapacity, int maxSize) {
+-        super(initialCapacity);
+-        this.initialCapacity = initialCapacity;
+-        this.maxSize = maxSize;
+-    }
+-
+-    /**
+-     Create a new ParseErrorList with the same settings, but no errors in the list
+-     @param copy initial and max size details to copy
+-     */
+-    ParseErrorList(ParseErrorList copy) {
+-        this(copy.initialCapacity, copy.maxSize);
+-    }
+-    
+-    boolean canAddError() {
+-        return size() < maxSize;
+-    }
+-
+-    int getMaxSize() {
+-        return maxSize;
+-    }
+-
+-    public static ParseErrorList noTracking() {
+-        return new ParseErrorList(0, 0);
+-    }
+-    
+-    public static ParseErrorList tracking(int maxSize) {
+-        return new ParseErrorList(INITIAL_CAPACITY, maxSize);
+-    }
+-
+-    @Override
+-    public Object clone() {
+-        // all class fields are primitive, so native clone is enough.
+-        return super.clone();
+-    }
+-}
+diff --git a/src/main/java/org/jsoup/parser/ParseSettings.java b/src/main/java/org/jsoup/parser/ParseSettings.java
+deleted file mode 100644
+index b31e5f8c..00000000
+--- a/src/main/java/org/jsoup/parser/ParseSettings.java
++++ /dev/null
+@@ -1,88 +0,0 @@
+-package org.jsoup.parser;
+-
+-import org.jsoup.nodes.Attributes;
+-import org.jspecify.annotations.Nullable;
+-
+-import static org.jsoup.internal.Normalizer.lowerCase;
+-import static org.jsoup.internal.Normalizer.normalize;
+-
+-/**
+- * Controls parser case settings, to optionally preserve tag and/or attribute name case.
+- */
+-public class ParseSettings {
+-    /**
+-     * HTML default settings: both tag and attribute names are lower-cased during parsing.
+-     */
+-    public static final ParseSettings htmlDefault;
+-    /**
+-     * Preserve both tag and attribute case.
+-     */
+-    public static final ParseSettings preserveCase;
+-
+-    static {
+-        htmlDefault = new ParseSettings(false, false);
+-        preserveCase = new ParseSettings(true, true);
+-    }
+-
+-    private final boolean preserveTagCase;
+-    private final boolean preserveAttributeCase;
+-
+-    /**
+-     * Returns true if preserving tag name case.
+-     */
+-    public boolean preserveTagCase() {
+-        return preserveTagCase;
+-    }
+-
+-    /**
+-     * Returns true if preserving attribute case.
+-     */
+-    public boolean preserveAttributeCase() {
+-        return preserveAttributeCase;
+-    }
+-
+-    /**
+-     * Define parse settings.
+-     * @param tag preserve tag case?
+-     * @param attribute preserve attribute name case?
+-     */
+-    public ParseSettings(boolean tag, boolean attribute) {
+-        preserveTagCase = tag;
+-        preserveAttributeCase = attribute;
+-    }
+-
+-    ParseSettings(ParseSettings copy) {
+-        this(copy.preserveTagCase, copy.preserveAttributeCase);
+-    }
+-
+-    /**
+-     * Normalizes a tag name according to the case preservation setting.
+-     */
+-    public String normalizeTag(String name) {
+-        name = name.trim();
+-        if (!preserveTagCase)
+-            name = lowerCase(name);
+-        return name;
+-    }
+-
+-    /**
+-     * Normalizes an attribute according to the case preservation setting.
+-     */
+-    public String normalizeAttribute(String name) {
+-        name = name.trim();
+-        if (!preserveAttributeCase)
+-            name = lowerCase(name);
+-        return name;
+-    }
+-
+-    void normalizeAttributes(Attributes attributes) {
+-        if (!preserveAttributeCase) {
+-            attributes.normalize();
+-        }
+-    }
+-
+-    /** Returns the normal name that a Tag will have (trimmed and lower-cased) */
+-    static String normalName(String name) {
+-        return normalize(name);
+-    }
+-}
+diff --git a/src/main/java/org/jsoup/parser/Parser.java b/src/main/java/org/jsoup/parser/Parser.java
+deleted file mode 100644
+index 5dd8eb7f..00000000
+--- a/src/main/java/org/jsoup/parser/Parser.java
++++ /dev/null
+@@ -1,381 +0,0 @@
+-package org.jsoup.parser;
+-
+-import org.jsoup.helper.Validate;
+-import org.jsoup.nodes.Document;
+-import org.jsoup.nodes.Element;
+-import org.jsoup.nodes.Node;
+-import org.jspecify.annotations.Nullable;
+-
+-import java.io.Reader;
+-import java.io.StringReader;
+-import java.util.List;
+-import java.util.concurrent.locks.ReentrantLock;
+-
+-/**
+- Parses HTML or XML into a {@link org.jsoup.nodes.Document}. Generally, it is simpler to use one of the parse methods in
+- {@link org.jsoup.Jsoup}.
+- <p>Note that a given Parser instance object is threadsafe, but not concurrent. (Concurrent parse calls will
+- synchronize.) To reuse a Parser configuration in a multithreaded environment, use {@link #newInstance()} to make
+- copies.</p>
+- */
+-public class Parser implements Cloneable {
+-    public static final String NamespaceHtml = "http://www.w3.org/1999/xhtml";
+-    public static final String NamespaceXml = "http://www.w3.org/XML/1998/namespace";
+-    public static final String NamespaceMathml = "http://www.w3.org/1998/Math/MathML";
+-    public static final String NamespaceSvg = "http://www.w3.org/2000/svg";
+-
+-    private final TreeBuilder treeBuilder;
+-    private ParseErrorList errors;
+-    private ParseSettings settings;
+-    private boolean trackPosition = false;
+-    private @Nullable TagSet tagSet;
+-    private final ReentrantLock lock = new ReentrantLock();
+-    private int maxDepth;
+-
+-    /**
+-     * Create a new Parser, using the specified TreeBuilder
+-     * @param treeBuilder TreeBuilder to use to parse input into Documents.
+-     */
+-    public Parser(TreeBuilder treeBuilder) {
+-        this.treeBuilder = treeBuilder;
+-        settings = treeBuilder.defaultSettings();
+-        errors = ParseErrorList.noTracking();
+-        maxDepth = treeBuilder.defaultMaxDepth();
+-    }
+-
+-    /**
+-     Creates a new Parser as a deep copy of this; including initializing a new TreeBuilder. Allows independent (multi-threaded) use.
+-     @return a copied parser
+-     */
+-    public Parser newInstance() {
+-        return new Parser(this);
+-    }
+-
+-    @SuppressWarnings("MethodDoesntCallSuperMethod") // because we use the copy constructor instead
+-    @Override
+-    public Parser clone() {
+-        return new Parser(this);
+-    }
+-
+-    private Parser(Parser copy) {
+-        treeBuilder = copy.treeBuilder.newInstance(); // because extended
+-        errors = new ParseErrorList(copy.errors); // only copies size, not contents
+-        settings = new ParseSettings(copy.settings);
+-        trackPosition = copy.trackPosition;
+-        maxDepth = copy.maxDepth;
+-        tagSet = new TagSet(copy.tagSet());
+-    }
+-
+-    /**
+-     Parse the contents of a String.
+-
+-     @param html HTML to parse
+-     @param baseUri base URI of document (i.e. original fetch location), for resolving relative URLs.
+-     @return parsed Document
+-     */
+-    public Document parseInput(String html, String baseUri) {
+-        return parseInput(new StringReader(html), baseUri);
+-    }
+-
+-    /**
+-     Parse the contents of Reader.
+-
+-     @param inputHtml HTML to parse
+-     @param baseUri base URI of document (i.e. original fetch location), for resolving relative URLs.
+-     @return parsed Document
+-     @throws java.io.UncheckedIOException if an I/O error occurs in the Reader
+-     */
+-    public Document parseInput(Reader inputHtml, String baseUri) {
+-        try {
+-            lock.lock(); // using a lock vs synchronized to support loom threads
+-            return treeBuilder.parse(inputHtml, baseUri, this);
+-        } finally {
+-            lock.unlock();
+-        }
+-    }
+-
+-    /**
+-     Parse a fragment of HTML into a list of nodes. The context element, if supplied, supplies parsing context.
+-
+-     @param fragment the fragment of HTML to parse
+-     @param context (optional) the element that this HTML fragment is being parsed for (i.e. for inner HTML).
+-     @param baseUri base URI of document (i.e. original fetch location), for resolving relative URLs.
+-     @return list of nodes parsed from the input HTML.
+-     */
+-    public List<Node> parseFragmentInput(String fragment, @Nullable Element context, String baseUri) {
+-        return parseFragmentInput(new StringReader(fragment), context, baseUri);
+-    }
+-
+-    /**
+-     Parse a fragment of HTML into a list of nodes. The context element, if supplied, supplies parsing context.
+-
+-     @param fragment the fragment of HTML to parse
+-     @param context (optional) the element that this HTML fragment is being parsed for (i.e. for inner HTML).
+-     @param baseUri base URI of document (i.e. original fetch location), for resolving relative URLs.
+-     @return list of nodes parsed from the input HTML.
+-     @throws java.io.UncheckedIOException if an I/O error occurs in the Reader
+-     */
+-    public List<Node> parseFragmentInput(Reader fragment, @Nullable Element context, String baseUri) {
+-        try {
+-            lock.lock();
+-            return treeBuilder.parseFragment(fragment, context, baseUri, this);
+-        } finally {
+-            lock.unlock();
+-        }
+-    }
+-
+-    // gets & sets
+-    /**
+-     * Get the TreeBuilder currently in use.
+-     * @return current TreeBuilder.
+-     */
+-    public TreeBuilder getTreeBuilder() {
+-        return treeBuilder;
+-    }
+-
+-    /**
+-     * Check if parse error tracking is enabled.
+-     * @return current track error state.
+-     */
+-    public boolean isTrackErrors() {
+-        return errors.getMaxSize() > 0;
+-    }
+-
+-    /**
+-     * Enable or disable parse error tracking for the next parse.
+-     * @param maxErrors the maximum number of errors to track. Set to 0 to disable.
+-     * @return this, for chaining
+-     */
+-    public Parser setTrackErrors(int maxErrors) {
+-        errors = maxErrors > 0 ? ParseErrorList.tracking(maxErrors) : ParseErrorList.noTracking();
+-        return this;
+-    }
+-
+-    /**
+-     * Retrieve the parse errors, if any, from the last parse.
+-     * @return list of parse errors, up to the size of the maximum errors tracked.
+-     * @see #setTrackErrors(int)
+-     */
+-    public ParseErrorList getErrors() {
+-        return errors;
+-    }
+-
+-    /**
+-     Test if position tracking is enabled. If it is, Nodes will have a Position to track where in the original input
+-     source they were created from. By default, tracking is not enabled.
+-     * @return current track position setting
+-     */
+-    public boolean isTrackPosition() {
+-        return trackPosition;
+-    }
+-
+-    /**
+-     Enable or disable source position tracking. If enabled, Nodes will have a Position to track where in the original
+-     input source they were created from.
+-     @param trackPosition position tracking setting; {@code true} to enable
+-     @return this Parser, for chaining
+-     */
+-    public Parser setTrackPosition(boolean trackPosition) {
+-        this.trackPosition = trackPosition;
+-        return this;
+-    }
+-
+-    /**
+-     Update the ParseSettings of this Parser, to control the case sensitivity of tags and attributes.
+-     * @param settings the new settings
+-     * @return this Parser
+-     */
+-    public Parser settings(ParseSettings settings) {
+-        this.settings = settings;
+-        return this;
+-    }
+-
+-    /**
+-     Gets the current ParseSettings for this Parser
+-     * @return current ParseSettings
+-     */
+-    public ParseSettings settings() {
+-        return settings;
+-    }
+-
+-    /**
+-     Set the parser's maximum stack depth (maximum number of open elements). When reached, new open elements will be
+-     removed to prevent excessive nesting. Defaults to 512 for the HTML parser, and unlimited for the XML
+-     parser.
+-
+-     @param maxDepth maximum parser depth; must be >= 1
+-     @return this Parser, for chaining
+-     */
+-    public Parser setMaxDepth(int maxDepth) {
+-        Validate.isTrue(maxDepth >= 1, "maxDepth must be >= 1");
+-        this.maxDepth = maxDepth;
+-        return this;
+-    }
+-
+-    /**
+-     * Get the maximum parser depth (maximum number of open elements).
+-     * @return the current max parser depth
+-     */
+-    public int getMaxDepth() {
+-        return maxDepth;
+-    }
+-
+-    /**
+-     Set a custom TagSet to use for this Parser. This allows you to define your own tags, and control how they are
+-     parsed. For example, you can set a tag to preserve whitespace, or to be treated as a block tag.
+-     <p>You can start with the {@link TagSet#Html()} defaults and customize, or a new empty TagSet.</p>
+-
+-     @param tagSet the TagSet to use. This gets copied, so that changes that the parse makes (tags found in the document will be added) do not clobber the original TagSet.
+-     @return this Parser
+-     @since 1.20.1
+-     */
+-    public Parser tagSet(TagSet tagSet) {
+-        Validate.notNull(tagSet);
+-        this.tagSet = new TagSet(tagSet); // copy it as we are going to mutate it
+-        return this;
+-    }
+-
+-    /**
+-     Get the current TagSet for this Parser, which will be either this parser's default, or one that you have set.
+-     @return the current TagSet. After the parse, this will contain any new tags that were found in the document.
+-     @since 1.20.1
+-     */
+-    public TagSet tagSet() {
+-        if (tagSet == null)
+-            tagSet = treeBuilder.defaultTagSet();
+-        return tagSet;
+-    }
+-
+-    public String defaultNamespace() {
+-        return getTreeBuilder().defaultNamespace();
+-    }
+-
+-    // static parse functions below
+-    /**
+-     * Parse HTML into a Document.
+-     *
+-     * @param html HTML to parse
+-     * @param baseUri base URI of document (i.e. original fetch location), for resolving relative URLs.
+-     *
+-     * @return parsed Document
+-     */
+-    public static Document parse(String html, String baseUri) {
+-        TreeBuilder treeBuilder = new HtmlTreeBuilder();
+-        return treeBuilder.parse(new StringReader(html), baseUri, new Parser(treeBuilder));
+-    }
+-
+-    /**
+-     * Parse a fragment of HTML into a list of nodes. The context element, if supplied, supplies parsing context.
+-     *
+-     * @param fragmentHtml the fragment of HTML to parse
+-     * @param context (optional) the element that this HTML fragment is being parsed for (i.e. for inner HTML). This
+-     * provides stack context (for implicit element creation).
+-     * @param baseUri base URI of document (i.e. original fetch location), for resolving relative URLs.
+-     *
+-     * @return list of nodes parsed from the input HTML. Note that the context element, if supplied, is not modified.
+-     */
+-    public static List<Node> parseFragment(String fragmentHtml, Element context, String baseUri) {
+-        HtmlTreeBuilder treeBuilder = new HtmlTreeBuilder();
+-        return treeBuilder.parseFragment(new StringReader(fragmentHtml), context, baseUri, new Parser(treeBuilder));
+-    }
+-
+-    /**
+-     * Parse a fragment of HTML into a list of nodes. The context element, if supplied, supplies parsing context.
+-     *
+-     * @param fragmentHtml the fragment of HTML to parse
+-     * @param context (optional) the element that this HTML fragment is being parsed for (i.e. for inner HTML). This
+-     * provides stack context (for implicit element creation).
+-     * @param baseUri base URI of document (i.e. original fetch location), for resolving relative URLs.
+-     * @param errorList list to add errors to
+-     *
+-     * @return list of nodes parsed from the input HTML. Note that the context element, if supplied, is not modified.
+-     */
+-    public static List<Node> parseFragment(String fragmentHtml, Element context, String baseUri, ParseErrorList errorList) {
+-        HtmlTreeBuilder treeBuilder = new HtmlTreeBuilder();
+-        Parser parser = new Parser(treeBuilder);
+-        parser.errors = errorList;
+-        return treeBuilder.parseFragment(new StringReader(fragmentHtml), context, baseUri, parser);
+-    }
+-
+-    /**
+-     * Parse a fragment of XML into a list of nodes.
+-     *
+-     * @param fragmentXml the fragment of XML to parse
+-     * @param baseUri base URI of document (i.e. original fetch location), for resolving relative URLs.
+-     * @return list of nodes parsed from the input XML.
+-     */
+-    public static List<Node> parseXmlFragment(String fragmentXml, String baseUri) {
+-        XmlTreeBuilder treeBuilder = new XmlTreeBuilder();
+-        return treeBuilder.parseFragment(new StringReader(fragmentXml), null, baseUri, new Parser(treeBuilder));
+-    }
+-
+-    /**
+-     * Parse a fragment of HTML into the {@code body} of a Document.
+-     *
+-     * @param bodyHtml fragment of HTML
+-     * @param baseUri base URI of document (i.e. original fetch location), for resolving relative URLs.
+-     *
+-     * @return Document, with empty head, and HTML parsed into body
+-     */
+-    public static Document parseBodyFragment(String bodyHtml, String baseUri) {
+-        Document doc = Document.createShell(baseUri);
+-        Element body = doc.body();
+-        List<Node> nodeList = parseFragment(bodyHtml, body, baseUri);
+-        body.appendChildren(nodeList);
+-        return doc;
+-    }
+-
+-    /**
+-     Utility method to unescape HTML entities from a string.
+-     <p>To track errors while unescaping, use
+-     {@link #unescape(String, boolean)} with a Parser instance that has error tracking enabled.</p>
+-
+-     @param string HTML escaped string
+-     @param inAttribute if the string is to be escaped in strict mode (as attributes are)
+-     @return an unescaped string
+-     @see #unescape(String, boolean)
+-     */
+-    public static String unescapeEntities(String string, boolean inAttribute) {
+-        Validate.notNull(string);
+-        if (string.indexOf('&') < 0) return string; // nothing to unescape
+-        return Parser.htmlParser().unescape(string, inAttribute);
+-    }
+-
+-    /**
+-     Utility method to unescape HTML entities from a string, using this {@code Parser}'s configuration (for example, to
+-     collect errors while unescaping).
+-
+-     @param string HTML escaped string
+-     @param inAttribute if the string is to be escaped in strict mode (as attributes are)
+-     @return an unescaped string
+-     @see #setTrackErrors(int)
+-     @see #unescapeEntities(String, boolean)
+-     */
+-    public String unescape(String string, boolean inAttribute) {
+-        Validate.notNull(string);
+-        if (string.indexOf('&') < 0) return string; // nothing to unescape
+-        this.treeBuilder.initialiseParse(new StringReader(string), "", this);
+-        Tokeniser tokeniser = new Tokeniser(this.treeBuilder);
+-        return tokeniser.unescapeEntities(inAttribute);
+-    }
+-
+-    // builders
+-
+-    /**
+-     * Create a new HTML parser. This parser treats input as HTML5, and enforces the creation of a normalised document,
+-     * based on a knowledge of the semantics of the incoming tags.
+-     * @return a new HTML parser.
+-     */
+-    public static Parser htmlParser() {
+-        return new Parser(new HtmlTreeBuilder());
+-    }
+-
+-    /**
+-     * Create a new XML parser. This parser assumes no knowledge of the incoming tags and does not treat it as HTML,
+-     * rather creates a simple tree directly from the input.
+-     * @return a new simple XML parser.
+-     */
+-    public static Parser xmlParser() {
+-        return new Parser(new XmlTreeBuilder()).setMaxDepth(Integer.MAX_VALUE);
+-    }
+-}
+diff --git a/src/main/java/org/jsoup/parser/StreamParser.java b/src/main/java/org/jsoup/parser/StreamParser.java
+index 2e8827e4..0be70e71 100644
+--- a/src/main/java/org/jsoup/parser/StreamParser.java
++++ b/src/main/java/org/jsoup/parser/StreamParser.java
+@@ -1,6 +1,7 @@
+ package org.jsoup.parser;
+ 
+ import org.jsoup.Connection;
++import org.jsoup.parser.config.Parser;
+ import org.jsoup.helper.Validate;
+ import org.jsoup.nodes.Document;
+ import org.jsoup.nodes.Element;
+diff --git a/src/main/java/org/jsoup/parser/Tag.java b/src/main/java/org/jsoup/parser/Tag.java
+deleted file mode 100644
+index c443f15c..00000000
+--- a/src/main/java/org/jsoup/parser/Tag.java
++++ /dev/null
+@@ -1,384 +0,0 @@
+-package org.jsoup.parser;
+-
+-import org.jspecify.annotations.Nullable;
+-
+-import java.util.Objects;
+-
+-import static org.jsoup.parser.Parser.NamespaceHtml;
+-
+-/**
+- A Tag represents an Element's name and configured options, common throughout the Document. Options may affect the parse
+- and output.
+-
+- @see TagSet
+- @see Parser#tagSet(TagSet) */
+-public class Tag implements Cloneable {
+-    /** Tag option: the tag is known (specifically defined). This impacts if options may need to be inferred (when not
+-     known) in, e.g., the pretty-printer. Set when a tag is added to a TagSet, or when settings are set(). */
+-    public static int Known = 1;
+-    /** Tag option: the tag is a void tag (e.g., {@code <img>}), that can contain no children, and in HTML does not require closing. */
+-    public static int Void = 1 << 1;
+-    /** Tag option: the tag is a block tag (e.g., {@code <div>}, {@code <p>}). Causes the element to be indented when pretty-printing. If not a block, it is inline. */
+-    public static int Block = 1 << 2;
+-    /** Tag option: pretty-print hint for block tags whose inline children should stay inline. (Must also set Block.) */
+-    public static int InlineContainer = 1 << 3;
+-    /** Tag option: the tag can self-close (e.g., {@code <foo />}). */
+-    public static int SelfClose = 1 << 4;
+-    /** Tag option: the tag has been seen self-closing in this parse. */
+-    public static int SeenSelfClose = 1 << 5;
+-    /** Tag option: the tag preserves whitespace (e.g., {@code <pre>}). */
+-    public static int PreserveWhitespace = 1 << 6;
+-    /** Tag option: the tag is an RCDATA element that can have text and character references (e.g., {@code <title>}, {@code <textarea>}). */
+-    public static int RcData = 1 << 7;
+-    /** Tag option: the tag is a Data element that can have text but not character references (e.g., {@code <style>}, {@code <script>}). */
+-    public static int Data = 1 << 8;
+-    /** Tag option: the tag's value will be included when submitting a form (e.g., {@code <input>}). */
+-    public static int FormSubmittable = 1 << 9;
+-    /** Tag option: readable text boundary for {@code Element.text()}, used for controls, widgets, and embedded objects. */
+-    public static int TextBoundary = 1 << 10;
+-
+-    String namespace;
+-    String tagName;
+-    String normalName; // always the lower case version of this tag, regardless of case preservation mode
+-    int options = 0;
+-    private int parserOptions = 0; // internal tree-builder options; see HtmlTagOptions
+-
+-    /**
+-     Create a new Tag, with the given name and namespace.
+-     <p>The tag is not implicitly added to any TagSet.</p>
+-     @param tagName the name of the tag. Case-sensitive.
+-     @param namespace the namespace for the tag.
+-     @see TagSet#valueOf(String, String)
+-     @since 1.20.1
+-     */
+-    public Tag(String tagName, String namespace) {
+-        this(tagName, ParseSettings.normalName(tagName), namespace);
+-    }
+-
+-    /**
+-     Create a new Tag, with the given name, in the HTML namespace.
+-     <p>The tag is not implicitly added to any TagSet.</p>
+-     @param tagName the name of the tag. Case-sensitive.
+-     @see TagSet#valueOf(String, String)
+-     @since 1.20.1
+-     */
+-    public Tag(String tagName) {
+-        this(tagName, ParseSettings.normalName(tagName), NamespaceHtml);
+-    }
+-
+-    /** Path for TagSet defaults, no options set; normal name is already LC. */
+-    Tag(String tagName, String normalName, String namespace) {
+-        this.tagName = tagName;
+-        this.normalName = normalName;
+-        this.namespace = namespace;
+-        setParserOptions();
+-    }
+-
+-    /**
+-     * Get this tag's name.
+-     *
+-     * @return the tag's name
+-     */
+-    public String getName() {
+-        return tagName;
+-    }
+-
+-    /**
+-     Get this tag's name.
+-     @return the tag's name
+-     */
+-    public String name() {
+-        return tagName;
+-    }
+-
+-    /**
+-     Change the tag's name. As Tags are reused throughout a Document, this will change the name for all uses of this tag.
+-     @param tagName the new name of the tag. Case-sensitive.
+-     @return this tag
+-     @since 1.20.1
+-     */
+-    public Tag name(String tagName) {
+-        this.tagName = tagName;
+-        this.normalName = ParseSettings.normalName(tagName);
+-        setParserOptions();
+-        return this;
+-    }
+-
+-    /**
+-     Get this tag's prefix, if it has one; else the empty string.
+-     <p>For example, {@code <book:title>} has prefix {@code book}, and tag name {@code book:title}.</p>
+-     @return the tag's prefix
+-     @since 1.20.1
+-     */
+-    public String prefix() {
+-        int pos = tagName.indexOf(':');
+-        if (pos == -1) return "";
+-        else return tagName.substring(0, pos);
+-    }
+-
+-    /**
+-     Get this tag's local name. The local name is the name without the prefix (if any).
+-     <p>For exmaple, {@code <book:title>} has local name {@code title}, and tag name {@code book:title}.</p>
+-     @return the tag's local name
+-     @since 1.20.1
+-     */
+-    public String localName() {
+-        int pos = tagName.indexOf(':');
+-        if (pos == -1) return tagName;
+-        else return tagName.substring(pos + 1);
+-    }
+-
+-    /**
+-     * Get this tag's normalized (lowercased) name.
+-     * @return the tag's normal name.
+-     */
+-    public String normalName() {
+-        return normalName;
+-    }
+-
+-    /**
+-     Get this tag's namespace.
+-     @return the tag's namespace
+-     */
+-    public String namespace() {
+-        return namespace;
+-    }
+-
+-    /**
+-     Set the tag's namespace. As Tags are reused throughout a Document, this will change the namespace for all uses of this tag.
+-     @param namespace the new namespace of the tag.
+-     @return this tag
+-     @since 1.20.1
+-     */
+-    public Tag namespace(String namespace) {
+-        this.namespace = namespace;
+-        setParserOptions();
+-        return this;
+-    }
+-
+-    /**
+-     Set an option on this tag.
+-     <p>Once a tag has a setting applied, it will be considered a known tag.</p>
+-     @param option the option to set
+-     @return this tag
+-     @since 1.20.1
+-     */
+-    public Tag set(int option) {
+-        options |= option;
+-        options |= Tag.Known; // considered known if touched
+-        return this;
+-    }
+-
+-    /**
+-     Test if an option is set on this tag.
+-
+-     @param option the option to test
+-     @return true if the option is set
+-     @since 1.20.1
+-     */
+-    public boolean is(int option) {
+-        return (options & option) != 0;
+-    }
+-
+-    /**
+-     Clear (unset) an option from this tag.
+-     @param option the option to clear
+-     @return this tag
+-     @since 1.20.1
+-     */
+-    public Tag clear(int option) {
+-        options &= ~option;
+-        // considered known if touched, unless explicitly clearing known
+-        if (option != Tag.Known) options |= Tag.Known;
+-        return this;
+-    }
+-
+-    /**
+-     Set the cached parser options from the current name and namespace.
+-     */
+-    void setParserOptions() {
+-        parserOptions = HtmlTagOptions.optionsFor(normalName, namespace);
+-    }
+-
+-    /**
+-     Test if this tag has the given parser option.
+-     */
+-    boolean hasParserOption(int option) {
+-        return (parserOptions & option) != 0;
+-    }
+-
+-    /**
+-     * Get a Tag by name. If not previously defined (unknown), returns a new generic tag, that can do anything.
+-     * <p>
+-     * Pre-defined tags (p, div etc) will be ==, but unknown tags are not registered and will only .equals().
+-     * </p>
+-     * 
+-     * @param tagName Name of tag, e.g. "p". Case-insensitive.
+-     * @param namespace the namespace for the tag.
+-     * @param settings used to control tag name sensitivity
+-     * @see TagSet
+-     * @return The tag, either defined or new generic.
+-     */
+-    public static Tag valueOf(String tagName, String namespace, ParseSettings settings) {
+-        return TagSet.Html().valueOf(tagName, null, namespace, settings.preserveTagCase());
+-    }
+-
+-    /**
+-     * Get a Tag by name. If not previously defined (unknown), returns a new generic tag, that can do anything.
+-     * <p>
+-     * Pre-defined tags (P, DIV etc) will be ==, but unknown tags are not registered and will only .equals().
+-     * </p>
+-     *
+-     * @param tagName Name of tag, e.g. "p". <b>Case sensitive</b>.
+-     * @return The tag, either defined or new generic.
+-     * @see #valueOf(String tagName, String namespace, ParseSettings settings)
+-     */
+-    public static Tag valueOf(String tagName) {
+-        return valueOf(tagName, NamespaceHtml, ParseSettings.preserveCase);
+-    }
+-
+-    /**
+-     * Get a Tag by name. If not previously defined (unknown), returns a new generic tag, that can do anything.
+-     * <p>
+-     * Pre-defined tags (P, DIV etc) will be ==, but unknown tags are not registered and will only .equals().
+-     * </p>
+-     *
+-     * @param tagName Name of tag, e.g. "p". <b>Case sensitive</b>.
+-     * @param settings used to control tag name sensitivity
+-     * @return The tag, either defined or new generic.
+-     * @see #valueOf(String tagName, String namespace, ParseSettings settings)
+-     */
+-    public static Tag valueOf(String tagName, ParseSettings settings) {
+-        return valueOf(tagName, NamespaceHtml, settings);
+-    }
+-
+-    /**
+-     * Gets if this is a block tag.
+-     *
+-     * @return if block tag
+-     */
+-    public boolean isBlock() {
+-        return (options & Block) != 0;
+-    }
+-
+-    /**
+-     Get if this is an InlineContainer tag.
+-
+-     @return true if this tag has the InlineContainer pretty-print hint.
+-     @deprecated internal pretty-printing flag; use {@link #isInline()} or {@link #isBlock()} to check layout intent. Will be removed in jsoup 1.24.1.
+-     */
+-    @Deprecated public boolean formatAsBlock() {
+-        return (options & InlineContainer) != 0;
+-    }
+-
+-    /**
+-     * Gets if this tag is an inline tag. Just the opposite of isBlock.
+-     *
+-     * @return if this tag is an inline tag.
+-     */
+-    public boolean isInline() {
+-        return (options & Block) == 0;
+-    }
+-
+-    /**
+-     Get if this is void (aka empty) tag.
+-
+-     @return true if this is a void tag
+-     */
+-    public boolean isEmpty() {
+-        return (options & Void) != 0;
+-    }
+-
+-    /**
+-     * Get if this tag is self-closing.
+-     *
+-     * @return if this tag should be output as self-closing.
+-     */
+-    public boolean isSelfClosing() {
+-        return (options & SelfClose) != 0 || (options & Void) != 0;
+-    }
+-
+-    /**
+-     * Get if this is a pre-defined tag in the TagSet, or was auto created on parsing.
+-     *
+-     * @return if a known tag
+-     */
+-    public boolean isKnownTag() {
+-        return (options & Known) != 0;
+-    }
+-
+-    /**
+-     * Check if this tag name is a known HTML tag.
+-     *
+-     * @param tagName name of tag
+-     * @return if known HTML tag
+-     */
+-    public static boolean isKnownTag(String tagName) {
+-        return TagSet.HtmlTagSet.get(tagName, NamespaceHtml) != null;
+-    }
+-
+-    /**
+-     * Get if this tag should preserve whitespace within child text nodes.
+-     *
+-     * @return if preserve whitespace
+-     */
+-    public boolean preserveWhitespace() {
+-        return (options & PreserveWhitespace) != 0;
+-    }
+-
+-    /**
+-     * Get if this tag represents an element that should be submitted with a form. E.g. input, option
+-     * @return if submittable with a form
+-     */
+-    public boolean isFormSubmittable() {
+-        return (options & FormSubmittable) != 0;
+-    }
+-
+-    void setSeenSelfClose() {
+-        options |= Tag.SeenSelfClose; // does not change known status
+-    }
+-
+-    /**
+-     If this Tag uses a specific text TokeniserState for its content, returns that; otherwise null.
+-     */
+-    @Nullable TokeniserState textState() {
+-        if (is(RcData)) return TokeniserState.Rcdata;
+-        if (is(Data))   return TokeniserState.Rawtext;
+-        else            return null;
+-    }
+-
+-    @Override
+-    public boolean equals(Object o) {
+-        if (this == o) return true;
+-        if (!(o instanceof Tag)) return false;
+-        Tag tag = (Tag) o;
+-        return Objects.equals(tagName, tag.tagName) &&
+-            Objects.equals(namespace, tag.namespace) &&
+-            Objects.equals(normalName, tag.normalName) &&
+-            options == tag.options;
+-    }
+-
+-    /**
+-     Hashcode of this Tag, consisting of the tag name and namespace.
+-     */
+-    @Override
+-    public int hashCode() {
+-        return Objects.hash(tagName, namespace); // options not included so that mutations do not prevent use as a key
+-    }
+-
+-    @Override
+-    public String toString() {
+-        return tagName;
+-    }
+-
+-    @Override
+-    protected Tag clone() {
+-        try {
+-            return (Tag) super.clone();
+-        } catch (CloneNotSupportedException e) {
+-            throw new RuntimeException(e);
+-        }
+-    }
+-
+-
+-}
+diff --git a/src/main/java/org/jsoup/parser/TagSet.java b/src/main/java/org/jsoup/parser/TagSet.java
+deleted file mode 100644
+index e7e12de4..00000000
+--- a/src/main/java/org/jsoup/parser/TagSet.java
++++ /dev/null
+@@ -1,311 +0,0 @@
+-package org.jsoup.parser;
+-
+-import org.jsoup.helper.Validate;
+-import org.jsoup.internal.SharedConstants;
+-import org.jspecify.annotations.Nullable;
+-
+-import java.util.ArrayList;
+-import java.util.HashMap;
+-import java.util.Map;
+-import java.util.Objects;
+-import java.util.function.Consumer;
+-
+-import static org.jsoup.parser.Parser.NamespaceHtml;
+-import static org.jsoup.parser.Parser.NamespaceMathml;
+-import static org.jsoup.parser.Parser.NamespaceSvg;
+-
+-/**
+- A TagSet controls the {@link Tag} configuration for a Document's parse, and its serialization. It contains the initial
+- defaults, and after the parse, any additionally discovered tags.
+-
+- @see Parser#tagSet(TagSet)
+- @since 1.20.1
+- */
+-public class TagSet {
+-    static final TagSet HtmlTagSet = initHtmlDefault();
+-
+-    private final Map<String, Map<String, Tag>> tags = new HashMap<>(); // namespace -> tag name -> Tag
+-    private final @Nullable TagSet source; // internal fallback for lazy tag copies
+-    private @Nullable ArrayList<Consumer<Tag>> customizers; // optional onNewTag tag customizer
+-
+-    /**
+-     Returns a mutable copy of the default HTML tag set.
+-     */
+-    public static TagSet Html() {
+-        return new TagSet(HtmlTagSet, null);
+-    }
+-
+-    private TagSet(@Nullable TagSet source, @Nullable ArrayList<Consumer<Tag>> customizers) {
+-        this.source = source;
+-        this.customizers = customizers;
+-    }
+-
+-    public TagSet() {
+-        this(null, null);
+-    }
+-
+-    /**
+-     Creates a new TagSet by copying the current tags and customizers from the provided source TagSet. Changes made to
+-     one TagSet will not affect the other.
+-     @param template the TagSet to copy
+-     */
+-    public TagSet(TagSet template) {
+-        this(template.source, copyCustomizers(template));
+-        // copy tags eagerly; any lazy pull-through should come only from the root source (which would be the HTML defaults), not the template itself.
+-        // that way the template tagset is not mutated when we do read through
+-        if (template.tags.isEmpty()) return;
+-
+-        for (Map.Entry<String, Map<String, Tag>> namespaceEntry : template.tags.entrySet()) {
+-            Map<String, Tag> nsTags = new HashMap<>(namespaceEntry.getValue().size());
+-            for (Map.Entry<String, Tag> tagEntry : namespaceEntry.getValue().entrySet()) {
+-                nsTags.put(tagEntry.getKey(), tagEntry.getValue().clone());
+-            }
+-            tags.put(namespaceEntry.getKey(), nsTags);
+-        }
+-    }
+-
+-    private static @Nullable ArrayList<Consumer<Tag>> copyCustomizers(TagSet base) {
+-        if (base.customizers == null) return null;
+-        return new ArrayList<>(base.customizers);
+-    }
+-
+-    /**
+-     Insert a tag into this TagSet. If the tag already exists, it is replaced.
+-     <p>Tags explicitly added like this are considered to be known tags (vs those that are dynamically created via
+-     .valueOf() if not already in the set.</p>
+-
+-     @param tag the tag to add
+-     @return this TagSet
+-     */
+-    public TagSet add(Tag tag) {
+-        tag.set(Tag.Known);
+-        doAdd(tag);
+-        return this;
+-    }
+-
+-    /** Adds the tag, but does not set defined. Used in .valueOf */
+-    private void doAdd(Tag tag) {
+-        if (customizers != null) {
+-            for (Consumer<Tag> customizer : customizers) {
+-                customizer.accept(tag);
+-            }
+-        }
+-        tag.setParserOptions();
+-
+-        tags.computeIfAbsent(tag.namespace, ns -> new HashMap<>())
+-            .put(tag.tagName, tag);
+-    }
+-
+-    /**
+-     Get an existing Tag from this TagSet by tagName and namespace. The tag name is not normalized, to support mixed
+-     instances.
+-
+-     @param tagName the case-sensitive tag name
+-     @param namespace the namespace
+-     @return the tag, or null if not found
+-     */
+-    public @Nullable Tag get(String tagName, String namespace) {
+-        Validate.notNull(tagName);
+-        Validate.notNull(namespace);
+-
+-        // get from our tags
+-        Map<String, Tag> nsTags = tags.get(namespace);
+-        if (nsTags != null) {
+-            Tag tag = nsTags.get(tagName);
+-            if (tag != null) {
+-                return tag;
+-            }
+-        }
+-
+-        // not found; clone on demand from source if exists
+-        if (source != null) {
+-            Tag tag = source.get(tagName, namespace);
+-            if (tag != null) {
+-                Tag copy = tag.clone();
+-                doAdd(copy);
+-                return copy;
+-            }
+-        }
+-
+-        return null;
+-    }
+-
+-    /**
+-     Tag.valueOf with the normalName via the token.normalName, to save redundant lower-casing passes.
+-     Provide a null normalName unless we already have one; will be normalized if required from tagName.
+-     */
+-    Tag valueOf(String tagName, @Nullable String normalName, String namespace, boolean preserveTagCase) {
+-        Validate.notNull(tagName);
+-        Validate.notNull(namespace);
+-        tagName = tagName.trim();
+-        Validate.notEmpty(tagName);
+-        Tag tag = get(tagName, namespace);
+-        if (tag != null) return tag;
+-
+-        // not found by tagName, try by normal
+-        if (normalName == null) normalName = ParseSettings.normalName(tagName);
+-        tagName = preserveTagCase ? tagName : normalName;
+-        tag = get(normalName, namespace);
+-        if (tag != null) {
+-            if (preserveTagCase && !tagName.equals(normalName)) {
+-                tag = tag.clone(); // copy so that the name update doesn't reset all instances
+-                tag.tagName = tagName;
+-                doAdd(tag);
+-            }
+-            return tag;
+-        }
+-
+-        // not defined: return a new one
+-        tag = new Tag(tagName, normalName, namespace);
+-        doAdd(tag);
+-
+-        return tag;
+-    }
+-
+-    /**
+-     Get a Tag by name from this TagSet. If not previously defined (unknown), returns a new tag.
+-     <p>New tags will be added to this TagSet.</p>
+-
+-     @param tagName Name of tag, e.g. "p".
+-     @param namespace the namespace for the tag.
+-     @param settings used to control tag name sensitivity
+-     @return The tag, either defined or new generic.
+-     */
+-    public Tag valueOf(String tagName, String namespace, ParseSettings settings) {
+-        return valueOf(tagName, null, namespace, settings.preserveTagCase());
+-    }
+-
+-    /**
+-     Get a Tag by name from this TagSet. If not previously defined (unknown), returns a new tag.
+-     <p>New tags will be added to this TagSet.</p>
+-
+-     @param tagName Name of tag, e.g. "p". <b>Case-sensitive</b>.
+-     @param namespace the namespace for the tag.
+-     @return The tag, either defined or new generic.
+-     @see #valueOf(String tagName, String namespace, ParseSettings settings)
+-     */
+-    public Tag valueOf(String tagName, String namespace) {
+-        return valueOf(tagName, namespace, ParseSettings.preserveCase);
+-    }
+-
+-    /**
+-     Register a callback to customize each {@link Tag} as it's added to this TagSet.
+-     <p>Customizers are invoked once per Tag, when they are added (explicitly or via the valueOf methods).</p>
+-
+-     <p>For example, to allow all unknown tags to be self-closing during when parsing as HTML:</p>
+-     <pre><code>
+-     Parser parser = Parser.htmlParser();
+-     parser.tagSet().onNewTag(tag -> {
+-     if (!tag.isKnownTag())
+-        tag.set(Tag.SelfClose);
+-     });
+-
+-     Document doc = Jsoup.parse(html, parser);
+-     </code></pre>
+-
+-     @param customizer a {@code Consumer<Tag>} that will be called for each newly added or cloned Tag; callers can
+-     inspect and modify the Tag's state (e.g. set options)
+-     @return this TagSet, to allow method chaining
+-     @since 1.21.0
+-     */
+-    public TagSet onNewTag(Consumer<Tag> customizer) {
+-        Validate.notNull(customizer);
+-        if (customizers == null)
+-            customizers = new ArrayList<>();
+-        customizers.add(customizer);
+-        return this;
+-    }
+-
+-    @Override
+-    public boolean equals(Object o) {
+-        if (!(o instanceof TagSet)) return false;
+-        TagSet tagSet = (TagSet) o;
+-        return Objects.equals(tags, tagSet.tags);
+-    }
+-
+-    @Override
+-    public int hashCode() {
+-        return Objects.hashCode(tags);
+-    }
+-
+-    // Default HTML initialization
+-
+-    /**
+-     Initialize the default HTML tag set.
+-     */
+-    static TagSet initHtmlDefault() {
+-        String[] blockTags = {
+-            "html", "head", "body", "frameset", "script", "noscript", "style", "meta", "link", "title", "frame",
+-            "noframes", "section", "nav", "aside", "hgroup", "header", "footer", "p", "h1", "h2", "h3", "h4", "h5",
+-            "h6", "dialog", "search",
+-            "ul", "ol", "pre", "div", "blockquote", "hr", "address", "figure", "figcaption", "form", "fieldset",
+-            "dl", "dt", "dd", "li", "table", "caption", "thead", "tfoot", "tbody", "colgroup", "col", "tr", "th",
+-            "td", "details", "menu", "plaintext", "template", "article", "main",
+-            "center",
+-            "dir", "applet", "marquee", "listing", // deprecated but still known / special handling
+-            "#root" // the outer Document
+-        };
+-        String[] inlineTags = {
+-            "object", "base", "font", "tt", "i", "b", "u", "big", "small", "em", "strong", "dfn", "code", "samp", "kbd",
+-            "var", "cite", "abbr", "time", "acronym", "mark", "ruby", "rt", "rp", "rtc", "a", "img", "wbr", "map",
+-            "q",
+-            "sub", "sup", "bdo", "iframe", "embed", "span", "input", "select", "textarea", "label", "audio", "video", "canvas", "optgroup",
+-            "option", "legend", "datalist", "keygen", "output", "progress", "meter", "area", "param", "source", "track",
+-            "summary", "command", "device", "basefont", "bgsound", "menuitem", "data", "bdi", "s", "strike", "nobr",
+-            "ins", "del", "button", "picture", "slot",
+-            "rb", // deprecated but still known / special handling
+-        };
+-        String[] inlineContainers = { // pretty-print hint: block tags whose inline children should stay inline
+-            "title", "p", "h1", "h2", "h3", "h4", "h5", "h6", "pre", "address", "li", "th", "td", "script", "style"
+-        };
+-        String[] voidTags = {
+-            "meta", "link", "base", "frame", "img", "br", "wbr", "embed", "hr", "input", "keygen", "col", "command",
+-            "device", "area", "basefont", "bgsound", "menuitem", "param", "source", "track"
+-        };
+-        String[] preserveWhitespaceTags = {
+-            "pre", "plaintext", "title", "textarea", "script"
+-        };
+-        String[] rcdataTags = { "title", "textarea" };
+-        String[] dataTags = { "iframe", "noembed", "noframes", "script", "style", "xmp" };
+-        String[] formSubmitTags = SharedConstants.FormSubmitTags;
+-        String[] textBoundaryTags = { // text() readability hint for controls, widgets, and embedded objects
+-            "button", "input", "select", "textarea", "option", "output", "progress", "meter",
+-            "img", "picture", "audio", "video", "canvas", "object", "embed", "iframe"
+-        };
+-        String[] blockMathTags = {"math"};
+-        String[] inlineMathTags = {"mi", "mo", "msup", "mn", "mtext"};
+-        String[] blockSvgTags = {"svg", "femerge", "femergenode"}; // note these are LC versions, but actually preserve case
+-        String[] inlineSvgTags = {"text"};
+-        String[] dataSvgTags = {"script"};
+-
+-        return new TagSet()
+-            .setupTags(NamespaceHtml, blockTags, tag -> tag.set(Tag.Block))
+-            .setupTags(NamespaceHtml, inlineTags, tag -> tag.set(0))
+-            .setupTags(NamespaceHtml, inlineContainers, tag -> tag.set(Tag.InlineContainer))
+-            .setupTags(NamespaceHtml, voidTags, tag -> tag.set(Tag.Void))
+-            .setupTags(NamespaceHtml, preserveWhitespaceTags, tag -> tag.set(Tag.PreserveWhitespace))
+-            .setupTags(NamespaceHtml, rcdataTags, tag -> tag.set(Tag.RcData))
+-            .setupTags(NamespaceHtml, dataTags, tag -> tag.set(Tag.Data))
+-            .setupTags(NamespaceHtml, formSubmitTags, tag -> tag.set(Tag.FormSubmittable))
+-            .setupTags(NamespaceHtml, textBoundaryTags, tag -> tag.set(Tag.TextBoundary))
+-            .setupTags(NamespaceMathml, blockMathTags, tag -> tag.set(Tag.Block))
+-            .setupTags(NamespaceMathml, inlineMathTags, tag -> tag.set(0))
+-            .setupTags(NamespaceSvg, blockSvgTags, tag -> tag.set(Tag.Block))
+-            .setupTags(NamespaceSvg, inlineSvgTags, tag -> tag.set(0))
+-            .setupTags(NamespaceSvg, dataSvgTags, tag -> tag.set(Tag.Data))
+-            ;
+-    }
+-
+-    private TagSet setupTags(String namespace, String[] tagNames, Consumer<Tag> tagModifier) {
+-        for (String tagName : tagNames) {
+-            Tag tag = get(tagName, namespace);
+-            if (tag == null) {
+-                tag = new Tag(tagName, tagName, namespace); // normal name is already normal here
+-                tag.options = 0; // clear defaults
+-                add(tag);
+-            }
+-            tagModifier.accept(tag);
+-        }
+-        return this;
+-    }
+-}
+diff --git a/src/main/java/org/jsoup/parser/Token.java b/src/main/java/org/jsoup/parser/Token.java
+index 34da74e2..93304f7f 100644
+--- a/src/main/java/org/jsoup/parser/Token.java
++++ b/src/main/java/org/jsoup/parser/Token.java
+@@ -1,5 +1,8 @@
+ package org.jsoup.parser;
+ 
++import org.jsoup.parser.config.ParseSettings;
++import org.jsoup.parser.lex.CharacterReader;
++
+ import org.jsoup.helper.Validate;
+ import org.jsoup.nodes.Attributes;
+ import org.jsoup.nodes.NodeInternals;
+diff --git a/src/main/java/org/jsoup/parser/TokenQueue.java b/src/main/java/org/jsoup/parser/TokenQueue.java
+deleted file mode 100644
+index f81da33b..00000000
+--- a/src/main/java/org/jsoup/parser/TokenQueue.java
++++ /dev/null
+@@ -1,475 +0,0 @@
+-package org.jsoup.parser;
+-
+-import org.jsoup.internal.StringUtil;
+-import org.jsoup.helper.Validate;
+-
+-/**
+- A character reader with helpers focusing on parsing CSS selectors. Used internally by jsoup. API subject to changes.
+- */
+-
+-public class TokenQueue implements AutoCloseable {
+-    private static final char Esc = '\\'; // escape char for chomp balanced.
+-    private static final char Hyphen_Minus = '-';
+-    private static final char Unicode_Null = '\u0000';
+-    private static final char Replacement = '\uFFFD';
+-
+-    private final CharacterReader reader;
+-
+-    /**
+-     Create a new TokenQueue.
+-     @param data string of data to back queue.
+-     */
+-    public TokenQueue(String data) {
+-        reader = new CharacterReader(data);
+-    }
+-
+-    /**
+-     Is the queue empty?
+-     @return true if no data left in queue.
+-     */
+-    public boolean isEmpty() {
+-        return reader.isEmpty();
+-    }
+-
+-    /**
+-     Consume one character off queue.
+-     @return first character on queue.
+-     */
+-    public char consume() {
+-        return reader.consume();
+-    }
+-
+-    /**
+-     Drops the next character off the queue.
+-     */
+-    public void advance() {
+-        if (!isEmpty()) reader.advance();
+-    }
+-
+-    char current() {
+-        return reader.current();
+-    }
+-
+-    /**
+-     Tests if the next characters on the queue match the sequence, case-insensitively.
+-     @param seq String to check queue for.
+-     @return true if the next characters match.
+-     */
+-    public boolean matches(String seq) {
+-        return reader.matchesIgnoreCase(seq);
+-    }
+-
+-    /** Tests if the next character on the queue matches the character, case-sensitively. */
+-    public boolean matches(char c) {
+-        return reader.matches(c);
+-    }
+-
+-    /**
+-     Tests if the next characters match any of the sequences, case-<b>sensitively</b>.
+-     @param seq list of chars to case-sensitively check for
+-     @return true of any matched, false if none did
+-     */
+-    public boolean matchesAny(char... seq) {
+-        return reader.matchesAny(seq);
+-    }
+-
+-    /**
+-     If the queue case-insensitively matches the supplied string, consume it off the queue.
+-     @param seq String to search for, and if found, remove from queue.
+-     @return true if found and removed, false if not found.
+-     */
+-    public boolean matchChomp(String seq) {
+-        return reader.matchConsumeIgnoreCase(seq);
+-    }
+-
+-    /** If the queue matches the supplied (case-sensitive) character, consume it off the queue. */
+-    public boolean matchChomp(char c) {
+-        if (reader.matches(c)) {
+-            consume();
+-            return true;
+-        }
+-        return false;
+-    }
+-
+-    /**
+-     Tests if queue starts with a whitespace character.
+-     @return if starts with whitespace
+-     */
+-    public boolean matchesWhitespace() {
+-        return StringUtil.isWhitespace(reader.current());
+-    }
+-
+-    /**
+-     Test if the queue matches a tag word character (letter or digit).
+-     @return if matches a word character
+-     */
+-    public boolean matchesWord() {
+-        return Character.isLetterOrDigit(reader.current());
+-    }
+-
+-    /**
+-     Consumes the supplied sequence of the queue, case-insensitively. If the queue does not start with the supplied
+-     sequence, will throw an illegal state exception -- but you should be running match() against that condition.
+-
+-     @param seq sequence to remove from head of queue.
+-     */
+-    public void consume(String seq) {
+-        boolean found = reader.matchConsumeIgnoreCase(seq);
+-        if (!found) throw new IllegalStateException("Queue did not match expected sequence");
+-    }
+-
+-    /**
+-     Pulls a string off the queue, up to but exclusive of the match sequence, or to the queue running out.
+-     @param seq String to end on (and not include in return, but leave on queue). <b>Case-sensitive.</b>
+-     @return The matched data consumed from queue.
+-     */
+-    public String consumeTo(String seq) {
+-        return reader.consumeTo(seq);
+-    }
+-
+-    /**
+-     Consumes to the first sequence provided, or to the end of the queue. Leaves the terminator on the queue.
+-     @param seq any number of terminators to consume to. <b>Case-insensitive.</b>
+-     @return consumed string
+-     */
+-    public String consumeToAny(String... seq) {
+-        StringBuilder sb = StringUtil.borrowBuilder();
+-        OUT: while (!isEmpty()) {
+-            for (String s : seq) {
+-                if (reader.matchesIgnoreCase(s)) break OUT;
+-            }
+-            sb.append(consume());
+-        }
+-        return StringUtil.releaseBuilder(sb);
+-    }
+-
+-    /**
+-     Pulls a balanced string off the queue. E.g. if queue is "(one (two) three) four", (,) will return "one (two) three",
+-     and leave " four" on the queue. Unbalanced openers and closers can be quoted (with ' or ") or escaped (with \).
+-     Those escapes will be left in the returned string, which is suitable for regexes (where we need to preserve the
+-     escape), but unsuitable for contains text strings; use unescape for that.
+-
+-     @param open opener
+-     @param close closer
+-     @return data matched from the queue
+-     */
+-    public String chompBalanced(char open, char close) {
+-        StringBuilder accum = StringUtil.borrowBuilder();
+-        int depth = 0;
+-        char prev = 0;
+-        boolean inSingle = false;
+-        boolean inDouble = false;
+-        boolean inRegexQE = false; // regex \Q .. \E escapes from Pattern.quote()
+-        reader.mark(); // mark the initial position to restore if needed
+-
+-        do {
+-            if (isEmpty()) break;
+-            char c = consume();
+-            if (prev == Esc) {
+-                if      (c == 'Q') inRegexQE = true;
+-                else if (c == 'E') inRegexQE = false;
+-                accum.append(c);
+-            } else {
+-                if      (c == '\'' && c != open && !inDouble) inSingle = !inSingle;
+-                else if (c == '"'  && c != open && !inSingle) inDouble = !inDouble;
+-
+-                if (inSingle || inDouble || inRegexQE) {
+-                    accum.append(c);
+-                } else if (c == open) {
+-                    depth++;
+-                    if (depth > 1) accum.append(c); // don't include the outer match pair in the return
+-                } else if (c == close) {
+-                    depth--;
+-                    if (depth > 0) accum.append(c);
+-                } else {
+-                    accum.append(c);
+-                }
+-            }
+-            prev = c;
+-        } while (depth > 0);
+-
+-        String out = StringUtil.releaseBuilder(accum);
+-        if (depth > 0) {// ran out of queue before seeing enough )
+-            reader.rewindToMark(); // restore position if we don't have a balanced string
+-            Validate.fail("Did not find balanced marker at '" + out + "'");
+-        }
+-        return out;
+-    }
+-    
+-    /**
+-     * Unescape a \ escaped string.
+-     * @param in backslash escaped string
+-     * @return unescaped string
+-     */
+-    public static String unescape(String in) {
+-        if (in.indexOf(Esc) == -1) return in;
+-
+-        StringBuilder out = StringUtil.borrowBuilder();
+-        char last = 0;
+-        for (char c : in.toCharArray()) {
+-            if (c == Esc) {
+-                if (last == Esc) {
+-                    out.append(c);
+-                    c = 0;
+-                }
+-            }
+-            else 
+-                out.append(c);
+-            last = c;
+-        }
+-        return StringUtil.releaseBuilder(out);
+-    }
+-
+-    /**
+-     Given a CSS identifier (such as a tag, ID, or class), escape any CSS special characters that would otherwise not be
+-     valid in a selector.
+-
+-     @see <a href="https://www.w3.org/TR/cssom-1/#serialize-an-identifier">CSS Object Model, serialize an identifier</a>
+-     */
+-    public static String escapeCssIdentifier(String in) {
+-        if (in.isEmpty()) return in;
+-
+-        StringBuilder out = StringUtil.borrowBuilder();
+-        TokenQueue q = new TokenQueue(in);
+-
+-        char firstChar = q.current();
+-        if (firstChar == Hyphen_Minus) {
+-            q.advance();
+-            if (q.isEmpty()) {
+-                // If the character is the first character and is a "-" (U+002D), and there is no second character, then
+-                // the escaped character.
+-                appendEscaped(out, Hyphen_Minus);
+-            } else {
+-                out.append(Hyphen_Minus);
+-
+-                char secondChar = q.current();
+-                if (StringUtil.isDigit(secondChar)) {
+-                    // If the character is the second character and is in the range [0-9] (U+0030 to U+0039) and the
+-                    // first character is a "-" (U+002D), then the character escaped as code point.
+-                    appendEscapedCodepoint(out, q.consume());
+-                }
+-            }
+-        } else if (StringUtil.isDigit(firstChar)) {
+-            // If the character is the first character and is in the range [0-9] (U+0030 to U+0039), then the character
+-            // escaped as code point.
+-            appendEscapedCodepoint(out, q.consume());
+-        }
+-
+-        while (!q.isEmpty()) {
+-            // Note: It's fine to iterate on chars because non-ASCII characters are never escaped. So surrogate pairs
+-            // are kept intact.
+-            char c = q.consume();
+-            if (c == Unicode_Null) {
+-                // If the character is NULL (U+0000), then the REPLACEMENT CHARACTER (U+FFFD).
+-                out.append(Replacement);
+-            } else if (c <= '\u001F' || c == '\u007F') {
+-                // If the character is in the range [\1-\1f] (U+0001 to U+001F) or is U+007F, then the character
+-                // escaped as code point.
+-                appendEscapedCodepoint(out, c);
+-            } else if (isIdent(c)) {
+-                // If the character is not handled by one of the above rules and is greater than or equal to U+0080,
+-                // is "-" (U+002D) or "_" (U+005F), or is in one of the ranges [0-9] (U+0030 to U+0039),
+-                // [A-Z] (U+0041 to U+005A), or [a-z] (U+0061 to U+007A), then the character itself.
+-                out.append(c);
+-            } else {
+-                // Otherwise, the escaped character.
+-                appendEscaped(out, c);
+-            }
+-        }
+-
+-        q.close();
+-        return StringUtil.releaseBuilder(out);
+-    }
+-
+-    private static void appendEscaped(StringBuilder out, char c) {
+-        out.append(Esc).append(c);
+-    }
+-
+-    private static void appendEscapedCodepoint(StringBuilder out, char c) {
+-        out.append(Esc).append(Integer.toHexString(c)).append(' ');
+-    }
+-
+-    /**
+-     * Pulls the next run of whitespace characters of the queue.
+-     * @return Whether consuming whitespace or not
+-     */
+-    public boolean consumeWhitespace() {
+-        boolean seen = false;
+-        while (matchesWhitespace()) {
+-            advance();
+-            seen = true;
+-        }
+-        return seen;
+-    }
+-
+-    /**
+-     * Consume a CSS element selector (tag name, but | instead of : for namespaces (or *| for wildcard namespace), to not conflict with :pseudo selects).
+-     * 
+-     * @return tag name
+-     */
+-    public String consumeElementSelector() {
+-        return consumeEscapedCssIdentifier(ElementSelectorChars);
+-    }
+-    private static final char[] ElementSelectorChars = {'*', '|', '_', '-'};
+-
+-    /**
+-     Consume a CSS identifier (ID or class) off the queue.
+-     <p>Note: For backwards compatibility this method supports improperly formatted CSS identifiers, e.g. {@code 1} instead
+-     of {@code \31}.</p>
+-
+-     @return The unescaped identifier.
+-     @throws IllegalArgumentException if an invalid escape sequence was found. Afterward, the state of the TokenQueue
+-     is undefined.
+-     @see <a href="https://www.w3.org/TR/css-syntax-3/#consume-name">CSS Syntax Module Level 3, Consume an ident sequence</a>
+-     @see <a href="https://www.w3.org/TR/css-syntax-3/#typedef-ident-token">CSS Syntax Module Level 3, ident-token</a>
+-     */
+-    public String consumeCssIdentifier() {
+-        if (isEmpty()) throw new IllegalArgumentException("CSS identifier expected, but end of input found");
+-
+-        // Fast path for CSS identifiers that don't contain escape sequences.
+-        String identifier = reader.consumeMatching(TokenQueue::isIdent);
+-        char c = current();
+-        if (c != Esc && c != Unicode_Null) {
+-            // If we didn't end on an Esc or a Null, we consumed the whole identifier
+-            return identifier;
+-        }
+-
+-        // An escape sequence was found. Use a StringBuilder to store the decoded CSS identifier.
+-        StringBuilder out = StringUtil.borrowBuilder();
+-        if (!identifier.isEmpty()) {
+-            // Copy the CSS identifier up to the first escape sequence.
+-            out.append(identifier);
+-        }
+-
+-        while (!isEmpty()) {
+-            c = current();
+-            if (isIdent(c)) {
+-                out.append(consume());
+-            } else if (c == Unicode_Null) {
+-                // https://www.w3.org/TR/css-syntax-3/#input-preprocessing
+-                advance();
+-                out.append(Replacement);
+-            } else if (c == Esc) {
+-                advance();
+-                if (!isEmpty() && isNewline(current())) {
+-                    // Not a valid escape sequence. This is treated as the end of the CSS identifier.
+-                    reader.unconsume();
+-                    break;
+-                } else {
+-                    consumeCssEscapeSequenceInto(out);
+-                }
+-            } else {
+-                break;
+-            }
+-        }
+-        return StringUtil.releaseBuilder(out);
+-    }
+-
+-    private void consumeCssEscapeSequenceInto(StringBuilder out) {
+-        if (isEmpty()) {
+-            out.append(Replacement);
+-            return;
+-        }
+-
+-        char firstEscaped = consume();
+-        if (!StringUtil.isHexDigit(firstEscaped)) {
+-            out.append(firstEscaped);
+-        } else {
+-            reader.unconsume(); // put back the first hex digit
+-            String hexString = reader.consumeMatching(StringUtil::isHexDigit, 6); // consume up to 6 hex digits
+-            int codePoint;
+-            try {
+-                codePoint = Integer.parseInt(hexString, 16);
+-            } catch (NumberFormatException e) {
+-                throw new IllegalArgumentException("Invalid escape sequence: " + hexString, e);
+-            }
+-            if (isValidCodePoint(codePoint)) {
+-                out.appendCodePoint(codePoint);
+-            } else {
+-                out.append(Replacement);
+-            }
+-
+-            if (!isEmpty()) {
+-                char c = current();
+-                if (c == '\r') {
+-                    // Since there's currently no input preprocessing, check for CRLF here.
+-                    // https://www.w3.org/TR/css-syntax-3/#input-preprocessing
+-                    advance();
+-                    if (!isEmpty() && current() == '\n') advance();
+-                } else if (c == ' ' || c == '\t' || isNewline(c)) {
+-                    advance();
+-                }
+-            }
+-        }
+-    }
+-
+-    // statics below specifically for CSS identifiers:
+-
+-    // https://www.w3.org/TR/css-syntax-3/#non-ascii-code-point
+-    private static boolean isNonAscii(char c) {
+-        return c >= '\u0080';
+-    }
+-
+-    // https://www.w3.org/TR/css-syntax-3/#ident-start-code-point
+-    private static boolean isIdentStart(char c) {
+-        return c == '_' || StringUtil.isAsciiLetter(c) || isNonAscii(c);
+-    }
+-
+-    // https://www.w3.org/TR/css-syntax-3/#ident-code-point
+-    private static boolean isIdent(char c) {
+-        return c == Hyphen_Minus || StringUtil.isDigit(c) || isIdentStart(c);
+-    }
+-
+-    // https://www.w3.org/TR/css-syntax-3/#newline
+-    // Note: currently there's no preprocessing happening.
+-    private static boolean isNewline(char c) {
+-        return c == '\n' || c == '\r' || c == '\f';
+-    }
+-
+-    // https://www.w3.org/TR/css-syntax-3/#consume-an-escaped-code-point
+-    private static boolean isValidCodePoint(int codePoint) {
+-        return codePoint != 0 && Character.isValidCodePoint(codePoint) && !Character.isSurrogate((char) codePoint);
+-    }
+-
+-    private static final char[] CssIdentifierChars = {'-', '_'};
+-
+-    private String consumeEscapedCssIdentifier(char... matches) {
+-        StringBuilder sb = StringUtil.borrowBuilder();
+-        while (!isEmpty()) {
+-            char c = current();
+-            if (c == Esc) {
+-                advance();
+-                if (!isEmpty()) sb.append(consume());
+-                else break;
+-            } else if (matchesCssIdentifier(matches)) {
+-                sb.append(c);
+-                advance();
+-            } else {
+-                break;
+-            }
+-        }
+-        return StringUtil.releaseBuilder(sb);
+-    }
+-
+-    private boolean matchesCssIdentifier(char... matches) {
+-        return matchesWord() || reader.matchesAny(matches);
+-    }
+-
+-    /**
+-     Consume and return whatever is left on the queue.
+-     @return remainder of queue.
+-     */
+-    public String remainder() {
+-        return reader.consumeToEnd();
+-    }
+-
+-    @Override
+-    public String toString() {
+-        return reader.toString();
+-    }
+-
+-    @Override
+-    public void close() {
+-        reader.close(); // releases buffer back to pool
+-    }
+-}
+diff --git a/src/main/java/org/jsoup/parser/Tokeniser.java b/src/main/java/org/jsoup/parser/Tokeniser.java
+index 2a5db368..bdc8176d 100644
+--- a/src/main/java/org/jsoup/parser/Tokeniser.java
++++ b/src/main/java/org/jsoup/parser/Tokeniser.java
+@@ -1,9 +1,14 @@
+ package org.jsoup.parser;
+ 
++import org.jsoup.parser.lex.CharacterReader;
++import org.jsoup.parser.error.ParseError;
++import org.jsoup.parser.error.ParseErrorList;
++
+ import org.jsoup.helper.Validate;
+ import org.jsoup.internal.StringUtil;
+ import org.jsoup.nodes.Document;
+ import org.jsoup.nodes.Entities;
++import org.jsoup.parser.config.ParseSettings;
+ import org.jspecify.annotations.Nullable;
+ 
+ import java.util.Arrays;
+@@ -11,7 +16,7 @@ import java.util.Arrays;
+ /**
+  * Readers the input stream into tokens.
+  */
+-final class Tokeniser {
++public final class Tokeniser {
+     static final char replacementChar = '\uFFFD'; // replaces null character
+     private static final char[] notCharRefCharsSorted = new char[]{'\t', '\n', '\r', '\f', ' ', '<', '&'};
+ 
+@@ -52,7 +57,7 @@ final class Tokeniser {
+ 
+     private int markupStartPos, charStartPos = 0; // reader pos at the start of markup / characters. markup updated on state transition, char on token emit.
+ 
+-    Tokeniser(TreeBuilder treeBuilder) {
++    public Tokeniser(TreeBuilder treeBuilder) {
+         syntax = treeBuilder instanceof XmlTreeBuilder ? Document.OutputSettings.Syntax.xml : Document.OutputSettings.Syntax.html;
+         tagPending = startPending  = new Token.StartTag(treeBuilder);
+         endPending = new Token.EndTag(treeBuilder);
+@@ -305,7 +310,7 @@ final class Tokeniser {
+      * @param inAttribute if the text to be unescaped is in an attribute
+      * @return unescaped string from reader
+      */
+-    String unescapeEntities(boolean inAttribute) {
++    public String unescapeEntities(boolean inAttribute) {
+         StringBuilder builder = StringUtil.borrowBuilder();
+         while (!reader.isEmpty()) {
+             builder.append(reader.consumeTo('&'));
+diff --git a/src/main/java/org/jsoup/parser/TokeniserState.java b/src/main/java/org/jsoup/parser/TokeniserState.java
+index e61b8c27..c44d852a 100644
+--- a/src/main/java/org/jsoup/parser/TokeniserState.java
++++ b/src/main/java/org/jsoup/parser/TokeniserState.java
+@@ -1,4 +1,5 @@
+ package org.jsoup.parser;
++import org.jsoup.parser.lex.CharacterReader;
+ 
+ import org.jsoup.internal.StringUtil;
+ import org.jsoup.nodes.DocumentType;
+@@ -8,7 +9,7 @@ import static org.jsoup.nodes.Document.OutputSettings.Syntax.xml;
+ /**
+  * States and transition activations for the Tokeniser.
+  */
+-enum TokeniserState {
++public enum TokeniserState {
+     Data {
+         // in data state, gather characters until a character reference or tag is found
+         @Override void read(Tokeniser t, CharacterReader r) {
+diff --git a/src/main/java/org/jsoup/parser/TreeBuilder.java b/src/main/java/org/jsoup/parser/TreeBuilder.java
+index db7069c7..3cc504a6 100644
+--- a/src/main/java/org/jsoup/parser/TreeBuilder.java
++++ b/src/main/java/org/jsoup/parser/TreeBuilder.java
+@@ -1,4 +1,5 @@
+ package org.jsoup.parser;
++import org.jsoup.parser.lex.CharacterReader;
+ 
+ import org.jsoup.helper.Validate;
+ import org.jsoup.internal.LineMap;
+@@ -7,6 +8,12 @@ import org.jsoup.nodes.Document;
+ import org.jsoup.nodes.Element;
+ import org.jsoup.nodes.Node;
+ import org.jsoup.nodes.NodeInternals;
++import org.jsoup.parser.config.ParseSettings;
++import org.jsoup.parser.config.Parser;
++import org.jsoup.parser.error.ParseError;
++import org.jsoup.parser.error.ParseErrorList;
++import org.jsoup.parser.tagext.Tag;
++import org.jsoup.parser.tagext.TagSet;
+ import org.jsoup.select.NodeVisitor;
+ import org.jspecify.annotations.Nullable;
+ 
+@@ -14,12 +21,12 @@ import java.io.Reader;
+ import java.util.ArrayList;
+ import java.util.List;
+ 
+-import static org.jsoup.parser.Parser.NamespaceHtml;
++import static org.jsoup.parser.config.Parser.NamespaceHtml;
+ 
+ /**
+  * @author Jonathan Hedley
+  */
+-abstract class TreeBuilder {
++public abstract class TreeBuilder {
+     protected Parser parser;
+     CharacterReader reader;
+     Tokeniser tokeniser;
+@@ -33,12 +40,12 @@ abstract class TreeBuilder {
+ 
+     private Token.StartTag start; // start tag to process
+     private final Token.EndTag end  = new Token.EndTag(this);
+-    abstract ParseSettings defaultSettings();
++    public abstract ParseSettings defaultSettings();
+ 
+     boolean trackSourceRange; // optionally tracks source ranges of nodes and attributes
+     @Nullable LineMap lineMap; // shared line map for retained source ranges
+ 
+-    void initialiseParse(Reader input, String baseUri, Parser parser) {
++    public void initialiseParse(Reader input, String baseUri, Parser parser) {
+         Validate.notNullParam(input, "input");
+         Validate.notNullParam(baseUri, "baseUri");
+         Validate.notNull(parser);
+@@ -72,13 +79,13 @@ abstract class TreeBuilder {
+         stack = null;
+     }
+ 
+-    Document parse(Reader input, String baseUri, Parser parser) {
++    public Document parse(Reader input, String baseUri, Parser parser) {
+         initialiseParse(input, baseUri, parser);
+         runParser();
+         return doc;
+     }
+ 
+-    List<Node> parseFragment(Reader inputFragment, @Nullable Element context, String baseUri, Parser parser) {
++    public List<Node> parseFragment(Reader inputFragment, @Nullable Element context, String baseUri, Parser parser) {
+         initialiseParse(inputFragment, baseUri, parser);
+         initialiseParseFragment(context);
+         runParser();
+@@ -100,7 +107,7 @@ abstract class TreeBuilder {
+      Create a new copy of this TreeBuilder
+      @return copy, ready for a new parse
+      */
+-    abstract TreeBuilder newInstance();
++    public abstract TreeBuilder newInstance();
+ 
+     void runParser() {
+         do {} while (stepParser()); // run until stepParser sees EOF
+@@ -198,7 +205,7 @@ abstract class TreeBuilder {
+     /**
+      Default maximum depth for parsers using this tree builder.
+      */
+-    int defaultMaxDepth() {
++    public int defaultMaxDepth() {
+         return 512;
+     }
+ 
+@@ -270,11 +277,11 @@ abstract class TreeBuilder {
+      Gets the default namespace for this TreeBuilder
+      * @return the default namespace
+      */
+-    String defaultNamespace() {
++    public String defaultNamespace() {
+         return NamespaceHtml;
+     }
+ 
+-    TagSet defaultTagSet() {
++    public TagSet defaultTagSet() {
+         return TagSet.Html();
+     }
+ 
+diff --git a/src/main/java/org/jsoup/parser/XmlTreeBuilder.java b/src/main/java/org/jsoup/parser/XmlTreeBuilder.java
+index 74de95a2..8d092c6a 100644
+--- a/src/main/java/org/jsoup/parser/XmlTreeBuilder.java
++++ b/src/main/java/org/jsoup/parser/XmlTreeBuilder.java
+@@ -15,6 +15,8 @@ import org.jsoup.nodes.LeafNode;
+ import org.jsoup.nodes.Node;
+ import org.jsoup.nodes.TextNode;
+ import org.jsoup.nodes.XmlDeclaration;
++import org.jsoup.parser.tagext.Tag;
++import org.jsoup.parser.tagext.TagSet;
+ import org.jsoup.select.Elements;
+ import org.jspecify.annotations.Nullable;
+ 
+@@ -25,7 +27,10 @@ import java.util.HashMap;
+ import java.util.List;
+ import java.util.Map;
+ 
+-import static org.jsoup.parser.Parser.NamespaceXml;
++import org.jsoup.parser.config.ParseSettings;
++import org.jsoup.parser.config.Parser;
++
++import static org.jsoup.parser.config.Parser.NamespaceXml;
+ 
+ /**
+  * Use the {@code XmlTreeBuilder} when you want to parse XML without any of the HTML DOM rules being applied to the
+@@ -39,12 +44,12 @@ public class XmlTreeBuilder extends TreeBuilder {
+     static final String XmlnsPrefix = "xmlns:";
+     private final ArrayDeque<HashMap<String, String>> namespacesStack = new ArrayDeque<>(); // stack of namespaces, prefix => urn
+ 
+-    @Override ParseSettings defaultSettings() {
++    @Override public ParseSettings defaultSettings() {
+         return ParseSettings.preserveCase;
+     }
+ 
+     @Override
+-    protected void initialiseParse(Reader input, String baseUri, Parser parser) {
++    public void initialiseParse(Reader input, String baseUri, Parser parser) {
+         super.initialiseParse(input, baseUri, parser);
+         doc.outputSettings()
+             .syntax(Document.OutputSettings.Syntax.xml)
+@@ -93,7 +98,7 @@ public class XmlTreeBuilder extends TreeBuilder {
+     }
+ 
+     @Override
+-    XmlTreeBuilder newInstance() {
++    public XmlTreeBuilder newInstance() {
+         return new XmlTreeBuilder();
+     }
+ 
+@@ -102,12 +107,12 @@ public class XmlTreeBuilder extends TreeBuilder {
+     }
+ 
+     @Override
+-    TagSet defaultTagSet() {
++    public TagSet defaultTagSet() {
+         return new TagSet(); // an empty tagset
+     }
+ 
+     @Override
+-    int defaultMaxDepth() {
++    public int defaultMaxDepth() {
+         return Integer.MAX_VALUE;
+     }
+ 
+diff --git a/src/main/java/org/jsoup/safety/Cleaner.java b/src/main/java/org/jsoup/safety/Cleaner.java
+index a1c10d31..95d821b8 100644
+--- a/src/main/java/org/jsoup/safety/Cleaner.java
++++ b/src/main/java/org/jsoup/safety/Cleaner.java
+@@ -10,8 +10,8 @@ import org.jsoup.nodes.Node;
+ import org.jsoup.nodes.NodeInternals;
+ import org.jsoup.nodes.Range;
+ import org.jsoup.nodes.TextNode;
+-import org.jsoup.parser.ParseErrorList;
+-import org.jsoup.parser.Parser;
++import org.jsoup.parser.error.ParseErrorList;
++import org.jsoup.parser.config.Parser;
+ import org.jsoup.select.NodeVisitor;
+ 
+ import java.util.List;
+diff --git a/src/main/java/org/jsoup/select/Evaluator.java b/src/main/java/org/jsoup/select/Evaluator.java
+index f3b6a353..81b53f38 100644
+--- a/src/main/java/org/jsoup/select/Evaluator.java
++++ b/src/main/java/org/jsoup/select/Evaluator.java
+@@ -9,7 +9,7 @@ import org.jsoup.nodes.LeafNode;
+ import org.jsoup.nodes.Node;
+ import org.jsoup.nodes.TextNode;
+ import org.jsoup.nodes.XmlDeclaration;
+-import org.jsoup.parser.ParseSettings;
++import org.jsoup.parser.config.ParseSettings;
+ import org.jsoup.helper.Regex;
+ 
+ import java.util.List;
+@@ -1068,7 +1068,7 @@ public abstract class Evaluator {
+             List<TextNode> textNodes = element.textNodes();
+             for (TextNode textNode : textNodes) {
+                 org.jsoup.nodes.PseudoTextElement pel = new org.jsoup.nodes.PseudoTextElement(
+-                    org.jsoup.parser.Tag.valueOf(element.tagName(), element.tag().namespace(), ParseSettings.preserveCase), element.baseUri(), element.attributes());
++                    org.jsoup.parser.tagext.Tag.valueOf(element.tagName(), element.tag().namespace(), ParseSettings.preserveCase), element.baseUri(), element.attributes());
+                 textNode.replaceWith(pel);
+                 pel.appendChild(textNode);
+             }
+diff --git a/src/main/java/org/jsoup/select/QueryParser.java b/src/main/java/org/jsoup/select/QueryParser.java
+index 83b32232..d3f5b4bd 100644
+--- a/src/main/java/org/jsoup/select/QueryParser.java
++++ b/src/main/java/org/jsoup/select/QueryParser.java
+@@ -9,7 +9,7 @@ import org.jsoup.nodes.DataNode;
+ import org.jsoup.nodes.LeafNode;
+ import org.jsoup.nodes.Node;
+ import org.jsoup.nodes.TextNode;
+-import org.jsoup.parser.TokenQueue;
++import org.jsoup.parser.lex.TokenQueue;
+ import org.jspecify.annotations.Nullable;
+ 
+ import java.util.function.Function;
+diff --git a/src/main/java/org/jsoup/select/Selector.java b/src/main/java/org/jsoup/select/Selector.java
+index c28ea0e8..6ea73382 100644
+--- a/src/main/java/org/jsoup/select/Selector.java
++++ b/src/main/java/org/jsoup/select/Selector.java
+@@ -3,7 +3,7 @@ package org.jsoup.select;
+ import org.jsoup.helper.Validate;
+ import org.jsoup.nodes.Element;
+ import org.jsoup.nodes.Node;
+-import org.jsoup.parser.TokenQueue;
++import org.jsoup.parser.lex.TokenQueue;
+ import org.jspecify.annotations.Nullable;
+ 
+ import java.util.Collection;
+diff --git a/src/test/java/org/jsoup/JsoupTest.java b/src/test/java/org/jsoup/JsoupTest.java
+index 455a0a02..89fcb79e 100644
+--- a/src/test/java/org/jsoup/JsoupTest.java
++++ b/src/test/java/org/jsoup/JsoupTest.java
+@@ -2,7 +2,7 @@ package org.jsoup;
+ 
+ import org.jsoup.integration.ParseTest;
+ import org.jsoup.nodes.Document;
+-import org.jsoup.parser.Parser;
++import org.jsoup.parser.config.Parser;
+ import org.junit.jupiter.api.Test;
+ 
+ import java.io.IOException;
+diff --git a/src/test/java/org/jsoup/helper/DataUtilTest.java b/src/test/java/org/jsoup/helper/DataUtilTest.java
+index 96ac9ea4..4ad26639 100644
+--- a/src/test/java/org/jsoup/helper/DataUtilTest.java
++++ b/src/test/java/org/jsoup/helper/DataUtilTest.java
+@@ -4,7 +4,7 @@ import org.jsoup.Jsoup;
+ import org.jsoup.integration.ParseTest;
+ import org.jsoup.internal.ControllableInputStream;
+ import org.jsoup.nodes.Document;
+-import org.jsoup.parser.Parser;
++import org.jsoup.parser.config.Parser;
+ import org.jsoup.parser.StreamParser;
+ import org.junit.jupiter.api.Test;
+ 
+diff --git a/src/test/java/org/jsoup/helper/W3CDomTest.java b/src/test/java/org/jsoup/helper/W3CDomTest.java
+index c689db55..68569efa 100644
+--- a/src/test/java/org/jsoup/helper/W3CDomTest.java
++++ b/src/test/java/org/jsoup/helper/W3CDomTest.java
+@@ -5,7 +5,7 @@ import org.jsoup.TextUtil;
+ import org.jsoup.integration.ParseTest;
+ import org.jsoup.nodes.Element;
+ import org.jsoup.nodes.TextNode;
+-import org.jsoup.parser.Parser;
++import org.jsoup.parser.config.Parser;
+ import org.junit.jupiter.api.Test;
+ import org.junit.jupiter.params.ParameterizedTest;
+ import org.junit.jupiter.params.provider.Arguments;
+diff --git a/src/test/java/org/jsoup/integration/ConnectTest.java b/src/test/java/org/jsoup/integration/ConnectTest.java
+index aacee12e..0150e360 100644
+--- a/src/test/java/org/jsoup/integration/ConnectTest.java
++++ b/src/test/java/org/jsoup/integration/ConnectTest.java
+@@ -19,7 +19,7 @@ import org.jsoup.nodes.FormElement;
+ import org.jsoup.nodes.Node;
+ import org.jsoup.nodes.XmlDeclaration;
+ import org.jsoup.parser.HtmlTreeBuilder;
+-import org.jsoup.parser.Parser;
++import org.jsoup.parser.config.Parser;
+ import org.jsoup.parser.StreamParser;
+ import org.jsoup.parser.XmlTreeBuilder;
+ import org.junit.jupiter.api.BeforeAll;
+diff --git a/src/test/java/org/jsoup/integration/FuzzFixesTest.java b/src/test/java/org/jsoup/integration/FuzzFixesTest.java
+index d6c5a1eb..652e9d30 100644
+--- a/src/test/java/org/jsoup/integration/FuzzFixesTest.java
++++ b/src/test/java/org/jsoup/integration/FuzzFixesTest.java
+@@ -3,7 +3,7 @@ package org.jsoup.integration;
+ import org.jsoup.Jsoup;
+ import org.jsoup.nodes.Document;
+ import org.jsoup.nodes.Element;
+-import org.jsoup.parser.Parser;
++import org.jsoup.parser.config.Parser;
+ import org.junit.jupiter.api.Test;
+ import org.junit.jupiter.params.ParameterizedTest;
+ import org.junit.jupiter.params.provider.MethodSource;
+diff --git a/src/test/java/org/jsoup/integration/ParseTest.java b/src/test/java/org/jsoup/integration/ParseTest.java
+index d963d1d6..28fcc449 100644
+--- a/src/test/java/org/jsoup/integration/ParseTest.java
++++ b/src/test/java/org/jsoup/integration/ParseTest.java
+@@ -4,8 +4,8 @@ import org.jsoup.Jsoup;
+ import org.jsoup.helper.DataUtil;
+ import org.jsoup.nodes.Document;
+ import org.jsoup.nodes.Element;
+-import org.jsoup.parser.ParseErrorList;
+-import org.jsoup.parser.Parser;
++import org.jsoup.parser.error.ParseErrorList;
++import org.jsoup.parser.config.Parser;
+ import org.jsoup.select.Elements;
+ import org.junit.jupiter.api.Test;
+ 
+diff --git a/src/test/java/org/jsoup/integration/ParserSoakIT.java b/src/test/java/org/jsoup/integration/ParserSoakIT.java
+index 220452cf..73858f78 100644
+--- a/src/test/java/org/jsoup/integration/ParserSoakIT.java
++++ b/src/test/java/org/jsoup/integration/ParserSoakIT.java
+@@ -2,7 +2,7 @@ package org.jsoup.integration;
+ 
+ import org.jsoup.Jsoup;
+ import org.jsoup.nodes.Document;
+-import org.jsoup.parser.Parser;
++import org.jsoup.parser.config.Parser;
+ import org.junit.jupiter.api.Assertions;
+ import org.junit.jupiter.api.Tag;
+ import org.junit.jupiter.params.ParameterizedTest;
+diff --git a/src/test/java/org/jsoup/integration/SessionTest.java b/src/test/java/org/jsoup/integration/SessionTest.java
+index 98fb8497..1aa87ccf 100644
+--- a/src/test/java/org/jsoup/integration/SessionTest.java
++++ b/src/test/java/org/jsoup/integration/SessionTest.java
+@@ -4,9 +4,9 @@ import org.jsoup.Connection;
+ import org.jsoup.Jsoup;
+ import org.jsoup.integration.routes.CookieRoute;
+ import org.jsoup.nodes.Document;
+-import org.jsoup.parser.Parser;
+-import org.jsoup.parser.Tag;
+-import org.jsoup.parser.TagSet;
++import org.jsoup.parser.config.Parser;
++import org.jsoup.parser.tagext.Tag;
++import org.jsoup.parser.tagext.TagSet;
+ import org.jsoup.select.Elements;
+ import org.junit.jupiter.api.BeforeAll;
+ import org.junit.jupiter.api.Test;
+diff --git a/src/test/java/org/jsoup/internal/ReaderTest.java b/src/test/java/org/jsoup/internal/ReaderTest.java
+index 293ecb37..67b5e625 100644
+--- a/src/test/java/org/jsoup/internal/ReaderTest.java
++++ b/src/test/java/org/jsoup/internal/ReaderTest.java
+@@ -2,8 +2,8 @@ package org.jsoup.internal;
+ 
+ import org.jsoup.Jsoup;
+ import org.jsoup.nodes.Document;
+-import org.jsoup.parser.CharacterReader;
+-import org.jsoup.parser.Parser;
++import org.jsoup.parser.lex.CharacterReader;
++import org.jsoup.parser.config.Parser;
+ import org.junit.jupiter.api.Test;
+ 
+ import java.io.FileInputStream;
+diff --git a/src/test/java/org/jsoup/nodes/AttributeTest.java b/src/test/java/org/jsoup/nodes/AttributeTest.java
+index 4cff3205..86440438 100644
+--- a/src/test/java/org/jsoup/nodes/AttributeTest.java
++++ b/src/test/java/org/jsoup/nodes/AttributeTest.java
+@@ -1,8 +1,8 @@
+ package org.jsoup.nodes;
+ 
+ import org.jsoup.Jsoup;
+-import org.jsoup.parser.ParseSettings;
+-import org.jsoup.parser.Parser;
++import org.jsoup.parser.config.ParseSettings;
++import org.jsoup.parser.config.Parser;
+ import org.junit.jupiter.api.Test;
+ 
+ import static org.junit.jupiter.api.Assertions.*;
+diff --git a/src/test/java/org/jsoup/nodes/AttributesTest.java b/src/test/java/org/jsoup/nodes/AttributesTest.java
+index f1c54846..1627721f 100644
+--- a/src/test/java/org/jsoup/nodes/AttributesTest.java
++++ b/src/test/java/org/jsoup/nodes/AttributesTest.java
+@@ -1,7 +1,7 @@
+ package org.jsoup.nodes;
+ 
+ import org.jsoup.Jsoup;
+-import org.jsoup.parser.Parser;
++import org.jsoup.parser.config.Parser;
+ import org.junit.jupiter.api.Test;
+ 
+ import java.util.ConcurrentModificationException;
+diff --git a/src/test/java/org/jsoup/nodes/DocumentTest.java b/src/test/java/org/jsoup/nodes/DocumentTest.java
+index 6fc6080f..708e849b 100644
+--- a/src/test/java/org/jsoup/nodes/DocumentTest.java
++++ b/src/test/java/org/jsoup/nodes/DocumentTest.java
+@@ -5,9 +5,9 @@ import org.jsoup.TextUtil;
+ import org.jsoup.integration.ParseTest;
+ import org.jsoup.nodes.Document.OutputSettings;
+ import org.jsoup.nodes.Document.OutputSettings.Syntax;
+-import org.jsoup.parser.ParseSettings;
+-import org.jsoup.parser.Parser;
+-import org.jsoup.parser.Tag;
++import org.jsoup.parser.config.ParseSettings;
++import org.jsoup.parser.config.Parser;
++import org.jsoup.parser.tagext.Tag;
+ import org.jsoup.select.Elements;
+ import org.junit.jupiter.api.Disabled;
+ import org.junit.jupiter.api.Test;
+diff --git a/src/test/java/org/jsoup/nodes/DocumentTypeTest.java b/src/test/java/org/jsoup/nodes/DocumentTypeTest.java
+index b4a5b8d4..4fac3494 100644
+--- a/src/test/java/org/jsoup/nodes/DocumentTypeTest.java
++++ b/src/test/java/org/jsoup/nodes/DocumentTypeTest.java
+@@ -1,7 +1,7 @@
+ package org.jsoup.nodes;
+ 
+ import org.jsoup.Jsoup;
+-import org.jsoup.parser.Parser;
++import org.jsoup.parser.config.Parser;
+ import org.junit.jupiter.api.Test;
+ 
+ import static org.junit.jupiter.api.Assertions.assertEquals;
+diff --git a/src/test/java/org/jsoup/nodes/ElementIT.java b/src/test/java/org/jsoup/nodes/ElementIT.java
+index 5878b978..ab05b7a2 100644
+--- a/src/test/java/org/jsoup/nodes/ElementIT.java
++++ b/src/test/java/org/jsoup/nodes/ElementIT.java
+@@ -1,7 +1,7 @@
+ package org.jsoup.nodes;
+ 
+ import org.jsoup.Jsoup;
+-import org.jsoup.parser.Parser;
++import org.jsoup.parser.config.Parser;
+ import org.jsoup.select.Elements;
+ import org.junit.jupiter.api.Test;
+ 
+diff --git a/src/test/java/org/jsoup/nodes/ElementTest.java b/src/test/java/org/jsoup/nodes/ElementTest.java
+index b4eab867..31579878 100644
+--- a/src/test/java/org/jsoup/nodes/ElementTest.java
++++ b/src/test/java/org/jsoup/nodes/ElementTest.java
+@@ -4,10 +4,10 @@ import org.jsoup.Jsoup;
+ import org.jsoup.TextUtil;
+ import org.jsoup.helper.ValidationException;
+ import org.jsoup.internal.StringUtil;
+-import org.jsoup.parser.ParseSettings;
+-import org.jsoup.parser.Parser;
+-import org.jsoup.parser.Tag;
+-import org.jsoup.parser.TagSet;
++import org.jsoup.parser.config.ParseSettings;
++import org.jsoup.parser.config.Parser;
++import org.jsoup.parser.tagext.Tag;
++import org.jsoup.parser.tagext.TagSet;
+ import org.jsoup.select.Elements;
+ import org.jsoup.select.Evaluator;
+ import org.jsoup.select.NodeFilter;
+@@ -33,7 +33,7 @@ import java.util.stream.Stream;
+ 
+ import static org.jsoup.nodes.NodeIteratorTest.assertIterates;
+ import static org.jsoup.nodes.NodeIteratorTest.trackSeen;
+-import static org.jsoup.parser.Parser.NamespaceHtml;
++import static org.jsoup.parser.config.Parser.NamespaceHtml;
+ import static org.jsoup.select.SelectorTest.assertSelectedIds;
+ import static org.jsoup.select.SelectorTest.assertSelectedOwnText;
+ import static org.junit.jupiter.api.Assertions.*;
+diff --git a/src/test/java/org/jsoup/nodes/EntitiesTest.java b/src/test/java/org/jsoup/nodes/EntitiesTest.java
+index 6180e27c..643888c9 100644
+--- a/src/test/java/org/jsoup/nodes/EntitiesTest.java
++++ b/src/test/java/org/jsoup/nodes/EntitiesTest.java
+@@ -1,7 +1,7 @@
+ package org.jsoup.nodes;
+ 
+ import org.jsoup.Jsoup;
+-import org.jsoup.parser.Parser;
++import org.jsoup.parser.config.Parser;
+ import org.junit.jupiter.api.Test;
+ 
+ import static org.jsoup.nodes.Document.OutputSettings;
+diff --git a/src/test/java/org/jsoup/nodes/NodeTest.java b/src/test/java/org/jsoup/nodes/NodeTest.java
+index 51b4f71c..90c79ce2 100644
+--- a/src/test/java/org/jsoup/nodes/NodeTest.java
++++ b/src/test/java/org/jsoup/nodes/NodeTest.java
+@@ -2,14 +2,14 @@ package org.jsoup.nodes;
+ 
+ import org.jsoup.Jsoup;
+ import org.jsoup.TextUtil;
+-import org.jsoup.parser.Tag;
++import org.jsoup.parser.tagext.Tag;
+ import org.jsoup.select.Elements;
+ import org.jsoup.select.NodeVisitor;
+ import org.junit.jupiter.api.Test;
+ 
+ import java.util.List;
+ 
+-import static org.jsoup.parser.Parser.*;
++import static org.jsoup.parser.config.Parser.*;
+ import static org.junit.jupiter.api.Assertions.*;
+ 
+ /**
+diff --git a/src/test/java/org/jsoup/parser/HtmlParserTest.java b/src/test/java/org/jsoup/parser/HtmlParserTest.java
+index a7336676..e21cb4f7 100644
+--- a/src/test/java/org/jsoup/parser/HtmlParserTest.java
++++ b/src/test/java/org/jsoup/parser/HtmlParserTest.java
+@@ -5,6 +5,8 @@ import org.jsoup.TextUtil;
+ import org.jsoup.integration.ParseTest;
+ import org.jsoup.internal.StringUtil;
+ import org.jsoup.nodes.*;
++import org.jsoup.parser.error.ParseError;
++import org.jsoup.parser.error.ParseErrorList;
+ import org.jsoup.safety.Safelist;
+ import org.jsoup.select.Elements;
+ import org.junit.jupiter.api.Nested;
+diff --git a/src/test/java/org/jsoup/parser/HtmlTreeBuilderTest.java b/src/test/java/org/jsoup/parser/HtmlTreeBuilderTest.java
+index c882a7d0..105247c0 100644
+--- a/src/test/java/org/jsoup/parser/HtmlTreeBuilderTest.java
++++ b/src/test/java/org/jsoup/parser/HtmlTreeBuilderTest.java
+@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
+ import java.lang.annotation.Annotation;
+ import java.util.List;
+ 
+-import static org.jsoup.parser.Parser.NamespaceHtml;
++import static org.jsoup.parser.config.Parser.NamespaceHtml;
+ import static org.junit.jupiter.api.Assertions.*;
+ 
+ public class HtmlTreeBuilderTest {
+diff --git a/src/test/java/org/jsoup/parser/ParserTest.java b/src/test/java/org/jsoup/parser/ParserTest.java
+index bfebf6be..bee6e9e1 100644
+--- a/src/test/java/org/jsoup/parser/ParserTest.java
++++ b/src/test/java/org/jsoup/parser/ParserTest.java
+@@ -2,6 +2,7 @@ package org.jsoup.parser;
+ 
+ import org.jsoup.Jsoup;
+ import org.jsoup.nodes.Document;
++import org.jsoup.parser.error.ParseErrorList;
+ import org.junit.jupiter.api.Test;
+ 
+ import java.io.ByteArrayInputStream;
+diff --git a/src/test/java/org/jsoup/parser/TagSetTest.java b/src/test/java/org/jsoup/parser/TagSetTest.java
+index 2edcdf75..bbca9ed7 100644
+--- a/src/test/java/org/jsoup/parser/TagSetTest.java
++++ b/src/test/java/org/jsoup/parser/TagSetTest.java
+@@ -8,7 +8,7 @@ import java.lang.reflect.Field;
+ import java.util.Map;
+ import java.util.concurrent.atomic.AtomicInteger;
+ 
+-import static org.jsoup.parser.Parser.NamespaceHtml;
++import static org.jsoup.parser.config.Parser.NamespaceHtml;
+ import static org.junit.jupiter.api.Assertions.*;
+ 
+ public class TagSetTest {
+diff --git a/src/test/java/org/jsoup/parser/TagTest.java b/src/test/java/org/jsoup/parser/TagTest.java
+index 266e80a5..75185384 100644
+--- a/src/test/java/org/jsoup/parser/TagTest.java
++++ b/src/test/java/org/jsoup/parser/TagTest.java
+@@ -9,8 +9,8 @@ import java.util.HashMap;
+ import java.util.HashSet;
+ import java.util.Locale;
+ 
+-import static org.jsoup.parser.Parser.NamespaceHtml;
+-import static org.jsoup.parser.Parser.NamespaceSvg;
++import static org.jsoup.parser.config.Parser.NamespaceHtml;
++import static org.jsoup.parser.config.Parser.NamespaceSvg;
+ import static org.junit.jupiter.api.Assertions.*;
+ 
+ /**
+diff --git a/src/test/java/org/jsoup/parser/TokeniserStateTest.java b/src/test/java/org/jsoup/parser/TokeniserStateTest.java
+index fca73f95..db45bbc9 100644
+--- a/src/test/java/org/jsoup/parser/TokeniserStateTest.java
++++ b/src/test/java/org/jsoup/parser/TokeniserStateTest.java
+@@ -6,6 +6,7 @@ import org.jsoup.nodes.Comment;
+ import org.jsoup.nodes.Document;
+ import org.jsoup.nodes.Element;
+ import org.jsoup.nodes.TextNode;
++import org.jsoup.parser.error.ParseErrorList;
+ import org.jsoup.select.Elements;
+ import org.junit.jupiter.api.Test;
+ 
+diff --git a/src/test/java/org/jsoup/parser/TokeniserTest.java b/src/test/java/org/jsoup/parser/TokeniserTest.java
+index d6846b25..41de6283 100644
+--- a/src/test/java/org/jsoup/parser/TokeniserTest.java
++++ b/src/test/java/org/jsoup/parser/TokeniserTest.java
+@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
+ import java.nio.charset.Charset;
+ import java.util.Arrays;
+ 
+-import static org.jsoup.parser.CharacterReader.BufferSize;
++import static org.jsoup.parser.lex.CharacterReader.BufferSize;
+ import static org.junit.jupiter.api.Assertions.*;
+ 
+ public class TokeniserTest {
+diff --git a/src/test/java/org/jsoup/parser/XmlTreeBuilderTest.java b/src/test/java/org/jsoup/parser/XmlTreeBuilderTest.java
+index 4d82c613..89c2a557 100644
+--- a/src/test/java/org/jsoup/parser/XmlTreeBuilderTest.java
++++ b/src/test/java/org/jsoup/parser/XmlTreeBuilderTest.java
+@@ -3,6 +3,7 @@ package org.jsoup.parser;
+ import org.jsoup.Jsoup;
+ import org.jsoup.TextUtil;
+ import org.jsoup.nodes.*;
++import org.jsoup.parser.error.ParseErrorList;
+ import org.jsoup.select.Elements;
+ import org.junit.jupiter.api.Test;
+ 
+@@ -15,8 +16,8 @@ import java.nio.charset.StandardCharsets;
+ import java.util.List;
+ 
+ import static org.jsoup.nodes.Document.OutputSettings.Syntax;
+-import static org.jsoup.parser.Parser.NamespaceHtml;
+-import static org.jsoup.parser.Parser.NamespaceXml;
++import static org.jsoup.parser.config.Parser.NamespaceHtml;
++import static org.jsoup.parser.config.Parser.NamespaceXml;
+ import static org.junit.jupiter.api.Assertions.*;
+ 
+ /**
+diff --git a/src/test/java/org/jsoup/safety/CleanerTest.java b/src/test/java/org/jsoup/safety/CleanerTest.java
+index 137fed76..dfbd24de 100644
+--- a/src/test/java/org/jsoup/safety/CleanerTest.java
++++ b/src/test/java/org/jsoup/safety/CleanerTest.java
+@@ -7,10 +7,10 @@ import org.jsoup.nodes.Document;
+ import org.jsoup.nodes.Element;
+ import org.jsoup.nodes.Entities;
+ import org.jsoup.nodes.Range;
+-import org.jsoup.parser.ParseSettings;
+-import org.jsoup.parser.Parser;
+-import org.jsoup.parser.Tag;
+-import org.jsoup.parser.TagSet;
++import org.jsoup.parser.config.ParseSettings;
++import org.jsoup.parser.config.Parser;
++import org.jsoup.parser.tagext.Tag;
++import org.jsoup.parser.tagext.TagSet;
+ import org.junit.jupiter.api.Test;
+ import org.junit.jupiter.params.ParameterizedTest;
+ import org.junit.jupiter.params.provider.ValueSource;
+diff --git a/src/test/java/org/jsoup/safety/SafelistTest.java b/src/test/java/org/jsoup/safety/SafelistTest.java
+index 90b4fd61..3ff5e0f2 100644
+--- a/src/test/java/org/jsoup/safety/SafelistTest.java
++++ b/src/test/java/org/jsoup/safety/SafelistTest.java
+@@ -4,7 +4,7 @@ import org.jsoup.helper.ValidationException;
+ import org.jsoup.nodes.Attribute;
+ import org.jsoup.nodes.Attributes;
+ import org.jsoup.nodes.Element;
+-import org.jsoup.parser.Tag;
++import org.jsoup.parser.tagext.Tag;
+ import org.junit.jupiter.api.Test;
+ 
+ import static org.junit.jupiter.api.Assertions.*;
+diff --git a/src/test/java/org/jsoup/select/CssTest.java b/src/test/java/org/jsoup/select/CssTest.java
+index 956d7f12..dbb80c2a 100644
+--- a/src/test/java/org/jsoup/select/CssTest.java
++++ b/src/test/java/org/jsoup/select/CssTest.java
+@@ -2,7 +2,7 @@ package org.jsoup.select;
+ 
+ import org.jsoup.Jsoup;
+ import org.jsoup.nodes.Document;
+-import org.jsoup.parser.Tag;
++import org.jsoup.parser.tagext.Tag;
+ import org.junit.jupiter.api.BeforeAll;
+ import org.junit.jupiter.api.BeforeEach;
+ import org.junit.jupiter.api.Test;
+diff --git a/src/test/java/org/jsoup/select/SelectorIT.java b/src/test/java/org/jsoup/select/SelectorIT.java
+index 1b8f5926..f6e00640 100644
+--- a/src/test/java/org/jsoup/select/SelectorIT.java
++++ b/src/test/java/org/jsoup/select/SelectorIT.java
+@@ -2,7 +2,7 @@ package org.jsoup.select;
+ 
+ import org.jsoup.Jsoup;
+ import org.jsoup.nodes.Document;
+-import org.jsoup.parser.Parser;
++import org.jsoup.parser.config.Parser;
+ import org.jsoup.parser.StreamParser;
+ import org.junit.jupiter.api.Test;
+ 
+diff --git a/src/test/java/org/jsoup/select/SelectorTest.java b/src/test/java/org/jsoup/select/SelectorTest.java
+index 8fe7d00e..d4dcefc8 100644
+--- a/src/test/java/org/jsoup/select/SelectorTest.java
++++ b/src/test/java/org/jsoup/select/SelectorTest.java
+@@ -8,7 +8,7 @@ import org.jsoup.nodes.Document;
+ import org.jsoup.nodes.Element;
+ import org.jsoup.nodes.Node;
+ import org.jsoup.nodes.TextNode;
+-import org.jsoup.parser.Parser;
++import org.jsoup.parser.config.Parser;
+ import org.junit.jupiter.api.Test;
+ import org.junit.jupiter.params.ParameterizedTest;
+ import org.junit.jupiter.params.provider.ValueSource;
+diff --git a/src/test/java/org/jsoup/select/XpathTest.java b/src/test/java/org/jsoup/select/XpathTest.java
+index b9aa1cf7..486d8bd0 100644
+--- a/src/test/java/org/jsoup/select/XpathTest.java
++++ b/src/test/java/org/jsoup/select/XpathTest.java
+@@ -5,7 +5,7 @@ import org.jsoup.nodes.Document;
+ import org.jsoup.nodes.Element;
+ import org.jsoup.nodes.Node;
+ import org.jsoup.nodes.TextNode;
+-import org.jsoup.parser.Parser;
++import org.jsoup.parser.config.Parser;
+ import org.junit.jupiter.api.Test;
+ import org.junit.jupiter.params.ParameterizedTest;
+ import org.junit.jupiter.params.provider.Arguments;

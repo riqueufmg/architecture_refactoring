@@ -1,0 +1,605 @@
+[ERROR] COMPILATION ERROR : 
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/HtmlParserTest.java:[25,31] cannot find symbol
+  symbol:   class ParseSettings
+  location: package org.jsoup.parser
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/HtmlParserTest.java:[25,1] static import only from classes and interfaces
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/PositionTest.java:[32,12] cannot find symbol
+  symbol:   class Parser
+  location: class org.jsoup.parser.PositionTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/PositionTest.java:[33,12] cannot find symbol
+  symbol:   class Parser
+  location: class org.jsoup.parser.PositionTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/StreamParserTest.java:[297,21] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.StreamParserTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/TagSetTest.java:[221,45] cannot find symbol
+  symbol:   class TagSet
+  location: class org.jsoup.parser.TagSetTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/AttributeParseTest.java:[96,37] cannot find symbol
+  symbol:   variable Parser
+  location: class org.jsoup.parser.AttributeParseTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[20,44] cannot find symbol
+  symbol:   variable CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[23,9] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[23,33] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[33,22] cannot find symbol
+  symbol:   variable CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[35,22] cannot find symbol
+  symbol:   variable CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[39,9] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[39,33] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[55,22] cannot find symbol
+  symbol:   variable CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[64,22] cannot find symbol
+  symbol:   variable CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[75,9] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[75,33] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[90,9] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[90,33] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[97,9] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[97,33] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[105,9] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[105,33] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[119,9] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[119,33] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[130,9] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[130,33] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[135,9] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[135,33] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[145,9] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[145,33] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[162,9] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[162,33] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[169,9] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[169,33] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[180,9] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[180,33] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[188,9] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[188,33] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[196,9] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[196,33] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[212,9] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[212,33] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[230,9] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[230,33] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[239,9] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[239,33] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[245,9] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[245,33] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[282,9] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[282,33] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[295,9] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[295,33] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[305,9] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[305,33] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[329,9] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[329,33] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[346,9] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[346,33] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[350,17] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[357,9] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[357,33] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[369,19] cannot find symbol
+  symbol:   variable CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[372,9] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[372,33] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[385,22] cannot find symbol
+  symbol:   variable CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[400,9] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[400,33] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[412,9] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[412,38] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[428,9] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[428,39] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[430,9] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[430,37] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[496,9] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[496,38] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[511,9] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[511,38] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[528,9] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[528,33] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[535,9] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[535,33] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[542,9] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[542,33] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[549,9] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[549,33] cannot find symbol
+  symbol:   class CharacterReader
+  location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/HtmlParserTest.java:[58,9] cannot find symbol
+  symbol:   class Parser
+  location: class org.jsoup.parser.HtmlParserTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/HtmlParserTest.java:[58,25] cannot find symbol
+  symbol:   variable Parser
+  location: class org.jsoup.parser.HtmlParserTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/HtmlParserTest.java:[79,9] cannot find symbol
+  symbol:   class Parser
+  location: class org.jsoup.parser.HtmlParserTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/HtmlParserTest.java:[79,54] cannot find symbol
+  symbol:   variable preserveCase
+  location: class org.jsoup.parser.HtmlParserTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/HtmlParserTest.java:[79,25] cannot find symbol
+  symbol:   variable Parser
+  location: class org.jsoup.parser.HtmlParserTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/HtmlParserTest.java:[125,9] cannot find symbol
+  symbol:   class Parser
+  location: class org.jsoup.parser.HtmlParserTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/HtmlParserTest.java:[125,25] cannot find symbol
+  symbol:   variable Parser
+  location: class org.jsoup.parser.HtmlParserTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/HtmlParserTest.java:[169,9] cannot find symbol
+  symbol:   class Parser
+  location: class org.jsoup.parser.HtmlParserTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/HtmlParserTest.java:[169,25] cannot find symbol
+  symbol:   variable Parser
+  location: class org.jsoup.parser.HtmlParserTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/HtmlParserTest.java:[375,31] cannot find symbol
+  symbol:   variable CharacterReader
+  location: class org.jsoup.parser.HtmlParserTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/HtmlParserTest.java:[495,9] cannot find symbol
+  symbol:   class Parser
+  location: class org.jsoup.parser.HtmlParserTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/HtmlParserTest.java:[495,25] cannot find symbol
+  symbol:   variable Parser
+  location: class org.jsoup.parser.HtmlParserTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/HtmlParserTest.java:[496,70] cannot find symbol
+  symbol:   variable Tag
+  location: class org.jsoup.parser.HtmlParserTest
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.15.0:testCompile (compile-java11-tests) on project jsoup: Compilation failure: Compilation failure: 
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/HtmlParserTest.java:[25,31] cannot find symbol
+[ERROR]   symbol:   class ParseSettings
+[ERROR]   location: package org.jsoup.parser
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/HtmlParserTest.java:[25,1] static import only from classes and interfaces
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/PositionTest.java:[32,12] cannot find symbol
+[ERROR]   symbol:   class Parser
+[ERROR]   location: class org.jsoup.parser.PositionTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/PositionTest.java:[33,12] cannot find symbol
+[ERROR]   symbol:   class Parser
+[ERROR]   location: class org.jsoup.parser.PositionTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/StreamParserTest.java:[297,21] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.StreamParserTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/TagSetTest.java:[221,45] cannot find symbol
+[ERROR]   symbol:   class TagSet
+[ERROR]   location: class org.jsoup.parser.TagSetTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/AttributeParseTest.java:[96,37] cannot find symbol
+[ERROR]   symbol:   variable Parser
+[ERROR]   location: class org.jsoup.parser.AttributeParseTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[20,44] cannot find symbol
+[ERROR]   symbol:   variable CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[23,9] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[23,33] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[33,22] cannot find symbol
+[ERROR]   symbol:   variable CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[35,22] cannot find symbol
+[ERROR]   symbol:   variable CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[39,9] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[39,33] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[55,22] cannot find symbol
+[ERROR]   symbol:   variable CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[64,22] cannot find symbol
+[ERROR]   symbol:   variable CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[75,9] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[75,33] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[90,9] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[90,33] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[97,9] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[97,33] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[105,9] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[105,33] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[119,9] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[119,33] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[130,9] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[130,33] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[135,9] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[135,33] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[145,9] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[145,33] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[162,9] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[162,33] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[169,9] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[169,33] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[180,9] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[180,33] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[188,9] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[188,33] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[196,9] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[196,33] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[212,9] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[212,33] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[230,9] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[230,33] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[239,9] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[239,33] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[245,9] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[245,33] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[282,9] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[282,33] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[295,9] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[295,33] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[305,9] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[305,33] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[329,9] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[329,33] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[346,9] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[346,33] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[350,17] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[357,9] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[357,33] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[369,19] cannot find symbol
+[ERROR]   symbol:   variable CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[372,9] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[372,33] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[385,22] cannot find symbol
+[ERROR]   symbol:   variable CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[400,9] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[400,33] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[412,9] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[412,38] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[428,9] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[428,39] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[430,9] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[430,37] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[496,9] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[496,38] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[511,9] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[511,38] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[528,9] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[528,33] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[535,9] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[535,33] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[542,9] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[542,33] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[549,9] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/CharacterReaderTest.java:[549,33] cannot find symbol
+[ERROR]   symbol:   class CharacterReader
+[ERROR]   location: class org.jsoup.parser.CharacterReaderTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/HtmlParserTest.java:[58,9] cannot find symbol
+[ERROR]   symbol:   class Parser
+[ERROR]   location: class org.jsoup.parser.HtmlParserTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/HtmlParserTest.java:[58,25] cannot find symbol
+[ERROR]   symbol:   variable Parser
+[ERROR]   location: class org.jsoup.parser.HtmlParserTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/HtmlParserTest.java:[79,9] cannot find symbol
+[ERROR]   symbol:   class Parser
+[ERROR]   location: class org.jsoup.parser.HtmlParserTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/HtmlParserTest.java:[79,54] cannot find symbol
+[ERROR]   symbol:   variable preserveCase
+[ERROR]   location: class org.jsoup.parser.HtmlParserTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/HtmlParserTest.java:[79,25] cannot find symbol
+[ERROR]   symbol:   variable Parser
+[ERROR]   location: class org.jsoup.parser.HtmlParserTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/HtmlParserTest.java:[125,9] cannot find symbol
+[ERROR]   symbol:   class Parser
+[ERROR]   location: class org.jsoup.parser.HtmlParserTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/HtmlParserTest.java:[125,25] cannot find symbol
+[ERROR]   symbol:   variable Parser
+[ERROR]   location: class org.jsoup.parser.HtmlParserTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/HtmlParserTest.java:[169,9] cannot find symbol
+[ERROR]   symbol:   class Parser
+[ERROR]   location: class org.jsoup.parser.HtmlParserTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/HtmlParserTest.java:[169,25] cannot find symbol
+[ERROR]   symbol:   variable Parser
+[ERROR]   location: class org.jsoup.parser.HtmlParserTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/HtmlParserTest.java:[375,31] cannot find symbol
+[ERROR]   symbol:   variable CharacterReader
+[ERROR]   location: class org.jsoup.parser.HtmlParserTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/HtmlParserTest.java:[495,9] cannot find symbol
+[ERROR]   symbol:   class Parser
+[ERROR]   location: class org.jsoup.parser.HtmlParserTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/HtmlParserTest.java:[495,25] cannot find symbol
+[ERROR]   symbol:   variable Parser
+[ERROR]   location: class org.jsoup.parser.HtmlParserTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/parser/HtmlParserTest.java:[496,70] cannot find symbol
+[ERROR]   symbol:   variable Tag
+[ERROR]   location: class org.jsoup.parser.HtmlParserTest
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException

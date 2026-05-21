@@ -1,0 +1,391 @@
+{
+  "project_name": "jsoup",
+  "smell": "GC",
+  "target_type": "package",
+  "target_name": "org.jsoup.parser",
+  "initial_commit": "8fb8eb5633901f535b8867a1c5a6fcc07df266c3",
+  "designite_before": {
+    "command": [
+      "/usr/lib/jvm/jdk-22.0.2-oracle-x64/bin/java",
+      "-jar",
+      "/data/henrique/langchain_prototype/codex/tools/DesigniteJava2.8.3.jar",
+      "-g",
+      "-i",
+      "/data/henrique/langchain_prototype/codex/data/repositories/jsoup",
+      "-o",
+      "/data/henrique/langchain_prototype/codex/runs/2026-05-21_153631_jsoup_GC_org.jsoup.parser/designite_before"
+    ],
+    "returncode": 0,
+    "seconds": 25.76,
+    "ok": true,
+    "output_dir": "/data/henrique/langchain_prototype/codex/runs/2026-05-21_153631_jsoup_GC_org.jsoup.parser/designite_before",
+    "log_path": "runs/2026-05-21_153631_jsoup_GC_org.jsoup.parser/designite_before.log"
+  },
+  "smell_before": {
+    "present": true,
+    "matches_count": 1,
+    "matches": [
+      {
+        "file": "runs/2026-05-21_153631_jsoup_GC_org.jsoup.parser/designite_before/ArchitectureSmells.csv",
+        "row_index": 45,
+        "row": {
+          "Project": "jsoup",
+          "Package": "org.jsoup.parser",
+          "Smell": "God Component",
+          "Description": "The tool detected the smell in this component because the component contains high number of classes. Number of classes in the component are: 48"
+        }
+      }
+    ],
+    "searched_files": [
+      "runs/2026-05-21_153631_jsoup_GC_org.jsoup.parser/designite_before/ArchitectureSmells.csv"
+    ]
+  },
+  "attempts": [
+    {
+      "smell_attempt": 1,
+      "compile_attempt": 1,
+      "attempt_dir": "runs/2026-05-21_153631_jsoup_GC_org.jsoup.parser/smell_attempt_1/compile_attempt_1",
+      "codex": {
+        "command": [
+          "npx",
+          "@openai/codex",
+          "exec",
+          "--cd",
+          "/data/henrique/langchain_prototype/codex/data/repositories/jsoup",
+          "--sandbox",
+          "workspace-write",
+          "--json",
+          "--model",
+          "gpt-5.3-codex",
+          "-"
+        ],
+        "returncode": 0,
+        "seconds": 146.75,
+        "ok": true
+      },
+      "diff": {
+        "changed_files_count": 13,
+        "lines_added": 14,
+        "lines_deleted": 116
+      },
+      "maven": {
+        "command": [
+          "mvn",
+          "-q",
+          "-Dmaven.test.skip=true",
+          "-Djapicmp.skip=true",
+          "-Drat.skip=true",
+          "-Dcheckstyle.skip=true",
+          "-Dspotbugs.skip=true",
+          "-Dpmd.skip=true",
+          "-DskipITs",
+          "clean",
+          "verify"
+        ],
+        "returncode": 0,
+        "seconds": 29.8,
+        "ok": true
+      },
+      "codex_success": true,
+      "compile_success": true
+    },
+    {
+      "smell_attempt": 2,
+      "compile_attempt": 1,
+      "attempt_dir": "runs/2026-05-21_153631_jsoup_GC_org.jsoup.parser/smell_attempt_2/compile_attempt_1",
+      "codex": {
+        "command": [
+          "npx",
+          "@openai/codex",
+          "exec",
+          "--cd",
+          "/data/henrique/langchain_prototype/codex/data/repositories/jsoup",
+          "--sandbox",
+          "workspace-write",
+          "--json",
+          "--model",
+          "gpt-5.3-codex",
+          "-"
+        ],
+        "returncode": 0,
+        "seconds": 184.98,
+        "ok": true
+      },
+      "diff": {
+        "changed_files_count": 33,
+        "lines_added": 41,
+        "lines_deleted": 903
+      },
+      "maven": {
+        "command": [
+          "mvn",
+          "-q",
+          "-Dmaven.test.skip=true",
+          "-Djapicmp.skip=true",
+          "-Drat.skip=true",
+          "-Dcheckstyle.skip=true",
+          "-Dspotbugs.skip=true",
+          "-Dpmd.skip=true",
+          "-DskipITs",
+          "clean",
+          "verify"
+        ],
+        "returncode": 0,
+        "seconds": 31.55,
+        "ok": true
+      },
+      "codex_success": true,
+      "compile_success": true
+    },
+    {
+      "smell_attempt": 3,
+      "compile_attempt": 1,
+      "attempt_dir": "runs/2026-05-21_153631_jsoup_GC_org.jsoup.parser/smell_attempt_3/compile_attempt_1",
+      "codex": {
+        "command": [
+          "npx",
+          "@openai/codex",
+          "exec",
+          "--cd",
+          "/data/henrique/langchain_prototype/codex/data/repositories/jsoup",
+          "--sandbox",
+          "workspace-write",
+          "--json",
+          "--model",
+          "gpt-5.3-codex",
+          "-"
+        ],
+        "returncode": 0,
+        "seconds": 281.25,
+        "ok": true
+      },
+      "diff": {
+        "changed_files_count": 41,
+        "lines_added": 52,
+        "lines_deleted": 2148
+      },
+      "maven": {
+        "command": [
+          "mvn",
+          "-q",
+          "-Dmaven.test.skip=true",
+          "-Djapicmp.skip=true",
+          "-Drat.skip=true",
+          "-Dcheckstyle.skip=true",
+          "-Dspotbugs.skip=true",
+          "-Dpmd.skip=true",
+          "-DskipITs",
+          "clean",
+          "verify"
+        ],
+        "returncode": 0,
+        "seconds": 31.49,
+        "ok": true
+      },
+      "codex_success": true,
+      "compile_success": true
+    },
+    {
+      "smell_attempt": 4,
+      "compile_attempt": 1,
+      "attempt_dir": "runs/2026-05-21_153631_jsoup_GC_org.jsoup.parser/smell_attempt_4/compile_attempt_1",
+      "codex": {
+        "command": [
+          "npx",
+          "@openai/codex",
+          "exec",
+          "--cd",
+          "/data/henrique/langchain_prototype/codex/data/repositories/jsoup",
+          "--sandbox",
+          "workspace-write",
+          "--json",
+          "--model",
+          "gpt-5.3-codex",
+          "-"
+        ],
+        "returncode": 0,
+        "seconds": 383.05,
+        "ok": true
+      },
+      "diff": {
+        "changed_files_count": 68,
+        "lines_added": 138,
+        "lines_deleted": 2689
+      },
+      "maven": {
+        "command": [
+          "mvn",
+          "-q",
+          "-Dmaven.test.skip=true",
+          "-Djapicmp.skip=true",
+          "-Drat.skip=true",
+          "-Dcheckstyle.skip=true",
+          "-Dspotbugs.skip=true",
+          "-Dpmd.skip=true",
+          "-DskipITs",
+          "clean",
+          "verify"
+        ],
+        "returncode": 0,
+        "seconds": 27.16,
+        "ok": true
+      },
+      "codex_success": true,
+      "compile_success": true
+    },
+    {
+      "smell_attempt": 5,
+      "compile_attempt": 1,
+      "attempt_dir": "runs/2026-05-21_153631_jsoup_GC_org.jsoup.parser/smell_attempt_5/compile_attempt_1",
+      "codex": {
+        "command": [
+          "npx",
+          "@openai/codex",
+          "exec",
+          "--cd",
+          "/data/henrique/langchain_prototype/codex/data/repositories/jsoup",
+          "--sandbox",
+          "workspace-write",
+          "--json",
+          "--model",
+          "gpt-5.3-codex",
+          "-"
+        ],
+        "returncode": 0,
+        "seconds": 365.54,
+        "ok": true
+      },
+      "diff": {
+        "changed_files_count": 68,
+        "lines_added": 135,
+        "lines_deleted": 2689
+      },
+      "maven": {
+        "command": [
+          "mvn",
+          "-q",
+          "-Dmaven.test.skip=true",
+          "-Djapicmp.skip=true",
+          "-Drat.skip=true",
+          "-Dcheckstyle.skip=true",
+          "-Dspotbugs.skip=true",
+          "-Dpmd.skip=true",
+          "-DskipITs",
+          "clean",
+          "verify"
+        ],
+        "returncode": 0,
+        "seconds": 31.0,
+        "ok": true
+      },
+      "codex_success": true,
+      "compile_success": true
+    }
+  ],
+  "codex": {
+    "command": [
+      "npx",
+      "@openai/codex",
+      "exec",
+      "--cd",
+      "/data/henrique/langchain_prototype/codex/data/repositories/jsoup",
+      "--sandbox",
+      "workspace-write",
+      "--json",
+      "--model",
+      "gpt-5.3-codex",
+      "-"
+    ],
+    "returncode": 0,
+    "seconds": 365.54,
+    "ok": true
+  },
+  "diff": {
+    "changed_files_count": 68,
+    "lines_added": 135,
+    "lines_deleted": 2689
+  },
+  "maven": {
+    "command": [
+      "mvn",
+      "-q",
+      "-Dmaven.test.skip=true",
+      "-Djapicmp.skip=true",
+      "-Drat.skip=true",
+      "-Dcheckstyle.skip=true",
+      "-Dspotbugs.skip=true",
+      "-Dpmd.skip=true",
+      "-DskipITs",
+      "clean",
+      "verify"
+    ],
+    "returncode": 0,
+    "seconds": 31.0,
+    "ok": true
+  },
+  "designite_after": {
+    "command": [
+      "/usr/lib/jvm/jdk-22.0.2-oracle-x64/bin/java",
+      "-jar",
+      "/data/henrique/langchain_prototype/codex/tools/DesigniteJava2.8.3.jar",
+      "-g",
+      "-i",
+      "/data/henrique/langchain_prototype/codex/data/repositories/jsoup",
+      "-o",
+      "/data/henrique/langchain_prototype/codex/runs/2026-05-21_153631_jsoup_GC_org.jsoup.parser/smell_attempt_5/designite_after"
+    ],
+    "returncode": 0,
+    "seconds": 29.96,
+    "ok": true,
+    "output_dir": "/data/henrique/langchain_prototype/codex/runs/2026-05-21_153631_jsoup_GC_org.jsoup.parser/smell_attempt_5/designite_after",
+    "log_path": "runs/2026-05-21_153631_jsoup_GC_org.jsoup.parser/designite_after_smell_attempt_5.log"
+  },
+  "smell_after": {
+    "present": true,
+    "matches_count": 1,
+    "matches": [
+      {
+        "file": "runs/2026-05-21_153631_jsoup_GC_org.jsoup.parser/smell_attempt_5/designite_after/ArchitectureSmells.csv",
+        "row_index": 51,
+        "row": {
+          "Project": "jsoup",
+          "Package": "org.jsoup.parser",
+          "Smell": "God Component",
+          "Description": "The tool detected the smell in this component because the component contains high number of classes. Number of classes in the component are: 38"
+        }
+      }
+    ],
+    "searched_files": [
+      "runs/2026-05-21_153631_jsoup_GC_org.jsoup.parser/smell_attempt_5/designite_after/ArchitectureSmells.csv"
+    ]
+  },
+  "smell_removed": false,
+  "final_commit": {
+    "created": true,
+    "commit": "2f6c18480c59d0e5456a1ce1fd76b850a8cf8563",
+    "message": "Temporary Codex refactoring result for 2026-05-21_153631_jsoup_GC_org.jsoup.parser"
+  },
+  "refactoring_miner": {
+    "command": [
+      "/data/henrique/langchain_prototype/codex/tools/RefactoringMiner-3.0.7/bin/RefactoringMiner",
+      "-bc",
+      "/data/henrique/langchain_prototype/codex/data/repositories/jsoup",
+      "8fb8eb5633901f535b8867a1c5a6fcc07df266c3",
+      "2f6c18480c59d0e5456a1ce1fd76b850a8cf8563",
+      "-json",
+      "/data/henrique/langchain_prototype/codex/runs/2026-05-21_153631_jsoup_GC_org.jsoup.parser/refactoring_miner.json"
+    ],
+    "returncode": 0,
+    "seconds": 7.41,
+    "ok": true,
+    "output_json": "/data/henrique/langchain_prototype/codex/runs/2026-05-21_153631_jsoup_GC_org.jsoup.parser/refactoring_miner.json",
+    "log_path": "/data/henrique/langchain_prototype/codex/runs/2026-05-21_153631_jsoup_GC_org.jsoup.parser/refactoring_miner.log",
+    "refactorings_count": 95,
+    "refactoring_types": {
+      "Move Class": 9,
+      "Change Method Access Modifier": 70,
+      "Change Class Access Modifier": 5,
+      "Change Attribute Access Modifier": 11
+    }
+  }
+}

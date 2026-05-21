@@ -1,0 +1,446 @@
+diff --git a/src/main/java/org/jsoup/nodes/Attribute.java b/src/main/java/org/jsoup/nodes/Attribute.java
+index 3ca0057e..2b9ccd3e 100644
+--- a/src/main/java/org/jsoup/nodes/Attribute.java
++++ b/src/main/java/org/jsoup/nodes/Attribute.java
+@@ -1,7 +1,6 @@
+ package org.jsoup.nodes;
+ 
+ import org.jsoup.helper.Validate;
+-import org.jsoup.internal.Normalizer;
+ import org.jsoup.internal.QuietAppendable;
+ import org.jsoup.internal.SharedConstants;
+ import org.jsoup.internal.StringUtil;
+@@ -9,22 +8,13 @@ import org.jsoup.nodes.Document.OutputSettings.Syntax;
+ import org.jspecify.annotations.Nullable;
+ 
+ import java.io.IOException;
+-import java.util.Arrays;
+ import java.util.Map;
+ import java.util.Objects;
+-import java.util.regex.Pattern;
+ 
+ /**
+  A single key + value attribute. (Only used for presentation.)
+  */
+ public class Attribute implements Map.Entry<String, String>, Cloneable  {
+-    private static final String[] booleanAttributes = {
+-            "allowfullscreen", "async", "autofocus", "checked", "compact", "declare", "default", "defer", "disabled",
+-            "formnovalidate", "hidden", "inert", "ismap", "itemscope", "multiple", "muted", "nohref", "noresize",
+-            "noshade", "novalidate", "nowrap", "open", "readonly", "required", "reversed", "seamless", "selected",
+-            "sortable", "truespeed", "typemustmatch"
+-    };
+-
+     private String key;
+     @Nullable private String val;
+     @Nullable Attributes parent; // used to update the holding Attributes when the key / value is changed via this interface
+@@ -217,8 +207,6 @@ public class Attribute implements Map.Entry<String, String>, Cloneable  {
+         }
+     }
+ 
+-    private static final Pattern xmlKeyReplace = Pattern.compile("[^-a-zA-Z0-9_:.]+");
+-    private static final Pattern htmlKeyReplace = Pattern.compile("[\\x00-\\x1f\\x7f-\\x9f \"'/=]+");
+     /**
+      * Get a valid attribute key for the given syntax. If the key is not valid, it will be coerced into a valid key.
+      * @param key the original attribute key
+@@ -226,44 +214,7 @@ public class Attribute implements Map.Entry<String, String>, Cloneable  {
+      * @return the original key if it's valid; a key with invalid characters replaced with "_" otherwise; or null if a valid key could not be created.
+      */
+     @Nullable public static String getValidKey(String key, Syntax syntax) {
+-        if (syntax == Syntax.xml && !isValidXmlKey(key)) {
+-            key = xmlKeyReplace.matcher(key).replaceAll("_");
+-            return isValidXmlKey(key) ? key : null; // null if could not be coerced
+-        }
+-        else if (syntax == Syntax.html && !isValidHtmlKey(key)) {
+-            key = htmlKeyReplace.matcher(key).replaceAll("_");
+-            return isValidHtmlKey(key) ? key : null; // null if could not be coerced
+-        }
+-        return key;
+-    }
+-
+-    // perf critical in html() so using manual scan vs regex:
+-    // note that we aren't using anything in supplemental space, so OK to iter charAt
+-    private static boolean isValidXmlKey(String key) {
+-        // =~ [a-zA-Z_:][-a-zA-Z0-9_:.]*
+-        final int length = key.length();
+-        if (length == 0) return false;
+-        char c = key.charAt(0);
+-        if (!((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || c == '_' || c == ':'))
+-            return false;
+-        for (int i = 1; i < length; i++) {
+-            c = key.charAt(i);
+-            if (!((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || c == '-' || c == '_' || c == ':' || c == '.'))
+-                return false;
+-        }
+-        return true;
+-    }
+-
+-    private static boolean isValidHtmlKey(String key) {
+-        // =~ [\x00-\x1f\x7f-\x9f "'/=]+
+-        final int length = key.length();
+-        if (length == 0) return false;
+-        for (int i = 0; i < length; i++) {
+-            char c = key.charAt(i);
+-            if ((c <= 0x1f) || (c >= 0x7f && c <= 0x9f) || c == ' ' || c == '"' || c == '\'' || c == '/' || c == '=')
+-                return false;
+-        }
+-        return true;
++        return AttributeKey.getValidKey(key, syntax);
+     }
+ 
+     /**
+@@ -316,7 +267,7 @@ public class Attribute implements Map.Entry<String, String>, Cloneable  {
+      * Checks if this attribute name is defined as a boolean attribute in HTML5
+      */
+     public static boolean isBooleanAttribute(final String key) {
+-        return Arrays.binarySearch(booleanAttributes, Normalizer.lowerCase(key)) >= 0;
++        return AttributeKey.isBooleanAttribute(key);
+     }
+ 
+     @Override
+diff --git a/src/test/java/org/jsoup/parser/AttributeParseTest.java b/src/test/java/org/jsoup/parser/AttributeParseTest.java
+index d328b9fb..751c1939 100644
+--- a/src/test/java/org/jsoup/parser/AttributeParseTest.java
++++ b/src/test/java/org/jsoup/parser/AttributeParseTest.java
+@@ -1,5 +1,9 @@
+ package org.jsoup.parser;
+ 
++import org.jsoup.parser.config.*;
++import org.jsoup.parser.lex.*;
++import org.jsoup.parser.tagext.*;
++
+ import org.jsoup.Jsoup;
+ import org.jsoup.nodes.Attribute;
+ import org.jsoup.nodes.Attributes;
+diff --git a/src/test/java/org/jsoup/parser/CharacterReaderTest.java b/src/test/java/org/jsoup/parser/CharacterReaderTest.java
+index 6ae2282a..6a08c807 100644
+--- a/src/test/java/org/jsoup/parser/CharacterReaderTest.java
++++ b/src/test/java/org/jsoup/parser/CharacterReaderTest.java
+@@ -1,7 +1,12 @@
+ package org.jsoup.parser;
+ 
++import org.jsoup.parser.config.*;
++import org.jsoup.parser.lex.*;
++import org.jsoup.parser.tagext.*;
++
+ import org.jsoup.integration.ParseTest;
+ import org.jsoup.internal.StringUtil;
++import org.jsoup.parser.lex.CharacterReader;
+ import org.junit.jupiter.api.Test;
+ 
+ import java.io.BufferedReader;
+diff --git a/src/test/java/org/jsoup/parser/HtmlParserTest.java b/src/test/java/org/jsoup/parser/HtmlParserTest.java
+index e21cb4f7..ec2191b9 100644
+--- a/src/test/java/org/jsoup/parser/HtmlParserTest.java
++++ b/src/test/java/org/jsoup/parser/HtmlParserTest.java
+@@ -1,12 +1,20 @@
+ package org.jsoup.parser;
+ 
++import org.jsoup.parser.config.*;
++import org.jsoup.parser.lex.*;
++import org.jsoup.parser.tagext.*;
++
+ import org.jsoup.Jsoup;
+ import org.jsoup.TextUtil;
+ import org.jsoup.integration.ParseTest;
+ import org.jsoup.internal.StringUtil;
+ import org.jsoup.nodes.*;
++import org.jsoup.parser.config.ParseSettings;
++import org.jsoup.parser.config.Parser;
+ import org.jsoup.parser.error.ParseError;
+ import org.jsoup.parser.error.ParseErrorList;
++import org.jsoup.parser.lex.CharacterReader;
++import org.jsoup.parser.tagext.Tag;
+ import org.jsoup.safety.Safelist;
+ import org.jsoup.select.Elements;
+ import org.junit.jupiter.api.Nested;
+@@ -22,7 +30,7 @@ import java.io.InputStream;
+ import java.util.List;
+ import java.util.stream.Stream;
+ 
+-import static org.jsoup.parser.ParseSettings.preserveCase;
++import static org.jsoup.parser.config.ParseSettings.preserveCase;
+ import static org.junit.jupiter.api.Assertions.*;
+ 
+ /**
+@@ -2165,7 +2173,7 @@ public class HtmlParserTest {
+         String html = "<svg><script>a < b</script></svg>";
+         Document doc = Jsoup.parse(html);
+         Element script = doc.expectFirst("script");
+-        assertEquals(Parser.NamespaceSvg, script.tag().namespace);
++        assertEquals(Parser.NamespaceSvg, script.tag().namespace());
+         assertTrue(script.tag().is(Tag.Data));
+ 
+         DataNode data = (DataNode) script.childNode(0);
+@@ -2175,11 +2183,11 @@ public class HtmlParserTest {
+     @Test void allowCustomDataInForeignElements() {
+         Tag dataTag = new Tag("data", Parser.NamespaceSvg);
+         dataTag.set(Tag.Data);
+-        TagSet tagSet = TagSet.HtmlTagSet.add(dataTag);
++        TagSet tagSet = TagSet.Html().add(dataTag);
+         String html = "<svg><data>a < b</data></svg>";
+         Document doc = Jsoup.parse(html, Parser.htmlParser().tagSet(tagSet));
+         Element data = doc.expectFirst("data");
+-        assertEquals(Parser.NamespaceSvg, data.tag().namespace);
++        assertEquals(Parser.NamespaceSvg, data.tag().namespace());
+         assertEquals("", data.text());
+         assertEquals("a < b", data.data());
+         assertEquals("<data>a < b</data>", data.outerHtml());
+diff --git a/src/test/java/org/jsoup/parser/HtmlTreeBuilderStateTest.java b/src/test/java/org/jsoup/parser/HtmlTreeBuilderStateTest.java
+index b9c573b2..8cfb348c 100644
+--- a/src/test/java/org/jsoup/parser/HtmlTreeBuilderStateTest.java
++++ b/src/test/java/org/jsoup/parser/HtmlTreeBuilderStateTest.java
+@@ -1,5 +1,9 @@
+ package org.jsoup.parser;
+ 
++import org.jsoup.parser.config.*;
++import org.jsoup.parser.lex.*;
++import org.jsoup.parser.tagext.*;
++
+ import org.jsoup.Jsoup;
+ import org.jsoup.internal.StringUtil;
+ import org.jsoup.parser.HtmlTreeBuilderState.Constants;
+@@ -23,6 +27,7 @@ public class HtmlTreeBuilderStateTest {
+             int modifiers = field.getModifiers();
+             if (Modifier.isStatic(modifiers) && !Modifier.isPrivate(modifiers) && field.getType().isArray()) {
+                 try {
++                    field.setAccessible(true);
+                     array.add((Object[]) field.get(null));
+                 } catch (IllegalAccessException e) {
+                     throw new IllegalStateException(e);
+diff --git a/src/test/java/org/jsoup/parser/HtmlTreeBuilderTest.java b/src/test/java/org/jsoup/parser/HtmlTreeBuilderTest.java
+index 105247c0..aafb3bbe 100644
+--- a/src/test/java/org/jsoup/parser/HtmlTreeBuilderTest.java
++++ b/src/test/java/org/jsoup/parser/HtmlTreeBuilderTest.java
+@@ -1,5 +1,9 @@
+ package org.jsoup.parser;
+ 
++import org.jsoup.parser.config.*;
++import org.jsoup.parser.lex.*;
++import org.jsoup.parser.tagext.*;
++
+ 
+ import org.jsoup.Jsoup;
+ import org.jsoup.nodes.Document;
+diff --git a/src/test/java/org/jsoup/parser/ParserIT.java b/src/test/java/org/jsoup/parser/ParserIT.java
+index 5961e01a..64fdafa6 100644
+--- a/src/test/java/org/jsoup/parser/ParserIT.java
++++ b/src/test/java/org/jsoup/parser/ParserIT.java
+@@ -1,5 +1,9 @@
+ package org.jsoup.parser;
+ 
++import org.jsoup.parser.config.*;
++import org.jsoup.parser.lex.*;
++import org.jsoup.parser.tagext.*;
++
+ import org.jsoup.nodes.Document;
+ import org.jsoup.nodes.Element;
+ import org.junit.jupiter.api.Test;
+diff --git a/src/test/java/org/jsoup/parser/ParserSettingsTest.java b/src/test/java/org/jsoup/parser/ParserSettingsTest.java
+index c21bf834..65114944 100644
+--- a/src/test/java/org/jsoup/parser/ParserSettingsTest.java
++++ b/src/test/java/org/jsoup/parser/ParserSettingsTest.java
+@@ -1,5 +1,9 @@
+ package org.jsoup.parser;
+ 
++import org.jsoup.parser.config.*;
++import org.jsoup.parser.lex.*;
++import org.jsoup.parser.tagext.*;
++
+ import org.jsoup.MultiLocaleExtension.MultiLocaleTest;
+ import org.jsoup.nodes.Attributes;
+ 
+diff --git a/src/test/java/org/jsoup/parser/ParserTest.java b/src/test/java/org/jsoup/parser/ParserTest.java
+index bee6e9e1..623b63ce 100644
+--- a/src/test/java/org/jsoup/parser/ParserTest.java
++++ b/src/test/java/org/jsoup/parser/ParserTest.java
+@@ -1,5 +1,9 @@
+ package org.jsoup.parser;
+ 
++import org.jsoup.parser.config.*;
++import org.jsoup.parser.lex.*;
++import org.jsoup.parser.tagext.*;
++
+ import org.jsoup.Jsoup;
+ import org.jsoup.nodes.Document;
+ import org.jsoup.parser.error.ParseErrorList;
+diff --git a/src/test/java/org/jsoup/parser/PositionTest.java b/src/test/java/org/jsoup/parser/PositionTest.java
+index f7b0a0ef..04fbc936 100644
+--- a/src/test/java/org/jsoup/parser/PositionTest.java
++++ b/src/test/java/org/jsoup/parser/PositionTest.java
+@@ -1,5 +1,9 @@
+ package org.jsoup.parser;
+ 
++import org.jsoup.parser.config.*;
++import org.jsoup.parser.lex.*;
++import org.jsoup.parser.tagext.*;
++
+ import org.jsoup.Jsoup;
+ import org.jsoup.TextUtil;
+ import org.jsoup.integration.TestServer;
+diff --git a/src/test/java/org/jsoup/parser/StreamParserTest.java b/src/test/java/org/jsoup/parser/StreamParserTest.java
+index 6865c9db..da3fedfd 100644
+--- a/src/test/java/org/jsoup/parser/StreamParserTest.java
++++ b/src/test/java/org/jsoup/parser/StreamParserTest.java
+@@ -1,5 +1,9 @@
+ package org.jsoup.parser;
+ 
++import org.jsoup.parser.config.*;
++import org.jsoup.parser.lex.*;
++import org.jsoup.parser.tagext.*;
++
+ import org.jsoup.Connection;
+ import org.jsoup.Jsoup;
+ import org.jsoup.helper.DataUtil;
+diff --git a/src/test/java/org/jsoup/parser/TagSetTest.java b/src/test/java/org/jsoup/parser/TagSetTest.java
+index bbca9ed7..c4b3d93f 100644
+--- a/src/test/java/org/jsoup/parser/TagSetTest.java
++++ b/src/test/java/org/jsoup/parser/TagSetTest.java
+@@ -1,4 +1,8 @@
+ package org.jsoup.parser;
++
++import org.jsoup.parser.config.*;
++import org.jsoup.parser.lex.*;
++import org.jsoup.parser.tagext.*;
+ import org.jsoup.Jsoup;
+ import org.jsoup.nodes.Document;
+ import org.jsoup.nodes.Element;
+diff --git a/src/test/java/org/jsoup/parser/TagTest.java b/src/test/java/org/jsoup/parser/TagTest.java
+index 75185384..9f1ac4af 100644
+--- a/src/test/java/org/jsoup/parser/TagTest.java
++++ b/src/test/java/org/jsoup/parser/TagTest.java
+@@ -1,5 +1,9 @@
+ package org.jsoup.parser;
+ 
++import org.jsoup.parser.config.*;
++import org.jsoup.parser.lex.*;
++import org.jsoup.parser.tagext.*;
++
+ import org.jsoup.Jsoup;
+ import org.jsoup.MultiLocaleExtension.MultiLocaleTest;
+ import org.jsoup.nodes.Document;
+@@ -185,12 +189,11 @@ public class TagTest {
+         // https://github.com/jhy/jsoup/issues/2323
+         Tag img = Tag.valueOf("img");
+         Tag input = Tag.valueOf("input");
+-        int imgOpts = img.options;
+-        int inputOpts = input.options;
+         assertFalse(img.isFormSubmittable());
+         assertTrue(input.isFormSubmittable());
+-        assertEquals(imgOpts, img.options);
+-        assertEquals(inputOpts, input.options);
++        // Verify that checking option state does not mutate hash-relevant state.
++        assertEquals(Tag.valueOf("img"), img);
++        assertEquals(Tag.valueOf("input"), input);
+     }
+ 
+     @Test void stableHashcode() {
+@@ -257,24 +260,44 @@ public class TagTest {
+     @Test void equals() {
+         TagSet tags = TagSet.Html();
+         Tag p1 = tags.get("p", NamespaceHtml);
+-        Tag p2 = p1.clone();
++        Tag p2 = new Tag(p1.name(), p1.namespace());
++        if (p1.is(Tag.Known)) p2.set(Tag.Known);
++        if (p1.is(Tag.Block)) p2.set(Tag.Block);
++        if (p1.is(Tag.InlineContainer)) p2.set(Tag.InlineContainer);
++        if (p1.is(Tag.SelfClose)) p2.set(Tag.SelfClose);
++        if (p1.is(Tag.SeenSelfClose)) p2.set(Tag.SeenSelfClose);
++        if (p1.is(Tag.PreserveWhitespace)) p2.set(Tag.PreserveWhitespace);
++        if (p1.is(Tag.RcData)) p2.set(Tag.RcData);
++        if (p1.is(Tag.Data)) p2.set(Tag.Data);
++        if (p1.is(Tag.FormSubmittable)) p2.set(Tag.FormSubmittable);
++        if (p1.is(Tag.TextBoundary)) p2.set(Tag.TextBoundary);
+         assertEquals(p1, p2);
+         assertNotEquals(p1, tags);
+ 
+-        p2.namespace = "Other";
++        p2.namespace("Other");
+         assertNotEquals(p1, p2);
+-        p2.namespace = p1.namespace;
++        p2.namespace(p1.namespace());
+ 
+-        p2.tagName = "P";
++        p2.name("P");
+         assertNotEquals(p1, p2);
+-        p2.tagName = p1.tagName;
++        p2.name(p1.name());
+ 
+-        p2.normalName = "pp";
++        p2.name("pp");
+         assertNotEquals(p1, p2);
+-        p2.normalName = p1.normalName;
++        p2.name(p1.name());
+ 
+-        p2.options = 0;
++        p2.clear(Tag.Known).clear(Tag.Block).clear(Tag.InlineContainer).clear(Tag.SelfClose).clear(Tag.SeenSelfClose)
++            .clear(Tag.PreserveWhitespace).clear(Tag.RcData).clear(Tag.Data).clear(Tag.FormSubmittable).clear(Tag.TextBoundary);
+         assertNotEquals(p1, p2);
+-        p2.options = p1.options;
++        if (p1.is(Tag.Known)) p2.set(Tag.Known);
++        if (p1.is(Tag.Block)) p2.set(Tag.Block);
++        if (p1.is(Tag.InlineContainer)) p2.set(Tag.InlineContainer);
++        if (p1.is(Tag.SelfClose)) p2.set(Tag.SelfClose);
++        if (p1.is(Tag.SeenSelfClose)) p2.set(Tag.SeenSelfClose);
++        if (p1.is(Tag.PreserveWhitespace)) p2.set(Tag.PreserveWhitespace);
++        if (p1.is(Tag.RcData)) p2.set(Tag.RcData);
++        if (p1.is(Tag.Data)) p2.set(Tag.Data);
++        if (p1.is(Tag.FormSubmittable)) p2.set(Tag.FormSubmittable);
++        if (p1.is(Tag.TextBoundary)) p2.set(Tag.TextBoundary);
+     }
+ }
+diff --git a/src/test/java/org/jsoup/parser/TokenQueueTest.java b/src/test/java/org/jsoup/parser/TokenQueueTest.java
+index 8fb2de6d..afa159a2 100644
+--- a/src/test/java/org/jsoup/parser/TokenQueueTest.java
++++ b/src/test/java/org/jsoup/parser/TokenQueueTest.java
+@@ -1,5 +1,9 @@
+ package org.jsoup.parser;
+ 
++import org.jsoup.parser.config.*;
++import org.jsoup.parser.lex.*;
++import org.jsoup.parser.tagext.*;
++
+ import org.jsoup.Jsoup;
+ import org.jsoup.nodes.Document;
+ import org.junit.jupiter.api.Test;
+diff --git a/src/test/java/org/jsoup/parser/TokeniserStateTest.java b/src/test/java/org/jsoup/parser/TokeniserStateTest.java
+index db45bbc9..6be63fc9 100644
+--- a/src/test/java/org/jsoup/parser/TokeniserStateTest.java
++++ b/src/test/java/org/jsoup/parser/TokeniserStateTest.java
+@@ -1,5 +1,9 @@
+ package org.jsoup.parser;
+ 
++import org.jsoup.parser.config.*;
++import org.jsoup.parser.lex.*;
++import org.jsoup.parser.tagext.*;
++
+ import org.jsoup.Jsoup;
+ import org.jsoup.TextUtil;
+ import org.jsoup.nodes.Comment;
+diff --git a/src/test/java/org/jsoup/parser/TokeniserTest.java b/src/test/java/org/jsoup/parser/TokeniserTest.java
+index 41de6283..72e78fa1 100644
+--- a/src/test/java/org/jsoup/parser/TokeniserTest.java
++++ b/src/test/java/org/jsoup/parser/TokeniserTest.java
+@@ -1,5 +1,9 @@
+ package org.jsoup.parser;
+ 
++import org.jsoup.parser.config.*;
++import org.jsoup.parser.lex.*;
++import org.jsoup.parser.tagext.*;
++
+ import org.jsoup.Jsoup;
+ import org.jsoup.nodes.*;
+ import org.jsoup.select.Elements;
+diff --git a/src/test/java/org/jsoup/parser/XmlTreeBuilderTest.java b/src/test/java/org/jsoup/parser/XmlTreeBuilderTest.java
+index 89c2a557..22fa856c 100644
+--- a/src/test/java/org/jsoup/parser/XmlTreeBuilderTest.java
++++ b/src/test/java/org/jsoup/parser/XmlTreeBuilderTest.java
+@@ -1,5 +1,9 @@
+ package org.jsoup.parser;
+ 
++import org.jsoup.parser.config.*;
++import org.jsoup.parser.lex.*;
++import org.jsoup.parser.tagext.*;
++
+ import org.jsoup.Jsoup;
+ import org.jsoup.TextUtil;
+ import org.jsoup.nodes.*;
