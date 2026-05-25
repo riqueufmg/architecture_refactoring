@@ -56,8 +56,7 @@ from util.plan_utils import enrich_plan_with_visibility_ops
 from util.state_utils import (
     _get_plan_dir,
     _get_target_type,
-    _get_target_identity,
-    _resolve_target_scope,
+    _get_target_identity
 )
 
 from State import State #langgraph state class
@@ -212,42 +211,6 @@ def resolve_target_class_node(state: State) -> State:
     )
 
     return state
-
-## filter in the package only the classes that can be moved without breaking incoming dependencies from outside the package
-'''def _filter_movable_package_scope(
-    state: State,
-    target_name: str,
-    incoming_deps: list[Tuple[str, str]],
-    allowed_classes: set[str],
-    internal_deps: list[Tuple[str, str]],
-) -> tuple[list[Tuple[str, str]], list[str]]:
-    incoming_targets = {dst for _, dst in incoming_deps}
-
-    movable_classes = {
-        cls
-        for cls in allowed_classes
-        if cls not in incoming_targets
-    }
-
-    movable_internal_deps = [
-        (src, dst)
-        for src, dst in internal_deps
-        if src in movable_classes and dst in movable_classes
-    ]
-
-    movable_files = [
-        f for f in state["target_files"]
-        if Fqn(target_name)._java_file_to_fqn(
-            f,
-            state["target_source_root"]
-        ) in movable_classes
-    ]
-
-    if not movable_files:
-        raise RuntimeError(f"No movable classes found for package: {target_name}")
-
-    return movable_internal_deps, movable_files
-'''
 
 def _filter_closed_movable_clusters(
     state: State,
@@ -629,14 +592,6 @@ def resolve_files_for_block_node(state: State) -> State:
     # get dic of blocks and list of operations
     blk = state.get("staged_block") or {}
     ops = blk.get("ops", []) or []
-
-    '''existing: set[str] = set()
-    for f in (state.get("staged_block_files") or []):
-        p = Path(f)
-        if p.is_absolute():
-            existing.add(str(p))
-        else:
-            existing.add(str((repo_path / p).resolve()))'''
 
     target_type = _get_target_type(state)
     if target_type == "class":
@@ -1127,81 +1082,6 @@ def after_rollback(state: State) -> str:
         return "prepare_replan"
     return END
 
-# Called when a class is move for outside package
-'''def openrewrite_node(state: State) -> State:
-    repo_path = Path(state["repo_path"]).resolve()
-    plan_dir = _get_plan_dir(state)
-
-    blk = state.get("staged_block") or {}
-    ops = blk.get("ops") or []
-
-    move_ops = [op for op in ops if op.get("op") == "MOVE_CLASS"]
-
-    # If block has no MOVE_CLASS, skip OpenRewrite
-    if not move_ops:
-        state["openrewrite_ok"] = True
-        state["msg"] = state.get("msg", "") + " | openrewrite skipped"
-        return state
-
-    recipe_items = []
-
-    for op in move_ops:
-        inputs = op.get("inputs") or []
-        outputs = op.get("outputs") or []
-
-        if not inputs or not outputs:
-            raise RuntimeError("MOVE_CLASS op missing inputs or outputs")
-
-        old_fqn = inputs[0]
-        new_fqn = outputs[0]
-
-        recipe_items.append(
-            f"""  - org.openrewrite.java.ChangeType:
-      oldFullyQualifiedTypeName: {old_fqn}
-      newFullyQualifiedTypeName: {new_fqn}"""
-        )
-
-    recipe_name = f"archagent.MoveClassBlock{state.get('block_idx', 0)}"
-
-    rewrite_yml = (
-        "type: specs.openrewrite.org/v1beta/recipe\n"
-        f"name: {recipe_name}\n"
-        "recipeList:\n"
-        + "\n".join(recipe_items)
-        + "\n"
-    )
-
-    rewrite_path = plan_dir / f"rewrite.block.{state.get('block_idx', 0)}.yml"
-    rewrite_path.write_text(rewrite_yml, encoding="utf-8")
-
-    cmd = [
-        "mvn",
-        "-U",
-        "org.openrewrite.maven:rewrite-maven-plugin:run",
-        f"-Drewrite.configLocation={rewrite_path}",
-        f"-Drewrite.activeRecipes={recipe_name}",
-    ]
-
-    p = _run(cmd, cwd=repo_path)
-
-    log = (p.stdout or "") + "\n" + (p.stderr or "")
-    (plan_dir / f"openrewrite.block.{state.get('block_idx', 0)}.log").write_text(
-        log,
-        encoding="utf-8",
-    )
-
-    state["openrewrite_returncode"] = p.returncode
-    state["openrewrite_ok"] = p.returncode == 0
-
-    if state["openrewrite_ok"]:
-        state["msg"] = state.get("msg", "") + " | openrewrite ok"
-        return state
-
-    state["rollback_reason"] = "openrewrite_failed"
-    state["executor_feedback"] = "OPENREWRITE_FAILED:\n" + _tail(log, 40)
-    state["msg"] = state.get("msg", "") + " | openrewrite FAIL"
-    return state'''
-
 def openrewrite_node(state: State) -> State:
     repo_path = Path(state["repo_path"]).resolve()
     plan_dir = _get_plan_dir(state)
@@ -1272,14 +1152,6 @@ def openrewrite_node(state: State) -> State:
 
     rewrite_path = plan_dir / f"rewrite.block.{block_idx}.yml"
     rewrite_path.write_text(rewrite_yml, encoding="utf-8")
-
-    '''cmd = [
-        "mvn",
-        "-U",
-        "org.openrewrite.maven:rewrite-maven-plugin:run",
-        f"-Drewrite.configLocation={rewrite_path}",
-        f"-Drewrite.activeRecipes={recipe_name}",
-    ]'''
 
     cmd = [
         "mvn",
