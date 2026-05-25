@@ -1,0 +1,1398 @@
+{
+"commits": [
+{
+	"repository": "https://github.com/apache/commons-io",
+	"sha1": "8cd992bd5e719ecc074a7ece583a9eeeb6699e25",
+	"url": "https://github.com/apache/commons-io/commit/8cd992bd5e719ecc074a7ece583a9eeeb6699e25",
+	"refactorings": [{
+	"type": "Extract Interface",
+	"description": "Extract Interface org.apache.commons.io.function.IOStreamOperations from classes [org.apache.commons.io.function.IOStream]",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 47,
+		"endLine": 602,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original sub-type declaration",
+		"codeElement": "org.apache.commons.io.function.IOStream"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 31,
+		"endLine": 129,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "sub-type declaration after extraction",
+		"codeElement": "org.apache.commons.io.function.IOStream"
+}, {
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStreamOperations.java",
+		"startLine": 39,
+		"endLine": 217,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "extracted super-type declaration",
+		"codeElement": "org.apache.commons.io.function.IOStreamOperations"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public allMatch(predicate IOPredicate<? super T>) : boolean from class org.apache.commons.io.function.IOStream to public allMatch(predicate IOPredicate<? super T>) : boolean from class org.apache.commons.io.function.IOStreamOperations",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 146,
+		"endLine": 156,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public allMatch(predicate IOPredicate<? super T>) : boolean"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStreamOperations.java",
+		"startLine": 46,
+		"endLine": 49,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public allMatch(predicate IOPredicate<? super T>) : boolean"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public anyMatch(predicate IOPredicate<? super T>) : boolean from class org.apache.commons.io.function.IOStream to public anyMatch(predicate IOPredicate<? super T>) : boolean from class org.apache.commons.io.function.IOStreamOperations",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 158,
+		"endLine": 168,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public anyMatch(predicate IOPredicate<? super T>) : boolean"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStreamOperations.java",
+		"startLine": 51,
+		"endLine": 54,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public anyMatch(predicate IOPredicate<? super T>) : boolean"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public collect(collector Collector<? super T,A,R>) : R from class org.apache.commons.io.function.IOStream to public collect(collector Collector<? super T,A,R>) : R from class org.apache.commons.io.function.IOStreamOperations",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 170,
+		"endLine": 187,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public collect(collector Collector<? super T,A,R>) : R"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStreamOperations.java",
+		"startLine": 56,
+		"endLine": 58,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public collect(collector Collector<? super T,A,R>) : R"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public collect(supplier IOSupplier<R>, accumulator IOBiConsumer<R,? super T>, combiner IOBiConsumer<R,R>) : R from class org.apache.commons.io.function.IOStream to public collect(supplier IOSupplier<R>, accumulator IOBiConsumer<R,? super T>, combiner IOBiConsumer<R,R>) : R from class org.apache.commons.io.function.IOStreamOperations",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 189,
+		"endLine": 208,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public collect(supplier IOSupplier<R>, accumulator IOBiConsumer<R,? super T>, combiner IOBiConsumer<R,R>) : R"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStreamOperations.java",
+		"startLine": 60,
+		"endLine": 63,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public collect(supplier IOSupplier<R>, accumulator IOBiConsumer<R,? super T>, combiner IOBiConsumer<R,R>) : R"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public count() : long from class org.apache.commons.io.function.IOStream to public count() : long from class org.apache.commons.io.function.IOStreamOperations",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 210,
+		"endLine": 217,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public count() : long"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStreamOperations.java",
+		"startLine": 65,
+		"endLine": 67,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public count() : long"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public distinct() : IOStream<T> from class org.apache.commons.io.function.IOStream to public distinct() : IOStream<T> from class org.apache.commons.io.function.IOStreamOperations",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 219,
+		"endLine": 226,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public distinct() : IOStream<T>"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStreamOperations.java",
+		"startLine": 69,
+		"endLine": 71,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public distinct() : IOStream<T>"
+}]
+},
+{
+	"type": "Extract And Move Method",
+	"description": "Extract And Move Method public adapt(stream Stream<T>) : IOStream<T> extracted from public distinct() : IOStream<T> in class org.apache.commons.io.function.IOStream & moved to class org.apache.commons.io.function.IOStream",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 219,
+		"endLine": 226,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration before extraction",
+		"codeElement": "public distinct() : IOStream<T>"
+}, {
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 225,
+		"endLine": 225,
+		"startColumn": 9,
+		"endColumn": 43,
+		"codeElementType": "RETURN_STATEMENT",
+		"description": "extracted code from source method declaration",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 39,
+		"endLine": 48,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "public adapt(stream Stream<T>) : IOStream<T>"
+}, {
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 47,
+		"endLine": 47,
+		"startColumn": 9,
+		"endColumn": 46,
+		"codeElementType": "RETURN_STATEMENT",
+		"description": "extracted code to extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStreamOperations.java",
+		"startLine": 69,
+		"endLine": 71,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration after extraction",
+		"codeElement": "public distinct() : IOStream<T>"
+}, {
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStreamOperations.java",
+		"startLine": 70,
+		"endLine": 70,
+		"startColumn": 16,
+		"endColumn": 51,
+		"codeElementType": "METHOD_INVOCATION",
+		"description": "extracted method invocation",
+		"codeElement": "IOStream.adapt(unwrap().distinct())"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public filter(predicate IOPredicate<? super T>) : IOStream<T> from class org.apache.commons.io.function.IOStream to public filter(predicate IOPredicate<? super T>) : IOStream<T> from class org.apache.commons.io.function.IOStreamOperations",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 228,
+		"endLine": 238,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public filter(predicate IOPredicate<? super T>) : IOStream<T>"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStreamOperations.java",
+		"startLine": 73,
+		"endLine": 76,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public filter(predicate IOPredicate<? super T>) : IOStream<T>"
+}]
+},
+{
+	"type": "Extract And Move Method",
+	"description": "Extract And Move Method public adapt(stream Stream<T>) : IOStream<T> extracted from public filter(predicate IOPredicate<? super T>) : IOStream<T> in class org.apache.commons.io.function.IOStream & moved to class org.apache.commons.io.function.IOStream",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 228,
+		"endLine": 238,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration before extraction",
+		"codeElement": "public filter(predicate IOPredicate<? super T>) : IOStream<T>"
+}, {
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 237,
+		"endLine": 237,
+		"startColumn": 9,
+		"endColumn": 70,
+		"codeElementType": "RETURN_STATEMENT",
+		"description": "extracted code from source method declaration",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 39,
+		"endLine": 48,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "public adapt(stream Stream<T>) : IOStream<T>"
+}, {
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 47,
+		"endLine": 47,
+		"startColumn": 9,
+		"endColumn": 46,
+		"codeElementType": "RETURN_STATEMENT",
+		"description": "extracted code to extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStreamOperations.java",
+		"startLine": 73,
+		"endLine": 76,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration after extraction",
+		"codeElement": "public filter(predicate IOPredicate<? super T>) : IOStream<T>"
+}, {
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStreamOperations.java",
+		"startLine": 75,
+		"endLine": 75,
+		"startColumn": 16,
+		"endColumn": 78,
+		"codeElementType": "METHOD_INVOCATION",
+		"description": "extracted method invocation",
+		"codeElement": "IOStream.adapt(unwrap().filter(t -> Erase.test(predicate,t)))"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public findAny() : Optional<T> from class org.apache.commons.io.function.IOStream to public findAny() : Optional<T> from class org.apache.commons.io.function.IOStreamOperations",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 240,
+		"endLine": 247,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public findAny() : Optional<T>"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStreamOperations.java",
+		"startLine": 78,
+		"endLine": 80,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public findAny() : Optional<T>"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public findFirst() : Optional<T> from class org.apache.commons.io.function.IOStream to public findFirst() : Optional<T> from class org.apache.commons.io.function.IOStreamOperations",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 249,
+		"endLine": 256,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public findFirst() : Optional<T>"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStreamOperations.java",
+		"startLine": 82,
+		"endLine": 84,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public findFirst() : Optional<T>"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public flatMap(mapper IOFunction<? super T,? extends IOStream<? extends R>>) : IOStream<R> from class org.apache.commons.io.function.IOStream to public flatMap(mapper IOFunction<? super T,? extends IOStream<? extends R>>) : IOStream<R> from class org.apache.commons.io.function.IOStreamOperations",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 258,
+		"endLine": 269,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public flatMap(mapper IOFunction<? super T,? extends IOStream<? extends R>>) : IOStream<R>"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStreamOperations.java",
+		"startLine": 86,
+		"endLine": 89,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public flatMap(mapper IOFunction<? super T,? extends IOStream<? extends R>>) : IOStream<R>"
+}]
+},
+{
+	"type": "Extract And Move Method",
+	"description": "Extract And Move Method public adapt(stream Stream<T>) : IOStream<T> extracted from public flatMap(mapper IOFunction<? super T,? extends IOStream<? extends R>>) : IOStream<R> in class org.apache.commons.io.function.IOStream & moved to class org.apache.commons.io.function.IOStream",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 258,
+		"endLine": 269,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration before extraction",
+		"codeElement": "public flatMap(mapper IOFunction<? super T,? extends IOStream<? extends R>>) : IOStream<R>"
+}, {
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 268,
+		"endLine": 268,
+		"startColumn": 9,
+		"endColumn": 78,
+		"codeElementType": "RETURN_STATEMENT",
+		"description": "extracted code from source method declaration",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 39,
+		"endLine": 48,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "public adapt(stream Stream<T>) : IOStream<T>"
+}, {
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 47,
+		"endLine": 47,
+		"startColumn": 9,
+		"endColumn": 46,
+		"codeElementType": "RETURN_STATEMENT",
+		"description": "extracted code to extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStreamOperations.java",
+		"startLine": 86,
+		"endLine": 89,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration after extraction",
+		"codeElement": "public flatMap(mapper IOFunction<? super T,? extends IOStream<? extends R>>) : IOStream<R>"
+}, {
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStreamOperations.java",
+		"startLine": 88,
+		"endLine": 88,
+		"startColumn": 16,
+		"endColumn": 86,
+		"codeElementType": "METHOD_INVOCATION",
+		"description": "extracted method invocation",
+		"codeElement": "IOStream.adapt(unwrap().flatMap(t -> Erase.apply(mapper,t).unwrap()))"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public flatMapToDouble(mapper IOFunction<? super T,? extends DoubleStream>) : DoubleStream from class org.apache.commons.io.function.IOStream to public flatMapToDouble(mapper IOFunction<? super T,? extends DoubleStream>) : DoubleStream from class org.apache.commons.io.function.IOStreamOperations",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 271,
+		"endLine": 286,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public flatMapToDouble(mapper IOFunction<? super T,? extends DoubleStream>) : DoubleStream"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStreamOperations.java",
+		"startLine": 91,
+		"endLine": 94,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public flatMapToDouble(mapper IOFunction<? super T,? extends DoubleStream>) : DoubleStream"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public flatMapToInt(mapper IOFunction<? super T,? extends IntStream>) : IntStream from class org.apache.commons.io.function.IOStream to public flatMapToInt(mapper IOFunction<? super T,? extends IntStream>) : IntStream from class org.apache.commons.io.function.IOStreamOperations",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 288,
+		"endLine": 303,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public flatMapToInt(mapper IOFunction<? super T,? extends IntStream>) : IntStream"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStreamOperations.java",
+		"startLine": 96,
+		"endLine": 99,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public flatMapToInt(mapper IOFunction<? super T,? extends IntStream>) : IntStream"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public flatMapToLong(mapper IOFunction<? super T,? extends LongStream>) : LongStream from class org.apache.commons.io.function.IOStream to public flatMapToLong(mapper IOFunction<? super T,? extends LongStream>) : LongStream from class org.apache.commons.io.function.IOStreamOperations",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 305,
+		"endLine": 320,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public flatMapToLong(mapper IOFunction<? super T,? extends LongStream>) : LongStream"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStreamOperations.java",
+		"startLine": 101,
+		"endLine": 104,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public flatMapToLong(mapper IOFunction<? super T,? extends LongStream>) : LongStream"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public forAll(action IOConsumer<T>) : void from class org.apache.commons.io.function.IOStream to public forAll(action IOConsumer<T>) : void from class org.apache.commons.io.function.IOStreamOperations",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 322,
+		"endLine": 330,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public forAll(action IOConsumer<T>) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStreamOperations.java",
+		"startLine": 106,
+		"endLine": 108,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public forAll(action IOConsumer<T>) : void"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public forAll(action IOConsumer<T>, exSupplier BiFunction<Integer,IOException,IOException>) : void from class org.apache.commons.io.function.IOStream to public forAll(action IOConsumer<T>, exSupplier BiFunction<Integer,IOException,IOException>) : void from class org.apache.commons.io.function.IOStreamOperations",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 332,
+		"endLine": 358,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public forAll(action IOConsumer<T>, exSupplier BiFunction<Integer,IOException,IOException>) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStreamOperations.java",
+		"startLine": 110,
+		"endLine": 129,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public forAll(action IOConsumer<T>, exSupplier BiFunction<Integer,IOException,IOException>) : void"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public forEach(action IOConsumer<? super T>) : void from class org.apache.commons.io.function.IOStream to public forEach(action IOConsumer<? super T>) : void from class org.apache.commons.io.function.IOStreamOperations",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 360,
+		"endLine": 369,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public forEach(action IOConsumer<? super T>) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStreamOperations.java",
+		"startLine": 131,
+		"endLine": 134,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public forEach(action IOConsumer<? super T>) : void"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public forEachOrdered(action IOConsumer<? super T>) : void from class org.apache.commons.io.function.IOStream to public forEachOrdered(action IOConsumer<? super T>) : void from class org.apache.commons.io.function.IOStreamOperations",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 371,
+		"endLine": 380,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public forEachOrdered(action IOConsumer<? super T>) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStreamOperations.java",
+		"startLine": 136,
+		"endLine": 139,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public forEachOrdered(action IOConsumer<? super T>) : void"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public limit(maxSize long) : IOStream<T> from class org.apache.commons.io.function.IOStream to public limit(maxSize long) : IOStream<T> from class org.apache.commons.io.function.IOStreamOperations",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 382,
+		"endLine": 390,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public limit(maxSize long) : IOStream<T>"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStreamOperations.java",
+		"startLine": 141,
+		"endLine": 143,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public limit(maxSize long) : IOStream<T>"
+}]
+},
+{
+	"type": "Extract And Move Method",
+	"description": "Extract And Move Method public adapt(stream Stream<T>) : IOStream<T> extracted from public limit(maxSize long) : IOStream<T> in class org.apache.commons.io.function.IOStream & moved to class org.apache.commons.io.function.IOStream",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 382,
+		"endLine": 390,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration before extraction",
+		"codeElement": "public limit(maxSize long) : IOStream<T>"
+}, {
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 389,
+		"endLine": 389,
+		"startColumn": 9,
+		"endColumn": 47,
+		"codeElementType": "RETURN_STATEMENT",
+		"description": "extracted code from source method declaration",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 39,
+		"endLine": 48,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "public adapt(stream Stream<T>) : IOStream<T>"
+}, {
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 47,
+		"endLine": 47,
+		"startColumn": 9,
+		"endColumn": 46,
+		"codeElementType": "RETURN_STATEMENT",
+		"description": "extracted code to extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStreamOperations.java",
+		"startLine": 141,
+		"endLine": 143,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration after extraction",
+		"codeElement": "public limit(maxSize long) : IOStream<T>"
+}, {
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStreamOperations.java",
+		"startLine": 142,
+		"endLine": 142,
+		"startColumn": 16,
+		"endColumn": 55,
+		"codeElementType": "METHOD_INVOCATION",
+		"description": "extracted method invocation",
+		"codeElement": "IOStream.adapt(unwrap().limit(maxSize))"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public map(mapper IOFunction<? super T,? extends R>) : IOStream<R> from class org.apache.commons.io.function.IOStream to public map(mapper IOFunction<? super T,? extends R>) : IOStream<R> from class org.apache.commons.io.function.IOStreamOperations",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 392,
+		"endLine": 403,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public map(mapper IOFunction<? super T,? extends R>) : IOStream<R>"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStreamOperations.java",
+		"startLine": 145,
+		"endLine": 148,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public map(mapper IOFunction<? super T,? extends R>) : IOStream<R>"
+}]
+},
+{
+	"type": "Extract And Move Method",
+	"description": "Extract And Move Method public adapt(stream Stream<T>) : IOStream<T> extracted from public map(mapper IOFunction<? super T,? extends R>) : IOStream<R> in class org.apache.commons.io.function.IOStream & moved to class org.apache.commons.io.function.IOStream",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 392,
+		"endLine": 403,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration before extraction",
+		"codeElement": "public map(mapper IOFunction<? super T,? extends R>) : IOStream<R>"
+}, {
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 402,
+		"endLine": 402,
+		"startColumn": 9,
+		"endColumn": 65,
+		"codeElementType": "RETURN_STATEMENT",
+		"description": "extracted code from source method declaration",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 39,
+		"endLine": 48,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "public adapt(stream Stream<T>) : IOStream<T>"
+}, {
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 47,
+		"endLine": 47,
+		"startColumn": 9,
+		"endColumn": 46,
+		"codeElementType": "RETURN_STATEMENT",
+		"description": "extracted code to extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStreamOperations.java",
+		"startLine": 145,
+		"endLine": 148,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration after extraction",
+		"codeElement": "public map(mapper IOFunction<? super T,? extends R>) : IOStream<R>"
+}, {
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStreamOperations.java",
+		"startLine": 147,
+		"endLine": 147,
+		"startColumn": 16,
+		"endColumn": 73,
+		"codeElementType": "METHOD_INVOCATION",
+		"description": "extracted method invocation",
+		"codeElement": "IOStream.adapt(unwrap().map(t -> Erase.apply(mapper,t)))"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public mapToDouble(mapper ToDoubleFunction<? super T>) : DoubleStream from class org.apache.commons.io.function.IOStream to public mapToDouble(mapper ToDoubleFunction<? super T>) : DoubleStream from class org.apache.commons.io.function.IOStreamOperations",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 405,
+		"endLine": 420,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public mapToDouble(mapper ToDoubleFunction<? super T>) : DoubleStream"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStreamOperations.java",
+		"startLine": 150,
+		"endLine": 152,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public mapToDouble(mapper ToDoubleFunction<? super T>) : DoubleStream"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public mapToInt(mapper ToIntFunction<? super T>) : IntStream from class org.apache.commons.io.function.IOStream to public mapToInt(mapper ToIntFunction<? super T>) : IntStream from class org.apache.commons.io.function.IOStreamOperations",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 422,
+		"endLine": 437,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public mapToInt(mapper ToIntFunction<? super T>) : IntStream"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStreamOperations.java",
+		"startLine": 154,
+		"endLine": 156,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public mapToInt(mapper ToIntFunction<? super T>) : IntStream"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public mapToLong(mapper ToLongFunction<? super T>) : LongStream from class org.apache.commons.io.function.IOStream to public mapToLong(mapper ToLongFunction<? super T>) : LongStream from class org.apache.commons.io.function.IOStreamOperations",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 439,
+		"endLine": 454,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public mapToLong(mapper ToLongFunction<? super T>) : LongStream"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStreamOperations.java",
+		"startLine": 158,
+		"endLine": 160,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public mapToLong(mapper ToLongFunction<? super T>) : LongStream"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public max(comparator IOComparator<? super T>) : Optional<T> from class org.apache.commons.io.function.IOStream to public max(comparator IOComparator<? super T>) : Optional<T> from class org.apache.commons.io.function.IOStreamOperations",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 456,
+		"endLine": 466,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public max(comparator IOComparator<? super T>) : Optional<T>"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStreamOperations.java",
+		"startLine": 162,
+		"endLine": 165,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public max(comparator IOComparator<? super T>) : Optional<T>"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public min(comparator IOComparator<? super T>) : Optional<T> from class org.apache.commons.io.function.IOStream to public min(comparator IOComparator<? super T>) : Optional<T> from class org.apache.commons.io.function.IOStreamOperations",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 468,
+		"endLine": 478,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public min(comparator IOComparator<? super T>) : Optional<T>"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStreamOperations.java",
+		"startLine": 167,
+		"endLine": 170,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public min(comparator IOComparator<? super T>) : Optional<T>"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public noneMatch(predicate IOPredicate<? super T>) : boolean from class org.apache.commons.io.function.IOStream to public noneMatch(predicate IOPredicate<? super T>) : boolean from class org.apache.commons.io.function.IOStreamOperations",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 480,
+		"endLine": 490,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public noneMatch(predicate IOPredicate<? super T>) : boolean"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStreamOperations.java",
+		"startLine": 172,
+		"endLine": 175,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public noneMatch(predicate IOPredicate<? super T>) : boolean"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public peek(action IOConsumer<? super T>) : IOStream<T> from class org.apache.commons.io.function.IOStream to public peek(action IOConsumer<? super T>) : IOStream<T> from class org.apache.commons.io.function.IOStreamOperations",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 492,
+		"endLine": 502,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public peek(action IOConsumer<? super T>) : IOStream<T>"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStreamOperations.java",
+		"startLine": 177,
+		"endLine": 180,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public peek(action IOConsumer<? super T>) : IOStream<T>"
+}]
+},
+{
+	"type": "Extract And Move Method",
+	"description": "Extract And Move Method public adapt(stream Stream<T>) : IOStream<T> extracted from public peek(action IOConsumer<? super T>) : IOStream<T> in class org.apache.commons.io.function.IOStream & moved to class org.apache.commons.io.function.IOStream",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 492,
+		"endLine": 502,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration before extraction",
+		"codeElement": "public peek(action IOConsumer<? super T>) : IOStream<T>"
+}, {
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 501,
+		"endLine": 501,
+		"startColumn": 9,
+		"endColumn": 67,
+		"codeElementType": "RETURN_STATEMENT",
+		"description": "extracted code from source method declaration",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 39,
+		"endLine": 48,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "public adapt(stream Stream<T>) : IOStream<T>"
+}, {
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 47,
+		"endLine": 47,
+		"startColumn": 9,
+		"endColumn": 46,
+		"codeElementType": "RETURN_STATEMENT",
+		"description": "extracted code to extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStreamOperations.java",
+		"startLine": 177,
+		"endLine": 180,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration after extraction",
+		"codeElement": "public peek(action IOConsumer<? super T>) : IOStream<T>"
+}, {
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStreamOperations.java",
+		"startLine": 179,
+		"endLine": 179,
+		"startColumn": 16,
+		"endColumn": 75,
+		"codeElementType": "METHOD_INVOCATION",
+		"description": "extracted method invocation",
+		"codeElement": "IOStream.adapt(unwrap().peek(t -> Erase.accept(action,t)))"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public reduce(accumulator IOBinaryOperator<T>) : Optional<T> from class org.apache.commons.io.function.IOStream to public reduce(accumulator IOBinaryOperator<T>) : Optional<T> from class org.apache.commons.io.function.IOStreamOperations",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 504,
+		"endLine": 514,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public reduce(accumulator IOBinaryOperator<T>) : Optional<T>"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStreamOperations.java",
+		"startLine": 182,
+		"endLine": 185,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public reduce(accumulator IOBinaryOperator<T>) : Optional<T>"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public reduce(identity T, accumulator IOBinaryOperator<T>) : T from class org.apache.commons.io.function.IOStream to public reduce(identity T, accumulator IOBinaryOperator<T>) : T from class org.apache.commons.io.function.IOStreamOperations",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 516,
+		"endLine": 527,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public reduce(identity T, accumulator IOBinaryOperator<T>) : T"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStreamOperations.java",
+		"startLine": 187,
+		"endLine": 190,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public reduce(identity T, accumulator IOBinaryOperator<T>) : T"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public reduce(identity U, accumulator IOBiFunction<U,? super T,U>, combiner IOBinaryOperator<U>) : U from class org.apache.commons.io.function.IOStream to public reduce(identity U, accumulator IOBiFunction<U,? super T,U>, combiner IOBinaryOperator<U>) : U from class org.apache.commons.io.function.IOStreamOperations",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 529,
+		"endLine": 542,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public reduce(identity U, accumulator IOBiFunction<U,? super T,U>, combiner IOBinaryOperator<U>) : U"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStreamOperations.java",
+		"startLine": 192,
+		"endLine": 195,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public reduce(identity U, accumulator IOBiFunction<U,? super T,U>, combiner IOBinaryOperator<U>) : U"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public skip(n long) : IOStream<T> from class org.apache.commons.io.function.IOStream to public skip(n long) : IOStream<T> from class org.apache.commons.io.function.IOStreamOperations",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 544,
+		"endLine": 552,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public skip(n long) : IOStream<T>"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStreamOperations.java",
+		"startLine": 197,
+		"endLine": 199,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public skip(n long) : IOStream<T>"
+}]
+},
+{
+	"type": "Extract And Move Method",
+	"description": "Extract And Move Method public adapt(stream Stream<T>) : IOStream<T> extracted from public skip(n long) : IOStream<T> in class org.apache.commons.io.function.IOStream & moved to class org.apache.commons.io.function.IOStream",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 544,
+		"endLine": 552,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration before extraction",
+		"codeElement": "public skip(n long) : IOStream<T>"
+}, {
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 551,
+		"endLine": 551,
+		"startColumn": 9,
+		"endColumn": 40,
+		"codeElementType": "RETURN_STATEMENT",
+		"description": "extracted code from source method declaration",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 39,
+		"endLine": 48,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "public adapt(stream Stream<T>) : IOStream<T>"
+}, {
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 47,
+		"endLine": 47,
+		"startColumn": 9,
+		"endColumn": 46,
+		"codeElementType": "RETURN_STATEMENT",
+		"description": "extracted code to extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStreamOperations.java",
+		"startLine": 197,
+		"endLine": 199,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration after extraction",
+		"codeElement": "public skip(n long) : IOStream<T>"
+}, {
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStreamOperations.java",
+		"startLine": 198,
+		"endLine": 198,
+		"startColumn": 16,
+		"endColumn": 48,
+		"codeElementType": "METHOD_INVOCATION",
+		"description": "extracted method invocation",
+		"codeElement": "IOStream.adapt(unwrap().skip(n))"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public sorted() : IOStream<T> from class org.apache.commons.io.function.IOStream to public sorted() : IOStream<T> from class org.apache.commons.io.function.IOStreamOperations",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 554,
+		"endLine": 561,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public sorted() : IOStream<T>"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStreamOperations.java",
+		"startLine": 201,
+		"endLine": 203,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public sorted() : IOStream<T>"
+}]
+},
+{
+	"type": "Extract And Move Method",
+	"description": "Extract And Move Method public adapt(stream Stream<T>) : IOStream<T> extracted from public sorted() : IOStream<T> in class org.apache.commons.io.function.IOStream & moved to class org.apache.commons.io.function.IOStream",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 554,
+		"endLine": 561,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration before extraction",
+		"codeElement": "public sorted() : IOStream<T>"
+}, {
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 560,
+		"endLine": 560,
+		"startColumn": 9,
+		"endColumn": 41,
+		"codeElementType": "RETURN_STATEMENT",
+		"description": "extracted code from source method declaration",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 39,
+		"endLine": 48,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "public adapt(stream Stream<T>) : IOStream<T>"
+}, {
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 47,
+		"endLine": 47,
+		"startColumn": 9,
+		"endColumn": 46,
+		"codeElementType": "RETURN_STATEMENT",
+		"description": "extracted code to extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStreamOperations.java",
+		"startLine": 201,
+		"endLine": 203,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration after extraction",
+		"codeElement": "public sorted() : IOStream<T>"
+}, {
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStreamOperations.java",
+		"startLine": 202,
+		"endLine": 202,
+		"startColumn": 16,
+		"endColumn": 49,
+		"codeElementType": "METHOD_INVOCATION",
+		"description": "extracted method invocation",
+		"codeElement": "IOStream.adapt(unwrap().sorted())"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public sorted(comparator IOComparator<? super T>) : IOStream<T> from class org.apache.commons.io.function.IOStream to public sorted(comparator IOComparator<? super T>) : IOStream<T> from class org.apache.commons.io.function.IOStreamOperations",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 563,
+		"endLine": 573,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public sorted(comparator IOComparator<? super T>) : IOStream<T>"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStreamOperations.java",
+		"startLine": 205,
+		"endLine": 208,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public sorted(comparator IOComparator<? super T>) : IOStream<T>"
+}]
+},
+{
+	"type": "Extract And Move Method",
+	"description": "Extract And Move Method public adapt(stream Stream<T>) : IOStream<T> extracted from public sorted(comparator IOComparator<? super T>) : IOStream<T> in class org.apache.commons.io.function.IOStream & moved to class org.apache.commons.io.function.IOStream",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 563,
+		"endLine": 573,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration before extraction",
+		"codeElement": "public sorted(comparator IOComparator<? super T>) : IOStream<T>"
+}, {
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 572,
+		"endLine": 572,
+		"startColumn": 9,
+		"endColumn": 82,
+		"codeElementType": "RETURN_STATEMENT",
+		"description": "extracted code from source method declaration",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 39,
+		"endLine": 48,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "public adapt(stream Stream<T>) : IOStream<T>"
+}, {
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 47,
+		"endLine": 47,
+		"startColumn": 9,
+		"endColumn": 46,
+		"codeElementType": "RETURN_STATEMENT",
+		"description": "extracted code to extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStreamOperations.java",
+		"startLine": 205,
+		"endLine": 208,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration after extraction",
+		"codeElement": "public sorted(comparator IOComparator<? super T>) : IOStream<T>"
+}, {
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStreamOperations.java",
+		"startLine": 207,
+		"endLine": 207,
+		"startColumn": 16,
+		"endColumn": 90,
+		"codeElementType": "METHOD_INVOCATION",
+		"description": "extracted method invocation",
+		"codeElement": "IOStream.adapt(unwrap().sorted((t,u) -> Erase.compare(comparator,t,u)))"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public toArray() : Object[] from class org.apache.commons.io.function.IOStream to public toArray() : Object[] from class org.apache.commons.io.function.IOStreamOperations",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 575,
+		"endLine": 582,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public toArray() : Object[]"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStreamOperations.java",
+		"startLine": 210,
+		"endLine": 212,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public toArray() : Object[]"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public toArray(generator IntFunction<A[]>) : A[] from class org.apache.commons.io.function.IOStream to public toArray(generator IntFunction<A[]>) : A[] from class org.apache.commons.io.function.IOStreamOperations",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStream.java",
+		"startLine": 584,
+		"endLine": 600,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public toArray(generator IntFunction<A[]>) : A[]"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/function/IOStreamOperations.java",
+		"startLine": 214,
+		"endLine": 216,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public toArray(generator IntFunction<A[]>) : A[]"
+}]
+}
+]
+}]
+}

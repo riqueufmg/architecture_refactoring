@@ -1,0 +1,359 @@
+diff --git a/src/main/java/org/apache/commons/io/function/IOBaseStream.java b/src/main/java/org/apache/commons/io/function/IOBaseStream.java
+index a48652d4d..aad763eba 100644
+--- a/src/main/java/org/apache/commons/io/function/IOBaseStream.java
++++ b/src/main/java/org/apache/commons/io/function/IOBaseStream.java
+@@ -23,6 +23,8 @@
+ import java.util.stream.BaseStream;
+ import java.util.stream.Stream;
+ 
++import org.apache.commons.io.function.unchecked.UncheckedIOBaseStream;
++
+ /**
+  * Like {@link BaseStream} but throws {@link IOException}.
+  *
+diff --git a/src/main/java/org/apache/commons/io/function/IOIterable.java b/src/main/java/org/apache/commons/io/function/IOIterable.java
+index dd656dff7..1cd022927 100644
+--- a/src/main/java/org/apache/commons/io/function/IOIterable.java
++++ b/src/main/java/org/apache/commons/io/function/IOIterable.java
+@@ -21,6 +21,8 @@
+ import java.io.UncheckedIOException;
+ import java.util.Objects;
+ 
++import org.apache.commons.io.function.unchecked.UncheckedIOIterable;
++
+ /**
+  * Like {@link Iterable} but throws {@link IOException}.
+  *
+diff --git a/src/main/java/org/apache/commons/io/function/IOIterator.java b/src/main/java/org/apache/commons/io/function/IOIterator.java
+index 85727a6e4..719afa8d5 100644
+--- a/src/main/java/org/apache/commons/io/function/IOIterator.java
++++ b/src/main/java/org/apache/commons/io/function/IOIterator.java
+@@ -24,6 +24,8 @@
+ import java.util.Objects;
+ import java.util.function.Consumer;
+ 
++import org.apache.commons.io.function.unchecked.UncheckedIOIterator;
++
+ /**
+  * Like {@link Iterator} but throws {@link IOException}.
+  *
+diff --git a/src/main/java/org/apache/commons/io/function/IOSpliterator.java b/src/main/java/org/apache/commons/io/function/IOSpliterator.java
+index b8af96373..501849871 100644
+--- a/src/main/java/org/apache/commons/io/function/IOSpliterator.java
++++ b/src/main/java/org/apache/commons/io/function/IOSpliterator.java
+@@ -23,6 +23,8 @@
+ import java.util.Spliterator;
+ import java.util.function.Consumer;
+ 
++import org.apache.commons.io.function.unchecked.UncheckedIOSpliterator;
++
+ /**
+  * Like {@link Spliterator} but throws {@link IOException}.
+  *
+diff --git a/src/main/java/org/apache/commons/io/function/UncheckedIOBaseStream.java b/src/main/java/org/apache/commons/io/function/UncheckedIOBaseStream.java
+deleted file mode 100644
+index bc8dbbb93..000000000
+--- a/src/main/java/org/apache/commons/io/function/UncheckedIOBaseStream.java
++++ /dev/null
+@@ -1,88 +0,0 @@
+-/*
+- * Licensed to the Apache Software Foundation (ASF) under one or more
+- * contributor license agreements.  See the NOTICE file distributed with
+- * this work for additional information regarding copyright ownership.
+- * The ASF licenses this file to You under the Apache License, Version 2.0
+- * (the "License"); you may not use this file except in compliance with
+- * the License.  You may obtain a copy of the License at
+- *
+- *      https://www.apache.org/licenses/LICENSE-2.0
+- *
+- * Unless required by applicable law or agreed to in writing, software
+- * distributed under the License is distributed on an "AS IS" BASIS,
+- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+- * See the License for the specific language governing permissions and
+- * limitations under the License.
+- */
+-
+-package org.apache.commons.io.function;
+-
+-import java.io.IOException;
+-import java.io.UncheckedIOException;
+-import java.util.Iterator;
+-import java.util.Spliterator;
+-import java.util.stream.BaseStream;
+-
+-/**
+- * An {@link BaseStream} for a {@link IOBaseStream} that throws {@link UncheckedIOException} instead of
+- * {@link IOException}.
+- *
+- * Keep package-private for now.
+- *
+- * @param <T> the type of the stream elements.
+- * @param <S> the type of the IO stream extending {@code IOBaseStream}.
+- * @param <B> the type of the stream extending {@code BaseStream}.
+- */
+-final class UncheckedIOBaseStream<T, S extends IOBaseStream<T, S, B>, B extends BaseStream<T, B>> implements BaseStream<T, B> {
+-
+-    private final S delegate;
+-
+-    UncheckedIOBaseStream(final S delegate) {
+-        this.delegate = delegate;
+-    }
+-
+-    @Override
+-    public void close() {
+-        delegate.close();
+-    }
+-
+-    @Override
+-    public boolean isParallel() {
+-        return delegate.isParallel();
+-    }
+-
+-    @Override
+-    public Iterator<T> iterator() {
+-        return delegate.iterator().asIterator();
+-    }
+-
+-    @SuppressWarnings("resource")
+-    @Override
+-    public B onClose(final Runnable closeHandler) {
+-        return Uncheck.apply(delegate::onClose, () -> closeHandler.run()).unwrap();
+-    }
+-
+-    @SuppressWarnings("resource")
+-    @Override
+-    public B parallel() {
+-        return delegate.parallel().unwrap();
+-    }
+-
+-    @SuppressWarnings("resource")
+-    @Override
+-    public B sequential() {
+-        return delegate.sequential().unwrap();
+-    }
+-
+-    @Override
+-    public Spliterator<T> spliterator() {
+-        return delegate.spliterator().unwrap();
+-    }
+-
+-    @SuppressWarnings("resource")
+-    @Override
+-    public B unordered() {
+-        return delegate.unordered().unwrap();
+-    }
+-
+-}
+diff --git a/src/main/java/org/apache/commons/io/function/UncheckedIOIterable.java b/src/main/java/org/apache/commons/io/function/UncheckedIOIterable.java
+deleted file mode 100644
+index bfc479872..000000000
+--- a/src/main/java/org/apache/commons/io/function/UncheckedIOIterable.java
++++ /dev/null
+@@ -1,51 +0,0 @@
+-/*
+- * Licensed to the Apache Software Foundation (ASF) under one or more
+- * contributor license agreements.  See the NOTICE file distributed with
+- * this work for additional information regarding copyright ownership.
+- * The ASF licenses this file to You under the Apache License, Version 2.0
+- * (the "License"); you may not use this file except in compliance with
+- * the License.  You may obtain a copy of the License at
+- *
+- *      https://www.apache.org/licenses/LICENSE-2.0
+- *
+- * Unless required by applicable law or agreed to in writing, software
+- * distributed under the License is distributed on an "AS IS" BASIS,
+- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+- * See the License for the specific language governing permissions and
+- * limitations under the License.
+- */
+-
+-package org.apache.commons.io.function;
+-
+-import java.io.IOException;
+-import java.io.UncheckedIOException;
+-import java.util.Iterator;
+-import java.util.Objects;
+-
+-/**
+- * An {@link Iterable} for an {@link IOIterable} that throws {@link UncheckedIOException} instead of {@link IOException}.
+- * <p>
+- * Keep package-private for now.
+- * </p>
+- *
+- * @param <E> the type of elements returned by this iterator.
+- */
+-final class UncheckedIOIterable<E> implements Iterable<E> {
+-
+-    private final IOIterable<E> delegate;
+-
+-    /**
+-     * Constructs a new instance.
+-     *
+-     * @param delegate The delegate.
+-     */
+-    UncheckedIOIterable(final IOIterable<E> delegate) {
+-        this.delegate = Objects.requireNonNull(delegate, "delegate");
+-    }
+-
+-    @Override
+-    public Iterator<E> iterator() {
+-        return new UncheckedIOIterator<>(delegate.iterator());
+-    }
+-
+-}
+diff --git a/src/main/java/org/apache/commons/io/function/UncheckedIOIterator.java b/src/main/java/org/apache/commons/io/function/UncheckedIOIterator.java
+deleted file mode 100644
+index 0fbbafb31..000000000
+--- a/src/main/java/org/apache/commons/io/function/UncheckedIOIterator.java
++++ /dev/null
+@@ -1,60 +0,0 @@
+-/*
+- * Licensed to the Apache Software Foundation (ASF) under one or more
+- * contributor license agreements.  See the NOTICE file distributed with
+- * this work for additional information regarding copyright ownership.
+- * The ASF licenses this file to You under the Apache License, Version 2.0
+- * (the "License"); you may not use this file except in compliance with
+- * the License.  You may obtain a copy of the License at
+- *
+- *      https://www.apache.org/licenses/LICENSE-2.0
+- *
+- * Unless required by applicable law or agreed to in writing, software
+- * distributed under the License is distributed on an "AS IS" BASIS,
+- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+- * See the License for the specific language governing permissions and
+- * limitations under the License.
+- */
+-
+-package org.apache.commons.io.function;
+-
+-import java.io.IOException;
+-import java.io.UncheckedIOException;
+-import java.util.Iterator;
+-import java.util.Objects;
+-
+-/**
+- * An {@link Iterator} for an {@link IOIterator} that throws {@link UncheckedIOException} instead of {@link IOException}.
+- * <p>
+- * Keep package-private for now.
+- * </p>
+- *
+- * @param <E> the type of elements returned by this iterator.
+- */
+-final class UncheckedIOIterator<E> implements Iterator<E> {
+-
+-    private final IOIterator<E> delegate;
+-
+-    /**
+-     * Constructs a new instance.
+-     *
+-     * @param delegate The delegate.
+-     */
+-    UncheckedIOIterator(final IOIterator<E> delegate) {
+-        this.delegate = Objects.requireNonNull(delegate, "delegate");
+-    }
+-
+-    @Override
+-    public boolean hasNext() {
+-        return Uncheck.getAsBoolean(delegate::hasNext);
+-    }
+-
+-    @Override
+-    public E next() {
+-        return Uncheck.get(delegate::next);
+-    }
+-
+-    @Override
+-    public void remove() {
+-        Uncheck.run(delegate::remove);
+-    }
+-}
+diff --git a/src/main/java/org/apache/commons/io/function/UncheckedIOSpliterator.java b/src/main/java/org/apache/commons/io/function/UncheckedIOSpliterator.java
+deleted file mode 100644
+index c5f6d692e..000000000
+--- a/src/main/java/org/apache/commons/io/function/UncheckedIOSpliterator.java
++++ /dev/null
+@@ -1,84 +0,0 @@
+-/*
+- * Licensed to the Apache Software Foundation (ASF) under one or more
+- * contributor license agreements.  See the NOTICE file distributed with
+- * this work for additional information regarding copyright ownership.
+- * The ASF licenses this file to You under the Apache License, Version 2.0
+- * (the "License"); you may not use this file except in compliance with
+- * the License.  You may obtain a copy of the License at
+- *
+- *      https://www.apache.org/licenses/LICENSE-2.0
+- *
+- * Unless required by applicable law or agreed to in writing, software
+- * distributed under the License is distributed on an "AS IS" BASIS,
+- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+- * See the License for the specific language governing permissions and
+- * limitations under the License.
+- */
+-
+-package org.apache.commons.io.function;
+-
+-import java.io.IOException;
+-import java.io.UncheckedIOException;
+-import java.util.Comparator;
+-import java.util.Objects;
+-import java.util.Spliterator;
+-import java.util.function.Consumer;
+-
+-/**
+- * A {@link Spliterator} for an {@link IOSpliterator} that throws {@link UncheckedIOException} instead of
+- * {@link IOException}.
+- * <p>
+- * Keep package-private for now.
+- * </p>
+- *
+- * @param <T> the type of elements returned by this iterator.
+- */
+-final class UncheckedIOSpliterator<T> implements Spliterator<T> {
+-
+-    private final IOSpliterator<T> delegate;
+-
+-    UncheckedIOSpliterator(final IOSpliterator<T> delegate) {
+-        this.delegate = Objects.requireNonNull(delegate, "delegate");
+-    }
+-
+-    @Override
+-    public int characteristics() {
+-        return delegate.characteristics();
+-    }
+-
+-    @Override
+-    public long estimateSize() {
+-        return delegate.estimateSize();
+-    }
+-
+-    @Override
+-    public void forEachRemaining(final Consumer<? super T> action) {
+-        Uncheck.accept(delegate::forEachRemaining, action::accept);
+-    }
+-
+-    @Override
+-    public Comparator<? super T> getComparator() {
+-        return delegate.getComparator().asComparator();
+-    }
+-
+-    @Override
+-    public long getExactSizeIfKnown() {
+-        return delegate.getExactSizeIfKnown();
+-    }
+-
+-    @Override
+-    public boolean hasCharacteristics(final int characteristics) {
+-        return delegate.hasCharacteristics(characteristics);
+-    }
+-
+-    @Override
+-    public boolean tryAdvance(final Consumer<? super T> action) {
+-        return Uncheck.apply(delegate::tryAdvance, action::accept);
+-    }
+-
+-    @Override
+-    public Spliterator<T> trySplit() {
+-        return Uncheck.get(delegate::trySplit).unwrap();
+-    }
+-
+-}

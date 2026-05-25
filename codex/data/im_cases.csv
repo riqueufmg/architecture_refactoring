@@ -1,0 +1,16 @@
+project_name,repo_path,target_name
+jsoup,data/repositories/jsoup,org.jsoup.internal.StringUtil
+jsoup,data/repositories/jsoup,org.jsoup.safety.Safelist
+jsoup,data/repositories/jsoup,org.jsoup.nodes.Attribute
+jsoup,data/repositories/jsoup,org.jsoup.nodes.Attributes
+jsoup,data/repositories/jsoup,org.jsoup.nodes.Element
+commons-lang,data/repositories/commons-lang,org.apache.commons.lang3.CharUtils
+commons-lang,data/repositories/commons-lang,org.apache.commons.lang3.Conversion
+commons-lang,data/repositories/commons-lang,org.apache.commons.lang3.RegExUtils
+commons-lang,data/repositories/commons-lang,org.apache.commons.lang3.ArrayUtils
+commons-lang,data/repositories/commons-lang,org.apache.commons.lang3.Functions
+commons-io,data/repositories/commons-io,org.apache.commons.io.CloseableURLConnection
+commons-io,data/repositories/commons-io,org.apache.commons.io.function.IOStream
+commons-io,data/repositories/commons-io,org.apache.commons.io.output.ByteArrayOutputStreamTest
+commons-io,data/repositories/commons-io,org.apache.commons.io.channels.FilterFileChannel
+commons-io,data/repositories/commons-io,org.apache.commons.io.build.AbstractOriginSupplier

@@ -1,0 +1,2802 @@
+{
+"commits": [
+{
+	"repository": "https://github.com/jhy/jsoup",
+	"sha1": "a8fcf32d417094a3abd63d940184d78523f3887d",
+	"url": "https://github.com/jhy/jsoup/commit/a8fcf32d417094a3abd63d940184d78523f3887d",
+	"refactorings": [{
+	"type": "Move Class",
+	"description": "Move Class org.jsoup.nodes.Element.NodeList moved to org.jsoup.nodes.ElementChildNodes.NodeList",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 854,
+		"endLine": 870,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original type declaration",
+		"codeElement": "org.jsoup.nodes.Element.NodeList"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementChildNodes.java",
+		"startLine": 10,
+		"endLine": 26,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "moved type declaration",
+		"codeElement": "org.jsoup.nodes.ElementChildNodes.NodeList"
+}]
+},
+{
+	"type": "Change Attribute Type",
+	"description": "Change Attribute Type EmptyNodeList : NodeList to EmptyNodeList : ElementChildNodes.NodeList in class org.jsoup.nodes.Element",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 39,
+		"endLine": 39,
+		"startColumn": 35,
+		"endColumn": 66,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "EmptyNodeList : NodeList"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 24,
+		"endLine": 24,
+		"startColumn": 53,
+		"endColumn": 100,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "changed-type attribute declaration",
+		"codeElement": "EmptyNodeList : ElementChildNodes.NodeList"
+}]
+},
+{
+	"type": "Change Attribute Type",
+	"description": "Change Attribute Type childNodes : NodeList to childNodes : ElementChildNodes.NodeList in class org.jsoup.nodes.Element",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 42,
+		"endLine": 42,
+		"startColumn": 14,
+		"endColumn": 24,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "childNodes : NodeList"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 27,
+		"endLine": 27,
+		"startColumn": 32,
+		"endColumn": 42,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "changed-type attribute declaration",
+		"codeElement": "childNodes : ElementChildNodes.NodeList"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier public to package in method package NodeList(size int) from class org.jsoup.nodes.ElementChildNodes.NodeList",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 858,
+		"endLine": 860,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public NodeList(size int)"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementChildNodes.java",
+		"startLine": 14,
+		"endLine": 16,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "package NodeList(size int)"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public parents() : Elements from class org.jsoup.nodes.Element to public parents() : Elements from class org.jsoup.nodes.ElementTraversalOps",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 320,
+		"endLine": 332,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public parents() : Elements"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementTraversalOps.java",
+		"startLine": 15,
+		"endLine": 27,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public parents() : Elements"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public stream() : Stream<Element> from class org.jsoup.nodes.Element to public stream() : Stream<Element> from class org.jsoup.nodes.ElementTraversalOps",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 433,
+		"endLine": 441,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public stream() : Stream<Element>"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementTraversalOps.java",
+		"startLine": 29,
+		"endLine": 37,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public stream() : Stream<Element>"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public root() : Element from class org.jsoup.nodes.Element to public root() : Element from class org.jsoup.nodes.ElementTraversalOps",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 814,
+		"endLine": 817,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public root() : Element"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementTraversalOps.java",
+		"startLine": 39,
+		"endLine": 42,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public root() : Element"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public traverse(nodeVisitor NodeVisitor) : Element from class org.jsoup.nodes.Element to public traverse(nodeVisitor NodeVisitor) : Element from class org.jsoup.nodes.ElementTraversalOps",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 819,
+		"endLine": 822,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public traverse(nodeVisitor NodeVisitor) : Element"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementTraversalOps.java",
+		"startLine": 44,
+		"endLine": 47,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public traverse(nodeVisitor NodeVisitor) : Element"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public forEachNode(action Consumer<? super Node>) : Element from class org.jsoup.nodes.Element to public forEachNode(action Consumer<? super Node>) : Element from class org.jsoup.nodes.ElementTraversalOps",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 824,
+		"endLine": 827,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public forEachNode(action Consumer<? super Node>) : Element"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementTraversalOps.java",
+		"startLine": 49,
+		"endLine": 52,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public forEachNode(action Consumer<? super Node>) : Element"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public forEach(action Consumer<? super Element>) : void from class org.jsoup.nodes.Element to public forEach(action Consumer<? super Element>) : void from class org.jsoup.nodes.ElementTraversalOps",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 829,
+		"endLine": 838,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public forEach(action Consumer<? super Element>) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementTraversalOps.java",
+		"startLine": 54,
+		"endLine": 63,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public forEach(action Consumer<? super Element>) : void"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public iterator() : Iterator<Element> from class org.jsoup.nodes.Element to public iterator() : Iterator<Element> from class org.jsoup.nodes.ElementTraversalOps",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 840,
+		"endLine": 847,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public iterator() : Iterator<Element>"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementTraversalOps.java",
+		"startLine": 65,
+		"endLine": 72,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public iterator() : Iterator<Element>"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public filter(nodeFilter NodeFilter) : Element from class org.jsoup.nodes.Element to public filter(nodeFilter NodeFilter) : Element from class org.jsoup.nodes.ElementTraversalOps",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 849,
+		"endLine": 852,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public filter(nodeFilter NodeFilter) : Element"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementTraversalOps.java",
+		"startLine": 74,
+		"endLine": 77,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public filter(nodeFilter NodeFilter) : Element"
+}]
+},
+{
+	"type": "Extract Superclass",
+	"description": "Extract Superclass org.jsoup.nodes.ElementTraversalOps from classes [org.jsoup.nodes.Element]",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 32,
+		"endLine": 887,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original sub-type declaration",
+		"codeElement": "org.jsoup.nodes.Element"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 18,
+		"endLine": 243,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "sub-type declaration after extraction",
+		"codeElement": "org.jsoup.nodes.Element"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/ElementTraversalOps.java",
+		"startLine": 11,
+		"endLine": 78,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "extracted super-type declaration",
+		"codeElement": "org.jsoup.nodes.ElementTraversalOps"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method protected hasAttributes() : boolean from class org.jsoup.nodes.Element to protected hasAttributes() : boolean from class org.jsoup.nodes.ElementIdentityOps",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 105,
+		"endLine": 108,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "protected hasAttributes() : boolean"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementIdentityOps.java",
+		"startLine": 20,
+		"endLine": 23,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "protected hasAttributes() : boolean"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method public attributes() : Attributes from class org.jsoup.nodes.Element to public attributes() : Attributes from class org.jsoup.nodes.ElementIdentityOps",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 110,
+		"endLine": 115,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public attributes() : Attributes"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementIdentityOps.java",
+		"startLine": 25,
+		"endLine": 31,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "public attributes() : Attributes"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method public baseUri() : String from class org.jsoup.nodes.Element to public baseUri() : String from class org.jsoup.nodes.ElementIdentityOps",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 117,
+		"endLine": 121,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public baseUri() : String"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementIdentityOps.java",
+		"startLine": 33,
+		"endLine": 37,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "public baseUri() : String"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method package searchUpForAttribute(start Element, key String) : String from class org.jsoup.nodes.Element to package searchUpForAttribute(start Element, key String) : String from class org.jsoup.nodes.ElementIdentityOps",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 123,
+		"endLine": 132,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package searchUpForAttribute(start Element, key String) : String"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementIdentityOps.java",
+		"startLine": 39,
+		"endLine": 48,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "package searchUpForAttribute(start Element, key String) : String"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method protected doSetBaseUri(baseUri String) : void from class org.jsoup.nodes.Element to protected doSetBaseUri(baseUri String) : void from class org.jsoup.nodes.ElementIdentityOps",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 134,
+		"endLine": 137,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "protected doSetBaseUri(baseUri String) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementIdentityOps.java",
+		"startLine": 50,
+		"endLine": 53,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "protected doSetBaseUri(baseUri String) : void"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method public nodeName() : String from class org.jsoup.nodes.Element to public nodeName() : String from class org.jsoup.nodes.ElementIdentityOps",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 144,
+		"endLine": 147,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public nodeName() : String"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementIdentityOps.java",
+		"startLine": 55,
+		"endLine": 59,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "public nodeName() : String"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method public tagName() : String from class org.jsoup.nodes.Element to public tagName() : String from class org.jsoup.nodes.ElementIdentityOps",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 149,
+		"endLine": 157,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public tagName() : String"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementIdentityOps.java",
+		"startLine": 61,
+		"endLine": 70,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "public tagName() : String"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method public normalName() : String from class org.jsoup.nodes.Element to public normalName() : String from class org.jsoup.nodes.ElementIdentityOps",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 159,
+		"endLine": 168,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public normalName() : String"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementIdentityOps.java",
+		"startLine": 72,
+		"endLine": 82,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "public normalName() : String"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method public elementIs(normalName String, namespace String) : boolean from class org.jsoup.nodes.Element to public elementIs(normalName String, namespace String) : boolean from class org.jsoup.nodes.ElementIdentityOps",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 170,
+		"endLine": 179,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public elementIs(normalName String, namespace String) : boolean"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementIdentityOps.java",
+		"startLine": 84,
+		"endLine": 94,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "public elementIs(normalName String, namespace String) : boolean"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method public tagName(tagName String) : Element from class org.jsoup.nodes.Element to public tagName(tagName String) : Element from class org.jsoup.nodes.ElementIdentityOps",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 181,
+		"endLine": 191,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public tagName(tagName String) : Element"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementIdentityOps.java",
+		"startLine": 96,
+		"endLine": 106,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "public tagName(tagName String) : Element"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method public tagName(tagName String, namespace String) : Element from class org.jsoup.nodes.Element to public tagName(tagName String, namespace String) : Element from class org.jsoup.nodes.ElementIdentityOps",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 193,
+		"endLine": 208,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public tagName(tagName String, namespace String) : Element"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementIdentityOps.java",
+		"startLine": 108,
+		"endLine": 123,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "public tagName(tagName String, namespace String) : Element"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method public tag() : Tag from class org.jsoup.nodes.Element to public tag() : Tag from class org.jsoup.nodes.ElementIdentityOps",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 210,
+		"endLine": 217,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public tag() : Tag"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementIdentityOps.java",
+		"startLine": 125,
+		"endLine": 132,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "public tag() : Tag"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method public tag(tag Tag) : Element from class org.jsoup.nodes.Element to public tag(tag Tag) : Element from class org.jsoup.nodes.ElementIdentityOps",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 219,
+		"endLine": 229,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public tag(tag Tag) : Element"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementIdentityOps.java",
+		"startLine": 134,
+		"endLine": 145,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "public tag(tag Tag) : Element"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method public isBlock() : boolean from class org.jsoup.nodes.Element to public isBlock() : boolean from class org.jsoup.nodes.ElementIdentityOps",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 231,
+		"endLine": 239,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public isBlock() : boolean"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementIdentityOps.java",
+		"startLine": 147,
+		"endLine": 155,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "public isBlock() : boolean"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method public id() : String from class org.jsoup.nodes.Element to public id() : String from class org.jsoup.nodes.ElementIdentityOps",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 241,
+		"endLine": 248,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public id() : String"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementIdentityOps.java",
+		"startLine": 157,
+		"endLine": 165,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "public id() : String"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method public id(id String) : Element from class org.jsoup.nodes.Element to public id(id String) : Element from class org.jsoup.nodes.ElementIdentityOps",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 250,
+		"endLine": 259,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public id(id String) : Element"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementIdentityOps.java",
+		"startLine": 167,
+		"endLine": 177,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "public id(id String) : Element"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method public attr(attributeKey String, attributeValue String) : Element from class org.jsoup.nodes.Element to public attr(attributeKey String, attributeValue String) : Element from class org.jsoup.nodes.ElementIdentityOps",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 261,
+		"endLine": 270,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public attr(attributeKey String, attributeValue String) : Element"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementIdentityOps.java",
+		"startLine": 179,
+		"endLine": 188,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "public attr(attributeKey String, attributeValue String) : Element"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method public attr(attributeKey String, attributeValue boolean) : Element from class org.jsoup.nodes.Element to public attr(attributeKey String, attributeValue boolean) : Element from class org.jsoup.nodes.ElementIdentityOps",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 272,
+		"endLine": 285,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public attr(attributeKey String, attributeValue boolean) : Element"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementIdentityOps.java",
+		"startLine": 190,
+		"endLine": 203,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "public attr(attributeKey String, attributeValue boolean) : Element"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method public attribute(key String) : Attribute from class org.jsoup.nodes.Element to public attribute(key String) : Attribute from class org.jsoup.nodes.ElementIdentityOps",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 287,
+		"endLine": 296,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public attribute(key String) : Attribute"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementIdentityOps.java",
+		"startLine": 205,
+		"endLine": 215,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "public attribute(key String) : Attribute"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method public dataset() : Map<String,String> from class org.jsoup.nodes.Element to public dataset() : Map<String,String> from class org.jsoup.nodes.ElementIdentityOps",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 298,
+		"endLine": 313,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public dataset() : Map<String,String>"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementIdentityOps.java",
+		"startLine": 217,
+		"endLine": 225,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "public dataset() : Map<String,String>"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method public cssSelector() : String from class org.jsoup.nodes.Element to public cssSelector() : String from class org.jsoup.nodes.ElementIdentityOps",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 502,
+		"endLine": 529,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public cssSelector() : String"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementIdentityOps.java",
+		"startLine": 227,
+		"endLine": 255,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "public cssSelector() : String"
+}]
+},
+{
+	"type": "Extract Variable",
+	"description": "Extract Variable self : Element in method public cssSelector() : String from class org.jsoup.nodes.ElementIdentityOps",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 518,
+		"endLine": 518,
+		"startColumn": 9,
+		"endColumn": 27,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement with the initializer of the extracted variable",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementIdentityOps.java",
+		"startLine": 237,
+		"endLine": 237,
+		"startColumn": 17,
+		"endColumn": 38,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "extracted variable declaration",
+		"codeElement": "self : Element"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/ElementIdentityOps.java",
+		"startLine": 244,
+		"endLine": 244,
+		"startColumn": 9,
+		"endColumn": 27,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement with the name of the extracted variable",
+		"codeElement": null
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method private uniqueIdSelector(ownerDoc Document) : String from class org.jsoup.nodes.Element to private uniqueIdSelector(element Element, ownerDoc Document) : String from class org.jsoup.nodes.ElementIdentityOps",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 483,
+		"endLine": 500,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private uniqueIdSelector(ownerDoc Document) : String"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementIdentityOps.java",
+		"startLine": 257,
+		"endLine": 274,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "private uniqueIdSelector(element Element, ownerDoc Document) : String"
+}]
+},
+{
+	"type": "Add Parameter",
+	"description": "Add Parameter element : Element in method private uniqueIdSelector(element Element, ownerDoc Document) : String from class org.jsoup.nodes.ElementIdentityOps",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 483,
+		"endLine": 500,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private uniqueIdSelector(ownerDoc Document) : String"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementIdentityOps.java",
+		"startLine": 262,
+		"endLine": 262,
+		"startColumn": 44,
+		"endColumn": 59,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "added parameter",
+		"codeElement": "element : Element"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/ElementIdentityOps.java",
+		"startLine": 257,
+		"endLine": 274,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with added parameter",
+		"codeElement": "private uniqueIdSelector(element Element, ownerDoc Document) : String"
+}]
+},
+{
+	"type": "Add Method Modifier",
+	"description": "Add Method Modifier static in method private uniqueIdSelector(element Element, ownerDoc Document) : String from class org.jsoup.nodes.ElementIdentityOps",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 483,
+		"endLine": 500,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private uniqueIdSelector(ownerDoc Document) : String"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementIdentityOps.java",
+		"startLine": 257,
+		"endLine": 274,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with added modifier",
+		"codeElement": "private uniqueIdSelector(element Element, ownerDoc Document) : String"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method private cssSelectorComponent() : String from class org.jsoup.nodes.Element to private cssSelectorComponent(element Element) : String from class org.jsoup.nodes.ElementIdentityOps",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 531,
+		"endLine": 549,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private cssSelectorComponent() : String"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementIdentityOps.java",
+		"startLine": 276,
+		"endLine": 294,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "private cssSelectorComponent(element Element) : String"
+}]
+},
+{
+	"type": "Extract Variable",
+	"description": "Extract Variable parent : Element in method private cssSelectorComponent(element Element) : String from class org.jsoup.nodes.ElementIdentityOps",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 540,
+		"endLine": 541,
+		"startColumn": 9,
+		"endColumn": 56,
+		"codeElementType": "IF_STATEMENT",
+		"description": "statement with the initializer of the extracted variable",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementIdentityOps.java",
+		"startLine": 285,
+		"endLine": 285,
+		"startColumn": 17,
+		"endColumn": 42,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "extracted variable declaration",
+		"codeElement": "parent : Element"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/ElementIdentityOps.java",
+		"startLine": 286,
+		"endLine": 287,
+		"startColumn": 9,
+		"endColumn": 56,
+		"codeElementType": "IF_STATEMENT",
+		"description": "statement with the name of the extracted variable",
+		"codeElement": null
+}]
+},
+{
+	"type": "Add Parameter",
+	"description": "Add Parameter element : Element in method private cssSelectorComponent(element Element) : String from class org.jsoup.nodes.ElementIdentityOps",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 531,
+		"endLine": 549,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private cssSelectorComponent() : String"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementIdentityOps.java",
+		"startLine": 276,
+		"endLine": 276,
+		"startColumn": 48,
+		"endColumn": 63,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "added parameter",
+		"codeElement": "element : Element"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/ElementIdentityOps.java",
+		"startLine": 276,
+		"endLine": 294,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with added parameter",
+		"codeElement": "private cssSelectorComponent(element Element) : String"
+}]
+},
+{
+	"type": "Add Method Modifier",
+	"description": "Add Method Modifier static in method private cssSelectorComponent(element Element) : String from class org.jsoup.nodes.ElementIdentityOps",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 531,
+		"endLine": 549,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private cssSelectorComponent() : String"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementIdentityOps.java",
+		"startLine": 276,
+		"endLine": 294,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with added modifier",
+		"codeElement": "private cssSelectorComponent(element Element) : String"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method public child(index int) : Element from class org.jsoup.nodes.Element to public child(index int) : Element from class org.jsoup.nodes.ElementSiblingOps",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 334,
+		"endLine": 358,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public child(index int) : Element"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementSiblingOps.java",
+		"startLine": 21,
+		"endLine": 45,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "public child(index int) : Element"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method public childrenSize() : int from class org.jsoup.nodes.Element to public childrenSize() : int from class org.jsoup.nodes.ElementSiblingOps",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 360,
+		"endLine": 374,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public childrenSize() : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementSiblingOps.java",
+		"startLine": 47,
+		"endLine": 57,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "public childrenSize() : int"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method public children() : Elements from class org.jsoup.nodes.Element to public children() : Elements from class org.jsoup.nodes.ElementSiblingOps",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 376,
+		"endLine": 386,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public children() : Elements"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementSiblingOps.java",
+		"startLine": 59,
+		"endLine": 65,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "public children() : Elements"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method package childElementsList() : List<Element> from class org.jsoup.nodes.Element to package childElementsList() : List<Element> from class org.jsoup.nodes.ElementSiblingOps",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 388,
+		"endLine": 403,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package childElementsList() : List<Element>"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementSiblingOps.java",
+		"startLine": 67,
+		"endLine": 82,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "package childElementsList() : List<Element>"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method package cachedChildren() : List<Element> from class org.jsoup.nodes.Element to package cachedChildren() : List<Element> from class org.jsoup.nodes.ElementSiblingOps",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 408,
+		"endLine": 423,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package cachedChildren() : List<Element>"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementSiblingOps.java",
+		"startLine": 84,
+		"endLine": 100,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "package cachedChildren() : List<Element>"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method private stashChildren(els List<Element>) : void from class org.jsoup.nodes.Element to private stashChildren(els List<Element>) : void from class org.jsoup.nodes.ElementSiblingOps",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 425,
+		"endLine": 431,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private stashChildren(els List<Element>) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementSiblingOps.java",
+		"startLine": 102,
+		"endLine": 109,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "private stashChildren(els List<Element>) : void"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method private filterNodes(clazz Class<T>) : List<T> from class org.jsoup.nodes.Element to private filterNodes(clazz Class<T>) : List<T> from class org.jsoup.nodes.ElementSiblingOps",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 443,
+		"endLine": 448,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private filterNodes(clazz Class<T>) : List<T>"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementSiblingOps.java",
+		"startLine": 111,
+		"endLine": 117,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "private filterNodes(clazz Class<T>) : List<T>"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method public textNodes() : List<TextNode> from class org.jsoup.nodes.Element to public textNodes() : List<TextNode> from class org.jsoup.nodes.ElementSiblingOps",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 450,
+		"endLine": 468,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public textNodes() : List<TextNode>"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementSiblingOps.java",
+		"startLine": 119,
+		"endLine": 125,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "public textNodes() : List<TextNode>"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method public dataNodes() : List<DataNode> from class org.jsoup.nodes.Element to public dataNodes() : List<DataNode> from class org.jsoup.nodes.ElementSiblingOps",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 470,
+		"endLine": 481,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public dataNodes() : List<DataNode>"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementSiblingOps.java",
+		"startLine": 127,
+		"endLine": 133,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "public dataNodes() : List<DataNode>"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method public siblingElements() : Elements from class org.jsoup.nodes.Element to public siblingElements() : Elements from class org.jsoup.nodes.ElementSiblingOps",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 551,
+		"endLine": 566,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public siblingElements() : Elements"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementSiblingOps.java",
+		"startLine": 135,
+		"endLine": 151,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "public siblingElements() : Elements"
+}]
+},
+{
+	"type": "Extract Variable",
+	"description": "Extract Variable self : Element in method public siblingElements() : Elements from class org.jsoup.nodes.ElementSiblingOps",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 563,
+		"endLine": 564,
+		"startColumn": 13,
+		"endColumn": 34,
+		"codeElementType": "IF_STATEMENT",
+		"description": "statement with the initializer of the extracted variable",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementSiblingOps.java",
+		"startLine": 141,
+		"endLine": 141,
+		"startColumn": 17,
+		"endColumn": 38,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "extracted variable declaration",
+		"codeElement": "self : Element"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/ElementSiblingOps.java",
+		"startLine": 148,
+		"endLine": 149,
+		"startColumn": 13,
+		"endColumn": 34,
+		"codeElementType": "IF_STATEMENT",
+		"description": "statement with the name of the extracted variable",
+		"codeElement": null
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method public nextElementSiblings() : Elements from class org.jsoup.nodes.Element to public nextElementSiblings() : Elements from class org.jsoup.nodes.ElementSiblingOps",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 570,
+		"endLine": 577,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public nextElementSiblings() : Elements"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementSiblingOps.java",
+		"startLine": 153,
+		"endLine": 160,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "public nextElementSiblings() : Elements"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method public previousElementSiblings() : Elements from class org.jsoup.nodes.Element to public previousElementSiblings() : Elements from class org.jsoup.nodes.ElementSiblingOps",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 579,
+		"endLine": 586,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public previousElementSiblings() : Elements"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementSiblingOps.java",
+		"startLine": 162,
+		"endLine": 169,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "public previousElementSiblings() : Elements"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method private nextElementSiblings(next boolean) : Elements from class org.jsoup.nodes.Element to private nextElementSiblings(next boolean) : Elements from class org.jsoup.nodes.ElementSiblingOps",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 588,
+		"endLine": 594,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private nextElementSiblings(next boolean) : Elements"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementSiblingOps.java",
+		"startLine": 171,
+		"endLine": 178,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "private nextElementSiblings(next boolean) : Elements"
+}]
+},
+{
+	"type": "Extract Variable",
+	"description": "Extract Variable self : Element in method private nextElementSiblings(next boolean) : Elements from class org.jsoup.nodes.ElementSiblingOps",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 592,
+		"endLine": 592,
+		"startColumn": 9,
+		"endColumn": 23,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement with the initializer of the extracted variable",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementSiblingOps.java",
+		"startLine": 172,
+		"endLine": 172,
+		"startColumn": 17,
+		"endColumn": 38,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "extracted variable declaration",
+		"codeElement": "self : Element"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/ElementSiblingOps.java",
+		"startLine": 176,
+		"endLine": 176,
+		"startColumn": 9,
+		"endColumn": 23,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement with the name of the extracted variable",
+		"codeElement": null
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method public firstElementSibling() : Element from class org.jsoup.nodes.Element to public firstElementSibling() : Element from class org.jsoup.nodes.ElementSiblingOps",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 596,
+		"endLine": 606,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public firstElementSibling() : Element"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementSiblingOps.java",
+		"startLine": 180,
+		"endLine": 191,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "public firstElementSibling() : Element"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method public elementSiblingIndex() : int from class org.jsoup.nodes.Element to public elementSiblingIndex() : int from class org.jsoup.nodes.ElementSiblingOps",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 608,
+		"endLine": 616,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public elementSiblingIndex() : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementSiblingOps.java",
+		"startLine": 193,
+		"endLine": 202,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "public elementSiblingIndex() : int"
+}]
+},
+{
+	"type": "Extract Variable",
+	"description": "Extract Variable self : Element in method public elementSiblingIndex() : int from class org.jsoup.nodes.ElementSiblingOps",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 615,
+		"endLine": 615,
+		"startColumn": 8,
+		"endColumn": 63,
+		"codeElementType": "RETURN_STATEMENT",
+		"description": "statement with the initializer of the extracted variable",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementSiblingOps.java",
+		"startLine": 199,
+		"endLine": 199,
+		"startColumn": 17,
+		"endColumn": 38,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "extracted variable declaration",
+		"codeElement": "self : Element"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/ElementSiblingOps.java",
+		"startLine": 201,
+		"endLine": 201,
+		"startColumn": 9,
+		"endColumn": 69,
+		"codeElementType": "RETURN_STATEMENT",
+		"description": "statement with the name of the extracted variable",
+		"codeElement": null
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method public lastElementSibling() : Element from class org.jsoup.nodes.Element to public lastElementSibling() : Element from class org.jsoup.nodes.ElementSiblingOps",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 618,
+		"endLine": 628,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public lastElementSibling() : Element"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementSiblingOps.java",
+		"startLine": 204,
+		"endLine": 215,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "public lastElementSibling() : Element"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method private indexInList(search Element, elements List<E>) : int from class org.jsoup.nodes.Element to private indexInList(search Element, elements List<E>) : int from class org.jsoup.nodes.ElementSiblingOps",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 630,
+		"endLine": 637,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private indexInList(search Element, elements List<E>) : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementSiblingOps.java",
+		"startLine": 217,
+		"endLine": 224,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "private indexInList(search Element, elements List<E>) : int"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method public firstElementChild() : Element from class org.jsoup.nodes.Element to public firstElementChild() : Element from class org.jsoup.nodes.ElementSiblingOps",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 639,
+		"endLine": 653,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public firstElementChild() : Element"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementSiblingOps.java",
+		"startLine": 226,
+		"endLine": 238,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "public firstElementChild() : Element"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method public lastElementChild() : Element from class org.jsoup.nodes.Element to public lastElementChild() : Element from class org.jsoup.nodes.ElementSiblingOps",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 655,
+		"endLine": 668,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public lastElementChild() : Element"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementSiblingOps.java",
+		"startLine": 240,
+		"endLine": 251,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "public lastElementChild() : Element"
+}]
+},
+{
+	"type": "Move Attribute",
+	"description": "Move Attribute private EmptyChildren : List<Element> from class org.jsoup.nodes.Element to private EmptyChildren : List<Element> from class org.jsoup.nodes.ElementSiblingOps",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 38,
+		"endLine": 38,
+		"startColumn": 40,
+		"endColumn": 79,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "private EmptyChildren : List<Element>"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementSiblingOps.java",
+		"startLine": 17,
+		"endLine": 17,
+		"startColumn": 40,
+		"endColumn": 79,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "moved attribute declaration",
+		"codeElement": "private EmptyChildren : List<Element>"
+}]
+},
+{
+	"type": "Extract Class",
+	"description": "Extract Class org.jsoup.nodes.ElementIdentityOps from class org.jsoup.nodes.Element",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 32,
+		"endLine": 887,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original type declaration",
+		"codeElement": "org.jsoup.nodes.Element"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 105,
+		"endLine": 108,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "protected hasAttributes() : boolean"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 110,
+		"endLine": 115,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public attributes() : Attributes"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 117,
+		"endLine": 121,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public baseUri() : String"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 123,
+		"endLine": 132,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package searchUpForAttribute(start Element, key String) : String"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 134,
+		"endLine": 137,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "protected doSetBaseUri(baseUri String) : void"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 144,
+		"endLine": 147,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public nodeName() : String"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 149,
+		"endLine": 157,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public tagName() : String"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 159,
+		"endLine": 168,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public normalName() : String"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 170,
+		"endLine": 179,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public elementIs(normalName String, namespace String) : boolean"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 181,
+		"endLine": 191,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public tagName(tagName String) : Element"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 193,
+		"endLine": 208,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public tagName(tagName String, namespace String) : Element"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 210,
+		"endLine": 217,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public tag() : Tag"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 219,
+		"endLine": 229,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public tag(tag Tag) : Element"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 231,
+		"endLine": 239,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public isBlock() : boolean"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 241,
+		"endLine": 248,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public id() : String"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 250,
+		"endLine": 259,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public id(id String) : Element"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 261,
+		"endLine": 270,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public attr(attributeKey String, attributeValue String) : Element"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 272,
+		"endLine": 285,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public attr(attributeKey String, attributeValue boolean) : Element"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 287,
+		"endLine": 296,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public attribute(key String) : Attribute"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 298,
+		"endLine": 313,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public dataset() : Map<String,String>"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 502,
+		"endLine": 529,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public cssSelector() : String"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 483,
+		"endLine": 500,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private uniqueIdSelector(ownerDoc Document) : String"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 18,
+		"endLine": 243,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "type declaration after extraction",
+		"codeElement": "org.jsoup.nodes.Element"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/ElementIdentityOps.java",
+		"startLine": 16,
+		"endLine": 295,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "extracted type declaration",
+		"codeElement": "org.jsoup.nodes.ElementIdentityOps"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/ElementIdentityOps.java",
+		"startLine": 20,
+		"endLine": 23,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "protected hasAttributes() : boolean"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/ElementIdentityOps.java",
+		"startLine": 25,
+		"endLine": 31,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "public attributes() : Attributes"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/ElementIdentityOps.java",
+		"startLine": 33,
+		"endLine": 37,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "public baseUri() : String"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/ElementIdentityOps.java",
+		"startLine": 39,
+		"endLine": 48,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "package searchUpForAttribute(start Element, key String) : String"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/ElementIdentityOps.java",
+		"startLine": 50,
+		"endLine": 53,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "protected doSetBaseUri(baseUri String) : void"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/ElementIdentityOps.java",
+		"startLine": 55,
+		"endLine": 59,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "public nodeName() : String"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/ElementIdentityOps.java",
+		"startLine": 61,
+		"endLine": 70,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "public tagName() : String"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/ElementIdentityOps.java",
+		"startLine": 72,
+		"endLine": 82,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "public normalName() : String"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/ElementIdentityOps.java",
+		"startLine": 84,
+		"endLine": 94,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "public elementIs(normalName String, namespace String) : boolean"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/ElementIdentityOps.java",
+		"startLine": 96,
+		"endLine": 106,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "public tagName(tagName String) : Element"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/ElementIdentityOps.java",
+		"startLine": 108,
+		"endLine": 123,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "public tagName(tagName String, namespace String) : Element"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/ElementIdentityOps.java",
+		"startLine": 125,
+		"endLine": 132,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "public tag() : Tag"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/ElementIdentityOps.java",
+		"startLine": 134,
+		"endLine": 145,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "public tag(tag Tag) : Element"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/ElementIdentityOps.java",
+		"startLine": 147,
+		"endLine": 155,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "public isBlock() : boolean"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/ElementIdentityOps.java",
+		"startLine": 157,
+		"endLine": 165,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "public id() : String"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/ElementIdentityOps.java",
+		"startLine": 167,
+		"endLine": 177,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "public id(id String) : Element"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/ElementIdentityOps.java",
+		"startLine": 179,
+		"endLine": 188,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "public attr(attributeKey String, attributeValue String) : Element"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/ElementIdentityOps.java",
+		"startLine": 190,
+		"endLine": 203,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "public attr(attributeKey String, attributeValue boolean) : Element"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/ElementIdentityOps.java",
+		"startLine": 205,
+		"endLine": 215,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "public attribute(key String) : Attribute"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/ElementIdentityOps.java",
+		"startLine": 217,
+		"endLine": 225,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "public dataset() : Map<String,String>"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/ElementIdentityOps.java",
+		"startLine": 227,
+		"endLine": 255,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "public cssSelector() : String"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/ElementIdentityOps.java",
+		"startLine": 257,
+		"endLine": 274,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "private uniqueIdSelector(element Element, ownerDoc Document) : String"
+}]
+},
+{
+	"type": "Extract Class",
+	"description": "Extract Class org.jsoup.nodes.ElementSiblingOps from class org.jsoup.nodes.Element",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 32,
+		"endLine": 887,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original type declaration",
+		"codeElement": "org.jsoup.nodes.Element"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 334,
+		"endLine": 358,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public child(index int) : Element"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 360,
+		"endLine": 374,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public childrenSize() : int"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 376,
+		"endLine": 386,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public children() : Elements"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 388,
+		"endLine": 403,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package childElementsList() : List<Element>"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 408,
+		"endLine": 423,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package cachedChildren() : List<Element>"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 425,
+		"endLine": 431,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private stashChildren(els List<Element>) : void"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 443,
+		"endLine": 448,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private filterNodes(clazz Class<T>) : List<T>"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 450,
+		"endLine": 468,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public textNodes() : List<TextNode>"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 470,
+		"endLine": 481,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public dataNodes() : List<DataNode>"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 551,
+		"endLine": 566,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public siblingElements() : Elements"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 570,
+		"endLine": 577,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public nextElementSiblings() : Elements"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 579,
+		"endLine": 586,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public previousElementSiblings() : Elements"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 588,
+		"endLine": 594,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private nextElementSiblings(next boolean) : Elements"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 596,
+		"endLine": 606,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public firstElementSibling() : Element"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 608,
+		"endLine": 616,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public elementSiblingIndex() : int"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 618,
+		"endLine": 628,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public lastElementSibling() : Element"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 630,
+		"endLine": 637,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private indexInList(search Element, elements List<E>) : int"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 639,
+		"endLine": 653,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public firstElementChild() : Element"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 655,
+		"endLine": 668,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public lastElementChild() : Element"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 38,
+		"endLine": 38,
+		"startColumn": 40,
+		"endColumn": 79,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "private EmptyChildren : List<Element>"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 18,
+		"endLine": 243,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "type declaration after extraction",
+		"codeElement": "org.jsoup.nodes.Element"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/ElementSiblingOps.java",
+		"startLine": 13,
+		"endLine": 252,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "extracted type declaration",
+		"codeElement": "org.jsoup.nodes.ElementSiblingOps"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/ElementSiblingOps.java",
+		"startLine": 21,
+		"endLine": 45,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "public child(index int) : Element"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/ElementSiblingOps.java",
+		"startLine": 47,
+		"endLine": 57,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "public childrenSize() : int"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/ElementSiblingOps.java",
+		"startLine": 59,
+		"endLine": 65,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "public children() : Elements"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/ElementSiblingOps.java",
+		"startLine": 67,
+		"endLine": 82,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "package childElementsList() : List<Element>"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/ElementSiblingOps.java",
+		"startLine": 84,
+		"endLine": 100,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "package cachedChildren() : List<Element>"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/ElementSiblingOps.java",
+		"startLine": 102,
+		"endLine": 109,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "private stashChildren(els List<Element>) : void"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/ElementSiblingOps.java",
+		"startLine": 111,
+		"endLine": 117,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "private filterNodes(clazz Class<T>) : List<T>"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/ElementSiblingOps.java",
+		"startLine": 119,
+		"endLine": 125,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "public textNodes() : List<TextNode>"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/ElementSiblingOps.java",
+		"startLine": 127,
+		"endLine": 133,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "public dataNodes() : List<DataNode>"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/ElementSiblingOps.java",
+		"startLine": 135,
+		"endLine": 151,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "public siblingElements() : Elements"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/ElementSiblingOps.java",
+		"startLine": 153,
+		"endLine": 160,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "public nextElementSiblings() : Elements"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/ElementSiblingOps.java",
+		"startLine": 162,
+		"endLine": 169,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "public previousElementSiblings() : Elements"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/ElementSiblingOps.java",
+		"startLine": 171,
+		"endLine": 178,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "private nextElementSiblings(next boolean) : Elements"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/ElementSiblingOps.java",
+		"startLine": 180,
+		"endLine": 191,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "public firstElementSibling() : Element"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/ElementSiblingOps.java",
+		"startLine": 193,
+		"endLine": 202,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "public elementSiblingIndex() : int"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/ElementSiblingOps.java",
+		"startLine": 204,
+		"endLine": 215,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "public lastElementSibling() : Element"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/ElementSiblingOps.java",
+		"startLine": 217,
+		"endLine": 224,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "private indexInList(search Element, elements List<E>) : int"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/ElementSiblingOps.java",
+		"startLine": 226,
+		"endLine": 238,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "public firstElementChild() : Element"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/ElementSiblingOps.java",
+		"startLine": 240,
+		"endLine": 251,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "public lastElementChild() : Element"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/ElementSiblingOps.java",
+		"startLine": 17,
+		"endLine": 17,
+		"startColumn": 40,
+		"endColumn": 79,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "extracted attribute declaration",
+		"codeElement": "private EmptyChildren : List<Element>"
+}]
+},
+{
+	"type": "Add Parameter",
+	"description": "Add Parameter element : Element in method package reindex(element Element) : void from class org.jsoup.nodes.ElementChildNodes",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 872,
+		"endLine": 878,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package reindexChildren() : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementChildNodes.java",
+		"startLine": 28,
+		"endLine": 28,
+		"startColumn": 25,
+		"endColumn": 40,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "added parameter",
+		"codeElement": "element : Element"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/ElementChildNodes.java",
+		"startLine": 28,
+		"endLine": 34,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with added parameter",
+		"codeElement": "package reindex(element Element) : void"
+}]
+},
+{
+	"type": "Add Method Modifier",
+	"description": "Add Method Modifier static in method package reindex(element Element) : void from class org.jsoup.nodes.ElementChildNodes",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 872,
+		"endLine": 878,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package reindexChildren() : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementChildNodes.java",
+		"startLine": 28,
+		"endLine": 34,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with added modifier",
+		"codeElement": "package reindex(element Element) : void"
+}]
+},
+{
+	"type": "Move And Rename Method",
+	"description": "Move And Rename Method package reindexChildren() : void from class org.jsoup.nodes.Element to package reindex(element Element) : void from class org.jsoup.nodes.ElementChildNodes",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 872,
+		"endLine": 878,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package reindexChildren() : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementChildNodes.java",
+		"startLine": 28,
+		"endLine": 34,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "package reindex(element Element) : void"
+}]
+},
+{
+	"type": "Add Parameter",
+	"description": "Add Parameter element : Element in method package invalidate(element Element) : void from class org.jsoup.nodes.ElementChildNodes",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 880,
+		"endLine": 882,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package invalidateChildren() : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementChildNodes.java",
+		"startLine": 36,
+		"endLine": 36,
+		"startColumn": 28,
+		"endColumn": 43,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "added parameter",
+		"codeElement": "element : Element"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/ElementChildNodes.java",
+		"startLine": 36,
+		"endLine": 38,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with added parameter",
+		"codeElement": "package invalidate(element Element) : void"
+}]
+},
+{
+	"type": "Add Method Modifier",
+	"description": "Add Method Modifier static in method package invalidate(element Element) : void from class org.jsoup.nodes.ElementChildNodes",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 880,
+		"endLine": 882,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package invalidateChildren() : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementChildNodes.java",
+		"startLine": 36,
+		"endLine": 38,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with added modifier",
+		"codeElement": "package invalidate(element Element) : void"
+}]
+},
+{
+	"type": "Move And Rename Method",
+	"description": "Move And Rename Method package invalidateChildren() : void from class org.jsoup.nodes.Element to package invalidate(element Element) : void from class org.jsoup.nodes.ElementChildNodes",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 880,
+		"endLine": 882,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package invalidateChildren() : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementChildNodes.java",
+		"startLine": 36,
+		"endLine": 38,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "package invalidate(element Element) : void"
+}]
+},
+{
+	"type": "Add Parameter",
+	"description": "Add Parameter element : Element in method package hasValid(element Element) : boolean from class org.jsoup.nodes.ElementChildNodes",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 884,
+		"endLine": 886,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package hasValidChildren() : boolean"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementChildNodes.java",
+		"startLine": 40,
+		"endLine": 40,
+		"startColumn": 29,
+		"endColumn": 44,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "added parameter",
+		"codeElement": "element : Element"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/ElementChildNodes.java",
+		"startLine": 40,
+		"endLine": 42,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with added parameter",
+		"codeElement": "package hasValid(element Element) : boolean"
+}]
+},
+{
+	"type": "Add Method Modifier",
+	"description": "Add Method Modifier static in method package hasValid(element Element) : boolean from class org.jsoup.nodes.ElementChildNodes",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 884,
+		"endLine": 886,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package hasValidChildren() : boolean"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementChildNodes.java",
+		"startLine": 40,
+		"endLine": 42,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with added modifier",
+		"codeElement": "package hasValid(element Element) : boolean"
+}]
+},
+{
+	"type": "Move And Rename Method",
+	"description": "Move And Rename Method package hasValidChildren() : boolean from class org.jsoup.nodes.Element to package hasValid(element Element) : boolean from class org.jsoup.nodes.ElementChildNodes",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 884,
+		"endLine": 886,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package hasValidChildren() : boolean"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementChildNodes.java",
+		"startLine": 40,
+		"endLine": 42,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "package hasValid(element Element) : boolean"
+}]
+},
+{
+	"type": "Change Attribute Access Modifier",
+	"description": "Change Attribute Access Modifier private to protected in attribute protected ChildElsKey : String from class org.jsoup.nodes.ElementSiblingOps",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 405,
+		"endLine": 405,
+		"startColumn": 33,
+		"endColumn": 63,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "private childElsKey : String"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementSiblingOps.java",
+		"startLine": 18,
+		"endLine": 18,
+		"startColumn": 35,
+		"endColumn": 65,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "attribute declaration with changed access modifier",
+		"codeElement": "protected ChildElsKey : String"
+}]
+},
+{
+	"type": "Change Attribute Access Modifier",
+	"description": "Change Attribute Access Modifier private to protected in attribute protected ChildElsMod : String from class org.jsoup.nodes.ElementSiblingOps",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 406,
+		"endLine": 406,
+		"startColumn": 33,
+		"endColumn": 66,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "private childElsMod : String"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementSiblingOps.java",
+		"startLine": 19,
+		"endLine": 19,
+		"startColumn": 35,
+		"endColumn": 68,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "attribute declaration with changed access modifier",
+		"codeElement": "protected ChildElsMod : String"
+}]
+},
+{
+	"type": "Move And Rename Attribute",
+	"description": "Move And Rename Attribute private childElsKey : String renamed to protected ChildElsKey : String and moved from class org.jsoup.nodes.Element to class org.jsoup.nodes.ElementSiblingOps",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 405,
+		"endLine": 405,
+		"startColumn": 33,
+		"endColumn": 63,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "private childElsKey : String"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementSiblingOps.java",
+		"startLine": 18,
+		"endLine": 18,
+		"startColumn": 35,
+		"endColumn": 65,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "moved and renamed attribute declaration",
+		"codeElement": "protected ChildElsKey : String"
+}]
+},
+{
+	"type": "Move And Rename Attribute",
+	"description": "Move And Rename Attribute private childElsMod : String renamed to protected ChildElsMod : String and moved from class org.jsoup.nodes.Element to class org.jsoup.nodes.ElementSiblingOps",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 406,
+		"endLine": 406,
+		"startColumn": 33,
+		"endColumn": 66,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "private childElsMod : String"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementSiblingOps.java",
+		"startLine": 19,
+		"endLine": 19,
+		"startColumn": 35,
+		"endColumn": 68,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "moved and renamed attribute declaration",
+		"codeElement": "protected ChildElsMod : String"
+}]
+}
+]
+}]
+}

@@ -1,0 +1,16 @@
+project_name,repo_path,target_name
+jsoup,data/repositories/jsoup,org.jsoup.nodes
+jsoup,data/repositories/jsoup,org.jsoup.helper
+jsoup,data/repositories/jsoup,org.jsoup.select
+jsoup,data/repositories/jsoup,org.jsoup.parser
+commons-lang,data/repositories/commons-lang,org.apache.commons.lang3
+commons-lang,data/repositories/commons-lang,org.apache.commons.lang3.function
+commons-lang,data/repositories/commons-lang,org.apache.commons.lang3.text
+commons-lang,data/repositories/commons-lang,org.apache.commons.lang3.time
+commons-lang,data/repositories/commons-lang,org.apache.commons.lang3.builder
+commons-lang,data/repositories/commons-lang,org.apache.commons.lang3.reflect
+commons-io,data/repositories/commons-io,org.apache.commons.io.function
+commons-io,data/repositories/commons-io,org.apache.commons.io.input
+commons-io,data/repositories/commons-io,org.apache.commons.io.file
+commons-io,data/repositories/commons-io,org.apache.commons.io.output
+commons-io,data/repositories/commons-io,org.apache.commons.io.channels

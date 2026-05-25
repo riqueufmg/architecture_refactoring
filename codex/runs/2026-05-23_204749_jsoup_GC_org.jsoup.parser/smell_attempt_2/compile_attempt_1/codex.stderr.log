@@ -1,0 +1,5 @@
+2026-05-24T04:35:35.456012Z ERROR codex_core::tools::router: error=write_stdin failed: stdin is closed for this session; rerun exec_command with tty=true to keep stdin open
+2026-05-24T04:47:25.453051Z ERROR codex_core::tools::router: error=apply_patch verification failed: Failed to find expected lines in /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/main/java/org/jsoup/parser/ParseSettings.java:
+    static String normalName(String name) {
+        return Normalizer.lowerCase(name.trim());
+    }

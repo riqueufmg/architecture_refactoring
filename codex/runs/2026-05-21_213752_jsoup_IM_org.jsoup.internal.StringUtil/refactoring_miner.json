@@ -1,0 +1,462 @@
+{
+"commits": [
+{
+	"repository": "https://github.com/jhy/jsoup",
+	"sha1": "1f8d639eeada30e48fdef412b4b971f9f4454796",
+	"url": "https://github.com/jhy/jsoup/commit/1f8d639eeada30e48fdef412b4b971f9f4454796",
+	"refactorings": [{
+	"type": "Move Method",
+	"description": "Move Method public isBlank(string String) : boolean from class org.jsoup.internal.StringUtil to public isBlank(string String) : boolean from class org.jsoup.internal.CharUtil",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/internal/StringUtil.java",
+		"startLine": 146,
+		"endLine": 161,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public isBlank(string String) : boolean"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/internal/CharUtil.java",
+		"startLine": 11,
+		"endLine": 26,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "public isBlank(string String) : boolean"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method public startsWithNewline(string String) : boolean from class org.jsoup.internal.StringUtil to public startsWithNewline(string String) : boolean from class org.jsoup.internal.CharUtil",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/internal/StringUtil.java",
+		"startLine": 163,
+		"endLine": 172,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public startsWithNewline(string String) : boolean"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/internal/CharUtil.java",
+		"startLine": 28,
+		"endLine": 37,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "public startsWithNewline(string String) : boolean"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method public isNumeric(string String) : boolean from class org.jsoup.internal.StringUtil to public isNumeric(string String) : boolean from class org.jsoup.internal.CharUtil",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/internal/StringUtil.java",
+		"startLine": 174,
+		"endLine": 189,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public isNumeric(string String) : boolean"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/internal/CharUtil.java",
+		"startLine": 39,
+		"endLine": 54,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "public isNumeric(string String) : boolean"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method public isWhitespace(c int) : boolean from class org.jsoup.internal.StringUtil to public isWhitespace(c int) : boolean from class org.jsoup.internal.CharUtil",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/internal/StringUtil.java",
+		"startLine": 191,
+		"endLine": 199,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public isWhitespace(c int) : boolean"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/internal/CharUtil.java",
+		"startLine": 56,
+		"endLine": 64,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "public isWhitespace(c int) : boolean"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method public isActuallyWhitespace(c int) : boolean from class org.jsoup.internal.StringUtil to public isActuallyWhitespace(c int) : boolean from class org.jsoup.internal.CharUtil",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/internal/StringUtil.java",
+		"startLine": 201,
+		"endLine": 209,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public isActuallyWhitespace(c int) : boolean"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/internal/CharUtil.java",
+		"startLine": 66,
+		"endLine": 74,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "public isActuallyWhitespace(c int) : boolean"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method public isInvisibleChar(c int) : boolean from class org.jsoup.internal.StringUtil to public isInvisibleChar(c int) : boolean from class org.jsoup.internal.CharUtil",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/internal/StringUtil.java",
+		"startLine": 211,
+		"endLine": 214,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public isInvisibleChar(c int) : boolean"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/internal/CharUtil.java",
+		"startLine": 76,
+		"endLine": 79,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "public isInvisibleChar(c int) : boolean"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method public isAscii(string String) : boolean from class org.jsoup.internal.StringUtil to public isAscii(string String) : boolean from class org.jsoup.internal.CharUtil",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/internal/StringUtil.java",
+		"startLine": 276,
+		"endLine": 290,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public isAscii(string String) : boolean"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/internal/CharUtil.java",
+		"startLine": 81,
+		"endLine": 94,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "public isAscii(string String) : boolean"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method public isAsciiLetter(c char) : boolean from class org.jsoup.internal.StringUtil to public isAsciiLetter(c char) : boolean from class org.jsoup.internal.CharUtil",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/internal/StringUtil.java",
+		"startLine": 405,
+		"endLine": 407,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public isAsciiLetter(c char) : boolean"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/internal/CharUtil.java",
+		"startLine": 96,
+		"endLine": 98,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "public isAsciiLetter(c char) : boolean"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method public isDigit(c char) : boolean from class org.jsoup.internal.StringUtil to public isDigit(c char) : boolean from class org.jsoup.internal.CharUtil",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/internal/StringUtil.java",
+		"startLine": 409,
+		"endLine": 411,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public isDigit(c char) : boolean"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/internal/CharUtil.java",
+		"startLine": 100,
+		"endLine": 102,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "public isDigit(c char) : boolean"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method public isHexDigit(c char) : boolean from class org.jsoup.internal.StringUtil to public isHexDigit(c char) : boolean from class org.jsoup.internal.CharUtil",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/internal/StringUtil.java",
+		"startLine": 413,
+		"endLine": 415,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public isHexDigit(c char) : boolean"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/internal/CharUtil.java",
+		"startLine": 104,
+		"endLine": 106,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "public isHexDigit(c char) : boolean"
+}]
+},
+{
+	"type": "Extract Class",
+	"description": "Extract Class org.jsoup.internal.CharUtil from class org.jsoup.internal.StringUtil",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/internal/StringUtil.java",
+		"startLine": 15,
+		"endLine": 416,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original type declaration",
+		"codeElement": "org.jsoup.internal.StringUtil"
+}, {
+		"filePath": "src/main/java/org/jsoup/internal/StringUtil.java",
+		"startLine": 146,
+		"endLine": 161,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public isBlank(string String) : boolean"
+}, {
+		"filePath": "src/main/java/org/jsoup/internal/StringUtil.java",
+		"startLine": 163,
+		"endLine": 172,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public startsWithNewline(string String) : boolean"
+}, {
+		"filePath": "src/main/java/org/jsoup/internal/StringUtil.java",
+		"startLine": 174,
+		"endLine": 189,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public isNumeric(string String) : boolean"
+}, {
+		"filePath": "src/main/java/org/jsoup/internal/StringUtil.java",
+		"startLine": 191,
+		"endLine": 199,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public isWhitespace(c int) : boolean"
+}, {
+		"filePath": "src/main/java/org/jsoup/internal/StringUtil.java",
+		"startLine": 201,
+		"endLine": 209,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public isActuallyWhitespace(c int) : boolean"
+}, {
+		"filePath": "src/main/java/org/jsoup/internal/StringUtil.java",
+		"startLine": 211,
+		"endLine": 214,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public isInvisibleChar(c int) : boolean"
+}, {
+		"filePath": "src/main/java/org/jsoup/internal/StringUtil.java",
+		"startLine": 276,
+		"endLine": 290,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public isAscii(string String) : boolean"
+}, {
+		"filePath": "src/main/java/org/jsoup/internal/StringUtil.java",
+		"startLine": 405,
+		"endLine": 407,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public isAsciiLetter(c char) : boolean"
+}, {
+		"filePath": "src/main/java/org/jsoup/internal/StringUtil.java",
+		"startLine": 409,
+		"endLine": 411,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public isDigit(c char) : boolean"
+}, {
+		"filePath": "src/main/java/org/jsoup/internal/StringUtil.java",
+		"startLine": 413,
+		"endLine": 415,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public isHexDigit(c char) : boolean"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/internal/StringUtil.java",
+		"startLine": 15,
+		"endLine": 319,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "type declaration after extraction",
+		"codeElement": "org.jsoup.internal.StringUtil"
+}, {
+		"filePath": "src/main/java/org/jsoup/internal/CharUtil.java",
+		"startLine": 5,
+		"endLine": 107,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "extracted type declaration",
+		"codeElement": "org.jsoup.internal.CharUtil"
+}, {
+		"filePath": "src/main/java/org/jsoup/internal/CharUtil.java",
+		"startLine": 11,
+		"endLine": 26,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "public isBlank(string String) : boolean"
+}, {
+		"filePath": "src/main/java/org/jsoup/internal/CharUtil.java",
+		"startLine": 28,
+		"endLine": 37,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "public startsWithNewline(string String) : boolean"
+}, {
+		"filePath": "src/main/java/org/jsoup/internal/CharUtil.java",
+		"startLine": 39,
+		"endLine": 54,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "public isNumeric(string String) : boolean"
+}, {
+		"filePath": "src/main/java/org/jsoup/internal/CharUtil.java",
+		"startLine": 56,
+		"endLine": 64,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "public isWhitespace(c int) : boolean"
+}, {
+		"filePath": "src/main/java/org/jsoup/internal/CharUtil.java",
+		"startLine": 66,
+		"endLine": 74,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "public isActuallyWhitespace(c int) : boolean"
+}, {
+		"filePath": "src/main/java/org/jsoup/internal/CharUtil.java",
+		"startLine": 76,
+		"endLine": 79,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "public isInvisibleChar(c int) : boolean"
+}, {
+		"filePath": "src/main/java/org/jsoup/internal/CharUtil.java",
+		"startLine": 81,
+		"endLine": 94,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "public isAscii(string String) : boolean"
+}, {
+		"filePath": "src/main/java/org/jsoup/internal/CharUtil.java",
+		"startLine": 96,
+		"endLine": 98,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "public isAsciiLetter(c char) : boolean"
+}, {
+		"filePath": "src/main/java/org/jsoup/internal/CharUtil.java",
+		"startLine": 100,
+		"endLine": 102,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "public isDigit(c char) : boolean"
+}, {
+		"filePath": "src/main/java/org/jsoup/internal/CharUtil.java",
+		"startLine": 104,
+		"endLine": 106,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "public isHexDigit(c char) : boolean"
+}]
+}
+]
+}]
+}

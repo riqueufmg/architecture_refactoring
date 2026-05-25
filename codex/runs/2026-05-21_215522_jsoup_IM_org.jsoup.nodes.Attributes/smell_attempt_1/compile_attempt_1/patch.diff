@@ -1,0 +1,275 @@
+diff --git a/src/main/java/org/jsoup/nodes/Attributes.java b/src/main/java/org/jsoup/nodes/Attributes.java
+index 15f34d16..9f477802 100644
+--- a/src/main/java/org/jsoup/nodes/Attributes.java
++++ b/src/main/java/org/jsoup/nodes/Attributes.java
+@@ -84,32 +84,6 @@ public class Attributes implements Iterable<Attribute>, Cloneable {
+     /**
+      Finds a visible attribute's range index, skipping internal metadata slots.
+      */
+-    int visibleIndexOfKey(String key) {
+-        Validate.notNull(key);
+-        int visible = 0;
+-        for (int i = 0; i < size; i++) {
+-            String attrKey = keys[i];
+-            if (isInternalKey(attrKey))
+-                continue;
+-            if (key.equals(attrKey))
+-                return visible;
+-            visible++;
+-        }
+-        return NotFound;
+-    }
+-
+-    /**
+-     Maps an attribute array slot to the matching visible attribute index.
+-     */
+-    private int visibleIndex(int index) {
+-        int visible = 0;
+-        for (int i = 0; i < index; i++) {
+-            if (!isInternalKey(keys[i]))
+-                visible++;
+-        }
+-        return visible;
+-    }
+-
+     private int indexOfKeyIgnoreCase(String key) {
+         Validate.notNull(key);
+         for (int i = 0; i < size; i++) {
+@@ -168,7 +142,7 @@ public class Attributes implements Iterable<Attribute>, Cloneable {
+         return this;
+     }
+ 
+-    private void addObject(String key, @Nullable Object value) {
++    void addObject(String key, @Nullable Object value) {
+         checkCapacity(size + 1);
+         keys[size] = key;
+         vals[size] = value;
+@@ -197,27 +171,6 @@ public class Attributes implements Iterable<Attribute>, Cloneable {
+      arbitrary objects; use for connecting W3C nodes to Elements, etc.
+      * @return the map holding user-data
+      */
+-    @SuppressWarnings("unchecked")
+-    Map<String, Object> userData() {
+-        final Map<String, Object> userData;
+-        int i = indexOfKey(SharedConstants.UserDataKey);
+-        if (i == NotFound) {
+-            userData = new HashMap<>();
+-            addObject(SharedConstants.UserDataKey, userData);
+-        } else {
+-            userData = (Map<String, Object>) vals[i];
+-        }
+-        assert userData != null;
+-        return userData;
+-    }
+-
+-    /**
+-     Check if these attributes have any user data associated with them.
+-     */
+-    boolean hasUserData() {
+-        return hasKey(SharedConstants.UserDataKey);
+-    }
+-
+     /**
+      Get an arbitrary user-data object by key.
+      * @param key case-sensitive key to the object.
+@@ -228,8 +181,8 @@ public class Attributes implements Iterable<Attribute>, Cloneable {
+     @Nullable
+     public Object userData(String key) {
+         Validate.notNull(key);
+-        if (!hasUserData()) return null; // no user data exists
+-        Map<String, Object> userData = userData();
++        if (!AttributesInternal.hasUserData(this)) return null; // no user data exists
++        Map<String, Object> userData = AttributesInternal.userData(this);
+         return userData.get(key);
+     }
+ 
+@@ -244,43 +197,12 @@ public class Attributes implements Iterable<Attribute>, Cloneable {
+     public Attributes userData(String key, @Nullable Object value) {
+         Validate.notNull(key);
+         if (value == null && !hasKey(SharedConstants.UserDataKey)) return this; // no user data exists, so short-circuit
+-        Map<String, Object> userData = userData();
++        Map<String, Object> userData = AttributesInternal.userData(this);
+         if (value == null)  userData.remove(key);
+         else                userData.put(key, value);
+         return this;
+     }
+ 
+-    /**
+-     Gets the range spans, if source tracking was used.
+-     */
+-    Range.@Nullable Spans spans() {
+-        int i = indexOfKey(SharedConstants.RangeSpansKey);
+-        return i == NotFound ? null : (Range.Spans) vals[i];
+-    }
+-
+-    /**
+-     Gets or creates the range spans for this attributes object.
+-     */
+-    Range.Spans ensureSpans() {
+-        Range.Spans rangeSpans = spans();
+-        if (rangeSpans == null) {
+-            rangeSpans = new Range.Spans();
+-            addObject(SharedConstants.RangeSpansKey, rangeSpans);
+-        }
+-        return rangeSpans;
+-    }
+-
+-    /**
+-     Sets the range spans when expanding compact leaf storage.
+-     */
+-    void putSpans(Range.Spans rangeSpans) {
+-        int i = indexOfKey(SharedConstants.RangeSpansKey);
+-        if (i == NotFound)
+-            addObject(SharedConstants.RangeSpansKey, rangeSpans);
+-        else
+-            vals[i] = rangeSpans;
+-    }
+-
+     void putIgnoreCase(String key, @Nullable String value) {
+         int i = indexOfKeyIgnoreCase(key);
+         if (i != NotFound) {
+@@ -324,10 +246,10 @@ public class Attributes implements Iterable<Attribute>, Cloneable {
+     @SuppressWarnings("AssignmentToNull")
+     private void remove(int index) {
+         Validate.isFalse(index >= size);
+-        Range.Spans rangeSpans = spans();
++        Range.Spans rangeSpans = AttributesInternal.spans(this);
+         // Source ranges are stored by visible attribute index; internal metadata slots have no matching range record.
+         if (rangeSpans != null && !isInternalKey(keys[index]))
+-            rangeSpans.removeAttributeRange(visibleIndex(index));
++            rangeSpans.removeAttributeRange(AttributesInternal.removeRangeIndex(this, index));
+ 
+         int shifted = size - index - 1;
+         if (shifted > 0) {
+@@ -454,9 +376,9 @@ public class Attributes implements Iterable<Attribute>, Cloneable {
+      @since 1.17.1
+      */
+     public Range.AttributeRange sourceRange(String key) {
+-        int index = visibleIndexOfKey(key);
++        int index = AttributesInternal.visibleIndexOfKey(this, key);
+         if (index == NotFound) return UntrackedAttr;
+-        Range.Spans rangeSpans = spans();
++        Range.Spans rangeSpans = AttributesInternal.spans(this);
+         return rangeSpans != null ? rangeSpans.attributeRange(index) : UntrackedAttr;
+     }
+ 
+@@ -739,10 +661,10 @@ public class Attributes implements Iterable<Attribute>, Cloneable {
+     }
+ 
+     static String internalKey(String key) {
+-        return InternalPrefix + key;
++        return AttributesInternal.internalKey(key);
+     }
+ 
+     static boolean isInternalKey(String key) {
+-        return key.length() > 1 && key.charAt(0) == InternalPrefix;
++        return AttributesInternal.isInternalKey(key);
+     }
+ }
+diff --git a/src/main/java/org/jsoup/nodes/Element.java b/src/main/java/org/jsoup/nodes/Element.java
+index e652d780..f644919a 100644
+--- a/src/main/java/org/jsoup/nodes/Element.java
++++ b/src/main/java/org/jsoup/nodes/Element.java
+@@ -408,8 +408,8 @@ public class Element extends ElementTreeOps implements Iterable<Element> {
+     /** returns the cached child els, if they exist, and the modcount of our childnodes matches the stashed modcount */
+     @SuppressWarnings("unchecked")
+     @Nullable List<Element> cachedChildren() {
+-        if (attributes == null || !attributes.hasUserData()) return null; // don't create empty userdata
+-        Map<String, Object> userData = attributes.userData();
++        if (attributes == null || !AttributesInternal.hasUserData(attributes)) return null; // don't create empty userdata
++        Map<String, Object> userData = AttributesInternal.userData(attributes);
+         WeakReference<List<Element>> ref = (WeakReference<List<Element>>) userData.get(childElsKey);
+         if (ref != null) {
+             List<Element> els = ref.get();
+@@ -424,7 +424,7 @@ public class Element extends ElementTreeOps implements Iterable<Element> {
+ 
+     /** caches the child els into the Attribute user data. */
+     private void stashChildren(List<Element> els) {
+-        Map<String, Object> userData = attributes().userData();
++        Map<String, Object> userData = AttributesInternal.userData(attributes());
+         WeakReference<List<Element>> ref = new WeakReference<>(els);
+         userData.put(childElsKey, ref);
+         userData.put(childElsMod, childNodes.modCount());
+diff --git a/src/main/java/org/jsoup/nodes/LeafNode.java b/src/main/java/org/jsoup/nodes/LeafNode.java
+index 5d9ca474..18d4669b 100644
+--- a/src/main/java/org/jsoup/nodes/LeafNode.java
++++ b/src/main/java/org/jsoup/nodes/LeafNode.java
+@@ -39,7 +39,7 @@ public abstract class LeafNode extends Node {
+             value = attributes;
+             attributes.put(nodeName(), coreValue);
+             if (rangeSpans != null)
+-                attributes.putSpans(rangeSpans);
++                AttributesInternal.putSpans(attributes, rangeSpans);
+         }
+     }
+ 
+@@ -158,7 +158,7 @@ public abstract class LeafNode extends Node {
+         if (value instanceof TrackedValue)
+             return ((TrackedValue) value).spans;
+         if (value instanceof Attributes)
+-            return ((Attributes) value).ensureSpans();
++            return AttributesInternal.ensureSpans((Attributes) value);
+ 
+         TrackedValue trackedValue = new TrackedValue((String) value);
+         value = trackedValue;
+diff --git a/src/main/java/org/jsoup/nodes/Node.java b/src/main/java/org/jsoup/nodes/Node.java
+index 497aaa93..709f7dd2 100644
+--- a/src/main/java/org/jsoup/nodes/Node.java
++++ b/src/main/java/org/jsoup/nodes/Node.java
+@@ -897,14 +897,14 @@ public abstract class Node implements Cloneable {
+      */
+     Range.@Nullable Spans spans() {
+         if (!hasAttributes()) return null;
+-        return attributes().spans();
++        return AttributesInternal.spans(attributes());
+     }
+ 
+     /**
+      Gets or creates range spans for this node.
+      */
+     Range.Spans ensureSpans() {
+-        return attributes().ensureSpans();
++        return AttributesInternal.ensureSpans(attributes());
+     }
+ 
+     /**
+diff --git a/src/main/java/org/jsoup/nodes/NodeInternals.java b/src/main/java/org/jsoup/nodes/NodeInternals.java
+index 7063dd9e..93b09b8a 100644
+--- a/src/main/java/org/jsoup/nodes/NodeInternals.java
++++ b/src/main/java/org/jsoup/nodes/NodeInternals.java
+@@ -41,9 +41,9 @@ public final class NodeInternals {
+     ) {
+         Validate.notNull(attributes);
+         Validate.notNull(key);
+-        int index = attributes.visibleIndexOfKey(key);
++        int index = AttributesInternal.visibleIndexOfKey(attributes, key);
+         if (index != Attributes.NotFound)
+-            attributes.ensureSpans().attributeRange(index, lineMap, nameStart, nameEnd, valueStart, valueEnd);
++            AttributesInternal.ensureSpans(attributes).attributeRange(index, lineMap, nameStart, nameEnd, valueStart, valueEnd);
+     }
+ 
+     /**
+@@ -53,8 +53,8 @@ public final class NodeInternals {
+         Validate.notNull(attributes);
+         Validate.notNull(key);
+         Validate.notNull(range);
+-        int index = attributes.visibleIndexOfKey(key);
++        int index = AttributesInternal.visibleIndexOfKey(attributes, key);
+         if (index != Attributes.NotFound && range.isTracked())
+-            attributes.ensureSpans().attributeRange(index, range);
++            AttributesInternal.ensureSpans(attributes).attributeRange(index, range);
+     }
+ }
+diff --git a/src/test/java/org/jsoup/nodes/AttributesTest.java b/src/test/java/org/jsoup/nodes/AttributesTest.java
+index f1c54846..e21ffae1 100644
+--- a/src/test/java/org/jsoup/nodes/AttributesTest.java
++++ b/src/test/java/org/jsoup/nodes/AttributesTest.java
+@@ -425,7 +425,7 @@ public class AttributesTest {
+ 
+         Attributes two = one.clone();
+         assertSame(two.userData("data"), one.userData("data"));
+-        assertNotSame(two.userData(), one.userData());
++        assertNotSame(AttributesInternal.userData(two), AttributesInternal.userData(one));
+     }
+ 
+     @Test void dontCloneNullUserData() {

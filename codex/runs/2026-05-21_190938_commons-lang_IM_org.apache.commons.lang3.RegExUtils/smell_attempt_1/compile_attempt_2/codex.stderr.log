@@ -1,0 +1,5 @@
+2026-05-21T22:13:42.957575Z ERROR codex_core::tools::router: error=apply_patch verification failed: Failed to find expected lines in /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/RegExUtils.java:
+    public static String replacePattern(final String text, final String regex, final String replacement) {
+        return replacePattern((CharSequence) text, regex, replacement);
+    }
+}

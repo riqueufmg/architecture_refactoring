@@ -1,0 +1,7 @@
+2026-05-22T01:17:33.316154Z ERROR codex_core::tools::router: error=apply_patch verification failed: Failed to find expected lines in /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/main/java/org/jsoup/nodes/Node.java:
+        if (el.hasValidChildren()) // can remove by index
+            ensureChildNodes().remove(out.siblingIndex);
+        else
+            ensureChildNodes().remove(out); // iterates, but potentially not every one
+        out.parentNode = null;
+        el.invalidateChildren();

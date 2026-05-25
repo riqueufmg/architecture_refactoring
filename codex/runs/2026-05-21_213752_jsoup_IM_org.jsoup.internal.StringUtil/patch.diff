@@ -1,0 +1,786 @@
+diff --git a/src/main/java/org/jsoup/helper/W3CDom.java b/src/main/java/org/jsoup/helper/W3CDom.java
+index f4d2150f..bd072baf 100644
+--- a/src/main/java/org/jsoup/helper/W3CDom.java
++++ b/src/main/java/org/jsoup/helper/W3CDom.java
+@@ -2,6 +2,7 @@ package org.jsoup.helper;
+ 
+ import org.jsoup.internal.Normalizer;
+ import org.jsoup.internal.StringUtil;
++import org.jsoup.internal.CharUtil;
+ import org.jsoup.nodes.Attribute;
+ import org.jsoup.parser.HtmlTreeBuilder;
+ import org.jsoup.parser.Parser;
+@@ -129,14 +130,14 @@ public class W3CDom {
+ 
+             if (doc.getDoctype() != null) {
+                 DocumentType doctype = doc.getDoctype();
+-                if (!StringUtil.isBlank(doctype.getPublicId()))
++                if (!CharUtil.isBlank(doctype.getPublicId()))
+                     transformer.setOutputProperty(OutputKeys.DOCTYPE_PUBLIC, doctype.getPublicId());
+-                if (!StringUtil.isBlank(doctype.getSystemId()))
++                if (!CharUtil.isBlank(doctype.getSystemId()))
+                     transformer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, doctype.getSystemId());
+                     // handle <!doctype html> for legacy dom.
+                 else if (doctype.getName().equalsIgnoreCase("html")
+-                    && StringUtil.isBlank(doctype.getPublicId())
+-                    && StringUtil.isBlank(doctype.getSystemId()))
++                    && CharUtil.isBlank(doctype.getPublicId())
++                    && CharUtil.isBlank(doctype.getSystemId()))
+                     transformer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, "about:legacy-compat");
+             }
+ 
+@@ -248,7 +249,7 @@ public class W3CDom {
+         builder.namespaceAware = namespaceAware;
+         org.jsoup.nodes.Document inDoc = in.ownerDocument();
+         if (inDoc != null) {
+-            if (!StringUtil.isBlank(inDoc.location())) {
++            if (!CharUtil.isBlank(inDoc.location())) {
+                 out.setDocumentURI(inDoc.location());
+             }
+             builder.syntax = inDoc.outputSettings().syntax();
+diff --git a/src/main/java/org/jsoup/internal/StringUtil.java b/src/main/java/org/jsoup/internal/StringUtil.java
+index 33193084..8dadfcbc 100644
+--- a/src/main/java/org/jsoup/internal/StringUtil.java
++++ b/src/main/java/org/jsoup/internal/StringUtil.java
+@@ -143,76 +143,6 @@ public final class StringUtil {
+         return String.valueOf(out);
+     }
+ 
+-    /**
+-     * Tests if a string is blank: null, empty, or only whitespace (" ", \r\n, \t, etc)
+-     * @param string string to test
+-     * @return if string is blank
+-     */
+-    public static boolean isBlank(@Nullable String string) {
+-        if (string == null || string.isEmpty())
+-            return true;
+-
+-        int l = string.length();
+-        for (int i = 0; i < l; i++) {
+-            if (!StringUtil.isWhitespace(string.codePointAt(i)))
+-                return false;
+-        }
+-        return true;
+-    }
+-
+-    /**
+-     Tests if a string starts with a newline character
+-     @param string string to test
+-     @return if its first character is a newline
+-     */
+-    public static boolean startsWithNewline(final String string) {
+-        if (string == null || string.length() == 0)
+-            return false;
+-        return string.charAt(0) == '\n';
+-    }
+-
+-    /**
+-     * Tests if a string is numeric, i.e. contains only ASCII digit characters
+-     * @param string string to test
+-     * @return true if only digit chars, false if empty or null or contains non-digit chars
+-     */
+-    public static boolean isNumeric(String string) {
+-        if (string == null || string.length() == 0)
+-            return false;
+-
+-        int l = string.length();
+-        for (int i = 0; i < l; i++) {
+-            if (!isDigit(string.charAt(i)))
+-                return false;
+-        }
+-        return true;
+-    }
+-
+-    /**
+-     * Tests if a code point is "whitespace" as defined in the HTML spec. Used for output HTML.
+-     * @param c code point to test
+-     * @return true if code point is whitespace, false otherwise
+-     * @see #isActuallyWhitespace(int)
+-     */
+-    public static boolean isWhitespace(int c){
+-        return c == ' ' || c == '\t' || c == '\n' || c == '\f' || c == '\r';
+-    }
+-
+-    /**
+-     * Tests if a code point is "whitespace" as defined by what it looks like. Used for Element.text etc.
+-     * @param c code point to test
+-     * @return true if code point is whitespace, false otherwise
+-     */
+-    public static boolean isActuallyWhitespace(int c){
+-        return c == ' ' || c == '\t' || c == '\n' || c == '\f' || c == '\r' || c == 160;
+-        // 160 is &nbsp; (non-breaking space). Not in the spec but expected.
+-    }
+-
+-    public static boolean isInvisibleChar(int c) {
+-        return c == 8203 || c == 173; // zero width sp, soft hyphen
+-        // previously also included zw non join, zw join - but removing those breaks semantic meaning of text
+-    }
+-
+     /**
+      * Normalise the whitespace within this string; multiple spaces collapse to a single, and all whitespace characters
+      * (e.g. newline, tab) convert to a simple space.
+@@ -239,13 +169,13 @@ public final class StringUtil {
+         int c;
+         for (int i = 0; i < len; i+= Character.charCount(c)) {
+             c = string.codePointAt(i);
+-            if (isActuallyWhitespace(c)) {
++            if (CharUtil.isActuallyWhitespace(c)) {
+                 if ((stripLeading && !reachedNonWhite) || lastWasWhite)
+                     continue;
+                 accum.append(' ');
+                 lastWasWhite = true;
+             }
+-            else if (!isInvisibleChar(c)) {
++            else if (!CharUtil.isInvisibleChar(c)) {
+                 accum.appendCodePoint(c);
+                 lastWasWhite = false;
+                 reachedNonWhite = true;
+@@ -273,22 +203,6 @@ public final class StringUtil {
+         return Arrays.binarySearch(haystack, needle) >= 0;
+     }
+ 
+-    /**
+-     Tests that a String contains only ASCII characters.
+-     @param string scanned string
+-     @return true if all characters are in range 0 - 127
+-     */
+-    public static boolean isAscii(String string) {
+-        Validate.notNull(string);
+-        for (int i = 0; i < string.length(); i++) {
+-            int c = string.charAt(i);
+-            if (c > 127) { // ascii range
+-                return false;
+-            }
+-        }
+-        return true;
+-    }
+-
+     private static final Pattern extraDotSegmentsPattern = Pattern.compile("^/(?>(?>\\.\\.?/)+)");
+     /**
+      * Create a new absolute URL, from a provided existing absolute URL and a relative URL component.
+@@ -402,15 +316,4 @@ public final class StringUtil {
+             StringJoiner::complete);
+     }
+ 
+-    public static boolean isAsciiLetter(char c) {
+-        return c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z';
+-    }
+-
+-    public static boolean isDigit(char c) {
+-        return c >= '0' && c <= '9';
+-    }
+-
+-    public static boolean isHexDigit(char c) {
+-        return isDigit(c) || c >= 'a' && c <= 'f' || c >= 'A' && c <= 'F';
+-    }
+ }
+diff --git a/src/main/java/org/jsoup/nodes/DocumentType.java b/src/main/java/org/jsoup/nodes/DocumentType.java
+index 19148049..93844e07 100644
+--- a/src/main/java/org/jsoup/nodes/DocumentType.java
++++ b/src/main/java/org/jsoup/nodes/DocumentType.java
+@@ -2,6 +2,7 @@ package org.jsoup.nodes;
+ 
+ import org.jsoup.internal.QuietAppendable;
+ import org.jsoup.internal.StringUtil;
++import org.jsoup.internal.CharUtil;
+ import org.jsoup.helper.Validate;
+ import org.jsoup.nodes.Document.OutputSettings.Syntax;
+ import org.jspecify.annotations.Nullable;
+@@ -109,6 +110,6 @@ public class DocumentType extends LeafNode {
+ 
+ 
+     private boolean has(final String attribute) {
+-        return !StringUtil.isBlank(attr(attribute));
++        return !CharUtil.isBlank(attr(attribute));
+     }
+ }
+diff --git a/src/main/java/org/jsoup/nodes/Element.java b/src/main/java/org/jsoup/nodes/Element.java
+index e652d780..a76ea83e 100644
+--- a/src/main/java/org/jsoup/nodes/Element.java
++++ b/src/main/java/org/jsoup/nodes/Element.java
+@@ -4,6 +4,7 @@ import org.jsoup.helper.Validate;
+ import org.jsoup.internal.Normalizer;
+ import org.jsoup.internal.QuietAppendable;
+ import org.jsoup.internal.StringUtil;
++import org.jsoup.internal.CharUtil;
+ import org.jsoup.parser.ParseSettings;
+ import org.jsoup.parser.Parser;
+ import org.jsoup.parser.Tag;
+@@ -74,7 +75,7 @@ public class Element extends ElementTreeOps implements Iterable<Element> {
+         childNodes = EmptyNodeList;
+         this.attributes = attributes;
+         this.tag = tag;
+-        if (!StringUtil.isBlank(baseUri)) this.setBaseUri(baseUri);
++        if (!CharUtil.isBlank(baseUri)) this.setBaseUri(baseUri);
+     }
+ 
+     /**
+diff --git a/src/main/java/org/jsoup/nodes/ElementClassNames.java b/src/main/java/org/jsoup/nodes/ElementClassNames.java
+index 096aae85..6f8d14bf 100644
+--- a/src/main/java/org/jsoup/nodes/ElementClassNames.java
++++ b/src/main/java/org/jsoup/nodes/ElementClassNames.java
+@@ -2,6 +2,7 @@ package org.jsoup.nodes;
+ 
+ import org.jsoup.helper.Validate;
+ import org.jsoup.internal.StringUtil;
++import org.jsoup.internal.CharUtil;
+ 
+ import java.util.ArrayList;
+ import java.util.Collections;
+@@ -87,12 +88,12 @@ final class ElementClassNames {
+     }
+ 
+     private static int nextClassStart(String classAttr, int offset, int len) {
+-        while (offset < len && StringUtil.isWhitespace(classAttr.charAt(offset))) offset++;
++        while (offset < len && CharUtil.isWhitespace(classAttr.charAt(offset))) offset++;
+         return offset;
+     }
+ 
+     private static int nextClassEnd(String classAttr, int offset, int len) {
+-        while (offset < len && !StringUtil.isWhitespace(classAttr.charAt(offset))) offset++;
++        while (offset < len && !CharUtil.isWhitespace(classAttr.charAt(offset))) offset++;
+         return offset;
+     }
+ 
+diff --git a/src/main/java/org/jsoup/nodes/ElementClassOps.java b/src/main/java/org/jsoup/nodes/ElementClassOps.java
+index 2b04b919..f6e8fd09 100644
+--- a/src/main/java/org/jsoup/nodes/ElementClassOps.java
++++ b/src/main/java/org/jsoup/nodes/ElementClassOps.java
+@@ -2,6 +2,7 @@ package org.jsoup.nodes;
+ 
+ import org.jsoup.helper.Validate;
+ import org.jsoup.internal.StringUtil;
++import org.jsoup.internal.CharUtil;
+ 
+ import java.util.ArrayList;
+ import java.util.Collections;
+@@ -89,7 +90,7 @@ abstract class ElementClassOps extends ElementQueryOps {
+      Find the next class token start.
+      */
+     private static int nextClassStart(String classAttr, int offset, int len) {
+-        while (offset < len && StringUtil.isWhitespace(classAttr.charAt(offset))) offset++;
++        while (offset < len && CharUtil.isWhitespace(classAttr.charAt(offset))) offset++;
+         return offset;
+     }
+ 
+@@ -97,7 +98,7 @@ abstract class ElementClassOps extends ElementQueryOps {
+      Find the next class token end.
+      */
+     private static int nextClassEnd(String classAttr, int offset, int len) {
+-        while (offset < len && !StringUtil.isWhitespace(classAttr.charAt(offset))) offset++;
++        while (offset < len && !CharUtil.isWhitespace(classAttr.charAt(offset))) offset++;
+         return offset;
+     }
+ 
+diff --git a/src/main/java/org/jsoup/nodes/Entities.java b/src/main/java/org/jsoup/nodes/Entities.java
+index f633cb64..7c846166 100644
+--- a/src/main/java/org/jsoup/nodes/Entities.java
++++ b/src/main/java/org/jsoup/nodes/Entities.java
+@@ -3,6 +3,7 @@ package org.jsoup.nodes;
+ import org.jsoup.helper.DataUtil;
+ import org.jsoup.internal.QuietAppendable;
+ import org.jsoup.internal.StringUtil;
++import org.jsoup.internal.CharUtil;
+ import org.jsoup.helper.Validate;
+ import org.jsoup.nodes.Document.OutputSettings;
+ import org.jsoup.parser.CharacterReader;
+@@ -204,7 +205,7 @@ public class Entities {
+             codePoint = data.codePointAt(offset);
+ 
+             if ((options & Normalise) != 0) {
+-                if (StringUtil.isWhitespace(codePoint)) {
++                if (CharUtil.isWhitespace(codePoint)) {
+                     if ((options & TrimLeading) != 0 && !reachedNonWhite) continue;
+                     if (lastWasWhite) continue;
+                     if ((options & TrimTrailing) != 0) {
+diff --git a/src/main/java/org/jsoup/nodes/Printer.java b/src/main/java/org/jsoup/nodes/Printer.java
+index 6b83fdbf..4729f2fc 100644
+--- a/src/main/java/org/jsoup/nodes/Printer.java
++++ b/src/main/java/org/jsoup/nodes/Printer.java
+@@ -2,6 +2,7 @@ package org.jsoup.nodes;
+ 
+ import org.jsoup.internal.QuietAppendable;
+ import org.jsoup.internal.StringUtil;
++import org.jsoup.internal.CharUtil;
+ import org.jsoup.nodes.Document.OutputSettings;
+ import org.jsoup.parser.Tag;
+ import org.jsoup.select.NodeVisitor;
+@@ -130,7 +131,7 @@ class Printer implements NodeVisitor {
+                 options |= Entities.TrimTrailing;
+             } else { // trim trailing whitespace if the next non-empty TextNode has leading whitespace
+                 next = nextNonBlank(next);
+-                if (next instanceof TextNode && StringUtil.isWhitespace(next.nodeValue().codePointAt(0)))
++                if (next instanceof TextNode && CharUtil.isWhitespace(next.nodeValue().codePointAt(0)))
+                     options |= Entities.TrimTrailing;
+             }
+ 
+diff --git a/src/main/java/org/jsoup/nodes/TextNode.java b/src/main/java/org/jsoup/nodes/TextNode.java
+index 0067a3fb..b66a059b 100644
+--- a/src/main/java/org/jsoup/nodes/TextNode.java
++++ b/src/main/java/org/jsoup/nodes/TextNode.java
+@@ -3,6 +3,7 @@ package org.jsoup.nodes;
+ import org.jsoup.helper.Validate;
+ import org.jsoup.internal.QuietAppendable;
+ import org.jsoup.internal.StringUtil;
++import org.jsoup.internal.CharUtil;
+ 
+ 
+ /**
+@@ -56,7 +57,7 @@ public class TextNode extends LeafNode {
+      @return true if this document is empty or only whitespace, false if it contains any text content.
+      */
+     public boolean isBlank() {
+-        return StringUtil.isBlank(coreValue());
++        return CharUtil.isBlank(coreValue());
+     }
+ 
+     /**
+diff --git a/src/main/java/org/jsoup/parser/CharacterReader.java b/src/main/java/org/jsoup/parser/CharacterReader.java
+index f8eca0ba..59d06668 100644
+--- a/src/main/java/org/jsoup/parser/CharacterReader.java
++++ b/src/main/java/org/jsoup/parser/CharacterReader.java
+@@ -4,6 +4,7 @@ import org.jsoup.helper.Validate;
+ import org.jsoup.internal.LineMap;
+ import org.jsoup.internal.SoftPool;
+ import org.jsoup.internal.StringUtil;
++import org.jsoup.internal.CharUtil;
+ import org.jspecify.annotations.Nullable;
+ 
+ import java.io.IOException;
+@@ -543,11 +544,11 @@ public final class CharacterReader implements AutoCloseable {
+         bufferUp();
+         int start = bufPos;
+         while (bufPos < bufLength) {
+-            if (StringUtil.isAsciiLetter(charBuf[bufPos])) bufPos++;
++            if (CharUtil.isAsciiLetter(charBuf[bufPos])) bufPos++;
+             else break;
+         }
+         while (!isEmptyNoBufferUp()) {
+-            if (StringUtil.isDigit(charBuf[bufPos])) bufPos++;
++            if (CharUtil.isDigit(charBuf[bufPos])) bufPos++;
+             else break;
+         }
+ 
+@@ -555,7 +556,7 @@ public final class CharacterReader implements AutoCloseable {
+     }
+ 
+     String consumeHexSequence() {
+-        return consumeMatching(StringUtil::isHexDigit);
++        return consumeMatching(CharUtil::isHexDigit);
+     }
+ 
+     String consumeDigitSequence() {
+@@ -640,12 +641,12 @@ public final class CharacterReader implements AutoCloseable {
+      */
+     boolean matchesAsciiAlpha() {
+         if (isEmpty()) return false;
+-        return StringUtil.isAsciiLetter(charBuf[bufPos]);
++        return CharUtil.isAsciiLetter(charBuf[bufPos]);
+     }
+ 
+     boolean matchesDigit() {
+         if (isEmpty()) return false;
+-        return StringUtil.isDigit(charBuf[bufPos]);
++        return CharUtil.isDigit(charBuf[bufPos]);
+     }
+ 
+     boolean matchConsume(String seq) {
+diff --git a/src/main/java/org/jsoup/parser/HtmlTreeBuilderState.java b/src/main/java/org/jsoup/parser/HtmlTreeBuilderState.java
+index eef814bc..d846c302 100644
+--- a/src/main/java/org/jsoup/parser/HtmlTreeBuilderState.java
++++ b/src/main/java/org/jsoup/parser/HtmlTreeBuilderState.java
+@@ -2,6 +2,7 @@ package org.jsoup.parser;
+ 
+ import org.jsoup.helper.Validate;
+ import org.jsoup.internal.StringUtil;
++import org.jsoup.internal.CharUtil;
+ import org.jsoup.nodes.Attribute;
+ import org.jsoup.nodes.Attributes;
+ import org.jsoup.nodes.Document;
+@@ -1882,7 +1883,7 @@ enum HtmlTreeBuilderState {
+     private static boolean isWhitespace(Token t) {
+         if (t.isCharacter()) {
+             String data = t.asCharacter().getData();
+-            return StringUtil.isBlank(data);
++            return CharUtil.isBlank(data);
+         }
+         return false;
+     }
+diff --git a/src/main/java/org/jsoup/parser/TokenQueue.java b/src/main/java/org/jsoup/parser/TokenQueue.java
+index f81da33b..49a2e7da 100644
+--- a/src/main/java/org/jsoup/parser/TokenQueue.java
++++ b/src/main/java/org/jsoup/parser/TokenQueue.java
+@@ -1,6 +1,7 @@
+ package org.jsoup.parser;
+ 
+ import org.jsoup.internal.StringUtil;
++import org.jsoup.internal.CharUtil;
+ import org.jsoup.helper.Validate;
+ 
+ /**
+@@ -96,7 +97,7 @@ public class TokenQueue implements AutoCloseable {
+      @return if starts with whitespace
+      */
+     public boolean matchesWhitespace() {
+-        return StringUtil.isWhitespace(reader.current());
++        return CharUtil.isWhitespace(reader.current());
+     }
+ 
+     /**
+@@ -243,13 +244,13 @@ public class TokenQueue implements AutoCloseable {
+                 out.append(Hyphen_Minus);
+ 
+                 char secondChar = q.current();
+-                if (StringUtil.isDigit(secondChar)) {
++                if (CharUtil.isDigit(secondChar)) {
+                     // If the character is the second character and is in the range [0-9] (U+0030 to U+0039) and the
+                     // first character is a "-" (U+002D), then the character escaped as code point.
+                     appendEscapedCodepoint(out, q.consume());
+                 }
+             }
+-        } else if (StringUtil.isDigit(firstChar)) {
++        } else if (CharUtil.isDigit(firstChar)) {
+             // If the character is the first character and is in the range [0-9] (U+0030 to U+0039), then the character
+             // escaped as code point.
+             appendEscapedCodepoint(out, q.consume());
+@@ -372,11 +373,11 @@ public class TokenQueue implements AutoCloseable {
+         }
+ 
+         char firstEscaped = consume();
+-        if (!StringUtil.isHexDigit(firstEscaped)) {
++        if (!CharUtil.isHexDigit(firstEscaped)) {
+             out.append(firstEscaped);
+         } else {
+             reader.unconsume(); // put back the first hex digit
+-            String hexString = reader.consumeMatching(StringUtil::isHexDigit, 6); // consume up to 6 hex digits
++            String hexString = reader.consumeMatching(CharUtil::isHexDigit, 6); // consume up to 6 hex digits
+             int codePoint;
+             try {
+                 codePoint = Integer.parseInt(hexString, 16);
+@@ -412,12 +413,12 @@ public class TokenQueue implements AutoCloseable {
+ 
+     // https://www.w3.org/TR/css-syntax-3/#ident-start-code-point
+     private static boolean isIdentStart(char c) {
+-        return c == '_' || StringUtil.isAsciiLetter(c) || isNonAscii(c);
++        return c == '_' || CharUtil.isAsciiLetter(c) || isNonAscii(c);
+     }
+ 
+     // https://www.w3.org/TR/css-syntax-3/#ident-code-point
+     private static boolean isIdent(char c) {
+-        return c == Hyphen_Minus || StringUtil.isDigit(c) || isIdentStart(c);
++        return c == Hyphen_Minus || CharUtil.isDigit(c) || isIdentStart(c);
+     }
+ 
+     // https://www.w3.org/TR/css-syntax-3/#newline
+diff --git a/src/main/java/org/jsoup/parser/TokeniserState.java b/src/main/java/org/jsoup/parser/TokeniserState.java
+index e61b8c27..0fde5e4a 100644
+--- a/src/main/java/org/jsoup/parser/TokeniserState.java
++++ b/src/main/java/org/jsoup/parser/TokeniserState.java
+@@ -1,6 +1,7 @@
+ package org.jsoup.parser;
+ 
+ import org.jsoup.internal.StringUtil;
++import org.jsoup.internal.CharUtil;
+ import org.jsoup.nodes.DocumentType;
+ 
+ import static org.jsoup.nodes.Document.OutputSettings.Syntax.xml;
+@@ -1861,7 +1862,7 @@ enum TokeniserState {
+                     break;
+                 case ']':
+                     if (context == None) {
+-                        String ws = r.consumeMatching(StringUtil::isWhitespace);
++                        String ws = r.consumeMatching(CharUtil::isWhitespace);
+                         if (r.matches('>')) {
+                             r.advance();
+                             t.emitDoctypePending();
+diff --git a/src/main/java/org/jsoup/select/NodeEvaluator.java b/src/main/java/org/jsoup/select/NodeEvaluator.java
+index 6ceff07c..e444c875 100644
+--- a/src/main/java/org/jsoup/select/NodeEvaluator.java
++++ b/src/main/java/org/jsoup/select/NodeEvaluator.java
+@@ -1,6 +1,7 @@
+ package org.jsoup.select;
+ 
+ import org.jsoup.internal.StringUtil;
++import org.jsoup.internal.CharUtil;
+ import org.jsoup.nodes.Element;
+ import org.jsoup.nodes.LeafNode;
+ import org.jsoup.nodes.Node;
+@@ -82,7 +83,7 @@ abstract class NodeEvaluator extends Evaluator {
+ 
+         @Override
+         boolean evaluateMatch(Node node) {
+-            return StringUtil.isBlank(node.nodeValue());
++            return CharUtil.isBlank(node.nodeValue());
+         }
+ 
+         @Override
+diff --git a/src/main/java/org/jsoup/select/QueryParser.java b/src/main/java/org/jsoup/select/QueryParser.java
+index 83b32232..8d2a00bd 100644
+--- a/src/main/java/org/jsoup/select/QueryParser.java
++++ b/src/main/java/org/jsoup/select/QueryParser.java
+@@ -2,6 +2,7 @@ package org.jsoup.select;
+ 
+ import org.jsoup.helper.Regex;
+ import org.jsoup.internal.StringUtil;
++import org.jsoup.internal.CharUtil;
+ import org.jsoup.helper.Validate;
+ import org.jsoup.nodes.CDataNode;
+ import org.jsoup.nodes.Comment;
+@@ -422,7 +423,7 @@ public class QueryParser implements AutoCloseable {
+ 
+     private int consumeIndex() {
+         String index = consumeParens().trim();
+-        Validate.isTrue(StringUtil.isNumeric(index), "Index must be numeric");
++        Validate.isTrue(CharUtil.isNumeric(index), "Index must be numeric");
+         return Integer.parseInt(index);
+     }
+ 
+diff --git a/src/test/java/org/jsoup/integration/routes/EchoRoute.java b/src/test/java/org/jsoup/integration/routes/EchoRoute.java
+index 2c6c9849..122e12ba 100644
+--- a/src/test/java/org/jsoup/integration/routes/EchoRoute.java
++++ b/src/test/java/org/jsoup/integration/routes/EchoRoute.java
+@@ -4,6 +4,7 @@ import org.jsoup.integration.netty.TestPart;
+ import org.jsoup.integration.netty.TestRequest;
+ import org.jsoup.integration.netty.TestResponse;
+ import org.jsoup.internal.StringUtil;
++import org.jsoup.internal.CharUtil;
+ 
+ import java.io.IOException;
+ import java.io.PrintWriter;
+@@ -73,7 +74,7 @@ public final class EchoRoute {
+ 
+         // post body
+         String postData = req.body();
+-        if (!StringUtil.isBlank(postData)) {
++        if (!CharUtil.isBlank(postData)) {
+             write(w, "Post Data", postData);
+         }
+ 
+diff --git a/src/test/java/org/jsoup/internal/StringUtilTest.java b/src/test/java/org/jsoup/internal/StringUtilTest.java
+index 4e686c46..0a3c07a0 100644
+--- a/src/test/java/org/jsoup/internal/StringUtilTest.java
++++ b/src/test/java/org/jsoup/internal/StringUtilTest.java
+@@ -63,36 +63,36 @@ public class StringUtilTest {
+     }
+ 
+     @Test public void isBlank() {
+-        assertTrue(StringUtil.isBlank(null));
+-        assertTrue(StringUtil.isBlank(""));
+-        assertTrue(StringUtil.isBlank("      "));
+-        assertTrue(StringUtil.isBlank("   \r\n  "));
++        assertTrue(CharUtil.isBlank(null));
++        assertTrue(CharUtil.isBlank(""));
++        assertTrue(CharUtil.isBlank("      "));
++        assertTrue(CharUtil.isBlank("   \r\n  "));
+ 
+-        assertFalse(StringUtil.isBlank("hello"));
+-        assertFalse(StringUtil.isBlank("   hello   "));
++        assertFalse(CharUtil.isBlank("hello"));
++        assertFalse(CharUtil.isBlank("   hello   "));
+     }
+ 
+     @Test public void isNumeric() {
+-        assertFalse(StringUtil.isNumeric(null));
+-        assertFalse(StringUtil.isNumeric(" "));
+-        assertFalse(StringUtil.isNumeric("123 546"));
+-        assertFalse(StringUtil.isNumeric("hello"));
+-        assertFalse(StringUtil.isNumeric("123.334"));
+-
+-        assertTrue(StringUtil.isNumeric("1"));
+-        assertTrue(StringUtil.isNumeric("1234"));
++        assertFalse(CharUtil.isNumeric(null));
++        assertFalse(CharUtil.isNumeric(" "));
++        assertFalse(CharUtil.isNumeric("123 546"));
++        assertFalse(CharUtil.isNumeric("hello"));
++        assertFalse(CharUtil.isNumeric("123.334"));
++
++        assertTrue(CharUtil.isNumeric("1"));
++        assertTrue(CharUtil.isNumeric("1234"));
+     }
+ 
+     @Test public void isWhitespace() {
+-        assertTrue(StringUtil.isWhitespace('\t'));
+-        assertTrue(StringUtil.isWhitespace('\n'));
+-        assertTrue(StringUtil.isWhitespace('\r'));
+-        assertTrue(StringUtil.isWhitespace('\f'));
+-        assertTrue(StringUtil.isWhitespace(' '));
+-
+-        assertFalse(StringUtil.isWhitespace('\u00a0'));
+-        assertFalse(StringUtil.isWhitespace('\u2000'));
+-        assertFalse(StringUtil.isWhitespace('\u3000'));
++        assertTrue(CharUtil.isWhitespace('\t'));
++        assertTrue(CharUtil.isWhitespace('\n'));
++        assertTrue(CharUtil.isWhitespace('\r'));
++        assertTrue(CharUtil.isWhitespace('\f'));
++        assertTrue(CharUtil.isWhitespace(' '));
++
++        assertFalse(CharUtil.isWhitespace('\u00a0'));
++        assertFalse(CharUtil.isWhitespace('\u2000'));
++        assertFalse(CharUtil.isWhitespace('\u3000'));
+     }
+ 
+     @Test public void normaliseWhiteSpace() {
+@@ -158,78 +158,78 @@ public class StringUtilTest {
+ 
+     @Test
+     void isAscii() {
+-        assertTrue(StringUtil.isAscii(""));
+-        assertTrue(StringUtil.isAscii("example.com"));
+-        assertTrue(StringUtil.isAscii("One Two"));
+-        assertFalse(StringUtil.isAscii("🧔"));
+-        assertFalse(StringUtil.isAscii("测试"));
+-        assertFalse(StringUtil.isAscii("测试.com"));
++        assertTrue(CharUtil.isAscii(""));
++        assertTrue(CharUtil.isAscii("example.com"));
++        assertTrue(CharUtil.isAscii("One Two"));
++        assertFalse(CharUtil.isAscii("🧔"));
++        assertFalse(CharUtil.isAscii("测试"));
++        assertFalse(CharUtil.isAscii("测试.com"));
+     }
+ 
+     @Test void isAsciiLetter() {
+-        assertTrue(StringUtil.isAsciiLetter('a'));
+-        assertTrue(StringUtil.isAsciiLetter('n'));
+-        assertTrue(StringUtil.isAsciiLetter('z'));
+-        assertTrue(StringUtil.isAsciiLetter('A'));
+-        assertTrue(StringUtil.isAsciiLetter('N'));
+-        assertTrue(StringUtil.isAsciiLetter('Z'));
+-
+-        assertFalse(StringUtil.isAsciiLetter(' '));
+-        assertFalse(StringUtil.isAsciiLetter('-'));
+-        assertFalse(StringUtil.isAsciiLetter('0'));
+-        assertFalse(StringUtil.isAsciiLetter('ß'));
+-        assertFalse(StringUtil.isAsciiLetter('Ě'));
++        assertTrue(CharUtil.isAsciiLetter('a'));
++        assertTrue(CharUtil.isAsciiLetter('n'));
++        assertTrue(CharUtil.isAsciiLetter('z'));
++        assertTrue(CharUtil.isAsciiLetter('A'));
++        assertTrue(CharUtil.isAsciiLetter('N'));
++        assertTrue(CharUtil.isAsciiLetter('Z'));
++
++        assertFalse(CharUtil.isAsciiLetter(' '));
++        assertFalse(CharUtil.isAsciiLetter('-'));
++        assertFalse(CharUtil.isAsciiLetter('0'));
++        assertFalse(CharUtil.isAsciiLetter('ß'));
++        assertFalse(CharUtil.isAsciiLetter('Ě'));
+     }
+ 
+     @Test void isDigit() {
+-        assertTrue(StringUtil.isDigit('0'));
+-        assertTrue(StringUtil.isDigit('1'));
+-        assertTrue(StringUtil.isDigit('2'));
+-        assertTrue(StringUtil.isDigit('3'));
+-        assertTrue(StringUtil.isDigit('4'));
+-        assertTrue(StringUtil.isDigit('5'));
+-        assertTrue(StringUtil.isDigit('6'));
+-        assertTrue(StringUtil.isDigit('7'));
+-        assertTrue(StringUtil.isDigit('8'));
+-        assertTrue(StringUtil.isDigit('9'));
+-
+-        assertFalse(StringUtil.isDigit('a'));
+-        assertFalse(StringUtil.isDigit('A'));
+-        assertFalse(StringUtil.isDigit('ä'));
+-        assertFalse(StringUtil.isDigit('Ä'));
+-        assertFalse(StringUtil.isDigit('١'));
+-        assertFalse(StringUtil.isDigit('୳'));
++        assertTrue(CharUtil.isDigit('0'));
++        assertTrue(CharUtil.isDigit('1'));
++        assertTrue(CharUtil.isDigit('2'));
++        assertTrue(CharUtil.isDigit('3'));
++        assertTrue(CharUtil.isDigit('4'));
++        assertTrue(CharUtil.isDigit('5'));
++        assertTrue(CharUtil.isDigit('6'));
++        assertTrue(CharUtil.isDigit('7'));
++        assertTrue(CharUtil.isDigit('8'));
++        assertTrue(CharUtil.isDigit('9'));
++
++        assertFalse(CharUtil.isDigit('a'));
++        assertFalse(CharUtil.isDigit('A'));
++        assertFalse(CharUtil.isDigit('ä'));
++        assertFalse(CharUtil.isDigit('Ä'));
++        assertFalse(CharUtil.isDigit('١'));
++        assertFalse(CharUtil.isDigit('୳'));
+     }
+ 
+     @Test void isHexDigit() {
+-        assertTrue(StringUtil.isHexDigit('0'));
+-        assertTrue(StringUtil.isHexDigit('1'));
+-        assertTrue(StringUtil.isHexDigit('2'));
+-        assertTrue(StringUtil.isHexDigit('3'));
+-        assertTrue(StringUtil.isHexDigit('4'));
+-        assertTrue(StringUtil.isHexDigit('5'));
+-        assertTrue(StringUtil.isHexDigit('6'));
+-        assertTrue(StringUtil.isHexDigit('7'));
+-        assertTrue(StringUtil.isHexDigit('8'));
+-        assertTrue(StringUtil.isHexDigit('9'));
+-        assertTrue(StringUtil.isHexDigit('a'));
+-        assertTrue(StringUtil.isHexDigit('b'));
+-        assertTrue(StringUtil.isHexDigit('c'));
+-        assertTrue(StringUtil.isHexDigit('d'));
+-        assertTrue(StringUtil.isHexDigit('e'));
+-        assertTrue(StringUtil.isHexDigit('f'));
+-        assertTrue(StringUtil.isHexDigit('A'));
+-        assertTrue(StringUtil.isHexDigit('B'));
+-        assertTrue(StringUtil.isHexDigit('C'));
+-        assertTrue(StringUtil.isHexDigit('D'));
+-        assertTrue(StringUtil.isHexDigit('E'));
+-        assertTrue(StringUtil.isHexDigit('F'));
+-
+-        assertFalse(StringUtil.isHexDigit('g'));
+-        assertFalse(StringUtil.isHexDigit('G'));
+-        assertFalse(StringUtil.isHexDigit('ä'));
+-        assertFalse(StringUtil.isHexDigit('Ä'));
+-        assertFalse(StringUtil.isHexDigit('١'));
+-        assertFalse(StringUtil.isHexDigit('୳'));
++        assertTrue(CharUtil.isHexDigit('0'));
++        assertTrue(CharUtil.isHexDigit('1'));
++        assertTrue(CharUtil.isHexDigit('2'));
++        assertTrue(CharUtil.isHexDigit('3'));
++        assertTrue(CharUtil.isHexDigit('4'));
++        assertTrue(CharUtil.isHexDigit('5'));
++        assertTrue(CharUtil.isHexDigit('6'));
++        assertTrue(CharUtil.isHexDigit('7'));
++        assertTrue(CharUtil.isHexDigit('8'));
++        assertTrue(CharUtil.isHexDigit('9'));
++        assertTrue(CharUtil.isHexDigit('a'));
++        assertTrue(CharUtil.isHexDigit('b'));
++        assertTrue(CharUtil.isHexDigit('c'));
++        assertTrue(CharUtil.isHexDigit('d'));
++        assertTrue(CharUtil.isHexDigit('e'));
++        assertTrue(CharUtil.isHexDigit('f'));
++        assertTrue(CharUtil.isHexDigit('A'));
++        assertTrue(CharUtil.isHexDigit('B'));
++        assertTrue(CharUtil.isHexDigit('C'));
++        assertTrue(CharUtil.isHexDigit('D'));
++        assertTrue(CharUtil.isHexDigit('E'));
++        assertTrue(CharUtil.isHexDigit('F'));
++
++        assertFalse(CharUtil.isHexDigit('g'));
++        assertFalse(CharUtil.isHexDigit('G'));
++        assertFalse(CharUtil.isHexDigit('ä'));
++        assertFalse(CharUtil.isHexDigit('Ä'));
++        assertFalse(CharUtil.isHexDigit('١'));
++        assertFalse(CharUtil.isHexDigit('୳'));
+     }
+ }
+diff --git a/src/test/java/org/jsoup/nodes/TextNodeTest.java b/src/test/java/org/jsoup/nodes/TextNodeTest.java
+index f99cb285..bd323a04 100644
+--- a/src/test/java/org/jsoup/nodes/TextNodeTest.java
++++ b/src/test/java/org/jsoup/nodes/TextNodeTest.java
+@@ -4,6 +4,7 @@ import org.jsoup.Jsoup;
+ import org.jsoup.TextUtil;
+ import org.jsoup.helper.ValidationException;
+ import org.jsoup.internal.StringUtil;
++import org.jsoup.internal.CharUtil;
+ import org.jsoup.select.Nodes;
+ import org.junit.jupiter.api.Test;
+ 
+@@ -161,7 +162,7 @@ public class TextNodeTest {
+             for (Node node : el.childNodes()) {
+                 if (node instanceof TextNode) {
+                     TextNode textNode = (TextNode) node;
+-                    assertFalse(StringUtil.isBlank(textNode.text()));
++                    assertFalse(CharUtil.isBlank(textNode.text()));
+                     if (!foundFirst) {
+                         foundFirst = true;
+                         assertEquals("One ", textNode.text());

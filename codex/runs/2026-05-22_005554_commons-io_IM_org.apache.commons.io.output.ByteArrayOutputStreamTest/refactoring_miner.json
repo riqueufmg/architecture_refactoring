@@ -1,0 +1,1002 @@
+{
+"commits": [
+{
+	"repository": "https://github.com/apache/commons-io",
+	"sha1": "266af36905e17eaf6db3d683a5e257cfc806eecd",
+	"url": "https://github.com/apache/commons-io/commit/266af36905e17eaf6db3d683a5e257cfc806eecd",
+	"refactorings": [{
+	"type": "Move Method",
+	"description": "Move Method private checkStreams(actual AbstractByteArrayOutputStream<?>, expected ByteArrayOutputStream) : void from class org.apache.commons.io.output.ByteArrayOutputStreamTest to package checkStreams(actual AbstractByteArrayOutputStream<?>, expected ByteArrayOutputStream) : void from class org.apache.commons.io.output.ByteArrayOutputStreamTestSupport",
+	"leftSideLocations": [{
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTest.java",
+		"startLine": 131,
+		"endLine": 136,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private checkStreams(actual AbstractByteArrayOutputStream<?>, expected ByteArrayOutputStream) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTestSupport.java",
+		"startLine": 43,
+		"endLine": 48,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "package checkStreams(actual AbstractByteArrayOutputStream<?>, expected ByteArrayOutputStream) : void"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier private to package in method package checkStreams(actual AbstractByteArrayOutputStream<?>, expected ByteArrayOutputStream) : void from class org.apache.commons.io.output.ByteArrayOutputStreamTestSupport",
+	"leftSideLocations": [{
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTest.java",
+		"startLine": 131,
+		"endLine": 136,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private checkStreams(actual AbstractByteArrayOutputStream<?>, expected ByteArrayOutputStream) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTestSupport.java",
+		"startLine": 43,
+		"endLine": 48,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "package checkStreams(actual AbstractByteArrayOutputStream<?>, expected ByteArrayOutputStream) : void"
+}]
+},
+{
+	"type": "Add Method Modifier",
+	"description": "Add Method Modifier static in method package checkStreams(actual AbstractByteArrayOutputStream<?>, expected ByteArrayOutputStream) : void from class org.apache.commons.io.output.ByteArrayOutputStreamTestSupport",
+	"leftSideLocations": [{
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTest.java",
+		"startLine": 131,
+		"endLine": 136,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private checkStreams(actual AbstractByteArrayOutputStream<?>, expected ByteArrayOutputStream) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTestSupport.java",
+		"startLine": 43,
+		"endLine": 48,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with added modifier",
+		"codeElement": "package checkStreams(actual AbstractByteArrayOutputStream<?>, expected ByteArrayOutputStream) : void"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method private checkByteArrays(expected byte[], actual byte[]) : void from class org.apache.commons.io.output.ByteArrayOutputStreamTest to private checkByteArrays(expected byte[], actual byte[]) : void from class org.apache.commons.io.output.ByteArrayOutputStreamTestSupport",
+	"leftSideLocations": [{
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTest.java",
+		"startLine": 122,
+		"endLine": 129,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private checkByteArrays(expected byte[], actual byte[]) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTestSupport.java",
+		"startLine": 50,
+		"endLine": 57,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "private checkByteArrays(expected byte[], actual byte[]) : void"
+}]
+},
+{
+	"type": "Add Method Modifier",
+	"description": "Add Method Modifier static in method private checkByteArrays(expected byte[], actual byte[]) : void from class org.apache.commons.io.output.ByteArrayOutputStreamTestSupport",
+	"leftSideLocations": [{
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTest.java",
+		"startLine": 122,
+		"endLine": 129,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private checkByteArrays(expected byte[], actual byte[]) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTestSupport.java",
+		"startLine": 50,
+		"endLine": 57,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with added modifier",
+		"codeElement": "private checkByteArrays(expected byte[], actual byte[]) : void"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method private byteCmp(src byte[], cmp byte[]) : boolean from class org.apache.commons.io.output.ByteArrayOutputStreamTest to private byteCmp(src byte[], cmp byte[]) : boolean from class org.apache.commons.io.output.ByteArrayOutputStreamTestSupport",
+	"leftSideLocations": [{
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTest.java",
+		"startLine": 96,
+		"endLine": 103,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private byteCmp(src byte[], cmp byte[]) : boolean"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTestSupport.java",
+		"startLine": 59,
+		"endLine": 66,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "private byteCmp(src byte[], cmp byte[]) : boolean"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method private writeByte(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, count int) : int from class org.apache.commons.io.output.ByteArrayOutputStreamTest to package writeByte(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, count int) : int from class org.apache.commons.io.output.ByteArrayOutputStreamTestSupport",
+	"leftSideLocations": [{
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTest.java",
+		"startLine": 491,
+		"endLine": 505,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private writeByte(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, count int) : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTestSupport.java",
+		"startLine": 68,
+		"endLine": 82,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "package writeByte(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, count int) : int"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier private to package in method package writeByte(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, count int) : int from class org.apache.commons.io.output.ByteArrayOutputStreamTestSupport",
+	"leftSideLocations": [{
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTest.java",
+		"startLine": 491,
+		"endLine": 505,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private writeByte(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, count int) : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTestSupport.java",
+		"startLine": 68,
+		"endLine": 82,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "package writeByte(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, count int) : int"
+}]
+},
+{
+	"type": "Add Method Modifier",
+	"description": "Add Method Modifier static in method package writeByte(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, count int) : int from class org.apache.commons.io.output.ByteArrayOutputStreamTestSupport",
+	"leftSideLocations": [{
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTest.java",
+		"startLine": 491,
+		"endLine": 505,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private writeByte(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, count int) : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTestSupport.java",
+		"startLine": 68,
+		"endLine": 82,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with added modifier",
+		"codeElement": "package writeByte(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, count int) : int"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method private writeByte(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, instructions int[]) : int from class org.apache.commons.io.output.ByteArrayOutputStreamTest to package writeByte(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, instructions int[]) : int from class org.apache.commons.io.output.ByteArrayOutputStreamTestSupport",
+	"leftSideLocations": [{
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTest.java",
+		"startLine": 507,
+		"endLine": 513,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private writeByte(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, instructions int[]) : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTestSupport.java",
+		"startLine": 84,
+		"endLine": 90,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "package writeByte(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, instructions int[]) : int"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier private to package in method package writeByte(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, instructions int[]) : int from class org.apache.commons.io.output.ByteArrayOutputStreamTestSupport",
+	"leftSideLocations": [{
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTest.java",
+		"startLine": 507,
+		"endLine": 513,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private writeByte(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, instructions int[]) : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTestSupport.java",
+		"startLine": 84,
+		"endLine": 90,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "package writeByte(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, instructions int[]) : int"
+}]
+},
+{
+	"type": "Add Method Modifier",
+	"description": "Add Method Modifier static in method package writeByte(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, instructions int[]) : int from class org.apache.commons.io.output.ByteArrayOutputStreamTestSupport",
+	"leftSideLocations": [{
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTest.java",
+		"startLine": 507,
+		"endLine": 513,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private writeByte(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, instructions int[]) : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTestSupport.java",
+		"startLine": 84,
+		"endLine": 90,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with added modifier",
+		"codeElement": "package writeByte(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, instructions int[]) : int"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method private writeByteArray(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, count int) : int from class org.apache.commons.io.output.ByteArrayOutputStreamTest to package writeByteArray(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, count int) : int from class org.apache.commons.io.output.ByteArrayOutputStreamTestSupport",
+	"leftSideLocations": [{
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTest.java",
+		"startLine": 515,
+		"endLine": 528,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private writeByteArray(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, count int) : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTestSupport.java",
+		"startLine": 92,
+		"endLine": 104,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "package writeByteArray(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, count int) : int"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier private to package in method package writeByteArray(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, count int) : int from class org.apache.commons.io.output.ByteArrayOutputStreamTestSupport",
+	"leftSideLocations": [{
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTest.java",
+		"startLine": 515,
+		"endLine": 528,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private writeByteArray(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, count int) : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTestSupport.java",
+		"startLine": 92,
+		"endLine": 104,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "package writeByteArray(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, count int) : int"
+}]
+},
+{
+	"type": "Add Method Modifier",
+	"description": "Add Method Modifier static in method package writeByteArray(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, count int) : int from class org.apache.commons.io.output.ByteArrayOutputStreamTestSupport",
+	"leftSideLocations": [{
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTest.java",
+		"startLine": 515,
+		"endLine": 528,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private writeByteArray(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, count int) : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTestSupport.java",
+		"startLine": 92,
+		"endLine": 104,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with added modifier",
+		"codeElement": "package writeByteArray(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, count int) : int"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method private writeByteArray(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, instructions int[]) : int from class org.apache.commons.io.output.ByteArrayOutputStreamTest to package writeByteArray(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, instructions int[]) : int from class org.apache.commons.io.output.ByteArrayOutputStreamTestSupport",
+	"leftSideLocations": [{
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTest.java",
+		"startLine": 530,
+		"endLine": 537,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private writeByteArray(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, instructions int[]) : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTestSupport.java",
+		"startLine": 106,
+		"endLine": 113,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "package writeByteArray(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, instructions int[]) : int"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier private to package in method package writeByteArray(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, instructions int[]) : int from class org.apache.commons.io.output.ByteArrayOutputStreamTestSupport",
+	"leftSideLocations": [{
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTest.java",
+		"startLine": 530,
+		"endLine": 537,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private writeByteArray(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, instructions int[]) : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTestSupport.java",
+		"startLine": 106,
+		"endLine": 113,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "package writeByteArray(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, instructions int[]) : int"
+}]
+},
+{
+	"type": "Add Method Modifier",
+	"description": "Add Method Modifier static in method package writeByteArray(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, instructions int[]) : int from class org.apache.commons.io.output.ByteArrayOutputStreamTestSupport",
+	"leftSideLocations": [{
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTest.java",
+		"startLine": 530,
+		"endLine": 537,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private writeByteArray(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, instructions int[]) : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTestSupport.java",
+		"startLine": 106,
+		"endLine": 113,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with added modifier",
+		"codeElement": "package writeByteArray(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, instructions int[]) : int"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method private writeByteArrayIndex(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, count int) : int from class org.apache.commons.io.output.ByteArrayOutputStreamTest to package writeByteArrayIndex(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, count int) : int from class org.apache.commons.io.output.ByteArrayOutputStreamTestSupport",
+	"leftSideLocations": [{
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTest.java",
+		"startLine": 539,
+		"endLine": 552,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private writeByteArrayIndex(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, count int) : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTestSupport.java",
+		"startLine": 115,
+		"endLine": 127,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "package writeByteArrayIndex(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, count int) : int"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier private to package in method package writeByteArrayIndex(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, count int) : int from class org.apache.commons.io.output.ByteArrayOutputStreamTestSupport",
+	"leftSideLocations": [{
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTest.java",
+		"startLine": 539,
+		"endLine": 552,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private writeByteArrayIndex(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, count int) : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTestSupport.java",
+		"startLine": 115,
+		"endLine": 127,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "package writeByteArrayIndex(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, count int) : int"
+}]
+},
+{
+	"type": "Add Method Modifier",
+	"description": "Add Method Modifier static in method package writeByteArrayIndex(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, count int) : int from class org.apache.commons.io.output.ByteArrayOutputStreamTestSupport",
+	"leftSideLocations": [{
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTest.java",
+		"startLine": 539,
+		"endLine": 552,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private writeByteArrayIndex(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, count int) : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTestSupport.java",
+		"startLine": 115,
+		"endLine": 127,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with added modifier",
+		"codeElement": "package writeByteArrayIndex(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, count int) : int"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method private writeByteArrayIndex(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, instructions int[]) : int from class org.apache.commons.io.output.ByteArrayOutputStreamTest to package writeByteArrayIndex(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, instructions int[]) : int from class org.apache.commons.io.output.ByteArrayOutputStreamTestSupport",
+	"leftSideLocations": [{
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTest.java",
+		"startLine": 554,
+		"endLine": 560,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private writeByteArrayIndex(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, instructions int[]) : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTestSupport.java",
+		"startLine": 129,
+		"endLine": 135,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "package writeByteArrayIndex(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, instructions int[]) : int"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier private to package in method package writeByteArrayIndex(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, instructions int[]) : int from class org.apache.commons.io.output.ByteArrayOutputStreamTestSupport",
+	"leftSideLocations": [{
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTest.java",
+		"startLine": 554,
+		"endLine": 560,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private writeByteArrayIndex(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, instructions int[]) : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTestSupport.java",
+		"startLine": 129,
+		"endLine": 135,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "package writeByteArrayIndex(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, instructions int[]) : int"
+}]
+},
+{
+	"type": "Add Method Modifier",
+	"description": "Add Method Modifier static in method package writeByteArrayIndex(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, instructions int[]) : int from class org.apache.commons.io.output.ByteArrayOutputStreamTestSupport",
+	"leftSideLocations": [{
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTest.java",
+		"startLine": 554,
+		"endLine": 560,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private writeByteArrayIndex(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, instructions int[]) : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTestSupport.java",
+		"startLine": 129,
+		"endLine": 135,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with added modifier",
+		"codeElement": "package writeByteArrayIndex(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, instructions int[]) : int"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method private writeStringCharset(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, count int) : int from class org.apache.commons.io.output.ByteArrayOutputStreamTest to package writeStringCharset(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, count int) : int from class org.apache.commons.io.output.ByteArrayOutputStreamTestSupport",
+	"leftSideLocations": [{
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTest.java",
+		"startLine": 562,
+		"endLine": 581,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private writeStringCharset(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, count int) : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTestSupport.java",
+		"startLine": 137,
+		"endLine": 154,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "package writeStringCharset(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, count int) : int"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier private to package in method package writeStringCharset(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, count int) : int from class org.apache.commons.io.output.ByteArrayOutputStreamTestSupport",
+	"leftSideLocations": [{
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTest.java",
+		"startLine": 562,
+		"endLine": 581,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private writeStringCharset(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, count int) : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTestSupport.java",
+		"startLine": 137,
+		"endLine": 154,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "package writeStringCharset(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, count int) : int"
+}]
+},
+{
+	"type": "Add Method Modifier",
+	"description": "Add Method Modifier static in method package writeStringCharset(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, count int) : int from class org.apache.commons.io.output.ByteArrayOutputStreamTestSupport",
+	"leftSideLocations": [{
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTest.java",
+		"startLine": 562,
+		"endLine": 581,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private writeStringCharset(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, count int) : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTestSupport.java",
+		"startLine": 137,
+		"endLine": 154,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with added modifier",
+		"codeElement": "package writeStringCharset(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, count int) : int"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method private writeStringCharset(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, instructions int[]) : int from class org.apache.commons.io.output.ByteArrayOutputStreamTest to package writeStringCharset(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, instructions int[]) : int from class org.apache.commons.io.output.ByteArrayOutputStreamTestSupport",
+	"leftSideLocations": [{
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTest.java",
+		"startLine": 583,
+		"endLine": 590,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private writeStringCharset(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, instructions int[]) : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTestSupport.java",
+		"startLine": 156,
+		"endLine": 163,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "package writeStringCharset(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, instructions int[]) : int"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier private to package in method package writeStringCharset(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, instructions int[]) : int from class org.apache.commons.io.output.ByteArrayOutputStreamTestSupport",
+	"leftSideLocations": [{
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTest.java",
+		"startLine": 583,
+		"endLine": 590,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private writeStringCharset(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, instructions int[]) : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTestSupport.java",
+		"startLine": 156,
+		"endLine": 163,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "package writeStringCharset(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, instructions int[]) : int"
+}]
+},
+{
+	"type": "Add Method Modifier",
+	"description": "Add Method Modifier static in method package writeStringCharset(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, instructions int[]) : int from class org.apache.commons.io.output.ByteArrayOutputStreamTestSupport",
+	"leftSideLocations": [{
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTest.java",
+		"startLine": 583,
+		"endLine": 590,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private writeStringCharset(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, instructions int[]) : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTestSupport.java",
+		"startLine": 156,
+		"endLine": 163,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with added modifier",
+		"codeElement": "package writeStringCharset(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, instructions int[]) : int"
+}]
+},
+{
+	"type": "Move Attribute",
+	"description": "Move Attribute private ASCII_DATA : byte[] from class org.apache.commons.io.output.ByteArrayOutputStreamTest to private ASCII_DATA : byte[] from class org.apache.commons.io.output.ByteArrayOutputStreamTestSupport",
+	"leftSideLocations": [{
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTest.java",
+		"startLine": 83,
+		"endLine": 83,
+		"startColumn": 33,
+		"endColumn": 43,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "private ASCII_DATA : byte[]"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTestSupport.java",
+		"startLine": 32,
+		"endLine": 32,
+		"startColumn": 33,
+		"endColumn": 43,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "moved attribute declaration",
+		"codeElement": "private ASCII_DATA : byte[]"
+}]
+},
+{
+	"type": "Extract Class",
+	"description": "Extract Class org.apache.commons.io.output.ByteArrayOutputStreamTestSupport from class org.apache.commons.io.output.ByteArrayOutputStreamTest",
+	"leftSideLocations": [{
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTest.java",
+		"startLine": 45,
+		"endLine": 591,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original type declaration",
+		"codeElement": "org.apache.commons.io.output.ByteArrayOutputStreamTest"
+}, {
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTest.java",
+		"startLine": 96,
+		"endLine": 103,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private byteCmp(src byte[], cmp byte[]) : boolean"
+}, {
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTest.java",
+		"startLine": 122,
+		"endLine": 129,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private checkByteArrays(expected byte[], actual byte[]) : void"
+}, {
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTest.java",
+		"startLine": 131,
+		"endLine": 136,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private checkStreams(actual AbstractByteArrayOutputStream<?>, expected ByteArrayOutputStream) : void"
+}, {
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTest.java",
+		"startLine": 491,
+		"endLine": 505,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private writeByte(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, count int) : int"
+}, {
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTest.java",
+		"startLine": 507,
+		"endLine": 513,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private writeByte(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, instructions int[]) : int"
+}, {
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTest.java",
+		"startLine": 515,
+		"endLine": 528,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private writeByteArray(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, count int) : int"
+}, {
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTest.java",
+		"startLine": 530,
+		"endLine": 537,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private writeByteArray(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, instructions int[]) : int"
+}, {
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTest.java",
+		"startLine": 539,
+		"endLine": 552,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private writeByteArrayIndex(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, count int) : int"
+}, {
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTest.java",
+		"startLine": 554,
+		"endLine": 560,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private writeByteArrayIndex(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, instructions int[]) : int"
+}, {
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTest.java",
+		"startLine": 562,
+		"endLine": 581,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private writeStringCharset(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, count int) : int"
+}, {
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTest.java",
+		"startLine": 583,
+		"endLine": 590,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private writeStringCharset(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, instructions int[]) : int"
+}, {
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTest.java",
+		"startLine": 83,
+		"endLine": 83,
+		"startColumn": 33,
+		"endColumn": 43,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "private ASCII_DATA : byte[]"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTest.java",
+		"startLine": 42,
+		"endLine": 455,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "type declaration after extraction",
+		"codeElement": "org.apache.commons.io.output.ByteArrayOutputStreamTest"
+}, {
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTestSupport.java",
+		"startLine": 27,
+		"endLine": 164,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "extracted type declaration",
+		"codeElement": "org.apache.commons.io.output.ByteArrayOutputStreamTestSupport"
+}, {
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTestSupport.java",
+		"startLine": 59,
+		"endLine": 66,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "private byteCmp(src byte[], cmp byte[]) : boolean"
+}, {
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTestSupport.java",
+		"startLine": 50,
+		"endLine": 57,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "private checkByteArrays(expected byte[], actual byte[]) : void"
+}, {
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTestSupport.java",
+		"startLine": 43,
+		"endLine": 48,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "package checkStreams(actual AbstractByteArrayOutputStream<?>, expected ByteArrayOutputStream) : void"
+}, {
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTestSupport.java",
+		"startLine": 68,
+		"endLine": 82,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "package writeByte(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, count int) : int"
+}, {
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTestSupport.java",
+		"startLine": 84,
+		"endLine": 90,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "package writeByte(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, instructions int[]) : int"
+}, {
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTestSupport.java",
+		"startLine": 92,
+		"endLine": 104,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "package writeByteArray(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, count int) : int"
+}, {
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTestSupport.java",
+		"startLine": 106,
+		"endLine": 113,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "package writeByteArray(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, instructions int[]) : int"
+}, {
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTestSupport.java",
+		"startLine": 115,
+		"endLine": 127,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "package writeByteArrayIndex(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, count int) : int"
+}, {
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTestSupport.java",
+		"startLine": 129,
+		"endLine": 135,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "package writeByteArrayIndex(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, instructions int[]) : int"
+}, {
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTestSupport.java",
+		"startLine": 137,
+		"endLine": 154,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "package writeStringCharset(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, count int) : int"
+}, {
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTestSupport.java",
+		"startLine": 156,
+		"endLine": 163,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "package writeStringCharset(baout AbstractByteArrayOutputStream<?>, ref ByteArrayOutputStream, instructions int[]) : int"
+}, {
+		"filePath": "src/test/java/org/apache/commons/io/output/ByteArrayOutputStreamTestSupport.java",
+		"startLine": 32,
+		"endLine": 32,
+		"startColumn": 33,
+		"endColumn": 43,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "extracted attribute declaration",
+		"codeElement": "private ASCII_DATA : byte[]"
+}]
+}
+]
+}]
+}

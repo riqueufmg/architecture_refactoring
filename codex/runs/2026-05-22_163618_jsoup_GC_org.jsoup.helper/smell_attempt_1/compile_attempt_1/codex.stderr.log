@@ -1,0 +1,5 @@
+2026-05-22T20:05:35.338219Z ERROR codex_models_manager::manager: failed to refresh available models: timeout waiting for child process to exit
+2026-05-22T20:23:01.765593Z ERROR codex_core::tools::router: error=write_stdin failed: stdin is closed for this session; rerun exec_command with tty=true to keep stdin open
+2026-05-22T20:29:06.473786Z ERROR codex_core::tools::router: error=write_stdin failed: stdin is closed for this session; rerun exec_command with tty=true to keep stdin open
+2026-05-22T21:05:09.600389Z ERROR codex_core::tools::router: error=apply_patch verification failed: Failed to find expected lines in /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/main/java/org/jsoup/select/NodeEvaluator.java:
+import org.jsoup.helper.Regex;

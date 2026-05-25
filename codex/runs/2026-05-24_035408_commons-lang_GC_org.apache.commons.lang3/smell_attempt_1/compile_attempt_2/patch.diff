@@ -1,0 +1,495 @@
+diff --git a/src/main/java/org/apache/commons/lang3/DoubleRange.java b/src/main/java/org/apache/commons/lang3/DoubleRange.java
+deleted file mode 100644
+index 060f4116e..000000000
+--- a/src/main/java/org/apache/commons/lang3/DoubleRange.java
++++ /dev/null
+@@ -1,109 +0,0 @@
+-/*
+- * Licensed to the Apache Software Foundation (ASF) under one or more
+- * contributor license agreements.  See the NOTICE file distributed with
+- * this work for additional information regarding copyright ownership.
+- * The ASF licenses this file to You under the Apache License, Version 2.0
+- * (the "License"); you may not use this file except in compliance with
+- * the License.  You may obtain a copy of the License at
+- *
+- *      https://www.apache.org/licenses/LICENSE-2.0
+- *
+- * Unless required by applicable law or agreed to in writing, software
+- * distributed under the License is distributed on an "AS IS" BASIS,
+- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+- * See the License for the specific language governing permissions and
+- * limitations under the License.
+- */
+-
+-package org.apache.commons.lang3;
+-
+-/**
+- * Specializes {@link NumberRange} for {@link Double}s.
+- *
+- * <p>
+- * This class is not designed to interoperate with other NumberRanges
+- * </p>
+- *
+- * @since 3.13.0
+- */
+-public final class DoubleRange extends NumberRange<Double> {
+-
+-    private static final long serialVersionUID = 1L;
+-
+-    /**
+-     * Creates a range with the specified minimum and maximum values (both inclusive).
+-     *
+-     * <p>
+-     * The range uses the natural ordering of the elements to determine where values lie in the range.
+-     * </p>
+-     *
+-     * <p>
+-     * The arguments may be passed in the order (min, max) or (max,min). The getMinimum and getMaximum methods will return the correct values.
+-     * </p>
+-     *
+-     * @param fromInclusive the first value that defines the edge of the range, inclusive.
+-     * @param toInclusive the second value that defines the edge of the range, inclusive.
+-     * @return the range object, not null.
+-     */
+-    public static DoubleRange of(final double fromInclusive, final double toInclusive) {
+-        return of(Double.valueOf(fromInclusive), Double.valueOf(toInclusive));
+-    }
+-
+-    /**
+-     * Creates a range with the specified minimum and maximum values (both inclusive).
+-     *
+-     * <p>
+-     * The range uses the natural ordering of the elements to determine where values lie in the range.
+-     * </p>
+-     *
+-     * <p>
+-     * The arguments may be passed in the order (min, max) or (max,min). The getMinimum and getMaximum methods will return the correct values.
+-     * </p>
+-     *
+-     * @param fromInclusive the first value that defines the edge of the range, inclusive.
+-     * @param toInclusive the second value that defines the edge of the range, inclusive.
+-     * @return the range object, not null.
+-     * @throws NullPointerException if either element is null.
+-     */
+-    public static DoubleRange of(final Double fromInclusive, final Double toInclusive) {
+-        return new DoubleRange(fromInclusive, toInclusive);
+-    }
+-
+-    /**
+-     * Creates an instance.
+-     *
+-     * @param number1 the first element, not null.
+-     * @param number2 the second element, not null.
+-     * @throws NullPointerException when element1 is null.
+-     * @throws NullPointerException when element2 is null.
+-     */
+-    private DoubleRange(final Double number1, final Double number2) {
+-        super(number1, number2, null);
+-    }
+-
+-    /**
+-     * Fits the given value into this range by returning the given value or, if out of bounds, the range minimum if
+-     * below, or the range maximum if above.
+-     *
+-     * <pre>{@code
+-     * LongRange range = LongRange.of(16, 64);
+-     * range.fit(-9) -->  16
+-     * range.fit(0)  -->  16
+-     * range.fit(15) -->  16
+-     * range.fit(16) -->  16
+-     * range.fit(17) -->  17
+-     * ...
+-     * range.fit(63) -->  63
+-     * range.fit(64) -->  64
+-     * range.fit(99) -->  64
+-     * }</pre>
+-     *
+-     * @param element the element to test.
+-     * @return the minimum, the element, or the maximum depending on the element's location relative to the range.
+-     * @since 3.19.0
+-     */
+-    public double fit(final double element) {
+-        return super.fit(element).doubleValue();
+-    }
+-
+-}
+diff --git a/src/main/java/org/apache/commons/lang3/IntegerRange.java b/src/main/java/org/apache/commons/lang3/IntegerRange.java
+deleted file mode 100644
+index 69dc1a584..000000000
+--- a/src/main/java/org/apache/commons/lang3/IntegerRange.java
++++ /dev/null
+@@ -1,121 +0,0 @@
+-/*
+- * Licensed to the Apache Software Foundation (ASF) under one or more
+- * contributor license agreements.  See the NOTICE file distributed with
+- * this work for additional information regarding copyright ownership.
+- * The ASF licenses this file to You under the Apache License, Version 2.0
+- * (the "License"); you may not use this file except in compliance with
+- * the License.  You may obtain a copy of the License at
+- *
+- *      https://www.apache.org/licenses/LICENSE-2.0
+- *
+- * Unless required by applicable law or agreed to in writing, software
+- * distributed under the License is distributed on an "AS IS" BASIS,
+- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+- * See the License for the specific language governing permissions and
+- * limitations under the License.
+- */
+-
+-package org.apache.commons.lang3;
+-
+-import java.util.stream.IntStream;
+-
+-/**
+- * Specializes {@link NumberRange} for {@link Integer}s.
+- *
+- * <p>
+- * This class is not designed to interoperate with other NumberRanges
+- * </p>
+- *
+- * @since 3.13.0
+- */
+-public final class IntegerRange extends NumberRange<Integer> {
+-
+-    private static final long serialVersionUID = 1L;
+-
+-    /**
+-     * Creates a closed range with the specified minimum and maximum values (both inclusive).
+-     *
+-     * <p>
+-     * The range uses the natural ordering of the elements to determine where values lie in the range.
+-     * </p>
+-     *
+-     * <p>
+-     * The arguments may be passed in the order (min, max) or (max,min). The getMinimum and getMaximum methods will return the correct values.
+-     * </p>
+-     *
+-     * @param fromInclusive the first value that defines the edge of the range, inclusive.
+-     * @param toInclusive the second value that defines the edge of the range, inclusive.
+-     * @return the range object, not null.
+-     */
+-    public static IntegerRange of(final int fromInclusive, final int toInclusive) {
+-        return of(Integer.valueOf(fromInclusive), Integer.valueOf(toInclusive));
+-    }
+-
+-    /**
+-     * Creates a closed range with the specified minimum and maximum values (both inclusive).
+-     *
+-     * <p>
+-     * The range uses the natural ordering of the elements to determine where values lie in the range.
+-     * </p>
+-     *
+-     * <p>
+-     * The arguments may be passed in the order (min, max) or (max,min). The getMinimum and getMaximum methods will return the correct values.
+-     * </p>
+-     *
+-     * @param fromInclusive the first value that defines the edge of the range, inclusive.
+-     * @param toInclusive the second value that defines the edge of the range, inclusive.
+-     * @return the range object, not null.
+-     * @throws NullPointerException if either element is null.
+-     */
+-    public static IntegerRange of(final Integer fromInclusive, final Integer toInclusive) {
+-        return new IntegerRange(fromInclusive, toInclusive);
+-    }
+-
+-    /**
+-     * Creates a new instance.
+-     *
+-     * @param number1 the first element, not null.
+-     * @param number2 the second element, not null.
+-     * @throws NullPointerException when element1 is null.
+-     * @throws NullPointerException when element2 is null.
+-     */
+-    private IntegerRange(final Integer number1, final Integer number2) {
+-        super(number1, number2, null);
+-    }
+-
+-    /**
+-     * Fits the given value into this range by returning the given value or, if out of bounds, the range minimum if
+-     * below, or the range maximum if above.
+-     *
+-     * <pre>{@code
+-     * IntegerRange range = IntegerRange.of(16, 64);
+-     * range.fit(-9) -->  16
+-     * range.fit(0)  -->  16
+-     * range.fit(15) -->  16
+-     * range.fit(16) -->  16
+-     * range.fit(17) -->  17
+-     * ...
+-     * range.fit(63) -->  63
+-     * range.fit(64) -->  64
+-     * range.fit(99) -->  64
+-     * }</pre>
+-     *
+-     * @param element the element to test.
+-     * @return the minimum, the element, or the maximum depending on the element's location relative to the range.
+-     * @since 3.19.0
+-     */
+-    public int fit(final int element) {
+-        return super.fit(element).intValue();
+-    }
+-
+-    /**
+-     * Returns a sequential ordered {@code IntStream} from {@link #getMinimum()} (inclusive) to {@link #getMaximum()} (inclusive) by an incremental step of
+-     * {@code 1}.
+-     *
+-     * @return a sequential {@code IntStream} for the range of {@code int} elements.
+-     * @since 3.18.0
+-     */
+-    public IntStream toIntStream() {
+-        return IntStream.rangeClosed(getMinimum(), getMaximum());
+-    }
+-}
+diff --git a/src/main/java/org/apache/commons/lang3/LongRange.java b/src/main/java/org/apache/commons/lang3/LongRange.java
+deleted file mode 100644
+index 88f3ee535..000000000
+--- a/src/main/java/org/apache/commons/lang3/LongRange.java
++++ /dev/null
+@@ -1,122 +0,0 @@
+-/*
+- * Licensed to the Apache Software Foundation (ASF) under one or more
+- * contributor license agreements.  See the NOTICE file distributed with
+- * this work for additional information regarding copyright ownership.
+- * The ASF licenses this file to You under the Apache License, Version 2.0
+- * (the "License"); you may not use this file except in compliance with
+- * the License.  You may obtain a copy of the License at
+- *
+- *      https://www.apache.org/licenses/LICENSE-2.0
+- *
+- * Unless required by applicable law or agreed to in writing, software
+- * distributed under the License is distributed on an "AS IS" BASIS,
+- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+- * See the License for the specific language governing permissions and
+- * limitations under the License.
+- */
+-
+-package org.apache.commons.lang3;
+-
+-import java.util.stream.LongStream;
+-
+-/**
+- * Specializes {@link NumberRange} for {@link Long}s.
+- *
+- * <p>
+- * This class is not designed to interoperate with other NumberRanges
+- * </p>
+- *
+- * @since 3.13.0
+- */
+-public final class LongRange extends NumberRange<Long> {
+-
+-    private static final long serialVersionUID = 1L;
+-
+-    /**
+-     * Creates a closed range with the specified minimum and maximum values (both inclusive).
+-     *
+-     * <p>
+-     * The range uses the natural ordering of the elements to determine where values lie in the range.
+-     * </p>
+-     *
+-     * <p>
+-     * The arguments may be passed in the order (min, max) or (max,min). The getMinimum and getMaximum methods will return the correct values.
+-     * </p>
+-     *
+-     * @param fromInclusive the first value that defines the edge of the range, inclusive.
+-     * @param toInclusive the second value that defines the edge of the range, inclusive.
+-     * @return the range object, not null.
+-     */
+-    public static LongRange of(final long fromInclusive, final long toInclusive) {
+-        return of(Long.valueOf(fromInclusive), Long.valueOf(toInclusive));
+-    }
+-
+-    /**
+-     * Creates a closed range with the specified minimum and maximum values (both inclusive).
+-     *
+-     * <p>
+-     * The range uses the natural ordering of the elements to determine where values lie in the range.
+-     * </p>
+-     *
+-     * <p>
+-     * The arguments may be passed in the order (min, max) or (max,min). The getMinimum and getMaximum methods will return the correct values.
+-     * </p>
+-     *
+-     * @param fromInclusive the first value that defines the edge of the range, inclusive.
+-     * @param toInclusive the second value that defines the edge of the range, inclusive.
+-     * @return the range object, not null.
+-     * @throws NullPointerException if either element is null.
+-     */
+-    public static LongRange of(final Long fromInclusive, final Long toInclusive) {
+-        return new LongRange(fromInclusive, toInclusive);
+-    }
+-
+-    /**
+-     * Creates a new instance.
+-     *
+-     * @param number1 the first element, not null.
+-     * @param number2 the second element, not null.
+-     * @throws NullPointerException when element1 is null.
+-     * @throws NullPointerException when element2 is null.
+-     */
+-    private LongRange(final Long number1, final Long number2) {
+-        super(number1, number2, null);
+-    }
+-
+-    /**
+-     * Fits the given value into this range by returning the given value or, if out of bounds, the range minimum if
+-     * below, or the range maximum if above.
+-     *
+-     * <pre>{@code
+-     * LongRange range = LongRange.of(16, 64);
+-     * range.fit(-9) -->  16
+-     * range.fit(0)  -->  16
+-     * range.fit(15) -->  16
+-     * range.fit(16) -->  16
+-     * range.fit(17) -->  17
+-     * ...
+-     * range.fit(63) -->  63
+-     * range.fit(64) -->  64
+-     * range.fit(99) -->  64
+-     * }</pre>
+-     *
+-     * @param element the element to test.
+-     * @return the minimum, the element, or the maximum depending on the element's location relative to the range.
+-     * @since 3.19.0
+-     */
+-    public long fit(final long element) {
+-        return super.fit(element).longValue();
+-    }
+-
+-    /**
+-     * Returns a sequential ordered {@code LongStream} from {@link #getMinimum()} (inclusive) to {@link #getMaximum()} (inclusive) by an incremental step of
+-     * {@code 1}.
+-     *
+-     * @return a sequential {@code LongStream} for the range of {@code long} elements
+-     * @since 3.18.0
+-     */
+-    public LongStream toLongStream() {
+-        return LongStream.rangeClosed(getMinimum(), getMaximum());
+-    }
+-
+-}
+diff --git a/src/main/java/org/apache/commons/lang3/NumberRange.java b/src/main/java/org/apache/commons/lang3/NumberRange.java
+deleted file mode 100644
+index 908c9c078..000000000
+--- a/src/main/java/org/apache/commons/lang3/NumberRange.java
++++ /dev/null
+@@ -1,48 +0,0 @@
+-/*
+- * Licensed to the Apache Software Foundation (ASF) under one or more
+- * contributor license agreements.  See the NOTICE file distributed with
+- * this work for additional information regarding copyright ownership.
+- * The ASF licenses this file to You under the Apache License, Version 2.0
+- * (the "License"); you may not use this file except in compliance with
+- * the License.  You may obtain a copy of the License at
+- *
+- *      https://www.apache.org/licenses/LICENSE-2.0
+- *
+- * Unless required by applicable law or agreed to in writing, software
+- * distributed under the License is distributed on an "AS IS" BASIS,
+- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+- * See the License for the specific language governing permissions and
+- * limitations under the License.
+- */
+-
+-package org.apache.commons.lang3;
+-
+-import java.util.Comparator;
+-
+-/**
+- * Specializes {@link Range} for {@link Number}s.
+- * <p>
+- * We only offer specializations for Integer, Long, and Double (like Java Streams).
+- * </p>
+- *
+- * @param <N> The Number class.
+- * @since 3.13.0
+- */
+-public class NumberRange<N extends Number> extends Range<N> {
+-
+-    private static final long serialVersionUID = 1L;
+-
+-    /**
+-     * Creates an instance.
+-     *
+-     * @param number1 the first element, not null.
+-     * @param number2 the second element, not null.
+-     * @param comp the comparator to be used, null for natural ordering.
+-     * @throws NullPointerException when element1 is null.
+-     * @throws NullPointerException when element2 is null.
+-     */
+-    public NumberRange(final N number1, final N number2, final Comparator<N> comp) {
+-        super(number1, number2, comp);
+-    }
+-
+-}
+diff --git a/src/main/java/org/apache/commons/lang3/Range.java b/src/main/java/org/apache/commons/lang3/Range.java
+index 2c1743956..37ff7e89d 100644
+--- a/src/main/java/org/apache/commons/lang3/Range.java
++++ b/src/main/java/org/apache/commons/lang3/Range.java
+@@ -227,7 +227,7 @@ public static <T> Range<T> of(final T fromInclusive, final T toInclusive, final
+      * @throws NullPointerException when element2 is null.
+      */
+     @SuppressWarnings("unchecked")
+-    Range(final T element1, final T element2, final Comparator<T> comp) {
++    protected Range(final T element1, final T element2, final Comparator<T> comp) {
+         Objects.requireNonNull(element1, "element1");
+         Objects.requireNonNull(element2, "element2");
+         if (comp == null) {
+diff --git a/src/main/java/org/apache/commons/lang3/time/DurationUtils.java b/src/main/java/org/apache/commons/lang3/time/DurationUtils.java
+index f13dcbc8a..2543f194b 100644
+--- a/src/main/java/org/apache/commons/lang3/time/DurationUtils.java
++++ b/src/main/java/org/apache/commons/lang3/time/DurationUtils.java
+@@ -25,7 +25,7 @@
+ import java.util.Objects;
+ import java.util.concurrent.TimeUnit;
+ 
+-import org.apache.commons.lang3.LongRange;
++import org.apache.commons.lang3.range.LongRange;
+ import org.apache.commons.lang3.ObjectUtils;
+ import org.apache.commons.lang3.StringUtils;
+ import org.apache.commons.lang3.function.FailableBiConsumer;
+@@ -258,7 +258,7 @@ public static int toMillisInt(final Duration duration) {
+         } catch (final ArithmeticException e) {
+             return duration.isNegative() ? Integer.MIN_VALUE : Integer.MAX_VALUE;
+         }
+-        return LONG_TO_INT_RANGE.fit(Long.valueOf(millis)).intValue();
++        return (int) LONG_TO_INT_RANGE.fit(millis);
+     }
+ 
+     /**
+diff --git a/src/test/java/org/apache/commons/lang3/DoubleRangeTest.java b/src/test/java/org/apache/commons/lang3/DoubleRangeTest.java
+index 64c0c2611..d1112567b 100644
+--- a/src/test/java/org/apache/commons/lang3/DoubleRangeTest.java
++++ b/src/test/java/org/apache/commons/lang3/DoubleRangeTest.java
+@@ -27,6 +27,7 @@
+ import static org.junit.jupiter.api.Assertions.assertTrue;
+ 
+ import java.util.Comparator;
++import org.apache.commons.lang3.range.DoubleRange;
+ 
+ import org.junit.jupiter.api.BeforeEach;
+ import org.junit.jupiter.api.Test;
+diff --git a/src/test/java/org/apache/commons/lang3/IntegerRangeTest.java b/src/test/java/org/apache/commons/lang3/IntegerRangeTest.java
+index 005bcaba0..baa7269eb 100644
+--- a/src/test/java/org/apache/commons/lang3/IntegerRangeTest.java
++++ b/src/test/java/org/apache/commons/lang3/IntegerRangeTest.java
+@@ -27,6 +27,7 @@
+ import static org.junit.jupiter.api.Assertions.assertTrue;
+ 
+ import java.util.Comparator;
++import org.apache.commons.lang3.range.IntegerRange;
+ import java.util.stream.IntStream;
+ 
+ import org.junit.jupiter.api.BeforeEach;
+diff --git a/src/test/java/org/apache/commons/lang3/LongRangeTest.java b/src/test/java/org/apache/commons/lang3/LongRangeTest.java
+index 6c644d751..956a071e6 100644
+--- a/src/test/java/org/apache/commons/lang3/LongRangeTest.java
++++ b/src/test/java/org/apache/commons/lang3/LongRangeTest.java
+@@ -27,6 +27,7 @@
+ import static org.junit.jupiter.api.Assertions.assertTrue;
+ 
+ import java.util.Comparator;
++import org.apache.commons.lang3.range.LongRange;
+ import java.util.stream.LongStream;
+ 
+ import org.junit.jupiter.api.BeforeEach;

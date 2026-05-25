@@ -1,0 +1,43 @@
+23-05-2026 13:37:26: Searching classpath folders ...
+DesigniteJava Professional. Version 2.8.3.0
+Copyright (C) 2026 Designite. All rights reserved.
+23-05-2026 13:37:31: Parsing the source code ...
+23-05-2026 13:38:00: Resolving symbols...
+23-05-2026 13:38:02: Computing metrics...
+23-05-2026 13:38:02: Detecting code smells...
+23-05-2026 13:38:11: Exporting analysis results...
+wrapping up ...
+--Analysis summary--
+	Total LOC analyzed: 44299	Number of packages: 13
+	Number of classes: 342	Number of methods: 3519
+-Total architecture smell instances detected-
+	Cyclic dependency: 11	God component: 4
+	Ambiguous interface: 0 	Feature concentration: 8
+	Unstable dependency: 10	Scattered functionality: 37
+	Dense structure: 1
+-Total design smell instances detected-
+	Imperative abstraction: 0	Multifaceted abstraction: 0
+	Unnecessary abstraction: 131	Unutilized abstraction: 106
+	Feature envy: 5	Deficient encapsulation: 20
+	Unexploited encapsulation: 7	Broken modularization: 11
+	Cyclically-dependent modularization: 12	Hub-like modularization: 0
+	Insufficient modularization: 23	Broken hierarchy: 17
+	Cyclic hierarchy: 4	Deep hierarchy: 5
+	Missing hierarchy: 8	Multipath hierarchy: 0
+	Rebellious hierarchy: 0	Wide hierarchy: 1
+-Total testability smell instances detected-
+	Hard-wired dependency: 28	Global state: 65
+	Excessive dependency: 27	Law of Demeter violation: 145
+-Total implementation smell instances detected-
+	Abstract function call from constructor: 2	Complex conditional: 43
+	Complex method: 71	Empty catch clause: 6
+	Long identifier: 0	Long method: 4
+	Long parameter list: 7	Long statement: 77
+	Magic number: 132	Missing default: 3
+-Total test smell instances detected-
+	Assertion roulette: 967	Missing assertion: 50
+	Empty test: 0	Ignored test: 0
+	Constructor initialization: 0	Eager test: 860
+	Exceptional handling: 41	Conditional test logic: 3
+----
+23-05-2026 13:38:26: Done.

@@ -1,0 +1,165 @@
+diff --git a/src/main/java/org/jsoup/safety/Safelist.java b/src/main/java/org/jsoup/safety/Safelist.java
+index 05e5f700..41d49532 100644
+--- a/src/main/java/org/jsoup/safety/Safelist.java
++++ b/src/main/java/org/jsoup/safety/Safelist.java
+@@ -18,8 +18,6 @@ import java.util.Map;
+ import java.util.Objects;
+ import java.util.Set;
+ 
+-import static org.jsoup.internal.Normalizer.lowerCase;
+-
+ 
+ /**
+  Safelists define what HTML (elements and attributes) to allow through a {@link Cleaner}. Everything else is removed.
+@@ -76,6 +74,7 @@ public class Safelist {
+     private final Map<TagName, Set<AttributeKey>> attributes; // tag -> attribute[]. allowed attributes [href] for a tag.
+     private final Map<TagName, Map<AttributeKey, AttributeValue>> enforcedAttributes; // always set these attribute values
+     private final Map<TagName, Map<AttributeKey, Set<Protocol>>> protocols; // allowed URL protocols for attributes
++    private final SafelistProtocols safelistProtocols;
+     private boolean preserveRelativeLinks; // option to preserve relative links
+ 
+     /**
+@@ -218,6 +217,7 @@ public class Safelist {
+         attributes = new HashMap<>();
+         enforcedAttributes = new HashMap<>();
+         protocols = new HashMap<>();
++        safelistProtocols = new SafelistProtocols(protocols);
+         preserveRelativeLinks = false;
+     }
+ 
+@@ -452,20 +452,7 @@ public class Safelist {
+      @return this, for chaining
+      */
+     public Safelist addProtocols(String tag, String attribute, String... protocols) {
+-        Validate.notEmpty(tag);
+-        Validate.notEmpty(attribute);
+-        Validate.notNull(protocols);
+-
+-        TagName tagName = TagName.valueOf(tag);
+-        AttributeKey attrKey = AttributeKey.valueOf(attribute);
+-        Map<AttributeKey, Set<Protocol>> attrMap = this.protocols.computeIfAbsent(tagName, k -> new HashMap<>());
+-        Set<Protocol> protSet = attrMap.computeIfAbsent(attrKey, k -> new HashSet<>());
+-
+-        for (String protocol : protocols) {
+-            Validate.notEmpty(protocol);
+-            Protocol prot = Protocol.valueOf(protocol);
+-            protSet.add(prot);
+-        }
++        safelistProtocols.addProtocols(tag, attribute, protocols);
+         return this;
+     }
+ 
+@@ -482,30 +469,7 @@ public class Safelist {
+      @return this, for chaining
+      */
+     public Safelist removeProtocols(String tag, String attribute, String... removeProtocols) {
+-        Validate.notEmpty(tag);
+-        Validate.notEmpty(attribute);
+-        Validate.notNull(removeProtocols);
+-
+-        TagName tagName = TagName.valueOf(tag);
+-        AttributeKey attr = AttributeKey.valueOf(attribute);
+-
+-        // make sure that what we're removing actually exists; otherwise can open the tag to any data and that can
+-        // be surprising
+-        Validate.isTrue(protocols.containsKey(tagName), "Cannot remove a protocol that is not set.");
+-        Map<AttributeKey, Set<Protocol>> tagProtocols = protocols.get(tagName);
+-        Validate.isTrue(tagProtocols.containsKey(attr), "Cannot remove a protocol that is not set.");
+-
+-        Set<Protocol> attrProtocols = tagProtocols.get(attr);
+-        for (String protocol : removeProtocols) {
+-            Validate.notEmpty(protocol);
+-            attrProtocols.remove(Protocol.valueOf(protocol));
+-        }
+-
+-        if (attrProtocols.isEmpty()) { // Remove protocol set if empty
+-            tagProtocols.remove(attr);
+-            if (tagProtocols.isEmpty()) // Remove entry for tag if empty
+-                protocols.remove(tagName);
+-        }
++        safelistProtocols.removeProtocols(tag, attribute, removeProtocols);
+         return this;
+     }
+ 
+@@ -532,13 +496,7 @@ public class Safelist {
+ 
+         Set<AttributeKey> okSet = attributes.get(tag);
+         if (okSet != null && okSet.contains(key)) {
+-            if (protocols.containsKey(tag)) {
+-                Map<AttributeKey, Set<Protocol>> attrProts = protocols.get(tag);
+-                // ok if not defined protocol; otherwise test
+-                return !attrProts.containsKey(key) || isSafeProtocol(getProtocolValue(el, attr), attrProts.get(key));
+-            } else { // attribute found, no protocols defined, so OK
+-                return true;
+-            }
++            return safelistProtocols.isSafeAttributeProtocol(tag, key, el, attr);
+         }
+         Map<AttributeKey, AttributeValue> enforcedSet = enforcedAttributes.get(tag);
+         if (enforcedSet != null && enforcedSet.containsKey(key)) {
+@@ -550,59 +508,19 @@ public class Safelist {
+         return !tagName.equals(All) && isSafeAttribute(All, el, attr);
+     }
+ 
+-    private String getProtocolValue(Element el, Attribute attr) {
+-        String value = el.absUrl(attr.getKey());
+-        if (value.isEmpty())
+-            value = attr.getValue(); // if it could not be made abs, run as-is to allow custom unknown protocols
+-        return value;
+-    }
+-
+-    private boolean isSafeProtocol(String value, Set<Protocol> protocols) {
+-        for (Protocol protocol : protocols) {
+-            String prot = protocol.toString();
+-
+-            if (prot.equals("#")) { // allows anchor links
+-                if (isValidAnchor(value)) {
+-                    return true;
+-                } else {
+-                    continue;
+-                }
+-            }
+-
+-            prot += ":";
+-
+-            if (lowerCase(value).startsWith(prot)) {
+-                return true;
+-            }
+-        }
+-        return false;
+-    }
+-
+     /**
+      Check if a URL attribute should be normalized to an absolute URL in the cleaned output. Uses the configured
+      protocols for that tag+attribute pair, falling back to {@code :all} only if the tag does not define the
+      attribute.
+      */
+     boolean shouldAbsUrl(String tagName, String attrKey) {
+-        if (preserveRelativeLinks) return false;
+-        return shouldAbsUrl(TagName.valueOf(tagName), AttributeKey.valueOf(attrKey));
+-    }
+-
+-    private boolean shouldAbsUrl(TagName tag, AttributeKey key) {
+-        Set<AttributeKey> allowedAttrs = attributes.get(tag);
+-        if (allowedAttrs != null && allowedAttrs.contains(key)) {
+-            Map<AttributeKey, Set<Protocol>> protocolsByAttr = protocols.get(tag);
+-            return protocolsByAttr != null && protocolsByAttr.containsKey(key);
+-        }
+-
+-        Map<AttributeKey, AttributeValue> enforcedAttrs = enforcedAttributes.get(tag);
+-        if (enforcedAttrs != null && enforcedAttrs.containsKey(key)) return false;
+-
+-        return !tag.equals(AllTag) && shouldAbsUrl(AllTag, key);
+-    }
+-
+-    private static boolean isValidAnchor(String value) {
+-        return value.startsWith("#") && !value.matches(".*\\s.*");
++        return safelistProtocols.shouldAbsUrl(
++            TagName.valueOf(tagName),
++            AttributeKey.valueOf(attrKey),
++            attributes,
++            enforcedAttributes,
++            AllTag,
++            preserveRelativeLinks);
+     }
+ 
+     /**

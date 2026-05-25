@@ -4,4 +4,4 @@ data/repositories
 src/tools/java
 .env
 venv/
-codex/
+codex/data/repositories

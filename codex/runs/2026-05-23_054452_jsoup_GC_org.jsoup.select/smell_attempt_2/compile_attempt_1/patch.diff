@@ -1,0 +1,1270 @@
+diff --git a/src/main/java/org/jsoup/examples/HtmlToPlainText.java b/src/main/java/org/jsoup/examples/HtmlToPlainText.java
+index 9b98ca9e..405917ef 100644
+--- a/src/main/java/org/jsoup/examples/HtmlToPlainText.java
++++ b/src/main/java/org/jsoup/examples/HtmlToPlainText.java
+@@ -9,7 +9,7 @@ import org.jsoup.nodes.Element;
+ import org.jsoup.nodes.Node;
+ import org.jsoup.nodes.TextNode;
+ import org.jsoup.select.Elements;
+-import org.jsoup.select.NodeVisitor;
++import org.jsoup.select.traversal.NodeVisitor;
+ 
+ import java.io.IOException;
+ import java.util.HashSet;
+diff --git a/src/main/java/org/jsoup/helper/W3CDom.java b/src/main/java/org/jsoup/helper/W3CDom.java
+index f4d2150f..b68362b4 100644
+--- a/src/main/java/org/jsoup/helper/W3CDom.java
++++ b/src/main/java/org/jsoup/helper/W3CDom.java
+@@ -5,7 +5,7 @@ import org.jsoup.internal.StringUtil;
+ import org.jsoup.nodes.Attribute;
+ import org.jsoup.parser.HtmlTreeBuilder;
+ import org.jsoup.parser.Parser;
+-import org.jsoup.select.NodeVisitor;
++import org.jsoup.select.traversal.NodeVisitor;
+ import org.jsoup.select.Selector;
+ import org.w3c.dom.Comment;
+ import org.w3c.dom.DOMException;
+diff --git a/src/main/java/org/jsoup/nodes/ElementTextOps.java b/src/main/java/org/jsoup/nodes/ElementTextOps.java
+index 550ca579..c986a08e 100644
+--- a/src/main/java/org/jsoup/nodes/ElementTextOps.java
++++ b/src/main/java/org/jsoup/nodes/ElementTextOps.java
+@@ -3,8 +3,8 @@ package org.jsoup.nodes;
+ import org.jsoup.helper.Validate;
+ import org.jsoup.internal.StringUtil;
+ import org.jsoup.parser.Tag;
+-import org.jsoup.select.NodeFilter;
+-import org.jsoup.select.NodeVisitor;
++import org.jsoup.select.traversal.NodeFilter;
++import org.jsoup.select.traversal.NodeVisitor;
+ import org.jspecify.annotations.Nullable;
+ 
+ import java.util.concurrent.atomic.AtomicBoolean;
+diff --git a/src/main/java/org/jsoup/nodes/ElementTraversalOps.java b/src/main/java/org/jsoup/nodes/ElementTraversalOps.java
+index 63dc5ee1..a0e4ae8c 100644
+--- a/src/main/java/org/jsoup/nodes/ElementTraversalOps.java
++++ b/src/main/java/org/jsoup/nodes/ElementTraversalOps.java
+@@ -1,8 +1,8 @@
+ package org.jsoup.nodes;
+ 
+ import org.jsoup.select.Elements;
+-import org.jsoup.select.NodeFilter;
+-import org.jsoup.select.NodeVisitor;
++import org.jsoup.select.traversal.NodeFilter;
++import org.jsoup.select.traversal.NodeVisitor;
+ 
+ import java.util.Iterator;
+ import java.util.function.Consumer;
+diff --git a/src/main/java/org/jsoup/nodes/Node.java b/src/main/java/org/jsoup/nodes/Node.java
+index d05b9892..599e869f 100644
+--- a/src/main/java/org/jsoup/nodes/Node.java
++++ b/src/main/java/org/jsoup/nodes/Node.java
+@@ -4,8 +4,8 @@ import org.jsoup.helper.Validate;
+ import org.jsoup.internal.QuietAppendable;
+ import org.jsoup.internal.StringUtil;
+ import org.jsoup.parser.ParseSettings;
+-import org.jsoup.select.NodeFilter;
+-import org.jsoup.select.NodeVisitor;
++import org.jsoup.select.traversal.NodeFilter;
++import org.jsoup.select.traversal.NodeVisitor;
+ import org.jspecify.annotations.Nullable;
+ 
+ import java.io.IOException;
+diff --git a/src/main/java/org/jsoup/nodes/NodeIterator.java b/src/main/java/org/jsoup/nodes/NodeIterator.java
+index 77d787d5..b01b87b5 100644
+--- a/src/main/java/org/jsoup/nodes/NodeIterator.java
++++ b/src/main/java/org/jsoup/nodes/NodeIterator.java
+@@ -10,7 +10,7 @@ import java.util.NoSuchElementException;
+  Iterate through a Node and its tree of descendants, in document order, and returns nodes of the specified type. This
+  iterator supports structural changes to the tree during the traversal, such as {@link Node#remove()},
+  {@link Node#replaceWith(Node)}, {@link Node#wrap(String)}, etc.
+- <p>See also the {@link org.jsoup.select.NodeTraversor NodeTraversor} if {@code head} and {@code tail} callbacks are
++ <p>See also the {@link org.jsoup.select.traversal.NodeTraversor NodeTraversor} if {@code head} and {@code tail} callbacks are
+  desired for each node.</p>
+  @since 1.17.1
+  */
+diff --git a/src/main/java/org/jsoup/nodes/Printer.java b/src/main/java/org/jsoup/nodes/Printer.java
+index 6b83fdbf..5e88e292 100644
+--- a/src/main/java/org/jsoup/nodes/Printer.java
++++ b/src/main/java/org/jsoup/nodes/Printer.java
+@@ -4,7 +4,7 @@ import org.jsoup.internal.QuietAppendable;
+ import org.jsoup.internal.StringUtil;
+ import org.jsoup.nodes.Document.OutputSettings;
+ import org.jsoup.parser.Tag;
+-import org.jsoup.select.NodeVisitor;
++import org.jsoup.select.traversal.NodeVisitor;
+ import org.jspecify.annotations.Nullable;
+ 
+ /** Base Printer */
+diff --git a/src/main/java/org/jsoup/parser/StreamParser.java b/src/main/java/org/jsoup/parser/StreamParser.java
+index 2e8827e4..cb8fb5ab 100644
+--- a/src/main/java/org/jsoup/parser/StreamParser.java
++++ b/src/main/java/org/jsoup/parser/StreamParser.java
+@@ -6,7 +6,7 @@ import org.jsoup.nodes.Document;
+ import org.jsoup.nodes.Element;
+ import org.jsoup.nodes.Node;
+ import org.jsoup.select.Evaluator;
+-import org.jsoup.select.NodeVisitor;
++import org.jsoup.select.traversal.NodeVisitor;
+ import org.jsoup.select.Selector;
+ import org.jspecify.annotations.Nullable;
+ 
+diff --git a/src/main/java/org/jsoup/parser/TreeBuilder.java b/src/main/java/org/jsoup/parser/TreeBuilder.java
+index db7069c7..256aa784 100644
+--- a/src/main/java/org/jsoup/parser/TreeBuilder.java
++++ b/src/main/java/org/jsoup/parser/TreeBuilder.java
+@@ -7,7 +7,7 @@ import org.jsoup.nodes.Document;
+ import org.jsoup.nodes.Element;
+ import org.jsoup.nodes.Node;
+ import org.jsoup.nodes.NodeInternals;
+-import org.jsoup.select.NodeVisitor;
++import org.jsoup.select.traversal.NodeVisitor;
+ import org.jspecify.annotations.Nullable;
+ 
+ import java.io.Reader;
+diff --git a/src/main/java/org/jsoup/safety/Cleaner.java b/src/main/java/org/jsoup/safety/Cleaner.java
+index a1c10d31..5b96b6e9 100644
+--- a/src/main/java/org/jsoup/safety/Cleaner.java
++++ b/src/main/java/org/jsoup/safety/Cleaner.java
+@@ -12,7 +12,7 @@ import org.jsoup.nodes.Range;
+ import org.jsoup.nodes.TextNode;
+ import org.jsoup.parser.ParseErrorList;
+ import org.jsoup.parser.Parser;
+-import org.jsoup.select.NodeVisitor;
++import org.jsoup.select.traversal.NodeVisitor;
+ 
+ import java.util.List;
+ 
+diff --git a/src/main/java/org/jsoup/select/CombiningEvaluator.java b/src/main/java/org/jsoup/select/CombiningEvaluator.java
+deleted file mode 100644
+index 0c8c7d5b..00000000
+--- a/src/main/java/org/jsoup/select/CombiningEvaluator.java
++++ /dev/null
+@@ -1,160 +0,0 @@
+-package org.jsoup.select;
+-
+-import org.jsoup.internal.StringUtil;
+-import org.jsoup.nodes.Element;
+-import org.jsoup.nodes.LeafNode;
+-import org.jsoup.nodes.Node;
+-import org.jspecify.annotations.Nullable;
+-
+-import java.util.ArrayList;
+-import java.util.Arrays;
+-import java.util.Collection;
+-import java.util.Comparator;
+-import java.util.List;
+-
+-/**
+- * Base combining (and, or) evaluator.
+- */
+-public abstract class CombiningEvaluator extends Evaluator {
+-    final ArrayList<Evaluator> evaluators; // maintain original order so that #toString() is sensible
+-    final List<Evaluator> sortedEvaluators; // cost ascending order
+-    int num = 0;
+-    int cost = 0;
+-    boolean wantsNodes;
+-
+-    CombiningEvaluator() {
+-        super();
+-        evaluators = new ArrayList<>();
+-        sortedEvaluators = new ArrayList<>();
+-    }
+-
+-    CombiningEvaluator(Collection<Evaluator> evaluators) {
+-        this();
+-        this.evaluators.addAll(evaluators);
+-        updateEvaluators();
+-    }
+-
+-    public void add(Evaluator e) {
+-        evaluators.add(e);
+-        updateEvaluators();
+-    }
+-
+-    @Override protected void reset() {
+-        for (Evaluator evaluator : evaluators) {
+-            evaluator.reset();
+-        }
+-        super.reset();
+-    }
+-
+-    @Override protected int cost() {
+-        return cost;
+-    }
+-
+-    @Override
+-    boolean wantsNodes() {
+-        return wantsNodes;
+-    }
+-
+-    void updateEvaluators() {
+-        // used so we don't need to bash on size() for every match test
+-        num = evaluators.size();
+-
+-        // sort the evaluators by lowest cost first, to optimize the evaluation order
+-        cost = 0;
+-        for (Evaluator evaluator : evaluators) {
+-            cost += evaluator.cost();
+-        }
+-        sortedEvaluators.clear();
+-        sortedEvaluators.addAll(evaluators);
+-        sortedEvaluators.sort(Comparator.comparingInt(Evaluator::cost));
+-
+-        // any want nodes?
+-        for (Evaluator evaluator : evaluators) {
+-            if (evaluator.wantsNodes()) {
+-                wantsNodes = true;
+-                break;
+-            }
+-        }
+-    }
+-
+-    public static final class And extends CombiningEvaluator {
+-        public And(Collection<Evaluator> evaluators) {
+-            super(evaluators);
+-        }
+-
+-        And(Evaluator... evaluators) {
+-            this(Arrays.asList(evaluators));
+-        }
+-
+-        @Override
+-        public boolean matches(Element root, Element el) {
+-            for (int i = 0; i < num; i++) {
+-                Evaluator eval = sortedEvaluators.get(i);
+-                if (!eval.matches(root, el))
+-                    return false;
+-            }
+-            return true;
+-        }
+-
+-        @Override
+-        public boolean matches(Element root, LeafNode leaf) {
+-            for (int i = 0; i < num; i++) {
+-                Evaluator eval = sortedEvaluators.get(i);
+-                if (!eval.matches(root, leaf))
+-                    return false;
+-            }
+-            return true;
+-        }
+-
+-        @Override
+-        public String toString() {
+-            return StringUtil.join(evaluators, "");
+-        }
+-    }
+-
+-    public static final class Or extends CombiningEvaluator {
+-        /**
+-         * Create a new Or evaluator. The initial evaluators are ANDed together and used as the first clause of the OR.
+-         * @param evaluators initial OR clause (these are wrapped into an AND evaluator).
+-         */
+-        public Or(Collection<Evaluator> evaluators) {
+-            super();
+-            if (num > 1)
+-                this.evaluators.add(new And(evaluators));
+-            else // 0 or 1
+-                this.evaluators.addAll(evaluators);
+-            updateEvaluators();
+-        }
+-
+-        Or(Evaluator... evaluators) { this(Arrays.asList(evaluators)); }
+-
+-        Or() {
+-            super();
+-        }
+-
+-        @Override
+-        public boolean matches(Element root, Element element) {
+-            for (int i = 0; i < num; i++) {
+-                Evaluator eval = sortedEvaluators.get(i);
+-                if (eval.matches(root, element))
+-                    return true;
+-            }
+-            return false;
+-        }
+-
+-        @Override
+-        public boolean matches(Element root, LeafNode leaf) {
+-            for (int i = 0; i < num; i++) {
+-                Evaluator eval = sortedEvaluators.get(i);
+-                if (eval.matches(root, leaf))
+-                    return true;
+-            }
+-            return false;
+-        }
+-
+-        @Override
+-        public String toString() {
+-            return StringUtil.join(evaluators, ", ");
+-        }
+-    }
+-}
+diff --git a/src/main/java/org/jsoup/select/Elements.java b/src/main/java/org/jsoup/select/Elements.java
+index e84e2a0e..739c9285 100644
+--- a/src/main/java/org/jsoup/select/Elements.java
++++ b/src/main/java/org/jsoup/select/Elements.java
+@@ -8,6 +8,9 @@ import org.jsoup.nodes.Element;
+ import org.jsoup.nodes.FormElement;
+ import org.jsoup.nodes.Node;
+ import org.jsoup.nodes.TextNode;
++import org.jsoup.select.traversal.NodeFilter;
++import org.jsoup.select.traversal.NodeTraversor;
++import org.jsoup.select.traversal.NodeVisitor;
+ import org.jspecify.annotations.Nullable;
+ 
+ import java.util.ArrayList;
+diff --git a/src/main/java/org/jsoup/select/Evaluator.java b/src/main/java/org/jsoup/select/Evaluator.java
+index f3b6a353..f8f7238b 100644
+--- a/src/main/java/org/jsoup/select/Evaluator.java
++++ b/src/main/java/org/jsoup/select/Evaluator.java
+@@ -55,7 +55,7 @@ public abstract class Evaluator {
+      */
+     public abstract boolean matches(Element root, Element element);
+ 
+-    final boolean matches(Element root, Node node) {
++    public final boolean matches(Element root, Node node) {
+         if (node instanceof Element) {
+             return matches(root, (Element) node);
+         } else if (node instanceof LeafNode && wantsNodes()) {
+@@ -64,11 +64,11 @@ public abstract class Evaluator {
+         return false;
+     }
+ 
+-    boolean matches(Element root, LeafNode leafNode) {
++    public boolean matches(Element root, LeafNode leafNode) {
+         return false;
+     }
+ 
+-    boolean wantsNodes() {
++    public boolean wantsNodes() {
+         return false;
+     }
+ 
+@@ -78,6 +78,10 @@ public abstract class Evaluator {
+     protected void reset() {
+     }
+ 
++    public final void resetState() {
++        reset();
++    }
++
+     /**
+      A relative evaluator cost function. During evaluation, Evaluators are sorted by ascending cost as an optimization.
+      * @return the relative cost of this Evaluator
+@@ -86,6 +90,10 @@ public abstract class Evaluator {
+         return 5; // a nominal default cost
+     }
+ 
++    public final int evalCost() {
++        return cost();
++    }
++
+     /**
+      * Evaluator for tag name
+      */
+diff --git a/src/main/java/org/jsoup/select/NodeEvaluator.java b/src/main/java/org/jsoup/select/NodeEvaluator.java
+index 6ceff07c..11cf70aa 100644
+--- a/src/main/java/org/jsoup/select/NodeEvaluator.java
++++ b/src/main/java/org/jsoup/select/NodeEvaluator.java
+@@ -16,13 +16,13 @@ abstract class NodeEvaluator extends Evaluator {
+         return evaluateMatch(element);
+     }
+ 
+-    @Override boolean matches(Element root, LeafNode leaf) {
++    @Override public boolean matches(Element root, LeafNode leaf) {
+         return evaluateMatch(leaf);
+     }
+ 
+     abstract boolean evaluateMatch(Node node);
+     
+-    @Override boolean wantsNodes() {
++    @Override public boolean wantsNodes() {
+         return true;
+     }
+ 
+diff --git a/src/main/java/org/jsoup/select/NodeFilter.java b/src/main/java/org/jsoup/select/NodeFilter.java
+deleted file mode 100644
+index 3948a579..00000000
+--- a/src/main/java/org/jsoup/select/NodeFilter.java
++++ /dev/null
+@@ -1,69 +0,0 @@
+-package org.jsoup.select;
+-
+-import org.jsoup.nodes.Node;
+-
+-/**
+- A controllable Node visitor interface. Execute via {@link #traverse(Node)}.
+- <p>
+- This interface provides two methods, {@code head} and {@code tail}. The head method is called when a node is first seen,
+- and the tail method when all that node's children have been visited.
+- </p>
+- <p>
+- For each visited node, the resulting action may be:
+- <ul>
+- <li>continue ({@link FilterResult#CONTINUE}),</li>
+- <li>skip all children ({@link FilterResult#SKIP_CHILDREN}),</li>
+- <li>skip node entirely ({@link FilterResult#SKIP_ENTIRELY}),</li>
+- <li>remove the subtree ({@link FilterResult#REMOVE}),</li>
+- <li>interrupt the iteration and return ({@link FilterResult#STOP}).</li>
+- </ul>
+- The difference between {@link FilterResult#SKIP_CHILDREN} and {@link FilterResult#SKIP_ENTIRELY} is that the first
+- will invoke {@link NodeFilter#tail(Node, int)} on the node, while the latter will not.
+- Within {@link NodeFilter#tail(Node, int)}, both are equivalent to {@link FilterResult#CONTINUE}.
+- </p>
+- */
+-public interface NodeFilter {
+-    /**
+-     Traversal action.
+-     */
+-    enum FilterResult {
+-        /** Continue processing the tree */
+-        CONTINUE,
+-        /** Skip this node's children, and call {@link NodeFilter#tail(Node, int)} on this node next. */
+-        SKIP_CHILDREN,
+-        /** Skip this node's children, and do not call {@link NodeFilter#tail(Node, int)}. */
+-        SKIP_ENTIRELY,
+-        /** Remove the node and its children */
+-        REMOVE,
+-        /** Stop processing */
+-        STOP
+-    }
+-
+-    /**
+-     * Callback for when a node is first visited.
+-     * @param node the node being visited.
+-     * @param depth the depth of the node, relative to the root node. E.g., the root node has depth 0, and a child node of that will have depth 1.
+-     * @return Traversal action
+-     */
+-    FilterResult head(Node node, int depth);
+-
+-    /**
+-     * Callback for when a node is last visited, after all of its descendants have been visited.
+-     * <p>This method has a default implementation to return {@link FilterResult#CONTINUE}.</p>
+-     * @param node the node being visited.
+-     * @param depth the depth of the node, relative to the root node. E.g., the root node has depth 0, and a child node of that will have depth 1.
+-     * @return Traversal action
+-     */
+-    default FilterResult tail(Node node, int depth) {
+-        return FilterResult.CONTINUE;
+-    }
+-
+-    /**
+-     Run a depth-first controlled traverse of the root and all of its descendants.
+-     @param root the initial node point to traverse.
+-     @since 1.21.1
+-     */
+-    default void traverse(Node root) {
+-        NodeTraversor.filter(this, root);
+-    }
+-}
+diff --git a/src/main/java/org/jsoup/select/NodeTraversor.java b/src/main/java/org/jsoup/select/NodeTraversor.java
+deleted file mode 100644
+index d682a620..00000000
+--- a/src/main/java/org/jsoup/select/NodeTraversor.java
++++ /dev/null
+@@ -1,175 +0,0 @@
+-package org.jsoup.select;
+-
+-import org.jsoup.helper.Validate;
+-import org.jsoup.nodes.Element;
+-import org.jsoup.nodes.Node;
+-import org.jsoup.select.NodeFilter.FilterResult;
+-
+-/**
+- A depth-first node traversor. Use to walk through all nodes under and including the specified root node, in document
+- order. The {@link NodeVisitor#head(Node, int)} and {@link NodeVisitor#tail(Node, int)} methods will be called for
+- each node.
+- <p>During the <code>head()</code> visit, DOM structural changes around the node currently being visited are
+- supported, including {@link Node#replaceWith(Node)} and {@link Node#remove()}. See
+- {@link NodeVisitor#head(Node, int) head()} for the traversal contract after mutation. Other non-structural node
+- changes are also supported.</p>
+- <p>DOM structural changes to the current node are not supported during the <code>tail()</code> visit.</p>
+- */
+-public class NodeTraversor {
+-    // cursor state
+-    private static final byte VisitHead = 0;
+-    private static final byte AfterHead = 1;
+-    private static final byte VisitTail = 2;
+-
+-    /**
+-     Run a depth-first traverse of the root and all of its descendants.
+-     @param visitor Node visitor.
+-     @param root the initial node point to traverse.
+-     @see NodeVisitor#traverse(Node root)
+-     */
+-    public static void traverse(NodeVisitor visitor, Node root) {
+-        Validate.notNull(visitor);
+-        Validate.notNull(root);
+-        Node node = root;
+-        final Node rootNext = root.nextSibling(); // don't traverse siblings beyond the original root
+-        int depth = 0;
+-        byte state = VisitHead;
+-
+-        while (true) {
+-            if (state == VisitHead) {
+-                // snapshot the current cursor position so we can recover if head() structurally changes it:
+-                Node parent   = node.parentNode();
+-                Node next     = node.nextSibling();
+-                int  sibIndex = parent != null ? node.siblingIndex() : 0;
+-
+-                visitor.head(node, depth);
+-
+-                // any structural changes?
+-                if (parent != null && node.parentNode() != parent) { // removed / replaced / moved
+-                    Node occupant = sibIndex < parent.childNodeSize() ? parent.childNode(sibIndex) : null;
+-                    // ^^ the node now at this node's former position
+-                    Node boundary = depth == 0 ? rootNext : next;   // don't advance beyond this node when resuming
+-                    if (occupant != null && occupant != boundary) {
+-                        node = occupant;
+-                        state = AfterHead;                          // continue from that slot without re-heading it
+-                    } else if (depth == 0) {                        // root detached or replaced
+-                        break;
+-                    } else if (next != null && next.parentNode() == parent) {
+-                        node = next;                                // old slot is empty or shifted to the original next, visit
+-                    } else {                                        // removed last child; tail the parent next
+-                        node = parent;
+-                        depth--;
+-                        state = VisitTail;
+-                    }
+-                } else {
+-                    state = AfterHead;
+-                }
+-                continue;                                           // next loop handles the updated node/state
+-            }
+-
+-            if (state == AfterHead && node.childNodeSize() > 0) { // descend into current children
+-                node = node.childNode(0);
+-                depth++;
+-                state = VisitHead;
+-                continue;
+-            }
+-
+-            visitor.tail(node, depth);
+-
+-            Node next = node.nextSibling();
+-            if (depth == 0) {
+-                if (next == null || next == rootNext) break; // done with the original root range
+-                node = next;
+-                state = VisitHead;
+-            } else if (next != null) { // traverse siblings
+-                node = next;
+-                state = VisitHead;
+-            } else {                // no siblings left, ascend
+-                node = node.parentNode();
+-                depth--;
+-                state = VisitTail;
+-            }
+-        }
+-    }
+-
+-    /**
+-     Run a depth-first traversal of each Element.
+-     @param visitor Node visitor.
+-     @param elements Elements to traverse.
+-     */
+-    public static void traverse(NodeVisitor visitor, Elements elements) {
+-        Validate.notNull(visitor);
+-        Validate.notNull(elements);
+-        for (Element el : elements)
+-            traverse(visitor, el);
+-    }
+-
+-    /**
+-     Run a depth-first controllable traversal of the root and all of its descendants.
+-     @param filter NodeFilter visitor.
+-     @param root the root node point to traverse.
+-     @return The filter result of the root node, or {@link FilterResult#STOP}.
+-
+-     @see NodeFilter
+-     */
+-    public static FilterResult filter(NodeFilter filter, Node root) {
+-        Node node = root;
+-        int depth = 0;
+-
+-        while (node != null) {
+-            FilterResult result = filter.head(node, depth);
+-            if (result == FilterResult.STOP)
+-                return result;
+-            // Descend into child nodes:
+-            if (result == FilterResult.CONTINUE && node.childNodeSize() > 0) {
+-                node = node.childNode(0);
+-                ++depth;
+-                continue;
+-            }
+-            // No siblings, move upwards:
+-            while (true) {
+-                assert node != null; // depth > 0, so has parent
+-                if (!(node.nextSibling() == null && depth > 0)) break;
+-                // 'tail' current node:
+-                if (result == FilterResult.CONTINUE || result == FilterResult.SKIP_CHILDREN) {
+-                    result = filter.tail(node, depth);
+-                    if (result == FilterResult.STOP)
+-                        return result;
+-                }
+-                Node prev = node; // In case we need to remove it below.
+-                node = node.parentNode();
+-                depth--;
+-                if (result == FilterResult.REMOVE)
+-                    prev.remove(); // Remove AFTER finding parent.
+-                result = FilterResult.CONTINUE; // Parent was not pruned.
+-            }
+-            // 'tail' current node, then proceed with siblings:
+-            if (result == FilterResult.CONTINUE || result == FilterResult.SKIP_CHILDREN) {
+-                result = filter.tail(node, depth);
+-                if (result == FilterResult.STOP)
+-                    return result;
+-            }
+-            if (node == root)
+-                return result;
+-            Node prev = node; // In case we need to remove it below.
+-            node = node.nextSibling();
+-            if (result == FilterResult.REMOVE)
+-                prev.remove(); // Remove AFTER finding sibling.
+-        }
+-        // root == null?
+-        return FilterResult.CONTINUE;
+-    }
+-
+-    /**
+-     Run a depth-first controllable traversal of each Element.
+-     @param filter NodeFilter visitor.
+-     @see NodeFilter
+-     */
+-    public static void filter(NodeFilter filter, Elements elements) {
+-        Validate.notNull(filter);
+-        Validate.notNull(elements);
+-        for (Element el : elements)
+-            if (filter(filter, el) == FilterResult.STOP)
+-                break;
+-    }
+-}
+diff --git a/src/main/java/org/jsoup/select/NodeVisitor.java b/src/main/java/org/jsoup/select/NodeVisitor.java
+deleted file mode 100644
+index 479d79be..00000000
+--- a/src/main/java/org/jsoup/select/NodeVisitor.java
++++ /dev/null
+@@ -1,75 +0,0 @@
+-package org.jsoup.select;
+-
+-import org.jsoup.nodes.Element;
+-import org.jsoup.nodes.Node;
+-
+-/**
+- Node visitor interface, used to walk the DOM and visit each node. Execute via {@link #traverse(Node)} or
+- {@link Node#traverse(NodeVisitor)}. The traversal is depth-first.
+- <p>
+- This interface provides two methods, {@link #head} and {@link #tail}. The head method is called when a node is first
+- seen, and the tail method when all that node's children have been visited. As an example, {@code head} can be used to
+- emit a start tag for a node, and {@code tail} to emit the end tag. The {@code tail} method defaults to a no-op, so
+- this interface can be used as a {@link FunctionalInterface}, with {@code head} as its single abstract method.
+- </p>
+- <p><b>Example:</b></p>
+- <pre><code>
+- doc.body().traverse((node, depth) -&gt; {
+-     switch (node) {
+-         case Element el     -&gt; print(el.tag() + ": " + el.ownText());
+-         case DataNode data  -&gt; print("Data: " + data.getWholeData());
+-         default             -&gt; print(node.nodeName() + " at depth " + depth);
+-     }
+- });
+- </code></pre>
+- */
+-@FunctionalInterface
+-public interface NodeVisitor {
+-    /**
+-     Callback for when a node is first visited.
+-     <p>The node may be modified (for example via {@link Node#attr(String)}), removed with
+-     {@link Node#remove()}, or replaced with {@link Node#replaceWith(Node)}. If the node is an
+-     {@link Element}, you may cast it and access those methods.</p>
+-     <p>Traversal uses a forward cursor. After {@code head()} completes:</p>
+-     <ul>
+-     <li>If the current node is still attached, traversal continues into its current children and then its following
+-     siblings. Nodes inserted before the current node are not visited.</li>
+-     <li>If the current node was detached and another node now occupies its former sibling position, the node now at
+-     that position is not passed to {@code head()} again. Traversal continues from there: its children are visited,
+-     then the node is passed to {@link #tail(Node, int)}, then later siblings are visited.</li>
+-     <li>If the current node was detached and no node occupies its former sibling position, the current node is not
+-     passed to {@code tail()}, and traversal resumes at the node that originally followed it.</li>
+-     </ul>
+-     <p>Traversal never advances outside the original root subtree. If the traversal root is detached during
+-     {@code head()}, traversal stops at the original root boundary.</p>
+-
+-     @param node the node being visited.
+-     @param depth the depth of the node, relative to the root node. E.g., the root node has depth 0, and a child node
+-     of that will have depth 1.
+-     */
+-    void head(Node node, int depth);
+-
+-    /**
+-     Callback for when a node is last visited, after all of its descendants have been visited.
+-     <p>This method defaults to a no-op.</p>
+-     <p>The node passed to {@code tail()} is the node at the current traversal position when the subtree completes.
+-     If {@code head()} replaced the original node, this may be the replacement node instead.</p>
+-     <p>Structural changes to the current node are not supported during {@code tail()}.</p>
+-
+-     @param node the node being visited.
+-     @param depth the depth of the node, relative to the root node. E.g., the root node has depth 0, and a child node
+-     of that will have depth 1.
+-     */
+-    default void tail(Node node, int depth) {
+-        // no-op by default, to allow just specifying the head() method
+-    }
+-
+-    /**
+-     Run a depth-first traverse of the root and all of its descendants.
+-     @param root the initial node point to traverse.
+-     @since 1.21.1
+-     */
+-    default void traverse(Node root) {
+-        NodeTraversor.traverse(this, root);
+-    }
+-}
+diff --git a/src/main/java/org/jsoup/select/QueryParser.java b/src/main/java/org/jsoup/select/QueryParser.java
+index 83b32232..b7959b69 100644
+--- a/src/main/java/org/jsoup/select/QueryParser.java
++++ b/src/main/java/org/jsoup/select/QueryParser.java
+@@ -10,13 +10,15 @@ import org.jsoup.nodes.LeafNode;
+ import org.jsoup.nodes.Node;
+ import org.jsoup.nodes.TextNode;
+ import org.jsoup.parser.TokenQueue;
++import org.jsoup.select.evaluator.CombiningEvaluator;
++import org.jsoup.select.evaluator.StructuralEvaluator;
+ import org.jspecify.annotations.Nullable;
+ 
+ import java.util.function.Function;
+ import java.util.regex.Matcher;
+ import java.util.regex.Pattern;
+ 
+-import static org.jsoup.select.StructuralEvaluator.ImmediateParentRun;
++import static org.jsoup.select.evaluator.StructuralEvaluator.ImmediateParentRun;
+ import static org.jsoup.internal.Normalizer.normalize;
+ 
+ /**
+diff --git a/src/main/java/org/jsoup/select/StructuralEvaluator.java b/src/main/java/org/jsoup/select/StructuralEvaluator.java
+deleted file mode 100644
+index 6998bf82..00000000
+--- a/src/main/java/org/jsoup/select/StructuralEvaluator.java
++++ /dev/null
+@@ -1,314 +0,0 @@
+-package org.jsoup.select;
+-
+-import org.jsoup.internal.SoftPool;
+-import org.jsoup.internal.StringUtil;
+-import org.jsoup.nodes.Element;
+-import org.jsoup.nodes.LeafNode;
+-import org.jsoup.nodes.Node;
+-import org.jsoup.nodes.NodeIterator;
+-import org.jsoup.nodes.TextNode;
+-
+-import java.util.ArrayList;
+-import java.util.Map;
+-import java.util.WeakHashMap;
+-
+-/**
+- * Base structural evaluator.
+- */
+-abstract class StructuralEvaluator extends Evaluator {
+-    final Evaluator evaluator;
+-    boolean wantsNodes; // if the evaluator requested nodes, not just elements
+-
+-    public StructuralEvaluator(Evaluator evaluator) {
+-        this.evaluator = evaluator;
+-        wantsNodes = evaluator.wantsNodes();
+-    }
+-
+-    @Override
+-    boolean wantsNodes() {
+-        return wantsNodes;
+-    }
+-
+-    // Memoize inner matches, to save repeated re-evaluations of parent, sibling etc.
+-    // root + element: Boolean matches. ThreadLocal in case the Evaluator is compiled then reused across multi threads
+-    final ThreadLocal<Map<Node, Map<Node, Boolean>>> threadMemo = ThreadLocal.withInitial(WeakHashMap::new);
+-
+-    boolean memoMatches(final Element root, final Node node) {
+-        Map<Node, Map<Node, Boolean>> rootMemo = threadMemo.get();
+-        Map<Node, Boolean> memo = rootMemo.computeIfAbsent(root, r -> new WeakHashMap<>());
+-        return memo.computeIfAbsent(node, test -> evaluator.matches(root, test));
+-    }
+-
+-    @Override protected void reset() {
+-        threadMemo.remove();
+-        evaluator.reset();
+-        super.reset();
+-    }
+-
+-    @Override
+-    public boolean matches(Element root, Element element) {
+-        return evaluateMatch(root, element);
+-    }
+-
+-    @Override
+-    boolean matches(Element root, LeafNode leafNode) {
+-        return evaluateMatch(root, leafNode);
+-    }
+-
+-    abstract boolean evaluateMatch(Element root, Node node);
+-
+-    static class Root extends Evaluator {
+-        @Override
+-        public boolean matches(Element root, Element element) {
+-            return root == element;
+-        }
+-
+-        @Override protected int cost() {
+-            return 1;
+-        }
+-
+-        @Override public String toString() {
+-            return ">";
+-        }
+-    }
+-
+-    static class Has extends StructuralEvaluator {
+-        static final SoftPool<NodeIterator<Node>> NodeIterPool =
+-            new SoftPool<>(() -> new NodeIterator<>(new TextNode(""), Node.class));
+-        // the element here is just a placeholder so this can be final - gets set in restart()
+-
+-        private final boolean checkSiblings; // evaluating against siblings (or children)
+-
+-        public Has(Evaluator evaluator) {
+-            super(evaluator);
+-            checkSiblings = evalWantsSiblings(evaluator);
+-        }
+-
+-        @Override public boolean matches(Element root, Element element) {
+-            if (checkSiblings) { // evaluating against siblings
+-                for (Element sib = element.firstElementSibling(); sib != null; sib = sib.nextElementSibling()) {
+-                    if (sib != element && evaluator.matches(element, sib)) { // don't match against self
+-                        return true;
+-                    }
+-                }
+-            }
+-            // otherwise we only want to match children (or below), and not the input element. And we want to minimize GCs so reusing the Iterator obj
+-            NodeIterator<Node> it = NodeIterPool.borrow();
+-            it.restart(element);
+-            try {
+-                while (it.hasNext()) {
+-                    Node node = it.next();
+-                    if (node == element) continue; // don't match self, only descendants
+-                    if (evaluator.matches(element, node)) {
+-                        return true;
+-                    }
+-                }
+-            } finally {
+-                NodeIterPool.release(it);
+-            }
+-            return false;
+-        }
+-
+-        @Override
+-        boolean evaluateMatch(Element root, Node node) {
+-            return false; // unused; :has(::comment)) goes via implicit root combinator
+-        }
+-
+-        /* Test if the :has sub-clause wants sibling elements (vs nested elements) - will be a Combining eval */
+-        private static boolean evalWantsSiblings(Evaluator eval) {
+-            if (eval instanceof CombiningEvaluator) {
+-                CombiningEvaluator ce = (CombiningEvaluator) eval;
+-                for (Evaluator innerEval : ce.evaluators) {
+-                    if (innerEval instanceof PreviousSibling || innerEval instanceof ImmediatePreviousSibling)
+-                        return true;
+-                }
+-            }
+-            return false;
+-        }
+-
+-        @Override protected int cost() {
+-            return 10 * evaluator.cost();
+-        }
+-
+-        @Override
+-        public String toString() {
+-            return String.format(":has(%s)", evaluator);
+-        }
+-    }
+-
+-    /** Implements the :is(sub-query) pseudo-selector */
+-    static class Is extends StructuralEvaluator {
+-        public Is(Evaluator evaluator) {
+-            super(evaluator);
+-        }
+-
+-        @Override
+-        boolean evaluateMatch(Element root, Node node) {
+-            return evaluator.matches(root, node);
+-        }
+-
+-        @Override protected int cost() {
+-            return 2 + evaluator.cost();
+-        }
+-
+-        @Override
+-        public String toString() {
+-            return String.format(":is(%s)", evaluator);
+-        }
+-    }
+-
+-    static class Not extends StructuralEvaluator {
+-        public Not(Evaluator evaluator) {
+-            super(evaluator);
+-        }
+-
+-        @Override
+-        boolean evaluateMatch(Element root, Node node) {
+-            return !memoMatches(root, node);
+-        }
+-
+-        @Override protected int cost() {
+-            return 2 + evaluator.cost();
+-        }
+-
+-        @Override
+-        public String toString() {
+-            return String.format(":not(%s)", evaluator);
+-        }
+-    }
+-
+-    /**
+-     Any Ancestor (i.e., ascending parent chain.).
+-     */
+-    static class Ancestor extends StructuralEvaluator {
+-        public Ancestor(Evaluator evaluator) {
+-            super(evaluator);
+-        }
+-
+-        @Override
+-        boolean evaluateMatch(Element root, Node node) {
+-            if (root == node)
+-                return false;
+-
+-            for (Node parent = node.parent(); parent != null; parent = parent.parent()) {
+-                if (memoMatches(root, parent))
+-                    return true;
+-                if (parent == root)
+-                    break;
+-            }
+-            return false;
+-        }
+-
+-        @Override
+-        protected int cost() {
+-            return 8 * evaluator.cost(); // probably lower than has(), but still significant, depending on doc and el depth.
+-        }
+-
+-        @Override
+-        public String toString() {
+-            return String.format("%s ", evaluator);
+-        }
+-    }
+-
+-    /**
+-     Holds a list of evaluators for one > two > three immediate parent matches, and the final direct evaluator under
+-     test. To match, these are effectively ANDed together, starting from the last, matching up to the first.
+-     */
+-    static class ImmediateParentRun extends StructuralEvaluator {
+-        final ArrayList<Evaluator> evaluators = new ArrayList<>();
+-        int cost = 2;
+-
+-        public ImmediateParentRun(Evaluator evaluator) {
+-            super(evaluator);
+-            evaluators.add(evaluator);
+-            cost += evaluator.cost();
+-        }
+-
+-        void add(Evaluator evaluator) {
+-            evaluators.add(evaluator);
+-            cost += evaluator.cost();
+-            wantsNodes |= evaluator.wantsNodes();
+-        }
+-
+-        @Override boolean evaluateMatch(Element root, Node node) {
+-            if (node == root)
+-                return false; // cannot match as the second eval (first parent test) would be above the root
+-
+-            for (int i = evaluators.size() -1; i >= 0; --i) {
+-                if (node == null)
+-                    return false;
+-                Evaluator eval = evaluators.get(i);
+-                if (!eval.matches(root, node))
+-                    return false;
+-                node = node.parent();
+-            }
+-            return true;
+-        }
+-
+-        @Override protected int cost() {
+-            return cost;
+-        }
+-
+-        @Override
+-        protected void reset() {
+-            for (Evaluator evaluator : evaluators) {
+-                evaluator.reset();
+-            }
+-            super.reset();
+-        }
+-
+-        @Override
+-        public String toString() {
+-            return StringUtil.join(evaluators, " > ");
+-        }
+-    }
+-
+-    static class PreviousSibling extends StructuralEvaluator {
+-        public PreviousSibling(Evaluator evaluator) {
+-            super(evaluator);
+-        }
+-
+-        // matches any previous sibling, so can be same in Element only or wantsNodes context
+-        @Override boolean evaluateMatch(Element root, Node node) {
+-            if (root == node) return false;
+-
+-            for (Node sib = node.firstSibling(); sib != null; sib = sib.nextSibling()) {
+-                if (sib == node) break;
+-                if (memoMatches(root, sib)) return true;
+-            }
+-
+-            return false;
+-        }
+-
+-        @Override protected int cost() {
+-            return 3 * evaluator.cost();
+-        }
+-
+-        @Override
+-        public String toString() {
+-            return String.format("%s ~ ", evaluator);
+-        }
+-    }
+-
+-    static class ImmediatePreviousSibling extends StructuralEvaluator {
+-        public ImmediatePreviousSibling(Evaluator evaluator) {
+-            super(evaluator);
+-        }
+-
+-        @Override boolean evaluateMatch(Element root, Node node) {
+-            if (root == node) return false;
+-
+-            Node prev = wantsNodes ? node.previousSibling() : node.previousElementSibling();
+-            return prev != null && memoMatches(root, prev);
+-        }
+-
+-        @Override protected int cost() {
+-            return 2 + evaluator.cost();
+-        }
+-
+-        @Override
+-        public String toString() {
+-            return String.format("%s + ", evaluator);
+-        }
+-    }
+-}
+diff --git a/src/test/java/org/jsoup/nodes/ElementTest.java b/src/test/java/org/jsoup/nodes/ElementTest.java
+index b4eab867..878bf244 100644
+--- a/src/test/java/org/jsoup/nodes/ElementTest.java
++++ b/src/test/java/org/jsoup/nodes/ElementTest.java
+@@ -10,8 +10,8 @@ import org.jsoup.parser.Tag;
+ import org.jsoup.parser.TagSet;
+ import org.jsoup.select.Elements;
+ import org.jsoup.select.Evaluator;
+-import org.jsoup.select.NodeFilter;
+-import org.jsoup.select.NodeVisitor;
++import org.jsoup.select.traversal.NodeFilter;
++import org.jsoup.select.traversal.NodeVisitor;
+ import org.jsoup.select.QueryParser;
+ import org.junit.jupiter.api.Test;
+ import org.junit.jupiter.params.ParameterizedTest;
+diff --git a/src/test/java/org/jsoup/nodes/LeafNodeTest.java b/src/test/java/org/jsoup/nodes/LeafNodeTest.java
+index a0d735d8..75538b19 100644
+--- a/src/test/java/org/jsoup/nodes/LeafNodeTest.java
++++ b/src/test/java/org/jsoup/nodes/LeafNodeTest.java
+@@ -2,7 +2,7 @@ package org.jsoup.nodes;
+ 
+ import org.jsoup.Jsoup;
+ import org.jsoup.select.Elements;
+-import org.jsoup.select.NodeFilter;
++import org.jsoup.select.traversal.NodeFilter;
+ import org.junit.jupiter.api.Test;
+ 
+ import static org.junit.jupiter.api.Assertions.*;
+diff --git a/src/test/java/org/jsoup/nodes/NodeTest.java b/src/test/java/org/jsoup/nodes/NodeTest.java
+index 51b4f71c..b0356a52 100644
+--- a/src/test/java/org/jsoup/nodes/NodeTest.java
++++ b/src/test/java/org/jsoup/nodes/NodeTest.java
+@@ -4,7 +4,7 @@ import org.jsoup.Jsoup;
+ import org.jsoup.TextUtil;
+ import org.jsoup.parser.Tag;
+ import org.jsoup.select.Elements;
+-import org.jsoup.select.NodeVisitor;
++import org.jsoup.select.traversal.NodeVisitor;
+ import org.junit.jupiter.api.Test;
+ 
+ import java.util.List;
+diff --git a/src/test/java/org/jsoup/select/ElementsTest.java b/src/test/java/org/jsoup/select/ElementsTest.java
+index b1b9b3dd..756d3e44 100644
+--- a/src/test/java/org/jsoup/select/ElementsTest.java
++++ b/src/test/java/org/jsoup/select/ElementsTest.java
+@@ -9,6 +9,7 @@ import org.jsoup.nodes.Element;
+ import org.jsoup.nodes.FormElement;
+ import org.jsoup.nodes.Node;
+ import org.jsoup.nodes.TextNode;
++import org.jsoup.select.traversal.NodeVisitor;
+ import org.junit.jupiter.api.Test;
+ 
+ import java.util.Iterator;
+diff --git a/src/test/java/org/jsoup/select/EvaluatorDebug.java b/src/test/java/org/jsoup/select/EvaluatorDebug.java
+index 266ed1cb..5a136c67 100644
+--- a/src/test/java/org/jsoup/select/EvaluatorDebug.java
++++ b/src/test/java/org/jsoup/select/EvaluatorDebug.java
+@@ -4,6 +4,9 @@ import org.jsoup.internal.StringUtil;
+ import org.jsoup.nodes.Document;
+ import org.jsoup.nodes.Element;
+ import org.jsoup.nodes.Node;
++import org.jsoup.select.evaluator.CombiningEvaluator;
++import org.jsoup.select.evaluator.StructuralEvaluator;
++import org.jsoup.select.traversal.NodeVisitor;
+ 
+ public class EvaluatorDebug {
+ 
+@@ -32,15 +35,15 @@ public class EvaluatorDebug {
+         el.attr("cost", Integer.toString(eval.cost()));
+ 
+         if (eval instanceof CombiningEvaluator) {
+-            for (Evaluator inner : ((CombiningEvaluator) eval).sortedEvaluators) {
++            for (Evaluator inner : ((CombiningEvaluator) eval).sortedEvaluators()) {
+                 el.appendChild(asElement(inner));
+             }
+         } else if (eval instanceof StructuralEvaluator.ImmediateParentRun) {
+-            for (Evaluator inner : ((StructuralEvaluator.ImmediateParentRun) eval).evaluators) {
++            for (Evaluator inner : ((StructuralEvaluator.ImmediateParentRun) eval).evaluators()) {
+                 el.appendChild(asElement(inner));
+             }
+         } else if (eval instanceof StructuralEvaluator) {
+-            Evaluator inner = ((StructuralEvaluator) eval).evaluator;
++            Evaluator inner = ((StructuralEvaluator) eval).evaluator();
+             el.appendChild(asElement(inner));
+         }
+ 
+diff --git a/src/test/java/org/jsoup/select/SelectorTest.java b/src/test/java/org/jsoup/select/SelectorTest.java
+index 8fe7d00e..10eb5f5c 100644
+--- a/src/test/java/org/jsoup/select/SelectorTest.java
++++ b/src/test/java/org/jsoup/select/SelectorTest.java
+@@ -9,6 +9,8 @@ import org.jsoup.nodes.Element;
+ import org.jsoup.nodes.Node;
+ import org.jsoup.nodes.TextNode;
+ import org.jsoup.parser.Parser;
++import org.jsoup.select.evaluator.CombiningEvaluator;
++import org.jsoup.select.evaluator.StructuralEvaluator;
+ import org.junit.jupiter.api.Test;
+ import org.junit.jupiter.params.ParameterizedTest;
+ import org.junit.jupiter.params.provider.ValueSource;
+@@ -1193,8 +1195,8 @@ public class SelectorTest {
+     @Test public void evaluatorMemosAreReset() {
+         Evaluator eval = QueryParser.parse("p ~ p");
+         CombiningEvaluator.And andEval = (CombiningEvaluator.And) eval;
+-        StructuralEvaluator.PreviousSibling prevEval = (StructuralEvaluator.PreviousSibling) andEval.evaluators.get(0);
+-        Map<Node, Map<Node, Boolean>> map = prevEval.threadMemo.get();
++        StructuralEvaluator.PreviousSibling prevEval = (StructuralEvaluator.PreviousSibling) andEval.evaluators().get(0);
++        Map<Node, Map<Node, Boolean>> map = prevEval.threadMemo().get();
+         assertEquals(0, map.size()); // no memo yet
+ 
+         Document doc1 = Jsoup.parse("<p>One<p>Two<p>Three");
+@@ -1429,11 +1431,11 @@ public class SelectorTest {
+         Element p = doc.expectFirst("p");
+         structEval.matches(doc, p);
+ 
+-        assertFalse(structEval.threadMemo.get().isEmpty());
++        assertFalse(structEval.threadMemo().get().isEmpty());
+         assertFalse(track.resetCalled);
+ 
+         structEval.reset();
+-        assertTrue(structEval.threadMemo.get().isEmpty());
++        assertTrue(structEval.threadMemo().get().isEmpty());
+         assertTrue(track.resetCalled);
+     }
+ 
+@@ -1471,8 +1473,8 @@ public class SelectorTest {
+         assertTrue(grandParent.resetCalled);
+         assertTrue(parent.resetCalled);
+         assertTrue(child.resetCalled);
+-        assertTrue(b_needs_a.threadMemo.get().isEmpty());
+-        assertTrue(c_needs_b.threadMemo.get().isEmpty());
++        assertTrue(b_needs_a.threadMemo().get().isEmpty());
++        assertTrue(c_needs_b.threadMemo().get().isEmpty());
+     }
+ 
+     @Test void hexDigitUnescape() {
+diff --git a/src/test/java/org/jsoup/select/StructuralEvaluatorTest.java b/src/test/java/org/jsoup/select/StructuralEvaluatorTest.java
+index 87c50540..0f6ebe2a 100644
+--- a/src/test/java/org/jsoup/select/StructuralEvaluatorTest.java
++++ b/src/test/java/org/jsoup/select/StructuralEvaluatorTest.java
+@@ -2,6 +2,8 @@ package org.jsoup.select;
+ 
+ import org.jsoup.Jsoup;
+ import org.jsoup.nodes.Document;
++import org.jsoup.select.evaluator.CombiningEvaluator;
++import org.jsoup.select.evaluator.StructuralEvaluator;
+ import org.junit.jupiter.params.ParameterizedTest;
+ import org.junit.jupiter.params.provider.Arguments;
+ import org.junit.jupiter.params.provider.MethodSource;
+@@ -48,7 +50,7 @@ class StructuralEvaluatorTest {
+ 
+         boolean hadMemos = false;
+         for (StructuralEvaluator se : structuralEvals) {
+-            if (!se.threadMemo.get().isEmpty()) {
++            if (!se.threadMemo().get().isEmpty()) {
+                 hadMemos = true;
+                 break;
+             }
+@@ -58,7 +60,7 @@ class StructuralEvaluatorTest {
+ 
+         // verify all structural evaluator thread-local maps are cleared
+         for (StructuralEvaluator se : structuralEvals) {
+-            assertTrue(se.threadMemo.get().isEmpty());
++            assertTrue(se.threadMemo().get().isEmpty());
+         }
+ 
+         assertEquals(expectMemos, hadMemos);
+@@ -79,7 +81,7 @@ class StructuralEvaluatorTest {
+         // recursive traversal of evaluator trees to find StructuralEvaluator instances
+         if (evaluator instanceof CombiningEvaluator) {
+             CombiningEvaluator ce = (CombiningEvaluator) evaluator;
+-            for (Evaluator inner : ce.evaluators) {
++            for (Evaluator inner : ce.evaluators()) {
+                 collectEvals(inner, out);
+             }
+             return;
+@@ -88,7 +90,7 @@ class StructuralEvaluatorTest {
+         if (evaluator instanceof StructuralEvaluator.ImmediateParentRun) {
+             StructuralEvaluator.ImmediateParentRun run = (StructuralEvaluator.ImmediateParentRun) evaluator;
+             out.add(run);
+-            for (Evaluator inner : run.evaluators) {
++            for (Evaluator inner : run.evaluators()) {
+                 collectEvals(inner, out);
+             }
+             return;
+@@ -97,7 +99,7 @@ class StructuralEvaluatorTest {
+         if (evaluator instanceof StructuralEvaluator) {
+             StructuralEvaluator se = (StructuralEvaluator) evaluator;
+             out.add(se);
+-            collectEvals(se.evaluator, out);
++            collectEvals(se.evaluator(), out);
+         }
+ 
+     }
+diff --git a/src/test/java/org/jsoup/select/TraversorTest.java b/src/test/java/org/jsoup/select/TraversorTest.java
+index cb18b510..9e61a750 100644
+--- a/src/test/java/org/jsoup/select/TraversorTest.java
++++ b/src/test/java/org/jsoup/select/TraversorTest.java
+@@ -6,6 +6,9 @@ import org.jsoup.nodes.Document;
+ import org.jsoup.nodes.Element;
+ import org.jsoup.nodes.Node;
+ import org.jsoup.nodes.TextNode;
++import org.jsoup.select.traversal.NodeFilter;
++import org.jsoup.select.traversal.NodeTraversor;
++import org.jsoup.select.traversal.NodeVisitor;
+ import org.junit.jupiter.api.Test;
+ import org.junit.jupiter.params.ParameterizedTest;
+ import org.junit.jupiter.params.provider.EnumSource;

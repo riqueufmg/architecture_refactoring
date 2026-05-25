@@ -1,0 +1,93 @@
+[ERROR] COMPILATION ERROR : 
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/AutoCloseables.java:[24,46] cannot find symbol
+  symbol:   class FailableConsumer
+  location: package org.apache.commons.lang3.function.util
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/AutoCloseables.java:[56,67] cannot find symbol
+  symbol:   class FailableConsumer
+  location: class org.apache.commons.lang3.AutoCloseables
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/concurrent/locks/LockingVisitors.java:[28,46] cannot find symbol
+  symbol:   class Failable
+  location: package org.apache.commons.lang3.function.util
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/concurrent/locks/LockingVisitors.java:[29,46] cannot find symbol
+  symbol:   class FailableConsumer
+  location: package org.apache.commons.lang3.function.util
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/concurrent/locks/LockingVisitors.java:[30,46] cannot find symbol
+  symbol:   class FailableFunction
+  location: package org.apache.commons.lang3.function.util
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/concurrent/locks/LockingVisitors.java:[309,44] cannot find symbol
+  symbol:   class FailableConsumer
+  location: class org.apache.commons.lang3.concurrent.locks.LockingVisitors.LockVisitor<O,L>
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/concurrent/locks/LockingVisitors.java:[330,45] cannot find symbol
+  symbol:   class FailableConsumer
+  location: class org.apache.commons.lang3.concurrent.locks.LockingVisitors.LockVisitor<O,L>
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/concurrent/locks/LockingVisitors.java:[370,44] cannot find symbol
+  symbol:   class FailableFunction
+  location: class org.apache.commons.lang3.concurrent.locks.LockingVisitors.LockVisitor<O,L>
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/concurrent/locks/LockingVisitors.java:[397,45] cannot find symbol
+  symbol:   class FailableFunction
+  location: class org.apache.commons.lang3.concurrent.locks.LockingVisitors.LockVisitor<O,L>
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/concurrent/locks/LockingVisitors.java:[430,82] cannot find symbol
+  symbol:   class FailableConsumer
+  location: class org.apache.commons.lang3.concurrent.locks.LockingVisitors.LockVisitor<O,L>
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/concurrent/locks/LockingVisitors.java:[455,82] cannot find symbol
+  symbol:   class FailableFunction
+  location: class org.apache.commons.lang3.concurrent.locks.LockingVisitors.LockVisitor<O,L>
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/AutoCloseables.java:[61,17] cannot find symbol
+  symbol:   variable FailableConsumer
+  location: class org.apache.commons.lang3.AutoCloseables
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/concurrent/locks/LockingVisitors.java:[434,17] cannot find symbol
+  symbol:   variable Failable
+  location: class org.apache.commons.lang3.concurrent.locks.LockingVisitors.LockVisitor<O,L>
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/concurrent/locks/LockingVisitors.java:[459,24] cannot find symbol
+  symbol:   variable Failable
+  location: class org.apache.commons.lang3.concurrent.locks.LockingVisitors.LockVisitor<O,L>
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.15.0:compile (default-compile) on project commons-lang3: Compilation failure: Compilation failure: 
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/AutoCloseables.java:[24,46] cannot find symbol
+[ERROR]   symbol:   class FailableConsumer
+[ERROR]   location: package org.apache.commons.lang3.function.util
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/AutoCloseables.java:[56,67] cannot find symbol
+[ERROR]   symbol:   class FailableConsumer
+[ERROR]   location: class org.apache.commons.lang3.AutoCloseables
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/concurrent/locks/LockingVisitors.java:[28,46] cannot find symbol
+[ERROR]   symbol:   class Failable
+[ERROR]   location: package org.apache.commons.lang3.function.util
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/concurrent/locks/LockingVisitors.java:[29,46] cannot find symbol
+[ERROR]   symbol:   class FailableConsumer
+[ERROR]   location: package org.apache.commons.lang3.function.util
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/concurrent/locks/LockingVisitors.java:[30,46] cannot find symbol
+[ERROR]   symbol:   class FailableFunction
+[ERROR]   location: package org.apache.commons.lang3.function.util
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/concurrent/locks/LockingVisitors.java:[309,44] cannot find symbol
+[ERROR]   symbol:   class FailableConsumer
+[ERROR]   location: class org.apache.commons.lang3.concurrent.locks.LockingVisitors.LockVisitor<O,L>
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/concurrent/locks/LockingVisitors.java:[330,45] cannot find symbol
+[ERROR]   symbol:   class FailableConsumer
+[ERROR]   location: class org.apache.commons.lang3.concurrent.locks.LockingVisitors.LockVisitor<O,L>
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/concurrent/locks/LockingVisitors.java:[370,44] cannot find symbol
+[ERROR]   symbol:   class FailableFunction
+[ERROR]   location: class org.apache.commons.lang3.concurrent.locks.LockingVisitors.LockVisitor<O,L>
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/concurrent/locks/LockingVisitors.java:[397,45] cannot find symbol
+[ERROR]   symbol:   class FailableFunction
+[ERROR]   location: class org.apache.commons.lang3.concurrent.locks.LockingVisitors.LockVisitor<O,L>
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/concurrent/locks/LockingVisitors.java:[430,82] cannot find symbol
+[ERROR]   symbol:   class FailableConsumer
+[ERROR]   location: class org.apache.commons.lang3.concurrent.locks.LockingVisitors.LockVisitor<O,L>
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/concurrent/locks/LockingVisitors.java:[455,82] cannot find symbol
+[ERROR]   symbol:   class FailableFunction
+[ERROR]   location: class org.apache.commons.lang3.concurrent.locks.LockingVisitors.LockVisitor<O,L>
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/AutoCloseables.java:[61,17] cannot find symbol
+[ERROR]   symbol:   variable FailableConsumer
+[ERROR]   location: class org.apache.commons.lang3.AutoCloseables
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/concurrent/locks/LockingVisitors.java:[434,17] cannot find symbol
+[ERROR]   symbol:   variable Failable
+[ERROR]   location: class org.apache.commons.lang3.concurrent.locks.LockingVisitors.LockVisitor<O,L>
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/concurrent/locks/LockingVisitors.java:[459,24] cannot find symbol
+[ERROR]   symbol:   variable Failable
+[ERROR]   location: class org.apache.commons.lang3.concurrent.locks.LockingVisitors.LockVisitor<O,L>
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException

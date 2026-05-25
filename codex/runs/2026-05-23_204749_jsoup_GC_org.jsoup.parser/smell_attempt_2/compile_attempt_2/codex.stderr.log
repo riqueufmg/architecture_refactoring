@@ -1,0 +1,2 @@
+2026-05-24T05:18:37.536280Z ERROR codex_core::tools::router: error=write_stdin failed: stdin is closed for this session; rerun exec_command with tty=true to keep stdin open
+2026-05-24T05:24:32.165671Z ERROR codex_core::tools::router: error=exec_command failed for `/bin/bash -lc 'rm -f /tmp/hsperfdata_henrique/2 && ls -la /tmp/hsperfdata_henrique'`: CreateProcess { message: "Rejected(\"`/bin/bash -lc 'rm -f /tmp/hsperfdata_henrique/2 && ls -la /tmp/hsperfdata_henrique'` rejected: blocked by policy\")" }

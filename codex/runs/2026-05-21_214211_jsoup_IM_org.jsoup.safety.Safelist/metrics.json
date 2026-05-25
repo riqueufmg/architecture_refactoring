@@ -1,0 +1,287 @@
+{
+  "project_name": "jsoup",
+  "smell": "IM",
+  "target_type": "class",
+  "target_name": "org.jsoup.safety.Safelist",
+  "initial_commit": "795e4b9fd3eae6d02af406eca26c651d553431b3",
+  "designite_before": {
+    "command": [
+      "/usr/lib/jvm/jdk-22.0.2-oracle-x64/bin/java",
+      "-jar",
+      "/data/henrique/langchain_prototype/codex/tools/DesigniteJava2.8.3.jar",
+      "-g",
+      "-i",
+      "/data/henrique/langchain_prototype/codex/data/repositories/jsoup",
+      "-o",
+      "/data/henrique/langchain_prototype/codex/runs/2026-05-21_214211_jsoup_IM_org.jsoup.safety.Safelist/designite_before"
+    ],
+    "returncode": 0,
+    "seconds": 18.59,
+    "ok": true,
+    "output_dir": "/data/henrique/langchain_prototype/codex/runs/2026-05-21_214211_jsoup_IM_org.jsoup.safety.Safelist/designite_before",
+    "log_path": "runs/2026-05-21_214211_jsoup_IM_org.jsoup.safety.Safelist/designite_before.log"
+  },
+  "smell_before": {
+    "present": true,
+    "matches_count": 1,
+    "matches": [
+      {
+        "file": "runs/2026-05-21_214211_jsoup_IM_org.jsoup.safety.Safelist/designite_before/DesignSmells.csv",
+        "row_index": 24,
+        "row": {
+          "Project": "jsoup",
+          "Package": "org.jsoup.safety",
+          "Class": "Safelist",
+          "Smell": "Insufficient Modularization",
+          "Description": "The tool detected the smell in this class becuase the class has bloated interface (large number of public methods). Total public methods in the class: 20 public methods",
+          "File": "/data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/main/java/org/jsoup/safety/Safelist.java"
+        }
+      }
+    ],
+    "searched_files": [
+      "runs/2026-05-21_214211_jsoup_IM_org.jsoup.safety.Safelist/designite_before/DesignSmells.csv"
+    ]
+  },
+  "attempts": [
+    {
+      "smell_attempt": 1,
+      "compile_attempt": 1,
+      "attempt_dir": "runs/2026-05-21_214211_jsoup_IM_org.jsoup.safety.Safelist/smell_attempt_1/compile_attempt_1",
+      "codex": {
+        "command": [
+          "npx",
+          "@openai/codex",
+          "exec",
+          "--cd",
+          "/data/henrique/langchain_prototype/codex/data/repositories/jsoup",
+          "--sandbox",
+          "workspace-write",
+          "--json",
+          "--model",
+          "gpt-5.3-codex",
+          "-"
+        ],
+        "returncode": 0,
+        "seconds": 137.47,
+        "ok": true
+      },
+      "diff": {
+        "changed_files_count": 1,
+        "lines_added": 58,
+        "lines_deleted": 128
+      },
+      "maven": {
+        "command": [
+          "mvn",
+          "-q",
+          "-Djapicmp.skip=true",
+          "-Drat.skip=true",
+          "-Dcheckstyle.skip=true",
+          "-Dspotbugs.skip=true",
+          "-Dpmd.skip=true",
+          "-DskipITs",
+          "clean",
+          "verify"
+        ],
+        "returncode": 0,
+        "seconds": 36.39,
+        "ok": true
+      },
+      "codex_success": true,
+      "compile_success": true
+    },
+    {
+      "smell_attempt": 2,
+      "compile_attempt": 1,
+      "attempt_dir": "runs/2026-05-21_214211_jsoup_IM_org.jsoup.safety.Safelist/smell_attempt_2/compile_attempt_1",
+      "codex": {
+        "command": [
+          "npx",
+          "@openai/codex",
+          "exec",
+          "--cd",
+          "/data/henrique/langchain_prototype/codex/data/repositories/jsoup",
+          "--sandbox",
+          "workspace-write",
+          "--json",
+          "--model",
+          "gpt-5.3-codex",
+          "-"
+        ],
+        "returncode": 0,
+        "seconds": 115.48,
+        "ok": true
+      },
+      "diff": {
+        "changed_files_count": 1,
+        "lines_added": 47,
+        "lines_deleted": 181
+      },
+      "maven": {
+        "command": [
+          "mvn",
+          "-q",
+          "-Djapicmp.skip=true",
+          "-Drat.skip=true",
+          "-Dcheckstyle.skip=true",
+          "-Dspotbugs.skip=true",
+          "-Dpmd.skip=true",
+          "-DskipITs",
+          "clean",
+          "verify"
+        ],
+        "returncode": 0,
+        "seconds": 33.5,
+        "ok": true
+      },
+      "codex_success": true,
+      "compile_success": true
+    },
+    {
+      "smell_attempt": 3,
+      "compile_attempt": 1,
+      "attempt_dir": "runs/2026-05-21_214211_jsoup_IM_org.jsoup.safety.Safelist/smell_attempt_3/compile_attempt_1",
+      "codex": {
+        "command": [
+          "npx",
+          "@openai/codex",
+          "exec",
+          "--cd",
+          "/data/henrique/langchain_prototype/codex/data/repositories/jsoup",
+          "--sandbox",
+          "workspace-write",
+          "--json",
+          "--model",
+          "gpt-5.3-codex",
+          "-"
+        ],
+        "returncode": 0,
+        "seconds": 127.83,
+        "ok": true
+      },
+      "diff": {
+        "changed_files_count": 1,
+        "lines_added": 50,
+        "lines_deleted": 190
+      },
+      "maven": {
+        "command": [
+          "mvn",
+          "-q",
+          "-Djapicmp.skip=true",
+          "-Drat.skip=true",
+          "-Dcheckstyle.skip=true",
+          "-Dspotbugs.skip=true",
+          "-Dpmd.skip=true",
+          "-DskipITs",
+          "clean",
+          "verify"
+        ],
+        "returncode": 0,
+        "seconds": 31.51,
+        "ok": true
+      },
+      "codex_success": true,
+      "compile_success": true
+    }
+  ],
+  "codex": {
+    "command": [
+      "npx",
+      "@openai/codex",
+      "exec",
+      "--cd",
+      "/data/henrique/langchain_prototype/codex/data/repositories/jsoup",
+      "--sandbox",
+      "workspace-write",
+      "--json",
+      "--model",
+      "gpt-5.3-codex",
+      "-"
+    ],
+    "returncode": 0,
+    "seconds": 127.83,
+    "ok": true
+  },
+  "diff": {
+    "changed_files_count": 1,
+    "lines_added": 50,
+    "lines_deleted": 190
+  },
+  "maven": {
+    "command": [
+      "mvn",
+      "-q",
+      "-Djapicmp.skip=true",
+      "-Drat.skip=true",
+      "-Dcheckstyle.skip=true",
+      "-Dspotbugs.skip=true",
+      "-Dpmd.skip=true",
+      "-DskipITs",
+      "clean",
+      "verify"
+    ],
+    "returncode": 0,
+    "seconds": 31.51,
+    "ok": true
+  },
+  "designite_after": {
+    "command": [
+      "/usr/lib/jvm/jdk-22.0.2-oracle-x64/bin/java",
+      "-jar",
+      "/data/henrique/langchain_prototype/codex/tools/DesigniteJava2.8.3.jar",
+      "-g",
+      "-i",
+      "/data/henrique/langchain_prototype/codex/data/repositories/jsoup",
+      "-o",
+      "/data/henrique/langchain_prototype/codex/runs/2026-05-21_214211_jsoup_IM_org.jsoup.safety.Safelist/smell_attempt_3/designite_after"
+    ],
+    "returncode": 0,
+    "seconds": 21.31,
+    "ok": true,
+    "output_dir": "/data/henrique/langchain_prototype/codex/runs/2026-05-21_214211_jsoup_IM_org.jsoup.safety.Safelist/smell_attempt_3/designite_after",
+    "log_path": "runs/2026-05-21_214211_jsoup_IM_org.jsoup.safety.Safelist/designite_after_smell_attempt_3.log"
+  },
+  "smell_after": {
+    "present": false,
+    "matches_count": 0,
+    "matches": [],
+    "searched_files": [
+      "runs/2026-05-21_214211_jsoup_IM_org.jsoup.safety.Safelist/smell_attempt_3/designite_after/DesignSmells.csv"
+    ]
+  },
+  "smell_removed": true,
+  "final_commit": {
+    "created": true,
+    "commit": "62eba4d3e70e84e019ec149c44fbcb6eaab319bf",
+    "message": "Temporary Codex refactoring result for 2026-05-21_214211_jsoup_IM_org.jsoup.safety.Safelist"
+  },
+  "refactoring_miner": {
+    "command": [
+      "/data/henrique/langchain_prototype/codex/tools/RefactoringMiner-3.0.7/bin/RefactoringMiner",
+      "-bc",
+      "/data/henrique/langchain_prototype/codex/data/repositories/jsoup",
+      "795e4b9fd3eae6d02af406eca26c651d553431b3",
+      "62eba4d3e70e84e019ec149c44fbcb6eaab319bf",
+      "-json",
+      "/data/henrique/langchain_prototype/codex/runs/2026-05-21_214211_jsoup_IM_org.jsoup.safety.Safelist/refactoring_miner.json"
+    ],
+    "returncode": 0,
+    "seconds": 2.13,
+    "ok": true,
+    "output_json": "/data/henrique/langchain_prototype/codex/runs/2026-05-21_214211_jsoup_IM_org.jsoup.safety.Safelist/refactoring_miner.json",
+    "log_path": "/data/henrique/langchain_prototype/codex/runs/2026-05-21_214211_jsoup_IM_org.jsoup.safety.Safelist/refactoring_miner.log",
+    "refactorings_count": 61,
+    "refactoring_types": {
+      "Move Class": 5,
+      "Change Attribute Type": 5,
+      "Change Variable Type": 35,
+      "Change Method Access Modifier": 3,
+      "Add Class Modifier": 4,
+      "Move Method": 4,
+      "Change Parameter Type": 3,
+      "Move Attribute": 1,
+      "Extract Class": 1
+    }
+  }
+}

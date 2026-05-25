@@ -1,0 +1,244 @@
+diff --git a/src/main/java/org/apache/commons/lang3/ArrayUtils.java b/src/main/java/org/apache/commons/lang3/ArrayUtils.java
+index 3e95e7326..36d942e33 100644
+--- a/src/main/java/org/apache/commons/lang3/ArrayUtils.java
++++ b/src/main/java/org/apache/commons/lang3/ArrayUtils.java
+@@ -58,7 +58,7 @@
+  *
+  * @since 2.0
+  */
+-public class ArrayUtils {
++public class ArrayUtils extends ArrayUtilsSortedChecks {
+ 
+     /**
+      * Bridge class to {@link Math} methods for testing purposes.
+@@ -3865,230 +3865,6 @@ public static boolean isSameType(final Object array1, final Object array2) {
+         return array1.getClass().getName().equals(array2.getClass().getName());
+     }
+ 
+-    /**
+-     * Tests whether whether the provided array is sorted according to natural ordering ({@code false} before {@code true}).
+-     *
+-     * @param array the array to check.
+-     * @return whether the array is sorted according to natural ordering.
+-     * @since 3.4
+-     */
+-    public static boolean isSorted(final boolean[] array) {
+-        if (getLength(array) < 2) {
+-            return true;
+-        }
+-        boolean previous = array[0];
+-        final int n = array.length;
+-        for (int i = 1; i < n; i++) {
+-            final boolean current = array[i];
+-            if (BooleanUtils.compare(previous, current) > 0) {
+-                return false;
+-            }
+-            previous = current;
+-        }
+-        return true;
+-    }
+-
+-    /**
+-     * Tests whether the provided array is sorted according to natural ordering.
+-     *
+-     * @param array the array to check.
+-     * @return whether the array is sorted according to natural ordering.
+-     * @since 3.4
+-     */
+-    public static boolean isSorted(final byte[] array) {
+-        if (getLength(array) < 2) {
+-            return true;
+-        }
+-        byte previous = array[0];
+-        final int n = array.length;
+-        for (int i = 1; i < n; i++) {
+-            final byte current = array[i];
+-            if (Byte.compare(previous, current) > 0) {
+-                return false;
+-            }
+-            previous = current;
+-        }
+-        return true;
+-    }
+-
+-    /**
+-     * Tests whether the provided array is sorted according to natural ordering.
+-     *
+-     * @param array the array to check.
+-     * @return whether the array is sorted according to natural ordering.
+-     * @since 3.4
+-     */
+-    public static boolean isSorted(final char[] array) {
+-        if (getLength(array) < 2) {
+-            return true;
+-        }
+-        char previous = array[0];
+-        final int n = array.length;
+-        for (int i = 1; i < n; i++) {
+-            final char current = array[i];
+-            if (CharUtils.compare(previous, current) > 0) {
+-                return false;
+-            }
+-            previous = current;
+-        }
+-        return true;
+-    }
+-
+-    /**
+-     * Tests whether the provided array is sorted according to natural ordering.
+-     *
+-     * @param array the array to check.
+-     * @return whether the array is sorted according to natural ordering.
+-     * @since 3.4
+-     */
+-    public static boolean isSorted(final double[] array) {
+-        if (getLength(array) < 2) {
+-            return true;
+-        }
+-        double previous = array[0];
+-        final int n = array.length;
+-        for (int i = 1; i < n; i++) {
+-            final double current = array[i];
+-            if (Double.compare(previous, current) > 0) {
+-                return false;
+-            }
+-            previous = current;
+-        }
+-        return true;
+-    }
+-
+-    /**
+-     * Tests whether the provided array is sorted according to natural ordering.
+-     *
+-     * @param array the array to check.
+-     * @return whether the array is sorted according to natural ordering.
+-     * @since 3.4
+-     */
+-    public static boolean isSorted(final float[] array) {
+-        if (getLength(array) < 2) {
+-            return true;
+-        }
+-        float previous = array[0];
+-        final int n = array.length;
+-        for (int i = 1; i < n; i++) {
+-            final float current = array[i];
+-            if (Float.compare(previous, current) > 0) {
+-                return false;
+-            }
+-            previous = current;
+-        }
+-        return true;
+-    }
+-
+-    /**
+-     * Tests whether the provided array is sorted according to natural ordering.
+-     *
+-     * @param array the array to check.
+-     * @return whether the array is sorted according to natural ordering.
+-     * @since 3.4
+-     */
+-    public static boolean isSorted(final int[] array) {
+-        if (getLength(array) < 2) {
+-            return true;
+-        }
+-        int previous = array[0];
+-        final int n = array.length;
+-        for (int i = 1; i < n; i++) {
+-            final int current = array[i];
+-            if (Integer.compare(previous, current) > 0) {
+-                return false;
+-            }
+-            previous = current;
+-        }
+-        return true;
+-    }
+-
+-    /**
+-     * Tests whether the provided array is sorted according to natural ordering.
+-     *
+-     * @param array the array to check.
+-     * @return whether the array is sorted according to natural ordering.
+-     * @since 3.4
+-     */
+-    public static boolean isSorted(final long[] array) {
+-        if (getLength(array) < 2) {
+-            return true;
+-        }
+-        long previous = array[0];
+-        final int n = array.length;
+-        for (int i = 1; i < n; i++) {
+-            final long current = array[i];
+-            if (Long.compare(previous, current) > 0) {
+-                return false;
+-            }
+-            previous = current;
+-        }
+-        return true;
+-    }
+-
+-    /**
+-     * Tests whether the provided array is sorted according to natural ordering.
+-     *
+-     * @param array the array to check.
+-     * @return whether the array is sorted according to natural ordering.
+-     * @since 3.4
+-     */
+-    public static boolean isSorted(final short[] array) {
+-        if (getLength(array) < 2) {
+-            return true;
+-        }
+-        short previous = array[0];
+-        final int n = array.length;
+-        for (int i = 1; i < n; i++) {
+-            final short current = array[i];
+-            if (Short.compare(previous, current) > 0) {
+-                return false;
+-            }
+-            previous = current;
+-        }
+-        return true;
+-    }
+-
+-    /**
+-     * Tests whether the provided array is sorted according to the class's
+-     * {@code compareTo} method.
+-     *
+-     * @param array the array to check.
+-     * @param <T> the datatype of the array to check, it must implement {@link Comparable}.
+-     * @return whether the array is sorted.
+-     * @since 3.4
+-     */
+-    public static <T extends Comparable<? super T>> boolean isSorted(final T[] array) {
+-        return isSorted(array, Comparable::compareTo);
+-    }
+-
+-    /**
+-     * Tests whether the provided array is sorted according to the provided {@link Comparator}.
+-     *
+-     * @param array the array to check.
+-     * @param comparator the {@link Comparator} to compare over.
+-     * @param <T> the datatype of the array.
+-     * @return whether the array is sorted.
+-     * @throws NullPointerException if {@code comparator} is {@code null}.
+-     * @since 3.4
+-     */
+-    public static <T> boolean isSorted(final T[] array, final Comparator<T> comparator) {
+-        Objects.requireNonNull(comparator, "comparator");
+-        if (getLength(array) < 2) {
+-            return true;
+-        }
+-        T previous = array[0];
+-        final int n = array.length;
+-        for (int i = 1; i < n; i++) {
+-            final T current = array[i];
+-            if (comparator.compare(previous, current) > 0) {
+-                return false;
+-            }
+-            previous = current;
+-        }
+-        return true;
+-    }
+-
+     /**
+      * Finds the last index of the given value within the array.
+      * <p>

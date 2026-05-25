@@ -1,0 +1,49 @@
+{
+  "config": {
+    "project_name": "commons-io",
+    "repo_path": "data/repositories/commons-io",
+    "smell": "GC",
+    "smell_name": "God Component",
+    "target_type": "package",
+    "target_name": "org.apache.commons.io.output",
+    "maven_command": [
+      "mvn",
+      "-q",
+      "-Djapicmp.skip=true",
+      "-Drat.skip=true",
+      "-Dcheckstyle.skip=true",
+      "-Dspotbugs.skip=true",
+      "-Dpmd.skip=true",
+      "-DskipITs",
+      "clean",
+      "verify"
+    ],
+    "designite": {
+      "java_path": "/usr/lib/jvm/jdk-22.0.2-oracle-x64/bin/java",
+      "jar_path": "tools/DesigniteJava2.8.3.jar",
+      "output_dir": "designite_output"
+    },
+    "refactoring_miner": {
+      "enabled": true,
+      "command": [
+        "tools/RefactoringMiner-3.0.7/bin/RefactoringMiner"
+      ]
+    },
+    "codex": {
+      "command": [
+        "npx",
+        "@openai/codex"
+      ],
+      "model": "gpt-5.3-codex",
+      "max_attempts": 3,
+      "max_smell_attempts": 5,
+      "sandbox": "workspace-write"
+    },
+    "smell_detection": {
+      "csv_file": "ArchitectureSmells.csv",
+      "smell_column": "Smell",
+      "package_column": "Package"
+    }
+  },
+  "initial_commit": "3d1ffd32d03e3b31795d9586089ba7ec98b3b7b9"
+}

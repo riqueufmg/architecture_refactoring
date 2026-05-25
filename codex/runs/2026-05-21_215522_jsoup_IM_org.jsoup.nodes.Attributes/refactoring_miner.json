@@ -1,0 +1,1548 @@
+{
+"commits": [
+{
+	"repository": "https://github.com/jhy/jsoup",
+	"sha1": "26faf73fa4f9573da6d7698f31611ae6f2933fcf",
+	"url": "https://github.com/jhy/jsoup/commit/26faf73fa4f9573da6d7698f31611ae6f2933fcf",
+	"refactorings": [{
+	"type": "Add Method Annotation",
+	"description": "Add Method Annotation @Override in method package remove(index int) : void from class org.jsoup.nodes.Attributes",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 324,
+		"endLine": 340,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private remove(index int) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 110,
+		"endLine": 110,
+		"startColumn": 5,
+		"endColumn": 14,
+		"codeElementType": "ANNOTATION",
+		"description": "added annotation",
+		"codeElement": "@Override"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 110,
+		"endLine": 118,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with added annotation",
+		"codeElement": "package remove(index int) : void"
+}]
+},
+{
+	"type": "Remove Method Annotation",
+	"description": "Remove Method Annotation @SuppressWarnings(\"AssignmentToNull\") in method private remove(index int) : void from class org.jsoup.nodes.Attributes",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 324,
+		"endLine": 324,
+		"startColumn": 5,
+		"endColumn": 42,
+		"codeElementType": "ANNOTATION",
+		"description": "removed annotation",
+		"codeElement": "@SuppressWarnings(\"AssignmentToNull\")"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 324,
+		"endLine": 340,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private remove(index int) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 110,
+		"endLine": 118,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with removed annotation",
+		"codeElement": "package remove(index int) : void"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier private to package in method package remove(index int) : void from class org.jsoup.nodes.Attributes",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 324,
+		"endLine": 340,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private remove(index int) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 110,
+		"endLine": 118,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "package remove(index int) : void"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method private checkCapacity(minNewSize int) : void from class org.jsoup.nodes.Attributes to private checkCapacity(minNewSize int) : void from class org.jsoup.nodes.AttributesStorage",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 62,
+		"endLine": 73,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private checkCapacity(minNewSize int) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/AttributesStorage.java",
+		"startLine": 21,
+		"endLine": 32,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "private checkCapacity(minNewSize int) : void"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method package indexOfKey(key String) : int from class org.jsoup.nodes.Attributes to package indexOfKey(key String) : int from class org.jsoup.nodes.AttributesStorage",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 75,
+		"endLine": 82,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package indexOfKey(key String) : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/AttributesStorage.java",
+		"startLine": 34,
+		"endLine": 41,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "package indexOfKey(key String) : int"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method private indexOfKeyIgnoreCase(key String) : int from class org.jsoup.nodes.Attributes to private indexOfKeyIgnoreCase(key String) : int from class org.jsoup.nodes.AttributesStorage",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 113,
+		"endLine": 120,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private indexOfKeyIgnoreCase(key String) : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/AttributesStorage.java",
+		"startLine": 43,
+		"endLine": 50,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "private indexOfKeyIgnoreCase(key String) : int"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method package checkNotNull(val Object) : String from class org.jsoup.nodes.Attributes to package checkNotNull(val Object) : String from class org.jsoup.nodes.AttributesStorage",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 124,
+		"endLine": 126,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package checkNotNull(val Object) : String"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/AttributesStorage.java",
+		"startLine": 52,
+		"endLine": 54,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "package checkNotNull(val Object) : String"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public get(key String) : String from class org.jsoup.nodes.Attributes to public get(key String) : String from class org.jsoup.nodes.AttributesStorage",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 128,
+		"endLine": 137,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public get(key String) : String"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/AttributesStorage.java",
+		"startLine": 56,
+		"endLine": 59,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public get(key String) : String"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public getIgnoreCase(key String) : String from class org.jsoup.nodes.Attributes to public getIgnoreCase(key String) : String from class org.jsoup.nodes.AttributesStorage",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 152,
+		"endLine": 160,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public getIgnoreCase(key String) : String"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/AttributesStorage.java",
+		"startLine": 61,
+		"endLine": 64,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public getIgnoreCase(key String) : String"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public add(key String, value String) : Attributes from class org.jsoup.nodes.Attributes to public add(key String, value String) : Attributes from class org.jsoup.nodes.AttributesStorage",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 162,
+		"endLine": 169,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public add(key String, value String) : Attributes"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/AttributesStorage.java",
+		"startLine": 66,
+		"endLine": 69,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public add(key String, value String) : Attributes"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method private addObject(key String, value Object) : void from class org.jsoup.nodes.Attributes to package addObject(key String, value Object) : void from class org.jsoup.nodes.AttributesStorage",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 171,
+		"endLine": 176,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private addObject(key String, value Object) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/AttributesStorage.java",
+		"startLine": 71,
+		"endLine": 76,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "package addObject(key String, value Object) : void"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier private to package in method package addObject(key String, value Object) : void from class org.jsoup.nodes.AttributesStorage",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 171,
+		"endLine": 176,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private addObject(key String, value Object) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/AttributesStorage.java",
+		"startLine": 71,
+		"endLine": 76,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "package addObject(key String, value Object) : void"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public put(key String, value String) : Attributes from class org.jsoup.nodes.Attributes to public put(key String, value String) : Attributes from class org.jsoup.nodes.AttributesStorage",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 178,
+		"endLine": 192,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public put(key String, value String) : Attributes"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/AttributesStorage.java",
+		"startLine": 78,
+		"endLine": 86,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public put(key String, value String) : Attributes"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method package putIgnoreCase(key String, value String) : void from class org.jsoup.nodes.Attributes to package putIgnoreCase(key String, value String) : void from class org.jsoup.nodes.AttributesStorage",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 284,
+		"endLine": 295,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package putIgnoreCase(key String, value String) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/AttributesStorage.java",
+		"startLine": 88,
+		"endLine": 99,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "package putIgnoreCase(key String, value String) : void"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public put(key String, value boolean) : Attributes from class org.jsoup.nodes.Attributes to public put(key String, value boolean) : Attributes from class org.jsoup.nodes.AttributesStorage",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 297,
+		"endLine": 309,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public put(key String, value boolean) : Attributes"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/AttributesStorage.java",
+		"startLine": 101,
+		"endLine": 107,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public put(key String, value boolean) : Attributes"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public remove(key String) : void from class org.jsoup.nodes.Attributes to public remove(key String) : void from class org.jsoup.nodes.AttributesStorage",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 342,
+		"endLine": 350,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public remove(key String) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/AttributesStorage.java",
+		"startLine": 123,
+		"endLine": 127,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public remove(key String) : void"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public removeIgnoreCase(key String) : void from class org.jsoup.nodes.Attributes to public removeIgnoreCase(key String) : void from class org.jsoup.nodes.AttributesStorage",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 352,
+		"endLine": 360,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public removeIgnoreCase(key String) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/AttributesStorage.java",
+		"startLine": 129,
+		"endLine": 133,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public removeIgnoreCase(key String) : void"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public hasKey(key String) : boolean from class org.jsoup.nodes.Attributes to public hasKey(key String) : boolean from class org.jsoup.nodes.AttributesStorage",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 362,
+		"endLine": 369,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public hasKey(key String) : boolean"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/AttributesStorage.java",
+		"startLine": 135,
+		"endLine": 137,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public hasKey(key String) : boolean"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public hasKeyIgnoreCase(key String) : boolean from class org.jsoup.nodes.Attributes to public hasKeyIgnoreCase(key String) : boolean from class org.jsoup.nodes.AttributesStorage",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 371,
+		"endLine": 378,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public hasKeyIgnoreCase(key String) : boolean"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/AttributesStorage.java",
+		"startLine": 139,
+		"endLine": 141,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public hasKeyIgnoreCase(key String) : boolean"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public hasDeclaredValueForKey(key String) : boolean from class org.jsoup.nodes.Attributes to public hasDeclaredValueForKey(key String) : boolean from class org.jsoup.nodes.AttributesStorage",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 380,
+		"endLine": 388,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public hasDeclaredValueForKey(key String) : boolean"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/AttributesStorage.java",
+		"startLine": 143,
+		"endLine": 146,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public hasDeclaredValueForKey(key String) : boolean"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public hasDeclaredValueForKeyIgnoreCase(key String) : boolean from class org.jsoup.nodes.Attributes to public hasDeclaredValueForKeyIgnoreCase(key String) : boolean from class org.jsoup.nodes.AttributesStorage",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 390,
+		"endLine": 398,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public hasDeclaredValueForKeyIgnoreCase(key String) : boolean"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/AttributesStorage.java",
+		"startLine": 148,
+		"endLine": 151,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public hasDeclaredValueForKeyIgnoreCase(key String) : boolean"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public size() : int from class org.jsoup.nodes.Attributes to public size() : int from class org.jsoup.nodes.AttributesStorage",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 400,
+		"endLine": 414,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public size() : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/AttributesStorage.java",
+		"startLine": 153,
+		"endLine": 160,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public size() : int"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public isEmpty() : boolean from class org.jsoup.nodes.Attributes to public isEmpty() : boolean from class org.jsoup.nodes.AttributesStorage",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 416,
+		"endLine": 422,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public isEmpty() : boolean"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/AttributesStorage.java",
+		"startLine": 162,
+		"endLine": 164,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public isEmpty() : boolean"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public addAll(incoming Attributes) : void from class org.jsoup.nodes.Attributes to public addAll(incoming Attributes) : void from class org.jsoup.nodes.AttributesStorage",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 424,
+		"endLine": 441,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public addAll(incoming Attributes) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/AttributesStorage.java",
+		"startLine": 166,
+		"endLine": 178,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public addAll(incoming Attributes) : void"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public normalize() : void from class org.jsoup.nodes.Attributes to public normalize() : void from class org.jsoup.nodes.AttributesStorage",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 643,
+		"endLine": 654,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public normalize() : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/AttributesStorage.java",
+		"startLine": 180,
+		"endLine": 188,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public normalize() : void"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public deduplicate(settings ParseSettings) : int from class org.jsoup.nodes.Attributes to public deduplicate(settings ParseSettings) : int from class org.jsoup.nodes.AttributesStorage",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 656,
+		"endLine": 677,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public deduplicate(settings ParseSettings) : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/AttributesStorage.java",
+		"startLine": 190,
+		"endLine": 206,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public deduplicate(settings ParseSettings) : int"
+}]
+},
+{
+	"type": "Change Parameter Type",
+	"description": "Change Parameter Type settings : ParseSettings to settings : org.jsoup.parser.ParseSettings in method public deduplicate(settings org.jsoup.parser.ParseSettings) : int from class org.jsoup.nodes.AttributesStorage",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 661,
+		"endLine": 661,
+		"startColumn": 28,
+		"endColumn": 50,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "original variable declaration",
+		"codeElement": "settings : ParseSettings"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 663,
+		"endLine": 663,
+		"startColumn": 9,
+		"endColumn": 61,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/AttributesStorage.java",
+		"startLine": 190,
+		"endLine": 190,
+		"startColumn": 28,
+		"endColumn": 67,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "changed-type variable declaration",
+		"codeElement": "settings : ParseSettings"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/AttributesStorage.java",
+		"startLine": 192,
+		"endLine": 192,
+		"startColumn": 9,
+		"endColumn": 61,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}]
+},
+{
+	"type": "Pull Up Attribute",
+	"description": "Pull Up Attribute private EmptyString : String from class org.jsoup.nodes.Attributes to private EmptyString : String from class org.jsoup.nodes.AttributesStorage",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 48,
+		"endLine": 48,
+		"startColumn": 33,
+		"endColumn": 49,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "private EmptyString : String"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/AttributesStorage.java",
+		"startLine": 11,
+		"endLine": 11,
+		"startColumn": 33,
+		"endColumn": 49,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "pulled up attribute declaration",
+		"codeElement": "private EmptyString : String"
+}]
+},
+{
+	"type": "Pull Up Attribute",
+	"description": "Pull Up Attribute private InitialCapacity : int from class org.jsoup.nodes.Attributes to private InitialCapacity : int from class org.jsoup.nodes.AttributesStorage",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 51,
+		"endLine": 51,
+		"startColumn": 30,
+		"endColumn": 49,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "private InitialCapacity : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/AttributesStorage.java",
+		"startLine": 13,
+		"endLine": 13,
+		"startColumn": 30,
+		"endColumn": 49,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "pulled up attribute declaration",
+		"codeElement": "private InitialCapacity : int"
+}]
+},
+{
+	"type": "Pull Up Attribute",
+	"description": "Pull Up Attribute private GrowthFactor : int from class org.jsoup.nodes.Attributes to private GrowthFactor : int from class org.jsoup.nodes.AttributesStorage",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 52,
+		"endLine": 52,
+		"startColumn": 30,
+		"endColumn": 46,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "private GrowthFactor : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/AttributesStorage.java",
+		"startLine": 14,
+		"endLine": 14,
+		"startColumn": 30,
+		"endColumn": 46,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "pulled up attribute declaration",
+		"codeElement": "private GrowthFactor : int"
+}]
+},
+{
+	"type": "Pull Up Attribute",
+	"description": "Pull Up Attribute package NotFound : int from class org.jsoup.nodes.Attributes to package NotFound : int from class org.jsoup.nodes.AttributesStorage",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 53,
+		"endLine": 53,
+		"startColumn": 22,
+		"endColumn": 35,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "package NotFound : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/AttributesStorage.java",
+		"startLine": 15,
+		"endLine": 15,
+		"startColumn": 22,
+		"endColumn": 35,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "pulled up attribute declaration",
+		"codeElement": "package NotFound : int"
+}]
+},
+{
+	"type": "Pull Up Attribute",
+	"description": "Pull Up Attribute package size : int from class org.jsoup.nodes.Attributes to package size : int from class org.jsoup.nodes.AttributesStorage",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 56,
+		"endLine": 56,
+		"startColumn": 9,
+		"endColumn": 17,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "package size : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/AttributesStorage.java",
+		"startLine": 17,
+		"endLine": 17,
+		"startColumn": 9,
+		"endColumn": 17,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "pulled up attribute declaration",
+		"codeElement": "package size : int"
+}]
+},
+{
+	"type": "Pull Up Attribute",
+	"description": "Pull Up Attribute package keys : String[] from class org.jsoup.nodes.Attributes to package keys : String[] from class org.jsoup.nodes.AttributesStorage",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 57,
+		"endLine": 57,
+		"startColumn": 24,
+		"endColumn": 58,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "package keys : String[]"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/AttributesStorage.java",
+		"startLine": 18,
+		"endLine": 18,
+		"startColumn": 24,
+		"endColumn": 58,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "pulled up attribute declaration",
+		"codeElement": "package keys : String[]"
+}]
+},
+{
+	"type": "Pull Up Attribute",
+	"description": "Pull Up Attribute package vals : Object[] from class org.jsoup.nodes.Attributes to package vals : Object[] from class org.jsoup.nodes.AttributesStorage",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 58,
+		"endLine": 58,
+		"startColumn": 24,
+		"endColumn": 58,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "package vals : Object[]"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/AttributesStorage.java",
+		"startLine": 19,
+		"endLine": 19,
+		"startColumn": 24,
+		"endColumn": 58,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "pulled up attribute declaration",
+		"codeElement": "package vals : Object[]"
+}]
+},
+{
+	"type": "Extract Superclass",
+	"description": "Extract Superclass org.jsoup.nodes.AttributesStorage from classes [org.jsoup.nodes.Attributes]",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 27,
+		"endLine": 748,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original sub-type declaration",
+		"codeElement": "org.jsoup.nodes.Attributes"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 24,
+		"endLine": 389,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "sub-type declaration after extraction",
+		"codeElement": "org.jsoup.nodes.Attributes"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/AttributesStorage.java",
+		"startLine": 10,
+		"endLine": 207,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "extracted super-type declaration",
+		"codeElement": "org.jsoup.nodes.AttributesStorage"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method package visibleIndexOfKey(key String) : int from class org.jsoup.nodes.Attributes to package visibleIndexOfKey(attributes Attributes, key String) : int from class org.jsoup.nodes.AttributesInternal",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 84,
+		"endLine": 99,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package visibleIndexOfKey(key String) : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/AttributesInternal.java",
+		"startLine": 13,
+		"endLine": 25,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "package visibleIndexOfKey(attributes Attributes, key String) : int"
+}]
+},
+{
+	"type": "Add Parameter",
+	"description": "Add Parameter attributes : Attributes in method package visibleIndexOfKey(attributes Attributes, key String) : int from class org.jsoup.nodes.AttributesInternal",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 84,
+		"endLine": 99,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package visibleIndexOfKey(key String) : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/AttributesInternal.java",
+		"startLine": 13,
+		"endLine": 13,
+		"startColumn": 34,
+		"endColumn": 55,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "added parameter",
+		"codeElement": "attributes : Attributes"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/AttributesInternal.java",
+		"startLine": 13,
+		"endLine": 25,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with added parameter",
+		"codeElement": "package visibleIndexOfKey(attributes Attributes, key String) : int"
+}]
+},
+{
+	"type": "Add Method Modifier",
+	"description": "Add Method Modifier static in method package visibleIndexOfKey(attributes Attributes, key String) : int from class org.jsoup.nodes.AttributesInternal",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 84,
+		"endLine": 99,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package visibleIndexOfKey(key String) : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/AttributesInternal.java",
+		"startLine": 13,
+		"endLine": 25,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with added modifier",
+		"codeElement": "package visibleIndexOfKey(attributes Attributes, key String) : int"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method private visibleIndex(index int) : int from class org.jsoup.nodes.Attributes to private visibleIndex(attributes Attributes, index int) : int from class org.jsoup.nodes.AttributesInternal",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 101,
+		"endLine": 111,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private visibleIndex(index int) : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/AttributesInternal.java",
+		"startLine": 27,
+		"endLine": 34,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "private visibleIndex(attributes Attributes, index int) : int"
+}]
+},
+{
+	"type": "Add Parameter",
+	"description": "Add Parameter attributes : Attributes in method private visibleIndex(attributes Attributes, index int) : int from class org.jsoup.nodes.AttributesInternal",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 101,
+		"endLine": 111,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private visibleIndex(index int) : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/AttributesInternal.java",
+		"startLine": 27,
+		"endLine": 27,
+		"startColumn": 37,
+		"endColumn": 58,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "added parameter",
+		"codeElement": "attributes : Attributes"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/AttributesInternal.java",
+		"startLine": 27,
+		"endLine": 34,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with added parameter",
+		"codeElement": "private visibleIndex(attributes Attributes, index int) : int"
+}]
+},
+{
+	"type": "Add Method Modifier",
+	"description": "Add Method Modifier static in method private visibleIndex(attributes Attributes, index int) : int from class org.jsoup.nodes.AttributesInternal",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 101,
+		"endLine": 111,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private visibleIndex(index int) : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/AttributesInternal.java",
+		"startLine": 27,
+		"endLine": 34,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with added modifier",
+		"codeElement": "private visibleIndex(attributes Attributes, index int) : int"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method package userData() : Map<String,Object> from class org.jsoup.nodes.Attributes to package userData(attributes Attributes) : Map<String,Object> from class org.jsoup.nodes.AttributesInternal",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 194,
+		"endLine": 212,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package userData() : Map<String,Object>"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/AttributesInternal.java",
+		"startLine": 36,
+		"endLine": 48,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "package userData(attributes Attributes) : Map<String,Object>"
+}]
+},
+{
+	"type": "Add Parameter",
+	"description": "Add Parameter attributes : Attributes in method package userData(attributes Attributes) : Map<String,Object> from class org.jsoup.nodes.AttributesInternal",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 194,
+		"endLine": 212,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package userData() : Map<String,Object>"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/AttributesInternal.java",
+		"startLine": 37,
+		"endLine": 37,
+		"startColumn": 41,
+		"endColumn": 62,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "added parameter",
+		"codeElement": "attributes : Attributes"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/AttributesInternal.java",
+		"startLine": 36,
+		"endLine": 48,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with added parameter",
+		"codeElement": "package userData(attributes Attributes) : Map<String,Object>"
+}]
+},
+{
+	"type": "Add Method Modifier",
+	"description": "Add Method Modifier static in method package userData(attributes Attributes) : Map<String,Object> from class org.jsoup.nodes.AttributesInternal",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 194,
+		"endLine": 212,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package userData() : Map<String,Object>"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/AttributesInternal.java",
+		"startLine": 36,
+		"endLine": 48,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with added modifier",
+		"codeElement": "package userData(attributes Attributes) : Map<String,Object>"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method package hasUserData() : boolean from class org.jsoup.nodes.Attributes to package hasUserData(attributes Attributes) : boolean from class org.jsoup.nodes.AttributesInternal",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 214,
+		"endLine": 219,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package hasUserData() : boolean"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/AttributesInternal.java",
+		"startLine": 50,
+		"endLine": 52,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "package hasUserData(attributes Attributes) : boolean"
+}]
+},
+{
+	"type": "Add Parameter",
+	"description": "Add Parameter attributes : Attributes in method package hasUserData(attributes Attributes) : boolean from class org.jsoup.nodes.AttributesInternal",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 214,
+		"endLine": 219,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package hasUserData() : boolean"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/AttributesInternal.java",
+		"startLine": 50,
+		"endLine": 50,
+		"startColumn": 32,
+		"endColumn": 53,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "added parameter",
+		"codeElement": "attributes : Attributes"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/AttributesInternal.java",
+		"startLine": 50,
+		"endLine": 52,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with added parameter",
+		"codeElement": "package hasUserData(attributes Attributes) : boolean"
+}]
+},
+{
+	"type": "Add Method Modifier",
+	"description": "Add Method Modifier static in method package hasUserData(attributes Attributes) : boolean from class org.jsoup.nodes.AttributesInternal",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 214,
+		"endLine": 219,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package hasUserData() : boolean"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/AttributesInternal.java",
+		"startLine": 50,
+		"endLine": 52,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with added modifier",
+		"codeElement": "package hasUserData(attributes Attributes) : boolean"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method package spans() : Range.Spans from class org.jsoup.nodes.Attributes to package spans(attributes Attributes) : Range.Spans from class org.jsoup.nodes.AttributesInternal",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 253,
+		"endLine": 259,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package spans() : Range.Spans"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/AttributesInternal.java",
+		"startLine": 54,
+		"endLine": 57,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "package spans(attributes Attributes) : Range.Spans"
+}]
+},
+{
+	"type": "Add Parameter",
+	"description": "Add Parameter attributes : Attributes in method package spans(attributes Attributes) : Range.Spans from class org.jsoup.nodes.AttributesInternal",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 253,
+		"endLine": 259,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package spans() : Range.Spans"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/AttributesInternal.java",
+		"startLine": 54,
+		"endLine": 54,
+		"startColumn": 40,
+		"endColumn": 61,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "added parameter",
+		"codeElement": "attributes : Attributes"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/AttributesInternal.java",
+		"startLine": 54,
+		"endLine": 57,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with added parameter",
+		"codeElement": "package spans(attributes Attributes) : Range.Spans"
+}]
+},
+{
+	"type": "Add Method Modifier",
+	"description": "Add Method Modifier static in method package spans(attributes Attributes) : Range.Spans from class org.jsoup.nodes.AttributesInternal",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 253,
+		"endLine": 259,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package spans() : Range.Spans"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/AttributesInternal.java",
+		"startLine": 54,
+		"endLine": 57,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with added modifier",
+		"codeElement": "package spans(attributes Attributes) : Range.Spans"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method package ensureSpans() : Range.Spans from class org.jsoup.nodes.Attributes to package ensureSpans(attributes Attributes) : Range.Spans from class org.jsoup.nodes.AttributesInternal",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 261,
+		"endLine": 271,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package ensureSpans() : Range.Spans"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/AttributesInternal.java",
+		"startLine": 59,
+		"endLine": 66,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "package ensureSpans(attributes Attributes) : Range.Spans"
+}]
+},
+{
+	"type": "Add Parameter",
+	"description": "Add Parameter attributes : Attributes in method package ensureSpans(attributes Attributes) : Range.Spans from class org.jsoup.nodes.AttributesInternal",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 261,
+		"endLine": 271,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package ensureSpans() : Range.Spans"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/AttributesInternal.java",
+		"startLine": 59,
+		"endLine": 59,
+		"startColumn": 36,
+		"endColumn": 57,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "added parameter",
+		"codeElement": "attributes : Attributes"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/AttributesInternal.java",
+		"startLine": 59,
+		"endLine": 66,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with added parameter",
+		"codeElement": "package ensureSpans(attributes Attributes) : Range.Spans"
+}]
+},
+{
+	"type": "Add Method Modifier",
+	"description": "Add Method Modifier static in method package ensureSpans(attributes Attributes) : Range.Spans from class org.jsoup.nodes.AttributesInternal",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 261,
+		"endLine": 271,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package ensureSpans() : Range.Spans"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/AttributesInternal.java",
+		"startLine": 59,
+		"endLine": 66,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with added modifier",
+		"codeElement": "package ensureSpans(attributes Attributes) : Range.Spans"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method package putSpans(rangeSpans Range.Spans) : void from class org.jsoup.nodes.Attributes to package putSpans(attributes Attributes, rangeSpans Range.Spans) : void from class org.jsoup.nodes.AttributesInternal",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 273,
+		"endLine": 282,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package putSpans(rangeSpans Range.Spans) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/AttributesInternal.java",
+		"startLine": 68,
+		"endLine": 74,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "package putSpans(attributes Attributes, rangeSpans Range.Spans) : void"
+}]
+},
+{
+	"type": "Add Parameter",
+	"description": "Add Parameter attributes : Attributes in method package putSpans(attributes Attributes, rangeSpans Range.Spans) : void from class org.jsoup.nodes.AttributesInternal",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 273,
+		"endLine": 282,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package putSpans(rangeSpans Range.Spans) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/AttributesInternal.java",
+		"startLine": 68,
+		"endLine": 68,
+		"startColumn": 26,
+		"endColumn": 47,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "added parameter",
+		"codeElement": "attributes : Attributes"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/AttributesInternal.java",
+		"startLine": 68,
+		"endLine": 74,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with added parameter",
+		"codeElement": "package putSpans(attributes Attributes, rangeSpans Range.Spans) : void"
+}]
+},
+{
+	"type": "Add Method Modifier",
+	"description": "Add Method Modifier static in method package putSpans(attributes Attributes, rangeSpans Range.Spans) : void from class org.jsoup.nodes.AttributesInternal",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 273,
+		"endLine": 282,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package putSpans(rangeSpans Range.Spans) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/AttributesInternal.java",
+		"startLine": 68,
+		"endLine": 74,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with added modifier",
+		"codeElement": "package putSpans(attributes Attributes, rangeSpans Range.Spans) : void"
+}]
+},
+{
+	"type": "Extract Class",
+	"description": "Extract Class org.jsoup.nodes.AttributesInternal from class org.jsoup.nodes.Attributes",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 27,
+		"endLine": 748,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original type declaration",
+		"codeElement": "org.jsoup.nodes.Attributes"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 84,
+		"endLine": 99,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package visibleIndexOfKey(key String) : int"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 101,
+		"endLine": 111,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private visibleIndex(index int) : int"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 273,
+		"endLine": 282,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package putSpans(rangeSpans Range.Spans) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 24,
+		"endLine": 389,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "type declaration after extraction",
+		"codeElement": "org.jsoup.nodes.Attributes"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/AttributesInternal.java",
+		"startLine": 10,
+		"endLine": 87,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "extracted type declaration",
+		"codeElement": "org.jsoup.nodes.AttributesInternal"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/AttributesInternal.java",
+		"startLine": 13,
+		"endLine": 25,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "package visibleIndexOfKey(attributes Attributes, key String) : int"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/AttributesInternal.java",
+		"startLine": 27,
+		"endLine": 34,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "private visibleIndex(attributes Attributes, index int) : int"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/AttributesInternal.java",
+		"startLine": 68,
+		"endLine": 74,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "package putSpans(attributes Attributes, rangeSpans Range.Spans) : void"
+}]
+}
+]
+}]
+}

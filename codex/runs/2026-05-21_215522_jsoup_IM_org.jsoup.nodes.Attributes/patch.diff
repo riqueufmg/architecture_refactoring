@@ -1,0 +1,588 @@
+diff --git a/src/main/java/org/jsoup/nodes/Attributes.java b/src/main/java/org/jsoup/nodes/Attributes.java
+index 15f34d16..b7e78b6c 100644
+--- a/src/main/java/org/jsoup/nodes/Attributes.java
++++ b/src/main/java/org/jsoup/nodes/Attributes.java
+@@ -4,7 +4,6 @@ import org.jsoup.helper.Validate;
+ import org.jsoup.internal.QuietAppendable;
+ import org.jsoup.internal.SharedConstants;
+ import org.jsoup.internal.StringUtil;
+-import org.jsoup.parser.ParseSettings;
+ import org.jspecify.annotations.Nullable;
+ 
+ import java.util.AbstractMap;
+@@ -20,8 +19,6 @@ import java.util.Map;
+ import java.util.NoSuchElementException;
+ import java.util.Objects;
+ import java.util.Set;
+-
+-import static org.jsoup.internal.Normalizer.lowerCase;
+ import static org.jsoup.nodes.Range.AttributeRange.UntrackedAttr;
+ 
+ /**
+@@ -39,102 +36,12 @@ import static org.jsoup.nodes.Range.AttributeRange.UntrackedAttr;
+  *
+  * @author Jonathan Hedley, jonathan@hedley.net
+  */
+-public class Attributes implements Iterable<Attribute>, Cloneable {
++public class Attributes extends AttributesStorage implements Iterable<Attribute>, Cloneable {
+     // The Attributes object is only created on the first use of an attribute; the Element will just have a null
+     // Attribute slot otherwise
+ 
+     static final char InternalPrefix = '/'; // Indicates an internal key. Can't be set via HTML. (It could be set via accessor, but not too worried about that. Suppressed from list, iter, size.)
+     protected static final String dataPrefix = "data-"; // data attributes
+-    private static final String EmptyString = "";
+-
+-    // manages the key/val arrays
+-    private static final int InitialCapacity = 3; // sampling found mean count when attrs present = 1.49; 1.08 overall. 2.6:1 don't have any attrs.
+-    private static final int GrowthFactor = 2;
+-    static final int NotFound = -1;
+-
+-    // the number of instance fields is kept as low as possible giving an object size of 24 bytes
+-    int size = 0; // number of slots used (not total capacity, which is keys.length). Package visible for actual size (incl internal)
+-    @Nullable String[] keys = new String[InitialCapacity]; // keys is not null, but contents may be. Same for vals
+-    @Nullable Object[] vals = new Object[InitialCapacity]; // Genericish: all non-internal attribute values must be Strings and are cast on access.
+-    // todo - make keys iterable without creating Attribute objects
+-
+-    // check there's room for more
+-    private void checkCapacity(int minNewSize) {
+-        Validate.isTrue(minNewSize >= size);
+-        int curCap = keys.length;
+-        if (curCap >= minNewSize)
+-            return;
+-        int newCap = curCap >= InitialCapacity ? size * GrowthFactor : InitialCapacity;
+-        if (minNewSize > newCap)
+-            newCap = minNewSize;
+-
+-        keys = Arrays.copyOf(keys, newCap);
+-        vals = Arrays.copyOf(vals, newCap);
+-    }
+-
+-    int indexOfKey(String key) {
+-        Validate.notNull(key);
+-        for (int i = 0; i < size; i++) {
+-            if (key.equals(keys[i]))
+-                return i;
+-        }
+-        return NotFound;
+-    }
+-
+-    /**
+-     Finds a visible attribute's range index, skipping internal metadata slots.
+-     */
+-    int visibleIndexOfKey(String key) {
+-        Validate.notNull(key);
+-        int visible = 0;
+-        for (int i = 0; i < size; i++) {
+-            String attrKey = keys[i];
+-            if (isInternalKey(attrKey))
+-                continue;
+-            if (key.equals(attrKey))
+-                return visible;
+-            visible++;
+-        }
+-        return NotFound;
+-    }
+-
+-    /**
+-     Maps an attribute array slot to the matching visible attribute index.
+-     */
+-    private int visibleIndex(int index) {
+-        int visible = 0;
+-        for (int i = 0; i < index; i++) {
+-            if (!isInternalKey(keys[i]))
+-                visible++;
+-        }
+-        return visible;
+-    }
+-
+-    private int indexOfKeyIgnoreCase(String key) {
+-        Validate.notNull(key);
+-        for (int i = 0; i < size; i++) {
+-            if (key.equalsIgnoreCase(keys[i]))
+-                return i;
+-        }
+-        return NotFound;
+-    }
+-
+-    // we track boolean attributes as null in values - they're just keys. so returns empty for consumers
+-    // casts to String, so only for non-internal attributes
+-    static String checkNotNull(@Nullable Object val) {
+-        return val == null ? EmptyString : (String) val;
+-    }
+-
+-    /**
+-     Get an attribute value by key.
+-     @param key the (case-sensitive) attribute key
+-     @return the attribute value if set; or empty string if not set (or a boolean attribute).
+-     @see #hasKey(String)
+-     */
+-    public String get(String key) {
+-        int i = indexOfKey(key);
+-        return i == NotFound ? EmptyString : checkNotNull(vals[i]);
+-    }
+ 
+     /**
+      Get an Attribute by key. The Attribute will remain connected to these Attributes, so changes made via
+@@ -149,75 +56,12 @@ public class Attributes implements Iterable<Attribute>, Cloneable {
+         return i == NotFound ? null : new Attribute(key, checkNotNull(vals[i]), this);
+     }
+ 
+-    /**
+-     * Get an attribute's value by case-insensitive key
+-     * @param key the attribute name
+-     * @return the first matching attribute value if set; or empty string if not set (ora boolean attribute).
+-     */
+-    public String getIgnoreCase(String key) {
+-        int i = indexOfKeyIgnoreCase(key);
+-        return i == NotFound ? EmptyString : checkNotNull(vals[i]);
+-    }
+-
+-    /**
+-     * Adds a new attribute. Will produce duplicates if the key already exists.
+-     * @see Attributes#put(String, String)
+-     */
+-    public Attributes add(String key, @Nullable String value) {
+-        addObject(key, value);
+-        return this;
+-    }
+-
+-    private void addObject(String key, @Nullable Object value) {
+-        checkCapacity(size + 1);
+-        keys[size] = key;
+-        vals[size] = value;
+-        size++;
+-    }
+-
+-    /**
+-     * Set a new attribute, or replace an existing one by key.
+-     * @param key case sensitive attribute key (not null)
+-     * @param value attribute value (which can be null, to set a true boolean attribute)
+-     * @return these attributes, for chaining
+-     */
+-    public Attributes put(String key, @Nullable String value) {
+-        Validate.notNull(key);
+-        int i = indexOfKey(key);
+-        if (i != NotFound)
+-            vals[i] = value;
+-        else
+-            addObject(key, value);
+-        return this;
+-    }
+-
+     /**
+      Get the map holding any user-data associated with these Attributes. Will be created empty on first use. Held as
+      an internal attribute, not a field member, to reduce the memory footprint of Attributes when not used. Can hold
+      arbitrary objects; use for connecting W3C nodes to Elements, etc.
+      * @return the map holding user-data
+      */
+-    @SuppressWarnings("unchecked")
+-    Map<String, Object> userData() {
+-        final Map<String, Object> userData;
+-        int i = indexOfKey(SharedConstants.UserDataKey);
+-        if (i == NotFound) {
+-            userData = new HashMap<>();
+-            addObject(SharedConstants.UserDataKey, userData);
+-        } else {
+-            userData = (Map<String, Object>) vals[i];
+-        }
+-        assert userData != null;
+-        return userData;
+-    }
+-
+-    /**
+-     Check if these attributes have any user data associated with them.
+-     */
+-    boolean hasUserData() {
+-        return hasKey(SharedConstants.UserDataKey);
+-    }
+-
+     /**
+      Get an arbitrary user-data object by key.
+      * @param key case-sensitive key to the object.
+@@ -228,8 +72,8 @@ public class Attributes implements Iterable<Attribute>, Cloneable {
+     @Nullable
+     public Object userData(String key) {
+         Validate.notNull(key);
+-        if (!hasUserData()) return null; // no user data exists
+-        Map<String, Object> userData = userData();
++        if (!AttributesInternal.hasUserData(this)) return null; // no user data exists
++        Map<String, Object> userData = AttributesInternal.userData(this);
+         return userData.get(key);
+     }
+ 
+@@ -244,70 +88,12 @@ public class Attributes implements Iterable<Attribute>, Cloneable {
+     public Attributes userData(String key, @Nullable Object value) {
+         Validate.notNull(key);
+         if (value == null && !hasKey(SharedConstants.UserDataKey)) return this; // no user data exists, so short-circuit
+-        Map<String, Object> userData = userData();
++        Map<String, Object> userData = AttributesInternal.userData(this);
+         if (value == null)  userData.remove(key);
+         else                userData.put(key, value);
+         return this;
+     }
+ 
+-    /**
+-     Gets the range spans, if source tracking was used.
+-     */
+-    Range.@Nullable Spans spans() {
+-        int i = indexOfKey(SharedConstants.RangeSpansKey);
+-        return i == NotFound ? null : (Range.Spans) vals[i];
+-    }
+-
+-    /**
+-     Gets or creates the range spans for this attributes object.
+-     */
+-    Range.Spans ensureSpans() {
+-        Range.Spans rangeSpans = spans();
+-        if (rangeSpans == null) {
+-            rangeSpans = new Range.Spans();
+-            addObject(SharedConstants.RangeSpansKey, rangeSpans);
+-        }
+-        return rangeSpans;
+-    }
+-
+-    /**
+-     Sets the range spans when expanding compact leaf storage.
+-     */
+-    void putSpans(Range.Spans rangeSpans) {
+-        int i = indexOfKey(SharedConstants.RangeSpansKey);
+-        if (i == NotFound)
+-            addObject(SharedConstants.RangeSpansKey, rangeSpans);
+-        else
+-            vals[i] = rangeSpans;
+-    }
+-
+-    void putIgnoreCase(String key, @Nullable String value) {
+-        int i = indexOfKeyIgnoreCase(key);
+-        if (i != NotFound) {
+-            vals[i] = value;
+-            String old = keys[i];
+-            assert old != null;
+-            if (!old.equals(key)) // case changed, update
+-                keys[i] = key;
+-        }
+-        else
+-            addObject(key, value);
+-    }
+-
+-    /**
+-     * Set a new boolean attribute. Removes the attribute if the value is false.
+-     * @param key case <b>insensitive</b> attribute key
+-     * @param value attribute value
+-     * @return these attributes, for chaining
+-     */
+-    public Attributes put(String key, boolean value) {
+-        if (value)
+-            putIgnoreCase(key, null);
+-        else
+-            remove(key);
+-        return this;
+-    }
+-
+     /**
+      Set a new attribute, or replace an existing one by key.
+      @param attribute attribute with case-sensitive key
+@@ -321,123 +107,14 @@ public class Attributes implements Iterable<Attribute>, Cloneable {
+     }
+ 
+     // removes and shifts up
+-    @SuppressWarnings("AssignmentToNull")
+-    private void remove(int index) {
++    @Override
++    void remove(int index) {
+         Validate.isFalse(index >= size);
+-        Range.Spans rangeSpans = spans();
++        Range.Spans rangeSpans = AttributesInternal.spans(this);
+         // Source ranges are stored by visible attribute index; internal metadata slots have no matching range record.
+         if (rangeSpans != null && !isInternalKey(keys[index]))
+-            rangeSpans.removeAttributeRange(visibleIndex(index));
+-
+-        int shifted = size - index - 1;
+-        if (shifted > 0) {
+-            System.arraycopy(keys, index + 1, keys, index, shifted);
+-            System.arraycopy(vals, index + 1, vals, index, shifted);
+-        }
+-        size--;
+-        keys[size] = null; // release hold
+-        vals[size] = null;
+-    }
+-
+-    /**
+-     Remove an attribute by key. <b>Case sensitive.</b>
+-     @param key attribute key to remove
+-     */
+-    public void remove(String key) {
+-        int i = indexOfKey(key);
+-        if (i != NotFound)
+-            remove(i);
+-    }
+-
+-    /**
+-     Remove an attribute by key. <b>Case insensitive.</b>
+-     @param key attribute key to remove
+-     */
+-    public void removeIgnoreCase(String key) {
+-        int i = indexOfKeyIgnoreCase(key);
+-        if (i != NotFound)
+-            remove(i);
+-    }
+-
+-    /**
+-     Tests if these attributes contain an attribute with this key.
+-     @param key case-sensitive key to check for
+-     @return true if key exists, false otherwise
+-     */
+-    public boolean hasKey(String key) {
+-        return indexOfKey(key) != NotFound;
+-    }
+-
+-    /**
+-     Tests if these attributes contain an attribute with this key.
+-     @param key key to check for
+-     @return true if key exists, false otherwise
+-     */
+-    public boolean hasKeyIgnoreCase(String key) {
+-        return indexOfKeyIgnoreCase(key) != NotFound;
+-    }
+-
+-    /**
+-     * Check if these attributes contain an attribute with a value for this key.
+-     * @param key key to check for
+-     * @return true if key exists, and it has a value
+-     */
+-    public boolean hasDeclaredValueForKey(String key) {
+-        int i = indexOfKey(key);
+-        return i != NotFound && vals[i] != null;
+-    }
+-
+-    /**
+-     * Check if these attributes contain an attribute with a value for this key.
+-     * @param key case-insensitive key to check for
+-     * @return true if key exists, and it has a value
+-     */
+-    public boolean hasDeclaredValueForKeyIgnoreCase(String key) {
+-        int i = indexOfKeyIgnoreCase(key);
+-        return i != NotFound && vals[i] != null;
+-    }
+-
+-    /**
+-     Get the number of attributes in this set, excluding any internal-only attributes (e.g. user data).
+-     <p>Internal attributes are excluded from the {@link #html()}, {@link #asList()}, and {@link #iterator()}
+-     methods.</p>
+-
+-     @return size
+-     */
+-    public int size() {
+-        if (size == 0) return 0;
+-        int count = 0;
+-        for (int i = 0; i < size; i++) {
+-            if (!isInternalKey(keys[i]))  count++;
+-        }
+-        return count;
+-    }
+-
+-    /**
+-     Test if this Attributes list is empty.
+-     <p>This does not include internal attributes, such as user data.</p>
+-     */
+-    public boolean isEmpty() {
+-        return size() == 0;
+-    }
+-
+-    /**
+-     Add all the attributes from the incoming set to this set.
+-     @param incoming attributes to add to these attributes.
+-     */
+-    public void addAll(Attributes incoming) {
+-        int incomingSize = incoming.size(); // not adding internal
+-        if (incomingSize == 0) return;
+-        checkCapacity(size + incomingSize);
+-
+-        boolean needsPut = size != 0; // if this set is empty, no need to check existing set, so can add() vs put()
+-        // (and save bashing on the indexOfKey()
+-        for (Attribute attr : incoming) {
+-            if (needsPut)
+-                put(attr);
+-            else
+-                addObject(attr.getKey(), attr.getValue());
+-        }
++            rangeSpans.removeAttributeRange(AttributesInternal.removeRangeIndex(this, index));
++        super.remove(index);
+     }
+ 
+     /**
+@@ -454,9 +131,9 @@ public class Attributes implements Iterable<Attribute>, Cloneable {
+      @since 1.17.1
+      */
+     public Range.AttributeRange sourceRange(String key) {
+-        int index = visibleIndexOfKey(key);
++        int index = AttributesInternal.visibleIndexOfKey(this, key);
+         if (index == NotFound) return UntrackedAttr;
+-        Range.Spans rangeSpans = spans();
++        Range.Spans rangeSpans = AttributesInternal.spans(this);
+         return rangeSpans != null ? rangeSpans.attributeRange(index) : UntrackedAttr;
+     }
+ 
+@@ -640,42 +317,6 @@ public class Attributes implements Iterable<Attribute>, Cloneable {
+         return clone;
+     }
+ 
+-    /**
+-     * Internal method. Lowercases all (non-internal) keys.
+-     */
+-    public void normalize() {
+-        for (int i = 0; i < size; i++) {
+-            assert keys[i] != null;
+-            String key = keys[i];
+-            assert key != null;
+-            if (!isInternalKey(key))
+-                keys[i] = lowerCase(key);
+-        }
+-    }
+-
+-    /**
+-     * Internal method. Removes duplicate attribute by name. Settings for case sensitivity of key names.
+-     * @param settings case sensitivity
+-     * @return number of removed dupes
+-     */
+-    public int deduplicate(ParseSettings settings) {
+-        if (size == 0) return 0;
+-        boolean preserve = settings.preserveAttributeCase();
+-        int dupes = 0;
+-        for (int i = 0; i < size; i++) {
+-            String keyI = keys[i];
+-            assert keyI != null;
+-            for (int j = i + 1; j < size; j++) {
+-                if ((preserve && keyI.equals(keys[j])) || (!preserve && keyI.equalsIgnoreCase(keys[j]))) {
+-                    dupes++;
+-                    remove(j);
+-                    j--;
+-                }
+-            }
+-        }
+-        return dupes;
+-    }
+-
+     private static class Dataset extends AbstractMap<String, String> {
+         private final Attributes attributes;
+ 
+@@ -739,10 +380,10 @@ public class Attributes implements Iterable<Attribute>, Cloneable {
+     }
+ 
+     static String internalKey(String key) {
+-        return InternalPrefix + key;
++        return AttributesInternal.internalKey(key);
+     }
+ 
+     static boolean isInternalKey(String key) {
+-        return key.length() > 1 && key.charAt(0) == InternalPrefix;
++        return AttributesInternal.isInternalKey(key);
+     }
+ }
+diff --git a/src/main/java/org/jsoup/nodes/Element.java b/src/main/java/org/jsoup/nodes/Element.java
+index e652d780..f644919a 100644
+--- a/src/main/java/org/jsoup/nodes/Element.java
++++ b/src/main/java/org/jsoup/nodes/Element.java
+@@ -408,8 +408,8 @@ public class Element extends ElementTreeOps implements Iterable<Element> {
+     /** returns the cached child els, if they exist, and the modcount of our childnodes matches the stashed modcount */
+     @SuppressWarnings("unchecked")
+     @Nullable List<Element> cachedChildren() {
+-        if (attributes == null || !attributes.hasUserData()) return null; // don't create empty userdata
+-        Map<String, Object> userData = attributes.userData();
++        if (attributes == null || !AttributesInternal.hasUserData(attributes)) return null; // don't create empty userdata
++        Map<String, Object> userData = AttributesInternal.userData(attributes);
+         WeakReference<List<Element>> ref = (WeakReference<List<Element>>) userData.get(childElsKey);
+         if (ref != null) {
+             List<Element> els = ref.get();
+@@ -424,7 +424,7 @@ public class Element extends ElementTreeOps implements Iterable<Element> {
+ 
+     /** caches the child els into the Attribute user data. */
+     private void stashChildren(List<Element> els) {
+-        Map<String, Object> userData = attributes().userData();
++        Map<String, Object> userData = AttributesInternal.userData(attributes());
+         WeakReference<List<Element>> ref = new WeakReference<>(els);
+         userData.put(childElsKey, ref);
+         userData.put(childElsMod, childNodes.modCount());
+diff --git a/src/main/java/org/jsoup/nodes/LeafNode.java b/src/main/java/org/jsoup/nodes/LeafNode.java
+index 5d9ca474..18d4669b 100644
+--- a/src/main/java/org/jsoup/nodes/LeafNode.java
++++ b/src/main/java/org/jsoup/nodes/LeafNode.java
+@@ -39,7 +39,7 @@ public abstract class LeafNode extends Node {
+             value = attributes;
+             attributes.put(nodeName(), coreValue);
+             if (rangeSpans != null)
+-                attributes.putSpans(rangeSpans);
++                AttributesInternal.putSpans(attributes, rangeSpans);
+         }
+     }
+ 
+@@ -158,7 +158,7 @@ public abstract class LeafNode extends Node {
+         if (value instanceof TrackedValue)
+             return ((TrackedValue) value).spans;
+         if (value instanceof Attributes)
+-            return ((Attributes) value).ensureSpans();
++            return AttributesInternal.ensureSpans((Attributes) value);
+ 
+         TrackedValue trackedValue = new TrackedValue((String) value);
+         value = trackedValue;
+diff --git a/src/main/java/org/jsoup/nodes/Node.java b/src/main/java/org/jsoup/nodes/Node.java
+index 497aaa93..709f7dd2 100644
+--- a/src/main/java/org/jsoup/nodes/Node.java
++++ b/src/main/java/org/jsoup/nodes/Node.java
+@@ -897,14 +897,14 @@ public abstract class Node implements Cloneable {
+      */
+     Range.@Nullable Spans spans() {
+         if (!hasAttributes()) return null;
+-        return attributes().spans();
++        return AttributesInternal.spans(attributes());
+     }
+ 
+     /**
+      Gets or creates range spans for this node.
+      */
+     Range.Spans ensureSpans() {
+-        return attributes().ensureSpans();
++        return AttributesInternal.ensureSpans(attributes());
+     }
+ 
+     /**
+diff --git a/src/main/java/org/jsoup/nodes/NodeInternals.java b/src/main/java/org/jsoup/nodes/NodeInternals.java
+index 7063dd9e..93b09b8a 100644
+--- a/src/main/java/org/jsoup/nodes/NodeInternals.java
++++ b/src/main/java/org/jsoup/nodes/NodeInternals.java
+@@ -41,9 +41,9 @@ public final class NodeInternals {
+     ) {
+         Validate.notNull(attributes);
+         Validate.notNull(key);
+-        int index = attributes.visibleIndexOfKey(key);
++        int index = AttributesInternal.visibleIndexOfKey(attributes, key);
+         if (index != Attributes.NotFound)
+-            attributes.ensureSpans().attributeRange(index, lineMap, nameStart, nameEnd, valueStart, valueEnd);
++            AttributesInternal.ensureSpans(attributes).attributeRange(index, lineMap, nameStart, nameEnd, valueStart, valueEnd);
+     }
+ 
+     /**
+@@ -53,8 +53,8 @@ public final class NodeInternals {
+         Validate.notNull(attributes);
+         Validate.notNull(key);
+         Validate.notNull(range);
+-        int index = attributes.visibleIndexOfKey(key);
++        int index = AttributesInternal.visibleIndexOfKey(attributes, key);
+         if (index != Attributes.NotFound && range.isTracked())
+-            attributes.ensureSpans().attributeRange(index, range);
++            AttributesInternal.ensureSpans(attributes).attributeRange(index, range);
+     }
+ }
+diff --git a/src/test/java/org/jsoup/nodes/AttributesTest.java b/src/test/java/org/jsoup/nodes/AttributesTest.java
+index f1c54846..e21ffae1 100644
+--- a/src/test/java/org/jsoup/nodes/AttributesTest.java
++++ b/src/test/java/org/jsoup/nodes/AttributesTest.java
+@@ -425,7 +425,7 @@ public class AttributesTest {
+ 
+         Attributes two = one.clone();
+         assertSame(two.userData("data"), one.userData("data"));
+-        assertNotSame(two.userData(), one.userData());
++        assertNotSame(AttributesInternal.userData(two), AttributesInternal.userData(one));
+     }
+ 
+     @Test void dontCloneNullUserData() {

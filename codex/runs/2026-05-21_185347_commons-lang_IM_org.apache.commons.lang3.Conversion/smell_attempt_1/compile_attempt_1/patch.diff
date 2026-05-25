@@ -1,0 +1,498 @@
+diff --git a/src/main/java/org/apache/commons/lang3/Conversion.java b/src/main/java/org/apache/commons/lang3/Conversion.java
+index 2b858a059..fe2c74a6b 100644
+--- a/src/main/java/org/apache/commons/lang3/Conversion.java
++++ b/src/main/java/org/apache/commons/lang3/Conversion.java
+@@ -59,89 +59,7 @@
+  *
+  * @since 3.2
+  */
+-public class Conversion {
+-
+-    private static final boolean[] TTTT = { true, true, true, true };
+-    private static final boolean[] FTTT = { false, true, true, true };
+-    private static final boolean[] TFTT = { true, false, true, true };
+-    private static final boolean[] FFTT = { false, false, true, true };
+-    private static final boolean[] TTFT = { true, true, false, true };
+-    private static final boolean[] FTFT = { false, true, false, true };
+-    private static final boolean[] TFFT = { true, false, false, true };
+-    private static final boolean[] FFFT = { false, false, false, true };
+-    private static final boolean[] TTTF = { true, true, true, false };
+-    private static final boolean[] FTTF = { false, true, true, false };
+-    private static final boolean[] TFTF = { true, false, true, false };
+-    private static final boolean[] FFTF = { false, false, true, false };
+-    private static final boolean[] TTFF = { true, true, false, false };
+-    private static final boolean[] FTFF = { false, true, false, false };
+-    private static final boolean[] TFFF = { true, false, false, false };
+-    private static final boolean[] FFFF = { false, false, false, false };
+-
+-    /**
+-     * Converts the first 4 bits of a binary (represented as boolean array) in big-endian MSB0 bit ordering to a hexadecimal digit.
+-     *
+-     * <p>
+-     * (1, 0, 0, 0) is converted as follow: '8' (1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0) is converted to '4'.
+-     * </p>
+-     *
+-     * @param src the binary to convert.
+-     * @return a hexadecimal digit representing the selected bits.
+-     * @throws IllegalArgumentException if {@code src} is empty.
+-     * @throws NullPointerException     if {@code src} is {@code null}.
+-     */
+-    public static char binaryBeMsb0ToHexDigit(final boolean[] src) {
+-        return binaryBeMsb0ToHexDigit(src, 0);
+-    }
+-
+-    /**
+-     * Converts a binary (represented as boolean array) in big-endian MSB0 bit ordering to a hexadecimal digit.
+-     *
+-     * <p>
+-     * (1, 0, 0, 0) with srcPos = 0 is converted as follow: '8' (1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0) with srcPos = 2 is converted to '5'.
+-     * </p>
+-     *
+-     * @param src    the binary to convert.
+-     * @param srcPos the position of the LSB to start the conversion.
+-     * @return a hexadecimal digit representing the selected bits.
+-     * @throws IllegalArgumentException  if {@code src} is empty.
+-     * @throws NullPointerException      if {@code src} is {@code null}.
+-     * @throws IndexOutOfBoundsException if {@code srcPos} is outside the array.
+-     */
+-    public static char binaryBeMsb0ToHexDigit(final boolean[] src, final int srcPos) {
+-        // JDK 9: Objects.checkIndex(int index, int length)
+-        if (Integer.compareUnsigned(srcPos, src.length) >= 0) {
+-            // Throw the correct exception
+-            if (src.length == 0) {
+-                throw new IllegalArgumentException("Cannot convert an empty array.");
+-            }
+-            throw new IndexOutOfBoundsException(srcPos + " is not within array length " + src.length);
+-        }
+-        // Little-endian bit 0 position
+-        final int pos = src.length - 1 - srcPos;
+-        if (3 <= pos && src[pos - 3]) {
+-            if (src[pos - 2]) {
+-                if (src[pos - 1]) {
+-                    return src[pos] ? 'f' : 'e';
+-                }
+-                return src[pos] ? 'd' : 'c';
+-            }
+-            if (src[pos - 1]) {
+-                return src[pos] ? 'b' : 'a';
+-            }
+-            return src[pos] ? '9' : '8';
+-        }
+-        if (2 <= pos && src[pos - 2]) {
+-            if (src[pos - 1]) {
+-                return src[pos] ? '7' : '6';
+-            }
+-            return src[pos] ? '5' : '4';
+-        }
+-        if (1 <= pos && src[pos - 1]) {
+-            return src[pos] ? '3' : '2';
+-        }
+-        return src[pos] ? '1' : '0';
+-    }
++public class Conversion extends ConversionHex {
+ 
+     /**
+      * Converts binary (represented as boolean array) into a byte using the default (little-endian, LSB0) byte and bit ordering.
+@@ -173,122 +91,6 @@ public static byte binaryToByte(final boolean[] src, final int srcPos, final byt
+         return out;
+     }
+ 
+-    /**
+-     * Converts binary (represented as boolean array) to a hexadecimal digit using the default (LSB0) bit ordering.
+-     *
+-     * <p>
+-     * (1, 0, 0, 0) is converted as follow: '1'.
+-     * </p>
+-     *
+-     * @param src the binary to convert.
+-     * @return a hexadecimal digit representing the selected bits.
+-     * @throws IllegalArgumentException if {@code src} is empty.
+-     * @throws NullPointerException     if {@code src} is {@code null}.
+-     */
+-    public static char binaryToHexDigit(final boolean[] src) {
+-        return binaryToHexDigit(src, 0);
+-    }
+-
+-    /**
+-     * Converts binary (represented as boolean array) to a hexadecimal digit using the default (LSB0) bit ordering.
+-     *
+-     * <p>
+-     * (1, 0, 0, 0) is converted as follow: '1'.
+-     * </p>
+-     *
+-     * @param src    the binary to convert.
+-     * @param srcPos the position of the LSB to start the conversion.
+-     * @return a hexadecimal digit representing the selected bits.
+-     * @throws IllegalArgumentException if {@code src} is empty.
+-     * @throws NullPointerException     if {@code src} is {@code null}.
+-     */
+-    public static char binaryToHexDigit(final boolean[] src, final int srcPos) {
+-        if (src.length == 0) {
+-            throw new IllegalArgumentException("Cannot convert an empty array.");
+-        }
+-        if (src.length > srcPos + 3 && src[srcPos + 3]) {
+-            if (src[srcPos + 2]) {
+-                if (src[srcPos + 1]) {
+-                    return src[srcPos] ? 'f' : 'e';
+-                }
+-                return src[srcPos] ? 'd' : 'c';
+-            }
+-            if (src[srcPos + 1]) {
+-                return src[srcPos] ? 'b' : 'a';
+-            }
+-            return src[srcPos] ? '9' : '8';
+-        }
+-        if (src.length > srcPos + 2 && src[srcPos + 2]) {
+-            if (src[srcPos + 1]) {
+-                return src[srcPos] ? '7' : '6';
+-            }
+-            return src[srcPos] ? '5' : '4';
+-        }
+-        if (src.length > srcPos + 1 && src[srcPos + 1]) {
+-            return src[srcPos] ? '3' : '2';
+-        }
+-        return src[srcPos] ? '1' : '0';
+-    }
+-
+-    /**
+-     * Converts binary (represented as boolean array) to a hexadecimal digit using the MSB0 bit ordering.
+-     *
+-     * <p>
+-     * (1, 0, 0, 0) is converted as follow: '8'.
+-     * </p>
+-     *
+-     * @param src the binary to convert.
+-     * @return a hexadecimal digit representing the selected bits.
+-     * @throws IllegalArgumentException if {@code src} is empty, {@code src.length < 4} or {@code src.length > 8}.
+-     * @throws NullPointerException     if {@code src} is {@code null}.
+-     */
+-    public static char binaryToHexDigitMsb0_4bits(final boolean[] src) {
+-        return binaryToHexDigitMsb0_4bits(src, 0);
+-    }
+-
+-    /**
+-     * Converts binary (represented as boolean array) to a hexadecimal digit using the MSB0 bit ordering.
+-     *
+-     * <p>
+-     * (1, 0, 0, 0) is converted as follow: '8' (1, 0, 0, 1, 1, 0, 1, 0) with srcPos = 3 is converted to 'D'
+-     * </p>
+-     *
+-     * @param src    the binary to convert.
+-     * @param srcPos the position of the LSB to start the conversion.
+-     * @return a hexadecimal digit representing the selected bits.
+-     * @throws IllegalArgumentException if {@code src} is empty, {@code src.length > 8} or {@code src.length - srcPos < 4}.
+-     * @throws NullPointerException     if {@code src} is {@code null}.
+-     */
+-    public static char binaryToHexDigitMsb0_4bits(final boolean[] src, final int srcPos) {
+-        if (src.length > Byte.SIZE) {
+-            throw new IllegalArgumentException("src.length > 8: src.length=" + src.length);
+-        }
+-        if (src.length - srcPos < 4) {
+-            throw new IllegalArgumentException("src.length - srcPos < 4: src.length=" + src.length + ", srcPos=" + srcPos);
+-        }
+-        if (src[srcPos + 3]) {
+-            if (src[srcPos + 2]) {
+-                if (src[srcPos + 1]) {
+-                    return src[srcPos] ? 'f' : '7';
+-                }
+-                return src[srcPos] ? 'b' : '3';
+-            }
+-            if (src[srcPos + 1]) {
+-                return src[srcPos] ? 'd' : '5';
+-            }
+-            return src[srcPos] ? '9' : '1';
+-        }
+-        if (src[srcPos + 2]) {
+-            if (src[srcPos + 1]) {
+-                return src[srcPos] ? 'e' : '6';
+-            }
+-            return src[srcPos] ? 'a' : '2';
+-        }
+-        if (src[srcPos + 1]) {
+-            return src[srcPos] ? 'c' : '4';
+-        }
+-        return src[srcPos] ? '8' : '0';
+-    }
+ 
+     /**
+      * Converts binary (represented as boolean array) into an int using the default (little endian, LSB0) byte and bit ordering.
+@@ -547,192 +349,6 @@ public static String byteToHex(final byte src, final int srcPos, final String ds
+         return sb.toString();
+     }
+ 
+-    /**
+-     * Converts a hexadecimal digit into binary (represented as boolean array) using the MSB0 bit ordering.
+-     *
+-     * <p>
+-     * '1' is converted as follow: (0, 0, 0, 1).
+-     * </p>
+-     *
+-     * @param hexChar the hexadecimal digit to convert.
+-     * @return a boolean array with the binary representation of {@code hexDigit}.
+-     * @throws IllegalArgumentException if {@code hexDigit} is not a hexadecimal digit.
+-     */
+-    public static boolean[] hexDigitMsb0ToBinary(final char hexChar) {
+-        switch (hexChar) {
+-        case '0':
+-            return FFFF.clone();
+-        case '1':
+-            return FFFT.clone();
+-        case '2':
+-            return FFTF.clone();
+-        case '3':
+-            return FFTT.clone();
+-        case '4':
+-            return FTFF.clone();
+-        case '5':
+-            return FTFT.clone();
+-        case '6':
+-            return FTTF.clone();
+-        case '7':
+-            return FTTT.clone();
+-        case '8':
+-            return TFFF.clone();
+-        case '9':
+-            return TFFT.clone();
+-        case 'a':// fall through
+-        case 'A':
+-            return TFTF.clone();
+-        case 'b':// fall through
+-        case 'B':
+-            return TFTT.clone();
+-        case 'c':// fall through
+-        case 'C':
+-            return TTFF.clone();
+-        case 'd':// fall through
+-        case 'D':
+-            return TTFT.clone();
+-        case 'e':// fall through
+-        case 'E':
+-            return TTTF.clone();
+-        case 'f':// fall through
+-        case 'F':
+-            return TTTT.clone();
+-        default:
+-            throw new IllegalArgumentException("Cannot convert '" + hexChar + "' to a hexadecimal digit");
+-        }
+-    }
+-
+-    /**
+-     * Converts a hexadecimal digit into an int using the MSB0 bit ordering.
+-     *
+-     * <p>
+-     * '1' is converted to 8.
+-     * </p>
+-     *
+-     * @param hexChar the hexadecimal digit to convert.
+-     * @return an int equals to {@code hexDigit}.
+-     * @throws IllegalArgumentException if {@code hexDigit} is not a hexadecimal digit.
+-     */
+-    public static int hexDigitMsb0ToInt(final char hexChar) {
+-        switch (hexChar) {
+-        case '0':
+-            return 0x0;
+-        case '1':
+-            return 0x8;
+-        case '2':
+-            return 0x4;
+-        case '3':
+-            return 0xC;
+-        case '4':
+-            return 0x2;
+-        case '5':
+-            return 0xA;
+-        case '6':
+-            return 0x6;
+-        case '7':
+-            return 0xE;
+-        case '8':
+-            return 0x1;
+-        case '9':
+-            return 0x9;
+-        case 'a':// fall through
+-        case 'A':
+-            return 0x5;
+-        case 'b':// fall through
+-        case 'B':
+-            return 0xD;
+-        case 'c':// fall through
+-        case 'C':
+-            return 0x3;
+-        case 'd':// fall through
+-        case 'D':
+-            return 0xB;
+-        case 'e':// fall through
+-        case 'E':
+-            return 0x7;
+-        case 'f':// fall through
+-        case 'F':
+-            return 0xF;
+-        default:
+-            throw new IllegalArgumentException("Cannot convert '" + hexChar + "' to a hexadecimal digit");
+-        }
+-    }
+-
+-    /**
+-     * Converts a hexadecimal digit into binary (represented as boolean array) using the default (LSB0) bit ordering.
+-     *
+-     * <p>
+-     * '1' is converted as follow: (1, 0, 0, 0).
+-     * </p>
+-     *
+-     * @param hexChar the hexadecimal digit to convert.
+-     * @return a boolean array with the binary representation of {@code hexDigit}.
+-     * @throws IllegalArgumentException if {@code hexDigit} is not a hexadecimal digit.
+-     */
+-    public static boolean[] hexDigitToBinary(final char hexChar) {
+-        switch (hexChar) {
+-        case '0':
+-            return FFFF.clone();
+-        case '1':
+-            return TFFF.clone();
+-        case '2':
+-            return FTFF.clone();
+-        case '3':
+-            return TTFF.clone();
+-        case '4':
+-            return FFTF.clone();
+-        case '5':
+-            return TFTF.clone();
+-        case '6':
+-            return FTTF.clone();
+-        case '7':
+-            return TTTF.clone();
+-        case '8':
+-            return FFFT.clone();
+-        case '9':
+-            return TFFT.clone();
+-        case 'a':// fall through
+-        case 'A':
+-            return FTFT.clone();
+-        case 'b':// fall through
+-        case 'B':
+-            return TTFT.clone();
+-        case 'c':// fall through
+-        case 'C':
+-            return FFTT.clone();
+-        case 'd':// fall through
+-        case 'D':
+-            return TFTT.clone();
+-        case 'e':// fall through
+-        case 'E':
+-            return FTTT.clone();
+-        case 'f':// fall through
+-        case 'F':
+-            return TTTT.clone();
+-        default:
+-            throw new IllegalArgumentException("Cannot convert '" + hexChar + "' to a hexadecimal digit");
+-        }
+-    }
+-
+-    /**
+-     * Converts a hexadecimal digit into an int using the default (LSB0) bit ordering.
+-     *
+-     * <p>
+-     * '1' is converted to 1
+-     * </p>
+-     *
+-     * @param hexChar the hexadecimal digit to convert.
+-     * @return an int equals to {@code hexDigit}.
+-     * @throws IllegalArgumentException if {@code hexDigit} is not a hexadecimal digit.
+-     */
+-    public static int hexDigitToInt(final char hexChar) {
+-        final int digit = Character.digit(hexChar, 16);
+-        if (digit < 0) {
+-            throw new IllegalArgumentException("Cannot convert '" + hexChar + "' to a hexadecimal digit");
+-        }
+-        return digit;
+-    }
+ 
+     /**
+      * Converts a hexadecimal string into a byte using the default (little-endian, LSB0) byte and bit ordering.
+@@ -964,86 +580,6 @@ public static String intToHex(final int src, final int srcPos, final String dstI
+         return sb.toString();
+     }
+ 
+-    /**
+-     * Converts the 4 LSB of an int to a hexadecimal digit.
+-     *
+-     * <p>
+-     * 0 returns '0'
+-     * </p>
+-     * <p>
+-     * 1 returns '1'
+-     * </p>
+-     * <p>
+-     * 10 returns 'A' and so on...
+-     * </p>
+-     *
+-     * @param nibble the 4 bits to convert.
+-     * @return a hexadecimal digit representing the 4 LSB of {@code nibble}.
+-     * @throws IllegalArgumentException if {@code nibble < 0} or {@code nibble > 15}.
+-     */
+-    public static char intToHexDigit(final int nibble) {
+-        final char c = Character.forDigit(nibble, 16);
+-        if (c == Character.MIN_VALUE) {
+-            throw new IllegalArgumentException("nibble value not between 0 and 15: " + nibble);
+-        }
+-        return c;
+-    }
+-
+-    /**
+-     * Converts the 4 LSB of an int to a hexadecimal digit encoded using the MSB0 bit ordering.
+-     *
+-     * <p>
+-     * 0 returns '0'
+-     * </p>
+-     * <p>
+-     * 1 returns '8'
+-     * </p>
+-     * <p>
+-     * 10 returns '5' and so on...
+-     * </p>
+-     *
+-     * @param nibble the 4 bits to convert.
+-     * @return a hexadecimal digit representing the 4 LSB of {@code nibble}.
+-     * @throws IllegalArgumentException if {@code nibble < 0} or {@code nibble > 15}.
+-     */
+-    public static char intToHexDigitMsb0(final int nibble) {
+-        switch (nibble) {
+-        case 0x0:
+-            return '0';
+-        case 0x1:
+-            return '8';
+-        case 0x2:
+-            return '4';
+-        case 0x3:
+-            return 'c';
+-        case 0x4:
+-            return '2';
+-        case 0x5:
+-            return 'a';
+-        case 0x6:
+-            return '6';
+-        case 0x7:
+-            return 'e';
+-        case 0x8:
+-            return '1';
+-        case 0x9:
+-            return '9';
+-        case 0xA:
+-            return '5';
+-        case 0xB:
+-            return 'd';
+-        case 0xC:
+-            return '3';
+-        case 0xD:
+-            return 'b';
+-        case 0xE:
+-            return '7';
+-        case 0xF:
+-            return 'f';
+-        default:
+-            throw new IllegalArgumentException("nibble value not between 0 and 15: " + nibble);
+-        }
+-    }
+ 
+     /**
+      * Converts an int into an array of short using the default (little-endian, LSB0) byte and bit ordering.

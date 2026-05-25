@@ -1,0 +1,1 @@
+2026-05-24T12:50:38.423101Z ERROR codex_core::tools::router: error=exec_command failed for `/bin/bash -lc 'rm -rf .m2repo && git status --short'`: CreateProcess { message: "Rejected(\"`/bin/bash -lc 'rm -rf .m2repo && git status --short'` rejected: blocked by policy\")" }

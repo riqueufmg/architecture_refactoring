@@ -1,0 +1,12 @@
+2026-05-24T10:05:28.786777Z ERROR codex_core::tools::router: error=apply_patch verification failed: Failed to find expected lines in /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/time/FastDateParser.java:
+import java.util.TimeZone;
+import java.util.TreeMap;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+2026-05-24T10:05:38.064403Z ERROR codex_core::tools::router: error=apply_patch verification failed: Failed to find expected lines in /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/test/java/org/apache/commons/lang3/time/DateFormatUtilsTest.java:
+import java.util.Locale;
+import java.util.TimeZone;
+
+import org.apache.commons.lang3.LocaleUtils;
+import org.apache.commons.lang3.SerializationUtils;
+import org.apache.commons.lang3.time.TimeZonesTest.ThreeLetterTimeZoneIdDataProvider;

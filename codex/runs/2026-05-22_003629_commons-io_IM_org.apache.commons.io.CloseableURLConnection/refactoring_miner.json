@@ -1,0 +1,255 @@
+{
+"commits": [
+{
+	"repository": "https://github.com/apache/commons-io",
+	"sha1": "5a47ab8728b5736850a0274facf522e1428ef36d",
+	"url": "https://github.com/apache/commons-io/commit/5a47ab8728b5736850a0274facf522e1428ef36d",
+	"refactorings": [{
+	"type": "Remove Method Annotation",
+	"description": "Remove Method Annotation @Override in method public getInputStream() : InputStream from class org.apache.commons.io.CloseableURLConnection",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/CloseableURLConnection.java",
+		"startLine": 175,
+		"endLine": 175,
+		"startColumn": 5,
+		"endColumn": 14,
+		"codeElementType": "ANNOTATION",
+		"description": "removed annotation",
+		"codeElement": "@Override"
+}, {
+		"filePath": "src/main/java/org/apache/commons/io/CloseableURLConnection.java",
+		"startLine": 175,
+		"endLine": 178,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public getInputStream() : InputStream"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/CloseableURLConnection.java",
+		"startLine": 49,
+		"endLine": 51,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with removed annotation",
+		"codeElement": "package getInputStream() : InputStream"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier public to package in method package getInputStream() : InputStream from class org.apache.commons.io.CloseableURLConnection",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/CloseableURLConnection.java",
+		"startLine": 175,
+		"endLine": 178,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public getInputStream() : InputStream"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/CloseableURLConnection.java",
+		"startLine": 49,
+		"endLine": 51,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "package getInputStream() : InputStream"
+}]
+},
+{
+	"type": "Remove Method Annotation",
+	"description": "Remove Method Annotation @Override in method public setConnectTimeout(timeout int) : void from class org.apache.commons.io.CloseableURLConnection",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/CloseableURLConnection.java",
+		"startLine": 230,
+		"endLine": 230,
+		"startColumn": 5,
+		"endColumn": 14,
+		"codeElementType": "ANNOTATION",
+		"description": "removed annotation",
+		"codeElement": "@Override"
+}, {
+		"filePath": "src/main/java/org/apache/commons/io/CloseableURLConnection.java",
+		"startLine": 230,
+		"endLine": 233,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public setConnectTimeout(timeout int) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/CloseableURLConnection.java",
+		"startLine": 53,
+		"endLine": 55,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with removed annotation",
+		"codeElement": "package setConnectTimeout(timeout int) : void"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier public to package in method package setConnectTimeout(timeout int) : void from class org.apache.commons.io.CloseableURLConnection",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/CloseableURLConnection.java",
+		"startLine": 230,
+		"endLine": 233,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public setConnectTimeout(timeout int) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/CloseableURLConnection.java",
+		"startLine": 53,
+		"endLine": 55,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "package setConnectTimeout(timeout int) : void"
+}]
+},
+{
+	"type": "Remove Method Annotation",
+	"description": "Remove Method Annotation @Override in method public setReadTimeout(timeout int) : void from class org.apache.commons.io.CloseableURLConnection",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/CloseableURLConnection.java",
+		"startLine": 255,
+		"endLine": 255,
+		"startColumn": 5,
+		"endColumn": 14,
+		"codeElementType": "ANNOTATION",
+		"description": "removed annotation",
+		"codeElement": "@Override"
+}, {
+		"filePath": "src/main/java/org/apache/commons/io/CloseableURLConnection.java",
+		"startLine": 255,
+		"endLine": 258,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public setReadTimeout(timeout int) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/CloseableURLConnection.java",
+		"startLine": 57,
+		"endLine": 59,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with removed annotation",
+		"codeElement": "package setReadTimeout(timeout int) : void"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier public to package in method package setReadTimeout(timeout int) : void from class org.apache.commons.io.CloseableURLConnection",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/CloseableURLConnection.java",
+		"startLine": 255,
+		"endLine": 258,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public setReadTimeout(timeout int) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/CloseableURLConnection.java",
+		"startLine": 57,
+		"endLine": 59,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "package setReadTimeout(timeout int) : void"
+}]
+},
+{
+	"type": "Move Attribute",
+	"description": "Move Attribute private urlConnection : URLConnection from class org.apache.commons.io.CloseableURLConnection to private urlConnection : URLConnection from class org.apache.commons.io.URLConnectionAdapter",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/CloseableURLConnection.java",
+		"startLine": 43,
+		"endLine": 43,
+		"startColumn": 33,
+		"endColumn": 46,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "private urlConnection : URLConnection"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/URLConnectionAdapter.java",
+		"startLine": 29,
+		"endLine": 29,
+		"startColumn": 33,
+		"endColumn": 46,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "moved attribute declaration",
+		"codeElement": "private urlConnection : URLConnection"
+}]
+},
+{
+	"type": "Extract Class",
+	"description": "Extract Class org.apache.commons.io.URLConnectionAdapter from class org.apache.commons.io.CloseableURLConnection",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/CloseableURLConnection.java",
+		"startLine": 30,
+		"endLine": 275,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original type declaration",
+		"codeElement": "org.apache.commons.io.CloseableURLConnection"
+}, {
+		"filePath": "src/main/java/org/apache/commons/io/CloseableURLConnection.java",
+		"startLine": 43,
+		"endLine": 43,
+		"startColumn": 33,
+		"endColumn": 46,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "private urlConnection : URLConnection"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/CloseableURLConnection.java",
+		"startLine": 26,
+		"endLine": 65,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "type declaration after extraction",
+		"codeElement": "org.apache.commons.io.CloseableURLConnection"
+}, {
+		"filePath": "src/main/java/org/apache/commons/io/URLConnectionAdapter.java",
+		"startLine": 24,
+		"endLine": 54,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "extracted type declaration",
+		"codeElement": "org.apache.commons.io.URLConnectionAdapter"
+}, {
+		"filePath": "src/main/java/org/apache/commons/io/URLConnectionAdapter.java",
+		"startLine": 29,
+		"endLine": 29,
+		"startColumn": 33,
+		"endColumn": 46,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "extracted attribute declaration",
+		"codeElement": "private urlConnection : URLConnection"
+}]
+}
+]
+}]
+}

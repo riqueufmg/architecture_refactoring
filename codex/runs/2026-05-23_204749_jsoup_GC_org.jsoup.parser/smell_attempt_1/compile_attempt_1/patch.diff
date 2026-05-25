@@ -1,0 +1,252 @@
+diff --git a/src/main/java/org/jsoup/parser/HtmlTreeBuilder.java b/src/main/java/org/jsoup/parser/HtmlTreeBuilder.java
+index f31f6f19..d2b3709b 100644
+--- a/src/main/java/org/jsoup/parser/HtmlTreeBuilder.java
++++ b/src/main/java/org/jsoup/parser/HtmlTreeBuilder.java
+@@ -12,6 +12,7 @@ import org.jsoup.nodes.Element;
+ import org.jsoup.nodes.FormElement;
+ import org.jsoup.nodes.Node;
+ import org.jsoup.nodes.TextNode;
++import org.jsoup.parser.error.ParseError;
+ import org.jspecify.annotations.Nullable;
+ 
+ import java.io.Reader;
+diff --git a/src/main/java/org/jsoup/parser/ParseError.java b/src/main/java/org/jsoup/parser/ParseError.java
+deleted file mode 100644
+index a82b7835..00000000
+--- a/src/main/java/org/jsoup/parser/ParseError.java
++++ /dev/null
+@@ -1,63 +0,0 @@
+-package org.jsoup.parser;
+-
+-/**
+- * A Parse Error records an error in the input HTML that occurs in either the tokenisation or the tree building phase.
+- */
+-public class ParseError {
+-    private final int pos;
+-    private final String cursorPos;
+-    private final String errorMsg;
+-
+-    ParseError(CharacterReader reader, String errorMsg) {
+-        pos = reader.pos();
+-        cursorPos = reader.posLineCol();
+-        this.errorMsg = errorMsg;
+-    }
+-
+-    ParseError(CharacterReader reader, String errorFormat, Object... args) {
+-        pos = reader.pos();
+-        cursorPos = reader.posLineCol();
+-        this.errorMsg = String.format(errorFormat, args);
+-    }
+-
+-    ParseError(int pos, String errorMsg) {
+-        this.pos = pos;
+-        cursorPos = String.valueOf(pos);
+-        this.errorMsg = errorMsg;
+-    }
+-
+-    ParseError(int pos, String errorFormat, Object... args) {
+-        this.pos = pos;
+-        cursorPos = String.valueOf(pos);
+-        this.errorMsg = String.format(errorFormat, args);
+-    }
+-
+-    /**
+-     * Retrieve the error message.
+-     * @return the error message.
+-     */
+-    public String getErrorMessage() {
+-        return errorMsg;
+-    }
+-
+-    /**
+-     * Retrieves the offset of the error.
+-     * @return error offset within input
+-     */
+-    public int getPosition() {
+-        return pos;
+-    }
+-
+-    /**
+-     Get the formatted line:column cursor position where the error occurred.
+-     @return line:number cursor position
+-     */
+-    public String getCursorPos() {
+-        return cursorPos;
+-    }
+-
+-    @Override
+-    public String toString() {
+-        return "<" + cursorPos + ">: " + errorMsg;
+-    }
+-}
+diff --git a/src/main/java/org/jsoup/parser/ParseErrorList.java b/src/main/java/org/jsoup/parser/ParseErrorList.java
+deleted file mode 100644
+index 969c862d..00000000
+--- a/src/main/java/org/jsoup/parser/ParseErrorList.java
++++ /dev/null
+@@ -1,50 +0,0 @@
+-package org.jsoup.parser;
+-
+-import java.util.ArrayList;
+-
+-/**
+- * A container for ParseErrors.
+- * 
+- * @author Jonathan Hedley
+- */
+-public class ParseErrorList extends ArrayList<ParseError>{
+-    private static final int INITIAL_CAPACITY = 16;
+-    private final int initialCapacity;
+-    private final int maxSize;
+-    
+-    ParseErrorList(int initialCapacity, int maxSize) {
+-        super(initialCapacity);
+-        this.initialCapacity = initialCapacity;
+-        this.maxSize = maxSize;
+-    }
+-
+-    /**
+-     Create a new ParseErrorList with the same settings, but no errors in the list
+-     @param copy initial and max size details to copy
+-     */
+-    ParseErrorList(ParseErrorList copy) {
+-        this(copy.initialCapacity, copy.maxSize);
+-    }
+-    
+-    boolean canAddError() {
+-        return size() < maxSize;
+-    }
+-
+-    int getMaxSize() {
+-        return maxSize;
+-    }
+-
+-    public static ParseErrorList noTracking() {
+-        return new ParseErrorList(0, 0);
+-    }
+-    
+-    public static ParseErrorList tracking(int maxSize) {
+-        return new ParseErrorList(INITIAL_CAPACITY, maxSize);
+-    }
+-
+-    @Override
+-    public Object clone() {
+-        // all class fields are primitive, so native clone is enough.
+-        return super.clone();
+-    }
+-}
+diff --git a/src/main/java/org/jsoup/parser/Parser.java b/src/main/java/org/jsoup/parser/Parser.java
+index 5dd8eb7f..fb18e74d 100644
+--- a/src/main/java/org/jsoup/parser/Parser.java
++++ b/src/main/java/org/jsoup/parser/Parser.java
+@@ -4,6 +4,7 @@ import org.jsoup.helper.Validate;
+ import org.jsoup.nodes.Document;
+ import org.jsoup.nodes.Element;
+ import org.jsoup.nodes.Node;
++import org.jsoup.parser.error.ParseErrorList;
+ import org.jspecify.annotations.Nullable;
+ 
+ import java.io.Reader;
+diff --git a/src/main/java/org/jsoup/parser/Tokeniser.java b/src/main/java/org/jsoup/parser/Tokeniser.java
+index 2a5db368..3649d084 100644
+--- a/src/main/java/org/jsoup/parser/Tokeniser.java
++++ b/src/main/java/org/jsoup/parser/Tokeniser.java
+@@ -4,6 +4,8 @@ import org.jsoup.helper.Validate;
+ import org.jsoup.internal.StringUtil;
+ import org.jsoup.nodes.Document;
+ import org.jsoup.nodes.Entities;
++import org.jsoup.parser.error.ParseError;
++import org.jsoup.parser.error.ParseErrorList;
+ import org.jspecify.annotations.Nullable;
+ 
+ import java.util.Arrays;
+diff --git a/src/main/java/org/jsoup/parser/TreeBuilder.java b/src/main/java/org/jsoup/parser/TreeBuilder.java
+index db7069c7..89b7a127 100644
+--- a/src/main/java/org/jsoup/parser/TreeBuilder.java
++++ b/src/main/java/org/jsoup/parser/TreeBuilder.java
+@@ -7,6 +7,8 @@ import org.jsoup.nodes.Document;
+ import org.jsoup.nodes.Element;
+ import org.jsoup.nodes.Node;
+ import org.jsoup.nodes.NodeInternals;
++import org.jsoup.parser.error.ParseError;
++import org.jsoup.parser.error.ParseErrorList;
+ import org.jsoup.select.NodeVisitor;
+ import org.jspecify.annotations.Nullable;
+ 
+diff --git a/src/main/java/org/jsoup/safety/Cleaner.java b/src/main/java/org/jsoup/safety/Cleaner.java
+index a1c10d31..6fe72232 100644
+--- a/src/main/java/org/jsoup/safety/Cleaner.java
++++ b/src/main/java/org/jsoup/safety/Cleaner.java
+@@ -10,8 +10,8 @@ import org.jsoup.nodes.Node;
+ import org.jsoup.nodes.NodeInternals;
+ import org.jsoup.nodes.Range;
+ import org.jsoup.nodes.TextNode;
+-import org.jsoup.parser.ParseErrorList;
+ import org.jsoup.parser.Parser;
++import org.jsoup.parser.error.ParseErrorList;
+ import org.jsoup.select.NodeVisitor;
+ 
+ import java.util.List;
+diff --git a/src/test/java/org/jsoup/integration/ParseTest.java b/src/test/java/org/jsoup/integration/ParseTest.java
+index d963d1d6..4e4473bb 100644
+--- a/src/test/java/org/jsoup/integration/ParseTest.java
++++ b/src/test/java/org/jsoup/integration/ParseTest.java
+@@ -4,8 +4,8 @@ import org.jsoup.Jsoup;
+ import org.jsoup.helper.DataUtil;
+ import org.jsoup.nodes.Document;
+ import org.jsoup.nodes.Element;
+-import org.jsoup.parser.ParseErrorList;
+ import org.jsoup.parser.Parser;
++import org.jsoup.parser.error.ParseErrorList;
+ import org.jsoup.select.Elements;
+ import org.junit.jupiter.api.Test;
+ 
+diff --git a/src/test/java/org/jsoup/parser/HtmlParserTest.java b/src/test/java/org/jsoup/parser/HtmlParserTest.java
+index a7336676..e21cb4f7 100644
+--- a/src/test/java/org/jsoup/parser/HtmlParserTest.java
++++ b/src/test/java/org/jsoup/parser/HtmlParserTest.java
+@@ -5,6 +5,8 @@ import org.jsoup.TextUtil;
+ import org.jsoup.integration.ParseTest;
+ import org.jsoup.internal.StringUtil;
+ import org.jsoup.nodes.*;
++import org.jsoup.parser.error.ParseError;
++import org.jsoup.parser.error.ParseErrorList;
+ import org.jsoup.safety.Safelist;
+ import org.jsoup.select.Elements;
+ import org.junit.jupiter.api.Nested;
+diff --git a/src/test/java/org/jsoup/parser/ParserTest.java b/src/test/java/org/jsoup/parser/ParserTest.java
+index bfebf6be..bee6e9e1 100644
+--- a/src/test/java/org/jsoup/parser/ParserTest.java
++++ b/src/test/java/org/jsoup/parser/ParserTest.java
+@@ -2,6 +2,7 @@ package org.jsoup.parser;
+ 
+ import org.jsoup.Jsoup;
+ import org.jsoup.nodes.Document;
++import org.jsoup.parser.error.ParseErrorList;
+ import org.junit.jupiter.api.Test;
+ 
+ import java.io.ByteArrayInputStream;
+diff --git a/src/test/java/org/jsoup/parser/TokeniserStateTest.java b/src/test/java/org/jsoup/parser/TokeniserStateTest.java
+index fca73f95..db45bbc9 100644
+--- a/src/test/java/org/jsoup/parser/TokeniserStateTest.java
++++ b/src/test/java/org/jsoup/parser/TokeniserStateTest.java
+@@ -6,6 +6,7 @@ import org.jsoup.nodes.Comment;
+ import org.jsoup.nodes.Document;
+ import org.jsoup.nodes.Element;
+ import org.jsoup.nodes.TextNode;
++import org.jsoup.parser.error.ParseErrorList;
+ import org.jsoup.select.Elements;
+ import org.junit.jupiter.api.Test;
+ 
+diff --git a/src/test/java/org/jsoup/parser/XmlTreeBuilderTest.java b/src/test/java/org/jsoup/parser/XmlTreeBuilderTest.java
+index 4d82c613..9ca2248b 100644
+--- a/src/test/java/org/jsoup/parser/XmlTreeBuilderTest.java
++++ b/src/test/java/org/jsoup/parser/XmlTreeBuilderTest.java
+@@ -3,6 +3,7 @@ package org.jsoup.parser;
+ import org.jsoup.Jsoup;
+ import org.jsoup.TextUtil;
+ import org.jsoup.nodes.*;
++import org.jsoup.parser.error.ParseErrorList;
+ import org.jsoup.select.Elements;
+ import org.junit.jupiter.api.Test;
+ 

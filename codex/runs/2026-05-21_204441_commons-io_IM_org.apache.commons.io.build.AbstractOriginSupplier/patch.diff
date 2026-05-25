@@ -1,0 +1,282 @@
+diff --git a/src/main/java/org/apache/commons/io/build/AbstractOriginSupplier.java b/src/main/java/org/apache/commons/io/build/AbstractOriginSupplier.java
+index ba8e6b393..9ddca9c72 100644
+--- a/src/main/java/org/apache/commons/io/build/AbstractOriginSupplier.java
++++ b/src/main/java/org/apache/commons/io/build/AbstractOriginSupplier.java
+@@ -26,21 +26,9 @@
+ import java.net.URI;
+ import java.nio.channels.Channel;
+ import java.nio.file.Path;
+-import java.nio.file.Paths;
+ 
+ import org.apache.commons.io.IORandomAccessFile;
+-import org.apache.commons.io.build.AbstractOrigin.ByteArrayOrigin;
+-import org.apache.commons.io.build.AbstractOrigin.ChannelOrigin;
+-import org.apache.commons.io.build.AbstractOrigin.CharSequenceOrigin;
+ import org.apache.commons.io.build.AbstractOrigin.FileOrigin;
+-import org.apache.commons.io.build.AbstractOrigin.IORandomAccessFileOrigin;
+-import org.apache.commons.io.build.AbstractOrigin.InputStreamOrigin;
+-import org.apache.commons.io.build.AbstractOrigin.OutputStreamOrigin;
+-import org.apache.commons.io.build.AbstractOrigin.PathOrigin;
+-import org.apache.commons.io.build.AbstractOrigin.RandomAccessFileOrigin;
+-import org.apache.commons.io.build.AbstractOrigin.ReaderOrigin;
+-import org.apache.commons.io.build.AbstractOrigin.URIOrigin;
+-import org.apache.commons.io.build.AbstractOrigin.WriterOrigin;
+ 
+ /**
+  * Abstracts <em>building</em> an instance of type {@code T} where {@code T} is unbounded from a wrapped {@linkplain AbstractOrigin origin}.
+@@ -51,38 +39,6 @@
+  */
+ public abstract class AbstractOriginSupplier<T, B extends AbstractOriginSupplier<T, B>> extends AbstractSupplier<T, B> {
+ 
+-    /**
+-     * Constructs a new byte array origin for a byte array.
+-     *
+-     * @param origin the byte array.
+-     * @return a new byte array origin.
+-     */
+-    protected static ByteArrayOrigin newByteArrayOrigin(final byte[] origin) {
+-        return new ByteArrayOrigin(origin);
+-    }
+-
+-    /**
+-     * Constructs a new channel origin for a channel.
+-     *
+-     * @param origin the channel.
+-     * @return a new channel origin.
+-     * @since 2.21.0
+-     */
+-    protected static ChannelOrigin newChannelOrigin(final Channel origin) {
+-        return new ChannelOrigin(origin);
+-    }
+-
+-    /**
+-     * Constructs a new CharSequence origin for a CharSequence.
+-     *
+-     * @param origin the CharSequence.
+-     * @return a new file origin.
+-     * @since 2.13.0
+-     */
+-    protected static CharSequenceOrigin newCharSequenceOrigin(final CharSequence origin) {
+-        return new CharSequenceOrigin(origin);
+-    }
+-
+     /**
+      * Constructs a new file origin for a file.
+      *
+@@ -90,7 +46,7 @@ protected static CharSequenceOrigin newCharSequenceOrigin(final CharSequence ori
+      * @return a new file origin.
+      */
+     protected static FileOrigin newFileOrigin(final File origin) {
+-        return new FileOrigin(origin);
++        return OriginFactory.newFileOrigin(origin);
+     }
+ 
+     /**
+@@ -100,99 +56,7 @@ protected static FileOrigin newFileOrigin(final File origin) {
+      * @return a new file origin.
+      */
+     protected static FileOrigin newFileOrigin(final String origin) {
+-        return new FileOrigin(new File(origin));
+-    }
+-
+-    /**
+-     * Constructs a new input stream origin for a file.
+-     *
+-     * @param origin the input stream.
+-     * @return a new input stream origin.
+-     */
+-    protected static InputStreamOrigin newInputStreamOrigin(final InputStream origin) {
+-        return new InputStreamOrigin(origin);
+-    }
+-
+-    /**
+-     * Constructs a new output stream origin for a file.
+-     *
+-     * @param origin the output stream.
+-     * @return a new output stream origin.
+-     */
+-    protected static OutputStreamOrigin newOutputStreamOrigin(final OutputStream origin) {
+-        return new OutputStreamOrigin(origin);
+-    }
+-
+-    /**
+-     * Constructs a new path origin for a file.
+-     *
+-     * @param origin the path.
+-     * @return a new path origin.
+-     */
+-    protected static PathOrigin newPathOrigin(final Path origin) {
+-        return new PathOrigin(origin);
+-    }
+-
+-    /**
+-     * Constructs a new path name origin for a path name.
+-     *
+-     * @param origin the path name.
+-     * @return a new path name origin.
+-     */
+-    protected static PathOrigin newPathOrigin(final String origin) {
+-        return new PathOrigin(Paths.get(origin));
+-    }
+-
+-    /**
+-     * Constructs a new RandomAccessFile origin for a RandomAccessFile.
+-     *
+-     * @param origin the reader.
+-     * @return a new reader origin.
+-     * @since 2.18.0
+-     */
+-    protected static IORandomAccessFileOrigin newRandomAccessFileOrigin(final IORandomAccessFile origin) {
+-        return new IORandomAccessFileOrigin(origin);
+-    }
+-
+-    /**
+-     * Constructs a new RandomAccessFile origin for a RandomAccessFile.
+-     *
+-     * @param origin the reader.
+-     * @return a new reader origin.
+-     * @since 2.18.0
+-     */
+-    protected static RandomAccessFileOrigin newRandomAccessFileOrigin(final RandomAccessFile origin) {
+-        return new RandomAccessFileOrigin(origin);
+-    }
+-
+-    /**
+-     * Constructs a new reader origin for a reader.
+-     *
+-     * @param origin the reader.
+-     * @return a new reader origin.
+-     */
+-    protected static ReaderOrigin newReaderOrigin(final Reader origin) {
+-        return new ReaderOrigin(origin);
+-    }
+-
+-    /**
+-     * Constructs a new reader origin for a URI.
+-     *
+-     * @param origin the URI.
+-     * @return a new URI origin.
+-     */
+-    protected static URIOrigin newURIOrigin(final URI origin) {
+-        return new URIOrigin(origin);
+-    }
+-
+-    /**
+-     * Constructs a new writer origin for a file.
+-     *
+-     * @param origin the writer.
+-     * @return a new writer.
+-     */
+-    protected static WriterOrigin newWriterOrigin(final Writer origin) {
+-        return new WriterOrigin(origin);
++        return OriginFactory.newFileOrigin(origin);
+     }
+ 
+     /**
+@@ -245,7 +109,7 @@ protected boolean hasOrigin() {
+      * @return {@code this} instance.
+      */
+     public B setByteArray(final byte[] origin) {
+-        return setOrigin(newByteArrayOrigin(origin));
++        return setOrigin(OriginFactory.newByteArrayOrigin(origin));
+     }
+ 
+     /**
+@@ -256,7 +120,7 @@ public B setByteArray(final byte[] origin) {
+      * @since 2.21.0
+      */
+     public B setChannel(final Channel origin) {
+-        return setOrigin(newChannelOrigin(origin));
++        return setOrigin(OriginFactory.newChannelOrigin(origin));
+     }
+ 
+     /**
+@@ -267,7 +131,7 @@ public B setChannel(final Channel origin) {
+      * @since 2.13.0
+      */
+     public B setCharSequence(final CharSequence origin) {
+-        return setOrigin(newCharSequenceOrigin(origin));
++        return setOrigin(OriginFactory.newCharSequenceOrigin(origin));
+     }
+ 
+     /**
+@@ -297,7 +161,7 @@ public B setFile(final String origin) {
+      * @return {@code this} instance.
+      */
+     public B setInputStream(final InputStream origin) {
+-        return setOrigin(newInputStreamOrigin(origin));
++        return setOrigin(OriginFactory.newInputStreamOrigin(origin));
+     }
+ 
+     /**
+@@ -318,7 +182,7 @@ protected B setOrigin(final AbstractOrigin<?, ?> origin) {
+      * @return {@code this} instance.
+      */
+     public B setOutputStream(final OutputStream origin) {
+-        return setOrigin(newOutputStreamOrigin(origin));
++        return setOrigin(OriginFactory.newOutputStreamOrigin(origin));
+     }
+ 
+     /**
+@@ -328,7 +192,7 @@ public B setOutputStream(final OutputStream origin) {
+      * @return {@code this} instance.
+      */
+     public B setPath(final Path origin) {
+-        return setOrigin(newPathOrigin(origin));
++        return setOrigin(OriginFactory.newPathOrigin(origin));
+     }
+ 
+     /**
+@@ -338,7 +202,7 @@ public B setPath(final Path origin) {
+      * @return {@code this} instance.
+      */
+     public B setPath(final String origin) {
+-        return setOrigin(newPathOrigin(origin));
++        return setOrigin(OriginFactory.newPathOrigin(origin));
+     }
+ 
+     /**
+@@ -349,7 +213,7 @@ public B setPath(final String origin) {
+      * @since 2.18.0
+      */
+     public B setRandomAccessFile(final IORandomAccessFile origin) {
+-        return setOrigin(newRandomAccessFileOrigin(origin));
++        return setOrigin(OriginFactory.newRandomAccessFileOrigin(origin));
+     }
+ 
+     /**
+@@ -360,7 +224,7 @@ public B setRandomAccessFile(final IORandomAccessFile origin) {
+      * @since 2.18.0
+      */
+     public B setRandomAccessFile(final RandomAccessFile origin) {
+-        return setOrigin(newRandomAccessFileOrigin(origin));
++        return setOrigin(OriginFactory.newRandomAccessFileOrigin(origin));
+     }
+ 
+     /**
+@@ -370,7 +234,7 @@ public B setRandomAccessFile(final RandomAccessFile origin) {
+      * @return {@code this} instance.
+      */
+     public B setReader(final Reader origin) {
+-        return setOrigin(newReaderOrigin(origin));
++        return setOrigin(OriginFactory.newReaderOrigin(origin));
+     }
+ 
+     /**
+@@ -380,7 +244,7 @@ public B setReader(final Reader origin) {
+      * @return {@code this} instance.
+      */
+     public B setURI(final URI origin) {
+-        return setOrigin(newURIOrigin(origin));
++        return setOrigin(OriginFactory.newURIOrigin(origin));
+     }
+ 
+     /**
+@@ -390,6 +254,6 @@ public B setURI(final URI origin) {
+      * @return {@code this} instance.
+      */
+     public B setWriter(final Writer origin) {
+-        return setOrigin(newWriterOrigin(origin));
++        return setOrigin(OriginFactory.newWriterOrigin(origin));
+     }
+ }

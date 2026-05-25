@@ -1,0 +1,230 @@
+{
+  "project_name": "commons-lang",
+  "smell": "IM",
+  "target_type": "class",
+  "target_name": "org.apache.commons.lang3.Conversion",
+  "initial_commit": "38f7109f4214300ae6eaf4bd76f5a7f1b2a10dc1",
+  "designite_before": {
+    "command": [
+      "/usr/lib/jvm/jdk-22.0.2-oracle-x64/bin/java",
+      "-jar",
+      "/data/henrique/langchain_prototype/codex/tools/DesigniteJava2.8.3.jar",
+      "-g",
+      "-i",
+      "/data/henrique/langchain_prototype/codex/data/repositories/commons-lang",
+      "-o",
+      "/data/henrique/langchain_prototype/codex/runs/2026-05-21_185347_commons-lang_IM_org.apache.commons.lang3.Conversion/designite_before"
+    ],
+    "returncode": 0,
+    "seconds": 24.13,
+    "ok": true,
+    "output_dir": "/data/henrique/langchain_prototype/codex/runs/2026-05-21_185347_commons-lang_IM_org.apache.commons.lang3.Conversion/designite_before",
+    "log_path": "runs/2026-05-21_185347_commons-lang_IM_org.apache.commons.lang3.Conversion/designite_before.log"
+  },
+  "smell_before": {
+    "present": true,
+    "matches_count": 1,
+    "matches": [
+      {
+        "file": "runs/2026-05-21_185347_commons-lang_IM_org.apache.commons.lang3.Conversion/designite_before/DesignSmells.csv",
+        "row_index": 18,
+        "row": {
+          "Project": "commons-lang",
+          "Package": "org.apache.commons.lang3",
+          "Class": "Conversion",
+          "Smell": "Insufficient Modularization",
+          "Description": "The tool detected the smell in this class becuase the class has bloated interface (large number of public methods). Total public methods in the class: 43 public methods",
+          "File": "/data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/Conversion.java"
+        }
+      }
+    ],
+    "searched_files": [
+      "runs/2026-05-21_185347_commons-lang_IM_org.apache.commons.lang3.Conversion/designite_before/DesignSmells.csv"
+    ]
+  },
+  "attempts": [
+    {
+      "smell_attempt": 1,
+      "compile_attempt": 1,
+      "attempt_dir": "runs/2026-05-21_185347_commons-lang_IM_org.apache.commons.lang3.Conversion/smell_attempt_1/compile_attempt_1",
+      "codex": {
+        "command": [
+          "npx",
+          "@openai/codex",
+          "exec",
+          "--cd",
+          "/data/henrique/langchain_prototype/codex/data/repositories/commons-lang",
+          "--sandbox",
+          "workspace-write",
+          "--json",
+          "--model",
+          "gpt-5.3-codex",
+          "-"
+        ],
+        "returncode": 0,
+        "seconds": 208.76,
+        "ok": true
+      },
+      "diff": {
+        "changed_files_count": 1,
+        "lines_added": 1,
+        "lines_deleted": 465
+      },
+      "maven": {
+        "command": [
+          "mvn",
+          "-q",
+          "-Djapicmp.skip=true",
+          "-Drat.skip=true",
+          "-Dcheckstyle.skip=true",
+          "-Dspotbugs.skip=true",
+          "-Dpmd.skip=true",
+          "-DskipITs",
+          "clean",
+          "verify"
+        ],
+        "returncode": 0,
+        "seconds": 204.46,
+        "ok": true
+      },
+      "codex_success": true,
+      "compile_success": true
+    },
+    {
+      "smell_attempt": 2,
+      "compile_attempt": 1,
+      "attempt_dir": "runs/2026-05-21_185347_commons-lang_IM_org.apache.commons.lang3.Conversion/smell_attempt_2/compile_attempt_1",
+      "codex": {
+        "command": [
+          "npx",
+          "@openai/codex",
+          "exec",
+          "--cd",
+          "/data/henrique/langchain_prototype/codex/data/repositories/commons-lang",
+          "--sandbox",
+          "workspace-write",
+          "--json",
+          "--model",
+          "gpt-5.3-codex",
+          "-"
+        ],
+        "returncode": 0,
+        "seconds": 259.8,
+        "ok": true
+      },
+      "diff": {
+        "changed_files_count": 1,
+        "lines_added": 1,
+        "lines_deleted": 1094
+      },
+      "maven": {
+        "command": [
+          "mvn",
+          "-q",
+          "-Djapicmp.skip=true",
+          "-Drat.skip=true",
+          "-Dcheckstyle.skip=true",
+          "-Dspotbugs.skip=true",
+          "-Dpmd.skip=true",
+          "-DskipITs",
+          "clean",
+          "verify"
+        ],
+        "returncode": 0,
+        "seconds": 201.79,
+        "ok": true
+      },
+      "codex_success": true,
+      "compile_success": true
+    }
+  ],
+  "codex": {
+    "command": [
+      "npx",
+      "@openai/codex",
+      "exec",
+      "--cd",
+      "/data/henrique/langchain_prototype/codex/data/repositories/commons-lang",
+      "--sandbox",
+      "workspace-write",
+      "--json",
+      "--model",
+      "gpt-5.3-codex",
+      "-"
+    ],
+    "returncode": 0,
+    "seconds": 259.8,
+    "ok": true
+  },
+  "diff": {
+    "changed_files_count": 1,
+    "lines_added": 1,
+    "lines_deleted": 1094
+  },
+  "maven": {
+    "command": [
+      "mvn",
+      "-q",
+      "-Djapicmp.skip=true",
+      "-Drat.skip=true",
+      "-Dcheckstyle.skip=true",
+      "-Dspotbugs.skip=true",
+      "-Dpmd.skip=true",
+      "-DskipITs",
+      "clean",
+      "verify"
+    ],
+    "returncode": 0,
+    "seconds": 201.79,
+    "ok": true
+  },
+  "designite_after": {
+    "command": [
+      "/usr/lib/jvm/jdk-22.0.2-oracle-x64/bin/java",
+      "-jar",
+      "/data/henrique/langchain_prototype/codex/tools/DesigniteJava2.8.3.jar",
+      "-g",
+      "-i",
+      "/data/henrique/langchain_prototype/codex/data/repositories/commons-lang",
+      "-o",
+      "/data/henrique/langchain_prototype/codex/runs/2026-05-21_185347_commons-lang_IM_org.apache.commons.lang3.Conversion/smell_attempt_2/designite_after"
+    ],
+    "returncode": 0,
+    "seconds": 26.74,
+    "ok": true,
+    "output_dir": "/data/henrique/langchain_prototype/codex/runs/2026-05-21_185347_commons-lang_IM_org.apache.commons.lang3.Conversion/smell_attempt_2/designite_after",
+    "log_path": "runs/2026-05-21_185347_commons-lang_IM_org.apache.commons.lang3.Conversion/designite_after_smell_attempt_2.log"
+  },
+  "smell_after": {
+    "present": false,
+    "matches_count": 0,
+    "matches": [],
+    "searched_files": [
+      "runs/2026-05-21_185347_commons-lang_IM_org.apache.commons.lang3.Conversion/smell_attempt_2/designite_after/DesignSmells.csv"
+    ]
+  },
+  "smell_removed": true,
+  "final_commit": {
+    "created": true,
+    "commit": "944b5b506ce24f756fb7910acb23d7bd7469ecf5",
+    "message": "Temporary Codex refactoring result for 2026-05-21_185347_commons-lang_IM_org.apache.commons.lang3.Conversion"
+  },
+  "refactoring_miner": {
+    "command": [
+      "/data/henrique/langchain_prototype/codex/tools/RefactoringMiner-3.0.7/bin/RefactoringMiner",
+      "-bc",
+      "/data/henrique/langchain_prototype/codex/data/repositories/commons-lang",
+      "38f7109f4214300ae6eaf4bd76f5a7f1b2a10dc1",
+      "944b5b506ce24f756fb7910acb23d7bd7469ecf5",
+      "-json",
+      "/data/henrique/langchain_prototype/codex/runs/2026-05-21_185347_commons-lang_IM_org.apache.commons.lang3.Conversion/refactoring_miner.json"
+    ],
+    "returncode": 1,
+    "seconds": 0.11,
+    "ok": false,
+    "output_json": "/data/henrique/langchain_prototype/codex/runs/2026-05-21_185347_commons-lang_IM_org.apache.commons.lang3.Conversion/refactoring_miner.json",
+    "log_path": "/data/henrique/langchain_prototype/codex/runs/2026-05-21_185347_commons-lang_IM_org.apache.commons.lang3.Conversion/refactoring_miner.log",
+    "refactorings_count": 0,
+    "refactoring_types": {}
+  }
+}

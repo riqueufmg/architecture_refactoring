@@ -1,0 +1,229 @@
+{
+  "project_name": "commons-lang",
+  "smell": "GC",
+  "target_type": "package",
+  "target_name": "org.apache.commons.lang3.reflect",
+  "initial_commit": "0b83a3dc4d1279b4e74b74072f95bd8c989e1d91",
+  "designite_before": {
+    "command": [
+      "/usr/lib/jvm/jdk-22.0.2-oracle-x64/bin/java",
+      "-jar",
+      "/data/henrique/langchain_prototype/codex/tools/DesigniteJava2.8.3.jar",
+      "-g",
+      "-i",
+      "/data/henrique/langchain_prototype/codex/data/repositories/commons-lang",
+      "-o",
+      "/data/henrique/langchain_prototype/codex/runs/2026-05-24_081620_commons-lang_GC_org.apache.commons.lang3.reflect/designite_before"
+    ],
+    "returncode": 0,
+    "seconds": 25.87,
+    "ok": true,
+    "output_dir": "/data/henrique/langchain_prototype/codex/runs/2026-05-24_081620_commons-lang_GC_org.apache.commons.lang3.reflect/designite_before",
+    "log_path": "runs/2026-05-24_081620_commons-lang_GC_org.apache.commons.lang3.reflect/designite_before.log"
+  },
+  "smell_before": {
+    "present": true,
+    "matches_count": 1,
+    "matches": [
+      {
+        "file": "runs/2026-05-24_081620_commons-lang_GC_org.apache.commons.lang3.reflect/designite_before/ArchitectureSmells.csv",
+        "row_index": 32,
+        "row": {
+          "Project": "commons-lang",
+          "Package": "org.apache.commons.lang3.reflect",
+          "Smell": "God Component",
+          "Description": "The tool detected the smell in this component because the component contains high number of classes. Number of classes in the component are: 91"
+        }
+      }
+    ],
+    "searched_files": [
+      "runs/2026-05-24_081620_commons-lang_GC_org.apache.commons.lang3.reflect/designite_before/ArchitectureSmells.csv"
+    ]
+  },
+  "attempts": [
+    {
+      "smell_attempt": 1,
+      "compile_attempt": 1,
+      "attempt_dir": "runs/2026-05-24_081620_commons-lang_GC_org.apache.commons.lang3.reflect/smell_attempt_1/compile_attempt_1",
+      "codex": {
+        "command": [
+          "npx",
+          "@openai/codex",
+          "exec",
+          "--cd",
+          "/data/henrique/langchain_prototype/codex/data/repositories/commons-lang",
+          "--sandbox",
+          "workspace-write",
+          "--json",
+          "--model",
+          "gpt-5.3-codex",
+          "-"
+        ],
+        "returncode": 0,
+        "seconds": 77.67,
+        "ok": true
+      },
+      "diff": {
+        "changed_files_count": 4,
+        "lines_added": 3,
+        "lines_deleted": 160
+      },
+      "maven": {
+        "command": [
+          "mvn",
+          "-q",
+          "-Djapicmp.skip=true",
+          "-Drat.skip=true",
+          "-Dcheckstyle.skip=true",
+          "-Dspotbugs.skip=true",
+          "-Dpmd.skip=true",
+          "-DskipITs",
+          "clean",
+          "verify"
+        ],
+        "returncode": 1,
+        "seconds": 764.22,
+        "ok": false
+      },
+      "codex_success": true,
+      "compile_success": false
+    },
+    {
+      "smell_attempt": 1,
+      "compile_attempt": 2,
+      "attempt_dir": "runs/2026-05-24_081620_commons-lang_GC_org.apache.commons.lang3.reflect/smell_attempt_1/compile_attempt_2",
+      "codex": {
+        "command": [
+          "npx",
+          "@openai/codex",
+          "exec",
+          "--cd",
+          "/data/henrique/langchain_prototype/codex/data/repositories/commons-lang",
+          "--sandbox",
+          "workspace-write",
+          "--json",
+          "--model",
+          "gpt-5.3-codex",
+          "-"
+        ],
+        "returncode": 0,
+        "seconds": 113.17,
+        "ok": true
+      },
+      "diff": {
+        "changed_files_count": 4,
+        "lines_added": 3,
+        "lines_deleted": 160
+      },
+      "maven": {
+        "command": [
+          "mvn",
+          "-q",
+          "-Djapicmp.skip=true",
+          "-Drat.skip=true",
+          "-Dcheckstyle.skip=true",
+          "-Dspotbugs.skip=true",
+          "-Dpmd.skip=true",
+          "-DskipITs",
+          "clean",
+          "verify"
+        ],
+        "returncode": 1,
+        "seconds": 840.13,
+        "ok": false
+      },
+      "codex_success": true,
+      "compile_success": false
+    },
+    {
+      "smell_attempt": 1,
+      "compile_attempt": 3,
+      "attempt_dir": "runs/2026-05-24_081620_commons-lang_GC_org.apache.commons.lang3.reflect/smell_attempt_1/compile_attempt_3",
+      "codex": {
+        "command": [
+          "npx",
+          "@openai/codex",
+          "exec",
+          "--cd",
+          "/data/henrique/langchain_prototype/codex/data/repositories/commons-lang",
+          "--sandbox",
+          "workspace-write",
+          "--json",
+          "--model",
+          "gpt-5.3-codex",
+          "-"
+        ],
+        "returncode": 0,
+        "seconds": 142.2,
+        "ok": true
+      },
+      "diff": {
+        "changed_files_count": 4,
+        "lines_added": 3,
+        "lines_deleted": 160
+      },
+      "maven": {
+        "command": [
+          "mvn",
+          "-q",
+          "-Djapicmp.skip=true",
+          "-Drat.skip=true",
+          "-Dcheckstyle.skip=true",
+          "-Dspotbugs.skip=true",
+          "-Dpmd.skip=true",
+          "-DskipITs",
+          "clean",
+          "verify"
+        ],
+        "returncode": 1,
+        "seconds": 663.1,
+        "ok": false
+      },
+      "codex_success": true,
+      "compile_success": false
+    }
+  ],
+  "codex": {
+    "command": [
+      "npx",
+      "@openai/codex",
+      "exec",
+      "--cd",
+      "/data/henrique/langchain_prototype/codex/data/repositories/commons-lang",
+      "--sandbox",
+      "workspace-write",
+      "--json",
+      "--model",
+      "gpt-5.3-codex",
+      "-"
+    ],
+    "returncode": 0,
+    "seconds": 142.2,
+    "ok": true
+  },
+  "diff": {
+    "changed_files_count": 4,
+    "lines_added": 3,
+    "lines_deleted": 160
+  },
+  "maven": {
+    "command": [
+      "mvn",
+      "-q",
+      "-Djapicmp.skip=true",
+      "-Drat.skip=true",
+      "-Dcheckstyle.skip=true",
+      "-Dspotbugs.skip=true",
+      "-Dpmd.skip=true",
+      "-DskipITs",
+      "clean",
+      "verify"
+    ],
+    "returncode": 1,
+    "seconds": 663.1,
+    "ok": false
+  },
+  "designite_after": null,
+  "smell_after": null,
+  "smell_removed": false
+}

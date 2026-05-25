@@ -1,0 +1,303 @@
+diff --git a/src/main/java/org/apache/commons/io/input/AbstractLineEndingInputStream.java b/src/main/java/org/apache/commons/io/input/AbstractLineEndingInputStream.java
+deleted file mode 100644
+index e42462cf1..000000000
+--- a/src/main/java/org/apache/commons/io/input/AbstractLineEndingInputStream.java
++++ /dev/null
+@@ -1,67 +0,0 @@
+-/*
+- * Licensed to the Apache Software Foundation (ASF) under one or more
+- * contributor license agreements.  See the NOTICE file distributed with
+- * this work for additional information regarding copyright ownership.
+- * The ASF licenses this file to You under the Apache License, Version 2.0
+- * (the "License"); you may not use this file except in compliance with
+- * the License.  You may obtain a copy of the License at
+- *
+- *      https://www.apache.org/licenses/LICENSE-2.0
+- *
+- * Unless required by applicable law or agreed to in writing, software
+- * distributed under the License is distributed on an "AS IS" BASIS,
+- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+- * See the License for the specific language governing permissions and
+- * limitations under the License.
+- */
+-
+-package org.apache.commons.io.input;
+-
+-import java.io.IOException;
+-import java.io.InputStream;
+-
+-/**
+- * Abstracts {@link UnixLineEndingInputStream} and {@link WindowsLineEndingInputStream} to reduce duplication.
+- */
+-abstract class AbstractLineEndingInputStream extends InputStream {
+-
+-    boolean atEos;
+-
+-    boolean atSlashCr;
+-
+-    boolean atSlashLf;
+-
+-    final InputStream in;
+-
+-    final boolean lineFeedAtEos;
+-
+-    /**
+-     * Constructs an input stream that filters another stream
+-     *
+-     * @param inputStream   The input stream to wrap.
+-     * @param lineFeedAtEos true to ensure that the file ends with LF.
+-     */
+-    AbstractLineEndingInputStream(final InputStream inputStream, final boolean lineFeedAtEos) {
+-        this.in = inputStream;
+-        this.lineFeedAtEos = lineFeedAtEos;
+-    }
+-
+-    /**
+-     * Closes the stream. Also closes the underlying stream.
+-     *
+-     * @throws IOException If an I/O error occurs.
+-     */
+-    @Override
+-    public void close() throws IOException {
+-        super.close();
+-        in.close();
+-    }
+-
+-    /**
+-     * {@inheritDoc}
+-     */
+-    @Override
+-    public synchronized void mark(final int readLimit) {
+-        throw UnsupportedOperationExceptions.mark();
+-    }
+-}
+diff --git a/src/main/java/org/apache/commons/io/input/UnixLineEndingInputStream.java b/src/main/java/org/apache/commons/io/input/UnixLineEndingInputStream.java
+deleted file mode 100644
+index 88f31b785..000000000
+--- a/src/main/java/org/apache/commons/io/input/UnixLineEndingInputStream.java
++++ /dev/null
+@@ -1,100 +0,0 @@
+-/*
+- * Licensed to the Apache Software Foundation (ASF) under one or more
+- * contributor license agreements.  See the NOTICE file distributed with
+- * this work for additional information regarding copyright ownership.
+- * The ASF licenses this file to You under the Apache License, Version 2.0
+- * (the "License"); you may not use this file except in compliance with
+- * the License.  You may obtain a copy of the License at
+- *
+- *      https://www.apache.org/licenses/LICENSE-2.0
+- *
+- * Unless required by applicable law or agreed to in writing, software
+- * distributed under the License is distributed on an "AS IS" BASIS,
+- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+- * See the License for the specific language governing permissions and
+- * limitations under the License.
+- */
+-package org.apache.commons.io.input;
+-
+-import static org.apache.commons.io.IOUtils.CR;
+-import static org.apache.commons.io.IOUtils.EOF;
+-import static org.apache.commons.io.IOUtils.LF;
+-
+-import java.io.IOException;
+-import java.io.InputStream;
+-
+-/**
+- * A filtering input stream that ensures the content will have UNIX-style line endings, LF.
+- *
+- * @since 2.5
+- */
+-public class UnixLineEndingInputStream extends AbstractLineEndingInputStream {
+-
+-    /**
+-     * Constructs an input stream that filters another stream
+-     *
+-     * @param inputStream                        The input stream to wrap.
+-     * @param lineFeedAtEos true to ensure that the file ends with LF.
+-     */
+-    public UnixLineEndingInputStream(final InputStream inputStream, final boolean lineFeedAtEos) {
+-        super(inputStream, lineFeedAtEos);
+-    }
+-
+-    /**
+-     * Handles the end of stream condition.
+-     *
+-     * @param previousWasSlashCr Indicates if the last seen was a {@code \r}.
+-     * @return The next char to output to the stream.
+-     */
+-    private int handleEos(final boolean previousWasSlashCr) {
+-        if (previousWasSlashCr || !lineFeedAtEos) {
+-            return EOF;
+-        }
+-        if (!atSlashLf) {
+-            atSlashLf = true;
+-            return LF;
+-        }
+-        return EOF;
+-    }
+-
+-    /**
+-     * {@inheritDoc}
+-     */
+-    @Override
+-    public synchronized int read() throws IOException {
+-        final boolean previousWasSlashR = atSlashCr;
+-        if (atEos) {
+-            return handleEos(previousWasSlashR);
+-        }
+-        final int target = readUpdate();
+-        if (atEos) {
+-            return handleEos(previousWasSlashR);
+-        }
+-        if (atSlashCr) {
+-            return LF;
+-        }
+-
+-        if (previousWasSlashR && atSlashLf) {
+-            return read();
+-        }
+-
+-        return target;
+-    }
+-
+-    /**
+-     * Reads the next item from the target, updating internal flags in the process
+-     *
+-     * @return the next int read from the target stream.
+-     * @throws IOException If an I/O error occurs.
+-     */
+-    private int readUpdate() throws IOException {
+-        final int target = this.in.read();
+-        atEos = target == EOF;
+-        if (atEos) {
+-            return target;
+-        }
+-        atSlashCr = target == CR;
+-        atSlashLf = target == LF;
+-        return target;
+-    }
+-}
+diff --git a/src/main/java/org/apache/commons/io/input/WindowsLineEndingInputStream.java b/src/main/java/org/apache/commons/io/input/WindowsLineEndingInputStream.java
+deleted file mode 100644
+index 24285adb6..000000000
+--- a/src/main/java/org/apache/commons/io/input/WindowsLineEndingInputStream.java
++++ /dev/null
+@@ -1,94 +0,0 @@
+-/*
+- * Licensed to the Apache Software Foundation (ASF) under one or more
+- * contributor license agreements.  See the NOTICE file distributed with
+- * this work for additional information regarding copyright ownership.
+- * The ASF licenses this file to You under the Apache License, Version 2.0
+- * (the "License"); you may not use this file except in compliance with
+- * the License.  You may obtain a copy of the License at
+- *
+- *      https://www.apache.org/licenses/LICENSE-2.0
+- *
+- * Unless required by applicable law or agreed to in writing, software
+- * distributed under the License is distributed on an "AS IS" BASIS,
+- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+- * See the License for the specific language governing permissions and
+- * limitations under the License.
+- */
+-package org.apache.commons.io.input;
+-
+-import static org.apache.commons.io.IOUtils.CR;
+-import static org.apache.commons.io.IOUtils.EOF;
+-import static org.apache.commons.io.IOUtils.LF;
+-
+-import java.io.IOException;
+-import java.io.InputStream;
+-
+-/**
+- * A filtering input stream that ensures the content will have Windows line endings, CRLF.
+- *
+- * @since 2.5
+- */
+-public class WindowsLineEndingInputStream extends AbstractLineEndingInputStream {
+-
+-    private boolean injectSlashLf;
+-
+-    /**
+-     * Constructs an input stream that filters another stream.
+-     *
+-     * @param in                        The input stream to wrap.
+-     * @param lineFeedAtEos true to ensure that the stream ends with CRLF.
+-     */
+-    public WindowsLineEndingInputStream(final InputStream in, final boolean lineFeedAtEos) {
+-        super(in, lineFeedAtEos);
+-    }
+-
+-    /**
+-     * Handles the end of stream condition.
+-     *
+-     * @return The next char to output to the stream.
+-     */
+-    private int handleEos() {
+-        if (!lineFeedAtEos) {
+-            return EOF;
+-        }
+-        if (!atSlashLf && !atSlashCr) {
+-            atSlashCr = true;
+-            return CR;
+-        }
+-        if (!atSlashLf) {
+-            atSlashCr = false;
+-            atSlashLf = true;
+-            return LF;
+-        }
+-        return EOF;
+-    }
+-
+-    /**
+-     * {@inheritDoc}
+-     */
+-    @Override
+-    public synchronized int read() throws IOException {
+-        if (atEos) {
+-            return handleEos();
+-        }
+-        if (injectSlashLf) {
+-            injectSlashLf = false;
+-            return LF;
+-        }
+-        final boolean prevWasSlashR = atSlashCr;
+-        final int target = in.read();
+-        atEos = target == EOF;
+-        if (!atEos) {
+-            atSlashCr = target == CR;
+-            atSlashLf = target == LF;
+-        }
+-        if (atEos) {
+-            return handleEos();
+-        }
+-        if (target == LF && !prevWasSlashR) {
+-            injectSlashLf = true;
+-            return CR;
+-        }
+-        return target;
+-    }
+-}
+diff --git a/src/test/java/org/apache/commons/io/input/UnixLineEndingInputStreamTest.java b/src/test/java/org/apache/commons/io/input/UnixLineEndingInputStreamTest.java
+index cbfd65130..3a44c5f8c 100644
+--- a/src/test/java/org/apache/commons/io/input/UnixLineEndingInputStreamTest.java
++++ b/src/test/java/org/apache/commons/io/input/UnixLineEndingInputStreamTest.java
+@@ -22,6 +22,7 @@
+ import java.io.IOException;
+ import java.nio.charset.StandardCharsets;
+ 
++import org.apache.commons.io.input.line.UnixLineEndingInputStream;
+ import org.junit.jupiter.api.Test;
+ 
+ class UnixLineEndingInputStreamTest {
+diff --git a/src/test/java/org/apache/commons/io/input/WindowsLineEndingInputStreamTest.java b/src/test/java/org/apache/commons/io/input/WindowsLineEndingInputStreamTest.java
+index 78fc90461..971eabab1 100644
+--- a/src/test/java/org/apache/commons/io/input/WindowsLineEndingInputStreamTest.java
++++ b/src/test/java/org/apache/commons/io/input/WindowsLineEndingInputStreamTest.java
+@@ -23,6 +23,7 @@
+ import java.io.IOException;
+ import java.nio.charset.StandardCharsets;
+ 
++import org.apache.commons.io.input.line.WindowsLineEndingInputStream;
+ import org.junit.jupiter.api.Test;
+ import org.junit.jupiter.params.ParameterizedTest;
+ import org.junit.jupiter.params.provider.ValueSource;

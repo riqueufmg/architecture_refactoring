@@ -1,0 +1,15 @@
+[ERROR] COMPILATION ERROR : 
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/select/SelectorTest.java:[1437,19] reset() has protected access in org.jsoup.select.evaluator.StructuralEvaluator
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/select/SelectorTest.java:[1453,12] reset() has protected access in org.jsoup.select.evaluator.StructuralEvaluator.ImmediateParentRun
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/select/SelectorTest.java:[1472,14] reset() has protected access in org.jsoup.select.evaluator.CombiningEvaluator
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.15.0:testCompile (compile-java11-tests) on project jsoup: Compilation failure: Compilation failure: 
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/select/SelectorTest.java:[1437,19] reset() has protected access in org.jsoup.select.evaluator.StructuralEvaluator
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/select/SelectorTest.java:[1453,12] reset() has protected access in org.jsoup.select.evaluator.StructuralEvaluator.ImmediateParentRun
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/select/SelectorTest.java:[1472,14] reset() has protected access in org.jsoup.select.evaluator.CombiningEvaluator
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException

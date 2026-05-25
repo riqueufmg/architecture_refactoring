@@ -1,0 +1,537 @@
+[ERROR] COMPILATION ERROR : 
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[41,47] cannot find symbol
+  symbol:   variable INDEX_NOT_FOUND
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[59,47] cannot find symbol
+  symbol:   variable INDEX_NOT_FOUND
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[78,47] cannot find symbol
+  symbol:   variable INDEX_NOT_FOUND
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[96,47] cannot find symbol
+  symbol:   variable INDEX_NOT_FOUND
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[118,61] cannot find symbol
+  symbol:   variable INDEX_NOT_FOUND
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[136,47] cannot find symbol
+  symbol:   variable INDEX_NOT_FOUND
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[154,47] cannot find symbol
+  symbol:   variable INDEX_NOT_FOUND
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[172,47] cannot find symbol
+  symbol:   variable INDEX_NOT_FOUND
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[190,48] cannot find symbol
+  symbol:   variable INDEX_NOT_FOUND
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[208,47] cannot find symbol
+  symbol:   variable INDEX_NOT_FOUND
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[285,35] cannot find symbol
+  symbol:   variable INDEX_NOT_FOUND
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[331,35] cannot find symbol
+  symbol:   variable INDEX_NOT_FOUND
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[376,35] cannot find symbol
+  symbol:   variable INDEX_NOT_FOUND
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[442,35] cannot find symbol
+  symbol:   variable INDEX_NOT_FOUND
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[478,35] cannot find symbol
+  symbol:   variable INDEX_NOT_FOUND
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[523,35] cannot find symbol
+  symbol:   variable INDEX_NOT_FOUND
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[568,35] cannot find symbol
+  symbol:   variable INDEX_NOT_FOUND
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[613,35] cannot find symbol
+  symbol:   variable INDEX_NOT_FOUND
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[658,35] cannot find symbol
+  symbol:   variable INDEX_NOT_FOUND
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[703,35] cannot find symbol
+  symbol:   variable INDEX_NOT_FOUND
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[742,13] cannot find symbol
+  symbol:   method isEmpty(boolean[])
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[743,20] cannot find symbol
+  symbol:   variable INDEX_NOT_FOUND
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[745,22] cannot find symbol
+  symbol:   method max0(int)
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[750,16] cannot find symbol
+  symbol:   variable INDEX_NOT_FOUND
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[782,13] cannot find symbol
+  symbol:   method isEmpty(byte[])
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[783,20] cannot find symbol
+  symbol:   variable INDEX_NOT_FOUND
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[785,22] cannot find symbol
+  symbol:   method max0(int)
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[790,16] cannot find symbol
+  symbol:   variable INDEX_NOT_FOUND
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[824,13] cannot find symbol
+  symbol:   method isEmpty(char[])
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[825,20] cannot find symbol
+  symbol:   variable INDEX_NOT_FOUND
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[827,22] cannot find symbol
+  symbol:   method max0(int)
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[832,16] cannot find symbol
+  symbol:   variable INDEX_NOT_FOUND
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[883,13] cannot find symbol
+  symbol:   method isEmpty(double[])
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[884,20] cannot find symbol
+  symbol:   variable INDEX_NOT_FOUND
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[886,22] cannot find symbol
+  symbol:   method max0(int)
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[891,16] cannot find symbol
+  symbol:   variable INDEX_NOT_FOUND
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[914,13] cannot find symbol
+  symbol:   method isEmpty(double[])
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[915,20] cannot find symbol
+  symbol:   variable INDEX_NOT_FOUND
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[919,22] cannot find symbol
+  symbol:   method max0(int)
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[924,16] cannot find symbol
+  symbol:   variable INDEX_NOT_FOUND
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[956,13] cannot find symbol
+  symbol:   method isEmpty(float[])
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[957,20] cannot find symbol
+  symbol:   variable INDEX_NOT_FOUND
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[960,22] cannot find symbol
+  symbol:   method max0(int)
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[966,16] cannot find symbol
+  symbol:   variable INDEX_NOT_FOUND
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[998,13] cannot find symbol
+  symbol:   method isEmpty(int[])
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[999,20] cannot find symbol
+  symbol:   variable INDEX_NOT_FOUND
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1001,22] cannot find symbol
+  symbol:   method max0(int)
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1006,16] cannot find symbol
+  symbol:   variable INDEX_NOT_FOUND
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1038,13] cannot find symbol
+  symbol:   method isEmpty(long[])
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1039,20] cannot find symbol
+  symbol:   variable INDEX_NOT_FOUND
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1041,22] cannot find symbol
+  symbol:   method max0(int)
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1046,16] cannot find symbol
+  symbol:   variable INDEX_NOT_FOUND
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1078,13] cannot find symbol
+  symbol:   method isEmpty(java.lang.Object[])
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1079,20] cannot find symbol
+  symbol:   variable INDEX_NOT_FOUND
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1081,22] cannot find symbol
+  symbol:   method max0(int)
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1095,16] cannot find symbol
+  symbol:   variable INDEX_NOT_FOUND
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1127,13] cannot find symbol
+  symbol:   method isEmpty(short[])
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1128,20] cannot find symbol
+  symbol:   variable INDEX_NOT_FOUND
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1130,22] cannot find symbol
+  symbol:   method max0(int)
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1135,16] cannot find symbol
+  symbol:   variable INDEX_NOT_FOUND
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1145,13] cannot find symbol
+  symbol:   method isEmpty(double[])
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1146,20] cannot find symbol
+  symbol:   variable INDEX_NOT_FOUND
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1148,22] cannot find symbol
+  symbol:   method max0(int)
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1153,16] cannot find symbol
+  symbol:   variable INDEX_NOT_FOUND
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1185,13] cannot find symbol
+  symbol:   method isEmpty(boolean[])
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1186,20] cannot find symbol
+  symbol:   variable INDEX_NOT_FOUND
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1196,16] cannot find symbol
+  symbol:   variable INDEX_NOT_FOUND
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1229,20] cannot find symbol
+  symbol:   variable INDEX_NOT_FOUND
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1239,16] cannot find symbol
+  symbol:   variable INDEX_NOT_FOUND
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1274,20] cannot find symbol
+  symbol:   variable INDEX_NOT_FOUND
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1284,16] cannot find symbol
+  symbol:   variable INDEX_NOT_FOUND
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1332,13] cannot find symbol
+  symbol:   method isEmpty(double[])
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1333,20] cannot find symbol
+  symbol:   variable INDEX_NOT_FOUND
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1343,16] cannot find symbol
+  symbol:   variable INDEX_NOT_FOUND
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1363,13] cannot find symbol
+  symbol:   method isEmpty(double[])
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1364,20] cannot find symbol
+  symbol:   variable INDEX_NOT_FOUND
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1376,16] cannot find symbol
+  symbol:   variable INDEX_NOT_FOUND
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1408,13] cannot find symbol
+  symbol:   method isEmpty(float[])
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1409,20] cannot find symbol
+  symbol:   variable INDEX_NOT_FOUND
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1419,16] cannot find symbol
+  symbol:   variable INDEX_NOT_FOUND
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1452,20] cannot find symbol
+  symbol:   variable INDEX_NOT_FOUND
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1462,16] cannot find symbol
+  symbol:   variable INDEX_NOT_FOUND
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1495,20] cannot find symbol
+  symbol:   variable INDEX_NOT_FOUND
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1505,16] cannot find symbol
+  symbol:   variable INDEX_NOT_FOUND
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1538,20] cannot find symbol
+  symbol:   variable INDEX_NOT_FOUND
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1556,16] cannot find symbol
+  symbol:   variable INDEX_NOT_FOUND
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1589,20] cannot find symbol
+  symbol:   variable INDEX_NOT_FOUND
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1599,16] cannot find symbol
+  symbol:   variable INDEX_NOT_FOUND
+  location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.15.0:compile (default-compile) on project commons-lang3: Compilation failure: Compilation failure: 
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[41,47] cannot find symbol
+[ERROR]   symbol:   variable INDEX_NOT_FOUND
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[59,47] cannot find symbol
+[ERROR]   symbol:   variable INDEX_NOT_FOUND
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[78,47] cannot find symbol
+[ERROR]   symbol:   variable INDEX_NOT_FOUND
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[96,47] cannot find symbol
+[ERROR]   symbol:   variable INDEX_NOT_FOUND
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[118,61] cannot find symbol
+[ERROR]   symbol:   variable INDEX_NOT_FOUND
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[136,47] cannot find symbol
+[ERROR]   symbol:   variable INDEX_NOT_FOUND
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[154,47] cannot find symbol
+[ERROR]   symbol:   variable INDEX_NOT_FOUND
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[172,47] cannot find symbol
+[ERROR]   symbol:   variable INDEX_NOT_FOUND
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[190,48] cannot find symbol
+[ERROR]   symbol:   variable INDEX_NOT_FOUND
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[208,47] cannot find symbol
+[ERROR]   symbol:   variable INDEX_NOT_FOUND
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[285,35] cannot find symbol
+[ERROR]   symbol:   variable INDEX_NOT_FOUND
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[331,35] cannot find symbol
+[ERROR]   symbol:   variable INDEX_NOT_FOUND
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[376,35] cannot find symbol
+[ERROR]   symbol:   variable INDEX_NOT_FOUND
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[442,35] cannot find symbol
+[ERROR]   symbol:   variable INDEX_NOT_FOUND
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[478,35] cannot find symbol
+[ERROR]   symbol:   variable INDEX_NOT_FOUND
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[523,35] cannot find symbol
+[ERROR]   symbol:   variable INDEX_NOT_FOUND
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[568,35] cannot find symbol
+[ERROR]   symbol:   variable INDEX_NOT_FOUND
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[613,35] cannot find symbol
+[ERROR]   symbol:   variable INDEX_NOT_FOUND
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[658,35] cannot find symbol
+[ERROR]   symbol:   variable INDEX_NOT_FOUND
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[703,35] cannot find symbol
+[ERROR]   symbol:   variable INDEX_NOT_FOUND
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[742,13] cannot find symbol
+[ERROR]   symbol:   method isEmpty(boolean[])
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[743,20] cannot find symbol
+[ERROR]   symbol:   variable INDEX_NOT_FOUND
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[745,22] cannot find symbol
+[ERROR]   symbol:   method max0(int)
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[750,16] cannot find symbol
+[ERROR]   symbol:   variable INDEX_NOT_FOUND
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[782,13] cannot find symbol
+[ERROR]   symbol:   method isEmpty(byte[])
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[783,20] cannot find symbol
+[ERROR]   symbol:   variable INDEX_NOT_FOUND
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[785,22] cannot find symbol
+[ERROR]   symbol:   method max0(int)
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[790,16] cannot find symbol
+[ERROR]   symbol:   variable INDEX_NOT_FOUND
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[824,13] cannot find symbol
+[ERROR]   symbol:   method isEmpty(char[])
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[825,20] cannot find symbol
+[ERROR]   symbol:   variable INDEX_NOT_FOUND
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[827,22] cannot find symbol
+[ERROR]   symbol:   method max0(int)
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[832,16] cannot find symbol
+[ERROR]   symbol:   variable INDEX_NOT_FOUND
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[883,13] cannot find symbol
+[ERROR]   symbol:   method isEmpty(double[])
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[884,20] cannot find symbol
+[ERROR]   symbol:   variable INDEX_NOT_FOUND
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[886,22] cannot find symbol
+[ERROR]   symbol:   method max0(int)
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[891,16] cannot find symbol
+[ERROR]   symbol:   variable INDEX_NOT_FOUND
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[914,13] cannot find symbol
+[ERROR]   symbol:   method isEmpty(double[])
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[915,20] cannot find symbol
+[ERROR]   symbol:   variable INDEX_NOT_FOUND
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[919,22] cannot find symbol
+[ERROR]   symbol:   method max0(int)
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[924,16] cannot find symbol
+[ERROR]   symbol:   variable INDEX_NOT_FOUND
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[956,13] cannot find symbol
+[ERROR]   symbol:   method isEmpty(float[])
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[957,20] cannot find symbol
+[ERROR]   symbol:   variable INDEX_NOT_FOUND
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[960,22] cannot find symbol
+[ERROR]   symbol:   method max0(int)
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[966,16] cannot find symbol
+[ERROR]   symbol:   variable INDEX_NOT_FOUND
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[998,13] cannot find symbol
+[ERROR]   symbol:   method isEmpty(int[])
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[999,20] cannot find symbol
+[ERROR]   symbol:   variable INDEX_NOT_FOUND
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1001,22] cannot find symbol
+[ERROR]   symbol:   method max0(int)
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1006,16] cannot find symbol
+[ERROR]   symbol:   variable INDEX_NOT_FOUND
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1038,13] cannot find symbol
+[ERROR]   symbol:   method isEmpty(long[])
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1039,20] cannot find symbol
+[ERROR]   symbol:   variable INDEX_NOT_FOUND
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1041,22] cannot find symbol
+[ERROR]   symbol:   method max0(int)
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1046,16] cannot find symbol
+[ERROR]   symbol:   variable INDEX_NOT_FOUND
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1078,13] cannot find symbol
+[ERROR]   symbol:   method isEmpty(java.lang.Object[])
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1079,20] cannot find symbol
+[ERROR]   symbol:   variable INDEX_NOT_FOUND
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1081,22] cannot find symbol
+[ERROR]   symbol:   method max0(int)
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1095,16] cannot find symbol
+[ERROR]   symbol:   variable INDEX_NOT_FOUND
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1127,13] cannot find symbol
+[ERROR]   symbol:   method isEmpty(short[])
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1128,20] cannot find symbol
+[ERROR]   symbol:   variable INDEX_NOT_FOUND
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1130,22] cannot find symbol
+[ERROR]   symbol:   method max0(int)
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1135,16] cannot find symbol
+[ERROR]   symbol:   variable INDEX_NOT_FOUND
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1145,13] cannot find symbol
+[ERROR]   symbol:   method isEmpty(double[])
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1146,20] cannot find symbol
+[ERROR]   symbol:   variable INDEX_NOT_FOUND
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1148,22] cannot find symbol
+[ERROR]   symbol:   method max0(int)
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1153,16] cannot find symbol
+[ERROR]   symbol:   variable INDEX_NOT_FOUND
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1185,13] cannot find symbol
+[ERROR]   symbol:   method isEmpty(boolean[])
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1186,20] cannot find symbol
+[ERROR]   symbol:   variable INDEX_NOT_FOUND
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1196,16] cannot find symbol
+[ERROR]   symbol:   variable INDEX_NOT_FOUND
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1229,20] cannot find symbol
+[ERROR]   symbol:   variable INDEX_NOT_FOUND
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1239,16] cannot find symbol
+[ERROR]   symbol:   variable INDEX_NOT_FOUND
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1274,20] cannot find symbol
+[ERROR]   symbol:   variable INDEX_NOT_FOUND
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1284,16] cannot find symbol
+[ERROR]   symbol:   variable INDEX_NOT_FOUND
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1332,13] cannot find symbol
+[ERROR]   symbol:   method isEmpty(double[])
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1333,20] cannot find symbol
+[ERROR]   symbol:   variable INDEX_NOT_FOUND
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1343,16] cannot find symbol
+[ERROR]   symbol:   variable INDEX_NOT_FOUND
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1363,13] cannot find symbol
+[ERROR]   symbol:   method isEmpty(double[])
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1364,20] cannot find symbol
+[ERROR]   symbol:   variable INDEX_NOT_FOUND
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1376,16] cannot find symbol
+[ERROR]   symbol:   variable INDEX_NOT_FOUND
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1408,13] cannot find symbol
+[ERROR]   symbol:   method isEmpty(float[])
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1409,20] cannot find symbol
+[ERROR]   symbol:   variable INDEX_NOT_FOUND
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1419,16] cannot find symbol
+[ERROR]   symbol:   variable INDEX_NOT_FOUND
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1452,20] cannot find symbol
+[ERROR]   symbol:   variable INDEX_NOT_FOUND
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1462,16] cannot find symbol
+[ERROR]   symbol:   variable INDEX_NOT_FOUND
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1495,20] cannot find symbol
+[ERROR]   symbol:   variable INDEX_NOT_FOUND
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1505,16] cannot find symbol
+[ERROR]   symbol:   variable INDEX_NOT_FOUND
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1538,20] cannot find symbol
+[ERROR]   symbol:   variable INDEX_NOT_FOUND
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1556,16] cannot find symbol
+[ERROR]   symbol:   variable INDEX_NOT_FOUND
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1589,20] cannot find symbol
+[ERROR]   symbol:   variable INDEX_NOT_FOUND
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:[1599,16] cannot find symbol
+[ERROR]   symbol:   variable INDEX_NOT_FOUND
+[ERROR]   location: class org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException

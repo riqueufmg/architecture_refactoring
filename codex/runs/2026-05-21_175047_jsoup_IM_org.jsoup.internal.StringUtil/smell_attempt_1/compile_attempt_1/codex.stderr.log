@@ -1,0 +1,5 @@
+2026-05-21T20:53:25.346625Z ERROR codex_core::tools::router: error=apply_patch verification failed: Failed to find expected lines in /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/main/java/org/jsoup/parser/TokeniserState.java:
+import org.jsoup.internal.SharedConstants;
+import org.jsoup.internal.SoftPool;
+import org.jsoup.internal.StringUtil;
+import org.jsoup.nodes.Entities;

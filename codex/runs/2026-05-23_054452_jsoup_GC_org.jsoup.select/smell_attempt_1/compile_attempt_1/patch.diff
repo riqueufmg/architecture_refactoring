@@ -1,0 +1,566 @@
+diff --git a/src/main/java/org/jsoup/examples/HtmlToPlainText.java b/src/main/java/org/jsoup/examples/HtmlToPlainText.java
+index 9b98ca9e..405917ef 100644
+--- a/src/main/java/org/jsoup/examples/HtmlToPlainText.java
++++ b/src/main/java/org/jsoup/examples/HtmlToPlainText.java
+@@ -9,7 +9,7 @@ import org.jsoup.nodes.Element;
+ import org.jsoup.nodes.Node;
+ import org.jsoup.nodes.TextNode;
+ import org.jsoup.select.Elements;
+-import org.jsoup.select.NodeVisitor;
++import org.jsoup.select.traversal.NodeVisitor;
+ 
+ import java.io.IOException;
+ import java.util.HashSet;
+diff --git a/src/main/java/org/jsoup/helper/W3CDom.java b/src/main/java/org/jsoup/helper/W3CDom.java
+index f4d2150f..b68362b4 100644
+--- a/src/main/java/org/jsoup/helper/W3CDom.java
++++ b/src/main/java/org/jsoup/helper/W3CDom.java
+@@ -5,7 +5,7 @@ import org.jsoup.internal.StringUtil;
+ import org.jsoup.nodes.Attribute;
+ import org.jsoup.parser.HtmlTreeBuilder;
+ import org.jsoup.parser.Parser;
+-import org.jsoup.select.NodeVisitor;
++import org.jsoup.select.traversal.NodeVisitor;
+ import org.jsoup.select.Selector;
+ import org.w3c.dom.Comment;
+ import org.w3c.dom.DOMException;
+diff --git a/src/main/java/org/jsoup/nodes/ElementTextOps.java b/src/main/java/org/jsoup/nodes/ElementTextOps.java
+index 550ca579..c986a08e 100644
+--- a/src/main/java/org/jsoup/nodes/ElementTextOps.java
++++ b/src/main/java/org/jsoup/nodes/ElementTextOps.java
+@@ -3,8 +3,8 @@ package org.jsoup.nodes;
+ import org.jsoup.helper.Validate;
+ import org.jsoup.internal.StringUtil;
+ import org.jsoup.parser.Tag;
+-import org.jsoup.select.NodeFilter;
+-import org.jsoup.select.NodeVisitor;
++import org.jsoup.select.traversal.NodeFilter;
++import org.jsoup.select.traversal.NodeVisitor;
+ import org.jspecify.annotations.Nullable;
+ 
+ import java.util.concurrent.atomic.AtomicBoolean;
+diff --git a/src/main/java/org/jsoup/nodes/ElementTraversalOps.java b/src/main/java/org/jsoup/nodes/ElementTraversalOps.java
+index 63dc5ee1..a0e4ae8c 100644
+--- a/src/main/java/org/jsoup/nodes/ElementTraversalOps.java
++++ b/src/main/java/org/jsoup/nodes/ElementTraversalOps.java
+@@ -1,8 +1,8 @@
+ package org.jsoup.nodes;
+ 
+ import org.jsoup.select.Elements;
+-import org.jsoup.select.NodeFilter;
+-import org.jsoup.select.NodeVisitor;
++import org.jsoup.select.traversal.NodeFilter;
++import org.jsoup.select.traversal.NodeVisitor;
+ 
+ import java.util.Iterator;
+ import java.util.function.Consumer;
+diff --git a/src/main/java/org/jsoup/nodes/Node.java b/src/main/java/org/jsoup/nodes/Node.java
+index d05b9892..599e869f 100644
+--- a/src/main/java/org/jsoup/nodes/Node.java
++++ b/src/main/java/org/jsoup/nodes/Node.java
+@@ -4,8 +4,8 @@ import org.jsoup.helper.Validate;
+ import org.jsoup.internal.QuietAppendable;
+ import org.jsoup.internal.StringUtil;
+ import org.jsoup.parser.ParseSettings;
+-import org.jsoup.select.NodeFilter;
+-import org.jsoup.select.NodeVisitor;
++import org.jsoup.select.traversal.NodeFilter;
++import org.jsoup.select.traversal.NodeVisitor;
+ import org.jspecify.annotations.Nullable;
+ 
+ import java.io.IOException;
+diff --git a/src/main/java/org/jsoup/nodes/NodeIterator.java b/src/main/java/org/jsoup/nodes/NodeIterator.java
+index 77d787d5..b01b87b5 100644
+--- a/src/main/java/org/jsoup/nodes/NodeIterator.java
++++ b/src/main/java/org/jsoup/nodes/NodeIterator.java
+@@ -10,7 +10,7 @@ import java.util.NoSuchElementException;
+  Iterate through a Node and its tree of descendants, in document order, and returns nodes of the specified type. This
+  iterator supports structural changes to the tree during the traversal, such as {@link Node#remove()},
+  {@link Node#replaceWith(Node)}, {@link Node#wrap(String)}, etc.
+- <p>See also the {@link org.jsoup.select.NodeTraversor NodeTraversor} if {@code head} and {@code tail} callbacks are
++ <p>See also the {@link org.jsoup.select.traversal.NodeTraversor NodeTraversor} if {@code head} and {@code tail} callbacks are
+  desired for each node.</p>
+  @since 1.17.1
+  */
+diff --git a/src/main/java/org/jsoup/nodes/Printer.java b/src/main/java/org/jsoup/nodes/Printer.java
+index 6b83fdbf..5e88e292 100644
+--- a/src/main/java/org/jsoup/nodes/Printer.java
++++ b/src/main/java/org/jsoup/nodes/Printer.java
+@@ -4,7 +4,7 @@ import org.jsoup.internal.QuietAppendable;
+ import org.jsoup.internal.StringUtil;
+ import org.jsoup.nodes.Document.OutputSettings;
+ import org.jsoup.parser.Tag;
+-import org.jsoup.select.NodeVisitor;
++import org.jsoup.select.traversal.NodeVisitor;
+ import org.jspecify.annotations.Nullable;
+ 
+ /** Base Printer */
+diff --git a/src/main/java/org/jsoup/parser/StreamParser.java b/src/main/java/org/jsoup/parser/StreamParser.java
+index 2e8827e4..cb8fb5ab 100644
+--- a/src/main/java/org/jsoup/parser/StreamParser.java
++++ b/src/main/java/org/jsoup/parser/StreamParser.java
+@@ -6,7 +6,7 @@ import org.jsoup.nodes.Document;
+ import org.jsoup.nodes.Element;
+ import org.jsoup.nodes.Node;
+ import org.jsoup.select.Evaluator;
+-import org.jsoup.select.NodeVisitor;
++import org.jsoup.select.traversal.NodeVisitor;
+ import org.jsoup.select.Selector;
+ import org.jspecify.annotations.Nullable;
+ 
+diff --git a/src/main/java/org/jsoup/parser/TreeBuilder.java b/src/main/java/org/jsoup/parser/TreeBuilder.java
+index db7069c7..256aa784 100644
+--- a/src/main/java/org/jsoup/parser/TreeBuilder.java
++++ b/src/main/java/org/jsoup/parser/TreeBuilder.java
+@@ -7,7 +7,7 @@ import org.jsoup.nodes.Document;
+ import org.jsoup.nodes.Element;
+ import org.jsoup.nodes.Node;
+ import org.jsoup.nodes.NodeInternals;
+-import org.jsoup.select.NodeVisitor;
++import org.jsoup.select.traversal.NodeVisitor;
+ import org.jspecify.annotations.Nullable;
+ 
+ import java.io.Reader;
+diff --git a/src/main/java/org/jsoup/safety/Cleaner.java b/src/main/java/org/jsoup/safety/Cleaner.java
+index a1c10d31..5b96b6e9 100644
+--- a/src/main/java/org/jsoup/safety/Cleaner.java
++++ b/src/main/java/org/jsoup/safety/Cleaner.java
+@@ -12,7 +12,7 @@ import org.jsoup.nodes.Range;
+ import org.jsoup.nodes.TextNode;
+ import org.jsoup.parser.ParseErrorList;
+ import org.jsoup.parser.Parser;
+-import org.jsoup.select.NodeVisitor;
++import org.jsoup.select.traversal.NodeVisitor;
+ 
+ import java.util.List;
+ 
+diff --git a/src/main/java/org/jsoup/select/Elements.java b/src/main/java/org/jsoup/select/Elements.java
+index e84e2a0e..739c9285 100644
+--- a/src/main/java/org/jsoup/select/Elements.java
++++ b/src/main/java/org/jsoup/select/Elements.java
+@@ -8,6 +8,9 @@ import org.jsoup.nodes.Element;
+ import org.jsoup.nodes.FormElement;
+ import org.jsoup.nodes.Node;
+ import org.jsoup.nodes.TextNode;
++import org.jsoup.select.traversal.NodeFilter;
++import org.jsoup.select.traversal.NodeTraversor;
++import org.jsoup.select.traversal.NodeVisitor;
+ import org.jspecify.annotations.Nullable;
+ 
+ import java.util.ArrayList;
+diff --git a/src/main/java/org/jsoup/select/NodeFilter.java b/src/main/java/org/jsoup/select/NodeFilter.java
+deleted file mode 100644
+index 3948a579..00000000
+--- a/src/main/java/org/jsoup/select/NodeFilter.java
++++ /dev/null
+@@ -1,69 +0,0 @@
+-package org.jsoup.select;
+-
+-import org.jsoup.nodes.Node;
+-
+-/**
+- A controllable Node visitor interface. Execute via {@link #traverse(Node)}.
+- <p>
+- This interface provides two methods, {@code head} and {@code tail}. The head method is called when a node is first seen,
+- and the tail method when all that node's children have been visited.
+- </p>
+- <p>
+- For each visited node, the resulting action may be:
+- <ul>
+- <li>continue ({@link FilterResult#CONTINUE}),</li>
+- <li>skip all children ({@link FilterResult#SKIP_CHILDREN}),</li>
+- <li>skip node entirely ({@link FilterResult#SKIP_ENTIRELY}),</li>
+- <li>remove the subtree ({@link FilterResult#REMOVE}),</li>
+- <li>interrupt the iteration and return ({@link FilterResult#STOP}).</li>
+- </ul>
+- The difference between {@link FilterResult#SKIP_CHILDREN} and {@link FilterResult#SKIP_ENTIRELY} is that the first
+- will invoke {@link NodeFilter#tail(Node, int)} on the node, while the latter will not.
+- Within {@link NodeFilter#tail(Node, int)}, both are equivalent to {@link FilterResult#CONTINUE}.
+- </p>
+- */
+-public interface NodeFilter {
+-    /**
+-     Traversal action.
+-     */
+-    enum FilterResult {
+-        /** Continue processing the tree */
+-        CONTINUE,
+-        /** Skip this node's children, and call {@link NodeFilter#tail(Node, int)} on this node next. */
+-        SKIP_CHILDREN,
+-        /** Skip this node's children, and do not call {@link NodeFilter#tail(Node, int)}. */
+-        SKIP_ENTIRELY,
+-        /** Remove the node and its children */
+-        REMOVE,
+-        /** Stop processing */
+-        STOP
+-    }
+-
+-    /**
+-     * Callback for when a node is first visited.
+-     * @param node the node being visited.
+-     * @param depth the depth of the node, relative to the root node. E.g., the root node has depth 0, and a child node of that will have depth 1.
+-     * @return Traversal action
+-     */
+-    FilterResult head(Node node, int depth);
+-
+-    /**
+-     * Callback for when a node is last visited, after all of its descendants have been visited.
+-     * <p>This method has a default implementation to return {@link FilterResult#CONTINUE}.</p>
+-     * @param node the node being visited.
+-     * @param depth the depth of the node, relative to the root node. E.g., the root node has depth 0, and a child node of that will have depth 1.
+-     * @return Traversal action
+-     */
+-    default FilterResult tail(Node node, int depth) {
+-        return FilterResult.CONTINUE;
+-    }
+-
+-    /**
+-     Run a depth-first controlled traverse of the root and all of its descendants.
+-     @param root the initial node point to traverse.
+-     @since 1.21.1
+-     */
+-    default void traverse(Node root) {
+-        NodeTraversor.filter(this, root);
+-    }
+-}
+diff --git a/src/main/java/org/jsoup/select/NodeTraversor.java b/src/main/java/org/jsoup/select/NodeTraversor.java
+deleted file mode 100644
+index d682a620..00000000
+--- a/src/main/java/org/jsoup/select/NodeTraversor.java
++++ /dev/null
+@@ -1,175 +0,0 @@
+-package org.jsoup.select;
+-
+-import org.jsoup.helper.Validate;
+-import org.jsoup.nodes.Element;
+-import org.jsoup.nodes.Node;
+-import org.jsoup.select.NodeFilter.FilterResult;
+-
+-/**
+- A depth-first node traversor. Use to walk through all nodes under and including the specified root node, in document
+- order. The {@link NodeVisitor#head(Node, int)} and {@link NodeVisitor#tail(Node, int)} methods will be called for
+- each node.
+- <p>During the <code>head()</code> visit, DOM structural changes around the node currently being visited are
+- supported, including {@link Node#replaceWith(Node)} and {@link Node#remove()}. See
+- {@link NodeVisitor#head(Node, int) head()} for the traversal contract after mutation. Other non-structural node
+- changes are also supported.</p>
+- <p>DOM structural changes to the current node are not supported during the <code>tail()</code> visit.</p>
+- */
+-public class NodeTraversor {
+-    // cursor state
+-    private static final byte VisitHead = 0;
+-    private static final byte AfterHead = 1;
+-    private static final byte VisitTail = 2;
+-
+-    /**
+-     Run a depth-first traverse of the root and all of its descendants.
+-     @param visitor Node visitor.
+-     @param root the initial node point to traverse.
+-     @see NodeVisitor#traverse(Node root)
+-     */
+-    public static void traverse(NodeVisitor visitor, Node root) {
+-        Validate.notNull(visitor);
+-        Validate.notNull(root);
+-        Node node = root;
+-        final Node rootNext = root.nextSibling(); // don't traverse siblings beyond the original root
+-        int depth = 0;
+-        byte state = VisitHead;
+-
+-        while (true) {
+-            if (state == VisitHead) {
+-                // snapshot the current cursor position so we can recover if head() structurally changes it:
+-                Node parent   = node.parentNode();
+-                Node next     = node.nextSibling();
+-                int  sibIndex = parent != null ? node.siblingIndex() : 0;
+-
+-                visitor.head(node, depth);
+-
+-                // any structural changes?
+-                if (parent != null && node.parentNode() != parent) { // removed / replaced / moved
+-                    Node occupant = sibIndex < parent.childNodeSize() ? parent.childNode(sibIndex) : null;
+-                    // ^^ the node now at this node's former position
+-                    Node boundary = depth == 0 ? rootNext : next;   // don't advance beyond this node when resuming
+-                    if (occupant != null && occupant != boundary) {
+-                        node = occupant;
+-                        state = AfterHead;                          // continue from that slot without re-heading it
+-                    } else if (depth == 0) {                        // root detached or replaced
+-                        break;
+-                    } else if (next != null && next.parentNode() == parent) {
+-                        node = next;                                // old slot is empty or shifted to the original next, visit
+-                    } else {                                        // removed last child; tail the parent next
+-                        node = parent;
+-                        depth--;
+-                        state = VisitTail;
+-                    }
+-                } else {
+-                    state = AfterHead;
+-                }
+-                continue;                                           // next loop handles the updated node/state
+-            }
+-
+-            if (state == AfterHead && node.childNodeSize() > 0) { // descend into current children
+-                node = node.childNode(0);
+-                depth++;
+-                state = VisitHead;
+-                continue;
+-            }
+-
+-            visitor.tail(node, depth);
+-
+-            Node next = node.nextSibling();
+-            if (depth == 0) {
+-                if (next == null || next == rootNext) break; // done with the original root range
+-                node = next;
+-                state = VisitHead;
+-            } else if (next != null) { // traverse siblings
+-                node = next;
+-                state = VisitHead;
+-            } else {                // no siblings left, ascend
+-                node = node.parentNode();
+-                depth--;
+-                state = VisitTail;
+-            }
+-        }
+-    }
+-
+-    /**
+-     Run a depth-first traversal of each Element.
+-     @param visitor Node visitor.
+-     @param elements Elements to traverse.
+-     */
+-    public static void traverse(NodeVisitor visitor, Elements elements) {
+-        Validate.notNull(visitor);
+-        Validate.notNull(elements);
+-        for (Element el : elements)
+-            traverse(visitor, el);
+-    }
+-
+-    /**
+-     Run a depth-first controllable traversal of the root and all of its descendants.
+-     @param filter NodeFilter visitor.
+-     @param root the root node point to traverse.
+-     @return The filter result of the root node, or {@link FilterResult#STOP}.
+-
+-     @see NodeFilter
+-     */
+-    public static FilterResult filter(NodeFilter filter, Node root) {
+-        Node node = root;
+-        int depth = 0;
+-
+-        while (node != null) {
+-            FilterResult result = filter.head(node, depth);
+-            if (result == FilterResult.STOP)
+-                return result;
+-            // Descend into child nodes:
+-            if (result == FilterResult.CONTINUE && node.childNodeSize() > 0) {
+-                node = node.childNode(0);
+-                ++depth;
+-                continue;
+-            }
+-            // No siblings, move upwards:
+-            while (true) {
+-                assert node != null; // depth > 0, so has parent
+-                if (!(node.nextSibling() == null && depth > 0)) break;
+-                // 'tail' current node:
+-                if (result == FilterResult.CONTINUE || result == FilterResult.SKIP_CHILDREN) {
+-                    result = filter.tail(node, depth);
+-                    if (result == FilterResult.STOP)
+-                        return result;
+-                }
+-                Node prev = node; // In case we need to remove it below.
+-                node = node.parentNode();
+-                depth--;
+-                if (result == FilterResult.REMOVE)
+-                    prev.remove(); // Remove AFTER finding parent.
+-                result = FilterResult.CONTINUE; // Parent was not pruned.
+-            }
+-            // 'tail' current node, then proceed with siblings:
+-            if (result == FilterResult.CONTINUE || result == FilterResult.SKIP_CHILDREN) {
+-                result = filter.tail(node, depth);
+-                if (result == FilterResult.STOP)
+-                    return result;
+-            }
+-            if (node == root)
+-                return result;
+-            Node prev = node; // In case we need to remove it below.
+-            node = node.nextSibling();
+-            if (result == FilterResult.REMOVE)
+-                prev.remove(); // Remove AFTER finding sibling.
+-        }
+-        // root == null?
+-        return FilterResult.CONTINUE;
+-    }
+-
+-    /**
+-     Run a depth-first controllable traversal of each Element.
+-     @param filter NodeFilter visitor.
+-     @see NodeFilter
+-     */
+-    public static void filter(NodeFilter filter, Elements elements) {
+-        Validate.notNull(filter);
+-        Validate.notNull(elements);
+-        for (Element el : elements)
+-            if (filter(filter, el) == FilterResult.STOP)
+-                break;
+-    }
+-}
+diff --git a/src/main/java/org/jsoup/select/NodeVisitor.java b/src/main/java/org/jsoup/select/NodeVisitor.java
+deleted file mode 100644
+index 479d79be..00000000
+--- a/src/main/java/org/jsoup/select/NodeVisitor.java
++++ /dev/null
+@@ -1,75 +0,0 @@
+-package org.jsoup.select;
+-
+-import org.jsoup.nodes.Element;
+-import org.jsoup.nodes.Node;
+-
+-/**
+- Node visitor interface, used to walk the DOM and visit each node. Execute via {@link #traverse(Node)} or
+- {@link Node#traverse(NodeVisitor)}. The traversal is depth-first.
+- <p>
+- This interface provides two methods, {@link #head} and {@link #tail}. The head method is called when a node is first
+- seen, and the tail method when all that node's children have been visited. As an example, {@code head} can be used to
+- emit a start tag for a node, and {@code tail} to emit the end tag. The {@code tail} method defaults to a no-op, so
+- this interface can be used as a {@link FunctionalInterface}, with {@code head} as its single abstract method.
+- </p>
+- <p><b>Example:</b></p>
+- <pre><code>
+- doc.body().traverse((node, depth) -&gt; {
+-     switch (node) {
+-         case Element el     -&gt; print(el.tag() + ": " + el.ownText());
+-         case DataNode data  -&gt; print("Data: " + data.getWholeData());
+-         default             -&gt; print(node.nodeName() + " at depth " + depth);
+-     }
+- });
+- </code></pre>
+- */
+-@FunctionalInterface
+-public interface NodeVisitor {
+-    /**
+-     Callback for when a node is first visited.
+-     <p>The node may be modified (for example via {@link Node#attr(String)}), removed with
+-     {@link Node#remove()}, or replaced with {@link Node#replaceWith(Node)}. If the node is an
+-     {@link Element}, you may cast it and access those methods.</p>
+-     <p>Traversal uses a forward cursor. After {@code head()} completes:</p>
+-     <ul>
+-     <li>If the current node is still attached, traversal continues into its current children and then its following
+-     siblings. Nodes inserted before the current node are not visited.</li>
+-     <li>If the current node was detached and another node now occupies its former sibling position, the node now at
+-     that position is not passed to {@code head()} again. Traversal continues from there: its children are visited,
+-     then the node is passed to {@link #tail(Node, int)}, then later siblings are visited.</li>
+-     <li>If the current node was detached and no node occupies its former sibling position, the current node is not
+-     passed to {@code tail()}, and traversal resumes at the node that originally followed it.</li>
+-     </ul>
+-     <p>Traversal never advances outside the original root subtree. If the traversal root is detached during
+-     {@code head()}, traversal stops at the original root boundary.</p>
+-
+-     @param node the node being visited.
+-     @param depth the depth of the node, relative to the root node. E.g., the root node has depth 0, and a child node
+-     of that will have depth 1.
+-     */
+-    void head(Node node, int depth);
+-
+-    /**
+-     Callback for when a node is last visited, after all of its descendants have been visited.
+-     <p>This method defaults to a no-op.</p>
+-     <p>The node passed to {@code tail()} is the node at the current traversal position when the subtree completes.
+-     If {@code head()} replaced the original node, this may be the replacement node instead.</p>
+-     <p>Structural changes to the current node are not supported during {@code tail()}.</p>
+-
+-     @param node the node being visited.
+-     @param depth the depth of the node, relative to the root node. E.g., the root node has depth 0, and a child node
+-     of that will have depth 1.
+-     */
+-    default void tail(Node node, int depth) {
+-        // no-op by default, to allow just specifying the head() method
+-    }
+-
+-    /**
+-     Run a depth-first traverse of the root and all of its descendants.
+-     @param root the initial node point to traverse.
+-     @since 1.21.1
+-     */
+-    default void traverse(Node root) {
+-        NodeTraversor.traverse(this, root);
+-    }
+-}
+diff --git a/src/test/java/org/jsoup/nodes/ElementTest.java b/src/test/java/org/jsoup/nodes/ElementTest.java
+index b4eab867..878bf244 100644
+--- a/src/test/java/org/jsoup/nodes/ElementTest.java
++++ b/src/test/java/org/jsoup/nodes/ElementTest.java
+@@ -10,8 +10,8 @@ import org.jsoup.parser.Tag;
+ import org.jsoup.parser.TagSet;
+ import org.jsoup.select.Elements;
+ import org.jsoup.select.Evaluator;
+-import org.jsoup.select.NodeFilter;
+-import org.jsoup.select.NodeVisitor;
++import org.jsoup.select.traversal.NodeFilter;
++import org.jsoup.select.traversal.NodeVisitor;
+ import org.jsoup.select.QueryParser;
+ import org.junit.jupiter.api.Test;
+ import org.junit.jupiter.params.ParameterizedTest;
+diff --git a/src/test/java/org/jsoup/nodes/LeafNodeTest.java b/src/test/java/org/jsoup/nodes/LeafNodeTest.java
+index a0d735d8..75538b19 100644
+--- a/src/test/java/org/jsoup/nodes/LeafNodeTest.java
++++ b/src/test/java/org/jsoup/nodes/LeafNodeTest.java
+@@ -2,7 +2,7 @@ package org.jsoup.nodes;
+ 
+ import org.jsoup.Jsoup;
+ import org.jsoup.select.Elements;
+-import org.jsoup.select.NodeFilter;
++import org.jsoup.select.traversal.NodeFilter;
+ import org.junit.jupiter.api.Test;
+ 
+ import static org.junit.jupiter.api.Assertions.*;
+diff --git a/src/test/java/org/jsoup/nodes/NodeTest.java b/src/test/java/org/jsoup/nodes/NodeTest.java
+index 51b4f71c..b0356a52 100644
+--- a/src/test/java/org/jsoup/nodes/NodeTest.java
++++ b/src/test/java/org/jsoup/nodes/NodeTest.java
+@@ -4,7 +4,7 @@ import org.jsoup.Jsoup;
+ import org.jsoup.TextUtil;
+ import org.jsoup.parser.Tag;
+ import org.jsoup.select.Elements;
+-import org.jsoup.select.NodeVisitor;
++import org.jsoup.select.traversal.NodeVisitor;
+ import org.junit.jupiter.api.Test;
+ 
+ import java.util.List;
+diff --git a/src/test/java/org/jsoup/select/ElementsTest.java b/src/test/java/org/jsoup/select/ElementsTest.java
+index b1b9b3dd..756d3e44 100644
+--- a/src/test/java/org/jsoup/select/ElementsTest.java
++++ b/src/test/java/org/jsoup/select/ElementsTest.java
+@@ -9,6 +9,7 @@ import org.jsoup.nodes.Element;
+ import org.jsoup.nodes.FormElement;
+ import org.jsoup.nodes.Node;
+ import org.jsoup.nodes.TextNode;
++import org.jsoup.select.traversal.NodeVisitor;
+ import org.junit.jupiter.api.Test;
+ 
+ import java.util.Iterator;
+diff --git a/src/test/java/org/jsoup/select/EvaluatorDebug.java b/src/test/java/org/jsoup/select/EvaluatorDebug.java
+index 266ed1cb..0c2800f5 100644
+--- a/src/test/java/org/jsoup/select/EvaluatorDebug.java
++++ b/src/test/java/org/jsoup/select/EvaluatorDebug.java
+@@ -4,6 +4,7 @@ import org.jsoup.internal.StringUtil;
+ import org.jsoup.nodes.Document;
+ import org.jsoup.nodes.Element;
+ import org.jsoup.nodes.Node;
++import org.jsoup.select.traversal.NodeVisitor;
+ 
+ public class EvaluatorDebug {
+ 
+diff --git a/src/test/java/org/jsoup/select/TraversorTest.java b/src/test/java/org/jsoup/select/TraversorTest.java
+index cb18b510..9e61a750 100644
+--- a/src/test/java/org/jsoup/select/TraversorTest.java
++++ b/src/test/java/org/jsoup/select/TraversorTest.java
+@@ -6,6 +6,9 @@ import org.jsoup.nodes.Document;
+ import org.jsoup.nodes.Element;
+ import org.jsoup.nodes.Node;
+ import org.jsoup.nodes.TextNode;
++import org.jsoup.select.traversal.NodeFilter;
++import org.jsoup.select.traversal.NodeTraversor;
++import org.jsoup.select.traversal.NodeVisitor;
+ import org.junit.jupiter.api.Test;
+ import org.junit.jupiter.params.ParameterizedTest;
+ import org.junit.jupiter.params.provider.EnumSource;

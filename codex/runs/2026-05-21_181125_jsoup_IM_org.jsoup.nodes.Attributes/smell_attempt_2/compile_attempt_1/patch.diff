@@ -1,0 +1,263 @@
+diff --git a/src/main/java/org/jsoup/nodes/Attributes.java b/src/main/java/org/jsoup/nodes/Attributes.java
+index 15f34d16..0d313f6b 100644
+--- a/src/main/java/org/jsoup/nodes/Attributes.java
++++ b/src/main/java/org/jsoup/nodes/Attributes.java
+@@ -2,7 +2,6 @@ package org.jsoup.nodes;
+ 
+ import org.jsoup.helper.Validate;
+ import org.jsoup.internal.QuietAppendable;
+-import org.jsoup.internal.SharedConstants;
+ import org.jsoup.internal.StringUtil;
+ import org.jsoup.parser.ParseSettings;
+ import org.jspecify.annotations.Nullable;
+@@ -13,7 +12,6 @@ import java.util.ArrayList;
+ import java.util.Arrays;
+ import java.util.Collections;
+ import java.util.ConcurrentModificationException;
+-import java.util.HashMap;
+ import java.util.Iterator;
+ import java.util.List;
+ import java.util.Map;
+@@ -22,7 +20,6 @@ import java.util.Objects;
+ import java.util.Set;
+ 
+ import static org.jsoup.internal.Normalizer.lowerCase;
+-import static org.jsoup.nodes.Range.AttributeRange.UntrackedAttr;
+ 
+ /**
+  * The attributes of an Element.
+@@ -39,7 +36,7 @@ import static org.jsoup.nodes.Range.AttributeRange.UntrackedAttr;
+  *
+  * @author Jonathan Hedley, jonathan@hedley.net
+  */
+-public class Attributes implements Iterable<Attribute>, Cloneable {
++public class Attributes extends AttributesMetadataSupport implements Iterable<Attribute>, Cloneable {
+     // The Attributes object is only created on the first use of an attribute; the Element will just have a null
+     // Attribute slot otherwise
+ 
+@@ -81,33 +78,9 @@ public class Attributes implements Iterable<Attribute>, Cloneable {
+         return NotFound;
+     }
+ 
+-    /**
+-     Finds a visible attribute's range index, skipping internal metadata slots.
+-     */
+     int visibleIndexOfKey(String key) {
+         Validate.notNull(key);
+-        int visible = 0;
+-        for (int i = 0; i < size; i++) {
+-            String attrKey = keys[i];
+-            if (isInternalKey(attrKey))
+-                continue;
+-            if (key.equals(attrKey))
+-                return visible;
+-            visible++;
+-        }
+-        return NotFound;
+-    }
+-
+-    /**
+-     Maps an attribute array slot to the matching visible attribute index.
+-     */
+-    private int visibleIndex(int index) {
+-        int visible = 0;
+-        for (int i = 0; i < index; i++) {
+-            if (!isInternalKey(keys[i]))
+-                visible++;
+-        }
+-        return visible;
++        return AttributesMetadata.visibleIndexOfKey(this, key);
+     }
+ 
+     private int indexOfKeyIgnoreCase(String key) {
+@@ -168,7 +141,7 @@ public class Attributes implements Iterable<Attribute>, Cloneable {
+         return this;
+     }
+ 
+-    private void addObject(String key, @Nullable Object value) {
++    void addObject(String key, @Nullable Object value) {
+         checkCapacity(size + 1);
+         keys[size] = key;
+         vals[size] = value;
+@@ -191,96 +164,6 @@ public class Attributes implements Iterable<Attribute>, Cloneable {
+         return this;
+     }
+ 
+-    /**
+-     Get the map holding any user-data associated with these Attributes. Will be created empty on first use. Held as
+-     an internal attribute, not a field member, to reduce the memory footprint of Attributes when not used. Can hold
+-     arbitrary objects; use for connecting W3C nodes to Elements, etc.
+-     * @return the map holding user-data
+-     */
+-    @SuppressWarnings("unchecked")
+-    Map<String, Object> userData() {
+-        final Map<String, Object> userData;
+-        int i = indexOfKey(SharedConstants.UserDataKey);
+-        if (i == NotFound) {
+-            userData = new HashMap<>();
+-            addObject(SharedConstants.UserDataKey, userData);
+-        } else {
+-            userData = (Map<String, Object>) vals[i];
+-        }
+-        assert userData != null;
+-        return userData;
+-    }
+-
+-    /**
+-     Check if these attributes have any user data associated with them.
+-     */
+-    boolean hasUserData() {
+-        return hasKey(SharedConstants.UserDataKey);
+-    }
+-
+-    /**
+-     Get an arbitrary user-data object by key.
+-     * @param key case-sensitive key to the object.
+-     * @return the object associated to this key, or {@code null} if not found.
+-     * @see #userData(String key, Object val)
+-     * @since 1.17.1
+-     */
+-    @Nullable
+-    public Object userData(String key) {
+-        Validate.notNull(key);
+-        if (!hasUserData()) return null; // no user data exists
+-        Map<String, Object> userData = userData();
+-        return userData.get(key);
+-    }
+-
+-    /**
+-     Set an arbitrary user-data object by key. Will be treated as an internal attribute, so will not be emitted in HTML.
+-     * @param key case-sensitive key
+-     * @param value object value. Providing a {@code null} value has the effect of removing the key from the userData map.
+-     * @return these attributes
+-     * @see #userData(String key)
+-     * @since 1.17.1
+-     */
+-    public Attributes userData(String key, @Nullable Object value) {
+-        Validate.notNull(key);
+-        if (value == null && !hasKey(SharedConstants.UserDataKey)) return this; // no user data exists, so short-circuit
+-        Map<String, Object> userData = userData();
+-        if (value == null)  userData.remove(key);
+-        else                userData.put(key, value);
+-        return this;
+-    }
+-
+-    /**
+-     Gets the range spans, if source tracking was used.
+-     */
+-    Range.@Nullable Spans spans() {
+-        int i = indexOfKey(SharedConstants.RangeSpansKey);
+-        return i == NotFound ? null : (Range.Spans) vals[i];
+-    }
+-
+-    /**
+-     Gets or creates the range spans for this attributes object.
+-     */
+-    Range.Spans ensureSpans() {
+-        Range.Spans rangeSpans = spans();
+-        if (rangeSpans == null) {
+-            rangeSpans = new Range.Spans();
+-            addObject(SharedConstants.RangeSpansKey, rangeSpans);
+-        }
+-        return rangeSpans;
+-    }
+-
+-    /**
+-     Sets the range spans when expanding compact leaf storage.
+-     */
+-    void putSpans(Range.Spans rangeSpans) {
+-        int i = indexOfKey(SharedConstants.RangeSpansKey);
+-        if (i == NotFound)
+-            addObject(SharedConstants.RangeSpansKey, rangeSpans);
+-        else
+-            vals[i] = rangeSpans;
+-    }
+-
+     void putIgnoreCase(String key, @Nullable String value) {
+         int i = indexOfKeyIgnoreCase(key);
+         if (i != NotFound) {
+@@ -324,10 +207,7 @@ public class Attributes implements Iterable<Attribute>, Cloneable {
+     @SuppressWarnings("AssignmentToNull")
+     private void remove(int index) {
+         Validate.isFalse(index >= size);
+-        Range.Spans rangeSpans = spans();
+-        // Source ranges are stored by visible attribute index; internal metadata slots have no matching range record.
+-        if (rangeSpans != null && !isInternalKey(keys[index]))
+-            rangeSpans.removeAttributeRange(visibleIndex(index));
++        AttributesMetadata.onRemoveSlot(this, index);
+ 
+         int shifted = size - index - 1;
+         if (shifted > 0) {
+@@ -440,44 +320,6 @@ public class Attributes implements Iterable<Attribute>, Cloneable {
+         }
+     }
+ 
+-    /**
+-     Get the source ranges (start to end position) in the original input source from which this attribute's <b>name</b>
+-     and <b>value</b> were parsed.
+-     <p>Position tracking must be enabled before parsing the content.</p>
+-     @param key the attribute name
+-     @return the ranges for the attribute's name and value, or {@code untracked} if the attribute does not exist or its range
+-     was not tracked.
+-     @see org.jsoup.parser.Parser#setTrackPosition(boolean)
+-     @see Attribute#sourceRange()
+-     @see Node#sourceRange()
+-     @see Element#endSourceRange()
+-     @since 1.17.1
+-     */
+-    public Range.AttributeRange sourceRange(String key) {
+-        int index = visibleIndexOfKey(key);
+-        if (index == NotFound) return UntrackedAttr;
+-        Range.Spans rangeSpans = spans();
+-        return rangeSpans != null ? rangeSpans.attributeRange(index) : UntrackedAttr;
+-    }
+-
+-    /**
+-     Deprecated parser-internal source range setup method, retained for source compatibility. Source ranges are normally
+-     produced by enabling parser position tracking before parsing.
+-     @param key the attribute name
+-     @param range the range for the attribute's name and value
+-     @return these attributes, for chaining
+-     @since 1.18.2
+-     @deprecated Use parser position tracking instead. Will be removed in jsoup 1.24.1.
+-     */
+-    @Deprecated
+-    public Attributes sourceRange(String key, Range.AttributeRange range) {
+-        Validate.notNull(key);
+-        Validate.notNull(range);
+-        NodeInternals.attributeRange(this, key, range);
+-        return this;
+-    }
+-
+-
+     @Override
+     public Iterator<Attribute> iterator() {
+         //noinspection ReturnOfInnerClass
+@@ -613,7 +455,6 @@ public class Attributes implements Iterable<Attribute>, Cloneable {
+     }
+ 
+     @Override
+-    @SuppressWarnings("unchecked")
+     public Attributes clone() {
+         Attributes clone;
+         try {
+@@ -624,18 +465,7 @@ public class Attributes implements Iterable<Attribute>, Cloneable {
+         clone.size = size;
+         clone.keys = Arrays.copyOf(keys, size);
+         clone.vals = Arrays.copyOf(vals, size);
+-
+-        // make a copy of the user data map. (Contents are shallow).
+-        int i = indexOfKey(SharedConstants.UserDataKey);
+-        if (i != NotFound) {
+-            clone.vals[i] = new HashMap<>((Map<String, Object>) vals[i]);
+-        }
+-
+-        // make a copy of the range spans, if present.
+-        i = indexOfKey(SharedConstants.RangeSpansKey);
+-        if (i != NotFound) {
+-            clone.vals[i] = ((Range.Spans) vals[i]).copy();
+-        }
++        AttributesMetadata.copyToClone(this, clone);
+ 
+         return clone;
+     }

@@ -1,0 +1,183 @@
+{
+  "project_name": "commons-io",
+  "smell": "IM",
+  "target_type": "class",
+  "target_name": "org.apache.commons.io.channels.FilterFileChannel",
+  "initial_commit": "9c5c0e50776020e05078c8173e00f994d16a52c6",
+  "designite_before": {
+    "command": [
+      "/usr/lib/jvm/jdk-22.0.2-oracle-x64/bin/java",
+      "-jar",
+      "/data/henrique/langchain_prototype/codex/tools/DesigniteJava2.8.3.jar",
+      "-g",
+      "-i",
+      "/data/henrique/langchain_prototype/codex/data/repositories/commons-io",
+      "-o",
+      "/data/henrique/langchain_prototype/codex/runs/2026-05-21_203236_commons-io_IM_org.apache.commons.io.channels.FilterFileChannel/designite_before"
+    ],
+    "returncode": 0,
+    "seconds": 21.5,
+    "ok": true,
+    "output_dir": "/data/henrique/langchain_prototype/codex/runs/2026-05-21_203236_commons-io_IM_org.apache.commons.io.channels.FilterFileChannel/designite_before",
+    "log_path": "runs/2026-05-21_203236_commons-io_IM_org.apache.commons.io.channels.FilterFileChannel/designite_before.log"
+  },
+  "smell_before": {
+    "present": true,
+    "matches_count": 1,
+    "matches": [
+      {
+        "file": "runs/2026-05-21_203236_commons-io_IM_org.apache.commons.io.channels.FilterFileChannel/designite_before/DesignSmells.csv",
+        "row_index": 263,
+        "row": {
+          "Project": "commons-io",
+          "Package": "org.apache.commons.io.channels",
+          "Class": "FilterFileChannel",
+          "Smell": "Insufficient Modularization",
+          "Description": "The tool detected the smell in this class becuase the class has bloated interface (large number of public methods). Total public methods in the class: 22 public methods",
+          "File": "/data/henrique/langchain_prototype/codex/data/repositories/commons-io/src/main/java/org/apache/commons/io/channels/FilterFileChannel.java"
+        }
+      }
+    ],
+    "searched_files": [
+      "runs/2026-05-21_203236_commons-io_IM_org.apache.commons.io.channels.FilterFileChannel/designite_before/DesignSmells.csv"
+    ]
+  },
+  "attempts": [
+    {
+      "smell_attempt": 1,
+      "compile_attempt": 1,
+      "attempt_dir": "runs/2026-05-21_203236_commons-io_IM_org.apache.commons.io.channels.FilterFileChannel/smell_attempt_1/compile_attempt_1",
+      "codex": {
+        "command": [
+          "npx",
+          "@openai/codex",
+          "exec",
+          "--cd",
+          "/data/henrique/langchain_prototype/codex/data/repositories/commons-io",
+          "--sandbox",
+          "workspace-write",
+          "--json",
+          "--model",
+          "gpt-5.3-codex",
+          "-"
+        ],
+        "returncode": 0,
+        "seconds": 112.31,
+        "ok": true
+      },
+      "diff": {
+        "changed_files_count": 1,
+        "lines_added": 3,
+        "lines_deleted": 111
+      },
+      "maven": {
+        "command": [
+          "mvn",
+          "-q",
+          "-Djapicmp.skip=true",
+          "-Drat.skip=true",
+          "-Dcheckstyle.skip=true",
+          "-Dspotbugs.skip=true",
+          "-Dpmd.skip=true",
+          "-DskipITs",
+          "clean",
+          "verify"
+        ],
+        "returncode": 0,
+        "seconds": 572.21,
+        "ok": true
+      },
+      "codex_success": true,
+      "compile_success": true
+    }
+  ],
+  "codex": {
+    "command": [
+      "npx",
+      "@openai/codex",
+      "exec",
+      "--cd",
+      "/data/henrique/langchain_prototype/codex/data/repositories/commons-io",
+      "--sandbox",
+      "workspace-write",
+      "--json",
+      "--model",
+      "gpt-5.3-codex",
+      "-"
+    ],
+    "returncode": 0,
+    "seconds": 112.31,
+    "ok": true
+  },
+  "diff": {
+    "changed_files_count": 1,
+    "lines_added": 3,
+    "lines_deleted": 111
+  },
+  "maven": {
+    "command": [
+      "mvn",
+      "-q",
+      "-Djapicmp.skip=true",
+      "-Drat.skip=true",
+      "-Dcheckstyle.skip=true",
+      "-Dspotbugs.skip=true",
+      "-Dpmd.skip=true",
+      "-DskipITs",
+      "clean",
+      "verify"
+    ],
+    "returncode": 0,
+    "seconds": 572.21,
+    "ok": true
+  },
+  "designite_after": {
+    "command": [
+      "/usr/lib/jvm/jdk-22.0.2-oracle-x64/bin/java",
+      "-jar",
+      "/data/henrique/langchain_prototype/codex/tools/DesigniteJava2.8.3.jar",
+      "-g",
+      "-i",
+      "/data/henrique/langchain_prototype/codex/data/repositories/commons-io",
+      "-o",
+      "/data/henrique/langchain_prototype/codex/runs/2026-05-21_203236_commons-io_IM_org.apache.commons.io.channels.FilterFileChannel/smell_attempt_1/designite_after"
+    ],
+    "returncode": 0,
+    "seconds": 19.02,
+    "ok": true,
+    "output_dir": "/data/henrique/langchain_prototype/codex/runs/2026-05-21_203236_commons-io_IM_org.apache.commons.io.channels.FilterFileChannel/smell_attempt_1/designite_after",
+    "log_path": "runs/2026-05-21_203236_commons-io_IM_org.apache.commons.io.channels.FilterFileChannel/designite_after_smell_attempt_1.log"
+  },
+  "smell_after": {
+    "present": false,
+    "matches_count": 0,
+    "matches": [],
+    "searched_files": [
+      "runs/2026-05-21_203236_commons-io_IM_org.apache.commons.io.channels.FilterFileChannel/smell_attempt_1/designite_after/DesignSmells.csv"
+    ]
+  },
+  "smell_removed": true,
+  "final_commit": {
+    "created": true,
+    "commit": "b503135c92a77b67cbbfaf6b52bc781cf048d228",
+    "message": "Temporary Codex refactoring result for 2026-05-21_203236_commons-io_IM_org.apache.commons.io.channels.FilterFileChannel"
+  },
+  "refactoring_miner": {
+    "command": [
+      "/data/henrique/langchain_prototype/codex/tools/RefactoringMiner-3.0.7/bin/RefactoringMiner",
+      "-bc",
+      "/data/henrique/langchain_prototype/codex/data/repositories/commons-io",
+      "9c5c0e50776020e05078c8173e00f994d16a52c6",
+      "b503135c92a77b67cbbfaf6b52bc781cf048d228",
+      "-json",
+      "/data/henrique/langchain_prototype/codex/runs/2026-05-21_203236_commons-io_IM_org.apache.commons.io.channels.FilterFileChannel/refactoring_miner.json"
+    ],
+    "returncode": 1,
+    "seconds": 0.07,
+    "ok": false,
+    "output_json": "/data/henrique/langchain_prototype/codex/runs/2026-05-21_203236_commons-io_IM_org.apache.commons.io.channels.FilterFileChannel/refactoring_miner.json",
+    "log_path": "/data/henrique/langchain_prototype/codex/runs/2026-05-21_203236_commons-io_IM_org.apache.commons.io.channels.FilterFileChannel/refactoring_miner.log",
+    "refactorings_count": 0,
+    "refactoring_types": {}
+  }
+}

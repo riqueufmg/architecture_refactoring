@@ -1,0 +1,413 @@
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-javadoc-plugin:3.11.2:javadoc (create-javadoc-jar) on project commons-lang3: An error has occurred in Javadoc report generation: 
+[ERROR] Exit code: 1
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:724: error: reference not found
+[ERROR]      * This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+[ERROR]                                   ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:729: error: reference not found
+[ERROR]      * @return the index of the value within the array, {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input.
+[ERROR]                                                                ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:731: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:738: error: reference not found
+[ERROR]      * This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+[ERROR]                                   ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:741: error: reference not found
+[ERROR]      * A negative startIndex is treated as zero. A startIndex larger than the array length will return {@link #INDEX_NOT_FOUND} ({@code -1}).
+[ERROR]                                                                                                               ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:747: error: reference not found
+[ERROR]      * @return the index of the value within the array, {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input.
+[ERROR]                                                                ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:749: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:749: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:764: error: reference not found
+[ERROR]      * This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+[ERROR]                                   ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:769: error: reference not found
+[ERROR]      * @return the index of the value within the array, {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input.
+[ERROR]                                                                ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:771: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:778: error: reference not found
+[ERROR]      * This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+[ERROR]                                   ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:781: error: reference not found
+[ERROR]      * A negative startIndex is treated as zero. A startIndex larger than the array length will return {@link #INDEX_NOT_FOUND} ({@code -1}).
+[ERROR]                                                                                                               ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:787: error: reference not found
+[ERROR]      * @return the index of the value within the array, {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input.
+[ERROR]                                                                ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:789: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:789: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:804: error: reference not found
+[ERROR]      * This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+[ERROR]                                   ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:809: error: reference not found
+[ERROR]      * @return the index of the value within the array, {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input.
+[ERROR]                                                                ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:812: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:819: error: reference not found
+[ERROR]      * This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+[ERROR]                                   ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:822: error: reference not found
+[ERROR]      * A negative startIndex is treated as zero. A startIndex larger than the array length will return {@link #INDEX_NOT_FOUND} ({@code -1}).
+[ERROR]                                                                                                               ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:828: error: reference not found
+[ERROR]      * @return the index of the value within the array, {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input.
+[ERROR]                                                                ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:831: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:831: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:846: error: reference not found
+[ERROR]      * This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+[ERROR]                                   ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:851: error: reference not found
+[ERROR]      * @return the index of the value within the array, {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input.
+[ERROR]                                                                ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:853: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:861: error: reference not found
+[ERROR]      * This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+[ERROR]                                   ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:867: error: reference not found
+[ERROR]      * @return the index of the value within the array, {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input.
+[ERROR]                                                                ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:869: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:876: error: reference not found
+[ERROR]      * This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+[ERROR]                                   ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:879: error: reference not found
+[ERROR]      * A negative startIndex is treated as zero. A startIndex larger than the array length will return {@link #INDEX_NOT_FOUND} ({@code -1}).
+[ERROR]                                                                                                               ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:885: error: reference not found
+[ERROR]      * @return the index of the value within the array, {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input.
+[ERROR]                                                                ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:887: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:887: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:906: error: reference not found
+[ERROR]      * This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+[ERROR]                                   ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:909: error: reference not found
+[ERROR]      * A negative startIndex is treated as zero. A startIndex larger than the array length will return {@link #INDEX_NOT_FOUND} ({@code -1}).
+[ERROR]                                                                                                               ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:916: error: reference not found
+[ERROR]      * @return the index of the value within the array, {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input.
+[ERROR]                                                                ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:918: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:918: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:938: error: reference not found
+[ERROR]      * This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+[ERROR]                                   ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:943: error: reference not found
+[ERROR]      * @return the index of the value within the array, {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input.
+[ERROR]                                                                ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:945: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:952: error: reference not found
+[ERROR]      * This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+[ERROR]                                   ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:955: error: reference not found
+[ERROR]      * A negative startIndex is treated as zero. A startIndex larger than the array length will return {@link #INDEX_NOT_FOUND} ({@code -1}).
+[ERROR]                                                                                                               ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:961: error: reference not found
+[ERROR]      * @return the index of the value within the array, {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input.
+[ERROR]                                                                ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:963: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:963: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:980: error: reference not found
+[ERROR]      * This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+[ERROR]                                   ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:985: error: reference not found
+[ERROR]      * @return the index of the value within the array, {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input.
+[ERROR]                                                                ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:987: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:994: error: reference not found
+[ERROR]      * This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+[ERROR]                                   ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:997: error: reference not found
+[ERROR]      * A negative startIndex is treated as zero. A startIndex larger than the array length will return {@link #INDEX_NOT_FOUND} ({@code -1}).
+[ERROR]                                                                                                               ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1003: error: reference not found
+[ERROR]      * @return the index of the value within the array, {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input.
+[ERROR]                                                                ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1005: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1005: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1020: error: reference not found
+[ERROR]      * This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+[ERROR]                                   ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1025: error: reference not found
+[ERROR]      * @return the index of the value within the array, {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input.
+[ERROR]                                                                ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1027: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1034: error: reference not found
+[ERROR]      * This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+[ERROR]                                   ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1037: error: reference not found
+[ERROR]      * A negative startIndex is treated as zero. A startIndex larger than the array length will return {@link #INDEX_NOT_FOUND} ({@code -1}).
+[ERROR]                                                                                                               ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1043: error: reference not found
+[ERROR]      * @return the index of the value within the array, {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input.
+[ERROR]                                                                ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1045: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1045: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1060: error: reference not found
+[ERROR]      * This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+[ERROR]                                   ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1065: error: reference not found
+[ERROR]      * @return the index of the object within the array, {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input.
+[ERROR]                                                                 ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1067: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1074: error: reference not found
+[ERROR]      * This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+[ERROR]                                   ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1077: error: reference not found
+[ERROR]      * A negative startIndex is treated as zero. A startIndex larger than the array length will return {@link #INDEX_NOT_FOUND} ({@code -1}).
+[ERROR]                                                                                                               ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1083: error: reference not found
+[ERROR]      * @return the index of the object within the array starting at the index, {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input.
+[ERROR]                                                                                       ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1085: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1085: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1109: error: reference not found
+[ERROR]      * This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+[ERROR]                                   ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1114: error: reference not found
+[ERROR]      * @return the index of the value within the array, {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input.
+[ERROR]                                                                ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1116: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1123: error: reference not found
+[ERROR]      * This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+[ERROR]                                   ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1126: error: reference not found
+[ERROR]      * A negative startIndex is treated as zero. A startIndex larger than the array length will return {@link #INDEX_NOT_FOUND} ({@code -1}).
+[ERROR]                                                                                                               ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1132: error: reference not found
+[ERROR]      * @return the index of the value within the array, {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input.
+[ERROR]                                                                ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1134: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1134: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1167: error: reference not found
+[ERROR]      * This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) if {@code null} array input.
+[ERROR]                                   ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1172: error: reference not found
+[ERROR]      * @return the last index of the value within the array, {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input.
+[ERROR]                                                                     ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1174: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1181: error: reference not found
+[ERROR]      * This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+[ERROR]                                   ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1184: error: reference not found
+[ERROR]      * A negative startIndex will return {@link #INDEX_NOT_FOUND} ({@code -1}). A startIndex larger than the array length will search from the end of the array.
+[ERROR]                                                 ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1190: error: reference not found
+[ERROR]      * @return the last index of the value within the array, {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input.
+[ERROR]                                                                     ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1192: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1192: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1210: error: reference not found
+[ERROR]      * This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+[ERROR]                                   ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1215: error: reference not found
+[ERROR]      * @return the last index of the value within the array, {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input.
+[ERROR]                                                                     ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1217: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1224: error: reference not found
+[ERROR]      * This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+[ERROR]                                   ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1227: error: reference not found
+[ERROR]      * A negative startIndex will return {@link #INDEX_NOT_FOUND} ({@code -1}). A startIndex larger than the array length will search from the end of the array.
+[ERROR]                                                 ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1233: error: reference not found
+[ERROR]      * @return the last index of the value within the array, {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input.
+[ERROR]                                                                     ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1235: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1235: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1253: error: reference not found
+[ERROR]      * This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+[ERROR]                                   ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1258: error: reference not found
+[ERROR]      * @return the last index of the value within the array, {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input.
+[ERROR]                                                                     ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1261: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1268: error: reference not found
+[ERROR]      * This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+[ERROR]                                   ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1271: error: reference not found
+[ERROR]      * A negative startIndex will return {@link #INDEX_NOT_FOUND} ({@code -1}). A startIndex larger than the array length will search from the end of the array.
+[ERROR]                                                 ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1277: error: reference not found
+[ERROR]      * @return the last index of the value within the array, {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input.
+[ERROR]                                                                     ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1280: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1280: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1298: error: reference not found
+[ERROR]      * This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+[ERROR]                                   ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1303: error: reference not found
+[ERROR]      * @return the last index of the value within the array, {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input.
+[ERROR]                                                                     ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1305: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1313: error: reference not found
+[ERROR]      * This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+[ERROR]                                   ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1319: error: reference not found
+[ERROR]      * @return the index of the value within the array, {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input.
+[ERROR]                                                                ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1321: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1328: error: reference not found
+[ERROR]      * This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+[ERROR]                                   ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1331: error: reference not found
+[ERROR]      * A negative startIndex will return {@link #INDEX_NOT_FOUND} ({@code -1}). A startIndex larger than the array length will search from the end of the array.
+[ERROR]                                                 ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1337: error: reference not found
+[ERROR]      * @return the last index of the value within the array, {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input.
+[ERROR]                                                                     ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1339: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1339: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1358: error: reference not found
+[ERROR]      * This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+[ERROR]                                   ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1361: error: reference not found
+[ERROR]      * A negative startIndex will return {@link #INDEX_NOT_FOUND} ({@code -1}). A startIndex larger than the array length will search from the end of the array.
+[ERROR]                                                 ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1368: error: reference not found
+[ERROR]      * @return the last index of the value within the array, {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input.
+[ERROR]                                                                     ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1370: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1370: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1390: error: reference not found
+[ERROR]      * This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+[ERROR]                                   ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1395: error: reference not found
+[ERROR]      * @return the last index of the value within the array, {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input.
+[ERROR]                                                                     ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1397: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1404: error: reference not found
+[ERROR]      * This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+[ERROR]                                   ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1407: error: reference not found
+[ERROR]      * A negative startIndex will return {@link #INDEX_NOT_FOUND} ({@code -1}). A startIndex larger than the array length will search from the end of the array.
+[ERROR]                                                 ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1413: error: reference not found
+[ERROR]      * @return the last index of the value within the array, {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input.
+[ERROR]                                                                     ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1415: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1415: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1433: error: reference not found
+[ERROR]      * This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+[ERROR]                                   ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1438: error: reference not found
+[ERROR]      * @return the last index of the value within the array, {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input.
+[ERROR]                                                                     ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1440: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1447: error: reference not found
+[ERROR]      * This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+[ERROR]                                   ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1450: error: reference not found
+[ERROR]      * A negative startIndex will return {@link #INDEX_NOT_FOUND} ({@code -1}). A startIndex larger than the array length will search from the end of the array.
+[ERROR]                                                 ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1456: error: reference not found
+[ERROR]      * @return the last index of the value within the array, {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input.
+[ERROR]                                                                     ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1458: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1458: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1476: error: reference not found
+[ERROR]      * This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+[ERROR]                                   ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1481: error: reference not found
+[ERROR]      * @return the last index of the value within the array, {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input.
+[ERROR]                                                                     ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1483: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1490: error: reference not found
+[ERROR]      * This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+[ERROR]                                   ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1493: error: reference not found
+[ERROR]      * A negative startIndex will return {@link #INDEX_NOT_FOUND} ({@code -1}). A startIndex larger than the array length will search from the end of the array.
+[ERROR]                                                 ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1499: error: reference not found
+[ERROR]      * @return the last index of the value within the array, {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input.
+[ERROR]                                                                     ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1501: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1501: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1519: error: reference not found
+[ERROR]      * This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+[ERROR]                                   ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1524: error: reference not found
+[ERROR]      * @return the last index of the object within the array, {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input.
+[ERROR]                                                                      ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1526: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1533: error: reference not found
+[ERROR]      * This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+[ERROR]                                   ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1536: error: reference not found
+[ERROR]      * A negative startIndex will return {@link #INDEX_NOT_FOUND} ({@code -1}). A startIndex larger than the array length will search from the end of the array.
+[ERROR]                                                 ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1542: error: reference not found
+[ERROR]      * @return the last index of the object within the array, {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input.
+[ERROR]                                                                      ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1544: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1544: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1570: error: reference not found
+[ERROR]      * This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+[ERROR]                                   ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1575: error: reference not found
+[ERROR]      * @return the last index of the value within the array, {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input.
+[ERROR]                                                                     ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1577: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1584: error: reference not found
+[ERROR]      * This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+[ERROR]                                   ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1587: error: reference not found
+[ERROR]      * A negative startIndex will return {@link #INDEX_NOT_FOUND} ({@code -1}). A startIndex larger than the array length will search from the end of the array.
+[ERROR]                                                 ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1593: error: reference not found
+[ERROR]      * @return the last index of the value within the array, {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input.
+[ERROR]                                                                     ^
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1595: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1595: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:731: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:749: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:771: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:789: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:812: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:831: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:853: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:869: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:887: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:918: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:945: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:963: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:987: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1005: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1027: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1045: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1067: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1085: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1116: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1134: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1174: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1192: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1217: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1235: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1261: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1280: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1305: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1321: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1339: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1370: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1397: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1415: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1440: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1458: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1483: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1501: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1526: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1544: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1577: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtilsSearch.java:1595: warning - Tag @link: can't find INDEX_NOT_FOUND in org.apache.commons.lang3.ArrayUtilsSearch
+[ERROR] Command line was: /home/henrique/.sdkman/candidates/java/8.0.442-amzn/jre/../bin/javadoc -J-Duser.language= -J-Duser.country= @options @packages
+[ERROR] 
+[ERROR] Refer to the generated Javadoc files in '/data/henrique/langchain_prototype/codex/data/repositories/commons-lang/target/reports/apidocs' dir.
+[ERROR] 
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException

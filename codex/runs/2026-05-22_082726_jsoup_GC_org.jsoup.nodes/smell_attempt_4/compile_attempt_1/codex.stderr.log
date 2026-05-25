@@ -1,0 +1,1 @@
+2026-05-22T13:15:59.718529Z ERROR codex_core::tools::router: error=write_stdin failed: stdin is closed for this session; rerun exec_command with tty=true to keep stdin open

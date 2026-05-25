@@ -1,0 +1,4 @@
+2026-05-24T11:17:22.161766Z ERROR codex_core::tools::router: error=apply_patch verification failed: Failed to find expected lines in /data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/reflect/type/TypeLiteral.java:
+import java.lang.reflect.Type;
+import java.lang.reflect.TypeVariable;
+import org.apache.commons.lang3.Validate;

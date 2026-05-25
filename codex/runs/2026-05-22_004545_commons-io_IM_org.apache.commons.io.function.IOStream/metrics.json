@@ -1,0 +1,187 @@
+{
+  "project_name": "commons-io",
+  "smell": "IM",
+  "target_type": "class",
+  "target_name": "org.apache.commons.io.function.IOStream",
+  "initial_commit": "3d1ffd32d03e3b31795d9586089ba7ec98b3b7b9",
+  "designite_before": {
+    "command": [
+      "/usr/lib/jvm/jdk-22.0.2-oracle-x64/bin/java",
+      "-jar",
+      "/data/henrique/langchain_prototype/codex/tools/DesigniteJava2.8.3.jar",
+      "-g",
+      "-i",
+      "/data/henrique/langchain_prototype/codex/data/repositories/commons-io",
+      "-o",
+      "/data/henrique/langchain_prototype/codex/runs/2026-05-22_004545_commons-io_IM_org.apache.commons.io.function.IOStream/designite_before"
+    ],
+    "returncode": 0,
+    "seconds": 15.75,
+    "ok": true,
+    "output_dir": "/data/henrique/langchain_prototype/codex/runs/2026-05-22_004545_commons-io_IM_org.apache.commons.io.function.IOStream/designite_before",
+    "log_path": "runs/2026-05-22_004545_commons-io_IM_org.apache.commons.io.function.IOStream/designite_before.log"
+  },
+  "smell_before": {
+    "present": true,
+    "matches_count": 1,
+    "matches": [
+      {
+        "file": "runs/2026-05-22_004545_commons-io_IM_org.apache.commons.io.function.IOStream/designite_before/DesignSmells.csv",
+        "row_index": 59,
+        "row": {
+          "Project": "commons-io",
+          "Package": "org.apache.commons.io.function",
+          "Class": "IOStream",
+          "Smell": "Insufficient Modularization",
+          "Description": "The tool detected the smell in this class because the class contains large number of methods. Total methods in the class: 42 methods",
+          "File": "/data/henrique/langchain_prototype/codex/data/repositories/commons-io/src/main/java/org/apache/commons/io/function/IOStream.java"
+        }
+      }
+    ],
+    "searched_files": [
+      "runs/2026-05-22_004545_commons-io_IM_org.apache.commons.io.function.IOStream/designite_before/DesignSmells.csv"
+    ]
+  },
+  "attempts": [
+    {
+      "smell_attempt": 1,
+      "compile_attempt": 1,
+      "attempt_dir": "runs/2026-05-22_004545_commons-io_IM_org.apache.commons.io.function.IOStream/smell_attempt_1/compile_attempt_1",
+      "codex": {
+        "command": [
+          "npx",
+          "@openai/codex",
+          "exec",
+          "--cd",
+          "/data/henrique/langchain_prototype/codex/data/repositories/commons-io",
+          "--sandbox",
+          "workspace-write",
+          "--json",
+          "--model",
+          "gpt-5.3-codex",
+          "-"
+        ],
+        "returncode": 0,
+        "seconds": 135.97,
+        "ok": true
+      },
+      "diff": {
+        "changed_files_count": 1,
+        "lines_added": 1,
+        "lines_deleted": 474
+      },
+      "maven": {
+        "command": [
+          "mvn",
+          "-q",
+          "-Djapicmp.skip=true",
+          "-Drat.skip=true",
+          "-Dcheckstyle.skip=true",
+          "-Dspotbugs.skip=true",
+          "-Dpmd.skip=true",
+          "-DskipITs",
+          "clean",
+          "verify"
+        ],
+        "returncode": 0,
+        "seconds": 438.39,
+        "ok": true
+      },
+      "codex_success": true,
+      "compile_success": true
+    }
+  ],
+  "codex": {
+    "command": [
+      "npx",
+      "@openai/codex",
+      "exec",
+      "--cd",
+      "/data/henrique/langchain_prototype/codex/data/repositories/commons-io",
+      "--sandbox",
+      "workspace-write",
+      "--json",
+      "--model",
+      "gpt-5.3-codex",
+      "-"
+    ],
+    "returncode": 0,
+    "seconds": 135.97,
+    "ok": true
+  },
+  "diff": {
+    "changed_files_count": 1,
+    "lines_added": 1,
+    "lines_deleted": 474
+  },
+  "maven": {
+    "command": [
+      "mvn",
+      "-q",
+      "-Djapicmp.skip=true",
+      "-Drat.skip=true",
+      "-Dcheckstyle.skip=true",
+      "-Dspotbugs.skip=true",
+      "-Dpmd.skip=true",
+      "-DskipITs",
+      "clean",
+      "verify"
+    ],
+    "returncode": 0,
+    "seconds": 438.39,
+    "ok": true
+  },
+  "designite_after": {
+    "command": [
+      "/usr/lib/jvm/jdk-22.0.2-oracle-x64/bin/java",
+      "-jar",
+      "/data/henrique/langchain_prototype/codex/tools/DesigniteJava2.8.3.jar",
+      "-g",
+      "-i",
+      "/data/henrique/langchain_prototype/codex/data/repositories/commons-io",
+      "-o",
+      "/data/henrique/langchain_prototype/codex/runs/2026-05-22_004545_commons-io_IM_org.apache.commons.io.function.IOStream/smell_attempt_1/designite_after"
+    ],
+    "returncode": 0,
+    "seconds": 17.72,
+    "ok": true,
+    "output_dir": "/data/henrique/langchain_prototype/codex/runs/2026-05-22_004545_commons-io_IM_org.apache.commons.io.function.IOStream/smell_attempt_1/designite_after",
+    "log_path": "runs/2026-05-22_004545_commons-io_IM_org.apache.commons.io.function.IOStream/designite_after_smell_attempt_1.log"
+  },
+  "smell_after": {
+    "present": false,
+    "matches_count": 0,
+    "matches": [],
+    "searched_files": [
+      "runs/2026-05-22_004545_commons-io_IM_org.apache.commons.io.function.IOStream/smell_attempt_1/designite_after/DesignSmells.csv"
+    ]
+  },
+  "smell_removed": true,
+  "final_commit": {
+    "created": true,
+    "commit": "8cd992bd5e719ecc074a7ece583a9eeeb6699e25",
+    "message": "Temporary Codex refactoring result for 2026-05-22_004545_commons-io_IM_org.apache.commons.io.function.IOStream"
+  },
+  "refactoring_miner": {
+    "command": [
+      "/data/henrique/langchain_prototype/codex/tools/RefactoringMiner-3.0.7/bin/RefactoringMiner",
+      "-bc",
+      "/data/henrique/langchain_prototype/codex/data/repositories/commons-io",
+      "3d1ffd32d03e3b31795d9586089ba7ec98b3b7b9",
+      "8cd992bd5e719ecc074a7ece583a9eeeb6699e25",
+      "-json",
+      "/data/henrique/langchain_prototype/codex/runs/2026-05-22_004545_commons-io_IM_org.apache.commons.io.function.IOStream/refactoring_miner.json"
+    ],
+    "returncode": 0,
+    "seconds": 1.51,
+    "ok": true,
+    "output_json": "/data/henrique/langchain_prototype/codex/runs/2026-05-22_004545_commons-io_IM_org.apache.commons.io.function.IOStream/refactoring_miner.json",
+    "log_path": "/data/henrique/langchain_prototype/codex/runs/2026-05-22_004545_commons-io_IM_org.apache.commons.io.function.IOStream/refactoring_miner.log",
+    "refactorings_count": 44,
+    "refactoring_types": {
+      "Extract Interface": 1,
+      "Pull Up Method": 34,
+      "Extract And Move Method": 9
+    }
+  }
+}

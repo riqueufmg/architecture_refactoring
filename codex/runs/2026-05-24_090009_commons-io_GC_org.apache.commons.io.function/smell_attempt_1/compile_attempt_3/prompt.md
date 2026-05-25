@@ -1,0 +1,202 @@
+You are an autonomous Java refactoring agent.
+
+Your previous refactoring attempt failed to compile.
+
+# Original refactoring goal
+
+Smell: God Component
+Smell code: GC
+
+Target type: package
+Target: org.apache.commons.io.function
+
+# Task
+
+Fix the compilation errors while preserving the original refactoring goal.
+
+# Rules
+
+- Do not revert the entire refactoring unless absolutely necessary.
+- Do not edit build files to hide failures.
+- Do not disable Maven plugins.
+- Do not delete source files to make the build pass.
+- Do not delete or weaken tests.
+- Keep changes focused on fixing compilation errors.
+- Preserve the moved/refactored structure whenever possible.
+- Update imports, package declarations, call sites, and visibility only as needed.
+
+# Validation command
+
+mvn -q -Djapicmp.skip=true -Drat.skip=true -Dcheckstyle.skip=true -Dspotbugs.skip=true -Dpmd.skip=true -DskipITs clean verify
+
+# Maven error log
+
+	... 5 more
+
+[ERROR] org.apache.commons.io.build.OutputStreamOriginTest.testSize -- Time elapsed: 0.002 s <<< ERROR!
+org.junit.jupiter.api.extension.ExtensionConfigurationException: Failed to create default temp directory
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.Collections$UnmodifiableCollection.forEach(Collections.java:1117)
+	at java.base/java.util.Collections$SingletonList.forEach(Collections.java:5188)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+Caused by: java.nio.file.FileSystemException: /tmp/junit-7319519013261995574: No space left on device
+	at java.base/sun.nio.fs.UnixException.translateToIOException(UnixException.java:100)
+	at java.base/sun.nio.fs.UnixException.rethrowAsIOException(UnixException.java:106)
+	at java.base/sun.nio.fs.UnixException.rethrowAsIOException(UnixException.java:111)
+	at java.base/sun.nio.fs.UnixFileSystemProvider.createDirectory(UnixFileSystemProvider.java:463)
+	at java.base/java.nio.file.Files.createDirectory(Files.java:700)
+	at java.base/java.nio.file.TempFileHelper.create(TempFileHelper.java:134)
+	at java.base/java.nio.file.TempFileHelper.createTempDirectory(TempFileHelper.java:171)
+	at java.base/java.nio.file.Files.createTempDirectory(Files.java:1018)
+	... 5 more
+
+[ERROR] org.apache.commons.io.build.OutputStreamOriginTest.testGetByteArray -- Time elapsed: 0.006 s <<< ERROR!
+org.junit.jupiter.api.extension.ExtensionConfigurationException: Failed to create default temp directory
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.Collections$UnmodifiableCollection.forEach(Collections.java:1117)
+	at java.base/java.util.Collections$SingletonList.forEach(Collections.java:5188)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+Caused by: java.nio.file.FileSystemException: /tmp/junit-8493353964648839712: No space left on device
+	at java.base/sun.nio.fs.UnixException.translateToIOException(UnixException.java:100)
+	at java.base/sun.nio.fs.UnixException.rethrowAsIOException(UnixException.java:106)
+	at java.base/sun.nio.fs.UnixException.rethrowAsIOException(UnixException.java:111)
+	at java.base/sun.nio.fs.UnixFileSystemProvider.createDirectory(UnixFileSystemProvider.java:463)
+	at java.base/java.nio.file.Files.createDirectory(Files.java:700)
+	at java.base/java.nio.file.TempFileHelper.create(TempFileHelper.java:134)
+	at java.base/java.nio.file.TempFileHelper.createTempDirectory(TempFileHelper.java:171)
+	at java.base/java.nio.file.Files.createTempDirectory(Files.java:1018)
+	... 5 more
+
+[ERROR] org.apache.commons.io.build.OutputStreamOriginTest.testGetFile -- Time elapsed: 0.003 s <<< ERROR!
+org.junit.jupiter.api.extension.ExtensionConfigurationException: Failed to create default temp directory
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.Collections$UnmodifiableCollection.forEach(Collections.java:1117)
+	at java.base/java.util.Collections$SingletonList.forEach(Collections.java:5188)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+Caused by: java.nio.file.FileSystemException: /tmp/junit-17914391572893992559: No space left on device
+	at java.base/sun.nio.fs.UnixException.translateToIOException(UnixException.java:100)
+	at java.base/sun.nio.fs.UnixException.rethrowAsIOException(UnixException.java:106)
+	at java.base/sun.nio.fs.UnixException.rethrowAsIOException(UnixException.java:111)
+	at java.base/sun.nio.fs.UnixFileSystemProvider.createDirectory(UnixFileSystemProvider.java:463)
+	at java.base/java.nio.file.Files.createDirectory(Files.java:700)
+	at java.base/java.nio.file.TempFileHelper.create(TempFileHelper.java:134)
+	at java.base/java.nio.file.TempFileHelper.createTempDirectory(TempFileHelper.java:171)
+	at java.base/java.nio.file.Files.createTempDirectory(Files.java:1018)
+	... 5 more
+
+[ERROR] org.apache.commons.io.build.OutputStreamOriginTest.testGetPath -- Time elapsed: 0.002 s <<< ERROR!
+org.junit.jupiter.api.extension.ExtensionConfigurationException: Failed to create default temp directory
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.Collections$UnmodifiableCollection.forEach(Collections.java:1117)
+	at java.base/java.util.Collections$SingletonList.forEach(Collections.java:5188)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+Caused by: java.nio.file.FileSystemException: /tmp/junit-10088063259981269925: No space left on device
+	at java.base/sun.nio.fs.UnixException.translateToIOException(UnixException.java:100)
+	at java.base/sun.nio.fs.UnixException.rethrowAsIOException(UnixException.java:106)
+	at java.base/sun.nio.fs.UnixException.rethrowAsIOException(UnixException.java:111)
+	at java.base/sun.nio.fs.UnixFileSystemProvider.createDirectory(UnixFileSystemProvider.java:463)
+	at java.base/java.nio.file.Files.createDirectory(Files.java:700)
+	at java.base/java.nio.file.TempFileHelper.create(TempFileHelper.java:134)
+	at java.base/java.nio.file.TempFileHelper.createTempDirectory(TempFileHelper.java:171)
+	at java.base/java.nio.file.Files.createTempDirectory(Files.java:1018)
+	... 5 more
+
+[ERROR] org.apache.commons.io.build.OutputStreamOriginTest.testGetRandomAccessFile -- Time elapsed: 0.002 s <<< ERROR!
+org.junit.jupiter.api.extension.ExtensionConfigurationException: Failed to create default temp directory
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.Collections$UnmodifiableCollection.forEach(Collections.java:1117)
+	at java.base/java.util.Collections$SingletonList.forEach(Collections.java:5188)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+Caused by: java.nio.file.FileSystemException: /tmp/junit-15135399312275243764: No space left on device
+	at java.base/sun.nio.fs.UnixException.translateToIOException(UnixException.java:100)
+	at java.base/sun.nio.fs.UnixException.rethrowAsIOException(UnixException.java:106)
+	at java.base/sun.nio.fs.UnixException.rethrowAsIOException(UnixException.java:111)
+	at java.base/sun.nio.fs.UnixFileSystemProvider.createDirectory(UnixFileSystemProvider.java:463)
+	at java.base/java.nio.file.Files.createDirectory(Files.java:700)
+	at java.base/java.nio.file.TempFileHelper.create(TempFileHelper.java:134)
+	at java.base/java.nio.file.TempFileHelper.createTempDirectory(TempFileHelper.java:171)
+	at java.base/java.nio.file.Files.createTempDirectory(Files.java:1018)
+	... 5 more
+
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+[ERROR] Tests run: 27, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 3.017 s <<< FAILURE! -- in org.apache.commons.io.build.ChannelOriginTest
+[ERROR] org.apache.commons.io.build.ChannelOriginTest.testGetWritableByteChannel -- Time elapsed: 0.251 s <<< ERROR!
+java.io.IOException: No space left on device
+	at java.base/sun.nio.ch.UnixFileDispatcherImpl.write0(Native Method)
+	at java.base/sun.nio.ch.UnixFileDispatcherImpl.write(UnixFileDispatcherImpl.java:65)
+	at java.base/sun.nio.ch.IOUtil.writeFromNativeBuffer(IOUtil.java:137)
+	at java.base/sun.nio.ch.IOUtil.write(IOUtil.java:102)
+	at java.base/sun.nio.ch.IOUtil.write(IOUtil.java:72)
+	at java.base/sun.nio.ch.FileChannelImpl.implWrite(FileChannelImpl.java:371)
+	at java.base/sun.nio.ch.FileChannelImpl.write(FileChannelImpl.java:351)
+	at org.apache.commons.io.build.AbstractOriginTest.checkWrite(AbstractOriginTest.java:95)
+	at org.apache.commons.io.build.AbstractOriginTest.testGetWritableByteChannel(AbstractOriginTest.java:323)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+[ERROR] Tests run: 175, Failures: 0, Errors: 1, Skipped: 1, Time elapsed: 5.608 s <<< FAILURE! -- in org.apache.commons.io.IOUtilsTest
+[ERROR] org.apache.commons.io.IOUtilsTest.testCopy_String_Writer -- Time elapsed: 0.032 s <<< ERROR!
+java.io.IOException: No space left on device
+	at java.base/sun.nio.ch.UnixFileDispatcherImpl.write0(Native Method)
+	at java.base/sun.nio.ch.UnixFileDispatcherImpl.write(UnixFileDispatcherImpl.java:65)
+	at java.base/sun.nio.ch.IOUtil.writeFromNativeBuffer(IOUtil.java:137)
+	at java.base/sun.nio.ch.IOUtil.write(IOUtil.java:102)
+	at java.base/sun.nio.ch.IOUtil.write(IOUtil.java:72)
+	at java.base/sun.nio.ch.FileChannelImpl.implWrite(FileChannelImpl.java:371)
+	at java.base/sun.nio.ch.FileChannelImpl.write(FileChannelImpl.java:351)
+	at java.base/sun.nio.ch.ChannelOutputStream.writeFully(ChannelOutputStream.java:68)
+	at java.base/sun.nio.ch.ChannelOutputStream.write(ChannelOutputStream.java:105)
+	at java.base/sun.nio.cs.StreamEncoder.writeBytes(StreamEncoder.java:291)
+	at java.base/sun.nio.cs.StreamEncoder.implFlushBuffer(StreamEncoder.java:386)
+	at java.base/sun.nio.cs.StreamEncoder.implFlush(StreamEncoder.java:391)
+	at java.base/sun.nio.cs.StreamEncoder.lockedFlush(StreamEncoder.java:208)
+	at java.base/sun.nio.cs.StreamEncoder.flush(StreamEncoder.java:195)
+	at java.base/java.io.OutputStreamWriter.flush(OutputStreamWriter.java:264)
+	at java.base/java.io.BufferedWriter.implFlush(BufferedWriter.java:372)
+	at java.base/java.io.BufferedWriter.flush(BufferedWriter.java:359)
+	at org.apache.commons.io.IOUtilsTest.testCopy_String_Writer(IOUtilsTest.java:997)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+
+[ERROR] Errors: 
+[ERROR]   IOUtilsCopyTest.testCopy_URLToFile:461 » IO No space left on device
+[ERROR]   IOUtilsTest.testCopy_String_Writer:997 » IO No space left on device
+[ERROR]   ChannelOriginTest>AbstractOriginTest.testGetWritableByteChannel:323->AbstractOriginTest.checkWrite:95 » IO No space left on device
+[ERROR]   OutputStreamOriginTest.testGetByteArray » ExtensionConfiguration Failed to create default temp directory
+[ERROR]   OutputStreamOriginTest.testGetCharSequence » ExtensionConfiguration Failed to create default temp directory
+[ERROR]   OutputStreamOriginTest.testGetFile » ExtensionConfiguration Failed to create default temp directory
+[ERROR]   OutputStreamOriginTest.testGetOutputStream » ExtensionConfiguration Failed to create default temp directory
+[ERROR]   OutputStreamOriginTest.testGetPath » ExtensionConfiguration Failed to create default temp directory
+[ERROR]   OutputStreamOriginTest.testGetRandomAccessFile » ExtensionConfiguration Failed to create default temp directory
+[ERROR]   OutputStreamOriginTest.testGetWriter » ExtensionConfiguration Failed to create default temp directory
+[ERROR]   OutputStreamOriginTest.testSize » ExtensionConfiguration Failed to create default temp directory
+[ERROR]   CloseShieldChannelTest.testWrapFileChannel(Path) » ParameterResolution Failed to resolve parameter [java.nio.file.Path arg0] in method [void org.apache.commons.io.channels.CloseShieldChannelTest.testWrapFileChannel(java.nio.file.Path) throws java.io.IOException]: Failed to create default temp directory
+[ERROR] Tests run: 6304, Failures: 0, Errors: 12, Skipped: 26
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.5.5:test (default-test) on project commons-io: 
+[ERROR] 
+[ERROR] See /data/henrique/langchain_prototype/codex/data/repositories/commons-io/target/surefire-reports for the individual test results.
+[ERROR] See dump files (if any exist) [date].dump, [date]-jvmRun[N].dump and [date].dumpstream.
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
+
+# Expected final response
+
+Summarize:
+
+1. compilation errors fixed;
+2. files changed;
+3. whether the original refactoring goal was preserved;
+4. remaining risks.

@@ -1,0 +1,354 @@
+{
+"commits": [
+{
+	"repository": "https://github.com/jhy/jsoup",
+	"sha1": "f32a6f053b35a54d850097737f088fc2474efa9f",
+	"url": "https://github.com/jhy/jsoup/commit/f32a6f053b35a54d850097737f088fc2474efa9f",
+	"refactorings": [{
+	"type": "Inline Method",
+	"description": "Inline Method package html(accum QuietAppendable, out Document.OutputSettings) : void inlined to public html() : String in class org.jsoup.nodes.Attribute",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attribute.java",
+		"startLine": 188,
+		"endLine": 190,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "inlined method declaration",
+		"codeElement": "package html(accum QuietAppendable, out Document.OutputSettings) : void"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/Attribute.java",
+		"startLine": 189,
+		"endLine": 189,
+		"startColumn": 9,
+		"endColumn": 36,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "inlined code from inlined method declaration",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/Attribute.java",
+		"startLine": 161,
+		"endLine": 169,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "target method declaration before inline",
+		"codeElement": "public html() : String"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/Attribute.java",
+		"startLine": 167,
+		"endLine": 167,
+		"startColumn": 9,
+		"endColumn": 70,
+		"codeElementType": "METHOD_INVOCATION",
+		"description": "inlined method invocation",
+		"codeElement": "html(QuietAppendable.wrap(sb),new Document.OutputSettings())"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attribute.java",
+		"startLine": 151,
+		"endLine": 159,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "target method declaration after inline",
+		"codeElement": "public html() : String"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/Attribute.java",
+		"startLine": 157,
+		"endLine": 157,
+		"startColumn": 9,
+		"endColumn": 81,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "inlined code in target method declaration",
+		"codeElement": null
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method package htmlNoValidate(key String, val String, accum QuietAppendable, out Document.OutputSettings) : void from class org.jsoup.nodes.Attribute to package htmlNoValidate(key String, val String, accum QuietAppendable, out Document.OutputSettings) : void from class org.jsoup.nodes.AttributeHtml",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attribute.java",
+		"startLine": 210,
+		"endLine": 218,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package htmlNoValidate(key String, val String, accum QuietAppendable, out Document.OutputSettings) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/AttributeHtml.java",
+		"startLine": 23,
+		"endLine": 31,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "package htmlNoValidate(key String, val String, accum QuietAppendable, out Document.OutputSettings) : void"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method private isValidXmlKey(key String) : boolean from class org.jsoup.nodes.Attribute to private isValidXmlKey(key String) : boolean from class org.jsoup.nodes.AttributeHtml",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attribute.java",
+		"startLine": 242,
+		"endLine": 255,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private isValidXmlKey(key String) : boolean"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/AttributeHtml.java",
+		"startLine": 55,
+		"endLine": 68,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "private isValidXmlKey(key String) : boolean"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method private isValidHtmlKey(key String) : boolean from class org.jsoup.nodes.Attribute to private isValidHtmlKey(key String) : boolean from class org.jsoup.nodes.AttributeHtml",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attribute.java",
+		"startLine": 257,
+		"endLine": 267,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private isValidHtmlKey(key String) : boolean"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/AttributeHtml.java",
+		"startLine": 70,
+		"endLine": 80,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "private isValidHtmlKey(key String) : boolean"
+}]
+},
+{
+	"type": "Move Attribute",
+	"description": "Move Attribute private booleanAttributes : String[] from class org.jsoup.nodes.Attribute to private booleanAttributes : String[] from class org.jsoup.nodes.AttributeHtml",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attribute.java",
+		"startLine": 21,
+		"endLine": 26,
+		"startColumn": 35,
+		"endColumn": 6,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "private booleanAttributes : String[]"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/AttributeHtml.java",
+		"startLine": 12,
+		"endLine": 17,
+		"startColumn": 35,
+		"endColumn": 6,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "moved attribute declaration",
+		"codeElement": "private booleanAttributes : String[]"
+}]
+},
+{
+	"type": "Move Attribute",
+	"description": "Move Attribute private xmlKeyReplace : Pattern from class org.jsoup.nodes.Attribute to private xmlKeyReplace : Pattern from class org.jsoup.nodes.AttributeHtml",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attribute.java",
+		"startLine": 220,
+		"endLine": 220,
+		"startColumn": 34,
+		"endColumn": 86,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "private xmlKeyReplace : Pattern"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/AttributeHtml.java",
+		"startLine": 18,
+		"endLine": 18,
+		"startColumn": 34,
+		"endColumn": 86,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "moved attribute declaration",
+		"codeElement": "private xmlKeyReplace : Pattern"
+}]
+},
+{
+	"type": "Move Attribute",
+	"description": "Move Attribute private htmlKeyReplace : Pattern from class org.jsoup.nodes.Attribute to private htmlKeyReplace : Pattern from class org.jsoup.nodes.AttributeHtml",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attribute.java",
+		"startLine": 221,
+		"endLine": 221,
+		"startColumn": 34,
+		"endColumn": 101,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "private htmlKeyReplace : Pattern"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/AttributeHtml.java",
+		"startLine": 19,
+		"endLine": 19,
+		"startColumn": 34,
+		"endColumn": 101,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "moved attribute declaration",
+		"codeElement": "private htmlKeyReplace : Pattern"
+}]
+},
+{
+	"type": "Extract Class",
+	"description": "Extract Class org.jsoup.nodes.AttributeHtml from class org.jsoup.nodes.Attribute",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attribute.java",
+		"startLine": 17,
+		"endLine": 343,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original type declaration",
+		"codeElement": "org.jsoup.nodes.Attribute"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/Attribute.java",
+		"startLine": 210,
+		"endLine": 218,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package htmlNoValidate(key String, val String, accum QuietAppendable, out Document.OutputSettings) : void"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/Attribute.java",
+		"startLine": 242,
+		"endLine": 255,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private isValidXmlKey(key String) : boolean"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/Attribute.java",
+		"startLine": 257,
+		"endLine": 267,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private isValidHtmlKey(key String) : boolean"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/Attribute.java",
+		"startLine": 21,
+		"endLine": 26,
+		"startColumn": 35,
+		"endColumn": 6,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "private booleanAttributes : String[]"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/Attribute.java",
+		"startLine": 220,
+		"endLine": 220,
+		"startColumn": 34,
+		"endColumn": 86,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "private xmlKeyReplace : Pattern"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/Attribute.java",
+		"startLine": 221,
+		"endLine": 221,
+		"startColumn": 34,
+		"endColumn": 101,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "private htmlKeyReplace : Pattern"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attribute.java",
+		"startLine": 14,
+		"endLine": 279,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "type declaration after extraction",
+		"codeElement": "org.jsoup.nodes.Attribute"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/AttributeHtml.java",
+		"startLine": 11,
+		"endLine": 81,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "extracted type declaration",
+		"codeElement": "org.jsoup.nodes.AttributeHtml"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/AttributeHtml.java",
+		"startLine": 23,
+		"endLine": 31,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "package htmlNoValidate(key String, val String, accum QuietAppendable, out Document.OutputSettings) : void"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/AttributeHtml.java",
+		"startLine": 55,
+		"endLine": 68,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "private isValidXmlKey(key String) : boolean"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/AttributeHtml.java",
+		"startLine": 70,
+		"endLine": 80,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "private isValidHtmlKey(key String) : boolean"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/AttributeHtml.java",
+		"startLine": 12,
+		"endLine": 17,
+		"startColumn": 35,
+		"endColumn": 6,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "extracted attribute declaration",
+		"codeElement": "private booleanAttributes : String[]"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/AttributeHtml.java",
+		"startLine": 18,
+		"endLine": 18,
+		"startColumn": 34,
+		"endColumn": 86,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "extracted attribute declaration",
+		"codeElement": "private xmlKeyReplace : Pattern"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/AttributeHtml.java",
+		"startLine": 19,
+		"endLine": 19,
+		"startColumn": 34,
+		"endColumn": 101,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "extracted attribute declaration",
+		"codeElement": "private htmlKeyReplace : Pattern"
+}]
+}
+]
+}]
+}

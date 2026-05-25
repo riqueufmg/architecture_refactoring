@@ -1,0 +1,231 @@
+diff --git a/src/main/java/org/jsoup/nodes/Element.java b/src/main/java/org/jsoup/nodes/Element.java
+index 186506e9..ff3905aa 100644
+--- a/src/main/java/org/jsoup/nodes/Element.java
++++ b/src/main/java/org/jsoup/nodes/Element.java
+@@ -4,6 +4,7 @@ import org.jsoup.helper.Validate;
+ import org.jsoup.internal.Normalizer;
+ import org.jsoup.internal.QuietAppendable;
+ import org.jsoup.internal.StringUtil;
++import org.jsoup.nodes.element.ElementChildNodes;
+ import org.jsoup.parser.ParseSettings;
+ import org.jsoup.parser.Parser;
+ import org.jsoup.parser.Tag;
+diff --git a/src/main/java/org/jsoup/nodes/ElementChildNodes.java b/src/main/java/org/jsoup/nodes/ElementChildNodes.java
+deleted file mode 100644
+index f01c751b..00000000
+--- a/src/main/java/org/jsoup/nodes/ElementChildNodes.java
++++ /dev/null
+@@ -1,43 +0,0 @@
+-package org.jsoup.nodes;
+-
+-import java.util.ArrayList;
+-
+-final class ElementChildNodes {
+-    private ElementChildNodes() {}
+-
+-    static final NodeList EmptyNodeList = new NodeList(0);
+-
+-    static final class NodeList extends ArrayList<Node> {
+-        /** Tracks if the children have valid sibling indices. We only need to reindex on siblingIndex() demand. */
+-        boolean validChildren = true;
+-
+-        NodeList(int size) {
+-            super(size);
+-        }
+-
+-        /** The modCount is used to invalidate the cached element children. */
+-        int modCount() {
+-            return this.modCount;
+-        }
+-
+-        void incrementMod() {
+-            this.modCount++;
+-        }
+-    }
+-
+-    static void reindex(Element element) {
+-        final int size = element.childNodes.size();
+-        for (int i = 0; i < size; i++) {
+-            element.childNodes.get(i).setSiblingIndex(i);
+-        }
+-        element.childNodes.validChildren = true;
+-    }
+-
+-    static void invalidate(Element element) {
+-        element.childNodes.validChildren = false;
+-    }
+-
+-    static boolean hasValid(Element element) {
+-        return element.childNodes.validChildren;
+-    }
+-}
+diff --git a/src/main/java/org/jsoup/nodes/ElementClassNames.java b/src/main/java/org/jsoup/nodes/ElementClassNames.java
+deleted file mode 100644
+index 096aae85..00000000
+--- a/src/main/java/org/jsoup/nodes/ElementClassNames.java
++++ /dev/null
+@@ -1,102 +0,0 @@
+-package org.jsoup.nodes;
+-
+-import org.jsoup.helper.Validate;
+-import org.jsoup.internal.StringUtil;
+-
+-import java.util.ArrayList;
+-import java.util.Collections;
+-import java.util.LinkedHashSet;
+-import java.util.List;
+-import java.util.Set;
+-
+-/**
+- * Handles parsing and matching of Element {@code class} attributes.
+- */
+-final class ElementClassNames {
+-    private ElementClassNames() {}
+-
+-    static Set<String> classNames(@org.jspecify.annotations.Nullable Attributes attributes) {
+-        Set<String> classNames = new LinkedHashSet<>(4);
+-        if (attributes == null) return classNames;
+-
+-        String classAttr = attributes.getIgnoreCase("class");
+-        int len = classAttr.length();
+-        for (int i = 0; i < len; ) {
+-            int start = nextClassStart(classAttr, i, len);
+-            if (start == len) break;
+-
+-            int end = nextClassEnd(classAttr, start, len);
+-            classNames.add(classToken(classAttr, start, end));
+-            i = end;
+-        }
+-        return classNames;
+-    }
+-
+-    static List<String> classList(@org.jspecify.annotations.Nullable Attributes attributes) {
+-        if (attributes == null) return Collections.emptyList();
+-
+-        String attr = attributes.getIgnoreCase("class");
+-        int len = attr.length();
+-        int start = nextClassStart(attr, 0, len);
+-        if (start == len) return Collections.emptyList();
+-
+-        int end = nextClassEnd(attr, start, len);
+-        String first = classToken(attr, start, end);
+-        start = nextClassStart(attr, end, len);
+-        if (start == len) return Collections.singletonList(first);
+-
+-        List<String> classes = new ArrayList<>(4);
+-        classes.add(first);
+-        do {
+-            end = nextClassEnd(attr, start, len);
+-            classes.add(classToken(attr, start, end));
+-            start = nextClassStart(attr, end, len);
+-        } while (start < len);
+-        return Collections.unmodifiableList(classes);
+-    }
+-
+-    static boolean hasClass(@org.jspecify.annotations.Nullable Attributes attributes, String className) {
+-        Validate.notNull(className);
+-        if (attributes == null) return false;
+-
+-        final String classAttr = attributes.getIgnoreCase("class");
+-        final int len = classAttr.length();
+-        final int wantLen = className.length();
+-
+-        if (len == 0 || len < wantLen) return false;
+-        if (len == wantLen) return className.equalsIgnoreCase(classAttr);
+-
+-        for (int i = 0; i < len; ) {
+-            int start = nextClassStart(classAttr, i, len);
+-            if (start == len) return false;
+-
+-            int end = nextClassEnd(classAttr, start, len);
+-            if (end - start == wantLen && classAttr.regionMatches(true, start, className, 0, wantLen)) return true;
+-            i = end;
+-        }
+-        return false;
+-    }
+-
+-    static void setClassNames(Element element, Set<String> classNames) {
+-        Validate.notNull(classNames);
+-        if (classNames.isEmpty()) {
+-            element.attributes().remove("class");
+-        } else {
+-            element.attributes().put("class", StringUtil.join(classNames, " "));
+-        }
+-    }
+-
+-    private static int nextClassStart(String classAttr, int offset, int len) {
+-        while (offset < len && StringUtil.isWhitespace(classAttr.charAt(offset))) offset++;
+-        return offset;
+-    }
+-
+-    private static int nextClassEnd(String classAttr, int offset, int len) {
+-        while (offset < len && !StringUtil.isWhitespace(classAttr.charAt(offset))) offset++;
+-        return offset;
+-    }
+-
+-    private static String classToken(String classAttr, int start, int end) {
+-        return start == 0 && end == classAttr.length() ? classAttr : classAttr.substring(start, end);
+-    }
+-}
+diff --git a/src/main/java/org/jsoup/nodes/Node.java b/src/main/java/org/jsoup/nodes/Node.java
+index d05b9892..d8971407 100644
+--- a/src/main/java/org/jsoup/nodes/Node.java
++++ b/src/main/java/org/jsoup/nodes/Node.java
+@@ -3,6 +3,7 @@ package org.jsoup.nodes;
+ import org.jsoup.helper.Validate;
+ import org.jsoup.internal.QuietAppendable;
+ import org.jsoup.internal.StringUtil;
++import org.jsoup.nodes.element.ElementChildNodes;
+ import org.jsoup.parser.ParseSettings;
+ import org.jsoup.select.NodeFilter;
+ import org.jsoup.select.NodeVisitor;
+@@ -563,12 +564,12 @@ public abstract class Node implements Cloneable {
+     protected void removeChild(Node out) {
+         Validate.isTrue(out.parentNode == this);
+         Element el = (Element) this;
+-        if (ElementChildNodes.hasValid(el)) // can remove by index
++        if (ElementChildNodes.hasValid(el.childNodes)) // can remove by index
+             ensureChildNodes().remove(out.siblingIndex);
+         else
+             ensureChildNodes().remove(out); // iterates, but potentially not every one
+ 
+-        ElementChildNodes.invalidate(el);
++        ElementChildNodes.invalidate(el.childNodes);
+         out.parentNode = null;
+     }
+ 
+@@ -610,7 +611,7 @@ public abstract class Node implements Cloneable {
+                 while (i-- > 0) {
+                     children[i].parentNode = (Element) this;
+                 }
+-                ElementChildNodes.invalidate((Element) this);
++                ElementChildNodes.invalidate(((Element) this).childNodes);
+                 return;
+             }
+         }
+@@ -620,7 +621,7 @@ public abstract class Node implements Cloneable {
+             reparentChild(child);
+         }
+         nodes.addAll(index, Arrays.asList(children));
+-        ElementChildNodes.invalidate((Element) this);
++        ElementChildNodes.invalidate(((Element) this).childNodes);
+     }
+     
+     protected void reparentChild(Node child) {
+@@ -683,13 +684,13 @@ public abstract class Node implements Cloneable {
+      * @see org.jsoup.nodes.Element#elementSiblingIndex()
+      */
+     public int siblingIndex() {
+-        if (parentNode != null && !parentNode.childNodes.validChildren)
+-            ElementChildNodes.reindex(parentNode);
++        if (parentNode != null && !parentNode.childNodes.hasValidChildren())
++            ElementChildNodes.reindex(parentNode.childNodes);
+ 
+         return siblingIndex;
+     }
+ 
+-    protected void setSiblingIndex(int siblingIndex) {
++    public void setSiblingIndex(int siblingIndex) {
+         this.siblingIndex = siblingIndex;
+     }
+ 

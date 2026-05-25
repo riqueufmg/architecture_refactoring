@@ -1,0 +1,32 @@
+WARNING: :matchText selector is deprecated and will be removed in jsoup 1.24.1. Use Element#selectNodes(String, Class) with selector ::textnode and class TextNode instead.
+[ERROR] Tests run: 9, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.014 s <<< FAILURE! -- in org.jsoup.parser.HtmlTreeBuilderTest
+[ERROR] org.jsoup.parser.HtmlTreeBuilderTest.ensureSearchArraysAreSorted -- Time elapsed: 0.004 s <<< ERROR!
+java.lang.IllegalStateException: java.lang.IllegalAccessException: class org.jsoup.parser.HtmlTreeBuilderStateTest cannot access a member of class org.jsoup.parser.tag.HtmlTagOptions with package access
+	at org.jsoup.parser.HtmlTreeBuilderStateTest.findConstantArrays(HtmlTreeBuilderStateTest.java:34)
+	at org.jsoup.parser.HtmlTreeBuilderTest.ensureSearchArraysAreSorted(HtmlTreeBuilderTest.java:25)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+Caused by: java.lang.IllegalAccessException: class org.jsoup.parser.HtmlTreeBuilderStateTest cannot access a member of class org.jsoup.parser.tag.HtmlTagOptions with package access
+	at java.base/jdk.internal.reflect.Reflection.newIllegalAccessException(Reflection.java:398)
+	at java.base/java.lang.reflect.AccessibleObject.checkAccess(AccessibleObject.java:709)
+	at java.base/java.lang.reflect.Field.checkAccess(Field.java:1156)
+	at java.base/java.lang.reflect.Field.get(Field.java:441)
+	at org.jsoup.parser.HtmlTreeBuilderStateTest.findConstantArrays(HtmlTreeBuilderStateTest.java:32)
+	... 4 more
+
+[ERROR] Surefire is going to kill self fork JVM. The exit has elapsed 30 seconds after System.exit(0).
+[ERROR] Errors: 
+[ERROR]   HtmlTreeBuilderTest.ensureSearchArraysAreSorted:25 » IllegalState java.lang.IllegalAccessException: class org.jsoup.parser.HtmlTreeBuilderStateTest cannot access a member of class org.jsoup.parser.tag.HtmlTagOptions with package access
+[ERROR] Tests run: 1971, Failures: 0, Errors: 1, Skipped: 0
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.5.5:test (default-test) on project jsoup: 
+[ERROR] 
+[ERROR] See /data/henrique/langchain_prototype/codex/data/repositories/jsoup/target/surefire-reports for the individual test results.
+[ERROR] See dump files (if any exist) [date].dump, [date]-jvmRun[N].dump and [date].dumpstream.
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException

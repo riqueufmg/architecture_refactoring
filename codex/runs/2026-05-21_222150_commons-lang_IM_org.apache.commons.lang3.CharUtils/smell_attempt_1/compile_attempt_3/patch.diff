@@ -1,0 +1,94 @@
+diff --git a/src/main/java/org/apache/commons/lang3/CharUtils.java b/src/main/java/org/apache/commons/lang3/CharUtils.java
+index fda1bf618..2a261d222 100644
+--- a/src/main/java/org/apache/commons/lang3/CharUtils.java
++++ b/src/main/java/org/apache/commons/lang3/CharUtils.java
+@@ -90,7 +90,7 @@ public static int compare(final char x, final char y) {
+      * @return true if less than 128
+      */
+     public static boolean isAscii(final char ch) {
+-        return ch < 128;
++        return CharClassifier.isAscii(ch);
+     }
+ 
+     /**
+@@ -109,7 +109,7 @@ public static boolean isAscii(final char ch) {
+      * @return true if between 65 and 90 or 97 and 122 inclusive
+      */
+     public static boolean isAsciiAlpha(final char ch) {
+-        return isAsciiAlphaUpper(ch) || isAsciiAlphaLower(ch);
++        return CharClassifier.isAsciiAlpha(ch);
+     }
+ 
+     /**
+@@ -128,7 +128,7 @@ public static boolean isAsciiAlpha(final char ch) {
+      * @return true if between 97 and 122 inclusive
+      */
+     public static boolean isAsciiAlphaLower(final char ch) {
+-        return ch >= 'a' && ch <= 'z';
++        return CharClassifier.isAsciiAlphaLower(ch);
+     }
+ 
+     /**
+@@ -147,7 +147,7 @@ public static boolean isAsciiAlphaLower(final char ch) {
+      * @return true if between 48 and 57 or 65 and 90 or 97 and 122 inclusive
+      */
+     public static boolean isAsciiAlphanumeric(final char ch) {
+-        return isAsciiAlpha(ch) || isAsciiNumeric(ch);
++        return CharClassifier.isAsciiAlphanumeric(ch);
+     }
+ 
+     /**
+@@ -166,7 +166,7 @@ public static boolean isAsciiAlphanumeric(final char ch) {
+      * @return true if between 65 and 90 inclusive
+      */
+     public static boolean isAsciiAlphaUpper(final char ch) {
+-        return ch >= 'A' && ch <= 'Z';
++        return CharClassifier.isAsciiAlphaUpper(ch);
+     }
+ 
+     /**
+@@ -185,7 +185,7 @@ public static boolean isAsciiAlphaUpper(final char ch) {
+      * @return true if less than 32 or equals 127
+      */
+     public static boolean isAsciiControl(final char ch) {
+-        return ch < 32 || ch == 127;
++        return CharClassifier.isAsciiControl(ch);
+     }
+ 
+     /**
+@@ -204,7 +204,7 @@ public static boolean isAsciiControl(final char ch) {
+      * @return true if between 48 and 57 inclusive
+      */
+     public static boolean isAsciiNumeric(final char ch) {
+-        return ch >= '0' && ch <= '9';
++        return CharClassifier.isAsciiNumeric(ch);
+     }
+ 
+     /**
+@@ -223,7 +223,7 @@ public static boolean isAsciiNumeric(final char ch) {
+      * @return true if between 32 and 126 inclusive
+      */
+     public static boolean isAsciiPrintable(final char ch) {
+-        return ch >= 32 && ch < 127;
++        return CharClassifier.isAsciiPrintable(ch);
+     }
+ 
+     /**
+@@ -250,7 +250,7 @@ public static boolean isAsciiPrintable(final char ch) {
+      * @since 3.18.0
+      */
+     public static boolean isHex(final char ch) {
+-        return isAsciiNumeric(ch) || ch >= 'a' && ch <= 'f' || ch >= 'A' && ch <= 'F';
++        return CharClassifier.isHex(ch);
+     }
+ 
+     /**
+@@ -261,7 +261,7 @@ public static boolean isHex(final char ch) {
+      * @since 3.18.0
+      */
+     public static boolean isOctal(final char ch) {
+-        return ch >= '0' && ch <= '7';
++        return CharClassifier.isOctal(ch);
+     }
+ 
+     /**

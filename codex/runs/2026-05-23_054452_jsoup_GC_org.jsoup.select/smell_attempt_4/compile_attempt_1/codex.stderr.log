@@ -1,0 +1,4 @@
+2026-05-23T17:34:59.701116Z ERROR codex_core::tools::router: error=write_stdin failed: stdin is closed for this session; rerun exec_command with tty=true to keep stdin open
+2026-05-23T17:37:22.161598Z ERROR codex_core::tools::router: error=apply_patch verification failed: Failed to find expected lines in /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/main/java/org/jsoup/helper/DataUtil.java:
+import org.jsoup.select.Elements;
+2026-05-23T18:36:45.630713Z ERROR codex_core::session: failed to record rollout items: thread 019e55e6-c49e-76d3-9452-52ff98773af2 not found

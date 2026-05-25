@@ -1,0 +1,277 @@
+{
+  "project_name": "commons-lang",
+  "smell": "IM",
+  "target_type": "class",
+  "target_name": "org.apache.commons.lang3.RegExUtils",
+  "initial_commit": "38f7109f4214300ae6eaf4bd76f5a7f1b2a10dc1",
+  "designite_before": {
+    "command": [
+      "/usr/lib/jvm/jdk-22.0.2-oracle-x64/bin/java",
+      "-jar",
+      "/data/henrique/langchain_prototype/codex/tools/DesigniteJava2.8.3.jar",
+      "-g",
+      "-i",
+      "/data/henrique/langchain_prototype/codex/data/repositories/commons-lang",
+      "-o",
+      "/data/henrique/langchain_prototype/codex/runs/2026-05-21_190938_commons-lang_IM_org.apache.commons.lang3.RegExUtils/designite_before"
+    ],
+    "returncode": 0,
+    "seconds": 25.18,
+    "ok": true,
+    "output_dir": "/data/henrique/langchain_prototype/codex/runs/2026-05-21_190938_commons-lang_IM_org.apache.commons.lang3.RegExUtils/designite_before",
+    "log_path": "runs/2026-05-21_190938_commons-lang_IM_org.apache.commons.lang3.RegExUtils/designite_before.log"
+  },
+  "smell_before": {
+    "present": true,
+    "matches_count": 1,
+    "matches": [
+      {
+        "file": "runs/2026-05-21_190938_commons-lang_IM_org.apache.commons.lang3.RegExUtils/designite_before/DesignSmells.csv",
+        "row_index": 19,
+        "row": {
+          "Project": "commons-lang",
+          "Package": "org.apache.commons.lang3",
+          "Class": "RegExUtils",
+          "Smell": "Insufficient Modularization",
+          "Description": "The tool detected the smell in this class becuase the class has bloated interface (large number of public methods). Total public methods in the class: 20 public methods",
+          "File": "/data/henrique/langchain_prototype/codex/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/RegExUtils.java"
+        }
+      }
+    ],
+    "searched_files": [
+      "runs/2026-05-21_190938_commons-lang_IM_org.apache.commons.lang3.RegExUtils/designite_before/DesignSmells.csv"
+    ]
+  },
+  "attempts": [
+    {
+      "smell_attempt": 1,
+      "compile_attempt": 1,
+      "attempt_dir": "runs/2026-05-21_190938_commons-lang_IM_org.apache.commons.lang3.RegExUtils/smell_attempt_1/compile_attempt_1",
+      "codex": {
+        "command": [
+          "npx",
+          "@openai/codex",
+          "exec",
+          "--cd",
+          "/data/henrique/langchain_prototype/codex/data/repositories/commons-lang",
+          "--sandbox",
+          "workspace-write",
+          "--json",
+          "--model",
+          "gpt-5.3-codex",
+          "-"
+        ],
+        "returncode": 0,
+        "seconds": 187.42,
+        "ok": true
+      },
+      "diff": {
+        "changed_files_count": 1,
+        "lines_added": 5,
+        "lines_deleted": 13
+      },
+      "maven": {
+        "command": [
+          "mvn",
+          "-q",
+          "-Djapicmp.skip=true",
+          "-Drat.skip=true",
+          "-Dcheckstyle.skip=true",
+          "-Dspotbugs.skip=true",
+          "-Dpmd.skip=true",
+          "-DskipITs",
+          "clean",
+          "verify"
+        ],
+        "returncode": 1,
+        "seconds": 10.59,
+        "ok": false
+      },
+      "codex_success": true,
+      "compile_success": false
+    },
+    {
+      "smell_attempt": 1,
+      "compile_attempt": 2,
+      "attempt_dir": "runs/2026-05-21_190938_commons-lang_IM_org.apache.commons.lang3.RegExUtils/smell_attempt_1/compile_attempt_2",
+      "codex": {
+        "command": [
+          "npx",
+          "@openai/codex",
+          "exec",
+          "--cd",
+          "/data/henrique/langchain_prototype/codex/data/repositories/commons-lang",
+          "--sandbox",
+          "workspace-write",
+          "--json",
+          "--model",
+          "gpt-5.3-codex",
+          "-"
+        ],
+        "returncode": 0,
+        "seconds": 51.26,
+        "ok": true
+      },
+      "diff": {
+        "changed_files_count": 1,
+        "lines_added": 5,
+        "lines_deleted": 8
+      },
+      "maven": {
+        "command": [
+          "mvn",
+          "-q",
+          "-Djapicmp.skip=true",
+          "-Drat.skip=true",
+          "-Dcheckstyle.skip=true",
+          "-Dspotbugs.skip=true",
+          "-Dpmd.skip=true",
+          "-DskipITs",
+          "clean",
+          "verify"
+        ],
+        "returncode": 0,
+        "seconds": 202.22,
+        "ok": true
+      },
+      "codex_success": true,
+      "compile_success": true
+    },
+    {
+      "smell_attempt": 2,
+      "compile_attempt": 1,
+      "attempt_dir": "runs/2026-05-21_190938_commons-lang_IM_org.apache.commons.lang3.RegExUtils/smell_attempt_2/compile_attempt_1",
+      "codex": {
+        "command": [
+          "npx",
+          "@openai/codex",
+          "exec",
+          "--cd",
+          "/data/henrique/langchain_prototype/codex/data/repositories/commons-lang",
+          "--sandbox",
+          "workspace-write",
+          "--json",
+          "--model",
+          "gpt-5.3-codex",
+          "-"
+        ],
+        "returncode": 0,
+        "seconds": 91.23,
+        "ok": true
+      },
+      "diff": {
+        "changed_files_count": 1,
+        "lines_added": 10,
+        "lines_deleted": 24
+      },
+      "maven": {
+        "command": [
+          "mvn",
+          "-q",
+          "-Djapicmp.skip=true",
+          "-Drat.skip=true",
+          "-Dcheckstyle.skip=true",
+          "-Dspotbugs.skip=true",
+          "-Dpmd.skip=true",
+          "-DskipITs",
+          "clean",
+          "verify"
+        ],
+        "returncode": 0,
+        "seconds": 204.14,
+        "ok": true
+      },
+      "codex_success": true,
+      "compile_success": true
+    }
+  ],
+  "codex": {
+    "command": [
+      "npx",
+      "@openai/codex",
+      "exec",
+      "--cd",
+      "/data/henrique/langchain_prototype/codex/data/repositories/commons-lang",
+      "--sandbox",
+      "workspace-write",
+      "--json",
+      "--model",
+      "gpt-5.3-codex",
+      "-"
+    ],
+    "returncode": 0,
+    "seconds": 91.23,
+    "ok": true
+  },
+  "diff": {
+    "changed_files_count": 1,
+    "lines_added": 10,
+    "lines_deleted": 24
+  },
+  "maven": {
+    "command": [
+      "mvn",
+      "-q",
+      "-Djapicmp.skip=true",
+      "-Drat.skip=true",
+      "-Dcheckstyle.skip=true",
+      "-Dspotbugs.skip=true",
+      "-Dpmd.skip=true",
+      "-DskipITs",
+      "clean",
+      "verify"
+    ],
+    "returncode": 0,
+    "seconds": 204.14,
+    "ok": true
+  },
+  "designite_after": {
+    "command": [
+      "/usr/lib/jvm/jdk-22.0.2-oracle-x64/bin/java",
+      "-jar",
+      "/data/henrique/langchain_prototype/codex/tools/DesigniteJava2.8.3.jar",
+      "-g",
+      "-i",
+      "/data/henrique/langchain_prototype/codex/data/repositories/commons-lang",
+      "-o",
+      "/data/henrique/langchain_prototype/codex/runs/2026-05-21_190938_commons-lang_IM_org.apache.commons.lang3.RegExUtils/smell_attempt_2/designite_after"
+    ],
+    "returncode": 0,
+    "seconds": 23.14,
+    "ok": true,
+    "output_dir": "/data/henrique/langchain_prototype/codex/runs/2026-05-21_190938_commons-lang_IM_org.apache.commons.lang3.RegExUtils/smell_attempt_2/designite_after",
+    "log_path": "runs/2026-05-21_190938_commons-lang_IM_org.apache.commons.lang3.RegExUtils/designite_after_smell_attempt_2.log"
+  },
+  "smell_after": {
+    "present": false,
+    "matches_count": 0,
+    "matches": [],
+    "searched_files": [
+      "runs/2026-05-21_190938_commons-lang_IM_org.apache.commons.lang3.RegExUtils/smell_attempt_2/designite_after/DesignSmells.csv"
+    ]
+  },
+  "smell_removed": true,
+  "final_commit": {
+    "created": true,
+    "commit": "0ffa49be03f05bfd9b0b626f2491be0086944d86",
+    "message": "Temporary Codex refactoring result for 2026-05-21_190938_commons-lang_IM_org.apache.commons.lang3.RegExUtils"
+  },
+  "refactoring_miner": {
+    "command": [
+      "/data/henrique/langchain_prototype/codex/tools/RefactoringMiner-3.0.7/bin/RefactoringMiner",
+      "-bc",
+      "/data/henrique/langchain_prototype/codex/data/repositories/commons-lang",
+      "38f7109f4214300ae6eaf4bd76f5a7f1b2a10dc1",
+      "0ffa49be03f05bfd9b0b626f2491be0086944d86",
+      "-json",
+      "/data/henrique/langchain_prototype/codex/runs/2026-05-21_190938_commons-lang_IM_org.apache.commons.lang3.RegExUtils/refactoring_miner.json"
+    ],
+    "returncode": 1,
+    "seconds": 0.11,
+    "ok": false,
+    "output_json": "/data/henrique/langchain_prototype/codex/runs/2026-05-21_190938_commons-lang_IM_org.apache.commons.lang3.RegExUtils/refactoring_miner.json",
+    "log_path": "/data/henrique/langchain_prototype/codex/runs/2026-05-21_190938_commons-lang_IM_org.apache.commons.lang3.RegExUtils/refactoring_miner.log",
+    "refactorings_count": 0,
+    "refactoring_types": {}
+  }
+}

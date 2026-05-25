@@ -1,0 +1,1177 @@
+diff --git a/src/main/java/org/jsoup/examples/HtmlToPlainText.java b/src/main/java/org/jsoup/examples/HtmlToPlainText.java
+index 9b98ca9e..6def8302 100644
+--- a/src/main/java/org/jsoup/examples/HtmlToPlainText.java
++++ b/src/main/java/org/jsoup/examples/HtmlToPlainText.java
+@@ -3,7 +3,7 @@ package org.jsoup.examples;
+ import org.jsoup.Connection;
+ import org.jsoup.Jsoup;
+ import org.jsoup.internal.StringUtil;
+-import org.jsoup.helper.Validate;
++import org.jsoup.helper.validation.Validate;
+ import org.jsoup.nodes.Document;
+ import org.jsoup.nodes.Element;
+ import org.jsoup.nodes.Node;
+diff --git a/src/main/java/org/jsoup/examples/ListLinks.java b/src/main/java/org/jsoup/examples/ListLinks.java
+index b10d0e7b..2cbae950 100644
+--- a/src/main/java/org/jsoup/examples/ListLinks.java
++++ b/src/main/java/org/jsoup/examples/ListLinks.java
+@@ -1,7 +1,7 @@
+ package org.jsoup.examples;
+ 
+ import org.jsoup.Jsoup;
+-import org.jsoup.helper.Validate;
++import org.jsoup.helper.validation.Validate;
+ import org.jsoup.nodes.Document;
+ import org.jsoup.nodes.Element;
+ import org.jsoup.select.Elements;
+diff --git a/src/main/java/org/jsoup/helper/DataUtil.java b/src/main/java/org/jsoup/helper/DataUtil.java
+index c5c4e43f..a2abfea5 100644
+--- a/src/main/java/org/jsoup/helper/DataUtil.java
++++ b/src/main/java/org/jsoup/helper/DataUtil.java
+@@ -1,6 +1,7 @@
+ package org.jsoup.helper;
+ 
+ import org.jsoup.Connection;
++import org.jsoup.helper.validation.Validate;
+ import org.jsoup.internal.ControllableInputStream;
+ import org.jsoup.internal.Normalizer;
+ import org.jsoup.internal.SimpleStreamReader;
+diff --git a/src/main/java/org/jsoup/helper/HttpConnection.java b/src/main/java/org/jsoup/helper/HttpConnection.java
+index ed41fd40..50c7a5a0 100644
+--- a/src/main/java/org/jsoup/helper/HttpConnection.java
++++ b/src/main/java/org/jsoup/helper/HttpConnection.java
+@@ -4,6 +4,7 @@ import org.jsoup.Connection;
+ import org.jsoup.HttpStatusException;
+ import org.jsoup.Progress;
+ import org.jsoup.UnsupportedMimeTypeException;
++import org.jsoup.helper.validation.Validate;
+ import org.jsoup.internal.ControllableInputStream;
+ import org.jsoup.internal.StringUtil;
+ import org.jsoup.nodes.Document;
+diff --git a/src/main/java/org/jsoup/helper/Re2jRegex.java b/src/main/java/org/jsoup/helper/Re2jRegex.java
+deleted file mode 100644
+index b9e65bed..00000000
+--- a/src/main/java/org/jsoup/helper/Re2jRegex.java
++++ /dev/null
+@@ -1,48 +0,0 @@
+-package org.jsoup.helper;
+-
+-/**
+- re2j-backed Regex implementation; must only be touched when re2j is on the classpath.
+- */
+-final class Re2jRegex extends Regex {
+-    private static final java.util.regex.Pattern unused = java.util.regex.Pattern.compile("");
+-
+-    private final com.google.re2j.Pattern re2jPattern;
+-
+-    private Re2jRegex(com.google.re2j.Pattern re2jPattern) {
+-        super(unused);
+-        this.re2jPattern = re2jPattern;
+-    }
+-
+-    public static Regex compile(String regex) {
+-        try {
+-            return new Re2jRegex(com.google.re2j.Pattern.compile(regex));
+-        } catch (RuntimeException e) {
+-            throw new ValidationException("Pattern syntax error: " + e.getMessage());
+-        } catch (OutOfMemoryError | StackOverflowError e) { // defensive check on regex to normalize exception
+-            throw new ValidationException("Pattern complexity error: " + e.getMessage());
+-        }
+-    }
+-
+-    @Override
+-    public Matcher matcher(CharSequence input) {
+-        return new Re2jMatcher(re2jPattern.matcher(input));
+-    }
+-
+-    @Override
+-    public String toString() {
+-        return re2jPattern.toString();
+-    }
+-
+-    private static final class Re2jMatcher implements Matcher {
+-        private final com.google.re2j.Matcher delegate;
+-
+-        Re2jMatcher(com.google.re2j.Matcher delegate) {
+-            this.delegate = delegate;
+-        }
+-
+-        @Override
+-        public boolean find() {
+-            return delegate.find();
+-        }
+-    }
+-}
+diff --git a/src/main/java/org/jsoup/helper/Regex.java b/src/main/java/org/jsoup/helper/Regex.java
+deleted file mode 100644
+index 7b157ddc..00000000
+--- a/src/main/java/org/jsoup/helper/Regex.java
++++ /dev/null
+@@ -1,119 +0,0 @@
+-package org.jsoup.helper;
+-
+-import org.jsoup.internal.SharedConstants;
+-
+-import java.lang.reflect.InvocationTargetException;
+-import java.lang.reflect.Method;
+-import java.util.regex.Pattern;
+-import java.util.regex.PatternSyntaxException;
+-
+-/**
+- A regular expression abstraction. Allows jsoup to optionally use the re2j regular expression engine (linear time)
+- instead of the JDK's backtracking regex implementation.
+-
+- <p>If the {@code com.google.re2j} library is found on the classpath, by default it will be used. You can override this
+- by setting {@code -Djsoup.useRe2j=false} to explicitly disable, and use the JDK regex engine.</p>
+-
+- <p>(Currently this a simplified implementation for jsoup's specific use; can extend as required.)</p>
+- */
+-public class Regex {
+-    private static final boolean hasRe2j = hasRe2j();
+-
+-    private final Pattern jdkPattern;
+-
+-    Regex(Pattern jdkPattern) {
+-        this.jdkPattern = jdkPattern;
+-    }
+-
+-    /**
+-     Compile a regex, using re2j if enabled and available; otherwise JDK regex.
+-
+-     @param regex the regex to compile
+-     @return the compiled regex
+-     @throws ValidationException if the regex is invalid
+-     */
+-    public static Regex compile(String regex) {
+-        if (usingRe2j()) {
+-            return Re2jRegex.compile(regex);
+-        }
+-
+-        try {
+-            return new Regex(Pattern.compile(regex));
+-        } catch (PatternSyntaxException e) {
+-            throw new ValidationException("Pattern syntax error: " + e.getMessage());
+-        }
+-    }
+-
+-    /** Wraps an existing JDK Pattern (for API compat); doesn't switch */
+-    public static Regex fromPattern(Pattern pattern) {
+-        return new Regex(pattern);
+-    }
+-
+-    /**
+-     Checks if re2j is available (on classpath) and enabled (via system property).
+-     @return true if re2j is available and enabled
+-     */
+-    public static boolean usingRe2j() {
+-        return hasRe2j && wantsRe2j();
+-    }
+-
+-    static boolean wantsRe2j() {
+-        return Boolean.parseBoolean(System.getProperty(SharedConstants.UseRe2j, "true"));
+-    }
+-
+-    static void wantsRe2j(boolean use) {
+-        System.setProperty(SharedConstants.UseRe2j, Boolean.toString(use));
+-    }
+-
+-    static boolean hasRe2j() {
+-        try {
+-            Class<?> re2 = Class.forName("com.google.re2j.Pattern", false, Regex.class.getClassLoader()); // check if re2j is in classpath
+-            try {
+-                // if it is, and we are on JVM9+, we need to dork around with modules, because re2j doesn't publish a module name.
+-                // done via reflection so we can still run on JVM 8.
+-                // todo remove if re2j publishes as a module
+-                Class<?> moduleCls = Class.forName("java.lang.Module");
+-                Method getModule = Class.class.getMethod("getModule");
+-                Object jsoupMod = getModule.invoke(Regex.class);
+-                Object re2Mod = getModule.invoke(re2);
+-                boolean reads = (boolean) moduleCls.getMethod("canRead", moduleCls).invoke(jsoupMod, re2Mod);
+-                if (!reads) moduleCls.getMethod("addReads", moduleCls).invoke(jsoupMod, re2Mod);
+-            } catch (ClassNotFoundException ignore) {
+-                // jvm8 - no Module class; so we can use as-is
+-            }
+-            return true;
+-        } catch (ClassNotFoundException e) {
+-            return false; // no re2j
+-        } catch (ReflectiveOperationException e) {
+-            // unexpectedly couldn’t wire modules on 9+; return false to avoid IllegalAccessError later
+-            System.err.println("Warning: (bug? please report) couldn't access re2j from jsoup due to modules: " + e);
+-            return false;
+-        }
+-    }
+-
+-    public Matcher matcher(CharSequence input) {
+-        return new JdkMatcher(jdkPattern.matcher(input));
+-    }
+-
+-    @Override
+-    public String toString() {
+-        return jdkPattern.toString();
+-    }
+-
+-    public interface Matcher {
+-        boolean find();
+-    }
+-
+-    private static final class JdkMatcher implements Matcher {
+-        private final java.util.regex.Matcher delegate;
+-
+-        JdkMatcher(java.util.regex.Matcher delegate) {
+-            this.delegate = delegate;
+-        }
+-
+-        @Override
+-        public boolean find() {
+-            return delegate.find();
+-        }
+-    }
+-}
+diff --git a/src/main/java/org/jsoup/helper/UrlBuilder.java b/src/main/java/org/jsoup/helper/UrlBuilder.java
+index b0e9d13a..15275087 100644
+--- a/src/main/java/org/jsoup/helper/UrlBuilder.java
++++ b/src/main/java/org/jsoup/helper/UrlBuilder.java
+@@ -1,6 +1,7 @@
+ package org.jsoup.helper;
+ 
+ import org.jsoup.Connection;
++import org.jsoup.helper.validation.Validate;
+ import org.jsoup.internal.StringUtil;
+ import org.jspecify.annotations.Nullable;
+ 
+diff --git a/src/main/java/org/jsoup/helper/Validate.java b/src/main/java/org/jsoup/helper/Validate.java
+deleted file mode 100644
+index d8e29d6e..00000000
+--- a/src/main/java/org/jsoup/helper/Validate.java
++++ /dev/null
+@@ -1,240 +0,0 @@
+-package org.jsoup.helper;
+-
+-import org.jspecify.annotations.Nullable;
+-
+-/**
+- * Validators to check that method arguments meet expectations. 
+- */
+-public final class Validate {
+-    
+-    private Validate() {}
+-
+-    /**
+-     * Validates that the object is not null
+-     * @param obj object to test
+-     * @throws ValidationException if the object is null
+-     */
+-    public static void notNull(@Nullable Object obj) {
+-        if (obj == null)
+-            throw new ValidationException("Object must not be null");
+-    }
+-
+-    /**
+-     Validates that the parameter is not null
+-
+-     * @param obj the parameter to test
+-     * @param param the name of the parameter, for presentation in the validation exception.
+-     * @throws ValidationException if the object is null
+-     */
+-    public static void notNullParam(@Nullable final Object obj, final String param) {
+-        if (obj == null)
+-            throw new ValidationException(String.format("The parameter '%s' must not be null.", param));
+-    }
+-
+-    /**
+-     * Validates that the object is not null
+-     * @param obj object to test
+-     * @param msg message to include in the Exception if validation fails
+-     * @throws ValidationException if the object is null
+-     */
+-    public static void notNull(@Nullable Object obj, String msg) {
+-        if (obj == null)
+-            throw new ValidationException(msg);
+-    }
+-
+-    /**
+-     Verifies the input object is not null, and returns that object. Effectively this casts a nullable object to a non-
+-     null object. (Works around lack of Objects.requestNonNull in Android version.)
+-     * @param obj nullable object to cast to not-null
+-     * @return the object, or throws an exception if it is null
+-     * @throws ValidationException if the object is null
+-     * @deprecated prefer to use {@link #expectNotNull(Object, String, Object...)} instead; will be removed in jsoup 1.24.1
+-     */
+-    @Deprecated
+-    public static Object ensureNotNull(@Nullable Object obj) {
+-        if (obj == null)
+-            throw new ValidationException("Object must not be null");
+-        else return obj;
+-    }
+-
+-    /**
+-     Verifies the input object is not null, and returns that object. Effectively this casts a nullable object to a non-
+-     null object. (Works around lack of Objects.requestNonNull in Android version.)
+-     * @param obj nullable object to cast to not-null
+-     * @param msg the String format message to include in the validation exception when thrown
+-     * @param args the arguments to the msg
+-     * @return the object, or throws an exception if it is null
+-     * @throws ValidationException if the object is null
+-     * @deprecated prefer to use {@link #expectNotNull(Object, String, Object...)} instead; will be removed in jsoup 1.24.1
+-     */
+-    @Deprecated
+-    public static Object ensureNotNull(@Nullable Object obj, String msg, Object... args) {
+-        if (obj == null)
+-            throw new ValidationException(String.format(msg, args));
+-        else return obj;
+-    }
+-
+-    /**
+-     Verifies the input object is not null, and returns that object, maintaining its type. Effectively this casts a
+-     nullable object to a non-null object.
+-
+-     @param obj nullable object to cast to not-null
+-     @return the object, or throws an exception if it is null
+-     @throws ValidationException if the object is null
+-     */
+-    public static <T> T expectNotNull(@Nullable T obj) {
+-        if (obj == null)
+-            throw new ValidationException("Object must not be null");
+-        else return obj;
+-    }
+-
+-    /**
+-     Verifies the input object is not null, and returns that object, maintaining its type. Effectively this casts a
+-     nullable object to a non-null object.
+-
+-     @param obj nullable object to cast to not-null
+-     @param msg the String format message to include in the validation exception when thrown
+-     @param args the arguments to the msg
+-     @return the object, or throws an exception if it is null
+-     @throws ValidationException if the object is null
+-     */
+-    public static <T> T expectNotNull(@Nullable T obj, String msg, Object... args) {
+-        if (obj == null)
+-            throw new ValidationException(String.format(msg, args));
+-        else return obj;
+-    }
+-
+-    /**
+-     * Validates that the value is true
+-     * @param val object to test
+-     * @throws ValidationException if the object is not true
+-     */
+-    public static void isTrue(boolean val) {
+-        if (!val)
+-            throw new ValidationException("Must be true");
+-    }
+-
+-    /**
+-     * Validates that the value is true
+-     * @param val object to test
+-     * @param msg message to include in the Exception if validation fails
+-     * @throws ValidationException if the object is not true
+-     */
+-    public static void isTrue(boolean val, String msg) {
+-        if (!val)
+-            throw new ValidationException(msg);
+-    }
+-
+-    /**
+-     * Validates that the value is false
+-     * @param val object to test
+-     * @throws ValidationException if the object is not false
+-     */
+-    public static void isFalse(boolean val) {
+-        if (val)
+-            throw new ValidationException("Must be false");
+-    }
+-
+-    /**
+-     * Validates that the value is false
+-     * @param val object to test
+-     * @param msg message to include in the Exception if validation fails
+-     * @throws ValidationException if the object is not false
+-     */
+-    public static void isFalse(boolean val, String msg) {
+-        if (val)
+-            throw new ValidationException(msg);
+-    }
+-
+-    /**
+-     * Validates that the array contains no null elements
+-     * @param objects the array to test
+-     * @throws ValidationException if the array contains a null element
+-     */
+-    public static void noNullElements(Object[] objects) {
+-        noNullElements(objects, "Array must not contain any null objects");
+-    }
+-
+-    /**
+-     * Validates that the array contains no null elements
+-     * @param objects the array to test
+-     * @param msg message to include in the Exception if validation fails
+-     * @throws ValidationException if the array contains a null element
+-     */
+-    public static void noNullElements(Object[] objects, String msg) {
+-        for (Object obj : objects)
+-            if (obj == null)
+-                throw new ValidationException(msg);
+-    }
+-
+-    /**
+-     * Validates that the string is not null and is not empty
+-     * @param string the string to test
+-     * @throws ValidationException if the string is null or empty
+-     */
+-    public static void notEmpty(@Nullable String string) {
+-        if (string == null || string.length() == 0)
+-            throw new ValidationException("String must not be empty");
+-    }
+-
+-    /**
+-     Validates that the string parameter is not null and is not empty
+-     * @param string the string to test
+-     * @param param the name of the parameter, for presentation in the validation exception.
+-     * @throws ValidationException if the string is null or empty
+-     */
+-    public static void notEmptyParam(@Nullable final String string, final String param) {
+-        if (string == null || string.length() == 0)
+-            throw new ValidationException(String.format("The '%s' parameter must not be empty.", param));
+-    }
+-
+-    /**
+-     * Validates that the string is not null and is not empty
+-     * @param string the string to test
+-     * @param msg message to include in the Exception if validation fails
+-     * @throws ValidationException if the string is null or empty
+-     */
+-    public static void notEmpty(@Nullable String string, String msg) {
+-        if (string == null || string.length() == 0)
+-            throw new ValidationException(msg);
+-    }
+-
+-    /**
+-     * Blow up if we reach an unexpected state.
+-     * @param msg message to think about
+-     * @throws IllegalStateException if we reach this state
+-     */
+-    public static void wtf(String msg) {
+-        throw new IllegalStateException(msg);
+-    }
+-
+-    /**
+-     Cause a failure.
+-     @param msg message to output.
+-     @throws IllegalStateException if we reach this state
+-     */
+-    public static void fail(String msg) {
+-        throw new ValidationException(msg);
+-    }
+-
+-    /**
+-     Cause a failure, but return false so it can be used in an assert statement.
+-     @param msg message to output.
+-     @return false, always
+-     @throws IllegalStateException if we reach this state
+-     */
+-    static boolean assertFail(String msg) {
+-        fail(msg);
+-        return false;
+-    }
+-
+-    /**
+-     Cause a failure.
+-     @param msg message to output.
+-     @param args the format arguments to the msg
+-     @throws IllegalStateException if we reach this state
+-     */
+-    public static void fail(String msg, Object... args) {
+-        throw new ValidationException(String.format(msg, args));
+-    }
+-}
+diff --git a/src/main/java/org/jsoup/helper/ValidationException.java b/src/main/java/org/jsoup/helper/ValidationException.java
+deleted file mode 100644
+index 916cf128..00000000
+--- a/src/main/java/org/jsoup/helper/ValidationException.java
++++ /dev/null
+@@ -1,34 +0,0 @@
+-package org.jsoup.helper;
+-
+-import java.util.ArrayList;
+-import java.util.List;
+-
+-/**
+- Validation exceptions, as thrown by the methods in {@link Validate}.
+- */
+-public class ValidationException extends IllegalArgumentException {
+-
+-    public static final String Validator = Validate.class.getName();
+-
+-    public ValidationException(String msg) {
+-        super(msg);
+-    }
+-
+-    @Override
+-    public synchronized Throwable fillInStackTrace() {
+-        // Filters out the Validate class from the stacktrace, to more clearly point at the root-cause.
+-
+-        super.fillInStackTrace();
+-
+-        StackTraceElement[] stackTrace = getStackTrace();
+-        List<StackTraceElement> filteredTrace = new ArrayList<>();
+-        for (StackTraceElement trace : stackTrace) {
+-            if (trace.getClassName().equals(Validator)) continue;
+-            filteredTrace.add(trace);
+-        }
+-
+-        setStackTrace(filteredTrace.toArray(new StackTraceElement[0]));
+-
+-        return this;
+-    }
+-}
+diff --git a/src/main/java/org/jsoup/helper/W3CDom.java b/src/main/java/org/jsoup/helper/W3CDom.java
+index f4d2150f..5449c421 100644
+--- a/src/main/java/org/jsoup/helper/W3CDom.java
++++ b/src/main/java/org/jsoup/helper/W3CDom.java
+@@ -1,5 +1,6 @@
+ package org.jsoup.helper;
+ 
++import org.jsoup.helper.validation.Validate;
+ import org.jsoup.internal.Normalizer;
+ import org.jsoup.internal.StringUtil;
+ import org.jsoup.nodes.Attribute;
+diff --git a/src/main/java/org/jsoup/internal/ControllableInputStream.java b/src/main/java/org/jsoup/internal/ControllableInputStream.java
+index 7deb4ef2..7bf80b36 100644
+--- a/src/main/java/org/jsoup/internal/ControllableInputStream.java
++++ b/src/main/java/org/jsoup/internal/ControllableInputStream.java
+@@ -1,7 +1,7 @@
+ package org.jsoup.internal;
+ 
+ import org.jsoup.Progress;
+-import org.jsoup.helper.Validate;
++import org.jsoup.helper.validation.Validate;
+ import org.jspecify.annotations.Nullable;
+ 
+ import java.io.BufferedInputStream;
+diff --git a/src/main/java/org/jsoup/internal/SimpleBufferedInput.java b/src/main/java/org/jsoup/internal/SimpleBufferedInput.java
+index daeeaed9..d224be4a 100644
+--- a/src/main/java/org/jsoup/internal/SimpleBufferedInput.java
++++ b/src/main/java/org/jsoup/internal/SimpleBufferedInput.java
+@@ -1,6 +1,6 @@
+ package org.jsoup.internal;
+ 
+-import org.jsoup.helper.Validate;
++import org.jsoup.helper.validation.Validate;
+ import org.jspecify.annotations.Nullable;
+ 
+ import java.io.FilterInputStream;
+diff --git a/src/main/java/org/jsoup/internal/SimpleStreamReader.java b/src/main/java/org/jsoup/internal/SimpleStreamReader.java
+index 15cff23d..725d431f 100644
+--- a/src/main/java/org/jsoup/internal/SimpleStreamReader.java
++++ b/src/main/java/org/jsoup/internal/SimpleStreamReader.java
+@@ -1,6 +1,6 @@
+ package org.jsoup.internal;
+ 
+-import org.jsoup.helper.Validate;
++import org.jsoup.helper.validation.Validate;
+ import org.jspecify.annotations.Nullable;
+ 
+ import java.io.IOException;
+diff --git a/src/main/java/org/jsoup/internal/StringUtil.java b/src/main/java/org/jsoup/internal/StringUtil.java
+index 33193084..20fdd19f 100644
+--- a/src/main/java/org/jsoup/internal/StringUtil.java
++++ b/src/main/java/org/jsoup/internal/StringUtil.java
+@@ -1,6 +1,6 @@
+ package org.jsoup.internal;
+ 
+-import org.jsoup.helper.Validate;
++import org.jsoup.helper.validation.Validate;
+ import org.jspecify.annotations.Nullable;
+ 
+ import java.net.MalformedURLException;
+diff --git a/src/main/java/org/jsoup/nodes/Attribute.java b/src/main/java/org/jsoup/nodes/Attribute.java
+index 3ca0057e..4d5b63a5 100644
+--- a/src/main/java/org/jsoup/nodes/Attribute.java
++++ b/src/main/java/org/jsoup/nodes/Attribute.java
+@@ -1,6 +1,6 @@
+ package org.jsoup.nodes;
+ 
+-import org.jsoup.helper.Validate;
++import org.jsoup.helper.validation.Validate;
+ import org.jsoup.internal.Normalizer;
+ import org.jsoup.internal.QuietAppendable;
+ import org.jsoup.internal.SharedConstants;
+diff --git a/src/main/java/org/jsoup/nodes/Attributes.java b/src/main/java/org/jsoup/nodes/Attributes.java
+index 15f34d16..73bc2c2f 100644
+--- a/src/main/java/org/jsoup/nodes/Attributes.java
++++ b/src/main/java/org/jsoup/nodes/Attributes.java
+@@ -1,6 +1,6 @@
+ package org.jsoup.nodes;
+ 
+-import org.jsoup.helper.Validate;
++import org.jsoup.helper.validation.Validate;
+ import org.jsoup.internal.QuietAppendable;
+ import org.jsoup.internal.SharedConstants;
+ import org.jsoup.internal.StringUtil;
+diff --git a/src/main/java/org/jsoup/nodes/Document.java b/src/main/java/org/jsoup/nodes/Document.java
+index db25382f..44db2c26 100644
+--- a/src/main/java/org/jsoup/nodes/Document.java
++++ b/src/main/java/org/jsoup/nodes/Document.java
+@@ -3,7 +3,7 @@ package org.jsoup.nodes;
+ import org.jsoup.Connection;
+ import org.jsoup.Jsoup;
+ import org.jsoup.helper.DataUtil;
+-import org.jsoup.helper.Validate;
++import org.jsoup.helper.validation.Validate;
+ import org.jsoup.internal.StringUtil;
+ import org.jsoup.parser.ParseSettings;
+ import org.jsoup.parser.Parser;
+diff --git a/src/main/java/org/jsoup/nodes/DocumentType.java b/src/main/java/org/jsoup/nodes/DocumentType.java
+index 19148049..59567d1c 100644
+--- a/src/main/java/org/jsoup/nodes/DocumentType.java
++++ b/src/main/java/org/jsoup/nodes/DocumentType.java
+@@ -2,7 +2,7 @@ package org.jsoup.nodes;
+ 
+ import org.jsoup.internal.QuietAppendable;
+ import org.jsoup.internal.StringUtil;
+-import org.jsoup.helper.Validate;
++import org.jsoup.helper.validation.Validate;
+ import org.jsoup.nodes.Document.OutputSettings.Syntax;
+ import org.jspecify.annotations.Nullable;
+ 
+diff --git a/src/main/java/org/jsoup/nodes/Element.java b/src/main/java/org/jsoup/nodes/Element.java
+index 186506e9..c0bc8f27 100644
+--- a/src/main/java/org/jsoup/nodes/Element.java
++++ b/src/main/java/org/jsoup/nodes/Element.java
+@@ -1,6 +1,6 @@
+ package org.jsoup.nodes;
+ 
+-import org.jsoup.helper.Validate;
++import org.jsoup.helper.validation.Validate;
+ import org.jsoup.internal.Normalizer;
+ import org.jsoup.internal.QuietAppendable;
+ import org.jsoup.internal.StringUtil;
+diff --git a/src/main/java/org/jsoup/nodes/ElementClassNames.java b/src/main/java/org/jsoup/nodes/ElementClassNames.java
+index 096aae85..b6c6ed96 100644
+--- a/src/main/java/org/jsoup/nodes/ElementClassNames.java
++++ b/src/main/java/org/jsoup/nodes/ElementClassNames.java
+@@ -1,6 +1,6 @@
+ package org.jsoup.nodes;
+ 
+-import org.jsoup.helper.Validate;
++import org.jsoup.helper.validation.Validate;
+ import org.jsoup.internal.StringUtil;
+ 
+ import java.util.ArrayList;
+diff --git a/src/main/java/org/jsoup/nodes/ElementClassOps.java b/src/main/java/org/jsoup/nodes/ElementClassOps.java
+index 2b04b919..ddf2b6ea 100644
+--- a/src/main/java/org/jsoup/nodes/ElementClassOps.java
++++ b/src/main/java/org/jsoup/nodes/ElementClassOps.java
+@@ -1,6 +1,6 @@
+ package org.jsoup.nodes;
+ 
+-import org.jsoup.helper.Validate;
++import org.jsoup.helper.validation.Validate;
+ import org.jsoup.internal.StringUtil;
+ 
+ import java.util.ArrayList;
+diff --git a/src/main/java/org/jsoup/nodes/ElementIdentityOps.java b/src/main/java/org/jsoup/nodes/ElementIdentityOps.java
+index 1286eaa0..6fdd922d 100644
+--- a/src/main/java/org/jsoup/nodes/ElementIdentityOps.java
++++ b/src/main/java/org/jsoup/nodes/ElementIdentityOps.java
+@@ -1,6 +1,6 @@
+ package org.jsoup.nodes;
+ 
+-import org.jsoup.helper.Validate;
++import org.jsoup.helper.validation.Validate;
+ import org.jsoup.internal.StringUtil;
+ import org.jsoup.parser.ParseSettings;
+ import org.jsoup.parser.Parser;
+diff --git a/src/main/java/org/jsoup/nodes/ElementQueryOps.java b/src/main/java/org/jsoup/nodes/ElementQueryOps.java
+index a58cf091..0c644da0 100644
+--- a/src/main/java/org/jsoup/nodes/ElementQueryOps.java
++++ b/src/main/java/org/jsoup/nodes/ElementQueryOps.java
+@@ -1,7 +1,7 @@
+ package org.jsoup.nodes;
+ 
+-import org.jsoup.helper.Regex;
+-import org.jsoup.helper.Validate;
++import org.jsoup.helper.regex.Regex;
++import org.jsoup.helper.validation.Validate;
+ import org.jsoup.internal.Normalizer;
+ import org.jsoup.select.Collector;
+ import org.jsoup.select.Elements;
+diff --git a/src/main/java/org/jsoup/nodes/ElementSiblingOps.java b/src/main/java/org/jsoup/nodes/ElementSiblingOps.java
+index 178e29e7..30909270 100644
+--- a/src/main/java/org/jsoup/nodes/ElementSiblingOps.java
++++ b/src/main/java/org/jsoup/nodes/ElementSiblingOps.java
+@@ -1,6 +1,6 @@
+ package org.jsoup.nodes;
+ 
+-import org.jsoup.helper.Validate;
++import org.jsoup.helper.validation.Validate;
+ import org.jsoup.select.Elements;
+ import org.jspecify.annotations.Nullable;
+ 
+diff --git a/src/main/java/org/jsoup/nodes/ElementTextOps.java b/src/main/java/org/jsoup/nodes/ElementTextOps.java
+index 550ca579..3e357d10 100644
+--- a/src/main/java/org/jsoup/nodes/ElementTextOps.java
++++ b/src/main/java/org/jsoup/nodes/ElementTextOps.java
+@@ -1,6 +1,6 @@
+ package org.jsoup.nodes;
+ 
+-import org.jsoup.helper.Validate;
++import org.jsoup.helper.validation.Validate;
+ import org.jsoup.internal.StringUtil;
+ import org.jsoup.parser.Tag;
+ import org.jsoup.select.NodeFilter;
+diff --git a/src/main/java/org/jsoup/nodes/ElementTreeOps.java b/src/main/java/org/jsoup/nodes/ElementTreeOps.java
+index 65b7e4a1..af8565d2 100644
+--- a/src/main/java/org/jsoup/nodes/ElementTreeOps.java
++++ b/src/main/java/org/jsoup/nodes/ElementTreeOps.java
+@@ -1,6 +1,6 @@
+ package org.jsoup.nodes;
+ 
+-import org.jsoup.helper.Validate;
++import org.jsoup.helper.validation.Validate;
+ import org.jsoup.parser.Parser;
+ 
+ import java.util.Collection;
+diff --git a/src/main/java/org/jsoup/nodes/Entities.java b/src/main/java/org/jsoup/nodes/Entities.java
+index f633cb64..3bdae400 100644
+--- a/src/main/java/org/jsoup/nodes/Entities.java
++++ b/src/main/java/org/jsoup/nodes/Entities.java
+@@ -3,7 +3,7 @@ package org.jsoup.nodes;
+ import org.jsoup.helper.DataUtil;
+ import org.jsoup.internal.QuietAppendable;
+ import org.jsoup.internal.StringUtil;
+-import org.jsoup.helper.Validate;
++import org.jsoup.helper.validation.Validate;
+ import org.jsoup.nodes.Document.OutputSettings;
+ import org.jsoup.parser.CharacterReader;
+ import org.jsoup.parser.Parser;
+diff --git a/src/main/java/org/jsoup/nodes/FormElement.java b/src/main/java/org/jsoup/nodes/FormElement.java
+index 5ee0ce87..90c98f1f 100644
+--- a/src/main/java/org/jsoup/nodes/FormElement.java
++++ b/src/main/java/org/jsoup/nodes/FormElement.java
+@@ -3,7 +3,7 @@ package org.jsoup.nodes;
+ import org.jsoup.Connection;
+ import org.jsoup.Jsoup;
+ import org.jsoup.helper.HttpConnection;
+-import org.jsoup.helper.Validate;
++import org.jsoup.helper.validation.Validate;
+ import org.jsoup.internal.SharedConstants;
+ import org.jsoup.internal.StringUtil;
+ import org.jsoup.parser.Tag;
+diff --git a/src/main/java/org/jsoup/nodes/LeafNode.java b/src/main/java/org/jsoup/nodes/LeafNode.java
+index 5d9ca474..25d54975 100644
+--- a/src/main/java/org/jsoup/nodes/LeafNode.java
++++ b/src/main/java/org/jsoup/nodes/LeafNode.java
+@@ -1,6 +1,6 @@
+ package org.jsoup.nodes;
+ 
+-import org.jsoup.helper.Validate;
++import org.jsoup.helper.validation.Validate;
+ import org.jsoup.internal.QuietAppendable;
+ import org.jspecify.annotations.Nullable;
+ 
+diff --git a/src/main/java/org/jsoup/nodes/Node.java b/src/main/java/org/jsoup/nodes/Node.java
+index d05b9892..6dfd5b2b 100644
+--- a/src/main/java/org/jsoup/nodes/Node.java
++++ b/src/main/java/org/jsoup/nodes/Node.java
+@@ -1,6 +1,6 @@
+ package org.jsoup.nodes;
+ 
+-import org.jsoup.helper.Validate;
++import org.jsoup.helper.validation.Validate;
+ import org.jsoup.internal.QuietAppendable;
+ import org.jsoup.internal.StringUtil;
+ import org.jsoup.parser.ParseSettings;
+diff --git a/src/main/java/org/jsoup/nodes/NodeInternals.java b/src/main/java/org/jsoup/nodes/NodeInternals.java
+index 7063dd9e..8dbabb9b 100644
+--- a/src/main/java/org/jsoup/nodes/NodeInternals.java
++++ b/src/main/java/org/jsoup/nodes/NodeInternals.java
+@@ -1,6 +1,6 @@
+ package org.jsoup.nodes;
+ 
+-import org.jsoup.helper.Validate;
++import org.jsoup.helper.validation.Validate;
+ import org.jsoup.internal.LineMap;
+ 
+ /**
+diff --git a/src/main/java/org/jsoup/nodes/NodeIterator.java b/src/main/java/org/jsoup/nodes/NodeIterator.java
+index 77d787d5..793fefd6 100644
+--- a/src/main/java/org/jsoup/nodes/NodeIterator.java
++++ b/src/main/java/org/jsoup/nodes/NodeIterator.java
+@@ -1,6 +1,6 @@
+ package org.jsoup.nodes;
+ 
+-import org.jsoup.helper.Validate;
++import org.jsoup.helper.validation.Validate;
+ import org.jspecify.annotations.Nullable;
+ 
+ import java.util.Iterator;
+diff --git a/src/main/java/org/jsoup/nodes/NodeUtils.java b/src/main/java/org/jsoup/nodes/NodeUtils.java
+index f56219cc..ea5a1efc 100644
+--- a/src/main/java/org/jsoup/nodes/NodeUtils.java
++++ b/src/main/java/org/jsoup/nodes/NodeUtils.java
+@@ -1,6 +1,6 @@
+ package org.jsoup.nodes;
+ 
+-import org.jsoup.helper.Validate;
++import org.jsoup.helper.validation.Validate;
+ import org.jsoup.helper.W3CDom;
+ import org.jsoup.parser.HtmlTreeBuilder;
+ import org.jsoup.parser.Parser;
+diff --git a/src/main/java/org/jsoup/nodes/TextNode.java b/src/main/java/org/jsoup/nodes/TextNode.java
+index 0067a3fb..0d59d51c 100644
+--- a/src/main/java/org/jsoup/nodes/TextNode.java
++++ b/src/main/java/org/jsoup/nodes/TextNode.java
+@@ -1,6 +1,6 @@
+ package org.jsoup.nodes;
+ 
+-import org.jsoup.helper.Validate;
++import org.jsoup.helper.validation.Validate;
+ import org.jsoup.internal.QuietAppendable;
+ import org.jsoup.internal.StringUtil;
+ 
+diff --git a/src/main/java/org/jsoup/parser/CharacterReader.java b/src/main/java/org/jsoup/parser/CharacterReader.java
+index f8eca0ba..6f51c09a 100644
+--- a/src/main/java/org/jsoup/parser/CharacterReader.java
++++ b/src/main/java/org/jsoup/parser/CharacterReader.java
+@@ -1,6 +1,6 @@
+ package org.jsoup.parser;
+ 
+-import org.jsoup.helper.Validate;
++import org.jsoup.helper.validation.Validate;
+ import org.jsoup.internal.LineMap;
+ import org.jsoup.internal.SoftPool;
+ import org.jsoup.internal.StringUtil;
+diff --git a/src/main/java/org/jsoup/parser/HtmlTreeBuilder.java b/src/main/java/org/jsoup/parser/HtmlTreeBuilder.java
+index f31f6f19..aa52dcb3 100644
+--- a/src/main/java/org/jsoup/parser/HtmlTreeBuilder.java
++++ b/src/main/java/org/jsoup/parser/HtmlTreeBuilder.java
+@@ -1,6 +1,6 @@
+ package org.jsoup.parser;
+ 
+-import org.jsoup.helper.Validate;
++import org.jsoup.helper.validation.Validate;
+ import org.jsoup.internal.Normalizer;
+ import org.jsoup.internal.StringUtil;
+ import org.jsoup.nodes.Attributes;
+diff --git a/src/main/java/org/jsoup/parser/HtmlTreeBuilderState.java b/src/main/java/org/jsoup/parser/HtmlTreeBuilderState.java
+index eef814bc..1c0cb365 100644
+--- a/src/main/java/org/jsoup/parser/HtmlTreeBuilderState.java
++++ b/src/main/java/org/jsoup/parser/HtmlTreeBuilderState.java
+@@ -1,6 +1,6 @@
+ package org.jsoup.parser;
+ 
+-import org.jsoup.helper.Validate;
++import org.jsoup.helper.validation.Validate;
+ import org.jsoup.internal.StringUtil;
+ import org.jsoup.nodes.Attribute;
+ import org.jsoup.nodes.Attributes;
+diff --git a/src/main/java/org/jsoup/parser/Parser.java b/src/main/java/org/jsoup/parser/Parser.java
+index 5dd8eb7f..05481e82 100644
+--- a/src/main/java/org/jsoup/parser/Parser.java
++++ b/src/main/java/org/jsoup/parser/Parser.java
+@@ -1,6 +1,6 @@
+ package org.jsoup.parser;
+ 
+-import org.jsoup.helper.Validate;
++import org.jsoup.helper.validation.Validate;
+ import org.jsoup.nodes.Document;
+ import org.jsoup.nodes.Element;
+ import org.jsoup.nodes.Node;
+diff --git a/src/main/java/org/jsoup/parser/StreamParser.java b/src/main/java/org/jsoup/parser/StreamParser.java
+index 2e8827e4..303789bf 100644
+--- a/src/main/java/org/jsoup/parser/StreamParser.java
++++ b/src/main/java/org/jsoup/parser/StreamParser.java
+@@ -1,7 +1,7 @@
+ package org.jsoup.parser;
+ 
+ import org.jsoup.Connection;
+-import org.jsoup.helper.Validate;
++import org.jsoup.helper.validation.Validate;
+ import org.jsoup.nodes.Document;
+ import org.jsoup.nodes.Element;
+ import org.jsoup.nodes.Node;
+diff --git a/src/main/java/org/jsoup/parser/TagSet.java b/src/main/java/org/jsoup/parser/TagSet.java
+index e7e12de4..0886eec3 100644
+--- a/src/main/java/org/jsoup/parser/TagSet.java
++++ b/src/main/java/org/jsoup/parser/TagSet.java
+@@ -1,6 +1,6 @@
+ package org.jsoup.parser;
+ 
+-import org.jsoup.helper.Validate;
++import org.jsoup.helper.validation.Validate;
+ import org.jsoup.internal.SharedConstants;
+ import org.jspecify.annotations.Nullable;
+ 
+diff --git a/src/main/java/org/jsoup/parser/Token.java b/src/main/java/org/jsoup/parser/Token.java
+index 34da74e2..62818090 100644
+--- a/src/main/java/org/jsoup/parser/Token.java
++++ b/src/main/java/org/jsoup/parser/Token.java
+@@ -1,6 +1,6 @@
+ package org.jsoup.parser;
+ 
+-import org.jsoup.helper.Validate;
++import org.jsoup.helper.validation.Validate;
+ import org.jsoup.nodes.Attributes;
+ import org.jsoup.nodes.NodeInternals;
+ import org.jsoup.nodes.Range;
+diff --git a/src/main/java/org/jsoup/parser/TokenQueue.java b/src/main/java/org/jsoup/parser/TokenQueue.java
+index f81da33b..0b8b870d 100644
+--- a/src/main/java/org/jsoup/parser/TokenQueue.java
++++ b/src/main/java/org/jsoup/parser/TokenQueue.java
+@@ -1,7 +1,7 @@
+ package org.jsoup.parser;
+ 
+ import org.jsoup.internal.StringUtil;
+-import org.jsoup.helper.Validate;
++import org.jsoup.helper.validation.Validate;
+ 
+ /**
+  A character reader with helpers focusing on parsing CSS selectors. Used internally by jsoup. API subject to changes.
+diff --git a/src/main/java/org/jsoup/parser/Tokeniser.java b/src/main/java/org/jsoup/parser/Tokeniser.java
+index 2a5db368..9f64cccb 100644
+--- a/src/main/java/org/jsoup/parser/Tokeniser.java
++++ b/src/main/java/org/jsoup/parser/Tokeniser.java
+@@ -1,6 +1,6 @@
+ package org.jsoup.parser;
+ 
+-import org.jsoup.helper.Validate;
++import org.jsoup.helper.validation.Validate;
+ import org.jsoup.internal.StringUtil;
+ import org.jsoup.nodes.Document;
+ import org.jsoup.nodes.Entities;
+diff --git a/src/main/java/org/jsoup/parser/TreeBuilder.java b/src/main/java/org/jsoup/parser/TreeBuilder.java
+index db7069c7..66a41dbb 100644
+--- a/src/main/java/org/jsoup/parser/TreeBuilder.java
++++ b/src/main/java/org/jsoup/parser/TreeBuilder.java
+@@ -1,6 +1,6 @@
+ package org.jsoup.parser;
+ 
+-import org.jsoup.helper.Validate;
++import org.jsoup.helper.validation.Validate;
+ import org.jsoup.internal.LineMap;
+ import org.jsoup.nodes.Attributes;
+ import org.jsoup.nodes.Document;
+diff --git a/src/main/java/org/jsoup/parser/XmlTreeBuilder.java b/src/main/java/org/jsoup/parser/XmlTreeBuilder.java
+index 74de95a2..d11492a2 100644
+--- a/src/main/java/org/jsoup/parser/XmlTreeBuilder.java
++++ b/src/main/java/org/jsoup/parser/XmlTreeBuilder.java
+@@ -1,6 +1,6 @@
+ package org.jsoup.parser;
+ 
+-import org.jsoup.helper.Validate;
++import org.jsoup.helper.validation.Validate;
+ import org.jsoup.internal.SharedConstants;
+ import org.jsoup.nodes.Attribute;
+ import org.jsoup.nodes.Attributes;
+diff --git a/src/main/java/org/jsoup/safety/Cleaner.java b/src/main/java/org/jsoup/safety/Cleaner.java
+index a1c10d31..301241b8 100644
+--- a/src/main/java/org/jsoup/safety/Cleaner.java
++++ b/src/main/java/org/jsoup/safety/Cleaner.java
+@@ -1,6 +1,6 @@
+ package org.jsoup.safety;
+ 
+-import org.jsoup.helper.Validate;
++import org.jsoup.helper.validation.Validate;
+ import org.jsoup.nodes.Attribute;
+ import org.jsoup.nodes.Attributes;
+ import org.jsoup.nodes.DataNode;
+diff --git a/src/main/java/org/jsoup/safety/Safelist.java b/src/main/java/org/jsoup/safety/Safelist.java
+index 05e5f700..46400435 100644
+--- a/src/main/java/org/jsoup/safety/Safelist.java
++++ b/src/main/java/org/jsoup/safety/Safelist.java
+@@ -5,7 +5,7 @@ package org.jsoup.safety;
+     this safe-list configuration, and the initial defaults.
+  */
+ 
+-import org.jsoup.helper.Validate;
++import org.jsoup.helper.validation.Validate;
+ import org.jsoup.internal.Normalizer;
+ import org.jsoup.nodes.Attribute;
+ import org.jsoup.nodes.Attributes;
+diff --git a/src/main/java/org/jsoup/select/Collector.java b/src/main/java/org/jsoup/select/Collector.java
+index 74ce0f83..fd7c4f13 100644
+--- a/src/main/java/org/jsoup/select/Collector.java
++++ b/src/main/java/org/jsoup/select/Collector.java
+@@ -1,6 +1,6 @@
+ package org.jsoup.select;
+ 
+-import org.jsoup.helper.Validate;
++import org.jsoup.helper.validation.Validate;
+ import org.jsoup.nodes.Element;
+ import org.jsoup.nodes.LeafNode;
+ import org.jsoup.nodes.Node;
+diff --git a/src/main/java/org/jsoup/select/Elements.java b/src/main/java/org/jsoup/select/Elements.java
+index e84e2a0e..1447d6fb 100644
+--- a/src/main/java/org/jsoup/select/Elements.java
++++ b/src/main/java/org/jsoup/select/Elements.java
+@@ -1,6 +1,6 @@
+ package org.jsoup.select;
+ 
+-import org.jsoup.helper.Validate;
++import org.jsoup.helper.validation.Validate;
+ import org.jsoup.internal.StringUtil;
+ import org.jsoup.nodes.Comment;
+ import org.jsoup.nodes.DataNode;
+diff --git a/src/main/java/org/jsoup/select/Evaluator.java b/src/main/java/org/jsoup/select/Evaluator.java
+index f3b6a353..c3126bc9 100644
+--- a/src/main/java/org/jsoup/select/Evaluator.java
++++ b/src/main/java/org/jsoup/select/Evaluator.java
+@@ -1,6 +1,6 @@
+ package org.jsoup.select;
+ 
+-import org.jsoup.helper.Validate;
++import org.jsoup.helper.validation.Validate;
+ import org.jsoup.nodes.Comment;
+ import org.jsoup.nodes.Document;
+ import org.jsoup.nodes.DocumentType;
+@@ -10,7 +10,7 @@ import org.jsoup.nodes.Node;
+ import org.jsoup.nodes.TextNode;
+ import org.jsoup.nodes.XmlDeclaration;
+ import org.jsoup.parser.ParseSettings;
+-import org.jsoup.helper.Regex;
++import org.jsoup.helper.regex.Regex;
+ 
+ import java.util.List;
+ import java.util.function.Predicate;
+diff --git a/src/main/java/org/jsoup/select/NodeEvaluator.java b/src/main/java/org/jsoup/select/NodeEvaluator.java
+index 6ceff07c..ec917a45 100644
+--- a/src/main/java/org/jsoup/select/NodeEvaluator.java
++++ b/src/main/java/org/jsoup/select/NodeEvaluator.java
+@@ -4,7 +4,7 @@ import org.jsoup.internal.StringUtil;
+ import org.jsoup.nodes.Element;
+ import org.jsoup.nodes.LeafNode;
+ import org.jsoup.nodes.Node;
+-import org.jsoup.helper.Regex;
++import org.jsoup.helper.regex.Regex;
+ 
+ import static org.jsoup.internal.Normalizer.lowerCase;
+ import static org.jsoup.internal.StringUtil.normaliseWhitespace;
+diff --git a/src/main/java/org/jsoup/select/NodeTraversor.java b/src/main/java/org/jsoup/select/NodeTraversor.java
+index d682a620..5d954103 100644
+--- a/src/main/java/org/jsoup/select/NodeTraversor.java
++++ b/src/main/java/org/jsoup/select/NodeTraversor.java
+@@ -1,6 +1,6 @@
+ package org.jsoup.select;
+ 
+-import org.jsoup.helper.Validate;
++import org.jsoup.helper.validation.Validate;
+ import org.jsoup.nodes.Element;
+ import org.jsoup.nodes.Node;
+ import org.jsoup.select.NodeFilter.FilterResult;
+diff --git a/src/main/java/org/jsoup/select/Nodes.java b/src/main/java/org/jsoup/select/Nodes.java
+index 35fca117..4a742a82 100644
+--- a/src/main/java/org/jsoup/select/Nodes.java
++++ b/src/main/java/org/jsoup/select/Nodes.java
+@@ -1,6 +1,6 @@
+ package org.jsoup.select;
+ 
+-import org.jsoup.helper.Validate;
++import org.jsoup.helper.validation.Validate;
+ import org.jsoup.internal.StringUtil;
+ import org.jsoup.nodes.Element;
+ import org.jsoup.nodes.Node;
+diff --git a/src/main/java/org/jsoup/select/QueryParser.java b/src/main/java/org/jsoup/select/QueryParser.java
+index 83b32232..9dd0a8f1 100644
+--- a/src/main/java/org/jsoup/select/QueryParser.java
++++ b/src/main/java/org/jsoup/select/QueryParser.java
+@@ -1,8 +1,8 @@
+ package org.jsoup.select;
+ 
+-import org.jsoup.helper.Regex;
++import org.jsoup.helper.regex.Regex;
+ import org.jsoup.internal.StringUtil;
+-import org.jsoup.helper.Validate;
++import org.jsoup.helper.validation.Validate;
+ import org.jsoup.nodes.CDataNode;
+ import org.jsoup.nodes.Comment;
+ import org.jsoup.nodes.DataNode;
+diff --git a/src/main/java/org/jsoup/select/Selector.java b/src/main/java/org/jsoup/select/Selector.java
+index c28ea0e8..f743d3c7 100644
+--- a/src/main/java/org/jsoup/select/Selector.java
++++ b/src/main/java/org/jsoup/select/Selector.java
+@@ -1,6 +1,6 @@
+ package org.jsoup.select;
+ 
+-import org.jsoup.helper.Validate;
++import org.jsoup.helper.validation.Validate;
+ import org.jsoup.nodes.Element;
+ import org.jsoup.nodes.Node;
+ import org.jsoup.parser.TokenQueue;
+diff --git a/src/test/java/org/jsoup/helper/RegexTest.java b/src/test/java/org/jsoup/helper/RegexTest.java
+index 14398df0..4006368a 100644
+--- a/src/test/java/org/jsoup/helper/RegexTest.java
++++ b/src/test/java/org/jsoup/helper/RegexTest.java
+@@ -2,6 +2,8 @@ package org.jsoup.helper;
+ 
+ import org.jsoup.select.QueryParser;
+ import org.jsoup.select.Selector;
++import org.jsoup.helper.regex.Regex;
++import org.jsoup.helper.validation.ValidationException;
+ import org.junit.jupiter.api.AfterEach;
+ import org.junit.jupiter.api.BeforeEach;
+ import org.junit.jupiter.api.Test;
+diff --git a/src/test/java/org/jsoup/helper/ValidateTest.java b/src/test/java/org/jsoup/helper/ValidateTest.java
+index 1a52b48c..c481b0d6 100644
+--- a/src/test/java/org/jsoup/helper/ValidateTest.java
++++ b/src/test/java/org/jsoup/helper/ValidateTest.java
+@@ -1,5 +1,7 @@
+ package org.jsoup.helper;
+ 
++import org.jsoup.helper.validation.Validate;
++import org.jsoup.helper.validation.ValidationException;
+ import org.junit.jupiter.api.Assertions;
+ import org.junit.jupiter.api.Test;
+ 
+diff --git a/src/test/java/org/jsoup/nodes/ElementTest.java b/src/test/java/org/jsoup/nodes/ElementTest.java
+index b4eab867..de221e69 100644
+--- a/src/test/java/org/jsoup/nodes/ElementTest.java
++++ b/src/test/java/org/jsoup/nodes/ElementTest.java
+@@ -2,7 +2,7 @@ package org.jsoup.nodes;
+ 
+ import org.jsoup.Jsoup;
+ import org.jsoup.TextUtil;
+-import org.jsoup.helper.ValidationException;
++import org.jsoup.helper.validation.ValidationException;
+ import org.jsoup.internal.StringUtil;
+ import org.jsoup.parser.ParseSettings;
+ import org.jsoup.parser.Parser;
+diff --git a/src/test/java/org/jsoup/nodes/TextNodeTest.java b/src/test/java/org/jsoup/nodes/TextNodeTest.java
+index f99cb285..5bde04f4 100644
+--- a/src/test/java/org/jsoup/nodes/TextNodeTest.java
++++ b/src/test/java/org/jsoup/nodes/TextNodeTest.java
+@@ -2,7 +2,7 @@ package org.jsoup.nodes;
+ 
+ import org.jsoup.Jsoup;
+ import org.jsoup.TextUtil;
+-import org.jsoup.helper.ValidationException;
++import org.jsoup.helper.validation.ValidationException;
+ import org.jsoup.internal.StringUtil;
+ import org.jsoup.select.Nodes;
+ import org.junit.jupiter.api.Test;
+diff --git a/src/test/java/org/jsoup/safety/SafelistTest.java b/src/test/java/org/jsoup/safety/SafelistTest.java
+index 90b4fd61..f322fe7a 100644
+--- a/src/test/java/org/jsoup/safety/SafelistTest.java
++++ b/src/test/java/org/jsoup/safety/SafelistTest.java
+@@ -1,6 +1,6 @@
+ package org.jsoup.safety;
+ 
+-import org.jsoup.helper.ValidationException;
++import org.jsoup.helper.validation.ValidationException;
+ import org.jsoup.nodes.Attribute;
+ import org.jsoup.nodes.Attributes;
+ import org.jsoup.nodes.Element;
+diff --git a/src/test/java/org/jsoup/select/EvaluatorTest.java b/src/test/java/org/jsoup/select/EvaluatorTest.java
+index 1679c192..adfcd92c 100644
+--- a/src/test/java/org/jsoup/select/EvaluatorTest.java
++++ b/src/test/java/org/jsoup/select/EvaluatorTest.java
+@@ -1,7 +1,7 @@
+ package org.jsoup.select;
+ 
+ import org.jsoup.Jsoup;
+-import org.jsoup.helper.Regex;
++import org.jsoup.helper.regex.Regex;
+ import org.jsoup.nodes.Document;
+ import org.jsoup.nodes.Element;
+ import org.junit.jupiter.api.Test;

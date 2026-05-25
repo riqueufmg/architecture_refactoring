@@ -1,0 +1,4 @@
+2026-05-23T21:36:25.702260Z ERROR codex_core::tools::router: error=write_stdin failed: stdin is closed for this session; rerun exec_command with tty=true to keep stdin open
+2026-05-23T22:18:21.503550Z ERROR codex_core::session: failed to record rollout items: thread 019e56bb-1f45-7132-8b05-e4e0244f1ef2 not found
+2026-05-23T22:18:21.503509Z ERROR codex_core::session: failed to record rollout items: thread 019e56bb-1f45-7132-8b05-e4e0244f1ef2 not found
+2026-05-23T22:18:21.530983Z ERROR codex_core::session: failed to record rollout items: thread 019e56bb-1f45-7132-8b05-e4e0244f1ef2 not found

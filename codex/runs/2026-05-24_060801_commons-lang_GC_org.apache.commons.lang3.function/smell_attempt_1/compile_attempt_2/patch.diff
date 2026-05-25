@@ -1,0 +1,553 @@
+diff --git a/src/main/java/org/apache/commons/lang3/AutoCloseables.java b/src/main/java/org/apache/commons/lang3/AutoCloseables.java
+index e4c574aa7..a9b1b2b6c 100644
+--- a/src/main/java/org/apache/commons/lang3/AutoCloseables.java
++++ b/src/main/java/org/apache/commons/lang3/AutoCloseables.java
+@@ -20,8 +20,8 @@
+ import java.io.Closeable;
+ import java.util.function.Consumer;
+ 
+-import org.apache.commons.lang3.function.Consumers;
+ import org.apache.commons.lang3.function.FailableConsumer;
++import org.apache.commons.lang3.function.util.Consumers;
+ 
+ /**
+  * Static operations on {@link AutoCloseable}.
+diff --git a/src/main/java/org/apache/commons/lang3/ObjectUtils.java b/src/main/java/org/apache/commons/lang3/ObjectUtils.java
+index 93c1a3dd0..4fc3454f6 100644
+--- a/src/main/java/org/apache/commons/lang3/ObjectUtils.java
++++ b/src/main/java/org/apache/commons/lang3/ObjectUtils.java
+@@ -35,8 +35,8 @@
+ import java.util.stream.Stream;
+ 
+ import org.apache.commons.lang3.exception.CloneFailedException;
+-import org.apache.commons.lang3.function.Consumers;
+-import org.apache.commons.lang3.function.Suppliers;
++import org.apache.commons.lang3.function.util.Consumers;
++import org.apache.commons.lang3.function.util.Suppliers;
+ import org.apache.commons.lang3.mutable.MutableInt;
+ import org.apache.commons.lang3.stream.Streams;
+ import org.apache.commons.lang3.text.StrBuilder;
+diff --git a/src/main/java/org/apache/commons/lang3/StringUtils.java b/src/main/java/org/apache/commons/lang3/StringUtils.java
+index 99ef00ff9..52fad1e15 100644
+--- a/src/main/java/org/apache/commons/lang3/StringUtils.java
++++ b/src/main/java/org/apache/commons/lang3/StringUtils.java
+@@ -31,7 +31,7 @@
+ import java.util.regex.Pattern;
+ import java.util.stream.Collectors;
+ 
+-import org.apache.commons.lang3.function.Suppliers;
++import org.apache.commons.lang3.function.util.Suppliers;
+ import org.apache.commons.lang3.stream.LangCollectors;
+ import org.apache.commons.lang3.stream.Streams;
+ 
+diff --git a/src/main/java/org/apache/commons/lang3/SystemProperties.java b/src/main/java/org/apache/commons/lang3/SystemProperties.java
+index a6c2e87f5..67be32d8d 100644
+--- a/src/main/java/org/apache/commons/lang3/SystemProperties.java
++++ b/src/main/java/org/apache/commons/lang3/SystemProperties.java
+@@ -24,7 +24,7 @@
+ import java.util.function.LongSupplier;
+ import java.util.function.Supplier;
+ 
+-import org.apache.commons.lang3.function.Suppliers;
++import org.apache.commons.lang3.function.util.Suppliers;
+ 
+ /**
+  * Accesses current <a href="https://docs.oracle.com/en/java/javase/25/docs/api/system-properties.html">System Property</a> names and values.
+diff --git a/src/main/java/org/apache/commons/lang3/ThreadUtils.java b/src/main/java/org/apache/commons/lang3/ThreadUtils.java
+index ad5b7677c..d4ed6e7fa 100644
+--- a/src/main/java/org/apache/commons/lang3/ThreadUtils.java
++++ b/src/main/java/org/apache/commons/lang3/ThreadUtils.java
+@@ -25,7 +25,7 @@
+ import java.util.stream.Collectors;
+ import java.util.stream.Stream;
+ 
+-import org.apache.commons.lang3.function.Predicates;
++import org.apache.commons.lang3.function.util.Predicates;
+ import org.apache.commons.lang3.time.DurationUtils;
+ 
+ /**
+diff --git a/src/main/java/org/apache/commons/lang3/concurrent/locks/LockingVisitors.java b/src/main/java/org/apache/commons/lang3/concurrent/locks/LockingVisitors.java
+index ddbdf6bc5..b88e5d99f 100644
+--- a/src/main/java/org/apache/commons/lang3/concurrent/locks/LockingVisitors.java
++++ b/src/main/java/org/apache/commons/lang3/concurrent/locks/LockingVisitors.java
+@@ -28,7 +28,7 @@
+ import org.apache.commons.lang3.function.Failable;
+ import org.apache.commons.lang3.function.FailableConsumer;
+ import org.apache.commons.lang3.function.FailableFunction;
+-import org.apache.commons.lang3.function.Suppliers;
++import org.apache.commons.lang3.function.util.Suppliers;
+ 
+ /**
+  * Combines the monitor and visitor pattern to work with {@link Lock}s as an alternative to synchronization.
+diff --git a/src/main/java/org/apache/commons/lang3/function/Consumers.java b/src/main/java/org/apache/commons/lang3/function/Consumers.java
+deleted file mode 100644
+index d27747d67..000000000
+--- a/src/main/java/org/apache/commons/lang3/function/Consumers.java
++++ /dev/null
+@@ -1,62 +0,0 @@
+-/*
+- * Licensed to the Apache Software Foundation (ASF) under one or more
+- * contributor license agreements.  See the NOTICE file distributed with
+- * this work for additional information regarding copyright ownership.
+- * The ASF licenses this file to You under the Apache License, Version 2.0
+- * (the "License"); you may not use this file except in compliance with
+- * the License.  You may obtain a copy of the License at
+- *
+- *      https://www.apache.org/licenses/LICENSE-2.0
+- *
+- * Unless required by applicable law or agreed to in writing, software
+- * distributed under the License is distributed on an "AS IS" BASIS,
+- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+- * See the License for the specific language governing permissions and
+- * limitations under the License.
+- */
+-
+-package org.apache.commons.lang3.function;
+-
+-import java.util.function.Consumer;
+-import java.util.function.Function;
+-
+-/**
+- * Provides {@link Consumer} instances.
+- *
+- * @since 3.13.0
+- */
+-public class Consumers {
+-
+-    /** NOP singleton. */
+-    @SuppressWarnings("rawtypes")
+-    private static final Consumer NOP = Function.identity()::apply;
+-
+-    /**
+-     * Applies the given {@link Consumer} action to the object if the consumer is not {@code null}. Otherwise, does nothing.
+-     *
+-     * @param consumer the consumer to consume.
+-     * @param object   the object to be consumed.
+-     * @param <T>      the type of the argument the consumer accepts.
+-     * @since 3.15.0
+-     */
+-    public static <T> void accept(final Consumer<T> consumer, final T object) {
+-        if (consumer != null) {
+-            consumer.accept(object);
+-        }
+-    }
+-
+-    /**
+-     * Gets the NOP Consumer singleton.
+-     *
+-     * @param <T> type type to consume.
+-     * @return the NOP Consumer singleton.
+-     */
+-    @SuppressWarnings("unchecked")
+-    public static <T> Consumer<T> nop() {
+-        return NOP;
+-    }
+-
+-    private Consumers() {
+-        // No instances.
+-    }
+-}
+diff --git a/src/main/java/org/apache/commons/lang3/function/Functions.java b/src/main/java/org/apache/commons/lang3/function/Functions.java
+deleted file mode 100644
+index e5d87dfd9..000000000
+--- a/src/main/java/org/apache/commons/lang3/function/Functions.java
++++ /dev/null
+@@ -1,151 +0,0 @@
+-/*
+- * Licensed to the Apache Software Foundation (ASF) under one or more
+- * contributor license agreements.  See the NOTICE file distributed with
+- * this work for additional information regarding copyright ownership.
+- * The ASF licenses this file to You under the Apache License, Version 2.0
+- * (the "License"); you may not use this file except in compliance with
+- * the License.  You may obtain a copy of the License at
+- *
+- *      https://www.apache.org/licenses/LICENSE-2.0
+- *
+- * Unless required by applicable law or agreed to in writing, software
+- * distributed under the License is distributed on an "AS IS" BASIS,
+- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+- * See the License for the specific language governing permissions and
+- * limitations under the License.
+- */
+-
+-package org.apache.commons.lang3.function;
+-
+-import java.util.Objects;
+-import java.util.Optional;
+-import java.util.function.Function;
+-
+-/**
+- * Factory for {@link Function}.
+- *
+- * @since 3.14.0
+- */
+-public final class Functions {
+-
+-    /**
+-     * Applies the {@link Function} on the object if the function is not {@code null}. Otherwise, does nothing and returns {@code null}.
+-     *
+-     * @param function the function to apply.
+-     * @param object   the object to apply the function.
+-     * @param <T>      the type of the argument the function applies.
+-     * @param <R>      the type of the result the function returns.
+-     * @return the value the function returns if the function is not {@code null}; {@code null} otherwise.
+-     * @since 3.15.0
+-     */
+-    public static <T, R> R apply(final Function<T, R> function, final T object) {
+-        return function != null ? function.apply(object) : null;
+-    }
+-
+-    /**
+-     * Applies a value to a function if the value isn't {@code null}, otherwise the method returns {@code null}. If the value isn't {@code null} then return the
+-     * result of the applying function.
+-     *
+-     * <pre>{@code
+-     * Functions.applyNonNull("a", String::toUpperCase)  = "A"
+-     * Functions.applyNonNull(null, String::toUpperCase) = null
+-     * Functions.applyNonNull("a", s -> null)            = null
+-     * }</pre>
+-     * <p>
+-     * Useful when working with expressions that may return {@code null} as it allows a single-line expression without using temporary local variables or
+-     * evaluating expressions twice. Provides an alternative to using {@link Optional} that is shorter and has less allocation.
+-     * </p>
+-     *
+-     * @param <T>    The type of the input of this method and the function.
+-     * @param <R>    The type of the result of the function and this method.
+-     * @param value  The value to apply the function to, may be {@code null}.
+-     * @param mapper The function to apply, must not be {@code null}.
+-     * @return The result of the function (which may be {@code null}) or {@code null} if the input value is {@code null}.
+-     * @see #applyNonNull(Object, Function, Function)
+-     * @see #applyNonNull(Object, Function, Function, Function)
+-     * @since 3.19.0
+-     */
+-    public static <T, R> R applyNonNull(final T value, final Function<? super T, ? extends R> mapper) {
+-        return value != null ? Objects.requireNonNull(mapper, "mapper").apply(value) : null;
+-    }
+-
+-    /**
+-     * Applies values to a chain of functions, where a {@code null} can short-circuit each step. A function is only applied if the previous value is not
+-     * {@code null}, otherwise this method returns {@code null}.
+-     *
+-     * <pre>{@code
+-     * Functions.applyNonNull(" a ", String::toUpperCase, String::trim) = "A"
+-     * Functions.applyNonNull(null, String::toUpperCase, String::trim)  = null
+-     * Functions.applyNonNull(" a ", s -> null, String::trim)           = null
+-     * Functions.applyNonNull(" a ", String::toUpperCase, s -> null)    = null
+-     * }</pre>
+-     * <p>
+-     * Useful when working with expressions that may return {@code null} as it allows a single-line expression without using temporary local variables or
+-     * evaluating expressions twice. Provides an alternative to using {@link Optional} that is shorter and has less allocation.
+-     * </p>
+-     *
+-     * @param <T>     The type of the input of this method and the first function.
+-     * @param <U>     The type of the result of the first function and the input to the second function.
+-     * @param <R>     The type of the result of the second function and this method.
+-     * @param value1  The value to apply the functions to, may be {@code null}.
+-     * @param mapper1 The first function to apply, must not be {@code null}.
+-     * @param mapper2 The second function to apply, must not be {@code null}.
+-     * @return The result of the final function (which may be {@code null}) or {@code null} if the input value or any intermediate value is {@code null}.
+-     * @see #applyNonNull(Object, Function)
+-     * @see #applyNonNull(Object, Function, Function, Function)
+-     * @since 3.19.0
+-     */
+-    public static <T, U, R> R applyNonNull(final T value1, final Function<? super T, ? extends U> mapper1, final Function<? super U, ? extends R> mapper2) {
+-        return applyNonNull(applyNonNull(value1, mapper1), mapper2);
+-    }
+-
+-    /**
+-     * Applies values to a chain of functions, where a {@code null} can short-circuit each step. A function is only applied if the previous value is not
+-     * {@code null}, otherwise this method returns {@code null}.
+-     *
+-     * <pre>{@code
+-     * Functions.applyNonNull(" abc ", String::toUpperCase, String::trim, StringUtils::reverse) = "CBA"
+-     * Functions.applyNonNull(null, String::toUpperCase, String::trim, StringUtils::reverse)    = null
+-     * Functions.applyNonNull(" abc ", s -> null, String::trim, StringUtils::reverse)           = null
+-     * Functions.applyNonNull(" abc ", String::toUpperCase, s -> null, StringUtils::reverse)    = null
+-     * Functions.applyNonNull(" abc ", String::toUpperCase, String::trim, s -> null)            = null
+-     * }</pre>
+-     * <p>
+-     * Useful when working with expressions that may return {@code null} as it allows a single-line expression without using temporary local variables or
+-     * evaluating expressions twice. Provides an alternative to using {@link Optional} that is shorter and has less allocation.
+-     * </p>
+-     *
+-     * @param <T>     The type of the input of this method and the first function.
+-     * @param <U>     The type of the result of the first function and the input to the second function.
+-     * @param <V>     The type of the result of the second function and the input to the third function.
+-     * @param <R>     The type of the result of the third function and this method.
+-     * @param value1  The value to apply the first function, may be {@code null}.
+-     * @param mapper1 The first function to apply, must not be {@code null}.
+-     * @param mapper2 The second function to apply, must not be {@code null}.
+-     * @param mapper3 The third function to apply, must not be {@code null}.
+-     * @return The result of the final function (which may be {@code null}) or {@code null} if the input value or any intermediate value is {@code null}.
+-     * @see #applyNonNull(Object, Function)
+-     * @see #applyNonNull(Object, Function, Function)
+-     * @since 3.19.0
+-     */
+-    public static <T, U, V, R> R applyNonNull(final T value1, final Function<? super T, ? extends U> mapper1, final Function<? super U, ? extends V> mapper2,
+-            final Function<? super V, ? extends R> mapper3) {
+-        return applyNonNull(applyNonNull(applyNonNull(value1, mapper1), mapper2), mapper3);
+-    }
+-
+-    /**
+-     * Starts a fluent chain like {@code function(foo::bar).andThen(...).andThen(...).apply(...);}
+-     *
+-     * @param <T>      Input type.
+-     * @param <R>      Return type.
+-     * @param function the argument to return.
+-     * @return the argument
+-     */
+-    public static <T, R> Function<T, R> function(final Function<T, R> function) {
+-        return function;
+-    }
+-
+-    private Functions() {
+-        // no instances needed.
+-    }
+-}
+diff --git a/src/main/java/org/apache/commons/lang3/function/Predicates.java b/src/main/java/org/apache/commons/lang3/function/Predicates.java
+deleted file mode 100644
+index 7039fb822..000000000
+--- a/src/main/java/org/apache/commons/lang3/function/Predicates.java
++++ /dev/null
+@@ -1,62 +0,0 @@
+-/*
+- * Licensed to the Apache Software Foundation (ASF) under one or more
+- * contributor license agreements.  See the NOTICE file distributed with
+- * this work for additional information regarding copyright ownership.
+- * The ASF licenses this file to You under the Apache License, Version 2.0
+- * (the "License"); you may not use this file except in compliance with
+- * the License.  You may obtain a copy of the License at
+- *
+- *      https://www.apache.org/licenses/LICENSE-2.0
+- *
+- * Unless required by applicable law or agreed to in writing, software
+- * distributed under the License is distributed on an "AS IS" BASIS,
+- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+- * See the License for the specific language governing permissions and
+- * limitations under the License.
+- */
+-
+-package org.apache.commons.lang3.function;
+-
+-import java.util.function.Predicate;
+-
+-/**
+- * Factory for {@link Predicate}.
+- *
+- * @since 3.18.0
+- */
+-public class Predicates {
+-
+-    private static final Predicate<?> TRUE = t -> true;
+-    private static final Predicate<?> FALSE = t -> false;
+-
+-    /**
+-     * Gets the Predicate singleton that always returns false.
+-     *
+-     * @param <T> the type of the input to the predicate.
+-     * @return the Predicate singleton.
+-     */
+-    @SuppressWarnings("unchecked")
+-    // method name cannot be "false".
+-    public static <T> Predicate<T> falsePredicate() {
+-        return (Predicate<T>) FALSE;
+-    }
+-
+-    /**
+-     * Gets the Predicate singleton that always returns true.
+-     *
+-     * @param <T> the type of the input to the predicate.
+-     * @return the Predicate singleton.
+-     */
+-    @SuppressWarnings("unchecked")
+-    // method name cannot be "true".
+-    public static <T> Predicate<T> truePredicate() {
+-        return (Predicate<T>) TRUE;
+-    }
+-
+-    /**
+-     * No instances needed.
+-     */
+-    private Predicates() {
+-        // empty
+-    }
+-}
+diff --git a/src/main/java/org/apache/commons/lang3/function/Suppliers.java b/src/main/java/org/apache/commons/lang3/function/Suppliers.java
+deleted file mode 100644
+index 2c4fb0ffe..000000000
+--- a/src/main/java/org/apache/commons/lang3/function/Suppliers.java
++++ /dev/null
+@@ -1,73 +0,0 @@
+-/*
+- * Licensed to the Apache Software Foundation (ASF) under one or more
+- * contributor license agreements.  See the NOTICE file distributed with
+- * this work for additional information regarding copyright ownership.
+- * The ASF licenses this file to You under the Apache License, Version 2.0
+- * (the "License"); you may not use this file except in compliance with
+- * the License.  You may obtain a copy of the License at
+- *
+- *      https://www.apache.org/licenses/LICENSE-2.0
+- *
+- * Unless required by applicable law or agreed to in writing, software
+- * distributed under the License is distributed on an "AS IS" BASIS,
+- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+- * See the License for the specific language governing permissions and
+- * limitations under the License.
+- */
+-
+-package org.apache.commons.lang3.function;
+-
+-import java.util.function.Supplier;
+-
+-/**
+- * Helps use {@link Supplier}.
+- *
+- * @since 3.13.0
+- */
+-public class Suppliers {
+-
+-    /**
+-     * Returns the singleton supplier that always returns null.
+-     * <p>
+-     * This supplier never throws an exception.
+-     * </p>
+-     */
+-    @SuppressWarnings("rawtypes")
+-    private static Supplier NUL = () -> null;
+-
+-    /**
+-     * Null-safe call to {@link Supplier#get()}.
+-     *
+-     * @param <T> the type of results supplied by this supplier.
+-     * @param supplier the supplier or null.
+-     * @return Result of {@link Supplier#get()} or null.
+-     */
+-    public static <T> T get(final Supplier<T> supplier) {
+-        return supplier == null ? null : supplier.get();
+-    }
+-
+-    /**
+-     * Gets the singleton supplier that always returns null.
+-     * <p>
+-     * This supplier never throws an exception.
+-     * </p>
+-     *
+-     * @param <T> Supplied type.
+-     * @return The NUL singleton.
+-     * @since 3.14.0
+-     */
+-    @SuppressWarnings("unchecked")
+-    public static <T> Supplier<T> nul() {
+-        return NUL;
+-    }
+-
+-    /**
+-     * Make private in 4.0.
+-     *
+-     * @deprecated TODO Make private in 4.0.
+-     */
+-    @Deprecated
+-    public Suppliers() {
+-        // empty
+-    }
+-}
+diff --git a/src/test/java/org/apache/commons/lang3/ArrayUtilsTest.java b/src/test/java/org/apache/commons/lang3/ArrayUtilsTest.java
+index a096e949f..899da9f2a 100644
+--- a/src/test/java/org/apache/commons/lang3/ArrayUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/ArrayUtilsTest.java
+@@ -46,7 +46,7 @@
+ import java.util.function.Function;
+ import java.util.function.Supplier;
+ 
+-import org.apache.commons.lang3.function.Suppliers;
++import org.apache.commons.lang3.function.util.Suppliers;
+ import org.junit.jupiter.api.Test;
+ 
+ /**
+diff --git a/src/test/java/org/apache/commons/lang3/ObjectUtilsTest.java b/src/test/java/org/apache/commons/lang3/ObjectUtilsTest.java
+index 51a650217..d8bb43812 100644
+--- a/src/test/java/org/apache/commons/lang3/ObjectUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/ObjectUtilsTest.java
+@@ -50,7 +50,7 @@
+ import java.util.function.Supplier;
+ 
+ import org.apache.commons.lang3.exception.CloneFailedException;
+-import org.apache.commons.lang3.function.Suppliers;
++import org.apache.commons.lang3.function.util.Suppliers;
+ import org.apache.commons.lang3.mutable.MutableInt;
+ import org.apache.commons.lang3.mutable.MutableObject;
+ import org.apache.commons.lang3.text.StrBuilder;
+diff --git a/src/test/java/org/apache/commons/lang3/StringUtilsTest.java b/src/test/java/org/apache/commons/lang3/StringUtilsTest.java
+index df33386b2..91e60148d 100644
+--- a/src/test/java/org/apache/commons/lang3/StringUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/StringUtilsTest.java
+@@ -43,7 +43,7 @@
+ import java.util.function.Supplier;
+ import java.util.regex.PatternSyntaxException;
+ 
+-import org.apache.commons.lang3.function.Suppliers;
++import org.apache.commons.lang3.function.util.Suppliers;
+ import org.apache.commons.lang3.mutable.MutableInt;
+ import org.apache.commons.lang3.text.WordUtils;
+ import org.junit.jupiter.api.Disabled;
+diff --git a/src/test/java/org/apache/commons/lang3/ThreadUtilsTest.java b/src/test/java/org/apache/commons/lang3/ThreadUtilsTest.java
+index e9bd002e7..aa46e520a 100644
+--- a/src/test/java/org/apache/commons/lang3/ThreadUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/ThreadUtilsTest.java
+@@ -41,7 +41,7 @@
+ 
+ import org.apache.commons.lang3.ThreadUtils.ThreadGroupPredicate;
+ import org.apache.commons.lang3.ThreadUtils.ThreadPredicate;
+-import org.apache.commons.lang3.function.Predicates;
++import org.apache.commons.lang3.function.util.Predicates;
+ import org.junit.jupiter.api.Test;
+ 
+ /**
+diff --git a/src/test/java/org/apache/commons/lang3/function/ConsumersTest.java b/src/test/java/org/apache/commons/lang3/function/ConsumersTest.java
+index 4447a57c7..7ab77ce90 100644
+--- a/src/test/java/org/apache/commons/lang3/function/ConsumersTest.java
++++ b/src/test/java/org/apache/commons/lang3/function/ConsumersTest.java
+@@ -24,6 +24,7 @@
+ import java.util.stream.Stream;
+ 
+ import org.apache.commons.lang3.AbstractLangTest;
++import org.apache.commons.lang3.function.util.Consumers;
+ import org.junit.jupiter.api.Test;
+ 
+ /**
+diff --git a/src/test/java/org/apache/commons/lang3/function/FunctionsTest.java b/src/test/java/org/apache/commons/lang3/function/FunctionsTest.java
+index c943a8c7b..f560f607e 100644
+--- a/src/test/java/org/apache/commons/lang3/function/FunctionsTest.java
++++ b/src/test/java/org/apache/commons/lang3/function/FunctionsTest.java
+@@ -28,6 +28,7 @@
+ 
+ import org.apache.commons.lang3.AbstractLangTest;
+ import org.apache.commons.lang3.StringUtils;
++import org.apache.commons.lang3.function.util.Functions;
+ import org.junit.jupiter.api.Test;
+ 
+ /**
+diff --git a/src/test/java/org/apache/commons/lang3/function/PredicatesTest.java b/src/test/java/org/apache/commons/lang3/function/PredicatesTest.java
+index 0eff24735..457888e47 100644
+--- a/src/test/java/org/apache/commons/lang3/function/PredicatesTest.java
++++ b/src/test/java/org/apache/commons/lang3/function/PredicatesTest.java
+@@ -23,6 +23,7 @@
+ import java.util.function.Predicate;
+ 
+ import org.apache.commons.lang3.AbstractLangTest;
++import org.apache.commons.lang3.function.util.Predicates;
+ import org.junit.jupiter.api.Test;
+ 
+ /**
+diff --git a/src/test/java/org/apache/commons/lang3/function/SuppliersTest.java b/src/test/java/org/apache/commons/lang3/function/SuppliersTest.java
+index d200bc663..fbed9c612 100644
+--- a/src/test/java/org/apache/commons/lang3/function/SuppliersTest.java
++++ b/src/test/java/org/apache/commons/lang3/function/SuppliersTest.java
+@@ -23,6 +23,7 @@
+ import java.util.function.Supplier;
+ 
+ import org.apache.commons.lang3.AbstractLangTest;
++import org.apache.commons.lang3.function.util.Suppliers;
+ import org.junit.jupiter.api.Test;
+ 
+ /**

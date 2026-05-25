@@ -1,0 +1,622 @@
+diff --git a/src/main/java/org/jsoup/nodes/Element.java b/src/main/java/org/jsoup/nodes/Element.java
+index 82e2d0ff..34185fd0 100644
+--- a/src/main/java/org/jsoup/nodes/Element.java
++++ b/src/main/java/org/jsoup/nodes/Element.java
+@@ -3,19 +3,14 @@ package org.jsoup.nodes;
+ import org.jsoup.helper.Validate;
+ import org.jsoup.internal.Normalizer;
+ import org.jsoup.internal.QuietAppendable;
+-import org.jsoup.helper.Regex;
+ import org.jsoup.internal.StringUtil;
+ import org.jsoup.parser.ParseSettings;
+ import org.jsoup.parser.Parser;
+ import org.jsoup.parser.Tag;
+ import org.jsoup.parser.TokenQueue;
+-import org.jsoup.select.Collector;
+ import org.jsoup.select.Elements;
+-import org.jsoup.select.Evaluator;
+ import org.jsoup.select.NodeFilter;
+ import org.jsoup.select.NodeVisitor;
+-import org.jsoup.select.Nodes;
+-import org.jsoup.select.Selector;
+ import org.jspecify.annotations.Nullable;
+ 
+ import java.lang.ref.WeakReference;
+@@ -29,24 +24,20 @@ import java.util.Map;
+ import java.util.Set;
+ import java.util.concurrent.atomic.AtomicBoolean;
+ import java.util.function.Consumer;
+-import java.util.regex.Pattern;
+-import java.util.regex.PatternSyntaxException;
+ import java.util.stream.Collectors;
+ import java.util.stream.Stream;
+ 
+-import static org.jsoup.internal.Normalizer.normalize;
+ import static org.jsoup.nodes.Document.OutputSettings.Syntax.xml;
+ import static org.jsoup.nodes.TextNode.lastCharIsWhitespace;
+ import static org.jsoup.parser.Parser.NamespaceHtml;
+ import static org.jsoup.parser.TokenQueue.escapeCssIdentifier;
+-import static org.jsoup.select.Selector.evaluatorOf;
+ 
+ /**
+  An HTML Element consists of a tag name, attributes, and child nodes (including text nodes and other elements).
+  <p>
+  From an Element, you can extract data, traverse the node graph, and manipulate the HTML.
+ */
+-public class Element extends Node implements Iterable<Element> {
++public class Element extends ElementQueryOps implements Iterable<Element> {
+     private static final List<Element> EmptyChildren = Collections.emptyList();
+     private static final NodeList EmptyNodeList = new NodeList(0);
+     static final String BaseUriKey = Attributes.internalKey("baseUri");
+@@ -513,303 +504,6 @@ public class Element extends Node implements Iterable<Element> {
+      * @see #select(Evaluator)
+      * @throws Selector.SelectorParseException (unchecked) on an invalid CSS query.
+      */
+-    public Elements select(String cssQuery) {
+-        return Selector.select(cssQuery, this);
+-    }
+-
+-    /**
+-     * Find elements that match the supplied Evaluator. This has the same functionality as {@link #select(String)}, but
+-     * may be useful if you are running the same query many times (on many documents) and want to save the overhead of
+-     * repeatedly parsing the CSS query.
+-     * @param evaluator an element evaluator
+-     * @return an {@link Elements} list containing elements that match the query (empty if none match)
+-     * @see Selector#evaluatorOf(String css)
+-     */
+-    public Elements select(Evaluator evaluator) {
+-        return Selector.select(evaluator, this);
+-    }
+-
+-    /**
+-     Selects elements from the given root that match the specified {@link Selector} CSS query, with this element as the
+-     starting context, and returns them as a lazy Stream. Matched elements may include this element, or any of its
+-     children.
+-     <p>
+-     Unlike {@link #select(String query)}, which returns a complete list of all matching elements, this method returns a
+-     {@link Stream} that processes elements lazily as they are needed. The stream operates in a "pull" model — elements
+-     are fetched from the root as the stream is traversed. You can use standard {@code Stream} operations such as
+-     {@code filter}, {@code map}, or {@code findFirst} to process elements on demand.
+-     </p>
+-
+-     @param cssQuery a {@link Selector} CSS-like query
+-     @return a {@link Stream} containing elements that match the query (empty if none match)
+-     @throws Selector.SelectorParseException (unchecked) on an invalid CSS query.
+-     @see Selector selector query syntax
+-     @see #selectStream(Evaluator eval)
+-     @since 1.19.1
+-     */
+-    public Stream<Element> selectStream(String cssQuery) {
+-        return Selector.selectStream(cssQuery, this);
+-    }
+-
+-    /**
+-     Find a Stream of elements that match the supplied Evaluator.
+-
+-     @param evaluator an element Evaluator
+-     @return a {@link Stream} containing elements that match the query (empty if none match)
+-     @see Selector#evaluatorOf(String css)
+-     @since 1.19.1
+-     */
+-    public Stream<Element> selectStream(Evaluator evaluator) {
+-        return Selector.selectStream(evaluator, this);
+-    }
+-
+-    /**
+-     * Find the first Element that matches the {@link Selector} CSS query, with this element as the starting context.
+-     * <p>This is effectively the same as calling {@code element.select(query).first()}, but is more efficient as query
+-     * execution stops on the first hit.</p>
+-     * <p>Also known as {@code querySelector()} in the Web DOM.</p>
+-     * @param cssQuery cssQuery a {@link Selector} CSS-like query
+-     * @return the first matching element, or <b>{@code null}</b> if there is no match.
+-     * @see #expectFirst(String)
+-     */
+-    public @Nullable Element selectFirst(String cssQuery) {
+-        return Selector.selectFirst(cssQuery, this);
+-    }
+-
+-    /**
+-     * Finds the first Element that matches the supplied Evaluator, with this element as the starting context, or
+-     * {@code null} if none match.
+-     *
+-     * @param evaluator an element evaluator
+-     * @return the first matching element (walking down the tree, starting from this element), or {@code null} if none
+-     * match.
+-     */
+-    public @Nullable Element selectFirst(Evaluator evaluator) {
+-        return Collector.findFirst(evaluator, this);
+-    }
+-
+-    /**
+-     Just like {@link #selectFirst(String)}, but if there is no match, throws an {@link IllegalArgumentException}. This
+-     is useful if you want to simply abort processing on a failed match.
+-     @param cssQuery a {@link Selector} CSS-like query
+-     @return the first matching element
+-     @throws IllegalArgumentException if no match is found
+-     @since 1.15.2
+-     */
+-    public Element expectFirst(String cssQuery) {
+-        return Validate.expectNotNull(
+-            Selector.selectFirst(cssQuery, this),
+-            parent() != null ?
+-                "No elements matched the query '%s' on element '%s'." :
+-                "No elements matched the query '%s' in the document."
+-            , cssQuery, this.tagName()
+-        );
+-    }
+-
+-    /**
+-     Find nodes that match the supplied {@link Evaluator}, with this element as the starting context. Matched
+-     nodes may include this element, or any of its descendents.
+-
+-     @param evaluator an evaluator
+-     @return a list of nodes that match the query (empty if none match)
+-     @since 1.21.1
+-     */
+-    public Nodes<Node> selectNodes(Evaluator evaluator) {
+-        return selectNodes(evaluator, Node.class);
+-    }
+-
+-    /**
+-     Find nodes that match the supplied {@link Selector} CSS query, with this element as the starting context. Matched
+-     nodes may include this element, or any of its descendents.
+-     <p>To select leaf nodes, the query should specify the node type, e.g. {@code ::text},
+-     {@code ::comment}, {@code ::data}, {@code ::leafnode}.</p>
+-
+-     @param cssQuery a {@link Selector} CSS query
+-     @return a list of nodes that match the query (empty if none match)
+-     @since 1.21.1
+-     */
+-    public Nodes<Node> selectNodes(String cssQuery) {
+-        return selectNodes(cssQuery, Node.class);
+-    }
+-
+-    /**
+-     Find nodes that match the supplied Evaluator, with this element as the starting context. Matched
+-     nodes may include this element, or any of its descendents.
+-
+-     @param evaluator an evaluator
+-     @param type the type of node to collect (e.g. {@link Element}, {@link LeafNode}, {@link TextNode} etc)
+-     @param <T> the type of node to collect
+-     @return a list of nodes that match the query (empty if none match)
+-     @since 1.21.1
+-     */
+-    public <T extends Node> Nodes<T> selectNodes(Evaluator evaluator, Class<T> type) {
+-        Validate.notNull(evaluator);
+-        return Collector.collectNodes(evaluator, this, type);
+-    }
+-
+-    /**
+-     Find nodes that match the supplied {@link Selector} CSS query, with this element as the starting context. Matched
+-     nodes may include this element, or any of its descendents.
+-     <p>To select specific node types, use {@code ::text}, {@code ::comment}, {@code ::leafnode}, etc. For example, to
+-     select all text nodes under {@code p} elements: </p>
+-     <pre>    Nodes&lt;TextNode&gt; textNodes = doc.selectNodes("p ::text", TextNode.class);</pre>
+-
+-     @param cssQuery a {@link Selector} CSS query
+-     @param type the type of node to collect (e.g. {@link Element}, {@link LeafNode}, {@link TextNode} etc)
+-     @param <T> the type of node to collect
+-     @return a list of nodes that match the query (empty if none match)
+-     @since 1.21.1
+-     */
+-    public <T extends Node> Nodes<T> selectNodes(String cssQuery, Class<T> type) {
+-        Validate.notEmpty(cssQuery);
+-        return selectNodes(evaluatorOf(cssQuery), type);
+-    }
+-
+-    /**
+-     Find the first Node that matches the {@link Selector} CSS query, with this element as the starting context.
+-     <p>This is effectively the same as calling {@code element.selectNodes(query).first()}, but is more efficient as
+-     query
+-     execution stops on the first hit.</p>
+-     <p>Also known as {@code querySelector()} in the Web DOM.</p>
+-
+-     @param cssQuery cssQuery a {@link Selector} CSS-like query
+-     @return the first matching node, or <b>{@code null}</b> if there is no match.
+-     @since 1.21.1
+-     @see #expectFirst(String)
+-     */
+-    public @Nullable <T extends Node> T selectFirstNode(String cssQuery, Class<T> type) {
+-        return selectFirstNode(evaluatorOf(cssQuery), type);
+-    }
+-
+-    /**
+-     Finds the first Node that matches the supplied Evaluator, with this element as the starting context, or
+-     {@code null} if none match.
+-
+-     @param evaluator an element evaluator
+-     @return the first matching node (walking down the tree, starting from this element), or {@code null} if none
+-     match.
+-     @since 1.21.1
+-     */
+-    public @Nullable <T extends Node> T selectFirstNode(Evaluator evaluator, Class<T> type) {
+-        return Collector.findFirstNode(evaluator, this, type);
+-    }
+-
+-    /**
+-     Just like {@link #selectFirstNode(String, Class)}, but if there is no match, throws an
+-     {@link IllegalArgumentException}. This is useful if you want to simply abort processing on a failed match.
+-
+-     @param cssQuery a {@link Selector} CSS-like query
+-     @return the first matching node
+-     @throws IllegalArgumentException if no match is found
+-     @since 1.21.1
+-     */
+-    public <T extends Node> T expectFirstNode(String cssQuery, Class<T> type) {
+-        return Validate.expectNotNull(
+-            selectFirstNode(cssQuery, type),
+-            parent() != null ?
+-                "No nodes matched the query '%s' on element '%s'.":
+-                "No nodes matched the query '%s' in the document."
+-            , cssQuery, this.tagName()
+-        );
+-    }
+-
+-    /**
+-     * Checks if this element matches the given {@link Selector} CSS query. Also knows as {@code matches()} in the Web
+-     * DOM.
+-     *
+-     * @param cssQuery a {@link Selector} CSS query
+-     * @return if this element matches the query
+-     */
+-    public boolean is(String cssQuery) {
+-        return is(evaluatorOf(cssQuery));
+-    }
+-
+-    /**
+-     * Check if this element matches the given evaluator.
+-     * @param evaluator an element evaluator
+-     * @return if this element matches
+-     */
+-    public boolean is(Evaluator evaluator) {
+-        return evaluator.matches(this.root(), this);
+-    }
+-
+-    /**
+-     * Find the closest element up the tree of parents that matches the specified CSS query. Will return itself, an
+-     * ancestor, or {@code null} if there is no such matching element.
+-     * @param cssQuery a {@link Selector} CSS query
+-     * @return the closest ancestor element (possibly itself) that matches the provided evaluator. {@code null} if not
+-     * found.
+-     */
+-    public @Nullable Element closest(String cssQuery) {
+-        return closest(evaluatorOf(cssQuery));
+-    }
+-
+-    /**
+-     * Find the closest element up the tree of parents that matches the specified evaluator. Will return itself, an
+-     * ancestor, or {@code null} if there is no such matching element.
+-     * @param evaluator a query evaluator
+-     * @return the closest ancestor element (possibly itself) that matches the provided evaluator. {@code null} if not
+-     * found.
+-     */
+-    public @Nullable Element closest(Evaluator evaluator) {
+-        Validate.notNull(evaluator);
+-        Element el = this;
+-        final Element root = root();
+-        do {
+-            if (evaluator.matches(root, el))
+-                return el;
+-            el = el.parent();
+-        } while (el != null);
+-        return null;
+-    }
+-
+-    /**
+-     Find Elements that match the supplied {@index XPath} expression.
+-     <p>Note that for convenience of writing the Xpath expression, namespaces are disabled, and queries can be
+-     expressed using the element's local name only.</p>
+-     <p>By default, XPath 1.0 expressions are supported. If you would to use XPath 2.0 or higher, you can provide an
+-     alternate XPathFactory implementation:</p>
+-     <ol>
+-     <li>Add the implementation to your classpath. E.g. to use <a href="https://www.saxonica.com/products/products.xml">Saxon-HE</a>, add <a href="https://mvnrepository.com/artifact/net.sf.saxon/Saxon-HE">net.sf.saxon:Saxon-HE</a> to your build.</li>
+-     <li>Set the system property <code>javax.xml.xpath.XPathFactory:jsoup</code> to the implementing classname. E.g.:<br>
+-     <code>System.setProperty(W3CDom.XPathFactoryProperty, "net.sf.saxon.xpath.XPathFactoryImpl");</code>
+-     </li>
+-     </ol>
+-
+-     @param xpath XPath expression
+-     @return matching elements, or an empty list if none match.
+-     @see #selectXpath(String, Class)
+-     @since 1.14.3
+-     */
+-    public Elements selectXpath(String xpath) {
+-        return new Elements(NodeUtils.selectXpath(xpath, this, Element.class));
+-    }
+-
+-    /**
+-     Find Nodes that match the supplied XPath expression.
+-     <p>For example, to select TextNodes under {@code p} elements: </p>
+-     <pre>List&lt;TextNode&gt; textNodes = doc.selectXpath("//body//p//text()", TextNode.class);</pre>
+-     <p>Note that in the jsoup DOM, Attribute objects are not Nodes. To directly select attribute values, do something
+-     like:</p>
+-     <pre>List&lt;String&gt; hrefs = doc.selectXpath("//a").eachAttr("href");</pre>
+-     @param xpath XPath expression
+-     @param nodeType the jsoup node type to return
+-     @see #selectXpath(String)
+-     @return a list of matching nodes
+-     @since 1.14.3
+-     */
+-    public <T extends Node> List<T> selectXpath(String xpath, Class<T> nodeType) {
+-        return NodeUtils.selectXpath(xpath, this, nodeType);
+-    }
+-
+-    /**
+-     * Insert a node to the end of this Element's children. The incoming node will be re-parented.
+-     *
+-     * @param child node to add.
+-     * @return this Element, for chaining
+-     * @see #prependChild(Node)
+-     * @see #insertChildren(int, Collection)
+-     */
+     public Element appendChild(Node child) {
+         Validate.notNull(child);
+ 
+@@ -1269,267 +963,6 @@ public class Element extends Node implements Iterable<Element> {
+         return null;
+     }
+ 
+-    // DOM type methods
+-
+-    /**
+-     * Finds elements, including and recursively under this element, with the specified tag name.
+-     * @param tagName The tag name to search for (case insensitively).
+-     * @return a matching unmodifiable list of elements. Will be empty if this element and none of its children match.
+-     */
+-    public Elements getElementsByTag(String tagName) {
+-        Validate.notEmpty(tagName);
+-        tagName = normalize(tagName);
+-
+-        return Collector.collect(new Evaluator.Tag(tagName), this);
+-    }
+-
+-    /**
+-     * Find an element by ID, including or under this element.
+-     * <p>
+-     * Note that this finds the first matching ID, starting with this element. If you search down from a different
+-     * starting point, it is possible to find a different element by ID. For unique element by ID within a Document,
+-     * use {@link Document#getElementById(String)}
+-     * @param id The ID to search for.
+-     * @return The first matching element by ID, starting with this element, or null if none found.
+-     */
+-    public @Nullable Element getElementById(String id) {
+-        Validate.notEmpty(id);
+-        return Collector.findFirst(new Evaluator.Id(id), this);
+-    }
+-
+-    /**
+-     * Find elements that have this class, including or under this element. Case-insensitive.
+-     * <p>
+-     * Elements can have multiple classes (e.g. {@code <div class="header round first">}). This method
+-     * checks each class, so you can find the above with {@code el.getElementsByClass("header");}.
+-     *
+-     * @param className the name of the class to search for.
+-     * @return elements with the supplied class name, empty if none
+-     * @see #hasClass(String)
+-     * @see #classNames()
+-     */
+-    public Elements getElementsByClass(String className) {
+-        Validate.notEmpty(className);
+-
+-        return Collector.collect(new Evaluator.Class(className), this);
+-    }
+-
+-    /**
+-     * Find elements that have a named attribute set. Case-insensitive.
+-     *
+-     * @param key name of the attribute, e.g. {@code href}
+-     * @return elements that have this attribute, empty if none
+-     */
+-    public Elements getElementsByAttribute(String key) {
+-        Validate.notEmpty(key);
+-        key = key.trim();
+-
+-        return Collector.collect(new Evaluator.Attribute(key), this);
+-    }
+-
+-    /**
+-     * Find elements that have an attribute name starting with the supplied prefix. Use {@code data-} to find elements
+-     * that have HTML5 datasets.
+-     * @param keyPrefix name prefix of the attribute e.g. {@code data-}
+-     * @return elements that have attribute names that start with the prefix, empty if none.
+-     */
+-    public Elements getElementsByAttributeStarting(String keyPrefix) {
+-        Validate.notEmpty(keyPrefix);
+-        keyPrefix = keyPrefix.trim();
+-
+-        return Collector.collect(new Evaluator.AttributeStarting(keyPrefix), this);
+-    }
+-
+-    /**
+-     * Find elements that have an attribute with the specific value. Case-insensitive.
+-     *
+-     * @param key name of the attribute
+-     * @param value value of the attribute
+-     * @return elements that have this attribute with this value, empty if none
+-     */
+-    public Elements getElementsByAttributeValue(String key, String value) {
+-        return Collector.collect(new Evaluator.AttributeWithValue(key, value), this);
+-    }
+-
+-    /**
+-     * Find elements that either do not have this attribute, or have it with a different value. Case-insensitive.
+-     *
+-     * @param key name of the attribute
+-     * @param value value of the attribute
+-     * @return elements that do not have a matching attribute
+-     */
+-    public Elements getElementsByAttributeValueNot(String key, String value) {
+-        return Collector.collect(new Evaluator.AttributeWithValueNot(key, value), this);
+-    }
+-
+-    /**
+-     * Find elements that have attributes that start with the value prefix. Case-insensitive.
+-     *
+-     * @param key name of the attribute
+-     * @param valuePrefix start of attribute value
+-     * @return elements that have attributes that start with the value prefix
+-     */
+-    public Elements getElementsByAttributeValueStarting(String key, String valuePrefix) {
+-        return Collector.collect(new Evaluator.AttributeWithValueStarting(key, valuePrefix), this);
+-    }
+-
+-    /**
+-     * Find elements that have attributes that end with the value suffix. Case-insensitive.
+-     *
+-     * @param key name of the attribute
+-     * @param valueSuffix end of the attribute value
+-     * @return elements that have attributes that end with the value suffix
+-     */
+-    public Elements getElementsByAttributeValueEnding(String key, String valueSuffix) {
+-        return Collector.collect(new Evaluator.AttributeWithValueEnding(key, valueSuffix), this);
+-    }
+-
+-    /**
+-     * Find elements that have attributes whose value contains the match string. Case-insensitive.
+-     *
+-     * @param key name of the attribute
+-     * @param match substring of value to search for
+-     * @return elements that have attributes containing this text
+-     */
+-    public Elements getElementsByAttributeValueContaining(String key, String match) {
+-        return Collector.collect(new Evaluator.AttributeWithValueContaining(key, match), this);
+-    }
+-
+-    /**
+-     * Find elements that have an attribute whose value matches the supplied regular expression.
+-     * @param key name of the attribute
+-     * @param pattern compiled regular expression to match against attribute values
+-     * @return elements that have attributes matching this regular expression
+-     */
+-    public Elements getElementsByAttributeValueMatching(String key, Pattern pattern) {
+-        return Collector.collect(new Evaluator.AttributeWithValueMatching(key, pattern), this);
+-    }
+-
+-    /**
+-     * Find elements that have attributes whose values match the supplied regular expression.
+-     * @param key name of the attribute
+-     * @param regex regular expression to match against attribute values. You can use <a href="http://java.sun.com/docs/books/tutorial/essential/regex/pattern.html#embedded">embedded flags</a> (such as {@code (?i)} and {@code (?m)}) to control regex options.
+-     * @return elements that have attributes matching this regular expression
+-     */
+-    public Elements getElementsByAttributeValueMatching(String key, String regex) {
+-        Regex pattern;
+-        try {
+-            pattern = Regex.compile(regex);
+-        } catch (PatternSyntaxException e) {
+-            throw new IllegalArgumentException("Pattern syntax error: " + regex, e);
+-        }
+-        return Collector.collect(new Evaluator.AttributeWithValueMatching(key, pattern), this);
+-    }
+-
+-    /**
+-     * Find elements whose sibling index is less than the supplied index.
+-     * @param index 0-based index
+-     * @return elements less than index
+-     */
+-    public Elements getElementsByIndexLessThan(int index) {
+-        return Collector.collect(new Evaluator.IndexLessThan(index), this);
+-    }
+-
+-    /**
+-     * Find elements whose sibling index is greater than the supplied index.
+-     * @param index 0-based index
+-     * @return elements greater than index
+-     */
+-    public Elements getElementsByIndexGreaterThan(int index) {
+-        return Collector.collect(new Evaluator.IndexGreaterThan(index), this);
+-    }
+-
+-    /**
+-     * Find elements whose sibling index is equal to the supplied index.
+-     * @param index 0-based index
+-     * @return elements equal to index
+-     */
+-    public Elements getElementsByIndexEquals(int index) {
+-        return Collector.collect(new Evaluator.IndexEquals(index), this);
+-    }
+-
+-    /**
+-     * Find elements that contain the specified string. The search is case-insensitive. The text may appear directly
+-     * in the element, or in any of its descendants.
+-     * @param searchText to look for in the element's text
+-     * @return elements that contain the string, case-insensitive.
+-     * @see Element#text()
+-     */
+-    public Elements getElementsContainingText(String searchText) {
+-        return Collector.collect(new Evaluator.ContainsText(searchText), this);
+-    }
+-
+-    /**
+-     * Find elements that directly contain the specified string. The search is case-insensitive. The text must appear directly
+-     * in the element, not in any of its descendants.
+-     * @param searchText to look for in the element's own text
+-     * @return elements that contain the string, case-insensitive.
+-     * @see Element#ownText()
+-     */
+-    public Elements getElementsContainingOwnText(String searchText) {
+-        return Collector.collect(new Evaluator.ContainsOwnText(searchText), this);
+-    }
+-
+-    /**
+-     * Find elements whose text matches the supplied regular expression.
+-     * @param pattern regular expression to match text against
+-     * @return elements matching the supplied regular expression.
+-     * @see Element#text()
+-     */
+-    public Elements getElementsMatchingText(Pattern pattern) {
+-        return Collector.collect(new Evaluator.Matches(pattern), this);
+-    }
+-
+-    /**
+-     * Find elements whose text matches the supplied regular expression.
+-     * @param regex regular expression to match text against. You can use <a href="http://java.sun.com/docs/books/tutorial/essential/regex/pattern.html#embedded">embedded flags</a> (such as {@code (?i)} and {@code (?m)}) to control regex options.
+-     * @return elements matching the supplied regular expression.
+-     * @see Element#text()
+-     */
+-    public Elements getElementsMatchingText(String regex) {
+-        Regex pattern;
+-        try {
+-            pattern = Regex.compile(regex);
+-        } catch (PatternSyntaxException e) {
+-            throw new IllegalArgumentException("Pattern syntax error: " + regex, e);
+-        }
+-        return Collector.collect(new Evaluator.Matches(pattern), this);
+-    }
+-
+-    /**
+-     * Find elements whose own text matches the supplied regular expression.
+-     * @param pattern regular expression to match text against
+-     * @return elements matching the supplied regular expression.
+-     * @see Element#ownText()
+-     */
+-    public Elements getElementsMatchingOwnText(Pattern pattern) {
+-        return Collector.collect(new Evaluator.MatchesOwn(pattern), this);
+-    }
+-
+-    /**
+-     * Find elements whose own text matches the supplied regular expression.
+-     * @param regex regular expression to match text against. You can use <a href="http://java.sun.com/docs/books/tutorial/essential/regex/pattern.html#embedded">embedded flags</a> (such as {@code (?i)} and {@code (?m)}) to control regex options.
+-     * @return elements matching the supplied regular expression.
+-     * @see Element#ownText()
+-     */
+-    public Elements getElementsMatchingOwnText(String regex) {
+-        Regex pattern;
+-        try {
+-            pattern = Regex.compile(regex);
+-        } catch (PatternSyntaxException e) {
+-            throw new IllegalArgumentException("Pattern syntax error: " + regex, e);
+-        }
+-        return Collector.collect(new Evaluator.MatchesOwn(pattern), this);
+-    }
+-
+-    /**
+-     * Find all elements under this element (including self, and children of children).
+-     *
+-     * @return all elements
+-     */
+-    public Elements getAllElements() {
+-        return Collector.collect(new Evaluator.AllElements(), this);
+-    }
+ 
+     /**
+      Gets the <b>normalized, combined text</b> of this element and all its children. Whitespace is normalized and

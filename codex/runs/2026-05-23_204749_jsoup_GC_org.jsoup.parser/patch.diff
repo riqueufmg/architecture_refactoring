@@ -1,0 +1,1607 @@
+diff --git a/src/main/java/org/jsoup/nodes/Document.java b/src/main/java/org/jsoup/nodes/Document.java
+index db25382f..7f88b6d4 100644
+--- a/src/main/java/org/jsoup/nodes/Document.java
++++ b/src/main/java/org/jsoup/nodes/Document.java
+@@ -7,7 +7,7 @@ import org.jsoup.helper.Validate;
+ import org.jsoup.internal.StringUtil;
+ import org.jsoup.parser.ParseSettings;
+ import org.jsoup.parser.Parser;
+-import org.jsoup.parser.Tag;
++import org.jsoup.parser.tag.Tag;
+ import org.jsoup.select.Elements;
+ import org.jsoup.select.Evaluator;
+ import org.jsoup.select.Selector;
+diff --git a/src/main/java/org/jsoup/nodes/Element.java b/src/main/java/org/jsoup/nodes/Element.java
+index 186506e9..2a9f3f7d 100644
+--- a/src/main/java/org/jsoup/nodes/Element.java
++++ b/src/main/java/org/jsoup/nodes/Element.java
+@@ -6,7 +6,7 @@ import org.jsoup.internal.QuietAppendable;
+ import org.jsoup.internal.StringUtil;
+ import org.jsoup.parser.ParseSettings;
+ import org.jsoup.parser.Parser;
+-import org.jsoup.parser.Tag;
++import org.jsoup.parser.tag.Tag;
+ import org.jspecify.annotations.Nullable;
+ 
+ import java.util.List;
+diff --git a/src/main/java/org/jsoup/nodes/ElementIdentityOps.java b/src/main/java/org/jsoup/nodes/ElementIdentityOps.java
+index 1286eaa0..8dd66140 100644
+--- a/src/main/java/org/jsoup/nodes/ElementIdentityOps.java
++++ b/src/main/java/org/jsoup/nodes/ElementIdentityOps.java
+@@ -4,7 +4,7 @@ import org.jsoup.helper.Validate;
+ import org.jsoup.internal.StringUtil;
+ import org.jsoup.parser.ParseSettings;
+ import org.jsoup.parser.Parser;
+-import org.jsoup.parser.Tag;
++import org.jsoup.parser.tag.Tag;
+ import org.jsoup.parser.TokenQueue;
+ import org.jsoup.select.Elements;
+ import org.jspecify.annotations.Nullable;
+diff --git a/src/main/java/org/jsoup/nodes/ElementTextOps.java b/src/main/java/org/jsoup/nodes/ElementTextOps.java
+index 550ca579..884e698a 100644
+--- a/src/main/java/org/jsoup/nodes/ElementTextOps.java
++++ b/src/main/java/org/jsoup/nodes/ElementTextOps.java
+@@ -2,7 +2,7 @@ package org.jsoup.nodes;
+ 
+ import org.jsoup.helper.Validate;
+ import org.jsoup.internal.StringUtil;
+-import org.jsoup.parser.Tag;
++import org.jsoup.parser.tag.Tag;
+ import org.jsoup.select.NodeFilter;
+ import org.jsoup.select.NodeVisitor;
+ import org.jspecify.annotations.Nullable;
+diff --git a/src/main/java/org/jsoup/nodes/FormElement.java b/src/main/java/org/jsoup/nodes/FormElement.java
+index 5ee0ce87..dbf5d9dc 100644
+--- a/src/main/java/org/jsoup/nodes/FormElement.java
++++ b/src/main/java/org/jsoup/nodes/FormElement.java
+@@ -6,7 +6,7 @@ import org.jsoup.helper.HttpConnection;
+ import org.jsoup.helper.Validate;
+ import org.jsoup.internal.SharedConstants;
+ import org.jsoup.internal.StringUtil;
+-import org.jsoup.parser.Tag;
++import org.jsoup.parser.tag.Tag;
+ import org.jsoup.select.Elements;
+ import org.jsoup.select.Evaluator;
+ import org.jsoup.select.Selector;
+diff --git a/src/main/java/org/jsoup/nodes/Printer.java b/src/main/java/org/jsoup/nodes/Printer.java
+index 6b83fdbf..b5b0d624 100644
+--- a/src/main/java/org/jsoup/nodes/Printer.java
++++ b/src/main/java/org/jsoup/nodes/Printer.java
+@@ -3,7 +3,7 @@ package org.jsoup.nodes;
+ import org.jsoup.internal.QuietAppendable;
+ import org.jsoup.internal.StringUtil;
+ import org.jsoup.nodes.Document.OutputSettings;
+-import org.jsoup.parser.Tag;
++import org.jsoup.parser.tag.Tag;
+ import org.jsoup.select.NodeVisitor;
+ import org.jspecify.annotations.Nullable;
+ 
+diff --git a/src/main/java/org/jsoup/nodes/PseudoTextElement.java b/src/main/java/org/jsoup/nodes/PseudoTextElement.java
+index 9ceb4150..e95c90af 100644
+--- a/src/main/java/org/jsoup/nodes/PseudoTextElement.java
++++ b/src/main/java/org/jsoup/nodes/PseudoTextElement.java
+@@ -1,7 +1,7 @@
+ package org.jsoup.nodes;
+ 
+ import org.jsoup.internal.QuietAppendable;
+-import org.jsoup.parser.Tag;
++import org.jsoup.parser.tag.Tag;
+ 
+ /**
+  * Represents a {@link TextNode} as an {@link Element}, to enable text nodes to be selected with
+diff --git a/src/main/java/org/jsoup/parser/CharacterReader.java b/src/main/java/org/jsoup/parser/CharacterReader.java
+index f8eca0ba..153b0890 100644
+--- a/src/main/java/org/jsoup/parser/CharacterReader.java
++++ b/src/main/java/org/jsoup/parser/CharacterReader.java
+@@ -229,7 +229,7 @@ public final class CharacterReader implements AutoCloseable {
+      @since 1.14.3
+      @see #trackNewlines(boolean)
+      */
+-    String posLineCol() {
++    public String posLineCol() {
+         return lineNumber() + ":" + columnNumber();
+     }
+ 
+diff --git a/src/main/java/org/jsoup/parser/HtmlTagOptions.java b/src/main/java/org/jsoup/parser/HtmlTagOptions.java
+deleted file mode 100644
+index 1dd5e84c..00000000
+--- a/src/main/java/org/jsoup/parser/HtmlTagOptions.java
++++ /dev/null
+@@ -1,73 +0,0 @@
+-package org.jsoup.parser;
+-
+-import org.jsoup.internal.StringUtil;
+-
+-import static org.jsoup.parser.Parser.*;
+-
+-/**
+- Parser-only tag options used by the HTML tree builder.
+- <p>These are cached on {@link Tag} so hot stack walks can check an option instead of searching
+- the same sorted arrays repeatedly.</p>
+- */
+-final class HtmlTagOptions {
+-    static final int Scope              = 1;
+-    static final int ListScope          = 1 << 1;
+-    static final int ButtonScope        = 1 << 2;
+-    static final int TableScope         = 1 << 3;
+-    static final int SelectScopeMember  = 1 << 4;
+-    static final int ImpliedEnd         = 1 << 5;
+-    static final int ThoroughImpliedEnd = 1 << 6;
+-    static final int Special            = 1 << 7;
+-
+-    static final String[] ScopeTags = new String[]{ // a particular element in scope
+-            "applet", "caption", "html", "marquee", "object", "select", "table", "td", "template", "th"};
+-    static final String[] MathScopeTags = new String[]{"annotation-xml", "mi", "mn", "mo", "ms", "mtext"};
+-    static final String[] SvgScopeTags = new String[]{"desc", "foreignobject", "title"};
+-    static final String[] ListScopeTags = new String[]{"ol", "ul"};
+-    static final String[] ButtonScopeTags = new String[]{"button"};
+-    static final String[] TableScopeTags = new String[]{"html", "table", "template"};
+-    static final String[] SelectScopeMemberTags = new String[]{"optgroup", "option"};
+-    static final String[] ImpliedEndTags = new String[]{
+-            "dd", "dt", "li", "optgroup", "option", "p", "rb", "rp", "rt", "rtc"};
+-    static final String[] ThoroughImpliedEndTags = new String[]{
+-            "caption", "colgroup", "dd", "dt", "li", "optgroup", "option", "p", "rb", "rp", "rt", "rtc", "tbody", "td",
+-            "tfoot", "th", "thead", "tr"};
+-    static final String[] SpecialTags = new String[]{
+-            "address", "applet", "area", "article", "aside", "base", "basefont", "bgsound", "blockquote", "body", "br",
+-            "button", "caption", "center", "col", "colgroup", "dd", "details", "dir", "div", "dl", "dt", "embed",
+-            "fieldset", "figcaption", "figure", "footer", "form", "frame", "frameset", "h1", "h2", "h3", "h4", "h5",
+-            "h6", "head", "header", "hgroup", "hr", "html", "iframe", "img", "input", "keygen", "li", "link", "listing",
+-            "main", "marquee", "menu", "meta", "nav", "noembed", "noframes", "noscript", "object", "ol", "p", "param",
+-            "plaintext", "pre", "script", "search", "section", "select", "source", "style", "summary", "table", "tbody",
+-            "td", "template", "textarea", "tfoot", "th", "thead", "title", "tr", "track", "ul", "wbr", "xmp"};
+-
+-    private HtmlTagOptions() {}
+-
+-    /**
+-     Get parser options for a tag's normalized name and namespace.
+-     */
+-    static int optionsFor(String normalName, String namespace) {
+-        int options = 0;
+-
+-        switch (namespace) {
+-            case NamespaceHtml:
+-                if (StringUtil.inSorted(normalName, ImpliedEndTags))         options |= ImpliedEnd;
+-                if (StringUtil.inSorted(normalName, ThoroughImpliedEndTags)) options |= ThoroughImpliedEnd;
+-                if (StringUtil.inSorted(normalName, SelectScopeMemberTags))  options |= SelectScopeMember;
+-                if (StringUtil.inSorted(normalName, ScopeTags))              options |= Scope;
+-                if (StringUtil.inSorted(normalName, ListScopeTags))          options |= ListScope;
+-                if (StringUtil.inSorted(normalName, ButtonScopeTags))        options |= ButtonScope;
+-                if (StringUtil.inSorted(normalName, TableScopeTags))         options |= TableScope;
+-                if (StringUtil.inSorted(normalName, SpecialTags))            options |= Special;
+-                break;
+-            case NamespaceMathml:
+-                if (StringUtil.inSorted(normalName, MathScopeTags))          options |= Scope | Special;
+-                break;
+-            case NamespaceSvg:
+-                if (StringUtil.inSorted(normalName, SvgScopeTags))           options |= Scope | Special;
+-                break;
+-        }
+-
+-        return options;
+-    }
+-}
+diff --git a/src/main/java/org/jsoup/parser/HtmlTreeBuilder.java b/src/main/java/org/jsoup/parser/HtmlTreeBuilder.java
+index f31f6f19..92d86b32 100644
+--- a/src/main/java/org/jsoup/parser/HtmlTreeBuilder.java
++++ b/src/main/java/org/jsoup/parser/HtmlTreeBuilder.java
+@@ -1,5 +1,11 @@
+ package org.jsoup.parser;
+ 
++import org.jsoup.parser.tag.HtmlTagOptions;
++
++import org.jsoup.parser.tag.TagSet;
++
++import org.jsoup.parser.tag.Tag;
++
+ import org.jsoup.helper.Validate;
+ import org.jsoup.internal.Normalizer;
+ import org.jsoup.internal.StringUtil;
+@@ -12,6 +18,7 @@ import org.jsoup.nodes.Element;
+ import org.jsoup.nodes.FormElement;
+ import org.jsoup.nodes.Node;
+ import org.jsoup.nodes.TextNode;
++import org.jsoup.parser.error.ParseError;
+ import org.jspecify.annotations.Nullable;
+ 
+ import java.io.Reader;
+@@ -371,7 +378,7 @@ public class HtmlTreeBuilder extends TreeBuilder {
+     private void doInsertElement(Element el) {
+         enforceStackDepthLimit();
+ 
+-        if (formElement != null && el.tag().namespace.equals(NamespaceHtml) && StringUtil.inSorted(el.normalName(), TagFormListed))
++        if (formElement != null && NamespaceHtml.equals(el.tag().namespace()) && StringUtil.inSorted(el.normalName(), TagFormListed))
+             formElement.addElement(el); // connect form controls to their form element
+ 
+         // in HTML, the xmlns attribute if set must match what the parser set the tag's namespace to
+diff --git a/src/main/java/org/jsoup/parser/HtmlTreeBuilderState.java b/src/main/java/org/jsoup/parser/HtmlTreeBuilderState.java
+index eef814bc..633a1667 100644
+--- a/src/main/java/org/jsoup/parser/HtmlTreeBuilderState.java
++++ b/src/main/java/org/jsoup/parser/HtmlTreeBuilderState.java
+@@ -1,5 +1,7 @@
+ package org.jsoup.parser;
+ 
++import org.jsoup.parser.tag.Tag;
++
+ import org.jsoup.helper.Validate;
+ import org.jsoup.internal.StringUtil;
+ import org.jsoup.nodes.Attribute;
+diff --git a/src/main/java/org/jsoup/parser/ParseError.java b/src/main/java/org/jsoup/parser/ParseError.java
+deleted file mode 100644
+index a82b7835..00000000
+--- a/src/main/java/org/jsoup/parser/ParseError.java
++++ /dev/null
+@@ -1,63 +0,0 @@
+-package org.jsoup.parser;
+-
+-/**
+- * A Parse Error records an error in the input HTML that occurs in either the tokenisation or the tree building phase.
+- */
+-public class ParseError {
+-    private final int pos;
+-    private final String cursorPos;
+-    private final String errorMsg;
+-
+-    ParseError(CharacterReader reader, String errorMsg) {
+-        pos = reader.pos();
+-        cursorPos = reader.posLineCol();
+-        this.errorMsg = errorMsg;
+-    }
+-
+-    ParseError(CharacterReader reader, String errorFormat, Object... args) {
+-        pos = reader.pos();
+-        cursorPos = reader.posLineCol();
+-        this.errorMsg = String.format(errorFormat, args);
+-    }
+-
+-    ParseError(int pos, String errorMsg) {
+-        this.pos = pos;
+-        cursorPos = String.valueOf(pos);
+-        this.errorMsg = errorMsg;
+-    }
+-
+-    ParseError(int pos, String errorFormat, Object... args) {
+-        this.pos = pos;
+-        cursorPos = String.valueOf(pos);
+-        this.errorMsg = String.format(errorFormat, args);
+-    }
+-
+-    /**
+-     * Retrieve the error message.
+-     * @return the error message.
+-     */
+-    public String getErrorMessage() {
+-        return errorMsg;
+-    }
+-
+-    /**
+-     * Retrieves the offset of the error.
+-     * @return error offset within input
+-     */
+-    public int getPosition() {
+-        return pos;
+-    }
+-
+-    /**
+-     Get the formatted line:column cursor position where the error occurred.
+-     @return line:number cursor position
+-     */
+-    public String getCursorPos() {
+-        return cursorPos;
+-    }
+-
+-    @Override
+-    public String toString() {
+-        return "<" + cursorPos + ">: " + errorMsg;
+-    }
+-}
+diff --git a/src/main/java/org/jsoup/parser/ParseErrorList.java b/src/main/java/org/jsoup/parser/ParseErrorList.java
+deleted file mode 100644
+index 969c862d..00000000
+--- a/src/main/java/org/jsoup/parser/ParseErrorList.java
++++ /dev/null
+@@ -1,50 +0,0 @@
+-package org.jsoup.parser;
+-
+-import java.util.ArrayList;
+-
+-/**
+- * A container for ParseErrors.
+- * 
+- * @author Jonathan Hedley
+- */
+-public class ParseErrorList extends ArrayList<ParseError>{
+-    private static final int INITIAL_CAPACITY = 16;
+-    private final int initialCapacity;
+-    private final int maxSize;
+-    
+-    ParseErrorList(int initialCapacity, int maxSize) {
+-        super(initialCapacity);
+-        this.initialCapacity = initialCapacity;
+-        this.maxSize = maxSize;
+-    }
+-
+-    /**
+-     Create a new ParseErrorList with the same settings, but no errors in the list
+-     @param copy initial and max size details to copy
+-     */
+-    ParseErrorList(ParseErrorList copy) {
+-        this(copy.initialCapacity, copy.maxSize);
+-    }
+-    
+-    boolean canAddError() {
+-        return size() < maxSize;
+-    }
+-
+-    int getMaxSize() {
+-        return maxSize;
+-    }
+-
+-    public static ParseErrorList noTracking() {
+-        return new ParseErrorList(0, 0);
+-    }
+-    
+-    public static ParseErrorList tracking(int maxSize) {
+-        return new ParseErrorList(INITIAL_CAPACITY, maxSize);
+-    }
+-
+-    @Override
+-    public Object clone() {
+-        // all class fields are primitive, so native clone is enough.
+-        return super.clone();
+-    }
+-}
+diff --git a/src/main/java/org/jsoup/parser/ParseSettings.java b/src/main/java/org/jsoup/parser/ParseSettings.java
+index b31e5f8c..6a33ccb2 100644
+--- a/src/main/java/org/jsoup/parser/ParseSettings.java
++++ b/src/main/java/org/jsoup/parser/ParseSettings.java
+@@ -1,5 +1,11 @@
+ package org.jsoup.parser;
+ 
++import org.jsoup.parser.tag.HtmlTagOptions;
++
++import org.jsoup.parser.tag.TagSet;
++
++import org.jsoup.parser.tag.Tag;
++
+ import org.jsoup.nodes.Attributes;
+ import org.jspecify.annotations.Nullable;
+ 
+@@ -82,7 +88,7 @@ public class ParseSettings {
+     }
+ 
+     /** Returns the normal name that a Tag will have (trimmed and lower-cased) */
+-    static String normalName(String name) {
++    public static String normalName(String name) {
+         return normalize(name);
+     }
+ }
+diff --git a/src/main/java/org/jsoup/parser/Parser.java b/src/main/java/org/jsoup/parser/Parser.java
+index 5dd8eb7f..eabaa529 100644
+--- a/src/main/java/org/jsoup/parser/Parser.java
++++ b/src/main/java/org/jsoup/parser/Parser.java
+@@ -1,9 +1,16 @@
+ package org.jsoup.parser;
+ 
++import org.jsoup.parser.tag.HtmlTagOptions;
++
++import org.jsoup.parser.tag.TagSet;
++
++import org.jsoup.parser.tag.Tag;
++
+ import org.jsoup.helper.Validate;
+ import org.jsoup.nodes.Document;
+ import org.jsoup.nodes.Element;
+ import org.jsoup.nodes.Node;
++import org.jsoup.parser.error.ParseErrorList;
+ import org.jspecify.annotations.Nullable;
+ 
+ import java.io.Reader;
+diff --git a/src/main/java/org/jsoup/parser/Tag.java b/src/main/java/org/jsoup/parser/Tag.java
+deleted file mode 100644
+index c443f15c..00000000
+--- a/src/main/java/org/jsoup/parser/Tag.java
++++ /dev/null
+@@ -1,384 +0,0 @@
+-package org.jsoup.parser;
+-
+-import org.jspecify.annotations.Nullable;
+-
+-import java.util.Objects;
+-
+-import static org.jsoup.parser.Parser.NamespaceHtml;
+-
+-/**
+- A Tag represents an Element's name and configured options, common throughout the Document. Options may affect the parse
+- and output.
+-
+- @see TagSet
+- @see Parser#tagSet(TagSet) */
+-public class Tag implements Cloneable {
+-    /** Tag option: the tag is known (specifically defined). This impacts if options may need to be inferred (when not
+-     known) in, e.g., the pretty-printer. Set when a tag is added to a TagSet, or when settings are set(). */
+-    public static int Known = 1;
+-    /** Tag option: the tag is a void tag (e.g., {@code <img>}), that can contain no children, and in HTML does not require closing. */
+-    public static int Void = 1 << 1;
+-    /** Tag option: the tag is a block tag (e.g., {@code <div>}, {@code <p>}). Causes the element to be indented when pretty-printing. If not a block, it is inline. */
+-    public static int Block = 1 << 2;
+-    /** Tag option: pretty-print hint for block tags whose inline children should stay inline. (Must also set Block.) */
+-    public static int InlineContainer = 1 << 3;
+-    /** Tag option: the tag can self-close (e.g., {@code <foo />}). */
+-    public static int SelfClose = 1 << 4;
+-    /** Tag option: the tag has been seen self-closing in this parse. */
+-    public static int SeenSelfClose = 1 << 5;
+-    /** Tag option: the tag preserves whitespace (e.g., {@code <pre>}). */
+-    public static int PreserveWhitespace = 1 << 6;
+-    /** Tag option: the tag is an RCDATA element that can have text and character references (e.g., {@code <title>}, {@code <textarea>}). */
+-    public static int RcData = 1 << 7;
+-    /** Tag option: the tag is a Data element that can have text but not character references (e.g., {@code <style>}, {@code <script>}). */
+-    public static int Data = 1 << 8;
+-    /** Tag option: the tag's value will be included when submitting a form (e.g., {@code <input>}). */
+-    public static int FormSubmittable = 1 << 9;
+-    /** Tag option: readable text boundary for {@code Element.text()}, used for controls, widgets, and embedded objects. */
+-    public static int TextBoundary = 1 << 10;
+-
+-    String namespace;
+-    String tagName;
+-    String normalName; // always the lower case version of this tag, regardless of case preservation mode
+-    int options = 0;
+-    private int parserOptions = 0; // internal tree-builder options; see HtmlTagOptions
+-
+-    /**
+-     Create a new Tag, with the given name and namespace.
+-     <p>The tag is not implicitly added to any TagSet.</p>
+-     @param tagName the name of the tag. Case-sensitive.
+-     @param namespace the namespace for the tag.
+-     @see TagSet#valueOf(String, String)
+-     @since 1.20.1
+-     */
+-    public Tag(String tagName, String namespace) {
+-        this(tagName, ParseSettings.normalName(tagName), namespace);
+-    }
+-
+-    /**
+-     Create a new Tag, with the given name, in the HTML namespace.
+-     <p>The tag is not implicitly added to any TagSet.</p>
+-     @param tagName the name of the tag. Case-sensitive.
+-     @see TagSet#valueOf(String, String)
+-     @since 1.20.1
+-     */
+-    public Tag(String tagName) {
+-        this(tagName, ParseSettings.normalName(tagName), NamespaceHtml);
+-    }
+-
+-    /** Path for TagSet defaults, no options set; normal name is already LC. */
+-    Tag(String tagName, String normalName, String namespace) {
+-        this.tagName = tagName;
+-        this.normalName = normalName;
+-        this.namespace = namespace;
+-        setParserOptions();
+-    }
+-
+-    /**
+-     * Get this tag's name.
+-     *
+-     * @return the tag's name
+-     */
+-    public String getName() {
+-        return tagName;
+-    }
+-
+-    /**
+-     Get this tag's name.
+-     @return the tag's name
+-     */
+-    public String name() {
+-        return tagName;
+-    }
+-
+-    /**
+-     Change the tag's name. As Tags are reused throughout a Document, this will change the name for all uses of this tag.
+-     @param tagName the new name of the tag. Case-sensitive.
+-     @return this tag
+-     @since 1.20.1
+-     */
+-    public Tag name(String tagName) {
+-        this.tagName = tagName;
+-        this.normalName = ParseSettings.normalName(tagName);
+-        setParserOptions();
+-        return this;
+-    }
+-
+-    /**
+-     Get this tag's prefix, if it has one; else the empty string.
+-     <p>For example, {@code <book:title>} has prefix {@code book}, and tag name {@code book:title}.</p>
+-     @return the tag's prefix
+-     @since 1.20.1
+-     */
+-    public String prefix() {
+-        int pos = tagName.indexOf(':');
+-        if (pos == -1) return "";
+-        else return tagName.substring(0, pos);
+-    }
+-
+-    /**
+-     Get this tag's local name. The local name is the name without the prefix (if any).
+-     <p>For exmaple, {@code <book:title>} has local name {@code title}, and tag name {@code book:title}.</p>
+-     @return the tag's local name
+-     @since 1.20.1
+-     */
+-    public String localName() {
+-        int pos = tagName.indexOf(':');
+-        if (pos == -1) return tagName;
+-        else return tagName.substring(pos + 1);
+-    }
+-
+-    /**
+-     * Get this tag's normalized (lowercased) name.
+-     * @return the tag's normal name.
+-     */
+-    public String normalName() {
+-        return normalName;
+-    }
+-
+-    /**
+-     Get this tag's namespace.
+-     @return the tag's namespace
+-     */
+-    public String namespace() {
+-        return namespace;
+-    }
+-
+-    /**
+-     Set the tag's namespace. As Tags are reused throughout a Document, this will change the namespace for all uses of this tag.
+-     @param namespace the new namespace of the tag.
+-     @return this tag
+-     @since 1.20.1
+-     */
+-    public Tag namespace(String namespace) {
+-        this.namespace = namespace;
+-        setParserOptions();
+-        return this;
+-    }
+-
+-    /**
+-     Set an option on this tag.
+-     <p>Once a tag has a setting applied, it will be considered a known tag.</p>
+-     @param option the option to set
+-     @return this tag
+-     @since 1.20.1
+-     */
+-    public Tag set(int option) {
+-        options |= option;
+-        options |= Tag.Known; // considered known if touched
+-        return this;
+-    }
+-
+-    /**
+-     Test if an option is set on this tag.
+-
+-     @param option the option to test
+-     @return true if the option is set
+-     @since 1.20.1
+-     */
+-    public boolean is(int option) {
+-        return (options & option) != 0;
+-    }
+-
+-    /**
+-     Clear (unset) an option from this tag.
+-     @param option the option to clear
+-     @return this tag
+-     @since 1.20.1
+-     */
+-    public Tag clear(int option) {
+-        options &= ~option;
+-        // considered known if touched, unless explicitly clearing known
+-        if (option != Tag.Known) options |= Tag.Known;
+-        return this;
+-    }
+-
+-    /**
+-     Set the cached parser options from the current name and namespace.
+-     */
+-    void setParserOptions() {
+-        parserOptions = HtmlTagOptions.optionsFor(normalName, namespace);
+-    }
+-
+-    /**
+-     Test if this tag has the given parser option.
+-     */
+-    boolean hasParserOption(int option) {
+-        return (parserOptions & option) != 0;
+-    }
+-
+-    /**
+-     * Get a Tag by name. If not previously defined (unknown), returns a new generic tag, that can do anything.
+-     * <p>
+-     * Pre-defined tags (p, div etc) will be ==, but unknown tags are not registered and will only .equals().
+-     * </p>
+-     * 
+-     * @param tagName Name of tag, e.g. "p". Case-insensitive.
+-     * @param namespace the namespace for the tag.
+-     * @param settings used to control tag name sensitivity
+-     * @see TagSet
+-     * @return The tag, either defined or new generic.
+-     */
+-    public static Tag valueOf(String tagName, String namespace, ParseSettings settings) {
+-        return TagSet.Html().valueOf(tagName, null, namespace, settings.preserveTagCase());
+-    }
+-
+-    /**
+-     * Get a Tag by name. If not previously defined (unknown), returns a new generic tag, that can do anything.
+-     * <p>
+-     * Pre-defined tags (P, DIV etc) will be ==, but unknown tags are not registered and will only .equals().
+-     * </p>
+-     *
+-     * @param tagName Name of tag, e.g. "p". <b>Case sensitive</b>.
+-     * @return The tag, either defined or new generic.
+-     * @see #valueOf(String tagName, String namespace, ParseSettings settings)
+-     */
+-    public static Tag valueOf(String tagName) {
+-        return valueOf(tagName, NamespaceHtml, ParseSettings.preserveCase);
+-    }
+-
+-    /**
+-     * Get a Tag by name. If not previously defined (unknown), returns a new generic tag, that can do anything.
+-     * <p>
+-     * Pre-defined tags (P, DIV etc) will be ==, but unknown tags are not registered and will only .equals().
+-     * </p>
+-     *
+-     * @param tagName Name of tag, e.g. "p". <b>Case sensitive</b>.
+-     * @param settings used to control tag name sensitivity
+-     * @return The tag, either defined or new generic.
+-     * @see #valueOf(String tagName, String namespace, ParseSettings settings)
+-     */
+-    public static Tag valueOf(String tagName, ParseSettings settings) {
+-        return valueOf(tagName, NamespaceHtml, settings);
+-    }
+-
+-    /**
+-     * Gets if this is a block tag.
+-     *
+-     * @return if block tag
+-     */
+-    public boolean isBlock() {
+-        return (options & Block) != 0;
+-    }
+-
+-    /**
+-     Get if this is an InlineContainer tag.
+-
+-     @return true if this tag has the InlineContainer pretty-print hint.
+-     @deprecated internal pretty-printing flag; use {@link #isInline()} or {@link #isBlock()} to check layout intent. Will be removed in jsoup 1.24.1.
+-     */
+-    @Deprecated public boolean formatAsBlock() {
+-        return (options & InlineContainer) != 0;
+-    }
+-
+-    /**
+-     * Gets if this tag is an inline tag. Just the opposite of isBlock.
+-     *
+-     * @return if this tag is an inline tag.
+-     */
+-    public boolean isInline() {
+-        return (options & Block) == 0;
+-    }
+-
+-    /**
+-     Get if this is void (aka empty) tag.
+-
+-     @return true if this is a void tag
+-     */
+-    public boolean isEmpty() {
+-        return (options & Void) != 0;
+-    }
+-
+-    /**
+-     * Get if this tag is self-closing.
+-     *
+-     * @return if this tag should be output as self-closing.
+-     */
+-    public boolean isSelfClosing() {
+-        return (options & SelfClose) != 0 || (options & Void) != 0;
+-    }
+-
+-    /**
+-     * Get if this is a pre-defined tag in the TagSet, or was auto created on parsing.
+-     *
+-     * @return if a known tag
+-     */
+-    public boolean isKnownTag() {
+-        return (options & Known) != 0;
+-    }
+-
+-    /**
+-     * Check if this tag name is a known HTML tag.
+-     *
+-     * @param tagName name of tag
+-     * @return if known HTML tag
+-     */
+-    public static boolean isKnownTag(String tagName) {
+-        return TagSet.HtmlTagSet.get(tagName, NamespaceHtml) != null;
+-    }
+-
+-    /**
+-     * Get if this tag should preserve whitespace within child text nodes.
+-     *
+-     * @return if preserve whitespace
+-     */
+-    public boolean preserveWhitespace() {
+-        return (options & PreserveWhitespace) != 0;
+-    }
+-
+-    /**
+-     * Get if this tag represents an element that should be submitted with a form. E.g. input, option
+-     * @return if submittable with a form
+-     */
+-    public boolean isFormSubmittable() {
+-        return (options & FormSubmittable) != 0;
+-    }
+-
+-    void setSeenSelfClose() {
+-        options |= Tag.SeenSelfClose; // does not change known status
+-    }
+-
+-    /**
+-     If this Tag uses a specific text TokeniserState for its content, returns that; otherwise null.
+-     */
+-    @Nullable TokeniserState textState() {
+-        if (is(RcData)) return TokeniserState.Rcdata;
+-        if (is(Data))   return TokeniserState.Rawtext;
+-        else            return null;
+-    }
+-
+-    @Override
+-    public boolean equals(Object o) {
+-        if (this == o) return true;
+-        if (!(o instanceof Tag)) return false;
+-        Tag tag = (Tag) o;
+-        return Objects.equals(tagName, tag.tagName) &&
+-            Objects.equals(namespace, tag.namespace) &&
+-            Objects.equals(normalName, tag.normalName) &&
+-            options == tag.options;
+-    }
+-
+-    /**
+-     Hashcode of this Tag, consisting of the tag name and namespace.
+-     */
+-    @Override
+-    public int hashCode() {
+-        return Objects.hash(tagName, namespace); // options not included so that mutations do not prevent use as a key
+-    }
+-
+-    @Override
+-    public String toString() {
+-        return tagName;
+-    }
+-
+-    @Override
+-    protected Tag clone() {
+-        try {
+-            return (Tag) super.clone();
+-        } catch (CloneNotSupportedException e) {
+-            throw new RuntimeException(e);
+-        }
+-    }
+-
+-
+-}
+diff --git a/src/main/java/org/jsoup/parser/TagSet.java b/src/main/java/org/jsoup/parser/TagSet.java
+deleted file mode 100644
+index e7e12de4..00000000
+--- a/src/main/java/org/jsoup/parser/TagSet.java
++++ /dev/null
+@@ -1,311 +0,0 @@
+-package org.jsoup.parser;
+-
+-import org.jsoup.helper.Validate;
+-import org.jsoup.internal.SharedConstants;
+-import org.jspecify.annotations.Nullable;
+-
+-import java.util.ArrayList;
+-import java.util.HashMap;
+-import java.util.Map;
+-import java.util.Objects;
+-import java.util.function.Consumer;
+-
+-import static org.jsoup.parser.Parser.NamespaceHtml;
+-import static org.jsoup.parser.Parser.NamespaceMathml;
+-import static org.jsoup.parser.Parser.NamespaceSvg;
+-
+-/**
+- A TagSet controls the {@link Tag} configuration for a Document's parse, and its serialization. It contains the initial
+- defaults, and after the parse, any additionally discovered tags.
+-
+- @see Parser#tagSet(TagSet)
+- @since 1.20.1
+- */
+-public class TagSet {
+-    static final TagSet HtmlTagSet = initHtmlDefault();
+-
+-    private final Map<String, Map<String, Tag>> tags = new HashMap<>(); // namespace -> tag name -> Tag
+-    private final @Nullable TagSet source; // internal fallback for lazy tag copies
+-    private @Nullable ArrayList<Consumer<Tag>> customizers; // optional onNewTag tag customizer
+-
+-    /**
+-     Returns a mutable copy of the default HTML tag set.
+-     */
+-    public static TagSet Html() {
+-        return new TagSet(HtmlTagSet, null);
+-    }
+-
+-    private TagSet(@Nullable TagSet source, @Nullable ArrayList<Consumer<Tag>> customizers) {
+-        this.source = source;
+-        this.customizers = customizers;
+-    }
+-
+-    public TagSet() {
+-        this(null, null);
+-    }
+-
+-    /**
+-     Creates a new TagSet by copying the current tags and customizers from the provided source TagSet. Changes made to
+-     one TagSet will not affect the other.
+-     @param template the TagSet to copy
+-     */
+-    public TagSet(TagSet template) {
+-        this(template.source, copyCustomizers(template));
+-        // copy tags eagerly; any lazy pull-through should come only from the root source (which would be the HTML defaults), not the template itself.
+-        // that way the template tagset is not mutated when we do read through
+-        if (template.tags.isEmpty()) return;
+-
+-        for (Map.Entry<String, Map<String, Tag>> namespaceEntry : template.tags.entrySet()) {
+-            Map<String, Tag> nsTags = new HashMap<>(namespaceEntry.getValue().size());
+-            for (Map.Entry<String, Tag> tagEntry : namespaceEntry.getValue().entrySet()) {
+-                nsTags.put(tagEntry.getKey(), tagEntry.getValue().clone());
+-            }
+-            tags.put(namespaceEntry.getKey(), nsTags);
+-        }
+-    }
+-
+-    private static @Nullable ArrayList<Consumer<Tag>> copyCustomizers(TagSet base) {
+-        if (base.customizers == null) return null;
+-        return new ArrayList<>(base.customizers);
+-    }
+-
+-    /**
+-     Insert a tag into this TagSet. If the tag already exists, it is replaced.
+-     <p>Tags explicitly added like this are considered to be known tags (vs those that are dynamically created via
+-     .valueOf() if not already in the set.</p>
+-
+-     @param tag the tag to add
+-     @return this TagSet
+-     */
+-    public TagSet add(Tag tag) {
+-        tag.set(Tag.Known);
+-        doAdd(tag);
+-        return this;
+-    }
+-
+-    /** Adds the tag, but does not set defined. Used in .valueOf */
+-    private void doAdd(Tag tag) {
+-        if (customizers != null) {
+-            for (Consumer<Tag> customizer : customizers) {
+-                customizer.accept(tag);
+-            }
+-        }
+-        tag.setParserOptions();
+-
+-        tags.computeIfAbsent(tag.namespace, ns -> new HashMap<>())
+-            .put(tag.tagName, tag);
+-    }
+-
+-    /**
+-     Get an existing Tag from this TagSet by tagName and namespace. The tag name is not normalized, to support mixed
+-     instances.
+-
+-     @param tagName the case-sensitive tag name
+-     @param namespace the namespace
+-     @return the tag, or null if not found
+-     */
+-    public @Nullable Tag get(String tagName, String namespace) {
+-        Validate.notNull(tagName);
+-        Validate.notNull(namespace);
+-
+-        // get from our tags
+-        Map<String, Tag> nsTags = tags.get(namespace);
+-        if (nsTags != null) {
+-            Tag tag = nsTags.get(tagName);
+-            if (tag != null) {
+-                return tag;
+-            }
+-        }
+-
+-        // not found; clone on demand from source if exists
+-        if (source != null) {
+-            Tag tag = source.get(tagName, namespace);
+-            if (tag != null) {
+-                Tag copy = tag.clone();
+-                doAdd(copy);
+-                return copy;
+-            }
+-        }
+-
+-        return null;
+-    }
+-
+-    /**
+-     Tag.valueOf with the normalName via the token.normalName, to save redundant lower-casing passes.
+-     Provide a null normalName unless we already have one; will be normalized if required from tagName.
+-     */
+-    Tag valueOf(String tagName, @Nullable String normalName, String namespace, boolean preserveTagCase) {
+-        Validate.notNull(tagName);
+-        Validate.notNull(namespace);
+-        tagName = tagName.trim();
+-        Validate.notEmpty(tagName);
+-        Tag tag = get(tagName, namespace);
+-        if (tag != null) return tag;
+-
+-        // not found by tagName, try by normal
+-        if (normalName == null) normalName = ParseSettings.normalName(tagName);
+-        tagName = preserveTagCase ? tagName : normalName;
+-        tag = get(normalName, namespace);
+-        if (tag != null) {
+-            if (preserveTagCase && !tagName.equals(normalName)) {
+-                tag = tag.clone(); // copy so that the name update doesn't reset all instances
+-                tag.tagName = tagName;
+-                doAdd(tag);
+-            }
+-            return tag;
+-        }
+-
+-        // not defined: return a new one
+-        tag = new Tag(tagName, normalName, namespace);
+-        doAdd(tag);
+-
+-        return tag;
+-    }
+-
+-    /**
+-     Get a Tag by name from this TagSet. If not previously defined (unknown), returns a new tag.
+-     <p>New tags will be added to this TagSet.</p>
+-
+-     @param tagName Name of tag, e.g. "p".
+-     @param namespace the namespace for the tag.
+-     @param settings used to control tag name sensitivity
+-     @return The tag, either defined or new generic.
+-     */
+-    public Tag valueOf(String tagName, String namespace, ParseSettings settings) {
+-        return valueOf(tagName, null, namespace, settings.preserveTagCase());
+-    }
+-
+-    /**
+-     Get a Tag by name from this TagSet. If not previously defined (unknown), returns a new tag.
+-     <p>New tags will be added to this TagSet.</p>
+-
+-     @param tagName Name of tag, e.g. "p". <b>Case-sensitive</b>.
+-     @param namespace the namespace for the tag.
+-     @return The tag, either defined or new generic.
+-     @see #valueOf(String tagName, String namespace, ParseSettings settings)
+-     */
+-    public Tag valueOf(String tagName, String namespace) {
+-        return valueOf(tagName, namespace, ParseSettings.preserveCase);
+-    }
+-
+-    /**
+-     Register a callback to customize each {@link Tag} as it's added to this TagSet.
+-     <p>Customizers are invoked once per Tag, when they are added (explicitly or via the valueOf methods).</p>
+-
+-     <p>For example, to allow all unknown tags to be self-closing during when parsing as HTML:</p>
+-     <pre><code>
+-     Parser parser = Parser.htmlParser();
+-     parser.tagSet().onNewTag(tag -> {
+-     if (!tag.isKnownTag())
+-        tag.set(Tag.SelfClose);
+-     });
+-
+-     Document doc = Jsoup.parse(html, parser);
+-     </code></pre>
+-
+-     @param customizer a {@code Consumer<Tag>} that will be called for each newly added or cloned Tag; callers can
+-     inspect and modify the Tag's state (e.g. set options)
+-     @return this TagSet, to allow method chaining
+-     @since 1.21.0
+-     */
+-    public TagSet onNewTag(Consumer<Tag> customizer) {
+-        Validate.notNull(customizer);
+-        if (customizers == null)
+-            customizers = new ArrayList<>();
+-        customizers.add(customizer);
+-        return this;
+-    }
+-
+-    @Override
+-    public boolean equals(Object o) {
+-        if (!(o instanceof TagSet)) return false;
+-        TagSet tagSet = (TagSet) o;
+-        return Objects.equals(tags, tagSet.tags);
+-    }
+-
+-    @Override
+-    public int hashCode() {
+-        return Objects.hashCode(tags);
+-    }
+-
+-    // Default HTML initialization
+-
+-    /**
+-     Initialize the default HTML tag set.
+-     */
+-    static TagSet initHtmlDefault() {
+-        String[] blockTags = {
+-            "html", "head", "body", "frameset", "script", "noscript", "style", "meta", "link", "title", "frame",
+-            "noframes", "section", "nav", "aside", "hgroup", "header", "footer", "p", "h1", "h2", "h3", "h4", "h5",
+-            "h6", "dialog", "search",
+-            "ul", "ol", "pre", "div", "blockquote", "hr", "address", "figure", "figcaption", "form", "fieldset",
+-            "dl", "dt", "dd", "li", "table", "caption", "thead", "tfoot", "tbody", "colgroup", "col", "tr", "th",
+-            "td", "details", "menu", "plaintext", "template", "article", "main",
+-            "center",
+-            "dir", "applet", "marquee", "listing", // deprecated but still known / special handling
+-            "#root" // the outer Document
+-        };
+-        String[] inlineTags = {
+-            "object", "base", "font", "tt", "i", "b", "u", "big", "small", "em", "strong", "dfn", "code", "samp", "kbd",
+-            "var", "cite", "abbr", "time", "acronym", "mark", "ruby", "rt", "rp", "rtc", "a", "img", "wbr", "map",
+-            "q",
+-            "sub", "sup", "bdo", "iframe", "embed", "span", "input", "select", "textarea", "label", "audio", "video", "canvas", "optgroup",
+-            "option", "legend", "datalist", "keygen", "output", "progress", "meter", "area", "param", "source", "track",
+-            "summary", "command", "device", "basefont", "bgsound", "menuitem", "data", "bdi", "s", "strike", "nobr",
+-            "ins", "del", "button", "picture", "slot",
+-            "rb", // deprecated but still known / special handling
+-        };
+-        String[] inlineContainers = { // pretty-print hint: block tags whose inline children should stay inline
+-            "title", "p", "h1", "h2", "h3", "h4", "h5", "h6", "pre", "address", "li", "th", "td", "script", "style"
+-        };
+-        String[] voidTags = {
+-            "meta", "link", "base", "frame", "img", "br", "wbr", "embed", "hr", "input", "keygen", "col", "command",
+-            "device", "area", "basefont", "bgsound", "menuitem", "param", "source", "track"
+-        };
+-        String[] preserveWhitespaceTags = {
+-            "pre", "plaintext", "title", "textarea", "script"
+-        };
+-        String[] rcdataTags = { "title", "textarea" };
+-        String[] dataTags = { "iframe", "noembed", "noframes", "script", "style", "xmp" };
+-        String[] formSubmitTags = SharedConstants.FormSubmitTags;
+-        String[] textBoundaryTags = { // text() readability hint for controls, widgets, and embedded objects
+-            "button", "input", "select", "textarea", "option", "output", "progress", "meter",
+-            "img", "picture", "audio", "video", "canvas", "object", "embed", "iframe"
+-        };
+-        String[] blockMathTags = {"math"};
+-        String[] inlineMathTags = {"mi", "mo", "msup", "mn", "mtext"};
+-        String[] blockSvgTags = {"svg", "femerge", "femergenode"}; // note these are LC versions, but actually preserve case
+-        String[] inlineSvgTags = {"text"};
+-        String[] dataSvgTags = {"script"};
+-
+-        return new TagSet()
+-            .setupTags(NamespaceHtml, blockTags, tag -> tag.set(Tag.Block))
+-            .setupTags(NamespaceHtml, inlineTags, tag -> tag.set(0))
+-            .setupTags(NamespaceHtml, inlineContainers, tag -> tag.set(Tag.InlineContainer))
+-            .setupTags(NamespaceHtml, voidTags, tag -> tag.set(Tag.Void))
+-            .setupTags(NamespaceHtml, preserveWhitespaceTags, tag -> tag.set(Tag.PreserveWhitespace))
+-            .setupTags(NamespaceHtml, rcdataTags, tag -> tag.set(Tag.RcData))
+-            .setupTags(NamespaceHtml, dataTags, tag -> tag.set(Tag.Data))
+-            .setupTags(NamespaceHtml, formSubmitTags, tag -> tag.set(Tag.FormSubmittable))
+-            .setupTags(NamespaceHtml, textBoundaryTags, tag -> tag.set(Tag.TextBoundary))
+-            .setupTags(NamespaceMathml, blockMathTags, tag -> tag.set(Tag.Block))
+-            .setupTags(NamespaceMathml, inlineMathTags, tag -> tag.set(0))
+-            .setupTags(NamespaceSvg, blockSvgTags, tag -> tag.set(Tag.Block))
+-            .setupTags(NamespaceSvg, inlineSvgTags, tag -> tag.set(0))
+-            .setupTags(NamespaceSvg, dataSvgTags, tag -> tag.set(Tag.Data))
+-            ;
+-    }
+-
+-    private TagSet setupTags(String namespace, String[] tagNames, Consumer<Tag> tagModifier) {
+-        for (String tagName : tagNames) {
+-            Tag tag = get(tagName, namespace);
+-            if (tag == null) {
+-                tag = new Tag(tagName, tagName, namespace); // normal name is already normal here
+-                tag.options = 0; // clear defaults
+-                add(tag);
+-            }
+-            tagModifier.accept(tag);
+-        }
+-        return this;
+-    }
+-}
+diff --git a/src/main/java/org/jsoup/parser/Tokeniser.java b/src/main/java/org/jsoup/parser/Tokeniser.java
+index 2a5db368..3649d084 100644
+--- a/src/main/java/org/jsoup/parser/Tokeniser.java
++++ b/src/main/java/org/jsoup/parser/Tokeniser.java
+@@ -4,6 +4,8 @@ import org.jsoup.helper.Validate;
+ import org.jsoup.internal.StringUtil;
+ import org.jsoup.nodes.Document;
+ import org.jsoup.nodes.Entities;
++import org.jsoup.parser.error.ParseError;
++import org.jsoup.parser.error.ParseErrorList;
+ import org.jspecify.annotations.Nullable;
+ 
+ import java.util.Arrays;
+diff --git a/src/main/java/org/jsoup/parser/TokeniserState.java b/src/main/java/org/jsoup/parser/TokeniserState.java
+index e61b8c27..428db9dc 100644
+--- a/src/main/java/org/jsoup/parser/TokeniserState.java
++++ b/src/main/java/org/jsoup/parser/TokeniserState.java
+@@ -8,7 +8,7 @@ import static org.jsoup.nodes.Document.OutputSettings.Syntax.xml;
+ /**
+  * States and transition activations for the Tokeniser.
+  */
+-enum TokeniserState {
++public enum TokeniserState {
+     Data {
+         // in data state, gather characters until a character reference or tag is found
+         @Override void read(Tokeniser t, CharacterReader r) {
+diff --git a/src/main/java/org/jsoup/parser/TreeBuilder.java b/src/main/java/org/jsoup/parser/TreeBuilder.java
+index db7069c7..a1831c4a 100644
+--- a/src/main/java/org/jsoup/parser/TreeBuilder.java
++++ b/src/main/java/org/jsoup/parser/TreeBuilder.java
+@@ -1,5 +1,11 @@
+ package org.jsoup.parser;
+ 
++import org.jsoup.parser.tag.HtmlTagOptions;
++
++import org.jsoup.parser.tag.TagSet;
++
++import org.jsoup.parser.tag.Tag;
++
+ import org.jsoup.helper.Validate;
+ import org.jsoup.internal.LineMap;
+ import org.jsoup.nodes.Attributes;
+@@ -7,6 +13,8 @@ import org.jsoup.nodes.Document;
+ import org.jsoup.nodes.Element;
+ import org.jsoup.nodes.Node;
+ import org.jsoup.nodes.NodeInternals;
++import org.jsoup.parser.error.ParseError;
++import org.jsoup.parser.error.ParseErrorList;
+ import org.jsoup.select.NodeVisitor;
+ import org.jspecify.annotations.Nullable;
+ 
+diff --git a/src/main/java/org/jsoup/parser/XmlTreeBuilder.java b/src/main/java/org/jsoup/parser/XmlTreeBuilder.java
+index 74de95a2..66455079 100644
+--- a/src/main/java/org/jsoup/parser/XmlTreeBuilder.java
++++ b/src/main/java/org/jsoup/parser/XmlTreeBuilder.java
+@@ -15,6 +15,8 @@ import org.jsoup.nodes.LeafNode;
+ import org.jsoup.nodes.Node;
+ import org.jsoup.nodes.TextNode;
+ import org.jsoup.nodes.XmlDeclaration;
++import org.jsoup.parser.tag.Tag;
++import org.jsoup.parser.tag.TagSet;
+ import org.jsoup.select.Elements;
+ import org.jspecify.annotations.Nullable;
+ 
+diff --git a/src/main/java/org/jsoup/safety/Cleaner.java b/src/main/java/org/jsoup/safety/Cleaner.java
+index a1c10d31..6fe72232 100644
+--- a/src/main/java/org/jsoup/safety/Cleaner.java
++++ b/src/main/java/org/jsoup/safety/Cleaner.java
+@@ -10,8 +10,8 @@ import org.jsoup.nodes.Node;
+ import org.jsoup.nodes.NodeInternals;
+ import org.jsoup.nodes.Range;
+ import org.jsoup.nodes.TextNode;
+-import org.jsoup.parser.ParseErrorList;
+ import org.jsoup.parser.Parser;
++import org.jsoup.parser.error.ParseErrorList;
+ import org.jsoup.select.NodeVisitor;
+ 
+ import java.util.List;
+diff --git a/src/main/java/org/jsoup/select/Evaluator.java b/src/main/java/org/jsoup/select/Evaluator.java
+index f3b6a353..406fa3ae 100644
+--- a/src/main/java/org/jsoup/select/Evaluator.java
++++ b/src/main/java/org/jsoup/select/Evaluator.java
+@@ -1068,7 +1068,7 @@ public abstract class Evaluator {
+             List<TextNode> textNodes = element.textNodes();
+             for (TextNode textNode : textNodes) {
+                 org.jsoup.nodes.PseudoTextElement pel = new org.jsoup.nodes.PseudoTextElement(
+-                    org.jsoup.parser.Tag.valueOf(element.tagName(), element.tag().namespace(), ParseSettings.preserveCase), element.baseUri(), element.attributes());
++                    org.jsoup.parser.tag.Tag.valueOf(element.tagName(), element.tag().namespace(), ParseSettings.preserveCase), element.baseUri(), element.attributes());
+                 textNode.replaceWith(pel);
+                 pel.appendChild(textNode);
+             }
+diff --git a/src/test/java/org/jsoup/integration/ParseTest.java b/src/test/java/org/jsoup/integration/ParseTest.java
+index d963d1d6..4e4473bb 100644
+--- a/src/test/java/org/jsoup/integration/ParseTest.java
++++ b/src/test/java/org/jsoup/integration/ParseTest.java
+@@ -4,8 +4,8 @@ import org.jsoup.Jsoup;
+ import org.jsoup.helper.DataUtil;
+ import org.jsoup.nodes.Document;
+ import org.jsoup.nodes.Element;
+-import org.jsoup.parser.ParseErrorList;
+ import org.jsoup.parser.Parser;
++import org.jsoup.parser.error.ParseErrorList;
+ import org.jsoup.select.Elements;
+ import org.junit.jupiter.api.Test;
+ 
+diff --git a/src/test/java/org/jsoup/integration/SessionTest.java b/src/test/java/org/jsoup/integration/SessionTest.java
+index 98fb8497..49de9590 100644
+--- a/src/test/java/org/jsoup/integration/SessionTest.java
++++ b/src/test/java/org/jsoup/integration/SessionTest.java
+@@ -5,8 +5,8 @@ import org.jsoup.Jsoup;
+ import org.jsoup.integration.routes.CookieRoute;
+ import org.jsoup.nodes.Document;
+ import org.jsoup.parser.Parser;
+-import org.jsoup.parser.Tag;
+-import org.jsoup.parser.TagSet;
++import org.jsoup.parser.tag.Tag;
++import org.jsoup.parser.tag.TagSet;
+ import org.jsoup.select.Elements;
+ import org.junit.jupiter.api.BeforeAll;
+ import org.junit.jupiter.api.Test;
+diff --git a/src/test/java/org/jsoup/nodes/DocumentTest.java b/src/test/java/org/jsoup/nodes/DocumentTest.java
+index 6fc6080f..b9012dfc 100644
+--- a/src/test/java/org/jsoup/nodes/DocumentTest.java
++++ b/src/test/java/org/jsoup/nodes/DocumentTest.java
+@@ -7,7 +7,7 @@ import org.jsoup.nodes.Document.OutputSettings;
+ import org.jsoup.nodes.Document.OutputSettings.Syntax;
+ import org.jsoup.parser.ParseSettings;
+ import org.jsoup.parser.Parser;
+-import org.jsoup.parser.Tag;
++import org.jsoup.parser.tag.Tag;
+ import org.jsoup.select.Elements;
+ import org.junit.jupiter.api.Disabled;
+ import org.junit.jupiter.api.Test;
+diff --git a/src/test/java/org/jsoup/nodes/ElementTest.java b/src/test/java/org/jsoup/nodes/ElementTest.java
+index b4eab867..a4d961c5 100644
+--- a/src/test/java/org/jsoup/nodes/ElementTest.java
++++ b/src/test/java/org/jsoup/nodes/ElementTest.java
+@@ -6,8 +6,8 @@ import org.jsoup.helper.ValidationException;
+ import org.jsoup.internal.StringUtil;
+ import org.jsoup.parser.ParseSettings;
+ import org.jsoup.parser.Parser;
+-import org.jsoup.parser.Tag;
+-import org.jsoup.parser.TagSet;
++import org.jsoup.parser.tag.Tag;
++import org.jsoup.parser.tag.TagSet;
+ import org.jsoup.select.Elements;
+ import org.jsoup.select.Evaluator;
+ import org.jsoup.select.NodeFilter;
+diff --git a/src/test/java/org/jsoup/nodes/NodeTest.java b/src/test/java/org/jsoup/nodes/NodeTest.java
+index 51b4f71c..9ac39d92 100644
+--- a/src/test/java/org/jsoup/nodes/NodeTest.java
++++ b/src/test/java/org/jsoup/nodes/NodeTest.java
+@@ -2,7 +2,7 @@ package org.jsoup.nodes;
+ 
+ import org.jsoup.Jsoup;
+ import org.jsoup.TextUtil;
+-import org.jsoup.parser.Tag;
++import org.jsoup.parser.tag.Tag;
+ import org.jsoup.select.Elements;
+ import org.jsoup.select.NodeVisitor;
+ import org.junit.jupiter.api.Test;
+diff --git a/src/test/java/org/jsoup/parser/AttributeParseTest.java b/src/test/java/org/jsoup/parser/AttributeParseTest.java
+index d328b9fb..7e98ed09 100644
+--- a/src/test/java/org/jsoup/parser/AttributeParseTest.java
++++ b/src/test/java/org/jsoup/parser/AttributeParseTest.java
+@@ -1,4 +1,7 @@
+ package org.jsoup.parser;
++import org.jsoup.parser.tag.HtmlTagOptions;
++import org.jsoup.parser.tag.TagSet;
++import org.jsoup.parser.tag.Tag;
+ 
+ import org.jsoup.Jsoup;
+ import org.jsoup.nodes.Attribute;
+diff --git a/src/test/java/org/jsoup/parser/CharacterReaderTest.java b/src/test/java/org/jsoup/parser/CharacterReaderTest.java
+index 6ae2282a..b2d210d8 100644
+--- a/src/test/java/org/jsoup/parser/CharacterReaderTest.java
++++ b/src/test/java/org/jsoup/parser/CharacterReaderTest.java
+@@ -1,4 +1,7 @@
+ package org.jsoup.parser;
++import org.jsoup.parser.tag.HtmlTagOptions;
++import org.jsoup.parser.tag.TagSet;
++import org.jsoup.parser.tag.Tag;
+ 
+ import org.jsoup.integration.ParseTest;
+ import org.jsoup.internal.StringUtil;
+diff --git a/src/test/java/org/jsoup/parser/HtmlParserTest.java b/src/test/java/org/jsoup/parser/HtmlParserTest.java
+index a7336676..c936c09d 100644
+--- a/src/test/java/org/jsoup/parser/HtmlParserTest.java
++++ b/src/test/java/org/jsoup/parser/HtmlParserTest.java
+@@ -1,10 +1,15 @@
+ package org.jsoup.parser;
++import org.jsoup.parser.tag.HtmlTagOptions;
++import org.jsoup.parser.tag.TagSet;
++import org.jsoup.parser.tag.Tag;
+ 
+ import org.jsoup.Jsoup;
+ import org.jsoup.TextUtil;
+ import org.jsoup.integration.ParseTest;
+ import org.jsoup.internal.StringUtil;
+ import org.jsoup.nodes.*;
++import org.jsoup.parser.error.ParseError;
++import org.jsoup.parser.error.ParseErrorList;
+ import org.jsoup.safety.Safelist;
+ import org.jsoup.select.Elements;
+ import org.junit.jupiter.api.Nested;
+@@ -2163,7 +2168,7 @@ public class HtmlParserTest {
+         String html = "<svg><script>a < b</script></svg>";
+         Document doc = Jsoup.parse(html);
+         Element script = doc.expectFirst("script");
+-        assertEquals(Parser.NamespaceSvg, script.tag().namespace);
++        assertEquals(Parser.NamespaceSvg, script.tag().namespace());
+         assertTrue(script.tag().is(Tag.Data));
+ 
+         DataNode data = (DataNode) script.childNode(0);
+@@ -2173,11 +2178,11 @@ public class HtmlParserTest {
+     @Test void allowCustomDataInForeignElements() {
+         Tag dataTag = new Tag("data", Parser.NamespaceSvg);
+         dataTag.set(Tag.Data);
+-        TagSet tagSet = TagSet.HtmlTagSet.add(dataTag);
++        TagSet tagSet = TagSet.Html().add(dataTag);
+         String html = "<svg><data>a < b</data></svg>";
+         Document doc = Jsoup.parse(html, Parser.htmlParser().tagSet(tagSet));
+         Element data = doc.expectFirst("data");
+-        assertEquals(Parser.NamespaceSvg, data.tag().namespace);
++        assertEquals(Parser.NamespaceSvg, data.tag().namespace());
+         assertEquals("", data.text());
+         assertEquals("a < b", data.data());
+         assertEquals("<data>a < b</data>", data.outerHtml());
+diff --git a/src/test/java/org/jsoup/parser/HtmlTreeBuilderStateTest.java b/src/test/java/org/jsoup/parser/HtmlTreeBuilderStateTest.java
+index b9c573b2..d29b7a3d 100644
+--- a/src/test/java/org/jsoup/parser/HtmlTreeBuilderStateTest.java
++++ b/src/test/java/org/jsoup/parser/HtmlTreeBuilderStateTest.java
+@@ -1,5 +1,11 @@
+ package org.jsoup.parser;
+ 
++import org.jsoup.parser.tag.HtmlTagOptions;
++
++import org.jsoup.parser.tag.TagSet;
++
++import org.jsoup.parser.tag.Tag;
++
+ import org.jsoup.Jsoup;
+ import org.jsoup.internal.StringUtil;
+ import org.jsoup.parser.HtmlTreeBuilderState.Constants;
+diff --git a/src/test/java/org/jsoup/parser/HtmlTreeBuilderTest.java b/src/test/java/org/jsoup/parser/HtmlTreeBuilderTest.java
+index c882a7d0..3f60996b 100644
+--- a/src/test/java/org/jsoup/parser/HtmlTreeBuilderTest.java
++++ b/src/test/java/org/jsoup/parser/HtmlTreeBuilderTest.java
+@@ -1,4 +1,7 @@
+ package org.jsoup.parser;
++import org.jsoup.parser.tag.HtmlTagOptions;
++import org.jsoup.parser.tag.TagSet;
++import org.jsoup.parser.tag.Tag;
+ 
+ 
+ import org.jsoup.Jsoup;
+diff --git a/src/test/java/org/jsoup/parser/ParserIT.java b/src/test/java/org/jsoup/parser/ParserIT.java
+index 5961e01a..e1a905d3 100644
+--- a/src/test/java/org/jsoup/parser/ParserIT.java
++++ b/src/test/java/org/jsoup/parser/ParserIT.java
+@@ -1,4 +1,7 @@
+ package org.jsoup.parser;
++import org.jsoup.parser.tag.HtmlTagOptions;
++import org.jsoup.parser.tag.TagSet;
++import org.jsoup.parser.tag.Tag;
+ 
+ import org.jsoup.nodes.Document;
+ import org.jsoup.nodes.Element;
+diff --git a/src/test/java/org/jsoup/parser/ParserSettingsTest.java b/src/test/java/org/jsoup/parser/ParserSettingsTest.java
+index c21bf834..bd7bdb60 100644
+--- a/src/test/java/org/jsoup/parser/ParserSettingsTest.java
++++ b/src/test/java/org/jsoup/parser/ParserSettingsTest.java
+@@ -1,4 +1,7 @@
+ package org.jsoup.parser;
++import org.jsoup.parser.tag.HtmlTagOptions;
++import org.jsoup.parser.tag.TagSet;
++import org.jsoup.parser.tag.Tag;
+ 
+ import org.jsoup.MultiLocaleExtension.MultiLocaleTest;
+ import org.jsoup.nodes.Attributes;
+diff --git a/src/test/java/org/jsoup/parser/ParserTest.java b/src/test/java/org/jsoup/parser/ParserTest.java
+index bfebf6be..9ac90dcf 100644
+--- a/src/test/java/org/jsoup/parser/ParserTest.java
++++ b/src/test/java/org/jsoup/parser/ParserTest.java
+@@ -1,7 +1,11 @@
+ package org.jsoup.parser;
++import org.jsoup.parser.tag.HtmlTagOptions;
++import org.jsoup.parser.tag.TagSet;
++import org.jsoup.parser.tag.Tag;
+ 
+ import org.jsoup.Jsoup;
+ import org.jsoup.nodes.Document;
++import org.jsoup.parser.error.ParseErrorList;
+ import org.junit.jupiter.api.Test;
+ 
+ import java.io.ByteArrayInputStream;
+diff --git a/src/test/java/org/jsoup/parser/PositionTest.java b/src/test/java/org/jsoup/parser/PositionTest.java
+index f7b0a0ef..973abd3b 100644
+--- a/src/test/java/org/jsoup/parser/PositionTest.java
++++ b/src/test/java/org/jsoup/parser/PositionTest.java
+@@ -1,4 +1,7 @@
+ package org.jsoup.parser;
++import org.jsoup.parser.tag.HtmlTagOptions;
++import org.jsoup.parser.tag.TagSet;
++import org.jsoup.parser.tag.Tag;
+ 
+ import org.jsoup.Jsoup;
+ import org.jsoup.TextUtil;
+diff --git a/src/test/java/org/jsoup/parser/StreamParserTest.java b/src/test/java/org/jsoup/parser/StreamParserTest.java
+index 6865c9db..c79d2f7f 100644
+--- a/src/test/java/org/jsoup/parser/StreamParserTest.java
++++ b/src/test/java/org/jsoup/parser/StreamParserTest.java
+@@ -1,4 +1,7 @@
+ package org.jsoup.parser;
++import org.jsoup.parser.tag.HtmlTagOptions;
++import org.jsoup.parser.tag.TagSet;
++import org.jsoup.parser.tag.Tag;
+ 
+ import org.jsoup.Connection;
+ import org.jsoup.Jsoup;
+diff --git a/src/test/java/org/jsoup/parser/TagSetTest.java b/src/test/java/org/jsoup/parser/TagSetTest.java
+index 2edcdf75..05637549 100644
+--- a/src/test/java/org/jsoup/parser/TagSetTest.java
++++ b/src/test/java/org/jsoup/parser/TagSetTest.java
+@@ -1,4 +1,7 @@
+ package org.jsoup.parser;
++import org.jsoup.parser.tag.HtmlTagOptions;
++import org.jsoup.parser.tag.TagSet;
++import org.jsoup.parser.tag.Tag;
+ import org.jsoup.Jsoup;
+ import org.jsoup.nodes.Document;
+ import org.jsoup.nodes.Element;
+diff --git a/src/test/java/org/jsoup/parser/TagTest.java b/src/test/java/org/jsoup/parser/TagTest.java
+index 266e80a5..9b7b6490 100644
+--- a/src/test/java/org/jsoup/parser/TagTest.java
++++ b/src/test/java/org/jsoup/parser/TagTest.java
+@@ -1,4 +1,7 @@
+ package org.jsoup.parser;
++import org.jsoup.parser.tag.HtmlTagOptions;
++import org.jsoup.parser.tag.TagSet;
++import org.jsoup.parser.tag.Tag;
+ 
+ import org.jsoup.Jsoup;
+ import org.jsoup.MultiLocaleExtension.MultiLocaleTest;
+@@ -185,12 +188,11 @@ public class TagTest {
+         // https://github.com/jhy/jsoup/issues/2323
+         Tag img = Tag.valueOf("img");
+         Tag input = Tag.valueOf("input");
+-        int imgOpts = img.options;
+-        int inputOpts = input.options;
+         assertFalse(img.isFormSubmittable());
+         assertTrue(input.isFormSubmittable());
+-        assertEquals(imgOpts, img.options);
+-        assertEquals(inputOpts, input.options);
++        // check no incidental mutation from query methods
++        assertEquals(Tag.valueOf("img"), img);
++        assertEquals(Tag.valueOf("input"), input);
+     }
+ 
+     @Test void stableHashcode() {
+@@ -257,24 +259,24 @@ public class TagTest {
+     @Test void equals() {
+         TagSet tags = TagSet.Html();
+         Tag p1 = tags.get("p", NamespaceHtml);
+-        Tag p2 = p1.clone();
++        Tag p2 = new TagSet(tags).get("p", NamespaceHtml);
++        assertNotNull(p2);
+         assertEquals(p1, p2);
+         assertNotEquals(p1, tags);
+ 
+-        p2.namespace = "Other";
+-        assertNotEquals(p1, p2);
+-        p2.namespace = p1.namespace;
++        Tag otherNamespace = new TagSet(tags).get("p", NamespaceHtml);
++        assertNotNull(otherNamespace);
++        otherNamespace.namespace("Other");
++        assertNotEquals(p1, otherNamespace);
+ 
+-        p2.tagName = "P";
+-        assertNotEquals(p1, p2);
+-        p2.tagName = p1.tagName;
++        Tag renamed = new TagSet(tags).get("p", NamespaceHtml);
++        assertNotNull(renamed);
++        renamed.name("P");
++        assertNotEquals(p1, renamed);
+ 
+-        p2.normalName = "pp";
+-        assertNotEquals(p1, p2);
+-        p2.normalName = p1.normalName;
+-
+-        p2.options = 0;
+-        assertNotEquals(p1, p2);
+-        p2.options = p1.options;
++        Tag optionChanged = new TagSet(tags).get("p", NamespaceHtml);
++        assertNotNull(optionChanged);
++        optionChanged.clear(Tag.Block);
++        assertNotEquals(p1, optionChanged);
+     }
+ }
+diff --git a/src/test/java/org/jsoup/parser/TokenQueueTest.java b/src/test/java/org/jsoup/parser/TokenQueueTest.java
+index 8fb2de6d..1596c9a1 100644
+--- a/src/test/java/org/jsoup/parser/TokenQueueTest.java
++++ b/src/test/java/org/jsoup/parser/TokenQueueTest.java
+@@ -1,4 +1,7 @@
+ package org.jsoup.parser;
++import org.jsoup.parser.tag.HtmlTagOptions;
++import org.jsoup.parser.tag.TagSet;
++import org.jsoup.parser.tag.Tag;
+ 
+ import org.jsoup.Jsoup;
+ import org.jsoup.nodes.Document;
+diff --git a/src/test/java/org/jsoup/parser/TokeniserStateTest.java b/src/test/java/org/jsoup/parser/TokeniserStateTest.java
+index fca73f95..e3824d54 100644
+--- a/src/test/java/org/jsoup/parser/TokeniserStateTest.java
++++ b/src/test/java/org/jsoup/parser/TokeniserStateTest.java
+@@ -1,4 +1,7 @@
+ package org.jsoup.parser;
++import org.jsoup.parser.tag.HtmlTagOptions;
++import org.jsoup.parser.tag.TagSet;
++import org.jsoup.parser.tag.Tag;
+ 
+ import org.jsoup.Jsoup;
+ import org.jsoup.TextUtil;
+@@ -6,6 +9,7 @@ import org.jsoup.nodes.Comment;
+ import org.jsoup.nodes.Document;
+ import org.jsoup.nodes.Element;
+ import org.jsoup.nodes.TextNode;
++import org.jsoup.parser.error.ParseErrorList;
+ import org.jsoup.select.Elements;
+ import org.junit.jupiter.api.Test;
+ 
+diff --git a/src/test/java/org/jsoup/parser/TokeniserTest.java b/src/test/java/org/jsoup/parser/TokeniserTest.java
+index d6846b25..04efb844 100644
+--- a/src/test/java/org/jsoup/parser/TokeniserTest.java
++++ b/src/test/java/org/jsoup/parser/TokeniserTest.java
+@@ -1,4 +1,7 @@
+ package org.jsoup.parser;
++import org.jsoup.parser.tag.HtmlTagOptions;
++import org.jsoup.parser.tag.TagSet;
++import org.jsoup.parser.tag.Tag;
+ 
+ import org.jsoup.Jsoup;
+ import org.jsoup.nodes.*;
+diff --git a/src/test/java/org/jsoup/parser/XmlTreeBuilderTest.java b/src/test/java/org/jsoup/parser/XmlTreeBuilderTest.java
+index 4d82c613..c5fc244a 100644
+--- a/src/test/java/org/jsoup/parser/XmlTreeBuilderTest.java
++++ b/src/test/java/org/jsoup/parser/XmlTreeBuilderTest.java
+@@ -1,8 +1,12 @@
+ package org.jsoup.parser;
++import org.jsoup.parser.tag.HtmlTagOptions;
++import org.jsoup.parser.tag.TagSet;
++import org.jsoup.parser.tag.Tag;
+ 
+ import org.jsoup.Jsoup;
+ import org.jsoup.TextUtil;
+ import org.jsoup.nodes.*;
++import org.jsoup.parser.error.ParseErrorList;
+ import org.jsoup.select.Elements;
+ import org.junit.jupiter.api.Test;
+ 
+diff --git a/src/test/java/org/jsoup/safety/CleanerTest.java b/src/test/java/org/jsoup/safety/CleanerTest.java
+index 137fed76..835ab45e 100644
+--- a/src/test/java/org/jsoup/safety/CleanerTest.java
++++ b/src/test/java/org/jsoup/safety/CleanerTest.java
+@@ -9,8 +9,8 @@ import org.jsoup.nodes.Entities;
+ import org.jsoup.nodes.Range;
+ import org.jsoup.parser.ParseSettings;
+ import org.jsoup.parser.Parser;
+-import org.jsoup.parser.Tag;
+-import org.jsoup.parser.TagSet;
++import org.jsoup.parser.tag.Tag;
++import org.jsoup.parser.tag.TagSet;
+ import org.junit.jupiter.api.Test;
+ import org.junit.jupiter.params.ParameterizedTest;
+ import org.junit.jupiter.params.provider.ValueSource;
+diff --git a/src/test/java/org/jsoup/safety/SafelistTest.java b/src/test/java/org/jsoup/safety/SafelistTest.java
+index 90b4fd61..545b85bc 100644
+--- a/src/test/java/org/jsoup/safety/SafelistTest.java
++++ b/src/test/java/org/jsoup/safety/SafelistTest.java
+@@ -4,7 +4,7 @@ import org.jsoup.helper.ValidationException;
+ import org.jsoup.nodes.Attribute;
+ import org.jsoup.nodes.Attributes;
+ import org.jsoup.nodes.Element;
+-import org.jsoup.parser.Tag;
++import org.jsoup.parser.tag.Tag;
+ import org.junit.jupiter.api.Test;
+ 
+ import static org.junit.jupiter.api.Assertions.*;
+diff --git a/src/test/java/org/jsoup/select/CssTest.java b/src/test/java/org/jsoup/select/CssTest.java
+index 956d7f12..18074a63 100644
+--- a/src/test/java/org/jsoup/select/CssTest.java
++++ b/src/test/java/org/jsoup/select/CssTest.java
+@@ -2,7 +2,7 @@ package org.jsoup.select;
+ 
+ import org.jsoup.Jsoup;
+ import org.jsoup.nodes.Document;
+-import org.jsoup.parser.Tag;
++import org.jsoup.parser.tag.Tag;
+ import org.junit.jupiter.api.BeforeAll;
+ import org.junit.jupiter.api.BeforeEach;
+ import org.junit.jupiter.api.Test;

@@ -1,0 +1,3015 @@
+{
+"commits": [
+{
+	"repository": "https://github.com/jhy/jsoup",
+	"sha1": "b4405a43ecbc32d2f4ad1ca7e0b425a3c1e61ffc",
+	"url": "https://github.com/jhy/jsoup/commit/b4405a43ecbc32d2f4ad1ca7e0b425a3c1e61ffc",
+	"refactorings": [{
+	"type": "Move Class",
+	"description": "Move Class org.jsoup.nodes.CDataNode moved to org.jsoup.nodes.text.CDataNode",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/CDataNode.java",
+		"startLine": 5,
+		"endLine": 39,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original type declaration",
+		"codeElement": "org.jsoup.nodes.CDataNode"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/text/CDataNode.java",
+		"startLine": 6,
+		"endLine": 40,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "moved type declaration",
+		"codeElement": "org.jsoup.nodes.text.CDataNode"
+}]
+},
+{
+	"type": "Move Class",
+	"description": "Move Class org.jsoup.nodes.DataNode moved to org.jsoup.nodes.text.DataNode",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/DataNode.java",
+		"startLine": 5,
+		"endLine": 63,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original type declaration",
+		"codeElement": "org.jsoup.nodes.DataNode"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/text/DataNode.java",
+		"startLine": 7,
+		"endLine": 65,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "moved type declaration",
+		"codeElement": "org.jsoup.nodes.text.DataNode"
+}]
+},
+{
+	"type": "Move Class",
+	"description": "Move Class org.jsoup.nodes.ElementClassNames moved to org.jsoup.nodes.element.ElementClassNames",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementClassNames.java",
+		"startLine": 12,
+		"endLine": 102,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original type declaration",
+		"codeElement": "org.jsoup.nodes.ElementClassNames"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/element/ElementClassNames.java",
+		"startLine": 14,
+		"endLine": 104,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "moved type declaration",
+		"codeElement": "org.jsoup.nodes.element.ElementClassNames"
+}]
+},
+{
+	"type": "Move Class",
+	"description": "Move Class org.jsoup.nodes.Entities moved to org.jsoup.nodes.entities.Entities",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Entities.java",
+		"startLine": 21,
+		"endLine": 425,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original type declaration",
+		"codeElement": "org.jsoup.nodes.Entities"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/entities/Entities.java",
+		"startLine": 21,
+		"endLine": 425,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "moved type declaration",
+		"codeElement": "org.jsoup.nodes.entities.Entities"
+}]
+},
+{
+	"type": "Move Class",
+	"description": "Move Class org.jsoup.nodes.EntitiesData moved to org.jsoup.nodes.entities.EntitiesData",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/EntitiesData.java",
+		"startLine": 3,
+		"endLine": 18,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original type declaration",
+		"codeElement": "org.jsoup.nodes.EntitiesData"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/entities/EntitiesData.java",
+		"startLine": 3,
+		"endLine": 18,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "moved type declaration",
+		"codeElement": "org.jsoup.nodes.entities.EntitiesData"
+}]
+},
+{
+	"type": "Move Class",
+	"description": "Move Class org.jsoup.nodes.NodeIterator moved to org.jsoup.nodes.traverse.NodeIterator",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/NodeIterator.java",
+		"startLine": 9,
+		"endLine": 122,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original type declaration",
+		"codeElement": "org.jsoup.nodes.NodeIterator"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/traverse/NodeIterator.java",
+		"startLine": 10,
+		"endLine": 123,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "moved type declaration",
+		"codeElement": "org.jsoup.nodes.traverse.NodeIterator"
+}]
+},
+{
+	"type": "Move Class",
+	"description": "Move Class org.jsoup.nodes.NodeUtils moved to org.jsoup.nodes.traverse.NodeUtils",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/NodeUtils.java",
+		"startLine": 16,
+		"endLine": 69,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original type declaration",
+		"codeElement": "org.jsoup.nodes.NodeUtils"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/traverse/NodeUtils.java",
+		"startLine": 19,
+		"endLine": 72,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "moved type declaration",
+		"codeElement": "org.jsoup.nodes.traverse.NodeUtils"
+}]
+},
+{
+	"type": "Move Class",
+	"description": "Move Class org.jsoup.nodes.TextNode moved to org.jsoup.nodes.text.TextNode",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/TextNode.java",
+		"startLine": 8,
+		"endLine": 120,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original type declaration",
+		"codeElement": "org.jsoup.nodes.TextNode"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/text/TextNode.java",
+		"startLine": 12,
+		"endLine": 125,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "moved type declaration",
+		"codeElement": "org.jsoup.nodes.text.TextNode"
+}]
+},
+{
+	"type": "Move Class",
+	"description": "Move Class org.jsoup.nodes.Attribute moved to org.jsoup.nodes.attributes.Attribute",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attribute.java",
+		"startLine": 17,
+		"endLine": 343,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original type declaration",
+		"codeElement": "org.jsoup.nodes.Attribute"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/attributes/Attribute.java",
+		"startLine": 22,
+		"endLine": 348,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "moved type declaration",
+		"codeElement": "org.jsoup.nodes.attributes.Attribute"
+}]
+},
+{
+	"type": "Move Class",
+	"description": "Move Class org.jsoup.nodes.Attributes moved to org.jsoup.nodes.attributes.Attributes",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 27,
+		"endLine": 748,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original type declaration",
+		"codeElement": "org.jsoup.nodes.Attributes"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/attributes/Attributes.java",
+		"startLine": 30,
+		"endLine": 751,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "moved type declaration",
+		"codeElement": "org.jsoup.nodes.attributes.Attributes"
+}]
+},
+{
+	"type": "Move Class",
+	"description": "Move Class org.jsoup.nodes.ElementChildNodes moved to org.jsoup.nodes.element.ElementChildNodes",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementChildNodes.java",
+		"startLine": 5,
+		"endLine": 43,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original type declaration",
+		"codeElement": "org.jsoup.nodes.ElementChildNodes"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/element/ElementChildNodes.java",
+		"startLine": 6,
+		"endLine": 52,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "moved type declaration",
+		"codeElement": "org.jsoup.nodes.element.ElementChildNodes"
+}]
+},
+{
+	"type": "Change Variable Type",
+	"description": "Change Variable Type sourceText : org.jsoup.nodes.TextNode to sourceText : org.jsoup.nodes.text.TextNode in method public head(source org.jsoup.nodes.Node, depth int) : void from class org.jsoup.helper.W3CDom.W3CBuilder",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/helper/W3CDom.java",
+		"startLine": 378,
+		"endLine": 378,
+		"startColumn": 42,
+		"endColumn": 88,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "sourceText : TextNode"
+}, {
+		"filePath": "src/main/java/org/jsoup/helper/W3CDom.java",
+		"startLine": 379,
+		"endLine": 379,
+		"startColumn": 17,
+		"endColumn": 75,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/helper/W3CDom.java",
+		"startLine": 380,
+		"endLine": 380,
+		"startColumn": 17,
+		"endColumn": 42,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/helper/W3CDom.java",
+		"startLine": 378,
+		"endLine": 378,
+		"startColumn": 47,
+		"endColumn": 98,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "changed-type variable declaration",
+		"codeElement": "sourceText : TextNode"
+}, {
+		"filePath": "src/main/java/org/jsoup/helper/W3CDom.java",
+		"startLine": 379,
+		"endLine": 379,
+		"startColumn": 17,
+		"endColumn": 75,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/helper/W3CDom.java",
+		"startLine": 380,
+		"endLine": 380,
+		"startColumn": 17,
+		"endColumn": 42,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}]
+},
+{
+	"type": "Change Variable Type",
+	"description": "Change Variable Type sourceData : org.jsoup.nodes.DataNode to sourceData : org.jsoup.nodes.text.DataNode in method public head(source org.jsoup.nodes.Node, depth int) : void from class org.jsoup.helper.W3CDom.W3CBuilder",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/helper/W3CDom.java",
+		"startLine": 386,
+		"endLine": 386,
+		"startColumn": 42,
+		"endColumn": 88,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "sourceData : DataNode"
+}, {
+		"filePath": "src/main/java/org/jsoup/helper/W3CDom.java",
+		"startLine": 387,
+		"endLine": 387,
+		"startColumn": 17,
+		"endColumn": 75,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/helper/W3CDom.java",
+		"startLine": 388,
+		"endLine": 388,
+		"startColumn": 17,
+		"endColumn": 42,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/helper/W3CDom.java",
+		"startLine": 386,
+		"endLine": 386,
+		"startColumn": 47,
+		"endColumn": 98,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "changed-type variable declaration",
+		"codeElement": "sourceData : DataNode"
+}, {
+		"filePath": "src/main/java/org/jsoup/helper/W3CDom.java",
+		"startLine": 387,
+		"endLine": 387,
+		"startColumn": 17,
+		"endColumn": 75,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/helper/W3CDom.java",
+		"startLine": 388,
+		"endLine": 388,
+		"startColumn": 17,
+		"endColumn": 42,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier package to protected in method protected outerHtmlHead(accum QuietAppendable, out Document.OutputSettings) : void from class org.jsoup.nodes.Comment",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Comment.java",
+		"startLine": 39,
+		"endLine": 45,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package outerHtmlHead(accum QuietAppendable, out Document.OutputSettings) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Comment.java",
+		"startLine": 39,
+		"endLine": 45,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "protected outerHtmlHead(accum QuietAppendable, out Document.OutputSettings) : void"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier package to protected in method protected outerHtmlHead(accum QuietAppendable, out Document.OutputSettings) : void from class org.jsoup.nodes.DocumentType",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/DocumentType.java",
+		"startLine": 89,
+		"endLine": 108,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package outerHtmlHead(accum QuietAppendable, out Document.OutputSettings) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/DocumentType.java",
+		"startLine": 91,
+		"endLine": 110,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "protected outerHtmlHead(accum QuietAppendable, out Document.OutputSettings) : void"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier package to protected in method protected outerHtmlHead(accum QuietAppendable, out Document.OutputSettings) : void from class org.jsoup.nodes.Element",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 128,
+		"endLine": 146,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package outerHtmlHead(accum QuietAppendable, out Document.OutputSettings) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 132,
+		"endLine": 150,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "protected outerHtmlHead(accum QuietAppendable, out Document.OutputSettings) : void"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier package to protected in method protected outerHtmlTail(accum QuietAppendable, out Document.OutputSettings) : void from class org.jsoup.nodes.Element",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 148,
+		"endLine": 153,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package outerHtmlTail(accum QuietAppendable, out Document.OutputSettings) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Element.java",
+		"startLine": 152,
+		"endLine": 157,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "protected outerHtmlTail(accum QuietAppendable, out Document.OutputSettings) : void"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier package to protected in method protected coreValue() : String from class org.jsoup.nodes.LeafNode",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/LeafNode.java",
+		"startLine": 46,
+		"endLine": 50,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package coreValue() : String"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/LeafNode.java",
+		"startLine": 48,
+		"endLine": 52,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "protected coreValue() : String"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier package to protected in method protected coreValue(value String) : void from class org.jsoup.nodes.LeafNode",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/LeafNode.java",
+		"startLine": 62,
+		"endLine": 69,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package coreValue(value String) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/LeafNode.java",
+		"startLine": 64,
+		"endLine": 71,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "protected coreValue(value String) : void"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier package to protected in method protected outerHtmlTail(accum QuietAppendable, out Document.OutputSettings) : void from class org.jsoup.nodes.LeafNode",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/LeafNode.java",
+		"startLine": 132,
+		"endLine": 133,
+		"startColumn": 5,
+		"endColumn": 78,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package outerHtmlTail(accum QuietAppendable, out Document.OutputSettings) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/LeafNode.java",
+		"startLine": 134,
+		"endLine": 135,
+		"startColumn": 5,
+		"endColumn": 88,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "protected outerHtmlTail(accum QuietAppendable, out Document.OutputSettings) : void"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier protected to public in method public setSiblingIndex(siblingIndex int) : void from class org.jsoup.nodes.Node",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Node.java",
+		"startLine": 692,
+		"endLine": 694,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "protected setSiblingIndex(siblingIndex int) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Node.java",
+		"startLine": 697,
+		"endLine": 699,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "public setSiblingIndex(siblingIndex int) : void"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier package to protected in method protected abstract outerHtmlHead(accum QuietAppendable, out Document.OutputSettings) : void from class org.jsoup.nodes.Node",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Node.java",
+		"startLine": 858,
+		"endLine": 864,
+		"startColumn": 5,
+		"endColumn": 97,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package abstract outerHtmlHead(accum QuietAppendable, out Document.OutputSettings) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Node.java",
+		"startLine": 863,
+		"endLine": 869,
+		"startColumn": 5,
+		"endColumn": 107,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "protected abstract outerHtmlHead(accum QuietAppendable, out Document.OutputSettings) : void"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier package to protected in method protected abstract outerHtmlTail(accum QuietAppendable, out Document.OutputSettings) : void from class org.jsoup.nodes.Node",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Node.java",
+		"startLine": 866,
+		"endLine": 866,
+		"startColumn": 5,
+		"endColumn": 97,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package abstract outerHtmlTail(accum QuietAppendable, out Document.OutputSettings) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Node.java",
+		"startLine": 871,
+		"endLine": 871,
+		"startColumn": 5,
+		"endColumn": 107,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "protected abstract outerHtmlTail(accum QuietAppendable, out Document.OutputSettings) : void"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier package to protected in method protected outerHtmlHead(accum QuietAppendable, out Document.OutputSettings) : void from class org.jsoup.nodes.PseudoTextElement",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/PseudoTextElement.java",
+		"startLine": 19,
+		"endLine": 21,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package outerHtmlHead(accum QuietAppendable, out Document.OutputSettings) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/PseudoTextElement.java",
+		"startLine": 21,
+		"endLine": 23,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "protected outerHtmlHead(accum QuietAppendable, out Document.OutputSettings) : void"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier package to protected in method protected outerHtmlTail(accum QuietAppendable, out Document.OutputSettings) : void from class org.jsoup.nodes.PseudoTextElement",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/PseudoTextElement.java",
+		"startLine": 23,
+		"endLine": 25,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package outerHtmlTail(accum QuietAppendable, out Document.OutputSettings) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/PseudoTextElement.java",
+		"startLine": 25,
+		"endLine": 27,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "protected outerHtmlTail(accum QuietAppendable, out Document.OutputSettings) : void"
+}]
+},
+{
+	"type": "Change Attribute Access Modifier",
+	"description": "Change Attribute Access Modifier package to public in attribute public UntrackedAttr : AttributeRange from class org.jsoup.nodes.Range.AttributeRange",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Range.java",
+		"startLine": 274,
+		"endLine": 274,
+		"startColumn": 37,
+		"endColumn": 73,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "package UntrackedAttr : AttributeRange"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Range.java",
+		"startLine": 274,
+		"endLine": 274,
+		"startColumn": 44,
+		"endColumn": 80,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "attribute declaration with changed access modifier",
+		"codeElement": "public UntrackedAttr : AttributeRange"
+}]
+},
+{
+	"type": "Change Class Access Modifier",
+	"description": "Change Class Access Modifier package to public in class org.jsoup.nodes.Range.Spans",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Range.java",
+		"startLine": 381,
+		"endLine": 571,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original class declaration",
+		"codeElement": "org.jsoup.nodes.Range.Spans"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Range.java",
+		"startLine": 381,
+		"endLine": 573,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "class declaration with changed access modifier",
+		"codeElement": "org.jsoup.nodes.Range.Spans"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier private to public in method public sourceRange() : Range from class org.jsoup.nodes.Range.Spans",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Range.java",
+		"startLine": 395,
+		"endLine": 400,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private sourceRange() : Range"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Range.java",
+		"startLine": 397,
+		"endLine": 402,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "public sourceRange() : Range"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier private to public in method public endSourceRange() : Range from class org.jsoup.nodes.Range.Spans",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Range.java",
+		"startLine": 402,
+		"endLine": 407,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private endSourceRange() : Range"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Range.java",
+		"startLine": 404,
+		"endLine": 409,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "public endSourceRange() : Range"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier package to public in method public sourceRange(lineMap LineMap, startPos int, endPos int) : void from class org.jsoup.nodes.Range.Spans",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Range.java",
+		"startLine": 409,
+		"endLine": 416,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package sourceRange(lineMap LineMap, startPos int, endPos int) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Range.java",
+		"startLine": 411,
+		"endLine": 418,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "public sourceRange(lineMap LineMap, startPos int, endPos int) : void"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier package to public in method public endSourceRange(lineMap LineMap, startPos int, endPos int) : void from class org.jsoup.nodes.Range.Spans",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Range.java",
+		"startLine": 418,
+		"endLine": 425,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package endSourceRange(lineMap LineMap, startPos int, endPos int) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Range.java",
+		"startLine": 420,
+		"endLine": 427,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "public endSourceRange(lineMap LineMap, startPos int, endPos int) : void"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier package to public in method public attributeRange(index int) : Range.AttributeRange from class org.jsoup.nodes.Range.Spans",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Range.java",
+		"startLine": 427,
+		"endLine": 449,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package attributeRange(index int) : Range.AttributeRange"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Range.java",
+		"startLine": 429,
+		"endLine": 451,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "public attributeRange(index int) : Range.AttributeRange"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier package to public in method public attributeRange(index int, range Range.AttributeRange) : void from class org.jsoup.nodes.Range.Spans",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Range.java",
+		"startLine": 451,
+		"endLine": 463,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package attributeRange(index int, range Range.AttributeRange) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Range.java",
+		"startLine": 453,
+		"endLine": 465,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "public attributeRange(index int, range Range.AttributeRange) : void"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier package to public in method public attributeRange(index int, lineMap LineMap, nameStart int, nameEnd int, valueStart int, valueEnd int) : void from class org.jsoup.nodes.Range.Spans",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Range.java",
+		"startLine": 465,
+		"endLine": 479,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package attributeRange(index int, lineMap LineMap, nameStart int, nameEnd int, valueStart int, valueEnd int) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Range.java",
+		"startLine": 467,
+		"endLine": 481,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "public attributeRange(index int, lineMap LineMap, nameStart int, nameEnd int, valueStart int, valueEnd int) : void"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier package to public in method public removeAttributeRange(index int) : void from class org.jsoup.nodes.Range.Spans",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Range.java",
+		"startLine": 492,
+		"endLine": 506,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package removeAttributeRange(index int) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Range.java",
+		"startLine": 494,
+		"endLine": 508,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "public removeAttributeRange(index int) : void"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier package to public in method public copy() : Spans from class org.jsoup.nodes.Range.Spans",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Range.java",
+		"startLine": 508,
+		"endLine": 520,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package copy() : Spans"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Range.java",
+		"startLine": 510,
+		"endLine": 522,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "public copy() : Spans"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier package to protected in method protected outerHtmlHead(accum QuietAppendable, out Document.OutputSettings) : void from class org.jsoup.nodes.XmlDeclaration",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/XmlDeclaration.java",
+		"startLine": 67,
+		"endLine": 77,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package outerHtmlHead(accum QuietAppendable, out Document.OutputSettings) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/XmlDeclaration.java",
+		"startLine": 70,
+		"endLine": 80,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "protected outerHtmlHead(accum QuietAppendable, out Document.OutputSettings) : void"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier package to protected in method protected outerHtmlTail(accum QuietAppendable, out Document.OutputSettings) : void from class org.jsoup.nodes.XmlDeclaration",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/XmlDeclaration.java",
+		"startLine": 79,
+		"endLine": 81,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package outerHtmlTail(accum QuietAppendable, out Document.OutputSettings) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/XmlDeclaration.java",
+		"startLine": 82,
+		"endLine": 84,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "protected outerHtmlTail(accum QuietAppendable, out Document.OutputSettings) : void"
+}]
+},
+{
+	"type": "Change Variable Type",
+	"description": "Change Variable Type attribute : org.jsoup.nodes.Attribute to attribute : org.jsoup.nodes.attributes.Attribute in method public matches(root Element, element Element) : boolean from class org.jsoup.select.Evaluator.AttributeStarting",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/select/Evaluator.java",
+		"startLine": 246,
+		"endLine": 246,
+		"startColumn": 18,
+		"endColumn": 53,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "original variable declaration",
+		"codeElement": "attribute : Attribute"
+}, {
+		"filePath": "src/main/java/org/jsoup/select/Evaluator.java",
+		"startLine": 247,
+		"endLine": 248,
+		"startColumn": 17,
+		"endColumn": 33,
+		"codeElementType": "IF_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/select/Evaluator.java",
+		"startLine": 246,
+		"endLine": 246,
+		"startColumn": 18,
+		"endColumn": 64,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "changed-type variable declaration",
+		"codeElement": "attribute : Attribute"
+}, {
+		"filePath": "src/main/java/org/jsoup/select/Evaluator.java",
+		"startLine": 247,
+		"endLine": 248,
+		"startColumn": 17,
+		"endColumn": 33,
+		"codeElementType": "IF_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}]
+},
+{
+	"type": "Change Variable Type",
+	"description": "Change Variable Type jText : org.jsoup.nodes.TextNode to jText : org.jsoup.nodes.text.TextNode in method public convertsElementsAndMaintainsSource() : void from class org.jsoup.helper.W3CDomTest",
+	"leftSideLocations": [{
+		"filePath": "src/test/java/org/jsoup/helper/W3CDomTest.java",
+		"startLine": 449,
+		"endLine": 449,
+		"startColumn": 34,
+		"endColumn": 83,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "jText : TextNode"
+}, {
+		"filePath": "src/test/java/org/jsoup/helper/W3CDomTest.java",
+		"startLine": 450,
+		"endLine": 450,
+		"startColumn": 9,
+		"endColumn": 74,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/test/java/org/jsoup/helper/W3CDomTest.java",
+		"startLine": 449,
+		"endLine": 449,
+		"startColumn": 39,
+		"endColumn": 88,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "changed-type variable declaration",
+		"codeElement": "jText : TextNode"
+}, {
+		"filePath": "src/test/java/org/jsoup/helper/W3CDomTest.java",
+		"startLine": 450,
+		"endLine": 450,
+		"startColumn": 9,
+		"endColumn": 74,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}]
+},
+{
+	"type": "Change Variable Type",
+	"description": "Change Variable Type node : DataNode to node : TestDataNode in method public xmlOutputScriptWithCData() : void from class org.jsoup.nodes.DataNodeTest",
+	"leftSideLocations": [{
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 16,
+		"endLine": 16,
+		"startColumn": 18,
+		"endColumn": 74,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "node : DataNode"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 24,
+		"endLine": 24,
+		"startColumn": 22,
+		"endColumn": 82,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "changed-type variable declaration",
+		"codeElement": "node : TestDataNode"
+}]
+},
+{
+	"type": "Change Variable Type",
+	"description": "Change Variable Type node : DataNode to node : TestDataNode in method public xmlOutputScriptWithoutCData() : void from class org.jsoup.nodes.DataNodeTest",
+	"leftSideLocations": [{
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 25,
+		"endLine": 25,
+		"startColumn": 18,
+		"endColumn": 58,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "node : DataNode"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 31,
+		"endLine": 31,
+		"startColumn": 22,
+		"endColumn": 66,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "changed-type variable declaration",
+		"codeElement": "node : TestDataNode"
+}]
+},
+{
+	"type": "Change Variable Type",
+	"description": "Change Variable Type node : DataNode to node : TestDataNode in method public xmlOutputStyleWithCData() : void from class org.jsoup.nodes.DataNodeTest",
+	"leftSideLocations": [{
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 34,
+		"endLine": 34,
+		"startColumn": 18,
+		"endColumn": 75,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "node : DataNode"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 38,
+		"endLine": 38,
+		"startColumn": 22,
+		"endColumn": 83,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "changed-type variable declaration",
+		"codeElement": "node : TestDataNode"
+}]
+},
+{
+	"type": "Change Variable Type",
+	"description": "Change Variable Type node : DataNode to node : TestDataNode in method public xmlOutputStyleWithoutCData() : void from class org.jsoup.nodes.DataNodeTest",
+	"leftSideLocations": [{
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 43,
+		"endLine": 43,
+		"startColumn": 18,
+		"endColumn": 57,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "node : DataNode"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 45,
+		"endLine": 45,
+		"startColumn": 22,
+		"endColumn": 65,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "changed-type variable declaration",
+		"codeElement": "node : TestDataNode"
+}]
+},
+{
+	"type": "Change Variable Type",
+	"description": "Change Variable Type node : DataNode to node : TestDataNode in method public xmlOutputOtherWithCData() : void from class org.jsoup.nodes.DataNodeTest",
+	"leftSideLocations": [{
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 52,
+		"endLine": 52,
+		"startColumn": 18,
+		"endColumn": 69,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "node : DataNode"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 52,
+		"endLine": 52,
+		"startColumn": 22,
+		"endColumn": 77,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "changed-type variable declaration",
+		"codeElement": "node : TestDataNode"
+}]
+},
+{
+	"type": "Change Variable Type",
+	"description": "Change Variable Type node : DataNode to node : TestDataNode in method public xmlOutputOtherWithoutCData() : void from class org.jsoup.nodes.DataNodeTest",
+	"leftSideLocations": [{
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 61,
+		"endLine": 61,
+		"startColumn": 18,
+		"endColumn": 57,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "node : DataNode"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 59,
+		"endLine": 59,
+		"startColumn": 22,
+		"endColumn": 65,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "changed-type variable declaration",
+		"codeElement": "node : TestDataNode"
+}]
+},
+{
+	"type": "Change Variable Type",
+	"description": "Change Variable Type node : DataNode to node : TestDataNode in method public xmlOutputOrphanWithoutCData() : void from class org.jsoup.nodes.DataNodeTest",
+	"leftSideLocations": [{
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 70,
+		"endLine": 70,
+		"startColumn": 18,
+		"endColumn": 57,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "node : DataNode"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 66,
+		"endLine": 66,
+		"startColumn": 22,
+		"endColumn": 65,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "changed-type variable declaration",
+		"codeElement": "node : TestDataNode"
+}]
+},
+{
+	"type": "Extract And Move Method",
+	"description": "Extract And Move Method package outerHtmlXml() : String extracted from public xmlOutputScriptWithCData() : void in class org.jsoup.nodes.DataNodeTest & moved to class org.jsoup.nodes.DataNodeTest.TestDataNode",
+	"leftSideLocations": [{
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 14,
+		"endLine": 21,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration before extraction",
+		"codeElement": "public xmlOutputScriptWithCData() : void"
+}, {
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 19,
+		"endLine": 19,
+		"startColumn": 9,
+		"endColumn": 109,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "extracted code from source method declaration",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 15,
+		"endLine": 19,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "package outerHtmlXml() : String"
+}, {
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 17,
+		"endLine": 17,
+		"startColumn": 13,
+		"endColumn": 108,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "extracted code to extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 22,
+		"endLine": 27,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration after extraction",
+		"codeElement": "public xmlOutputScriptWithCData() : void"
+}, {
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 26,
+		"endLine": 26,
+		"startColumn": 59,
+		"endColumn": 78,
+		"codeElementType": "METHOD_INVOCATION",
+		"description": "extracted method invocation",
+		"codeElement": "node.outerHtmlXml()"
+}, {
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 16,
+		"endLine": 16,
+		"startColumn": 13,
+		"endColumn": 79,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "added statement in extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 18,
+		"endLine": 18,
+		"startColumn": 13,
+		"endColumn": 37,
+		"codeElementType": "RETURN_STATEMENT",
+		"description": "added statement in extracted method declaration",
+		"codeElement": null
+}]
+},
+{
+	"type": "Extract And Move Method",
+	"description": "Extract And Move Method package outerHtmlXml() : String extracted from public xmlOutputScriptWithoutCData() : void in class org.jsoup.nodes.DataNodeTest & moved to class org.jsoup.nodes.DataNodeTest.TestDataNode",
+	"leftSideLocations": [{
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 23,
+		"endLine": 30,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration before extraction",
+		"codeElement": "public xmlOutputScriptWithoutCData() : void"
+}, {
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 28,
+		"endLine": 28,
+		"startColumn": 9,
+		"endColumn": 109,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "extracted code from source method declaration",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 15,
+		"endLine": 19,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "package outerHtmlXml() : String"
+}, {
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 17,
+		"endLine": 17,
+		"startColumn": 13,
+		"endColumn": 108,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "extracted code to extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 29,
+		"endLine": 34,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration after extraction",
+		"codeElement": "public xmlOutputScriptWithoutCData() : void"
+}, {
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 33,
+		"endLine": 33,
+		"startColumn": 63,
+		"endColumn": 82,
+		"codeElementType": "METHOD_INVOCATION",
+		"description": "extracted method invocation",
+		"codeElement": "node.outerHtmlXml()"
+}, {
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 16,
+		"endLine": 16,
+		"startColumn": 13,
+		"endColumn": 79,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "added statement in extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 18,
+		"endLine": 18,
+		"startColumn": 13,
+		"endColumn": 37,
+		"codeElementType": "RETURN_STATEMENT",
+		"description": "added statement in extracted method declaration",
+		"codeElement": null
+}]
+},
+{
+	"type": "Extract And Move Method",
+	"description": "Extract And Move Method package outerHtmlXml() : String extracted from public xmlOutputStyleWithCData() : void in class org.jsoup.nodes.DataNodeTest & moved to class org.jsoup.nodes.DataNodeTest.TestDataNode",
+	"leftSideLocations": [{
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 32,
+		"endLine": 39,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration before extraction",
+		"codeElement": "public xmlOutputStyleWithCData() : void"
+}, {
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 37,
+		"endLine": 37,
+		"startColumn": 9,
+		"endColumn": 109,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "extracted code from source method declaration",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 15,
+		"endLine": 19,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "package outerHtmlXml() : String"
+}, {
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 17,
+		"endLine": 17,
+		"startColumn": 13,
+		"endColumn": 108,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "extracted code to extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 36,
+		"endLine": 41,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration after extraction",
+		"codeElement": "public xmlOutputStyleWithCData() : void"
+}, {
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 40,
+		"endLine": 40,
+		"startColumn": 60,
+		"endColumn": 79,
+		"codeElementType": "METHOD_INVOCATION",
+		"description": "extracted method invocation",
+		"codeElement": "node.outerHtmlXml()"
+}, {
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 16,
+		"endLine": 16,
+		"startColumn": 13,
+		"endColumn": 79,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "added statement in extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 18,
+		"endLine": 18,
+		"startColumn": 13,
+		"endColumn": 37,
+		"codeElementType": "RETURN_STATEMENT",
+		"description": "added statement in extracted method declaration",
+		"codeElement": null
+}]
+},
+{
+	"type": "Extract And Move Method",
+	"description": "Extract And Move Method package outerHtmlXml() : String extracted from public xmlOutputStyleWithoutCData() : void in class org.jsoup.nodes.DataNodeTest & moved to class org.jsoup.nodes.DataNodeTest.TestDataNode",
+	"leftSideLocations": [{
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 41,
+		"endLine": 48,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration before extraction",
+		"codeElement": "public xmlOutputStyleWithoutCData() : void"
+}, {
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 46,
+		"endLine": 46,
+		"startColumn": 9,
+		"endColumn": 109,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "extracted code from source method declaration",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 15,
+		"endLine": 19,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "package outerHtmlXml() : String"
+}, {
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 17,
+		"endLine": 17,
+		"startColumn": 13,
+		"endColumn": 108,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "extracted code to extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 43,
+		"endLine": 48,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration after extraction",
+		"codeElement": "public xmlOutputStyleWithoutCData() : void"
+}, {
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 47,
+		"endLine": 47,
+		"startColumn": 66,
+		"endColumn": 85,
+		"codeElementType": "METHOD_INVOCATION",
+		"description": "extracted method invocation",
+		"codeElement": "node.outerHtmlXml()"
+}, {
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 16,
+		"endLine": 16,
+		"startColumn": 13,
+		"endColumn": 79,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "added statement in extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 18,
+		"endLine": 18,
+		"startColumn": 13,
+		"endColumn": 37,
+		"codeElementType": "RETURN_STATEMENT",
+		"description": "added statement in extracted method declaration",
+		"codeElement": null
+}]
+},
+{
+	"type": "Extract And Move Method",
+	"description": "Extract And Move Method package outerHtmlXml() : String extracted from public xmlOutputOtherWithCData() : void in class org.jsoup.nodes.DataNodeTest & moved to class org.jsoup.nodes.DataNodeTest.TestDataNode",
+	"leftSideLocations": [{
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 50,
+		"endLine": 57,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration before extraction",
+		"codeElement": "public xmlOutputOtherWithCData() : void"
+}, {
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 55,
+		"endLine": 55,
+		"startColumn": 9,
+		"endColumn": 109,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "extracted code from source method declaration",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 15,
+		"endLine": 19,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "package outerHtmlXml() : String"
+}, {
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 17,
+		"endLine": 17,
+		"startColumn": 13,
+		"endColumn": 108,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "extracted code to extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 50,
+		"endLine": 55,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration after extraction",
+		"codeElement": "public xmlOutputOtherWithCData() : void"
+}, {
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 54,
+		"endLine": 54,
+		"startColumn": 54,
+		"endColumn": 73,
+		"codeElementType": "METHOD_INVOCATION",
+		"description": "extracted method invocation",
+		"codeElement": "node.outerHtmlXml()"
+}, {
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 16,
+		"endLine": 16,
+		"startColumn": 13,
+		"endColumn": 79,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "added statement in extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 18,
+		"endLine": 18,
+		"startColumn": 13,
+		"endColumn": 37,
+		"codeElementType": "RETURN_STATEMENT",
+		"description": "added statement in extracted method declaration",
+		"codeElement": null
+}]
+},
+{
+	"type": "Extract And Move Method",
+	"description": "Extract And Move Method package outerHtmlXml() : String extracted from public xmlOutputOtherWithoutCData() : void in class org.jsoup.nodes.DataNodeTest & moved to class org.jsoup.nodes.DataNodeTest.TestDataNode",
+	"leftSideLocations": [{
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 59,
+		"endLine": 66,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration before extraction",
+		"codeElement": "public xmlOutputOtherWithoutCData() : void"
+}, {
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 64,
+		"endLine": 64,
+		"startColumn": 9,
+		"endColumn": 109,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "extracted code from source method declaration",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 15,
+		"endLine": 19,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "package outerHtmlXml() : String"
+}, {
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 17,
+		"endLine": 17,
+		"startColumn": 13,
+		"endColumn": 108,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "extracted code to extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 57,
+		"endLine": 62,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration after extraction",
+		"codeElement": "public xmlOutputOtherWithoutCData() : void"
+}, {
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 61,
+		"endLine": 61,
+		"startColumn": 54,
+		"endColumn": 73,
+		"codeElementType": "METHOD_INVOCATION",
+		"description": "extracted method invocation",
+		"codeElement": "node.outerHtmlXml()"
+}, {
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 16,
+		"endLine": 16,
+		"startColumn": 13,
+		"endColumn": 79,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "added statement in extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 18,
+		"endLine": 18,
+		"startColumn": 13,
+		"endColumn": 37,
+		"codeElementType": "RETURN_STATEMENT",
+		"description": "added statement in extracted method declaration",
+		"codeElement": null
+}]
+},
+{
+	"type": "Extract And Move Method",
+	"description": "Extract And Move Method package outerHtmlXml() : String extracted from public xmlOutputOrphanWithoutCData() : void in class org.jsoup.nodes.DataNodeTest & moved to class org.jsoup.nodes.DataNodeTest.TestDataNode",
+	"leftSideLocations": [{
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 68,
+		"endLine": 74,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration before extraction",
+		"codeElement": "public xmlOutputOrphanWithoutCData() : void"
+}, {
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 72,
+		"endLine": 72,
+		"startColumn": 9,
+		"endColumn": 109,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "extracted code from source method declaration",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 15,
+		"endLine": 19,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "package outerHtmlXml() : String"
+}, {
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 17,
+		"endLine": 17,
+		"startColumn": 13,
+		"endColumn": 108,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "extracted code to extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 64,
+		"endLine": 68,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration after extraction",
+		"codeElement": "public xmlOutputOrphanWithoutCData() : void"
+}, {
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 67,
+		"endLine": 67,
+		"startColumn": 54,
+		"endColumn": 73,
+		"codeElementType": "METHOD_INVOCATION",
+		"description": "extracted method invocation",
+		"codeElement": "node.outerHtmlXml()"
+}, {
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 16,
+		"endLine": 16,
+		"startColumn": 13,
+		"endColumn": 79,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "added statement in extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "src/test/java/org/jsoup/nodes/DataNodeTest.java",
+		"startLine": 18,
+		"endLine": 18,
+		"startColumn": 13,
+		"endColumn": 37,
+		"codeElementType": "RETURN_STATEMENT",
+		"description": "added statement in extracted method declaration",
+		"codeElement": null
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier package to protected in method protected outerHtmlHead(accum QuietAppendable, out Document.OutputSettings) : void from class org.jsoup.nodes.text.CDataNode",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/CDataNode.java",
+		"startLine": 27,
+		"endLine": 33,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package outerHtmlHead(accum QuietAppendable, out Document.OutputSettings) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/text/CDataNode.java",
+		"startLine": 28,
+		"endLine": 34,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "protected outerHtmlHead(accum QuietAppendable, out Document.OutputSettings) : void"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier package to protected in method protected outerHtmlHead(accum QuietAppendable, out Document.OutputSettings) : void from class org.jsoup.nodes.text.DataNode",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/DataNode.java",
+		"startLine": 41,
+		"endLine": 57,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package outerHtmlHead(accum QuietAppendable, out Document.OutputSettings) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/text/DataNode.java",
+		"startLine": 43,
+		"endLine": 59,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "protected outerHtmlHead(accum QuietAppendable, out Document.OutputSettings) : void"
+}]
+},
+{
+	"type": "Change Attribute Access Modifier",
+	"description": "Change Attribute Access Modifier package to public in attribute public ForText : int from class org.jsoup.nodes.entities.Entities",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Entities.java",
+		"startLine": 27,
+		"endLine": 27,
+		"startColumn": 22,
+		"endColumn": 35,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "package ForText : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/entities/Entities.java",
+		"startLine": 27,
+		"endLine": 27,
+		"startColumn": 25,
+		"endColumn": 38,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "attribute declaration with changed access modifier",
+		"codeElement": "public ForText : int"
+}]
+},
+{
+	"type": "Change Attribute Access Modifier",
+	"description": "Change Attribute Access Modifier package to public in attribute public ForAttribute : int from class org.jsoup.nodes.entities.Entities",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Entities.java",
+		"startLine": 28,
+		"endLine": 28,
+		"startColumn": 22,
+		"endColumn": 40,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "package ForAttribute : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/entities/Entities.java",
+		"startLine": 28,
+		"endLine": 28,
+		"startColumn": 25,
+		"endColumn": 43,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "attribute declaration with changed access modifier",
+		"codeElement": "public ForAttribute : int"
+}]
+},
+{
+	"type": "Change Attribute Access Modifier",
+	"description": "Change Attribute Access Modifier package to public in attribute public Normalise : int from class org.jsoup.nodes.entities.Entities",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Entities.java",
+		"startLine": 29,
+		"endLine": 29,
+		"startColumn": 22,
+		"endColumn": 37,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "package Normalise : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/entities/Entities.java",
+		"startLine": 29,
+		"endLine": 29,
+		"startColumn": 25,
+		"endColumn": 40,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "attribute declaration with changed access modifier",
+		"codeElement": "public Normalise : int"
+}]
+},
+{
+	"type": "Change Attribute Access Modifier",
+	"description": "Change Attribute Access Modifier package to public in attribute public TrimLeading : int from class org.jsoup.nodes.entities.Entities",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Entities.java",
+		"startLine": 30,
+		"endLine": 30,
+		"startColumn": 22,
+		"endColumn": 39,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "package TrimLeading : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/entities/Entities.java",
+		"startLine": 30,
+		"endLine": 30,
+		"startColumn": 25,
+		"endColumn": 42,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "attribute declaration with changed access modifier",
+		"codeElement": "public TrimLeading : int"
+}]
+},
+{
+	"type": "Change Attribute Access Modifier",
+	"description": "Change Attribute Access Modifier package to public in attribute public TrimTrailing : int from class org.jsoup.nodes.entities.Entities",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Entities.java",
+		"startLine": 31,
+		"endLine": 31,
+		"startColumn": 22,
+		"endColumn": 41,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "package TrimTrailing : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/entities/Entities.java",
+		"startLine": 31,
+		"endLine": 31,
+		"startColumn": 25,
+		"endColumn": 44,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "attribute declaration with changed access modifier",
+		"codeElement": "public TrimTrailing : int"
+}]
+},
+{
+	"type": "Change Attribute Access Modifier",
+	"description": "Change Attribute Access Modifier package to public in attribute public codepointRadix : int from class org.jsoup.nodes.entities.Entities",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Entities.java",
+		"startLine": 35,
+		"endLine": 35,
+		"startColumn": 22,
+		"endColumn": 41,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "package codepointRadix : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/entities/Entities.java",
+		"startLine": 35,
+		"endLine": 35,
+		"startColumn": 25,
+		"endColumn": 44,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "attribute declaration with changed access modifier",
+		"codeElement": "public codepointRadix : int"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier package to public in method public escape(accum QuietAppendable, data String, out OutputSettings, options int) : void from class org.jsoup.nodes.entities.Entities",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Entities.java",
+		"startLine": 190,
+		"endLine": 192,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package escape(accum QuietAppendable, data String, out OutputSettings, options int) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/entities/Entities.java",
+		"startLine": 190,
+		"endLine": 192,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "public escape(accum QuietAppendable, data String, out OutputSettings, options int) : void"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier package to public in method public unescape(string String, strict boolean) : String from class org.jsoup.nodes.entities.Entities",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Entities.java",
+		"startLine": 318,
+		"endLine": 327,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package unescape(string String, strict boolean) : String"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/entities/Entities.java",
+		"startLine": 318,
+		"endLine": 327,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "public unescape(string String, strict boolean) : String"
+}]
+},
+{
+	"type": "Change Class Access Modifier",
+	"description": "Change Class Access Modifier package to public in class org.jsoup.nodes.traverse.NodeUtils",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/NodeUtils.java",
+		"startLine": 16,
+		"endLine": 69,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original class declaration",
+		"codeElement": "org.jsoup.nodes.NodeUtils"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/traverse/NodeUtils.java",
+		"startLine": 19,
+		"endLine": 72,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "class declaration with changed access modifier",
+		"codeElement": "org.jsoup.nodes.traverse.NodeUtils"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier package to public in method public outputSettings(node Node) : Document.OutputSettings from class org.jsoup.nodes.traverse.NodeUtils",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/NodeUtils.java",
+		"startLine": 21,
+		"endLine": 28,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package outputSettings(node Node) : Document.OutputSettings"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/traverse/NodeUtils.java",
+		"startLine": 24,
+		"endLine": 31,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "public outputSettings(node Node) : Document.OutputSettings"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier package to public in method public parser(node Node) : Parser from class org.jsoup.nodes.traverse.NodeUtils",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/NodeUtils.java",
+		"startLine": 30,
+		"endLine": 36,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package parser(node Node) : Parser"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/traverse/NodeUtils.java",
+		"startLine": 33,
+		"endLine": 39,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "public parser(node Node) : Parser"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier package to public in method public selectXpath(xpath String, el Element, nodeType Class<T>) : List<T> from class org.jsoup.nodes.traverse.NodeUtils",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/NodeUtils.java",
+		"startLine": 38,
+		"endLine": 54,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package selectXpath(xpath String, el Element, nodeType Class<T>) : List<T>"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/traverse/NodeUtils.java",
+		"startLine": 41,
+		"endLine": 57,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "public selectXpath(xpath String, el Element, nodeType Class<T>) : List<T>"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier package to public in method public stream(start Node, type Class<T>) : Stream<T> from class org.jsoup.nodes.traverse.NodeUtils",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/NodeUtils.java",
+		"startLine": 56,
+		"endLine": 62,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package stream(start Node, type Class<T>) : Stream<T>"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/traverse/NodeUtils.java",
+		"startLine": 59,
+		"endLine": 65,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "public stream(start Node, type Class<T>) : Stream<T>"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier package to public in method public spliterator(iterator Iterator<T>) : Spliterator<T> from class org.jsoup.nodes.traverse.NodeUtils",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/NodeUtils.java",
+		"startLine": 64,
+		"endLine": 68,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package spliterator(iterator Iterator<T>) : Spliterator<T>"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/traverse/NodeUtils.java",
+		"startLine": 67,
+		"endLine": 71,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "public spliterator(iterator Iterator<T>) : Spliterator<T>"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier package to protected in method protected outerHtmlHead(accum QuietAppendable, out Document.OutputSettings) : void from class org.jsoup.nodes.text.TextNode",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/TextNode.java",
+		"startLine": 83,
+		"endLine": 86,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package outerHtmlHead(accum QuietAppendable, out Document.OutputSettings) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/text/TextNode.java",
+		"startLine": 88,
+		"endLine": 91,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "protected outerHtmlHead(accum QuietAppendable, out Document.OutputSettings) : void"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier package to public in method public normaliseWhitespace(text String) : String from class org.jsoup.nodes.text.TextNode",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/TextNode.java",
+		"startLine": 108,
+		"endLine": 111,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package normaliseWhitespace(text String) : String"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/text/TextNode.java",
+		"startLine": 113,
+		"endLine": 116,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "public normaliseWhitespace(text String) : String"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier package to public in method public stripLeadingWhitespace(text String) : String from class org.jsoup.nodes.text.TextNode",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/TextNode.java",
+		"startLine": 113,
+		"endLine": 115,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package stripLeadingWhitespace(text String) : String"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/text/TextNode.java",
+		"startLine": 118,
+		"endLine": 120,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "public stripLeadingWhitespace(text String) : String"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier package to public in method public lastCharIsWhitespace(sb StringBuilder) : boolean from class org.jsoup.nodes.text.TextNode",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/TextNode.java",
+		"startLine": 117,
+		"endLine": 119,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package lastCharIsWhitespace(sb StringBuilder) : boolean"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/text/TextNode.java",
+		"startLine": 122,
+		"endLine": 124,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "public lastCharIsWhitespace(sb StringBuilder) : boolean"
+}]
+},
+{
+	"type": "Change Attribute Access Modifier",
+	"description": "Change Attribute Access Modifier package to public in attribute public parent : Attributes from class org.jsoup.nodes.attributes.Attribute",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attribute.java",
+		"startLine": 30,
+		"endLine": 30,
+		"startColumn": 26,
+		"endColumn": 32,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "package parent : Attributes"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/attributes/Attribute.java",
+		"startLine": 35,
+		"endLine": 35,
+		"startColumn": 33,
+		"endColumn": 39,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "attribute declaration with changed access modifier",
+		"codeElement": "public parent : Attributes"
+}]
+},
+{
+	"type": "Change Attribute Access Modifier",
+	"description": "Change Attribute Access Modifier package to public in attribute public NotFound : int from class org.jsoup.nodes.attributes.Attributes",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 53,
+		"endLine": 53,
+		"startColumn": 22,
+		"endColumn": 35,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "package NotFound : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/attributes/Attributes.java",
+		"startLine": 56,
+		"endLine": 56,
+		"startColumn": 29,
+		"endColumn": 42,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "attribute declaration with changed access modifier",
+		"codeElement": "public NotFound : int"
+}]
+},
+{
+	"type": "Change Attribute Access Modifier",
+	"description": "Change Attribute Access Modifier package to public in attribute public size : int from class org.jsoup.nodes.attributes.Attributes",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 56,
+		"endLine": 56,
+		"startColumn": 9,
+		"endColumn": 17,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "package size : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/attributes/Attributes.java",
+		"startLine": 59,
+		"endLine": 59,
+		"startColumn": 16,
+		"endColumn": 24,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "attribute declaration with changed access modifier",
+		"codeElement": "public size : int"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier package to public in method public indexOfKey(key String) : int from class org.jsoup.nodes.attributes.Attributes",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 75,
+		"endLine": 82,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package indexOfKey(key String) : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/attributes/Attributes.java",
+		"startLine": 78,
+		"endLine": 85,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "public indexOfKey(key String) : int"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier package to public in method public visibleIndexOfKey(key String) : int from class org.jsoup.nodes.attributes.Attributes",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 84,
+		"endLine": 99,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package visibleIndexOfKey(key String) : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/attributes/Attributes.java",
+		"startLine": 87,
+		"endLine": 102,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "public visibleIndexOfKey(key String) : int"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier package to public in method public checkNotNull(val Object) : String from class org.jsoup.nodes.attributes.Attributes",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 124,
+		"endLine": 126,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package checkNotNull(val Object) : String"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/attributes/Attributes.java",
+		"startLine": 127,
+		"endLine": 129,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "public checkNotNull(val Object) : String"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier package to public in method public userData() : Map<String,Object> from class org.jsoup.nodes.attributes.Attributes",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 194,
+		"endLine": 212,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package userData() : Map<String,Object>"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/attributes/Attributes.java",
+		"startLine": 197,
+		"endLine": 215,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "public userData() : Map<String,Object>"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier package to public in method public hasUserData() : boolean from class org.jsoup.nodes.attributes.Attributes",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 214,
+		"endLine": 219,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package hasUserData() : boolean"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/attributes/Attributes.java",
+		"startLine": 217,
+		"endLine": 222,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "public hasUserData() : boolean"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier package to public in method public spans() : Range.Spans from class org.jsoup.nodes.attributes.Attributes",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 253,
+		"endLine": 259,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package spans() : Range.Spans"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/attributes/Attributes.java",
+		"startLine": 256,
+		"endLine": 262,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "public spans() : Range.Spans"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier package to public in method public ensureSpans() : Range.Spans from class org.jsoup.nodes.attributes.Attributes",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 261,
+		"endLine": 271,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package ensureSpans() : Range.Spans"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/attributes/Attributes.java",
+		"startLine": 264,
+		"endLine": 274,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "public ensureSpans() : Range.Spans"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier package to public in method public putSpans(rangeSpans Range.Spans) : void from class org.jsoup.nodes.attributes.Attributes",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 273,
+		"endLine": 282,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package putSpans(rangeSpans Range.Spans) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/attributes/Attributes.java",
+		"startLine": 276,
+		"endLine": 285,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "public putSpans(rangeSpans Range.Spans) : void"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier package to public in method public putIgnoreCase(key String, value String) : void from class org.jsoup.nodes.attributes.Attributes",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 284,
+		"endLine": 295,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package putIgnoreCase(key String, value String) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/attributes/Attributes.java",
+		"startLine": 287,
+		"endLine": 298,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "public putIgnoreCase(key String, value String) : void"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier package to public in method public html(accum QuietAppendable, out Document.OutputSettings) : void from class org.jsoup.nodes.attributes.Attributes",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 562,
+		"endLine": 573,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package html(accum QuietAppendable, out Document.OutputSettings) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/attributes/Attributes.java",
+		"startLine": 565,
+		"endLine": 576,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "public html(accum QuietAppendable, out Document.OutputSettings) : void"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier package to public in method public internalKey(key String) : String from class org.jsoup.nodes.attributes.Attributes",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
+		"startLine": 741,
+		"endLine": 743,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package internalKey(key String) : String"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/attributes/Attributes.java",
+		"startLine": 744,
+		"endLine": 746,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "public internalKey(key String) : String"
+}]
+},
+{
+	"type": "Change Class Access Modifier",
+	"description": "Change Class Access Modifier package to public in class org.jsoup.nodes.element.ElementChildNodes",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementChildNodes.java",
+		"startLine": 5,
+		"endLine": 43,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original class declaration",
+		"codeElement": "org.jsoup.nodes.ElementChildNodes"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/element/ElementChildNodes.java",
+		"startLine": 6,
+		"endLine": 52,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "class declaration with changed access modifier",
+		"codeElement": "org.jsoup.nodes.element.ElementChildNodes"
+}]
+},
+{
+	"type": "Change Attribute Access Modifier",
+	"description": "Change Attribute Access Modifier package to public in attribute public EmptyNodeList : NodeList from class org.jsoup.nodes.element.ElementChildNodes",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementChildNodes.java",
+		"startLine": 8,
+		"endLine": 8,
+		"startColumn": 27,
+		"endColumn": 58,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "package EmptyNodeList : NodeList"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/element/ElementChildNodes.java",
+		"startLine": 9,
+		"endLine": 9,
+		"startColumn": 34,
+		"endColumn": 65,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "attribute declaration with changed access modifier",
+		"codeElement": "public EmptyNodeList : NodeList"
+}]
+},
+{
+	"type": "Add Parameter",
+	"description": "Add Parameter childNodes : NodeList in method public reindex(childNodes NodeList) : void from class org.jsoup.nodes.element.ElementChildNodes",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementChildNodes.java",
+		"startLine": 28,
+		"endLine": 34,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package reindex(element Element) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/element/ElementChildNodes.java",
+		"startLine": 37,
+		"endLine": 37,
+		"startColumn": 32,
+		"endColumn": 51,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "added parameter",
+		"codeElement": "childNodes : NodeList"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/element/ElementChildNodes.java",
+		"startLine": 37,
+		"endLine": 43,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with added parameter",
+		"codeElement": "public reindex(childNodes NodeList) : void"
+}]
+},
+{
+	"type": "Remove Parameter",
+	"description": "Remove Parameter element : Element in method package reindex(element Element) : void from class org.jsoup.nodes.ElementChildNodes",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementChildNodes.java",
+		"startLine": 28,
+		"endLine": 28,
+		"startColumn": 25,
+		"endColumn": 40,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "removed parameter",
+		"codeElement": "element : Element"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/ElementChildNodes.java",
+		"startLine": 28,
+		"endLine": 34,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package reindex(element Element) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/element/ElementChildNodes.java",
+		"startLine": 37,
+		"endLine": 43,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with removed parameter",
+		"codeElement": "public reindex(childNodes NodeList) : void"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier package to public in method public reindex(childNodes NodeList) : void from class org.jsoup.nodes.element.ElementChildNodes",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementChildNodes.java",
+		"startLine": 28,
+		"endLine": 34,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package reindex(element Element) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/element/ElementChildNodes.java",
+		"startLine": 37,
+		"endLine": 43,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "public reindex(childNodes NodeList) : void"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier package to public in method public codepointForName(name String) : int from class org.jsoup.nodes.entities.Entities.EscapeMode",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Entities.java",
+		"startLine": 74,
+		"endLine": 77,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package codepointForName(name String) : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/entities/Entities.java",
+		"startLine": 74,
+		"endLine": 77,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "public codepointForName(name String) : int"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier package to public in method public nameForCodepoint(codepoint int) : String from class org.jsoup.nodes.entities.Entities.EscapeMode",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/Entities.java",
+		"startLine": 79,
+		"endLine": 88,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package nameForCodepoint(codepoint int) : String"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/entities/Entities.java",
+		"startLine": 79,
+		"endLine": 88,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "public nameForCodepoint(codepoint int) : String"
+}]
+},
+{
+	"type": "Change Class Access Modifier",
+	"description": "Change Class Access Modifier package to public in class org.jsoup.nodes.element.ElementChildNodes.NodeList",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementChildNodes.java",
+		"startLine": 10,
+		"endLine": 26,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original class declaration",
+		"codeElement": "org.jsoup.nodes.ElementChildNodes.NodeList"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/element/ElementChildNodes.java",
+		"startLine": 11,
+		"endLine": 35,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "class declaration with changed access modifier",
+		"codeElement": "org.jsoup.nodes.element.ElementChildNodes.NodeList"
+}]
+},
+{
+	"type": "Change Attribute Access Modifier",
+	"description": "Change Attribute Access Modifier package to private in attribute private validChildren : boolean from class org.jsoup.nodes.element.ElementChildNodes.NodeList",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementChildNodes.java",
+		"startLine": 12,
+		"endLine": 12,
+		"startColumn": 17,
+		"endColumn": 37,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "package validChildren : boolean"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/element/ElementChildNodes.java",
+		"startLine": 13,
+		"endLine": 13,
+		"startColumn": 25,
+		"endColumn": 45,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "attribute declaration with changed access modifier",
+		"codeElement": "private validChildren : boolean"
+}]
+},
+{
+	"type": "Encapsulate Attribute",
+	"description": "Encapsulate Attribute private validChildren : boolean from class org.jsoup.nodes.element.ElementChildNodes.NodeList",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementChildNodes.java",
+		"startLine": 12,
+		"endLine": 12,
+		"startColumn": 17,
+		"endColumn": 37,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "package validChildren : boolean"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/element/ElementChildNodes.java",
+		"startLine": 13,
+		"endLine": 13,
+		"startColumn": 25,
+		"endColumn": 45,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "encapsulated attribute declaration",
+		"codeElement": "private validChildren : boolean"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/element/ElementChildNodes.java",
+		"startLine": 28,
+		"endLine": 30,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "added getter method",
+		"codeElement": "public hasValidChildren() : boolean"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/element/ElementChildNodes.java",
+		"startLine": 32,
+		"endLine": 34,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "added setter method",
+		"codeElement": "package setValidChildren(validChildren boolean) : void"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier package to public in method public NodeList(size int) from class org.jsoup.nodes.element.ElementChildNodes.NodeList",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementChildNodes.java",
+		"startLine": 14,
+		"endLine": 16,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package NodeList(size int)"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/element/ElementChildNodes.java",
+		"startLine": 15,
+		"endLine": 17,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "public NodeList(size int)"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier package to public in method public modCount() : int from class org.jsoup.nodes.element.ElementChildNodes.NodeList",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementChildNodes.java",
+		"startLine": 18,
+		"endLine": 21,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package modCount() : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/element/ElementChildNodes.java",
+		"startLine": 19,
+		"endLine": 22,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "public modCount() : int"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier package to public in method public incrementMod() : void from class org.jsoup.nodes.element.ElementChildNodes.NodeList",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementChildNodes.java",
+		"startLine": 23,
+		"endLine": 25,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package incrementMod() : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/element/ElementChildNodes.java",
+		"startLine": 24,
+		"endLine": 26,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "public incrementMod() : void"
+}]
+},
+{
+	"type": "Extract And Move Method",
+	"description": "Extract And Move Method package setValidChildren(validChildren boolean) : void extracted from package reindex(element Element) : void in class org.jsoup.nodes.ElementChildNodes & moved to class org.jsoup.nodes.element.ElementChildNodes.NodeList",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/ElementChildNodes.java",
+		"startLine": 28,
+		"endLine": 34,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration before extraction",
+		"codeElement": "package reindex(element Element) : void"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/ElementChildNodes.java",
+		"startLine": 33,
+		"endLine": 33,
+		"startColumn": 9,
+		"endColumn": 49,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "extracted code from source method declaration",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/nodes/element/ElementChildNodes.java",
+		"startLine": 32,
+		"endLine": 34,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "package setValidChildren(validChildren boolean) : void"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/element/ElementChildNodes.java",
+		"startLine": 33,
+		"endLine": 33,
+		"startColumn": 13,
+		"endColumn": 48,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "extracted code to extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/element/ElementChildNodes.java",
+		"startLine": 37,
+		"endLine": 43,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration after extraction",
+		"codeElement": "public reindex(childNodes NodeList) : void"
+}, {
+		"filePath": "src/main/java/org/jsoup/nodes/element/ElementChildNodes.java",
+		"startLine": 42,
+		"endLine": 42,
+		"startColumn": 9,
+		"endColumn": 42,
+		"codeElementType": "METHOD_INVOCATION",
+		"description": "extracted method invocation",
+		"codeElement": "childNodes.setValidChildren(true)"
+}]
+}
+]
+}]
+}

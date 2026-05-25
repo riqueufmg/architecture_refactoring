@@ -1,0 +1,110 @@
+diff --git a/src/main/java/org/apache/commons/lang3/RegExUtils.java b/src/main/java/org/apache/commons/lang3/RegExUtils.java
+index 319e7bb0a..e49e24580 100644
+--- a/src/main/java/org/apache/commons/lang3/RegExUtils.java
++++ b/src/main/java/org/apache/commons/lang3/RegExUtils.java
+@@ -16,7 +16,6 @@
+  */
+ package org.apache.commons.lang3;
+ 
+-import java.util.Objects;
+ import java.util.regex.Matcher;
+ import java.util.regex.Pattern;
+ 
+@@ -41,7 +40,7 @@ public class RegExUtils {
+      * @since 3.13.0
+      */
+     public static Pattern dotAll(final String regex) {
+-        return Pattern.compile(regex, Pattern.DOTALL);
++        return RegExReplacementUtils.dotAll(regex);
+     }
+ 
+     /**
+@@ -54,7 +53,7 @@ public static Pattern dotAll(final String regex) {
+      * @since 3.18.0
+      */
+     public static Matcher dotAllMatcher(final String regex, final CharSequence text) {
+-        return dotAll(regex).matcher(text);
++        return RegExReplacementUtils.dotAllMatcher(regex, text);
+     }
+ 
+     /**
+@@ -69,7 +68,7 @@ public static Matcher dotAllMatcher(final String regex, final CharSequence text)
+      */
+     @Deprecated
+     public static Matcher dotAllMatcher(final String regex, final String text) {
+-        return dotAll(regex).matcher(text);
++        return RegExReplacementUtils.dotAllMatcher(regex, text);
+     }
+ 
+     /**
+@@ -414,10 +413,7 @@ public static String removePattern(final String text, final String regex) {
+      * @see java.util.regex.Pattern
+      */
+     public static String replaceAll(final CharSequence text, final Pattern regex, final String replacement) {
+-        if (ObjectUtils.anyNull(text, regex, replacement)) {
+-            return toStringOrNull(text);
+-        }
+-        return regex.matcher(text).replaceAll(replacement);
++        return RegExReplacementUtils.replaceAll(text, regex, replacement);
+     }
+ 
+     /**
+@@ -507,10 +503,7 @@ public static String replaceAll(final String text, final Pattern regex, final St
+      * @see java.util.regex.Pattern#DOTALL
+      */
+     public static String replaceAll(final String text, final String regex, final String replacement) {
+-        if (ObjectUtils.anyNull(text, regex, replacement)) {
+-            return text;
+-        }
+-        return text.replaceAll(regex, replacement);
++        return RegExReplacementUtils.replaceAll(text, regex, replacement);
+     }
+ 
+     /**
+@@ -550,10 +543,7 @@ public static String replaceAll(final String text, final String regex, final Str
+      * @since 3.18.0
+      */
+     public static String replaceFirst(final CharSequence text, final Pattern regex, final String replacement) {
+-        if (text == null || regex == null || replacement == null) {
+-            return toStringOrNull(text);
+-        }
+-        return regex.matcher(text).replaceFirst(replacement);
++        return RegExReplacementUtils.replaceFirst(text, regex, replacement);
+     }
+ 
+     /**
+@@ -641,10 +631,7 @@ public static String replaceFirst(final String text, final Pattern regex, final
+      * @see java.util.regex.Pattern#DOTALL
+      */
+     public static String replaceFirst(final String text, final String regex, final String replacement) {
+-        if (text == null || regex == null || replacement == null) {
+-            return text;
+-        }
+-        return text.replaceFirst(regex, replacement);
++        return RegExReplacementUtils.replaceFirst(text, regex, replacement);
+     }
+ 
+     /**
+@@ -686,10 +673,7 @@ public static String replaceFirst(final String text, final String regex, final S
+      * @since 3.18.0
+      */
+     public static String replacePattern(final CharSequence text, final String regex, final String replacement) {
+-        if (ObjectUtils.anyNull(text, regex, replacement)) {
+-            return toStringOrNull(text);
+-        }
+-        return dotAllMatcher(regex, text).replaceAll(replacement);
++        return RegExReplacementUtils.replacePattern(text, regex, replacement);
+     }
+ 
+     /**
+@@ -735,10 +719,6 @@ public static String replacePattern(final String text, final String regex, final
+         return replacePattern((CharSequence) text, regex, replacement);
+     }
+ 
+-    private static String toStringOrNull(final CharSequence text) {
+-        return Objects.toString(text, null);
+-    }
+-
+     /**
+      * Make private in 4.0.
+      *

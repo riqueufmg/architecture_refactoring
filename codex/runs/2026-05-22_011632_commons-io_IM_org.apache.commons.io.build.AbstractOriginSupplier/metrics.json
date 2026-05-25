@@ -1,0 +1,39 @@
+{
+  "project_name": "commons-io",
+  "smell": "IM",
+  "target_type": "class",
+  "target_name": "org.apache.commons.io.build.AbstractOriginSupplier",
+  "initial_commit": "3d1ffd32d03e3b31795d9586089ba7ec98b3b7b9",
+  "designite_before": {
+    "command": [
+      "/usr/lib/jvm/jdk-22.0.2-oracle-x64/bin/java",
+      "-jar",
+      "/data/henrique/langchain_prototype/codex/tools/DesigniteJava2.8.3.jar",
+      "-g",
+      "-i",
+      "/data/henrique/langchain_prototype/codex/data/repositories/commons-io",
+      "-o",
+      "/data/henrique/langchain_prototype/codex/runs/2026-05-22_011632_commons-io_IM_org.apache.commons.io.build.AbstractOriginSupplier/designite_before"
+    ],
+    "returncode": 0,
+    "seconds": 14.6,
+    "ok": true,
+    "output_dir": "/data/henrique/langchain_prototype/codex/runs/2026-05-22_011632_commons-io_IM_org.apache.commons.io.build.AbstractOriginSupplier/designite_before",
+    "log_path": "runs/2026-05-22_011632_commons-io_IM_org.apache.commons.io.build.AbstractOriginSupplier/designite_before.log"
+  },
+  "smell_before": {
+    "present": false,
+    "matches_count": 0,
+    "matches": [],
+    "searched_files": [
+      "runs/2026-05-22_011632_commons-io_IM_org.apache.commons.io.build.AbstractOriginSupplier/designite_before/DesignSmells.csv"
+    ]
+  },
+  "attempts": [],
+  "codex": null,
+  "diff": null,
+  "maven": null,
+  "designite_after": null,
+  "smell_after": null,
+  "smell_removed": false
+}

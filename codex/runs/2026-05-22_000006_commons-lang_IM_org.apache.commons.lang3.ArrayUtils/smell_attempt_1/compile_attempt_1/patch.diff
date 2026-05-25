@@ -1,0 +1,927 @@
+diff --git a/src/main/java/org/apache/commons/lang3/ArrayUtils.java b/src/main/java/org/apache/commons/lang3/ArrayUtils.java
+index 3e95e7326..57bc9b367 100644
+--- a/src/main/java/org/apache/commons/lang3/ArrayUtils.java
++++ b/src/main/java/org/apache/commons/lang3/ArrayUtils.java
+@@ -58,7 +58,7 @@
+  *
+  * @since 2.0
+  */
+-public class ArrayUtils {
++public class ArrayUtils extends ArrayUtilsIndexing {
+ 
+     /**
+      * Bridge class to {@link Math} methods for testing purposes.
+@@ -2200,913 +2200,6 @@ static <K> void increment(final Map<K, MutableInt> occurrences, final K boxed) {
+         occurrences.computeIfAbsent(boxed, k -> new MutableInt()).increment();
+     }
+ 
+-    /**
+-     * Finds the indices of the given value in the array.
+-     * <p>
+-     * This method returns an empty BitSet for a {@code null} input array.
+-     * </p>
+-     *
+-     * @param array  the array to search for the object, may be {@code null}.
+-     * @param valueToFind  the value to find.
+-     * @return a BitSet of all the indices of the value within the array,
+-     *  an empty BitSet if not found or {@code null} array input.
+-     * @since 3.10
+-     */
+-    public static BitSet indexesOf(final boolean[] array, final boolean valueToFind) {
+-        return indexesOf(array, valueToFind, 0);
+-    }
+-
+-    /**
+-     * Finds the indices of the given value in the array starting at the given index.
+-     * <p>
+-     * This method returns an empty BitSet for a {@code null} input array.
+-     * </p>
+-     * <p>
+-     * A negative startIndex is treated as zero. A startIndex larger than the array length will return an empty BitSet ({@code -1}).
+-     * </p>
+-     *
+-     * @param array       the array to search for the object, may be {@code null}.
+-     * @param valueToFind the value to find.
+-     * @param startIndex  the index to start searching.
+-     * @return a BitSet of all the indices of the value within the array, an empty BitSet if not found or {@code null} array input.
+-     * @since 3.10
+-     */
+-    public static BitSet indexesOf(final boolean[] array, final boolean valueToFind, int startIndex) {
+-        final BitSet bitSet = new BitSet();
+-        if (array != null) {
+-            while (startIndex < array.length) {
+-                startIndex = indexOf(array, valueToFind, startIndex);
+-                if (startIndex == INDEX_NOT_FOUND) {
+-                    break;
+-                }
+-                bitSet.set(startIndex);
+-                ++startIndex;
+-            }
+-        }
+-        return bitSet;
+-    }
+-
+-    /**
+-     * Finds the indices of the given value in the array.
+-     *
+-     * <p>
+-     * This method returns an empty BitSet for a {@code null} input array.
+-     * </p>
+-     *
+-     * @param array       the array to search for the object, may be {@code null}.
+-     * @param valueToFind the value to find.
+-     * @return a BitSet of all the indices of the value within the array, an empty BitSet if not found or {@code null} array input.
+-     * @since 3.10
+-     */
+-    public static BitSet indexesOf(final byte[] array, final byte valueToFind) {
+-        return indexesOf(array, valueToFind, 0);
+-    }
+-
+-    /**
+-     * Finds the indices of the given value in the array starting at the given index.
+-     *
+-     * <p>This method returns an empty BitSet for a {@code null} input array.</p>
+-     *
+-     * <p>A negative startIndex is treated as zero. A startIndex larger than the array
+-     * length will return an empty BitSet.</p>
+-     *
+-     * @param array  the array to search for the object, may be {@code null}.
+-     * @param valueToFind  the value to find.
+-     * @param startIndex  the index to start searching.
+-     * @return a BitSet of all the indices of the value within the array,
+-     *  an empty BitSet if not found or {@code null} array input.
+-     * @since 3.10
+-     */
+-    public static BitSet indexesOf(final byte[] array, final byte valueToFind, int startIndex) {
+-        final BitSet bitSet = new BitSet();
+-        if (array != null) {
+-            while (startIndex < array.length) {
+-                startIndex = indexOf(array, valueToFind, startIndex);
+-                if (startIndex == INDEX_NOT_FOUND) {
+-                    break;
+-                }
+-                bitSet.set(startIndex);
+-                ++startIndex;
+-            }
+-        }
+-        return bitSet;
+-    }
+-
+-    /**
+-     * Finds the indices of the given value in the array.
+-     *
+-     * <p>This method returns an empty BitSet for a {@code null} input array.</p>
+-     *
+-     * @param array  the array to search for the object, may be {@code null}.
+-     * @param valueToFind  the value to find.
+-     * @return a BitSet of all the indices of the value within the array,
+-     *  an empty BitSet if not found or {@code null} array input.
+-     * @since 3.10
+-     */
+-    public static BitSet indexesOf(final char[] array, final char valueToFind) {
+-        return indexesOf(array, valueToFind, 0);
+-    }
+-
+-    /**
+-     * Finds the indices of the given value in the array starting at the given index.
+-     *
+-     * <p>This method returns an empty BitSet for a {@code null} input array.</p>
+-     *
+-     * <p>A negative startIndex is treated as zero. A startIndex larger than the array
+-     * length will return an empty BitSet.</p>
+-     *
+-     * @param array  the array to search for the object, may be {@code null}.
+-     * @param valueToFind  the value to find.
+-     * @param startIndex  the index to start searching.
+-     * @return a BitSet of all the indices of the value within the array,
+-     *  an empty BitSet if not found or {@code null} array input.
+-     * @since 3.10
+-     */
+-    public static BitSet indexesOf(final char[] array, final char valueToFind, int startIndex) {
+-        final BitSet bitSet = new BitSet();
+-        if (array != null) {
+-            while (startIndex < array.length) {
+-                startIndex = indexOf(array, valueToFind, startIndex);
+-                if (startIndex == INDEX_NOT_FOUND) {
+-                    break;
+-                }
+-                bitSet.set(startIndex);
+-                ++startIndex;
+-            }
+-        }
+-        return bitSet;
+-    }
+-
+-    /**
+-     * Finds the indices of the given value in the array.
+-     *
+-     * <p>This method returns empty BitSet for a {@code null} input array.</p>
+-     *
+-     * @param array  the array to search for the object, may be {@code null}.
+-     * @param valueToFind  the value to find.
+-     * @return a BitSet of all the indices of the value within the array,
+-     *  an empty BitSet if not found or {@code null} array input.
+-     * @since 3.10
+-     */
+-    public static BitSet indexesOf(final double[] array, final double valueToFind) {
+-        return indexesOf(array, valueToFind, 0);
+-    }
+-
+-    /**
+-     * Finds the indices of the given value within a given tolerance in the array.
+-     *
+-     * <p>
+-     * This method will return all the indices of the value which fall between the region
+-     * defined by valueToFind - tolerance and valueToFind + tolerance, each time between the nearest integers.
+-     * </p>
+-     *
+-     * <p>This method returns an empty BitSet for a {@code null} input array.</p>
+-     *
+-     * @param array  the array to search for the object, may be {@code null}.
+-     * @param valueToFind  the value to find.
+-     * @param tolerance tolerance of the search.
+-     * @return a BitSet of all the indices of the value within the array,
+-     *  an empty BitSet if not found or {@code null} array input.
+-     * @since 3.10
+-     */
+-    public static BitSet indexesOf(final double[] array, final double valueToFind, final double tolerance) {
+-        return indexesOf(array, valueToFind, 0, tolerance);
+-    }
+-
+-    /**
+-     * Finds the indices of the given value in the array starting at the given index.
+-     *
+-     * <p>This method returns an empty BitSet for a {@code null} input array.</p>
+-     *
+-     * <p>A negative startIndex is treated as zero. A startIndex larger than the array
+-     * length will return an empty BitSet.</p>
+-     *
+-     * @param array  the array to search for the object, may be {@code null}.
+-     * @param valueToFind  the value to find.
+-     * @param startIndex  the index to start searching.
+-     * @return a BitSet of the indices of the value within the array,
+-     *  an empty BitSet if not found or {@code null} array input.
+-     * @since 3.10
+-     */
+-    public static BitSet indexesOf(final double[] array, final double valueToFind, int startIndex) {
+-        final BitSet bitSet = new BitSet();
+-        if (array != null) {
+-            while (startIndex < array.length) {
+-                startIndex = indexOf(array, valueToFind, startIndex);
+-                if (startIndex == INDEX_NOT_FOUND) {
+-                    break;
+-                }
+-                bitSet.set(startIndex);
+-                ++startIndex;
+-            }
+-        }
+-        return bitSet;
+-    }
+-
+-    /**
+-     * Finds the indices of the given value in the array starting at the given index.
+-     *
+-     * <p>
+-     * This method will return the indices of the values which fall between the region
+-     * defined by valueToFind - tolerance and valueToFind + tolerance, between the nearest integers.
+-     * </p>
+-     *
+-     * <p>This method returns an empty BitSet for a {@code null} input array.</p>
+-     *
+-     * <p>A negative startIndex is treated as zero. A startIndex larger than the array
+-     * length will return an empty BitSet.</p>
+-     *
+-     * @param array  the array to search for the object, may be {@code null}.
+-     * @param valueToFind  the value to find.
+-     * @param startIndex  the index to start searching.
+-     * @param tolerance tolerance of the search.
+-     * @return a BitSet of the indices of the value within the array,
+-     *  an empty BitSet if not found or {@code null} array input.
+-     * @since 3.10
+-     */
+-    public static BitSet indexesOf(final double[] array, final double valueToFind, int startIndex, final double tolerance) {
+-        final BitSet bitSet = new BitSet();
+-        if (array != null) {
+-            while (startIndex < array.length) {
+-                startIndex = indexOf(array, valueToFind, startIndex, tolerance);
+-                if (startIndex == INDEX_NOT_FOUND) {
+-                    break;
+-                }
+-                bitSet.set(startIndex);
+-                ++startIndex;
+-            }
+-        }
+-        return bitSet;
+-    }
+-
+-    /**
+-     * Finds the indices of the given value in the array.
+-     *
+-     * <p>This method returns an empty BitSet for a {@code null} input array.</p>
+-     *
+-     * @param array  the array to search for the object, may be {@code null}.
+-     * @param valueToFind  the value to find.
+-     * @return a BitSet of all the indices of the value within the array,
+-     *  an empty BitSet if not found or {@code null} array input.
+-     * @since 3.10
+-     */
+-    public static BitSet indexesOf(final float[] array, final float valueToFind) {
+-        return indexesOf(array, valueToFind, 0);
+-    }
+-
+-    /**
+-     * Finds the indices of the given value in the array starting at the given index.
+-     *
+-     * <p>This method returns an empty BitSet for a {@code null} input array.</p>
+-     *
+-     * <p>A negative startIndex is treated as zero. A startIndex larger than the array
+-     * length will return empty BitSet.</p>
+-     *
+-     * @param array  the array to search for the object, may be {@code null}.
+-     * @param valueToFind  the value to find.
+-     * @param startIndex  the index to start searching.
+-     * @return a BitSet of all the indices of the value within the array,
+-     *  an empty BitSet if not found or {@code null} array input.
+-     * @since 3.10
+-     */
+-    public static BitSet indexesOf(final float[] array, final float valueToFind, int startIndex) {
+-        final BitSet bitSet = new BitSet();
+-        if (array != null) {
+-            while (startIndex < array.length) {
+-                startIndex = indexOf(array, valueToFind, startIndex);
+-                if (startIndex == INDEX_NOT_FOUND) {
+-                    break;
+-                }
+-                bitSet.set(startIndex);
+-                ++startIndex;
+-            }
+-        }
+-        return bitSet;
+-    }
+-
+-    /**
+-     * Finds the indices of the given value in the array.
+-     *
+-     * <p>This method returns an empty BitSet for a {@code null} input array.</p>
+-     *
+-     * @param array  the array to search for the object, may be {@code null}.
+-     * @param valueToFind  the value to find.
+-     * @return a BitSet of all the indices of the value within the array,
+-     *  an empty BitSet if not found or {@code null} array input.
+-     * @since 3.10
+-     */
+-    public static BitSet indexesOf(final int[] array, final int valueToFind) {
+-        return indexesOf(array, valueToFind, 0);
+-    }
+-
+-    /**
+-     * Finds the indices of the given value in the array starting at the given index.
+-     *
+-     * <p>This method returns an empty BitSet for a {@code null} input array.</p>
+-     *
+-     * <p>A negative startIndex is treated as zero. A startIndex larger than the array
+-     * length will return an empty BitSet.</p>
+-     *
+-     * @param array  the array to search for the object, may be {@code null}.
+-     * @param valueToFind  the value to find.
+-     * @param startIndex  the index to start searching.
+-     * @return a BitSet of all the indices of the value within the array,
+-     *  an empty BitSet if not found or {@code null} array input.
+-     * @since 3.10
+-     */
+-    public static BitSet indexesOf(final int[] array, final int valueToFind, int startIndex) {
+-        final BitSet bitSet = new BitSet();
+-        if (array != null) {
+-            while (startIndex < array.length) {
+-                startIndex = indexOf(array, valueToFind, startIndex);
+-                if (startIndex == INDEX_NOT_FOUND) {
+-                    break;
+-                }
+-                bitSet.set(startIndex);
+-                ++startIndex;
+-            }
+-        }
+-        return bitSet;
+-    }
+-
+-    /**
+-     * Finds the indices of the given value in the array.
+-     *
+-     * <p>This method returns an empty BitSet for a {@code null} input array.</p>
+-     *
+-     * @param array  the array to search for the object, may be {@code null}.
+-     * @param valueToFind  the value to find.
+-     * @return a BitSet of all the indices of the value within the array,
+-     *  an empty BitSet if not found or {@code null} array input.
+-     * @since 3.10
+-     */
+-    public static BitSet indexesOf(final long[] array, final long valueToFind) {
+-        return indexesOf(array, valueToFind, 0);
+-    }
+-
+-    /**
+-     * Finds the indices of the given value in the array starting at the given index.
+-     *
+-     * <p>This method returns an empty BitSet for a {@code null} input array.</p>
+-     *
+-     * <p>A negative startIndex is treated as zero. A startIndex larger than the array
+-     * length will return an empty BitSet.</p>
+-     *
+-     * @param array  the array to search for the object, may be {@code null}.
+-     * @param valueToFind  the value to find.
+-     * @param startIndex  the index to start searching.
+-     * @return a BitSet of all the indices of the value within the array,
+-     *  an empty BitSet if not found or {@code null} array input.
+-     * @since 3.10
+-     */
+-    public static BitSet indexesOf(final long[] array, final long valueToFind, int startIndex) {
+-        final BitSet bitSet = new BitSet();
+-        if (array != null) {
+-            while (startIndex < array.length) {
+-                startIndex = indexOf(array, valueToFind, startIndex);
+-                if (startIndex == INDEX_NOT_FOUND) {
+-                    break;
+-                }
+-                bitSet.set(startIndex);
+-                ++startIndex;
+-            }
+-        }
+-        return bitSet;
+-    }
+-
+-    /**
+-     * Finds the indices of the given object in the array.
+-     *
+-     * <p>This method returns an empty BitSet for a {@code null} input array.</p>
+-     *
+-     * @param array  the array to search for the object, may be {@code null}.
+-     * @param objectToFind  the object to find, may be {@code null}.
+-     * @return a BitSet of all the indices of the object within the array,
+-     *  an empty BitSet if not found or {@code null} array input.
+-     * @since 3.10
+-     */
+-    public static BitSet indexesOf(final Object[] array, final Object objectToFind) {
+-        return indexesOf(array, objectToFind, 0);
+-    }
+-
+-    /**
+-     * Finds the indices of the given object in the array starting at the given index.
+-     *
+-     * <p>This method returns an empty BitSet for a {@code null} input array.</p>
+-     *
+-     * <p>A negative startIndex is treated as zero. A startIndex larger than the array
+-     * length will return an empty BitSet.</p>
+-     *
+-     * @param array  the array to search for the object, may be {@code null}.
+-     * @param objectToFind  the object to find, may be {@code null}.
+-     * @param startIndex  the index to start searching.
+-     * @return a BitSet of all the indices of the object within the array starting at the index,
+-     *  an empty BitSet if not found or {@code null} array input.
+-     * @since 3.10
+-     */
+-    public static BitSet indexesOf(final Object[] array, final Object objectToFind, int startIndex) {
+-        final BitSet bitSet = new BitSet();
+-        if (array != null) {
+-            while (startIndex < array.length) {
+-                startIndex = indexOf(array, objectToFind, startIndex);
+-                if (startIndex == INDEX_NOT_FOUND) {
+-                    break;
+-                }
+-                bitSet.set(startIndex);
+-                ++startIndex;
+-            }
+-        }
+-        return bitSet;
+-    }
+-
+-    /**
+-     * Finds the indices of the given value in the array.
+-     *
+-     * <p>This method returns an empty BitSet for a {@code null} input array.</p>
+-     *
+-     * @param array  the array to search for the object, may be {@code null}.
+-     * @param valueToFind  the value to find.
+-     * @return a BitSet of all the indices of the value within the array,
+-     *  an empty BitSet if not found or {@code null} array input.
+-     * @since 3.10
+-     */
+-    public static BitSet indexesOf(final short[] array, final short valueToFind) {
+-        return indexesOf(array, valueToFind, 0);
+-    }
+-
+-    /**
+-     * Finds the indices of the given value in the array starting at the given index.
+-     *
+-     * <p>This method returns an empty BitSet for a {@code null} input array.</p>
+-     *
+-     * <p>A negative startIndex is treated as zero. A startIndex larger than the array
+-     * length will return an empty BitSet.</p>
+-     *
+-     * @param array  the array to search for the object, may be {@code null}.
+-     * @param valueToFind  the value to find.
+-     * @param startIndex  the index to start searching.
+-     * @return a BitSet of all the indices of the value within the array,
+-     *  an empty BitSet if not found or {@code null} array input.
+-     * @since 3.10
+-     */
+-    public static BitSet indexesOf(final short[] array, final short valueToFind, int startIndex) {
+-        final BitSet bitSet = new BitSet();
+-        if (array != null) {
+-            while (startIndex < array.length) {
+-                startIndex = indexOf(array, valueToFind, startIndex);
+-                if (startIndex == INDEX_NOT_FOUND) {
+-                    break;
+-                }
+-                bitSet.set(startIndex);
+-                ++startIndex;
+-            }
+-        }
+-        return bitSet;
+-    }
+-
+-    /**
+-     * Finds the index of the given value in the array.
+-     * <p>
+-     * This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+-     * </p>
+-     *
+-     * @param array       the array to search for the object, may be {@code null}.
+-     * @param valueToFind the value to find.
+-     * @return the index of the value within the array, {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input.
+-     */
+-    public static int indexOf(final boolean[] array, final boolean valueToFind) {
+-        return indexOf(array, valueToFind, 0);
+-    }
+-
+-    /**
+-     * Finds the index of the given value in the array starting at the given index.
+-     * <p>
+-     * This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+-     * </p>
+-     * <p>
+-     * A negative startIndex is treated as zero. A startIndex larger than the array length will return {@link #INDEX_NOT_FOUND} ({@code -1}).
+-     * </p>
+-     *
+-     * @param array       the array to search for the object, may be {@code null}.
+-     * @param valueToFind the value to find.
+-     * @param startIndex  the index to start searching.
+-     * @return the index of the value within the array, {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input.
+-     */
+-    public static int indexOf(final boolean[] array, final boolean valueToFind, final int startIndex) {
+-        if (isEmpty(array)) {
+-            return INDEX_NOT_FOUND;
+-        }
+-        for (int i = max0(startIndex); i < array.length; i++) {
+-            if (valueToFind == array[i]) {
+-                return i;
+-            }
+-        }
+-        return INDEX_NOT_FOUND;
+-    }
+-
+-    /**
+-     * Finds the index of the given value in the array.
+-     * <p>
+-     * This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+-     * </p>
+-     *
+-     * @param array       the array to search for the object, may be {@code null}.
+-     * @param valueToFind the value to find.
+-     * @return the index of the value within the array, {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input.
+-     */
+-    public static int indexOf(final byte[] array, final byte valueToFind) {
+-        return indexOf(array, valueToFind, 0);
+-    }
+-
+-    /**
+-     * Finds the index of the given value in the array starting at the given index.
+-     * <p>
+-     * This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+-     * </p>
+-     * <p>
+-     * A negative startIndex is treated as zero. A startIndex larger than the array length will return {@link #INDEX_NOT_FOUND} ({@code -1}).
+-     * </p>
+-     *
+-     * @param array       the array to search for the object, may be {@code null}.
+-     * @param valueToFind the value to find.
+-     * @param startIndex  the index to start searching.
+-     * @return the index of the value within the array, {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input.
+-     */
+-    public static int indexOf(final byte[] array, final byte valueToFind, final int startIndex) {
+-        if (isEmpty(array)) {
+-            return INDEX_NOT_FOUND;
+-        }
+-        for (int i = max0(startIndex); i < array.length; i++) {
+-            if (valueToFind == array[i]) {
+-                return i;
+-            }
+-        }
+-        return INDEX_NOT_FOUND;
+-    }
+-
+-    /**
+-     * Finds the index of the given value in the array.
+-     * <p>
+-     * This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+-     * </p>
+-     *
+-     * @param array       the array to search for the object, may be {@code null}.
+-     * @param valueToFind the value to find.
+-     * @return the index of the value within the array, {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input.
+-     * @since 2.1
+-     */
+-    public static int indexOf(final char[] array, final char valueToFind) {
+-        return indexOf(array, valueToFind, 0);
+-    }
+-
+-    /**
+-     * Finds the index of the given value in the array starting at the given index.
+-     * <p>
+-     * This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+-     * </p>
+-     * <p>
+-     * A negative startIndex is treated as zero. A startIndex larger than the array length will return {@link #INDEX_NOT_FOUND} ({@code -1}).
+-     * </p>
+-     *
+-     * @param array       the array to search for the object, may be {@code null}.
+-     * @param valueToFind the value to find.
+-     * @param startIndex  the index to start searching.
+-     * @return the index of the value within the array, {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input.
+-     * @since 2.1
+-     */
+-    public static int indexOf(final char[] array, final char valueToFind, final int startIndex) {
+-        if (isEmpty(array)) {
+-            return INDEX_NOT_FOUND;
+-        }
+-        for (int i = max0(startIndex); i < array.length; i++) {
+-            if (valueToFind == array[i]) {
+-                return i;
+-            }
+-        }
+-        return INDEX_NOT_FOUND;
+-    }
+-
+-    /**
+-     * Finds the index of the given value in the array.
+-     * <p>
+-     * This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+-     * </p>
+-     *
+-     * @param array       the array to search for the object, may be {@code null}.
+-     * @param valueToFind the value to find.
+-     * @return the index of the value within the array, {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input.
+-     */
+-    public static int indexOf(final double[] array, final double valueToFind) {
+-        return indexOf(array, valueToFind, 0);
+-    }
+-
+-    /**
+-     * Finds the index of the given value within a given tolerance in the array. This method will return the index of the first value which falls between the
+-     * region defined by valueToFind - tolerance and valueToFind + tolerance.
+-     * <p>
+-     * This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+-     * </p>
+-     *
+-     * @param array       the array to search for the object, may be {@code null}.
+-     * @param valueToFind the value to find.
+-     * @param tolerance   tolerance of the search.
+-     * @return the index of the value within the array, {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input.
+-     */
+-    public static int indexOf(final double[] array, final double valueToFind, final double tolerance) {
+-        return indexOf(array, valueToFind, 0, tolerance);
+-    }
+-
+-    /**
+-     * Finds the index of the given value in the array starting at the given index.
+-     * <p>
+-     * This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+-     * </p>
+-     * <p>
+-     * A negative startIndex is treated as zero. A startIndex larger than the array length will return {@link #INDEX_NOT_FOUND} ({@code -1}).
+-     * </p>
+-     *
+-     * @param array       the array to search for the object, may be {@code null}.
+-     * @param valueToFind the value to find.
+-     * @param startIndex  the index to start searching.
+-     * @return the index of the value within the array, {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input.
+-     */
+-    public static int indexOf(final double[] array, final double valueToFind, final int startIndex) {
+-        if (Double.isNaN(valueToFind)) {
+-            return indexOfNaN(array, startIndex);
+-        }
+-        if (isEmpty(array)) {
+-            return INDEX_NOT_FOUND;
+-        }
+-        for (int i = max0(startIndex); i < array.length; i++) {
+-            if (valueToFind == array[i]) {
+-                return i;
+-            }
+-        }
+-        return INDEX_NOT_FOUND;
+-    }
+-
+-    /**
+-     * Finds the index of the given value in the array starting at the given index. This method will return the index of the first value which falls between the
+-     * region defined by valueToFind - tolerance and valueToFind + tolerance.
+-     * <p>
+-     * This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+-     * </p>
+-     * <p>
+-     * A negative startIndex is treated as zero. A startIndex larger than the array length will return {@link #INDEX_NOT_FOUND} ({@code -1}).
+-     * </p>
+-     *
+-     * @param array       the array to search for the object, may be {@code null}.
+-     * @param valueToFind the value to find.
+-     * @param startIndex  the index to start searching.
+-     * @param tolerance   tolerance of the search.
+-     * @return the index of the value within the array, {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input.
+-     */
+-    public static int indexOf(final double[] array, final double valueToFind, final int startIndex, final double tolerance) {
+-        if (Double.isNaN(valueToFind)) {
+-            return indexOfNaN(array, startIndex);
+-        }
+-        if (isEmpty(array)) {
+-            return INDEX_NOT_FOUND;
+-        }
+-        final double min = valueToFind - tolerance;
+-        final double max = valueToFind + tolerance;
+-        for (int i = max0(startIndex); i < array.length; i++) {
+-            if (array[i] >= min && array[i] <= max) {
+-                return i;
+-            }
+-        }
+-        return INDEX_NOT_FOUND;
+-    }
+-
+-    /**
+-     * Finds the index of the given value in the array.
+-     * <p>
+-     * This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+-     * </p>
+-     *
+-     * @param array       the array to search for the object, may be {@code null}.
+-     * @param valueToFind the value to find.
+-     * @return the index of the value within the array, {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input.
+-     */
+-    public static int indexOf(final float[] array, final float valueToFind) {
+-        return indexOf(array, valueToFind, 0);
+-    }
+-
+-    /**
+-     * Finds the index of the given value in the array starting at the given index.
+-     * <p>
+-     * This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+-     * </p>
+-     * <p>
+-     * A negative startIndex is treated as zero. A startIndex larger than the array length will return {@link #INDEX_NOT_FOUND} ({@code -1}).
+-     * </p>
+-     *
+-     * @param array       the array to search for the object, may be {@code null}.
+-     * @param valueToFind the value to find.
+-     * @param startIndex  the index to start searching.
+-     * @return the index of the value within the array, {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input.
+-     */
+-    public static int indexOf(final float[] array, final float valueToFind, final int startIndex) {
+-        if (isEmpty(array)) {
+-            return INDEX_NOT_FOUND;
+-        }
+-        final boolean searchNaN = Float.isNaN(valueToFind);
+-        for (int i = max0(startIndex); i < array.length; i++) {
+-            final float element = array[i];
+-            if (valueToFind == element || searchNaN && Float.isNaN(element)) {
+-                return i;
+-            }
+-        }
+-        return INDEX_NOT_FOUND;
+-    }
+-
+-    /**
+-     * Finds the index of the given value in the array.
+-     * <p>
+-     * This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+-     * </p>
+-     *
+-     * @param array       the array to search for the object, may be {@code null}.
+-     * @param valueToFind the value to find.
+-     * @return the index of the value within the array, {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input.
+-     */
+-    public static int indexOf(final int[] array, final int valueToFind) {
+-        return indexOf(array, valueToFind, 0);
+-    }
+-
+-    /**
+-     * Finds the index of the given value in the array starting at the given index.
+-     * <p>
+-     * This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+-     * </p>
+-     * <p>
+-     * A negative startIndex is treated as zero. A startIndex larger than the array length will return {@link #INDEX_NOT_FOUND} ({@code -1}).
+-     * </p>
+-     *
+-     * @param array       the array to search for the object, may be {@code null}.
+-     * @param valueToFind the value to find.
+-     * @param startIndex  the index to start searching.
+-     * @return the index of the value within the array, {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input.
+-     */
+-    public static int indexOf(final int[] array, final int valueToFind, final int startIndex) {
+-        if (isEmpty(array)) {
+-            return INDEX_NOT_FOUND;
+-        }
+-        for (int i = max0(startIndex); i < array.length; i++) {
+-            if (valueToFind == array[i]) {
+-                return i;
+-            }
+-        }
+-        return INDEX_NOT_FOUND;
+-    }
+-
+-    /**
+-     * Finds the index of the given value in the array.
+-     * <p>
+-     * This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+-     * </p>
+-     *
+-     * @param array       the array to search for the object, may be {@code null}.
+-     * @param valueToFind the value to find.
+-     * @return the index of the value within the array, {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input.
+-     */
+-    public static int indexOf(final long[] array, final long valueToFind) {
+-        return indexOf(array, valueToFind, 0);
+-    }
+-
+-    /**
+-     * Finds the index of the given value in the array starting at the given index.
+-     * <p>
+-     * This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+-     * </p>
+-     * <p>
+-     * A negative startIndex is treated as zero. A startIndex larger than the array length will return {@link #INDEX_NOT_FOUND} ({@code -1}).
+-     * </p>
+-     *
+-     * @param array       the array to search for the object, may be {@code null}.
+-     * @param valueToFind the value to find.
+-     * @param startIndex  the index to start searching.
+-     * @return the index of the value within the array, {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input.
+-     */
+-    public static int indexOf(final long[] array, final long valueToFind, final int startIndex) {
+-        if (isEmpty(array)) {
+-            return INDEX_NOT_FOUND;
+-        }
+-        for (int i = max0(startIndex); i < array.length; i++) {
+-            if (valueToFind == array[i]) {
+-                return i;
+-            }
+-        }
+-        return INDEX_NOT_FOUND;
+-    }
+-
+-    /**
+-     * Finds the index of the given object in the array.
+-     * <p>
+-     * This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+-     * </p>
+-     *
+-     * @param array        the array to search for the object, may be {@code null}.
+-     * @param objectToFind the object to find, may be {@code null}.
+-     * @return the index of the object within the array, {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input.
+-     */
+-    public static int indexOf(final Object[] array, final Object objectToFind) {
+-        return indexOf(array, objectToFind, 0);
+-    }
+-
+-    /**
+-     * Finds the index of the given object in the array starting at the given index.
+-     * <p>
+-     * This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+-     * </p>
+-     * <p>
+-     * A negative startIndex is treated as zero. A startIndex larger than the array length will return {@link #INDEX_NOT_FOUND} ({@code -1}).
+-     * </p>
+-     *
+-     * @param array        the array to search for the object, may be {@code null}.
+-     * @param objectToFind the object to find, may be {@code null}.
+-     * @param startIndex   the index to start searching.
+-     * @return the index of the object within the array starting at the index, {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input.
+-     */
+-    public static int indexOf(final Object[] array, final Object objectToFind, int startIndex) {
+-        if (isEmpty(array)) {
+-            return INDEX_NOT_FOUND;
+-        }
+-        startIndex = max0(startIndex);
+-        if (objectToFind == null) {
+-            for (int i = startIndex; i < array.length; i++) {
+-                if (array[i] == null) {
+-                    return i;
+-                }
+-            }
+-        } else {
+-            for (int i = startIndex; i < array.length; i++) {
+-                if (objectToFind.equals(array[i])) {
+-                    return i;
+-                }
+-            }
+-        }
+-        return INDEX_NOT_FOUND;
+-    }
+-
+-    /**
+-     * Finds the index of the given value in the array.
+-     * <p>
+-     * This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+-     * </p>
+-     *
+-     * @param array       the array to search for the object, may be {@code null}
+-     * @param valueToFind the value to find.
+-     * @return the index of the value within the array, {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input.
+-     */
+-    public static int indexOf(final short[] array, final short valueToFind) {
+-        return indexOf(array, valueToFind, 0);
+-    }
+-
+-    /**
+-     * Finds the index of the given value in the array starting at the given index.
+-     * <p>
+-     * This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+-     * </p>
+-     * <p>
+-     * A negative startIndex is treated as zero. A startIndex larger than the array length will return {@link #INDEX_NOT_FOUND} ({@code -1}).
+-     * </p>
+-     *
+-     * @param array       the array to search for the object, may be {@code null}.
+-     * @param valueToFind the value to find.
+-     * @param startIndex  the index to start searching.
+-     * @return the index of the value within the array, {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input.
+-     */
+-    public static int indexOf(final short[] array, final short valueToFind, final int startIndex) {
+-        if (isEmpty(array)) {
+-            return INDEX_NOT_FOUND;
+-        }
+-        for (int i = max0(startIndex); i < array.length; i++) {
+-            if (valueToFind == array[i]) {
+-                return i;
+-            }
+-        }
+-        return INDEX_NOT_FOUND;
+-    }
+-
+-    /**
+-     * Finds the index of the NaN value in a double array.
+-     * @param array the array to search for NaN, may be {@code null}.
+-     * @param startIndex the index to start searching.
+-     * @return the index of the NaN value within the array, {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input.
+-     */
+-    private static int indexOfNaN(final double[] array, final int startIndex) {
+-        if (isEmpty(array)) {
+-            return INDEX_NOT_FOUND;
+-        }
+-        for (int i = max0(startIndex); i < array.length; i++) {
+-            if (Double.isNaN(array[i])) {
+-                return i;
+-            }
+-        }
+-        return INDEX_NOT_FOUND;
+-    }
+-
+     /**
+      * Inserts elements into an array at the given index (starting from zero).
+      *

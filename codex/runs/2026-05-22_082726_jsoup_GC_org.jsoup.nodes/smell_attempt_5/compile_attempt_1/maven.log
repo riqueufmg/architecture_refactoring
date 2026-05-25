@@ -1,0 +1,609 @@
+[ERROR] COMPILATION ERROR : 
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/helper/W3CDomTest.java:[449,24] cannot find symbol
+  symbol:   class TextNode
+  location: package org.jsoup.nodes
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/DataNodeTest.java:[16,9] cannot find symbol
+  symbol:   class DataNode
+  location: class org.jsoup.nodes.DataNodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/DataNodeTest.java:[16,29] cannot find symbol
+  symbol:   class DataNode
+  location: class org.jsoup.nodes.DataNodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/DataNodeTest.java:[25,9] cannot find symbol
+  symbol:   class DataNode
+  location: class org.jsoup.nodes.DataNodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/DataNodeTest.java:[25,29] cannot find symbol
+  symbol:   class DataNode
+  location: class org.jsoup.nodes.DataNodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/DataNodeTest.java:[34,9] cannot find symbol
+  symbol:   class DataNode
+  location: class org.jsoup.nodes.DataNodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/DataNodeTest.java:[34,29] cannot find symbol
+  symbol:   class DataNode
+  location: class org.jsoup.nodes.DataNodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/DataNodeTest.java:[43,9] cannot find symbol
+  symbol:   class DataNode
+  location: class org.jsoup.nodes.DataNodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/DataNodeTest.java:[43,29] cannot find symbol
+  symbol:   class DataNode
+  location: class org.jsoup.nodes.DataNodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/DataNodeTest.java:[52,9] cannot find symbol
+  symbol:   class DataNode
+  location: class org.jsoup.nodes.DataNodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/DataNodeTest.java:[52,29] cannot find symbol
+  symbol:   class DataNode
+  location: class org.jsoup.nodes.DataNodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/DataNodeTest.java:[61,9] cannot find symbol
+  symbol:   class DataNode
+  location: class org.jsoup.nodes.DataNodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/DataNodeTest.java:[61,29] cannot find symbol
+  symbol:   class DataNode
+  location: class org.jsoup.nodes.DataNodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/DataNodeTest.java:[70,9] cannot find symbol
+  symbol:   class DataNode
+  location: class org.jsoup.nodes.DataNodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/DataNodeTest.java:[70,29] cannot find symbol
+  symbol:   class DataNode
+  location: class org.jsoup.nodes.DataNodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/NodeIteratorTest.java:[183,33] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.NodeIteratorTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/NodeIteratorTest.java:[183,47] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.NodeIteratorTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/NodeIteratorTest.java:[206,22] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.NodeIteratorTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/NodeIteratorTest.java:[206,61] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.NodeIteratorTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/NodeIteratorTest.java:[210,13] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.NodeIteratorTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/NodeIteratorTest.java:[261,34] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.NodeIteratorTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/NodeIteratorTest.java:[262,29] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.NodeIteratorTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/ElementTest.java:[94,33] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.ElementTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/ElementTest.java:[95,36] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.ElementTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/ElementTest.java:[1157,9] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.ElementTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/ElementTest.java:[1161,9] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.ElementTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/ElementTest.java:[1161,24] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.ElementTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/ElementTest.java:[1233,14] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.ElementTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/ElementTest.java:[1247,14] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.ElementTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/ElementTest.java:[1264,14] cannot find symbol
+  symbol:   class DataNode
+  location: class org.jsoup.nodes.ElementTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/ElementTest.java:[1268,14] cannot find symbol
+  symbol:   class DataNode
+  location: class org.jsoup.nodes.ElementTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/ElementTest.java:[1272,14] cannot find symbol
+  symbol:   class DataNode
+  location: class org.jsoup.nodes.ElementTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/ElementTest.java:[1365,9] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.ElementTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/ElementTest.java:[1365,28] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.ElementTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/ElementTest.java:[3123,9] cannot find symbol
+  symbol:   class CDataNode
+  location: class org.jsoup.nodes.ElementTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/ElementTest.java:[3123,31] cannot find symbol
+  symbol:   class CDataNode
+  location: class org.jsoup.nodes.ElementTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/ElementTest.java:[3137,9] cannot find symbol
+  symbol:   class DataNode
+  location: class org.jsoup.nodes.ElementTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/ElementTest.java:[3137,36] cannot find symbol
+  symbol:   class DataNode
+  location: class org.jsoup.nodes.ElementTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/ElementTest.java:[3156,9] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.ElementTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/ElementTest.java:[3156,32] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.ElementTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/ElementTest.java:[3158,9] cannot find symbol
+  symbol:   class CDataNode
+  location: class org.jsoup.nodes.ElementTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/ElementTest.java:[3158,34] cannot find symbol
+  symbol:   class CDataNode
+  location: class org.jsoup.nodes.ElementTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/ElementTest.java:[3168,9] cannot find symbol
+  symbol:   class DataNode
+  location: class org.jsoup.nodes.ElementTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/ElementTest.java:[3168,36] cannot find symbol
+  symbol:   class DataNode
+  location: class org.jsoup.nodes.ElementTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/ElementTest.java:[3189,9] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.ElementTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/ElementTest.java:[3189,32] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.ElementTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/ElementTest.java:[3191,9] cannot find symbol
+  symbol:   class CDataNode
+  location: class org.jsoup.nodes.ElementTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/ElementTest.java:[3191,34] cannot find symbol
+  symbol:   class CDataNode
+  location: class org.jsoup.nodes.ElementTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/ElementTest.java:[3442,9] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.ElementTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/ElementTest.java:[3442,55] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.ElementTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/ElementTest.java:[3445,9] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.ElementTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/ElementTest.java:[3445,56] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.ElementTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/ElementTest.java:[3525,9] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.ElementTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/ElementTest.java:[3525,26] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.ElementTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/NodeStreamTest.java:[44,45] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.NodeStreamTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/NodeTest.java:[287,36] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.NodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/NodeTest.java:[288,32] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.NodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/NodeTest.java:[321,33] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.NodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/NodeTest.java:[322,17] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.NodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/NodeTest.java:[322,38] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.NodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/NodeTest.java:[365,9] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.NodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/NodeTest.java:[365,25] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.NodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/NodeTest.java:[366,9] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.NodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/NodeTest.java:[366,25] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.NodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/NodeTest.java:[421,9] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.NodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/NodeTest.java:[421,26] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.NodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/NodeTest.java:[424,9] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.NodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/NodeTest.java:[447,9] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.NodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/NodeTest.java:[447,27] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.NodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/NodeTest.java:[450,9] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.NodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/NodeTest.java:[450,26] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.NodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/NodeTest.java:[473,9] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.NodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/NodeTest.java:[473,26] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.NodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/NodeTest.java:[485,9] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.NodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/NodeTest.java:[485,29] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.NodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/NodeTest.java:[495,9] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.NodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/NodeTest.java:[495,26] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.NodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/NodeTest.java:[516,9] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.NodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/NodeTest.java:[516,26] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.NodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/PrinterTest.java:[57,9] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.PrinterTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/PrinterTest.java:[57,27] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.PrinterTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/PrinterTest.java:[60,35] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.PrinterTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/PrinterTest.java:[73,101] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.PrinterTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/PrinterTest.java:[73,76] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.PrinterTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/PrinterTest.java:[73,52] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.PrinterTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/PrinterTest.java:[73,28] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.PrinterTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/TextNodeTest.java:[22,9] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.TextNodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/TextNodeTest.java:[22,28] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.TextNodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/TextNodeTest.java:[23,9] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.TextNodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/TextNodeTest.java:[23,28] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.TextNodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/TextNodeTest.java:[24,9] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.TextNodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/TextNodeTest.java:[24,30] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.TextNodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/TextNodeTest.java:[25,9] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.TextNodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/TextNodeTest.java:[25,29] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.TextNodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/TextNodeTest.java:[26,9] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.TextNodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/TextNodeTest.java:[26,29] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.TextNodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/TextNodeTest.java:[41,9] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.TextNodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/TextNodeTest.java:[41,30] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.TextNodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/TextNodeTest.java:[44,9] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.TextNodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/TextNodeTest.java:[44,24] cannot find symbol
+  symbol:   class TextNode
+  location: class org.jsoup.nodes.TextNodeTest
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.15.0:testCompile (compile-java11-tests) on project jsoup: Compilation failure: Compilation failure: 
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/helper/W3CDomTest.java:[449,24] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: package org.jsoup.nodes
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/DataNodeTest.java:[16,9] cannot find symbol
+[ERROR]   symbol:   class DataNode
+[ERROR]   location: class org.jsoup.nodes.DataNodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/DataNodeTest.java:[16,29] cannot find symbol
+[ERROR]   symbol:   class DataNode
+[ERROR]   location: class org.jsoup.nodes.DataNodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/DataNodeTest.java:[25,9] cannot find symbol
+[ERROR]   symbol:   class DataNode
+[ERROR]   location: class org.jsoup.nodes.DataNodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/DataNodeTest.java:[25,29] cannot find symbol
+[ERROR]   symbol:   class DataNode
+[ERROR]   location: class org.jsoup.nodes.DataNodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/DataNodeTest.java:[34,9] cannot find symbol
+[ERROR]   symbol:   class DataNode
+[ERROR]   location: class org.jsoup.nodes.DataNodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/DataNodeTest.java:[34,29] cannot find symbol
+[ERROR]   symbol:   class DataNode
+[ERROR]   location: class org.jsoup.nodes.DataNodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/DataNodeTest.java:[43,9] cannot find symbol
+[ERROR]   symbol:   class DataNode
+[ERROR]   location: class org.jsoup.nodes.DataNodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/DataNodeTest.java:[43,29] cannot find symbol
+[ERROR]   symbol:   class DataNode
+[ERROR]   location: class org.jsoup.nodes.DataNodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/DataNodeTest.java:[52,9] cannot find symbol
+[ERROR]   symbol:   class DataNode
+[ERROR]   location: class org.jsoup.nodes.DataNodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/DataNodeTest.java:[52,29] cannot find symbol
+[ERROR]   symbol:   class DataNode
+[ERROR]   location: class org.jsoup.nodes.DataNodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/DataNodeTest.java:[61,9] cannot find symbol
+[ERROR]   symbol:   class DataNode
+[ERROR]   location: class org.jsoup.nodes.DataNodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/DataNodeTest.java:[61,29] cannot find symbol
+[ERROR]   symbol:   class DataNode
+[ERROR]   location: class org.jsoup.nodes.DataNodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/DataNodeTest.java:[70,9] cannot find symbol
+[ERROR]   symbol:   class DataNode
+[ERROR]   location: class org.jsoup.nodes.DataNodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/DataNodeTest.java:[70,29] cannot find symbol
+[ERROR]   symbol:   class DataNode
+[ERROR]   location: class org.jsoup.nodes.DataNodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/NodeIteratorTest.java:[183,33] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.NodeIteratorTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/NodeIteratorTest.java:[183,47] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.NodeIteratorTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/NodeIteratorTest.java:[206,22] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.NodeIteratorTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/NodeIteratorTest.java:[206,61] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.NodeIteratorTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/NodeIteratorTest.java:[210,13] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.NodeIteratorTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/NodeIteratorTest.java:[261,34] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.NodeIteratorTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/NodeIteratorTest.java:[262,29] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.NodeIteratorTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/ElementTest.java:[94,33] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.ElementTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/ElementTest.java:[95,36] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.ElementTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/ElementTest.java:[1157,9] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.ElementTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/ElementTest.java:[1161,9] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.ElementTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/ElementTest.java:[1161,24] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.ElementTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/ElementTest.java:[1233,14] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.ElementTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/ElementTest.java:[1247,14] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.ElementTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/ElementTest.java:[1264,14] cannot find symbol
+[ERROR]   symbol:   class DataNode
+[ERROR]   location: class org.jsoup.nodes.ElementTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/ElementTest.java:[1268,14] cannot find symbol
+[ERROR]   symbol:   class DataNode
+[ERROR]   location: class org.jsoup.nodes.ElementTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/ElementTest.java:[1272,14] cannot find symbol
+[ERROR]   symbol:   class DataNode
+[ERROR]   location: class org.jsoup.nodes.ElementTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/ElementTest.java:[1365,9] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.ElementTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/ElementTest.java:[1365,28] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.ElementTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/ElementTest.java:[3123,9] cannot find symbol
+[ERROR]   symbol:   class CDataNode
+[ERROR]   location: class org.jsoup.nodes.ElementTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/ElementTest.java:[3123,31] cannot find symbol
+[ERROR]   symbol:   class CDataNode
+[ERROR]   location: class org.jsoup.nodes.ElementTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/ElementTest.java:[3137,9] cannot find symbol
+[ERROR]   symbol:   class DataNode
+[ERROR]   location: class org.jsoup.nodes.ElementTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/ElementTest.java:[3137,36] cannot find symbol
+[ERROR]   symbol:   class DataNode
+[ERROR]   location: class org.jsoup.nodes.ElementTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/ElementTest.java:[3156,9] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.ElementTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/ElementTest.java:[3156,32] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.ElementTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/ElementTest.java:[3158,9] cannot find symbol
+[ERROR]   symbol:   class CDataNode
+[ERROR]   location: class org.jsoup.nodes.ElementTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/ElementTest.java:[3158,34] cannot find symbol
+[ERROR]   symbol:   class CDataNode
+[ERROR]   location: class org.jsoup.nodes.ElementTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/ElementTest.java:[3168,9] cannot find symbol
+[ERROR]   symbol:   class DataNode
+[ERROR]   location: class org.jsoup.nodes.ElementTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/ElementTest.java:[3168,36] cannot find symbol
+[ERROR]   symbol:   class DataNode
+[ERROR]   location: class org.jsoup.nodes.ElementTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/ElementTest.java:[3189,9] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.ElementTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/ElementTest.java:[3189,32] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.ElementTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/ElementTest.java:[3191,9] cannot find symbol
+[ERROR]   symbol:   class CDataNode
+[ERROR]   location: class org.jsoup.nodes.ElementTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/ElementTest.java:[3191,34] cannot find symbol
+[ERROR]   symbol:   class CDataNode
+[ERROR]   location: class org.jsoup.nodes.ElementTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/ElementTest.java:[3442,9] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.ElementTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/ElementTest.java:[3442,55] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.ElementTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/ElementTest.java:[3445,9] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.ElementTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/ElementTest.java:[3445,56] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.ElementTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/ElementTest.java:[3525,9] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.ElementTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/ElementTest.java:[3525,26] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.ElementTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/NodeStreamTest.java:[44,45] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.NodeStreamTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/NodeTest.java:[287,36] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.NodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/NodeTest.java:[288,32] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.NodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/NodeTest.java:[321,33] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.NodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/NodeTest.java:[322,17] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.NodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/NodeTest.java:[322,38] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.NodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/NodeTest.java:[365,9] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.NodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/NodeTest.java:[365,25] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.NodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/NodeTest.java:[366,9] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.NodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/NodeTest.java:[366,25] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.NodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/NodeTest.java:[421,9] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.NodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/NodeTest.java:[421,26] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.NodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/NodeTest.java:[424,9] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.NodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/NodeTest.java:[447,9] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.NodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/NodeTest.java:[447,27] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.NodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/NodeTest.java:[450,9] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.NodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/NodeTest.java:[450,26] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.NodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/NodeTest.java:[473,9] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.NodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/NodeTest.java:[473,26] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.NodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/NodeTest.java:[485,9] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.NodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/NodeTest.java:[485,29] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.NodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/NodeTest.java:[495,9] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.NodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/NodeTest.java:[495,26] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.NodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/NodeTest.java:[516,9] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.NodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/NodeTest.java:[516,26] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.NodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/PrinterTest.java:[57,9] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.PrinterTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/PrinterTest.java:[57,27] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.PrinterTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/PrinterTest.java:[60,35] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.PrinterTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/PrinterTest.java:[73,101] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.PrinterTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/PrinterTest.java:[73,76] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.PrinterTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/PrinterTest.java:[73,52] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.PrinterTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/PrinterTest.java:[73,28] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.PrinterTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/TextNodeTest.java:[22,9] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.TextNodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/TextNodeTest.java:[22,28] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.TextNodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/TextNodeTest.java:[23,9] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.TextNodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/TextNodeTest.java:[23,28] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.TextNodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/TextNodeTest.java:[24,9] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.TextNodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/TextNodeTest.java:[24,30] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.TextNodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/TextNodeTest.java:[25,9] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.TextNodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/TextNodeTest.java:[25,29] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.TextNodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/TextNodeTest.java:[26,9] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.TextNodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/TextNodeTest.java:[26,29] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.TextNodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/TextNodeTest.java:[41,9] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.TextNodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/TextNodeTest.java:[41,30] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.TextNodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/TextNodeTest.java:[44,9] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.TextNodeTest
+[ERROR] /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/test/java/org/jsoup/nodes/TextNodeTest.java:[44,24] cannot find symbol
+[ERROR]   symbol:   class TextNode
+[ERROR]   location: class org.jsoup.nodes.TextNodeTest
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException

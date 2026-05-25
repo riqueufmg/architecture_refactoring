@@ -1,0 +1,570 @@
+{
+"commits": [
+{
+	"repository": "https://github.com/apache/commons-io",
+	"sha1": "9d4777047402f51cb55395887e49cd9b03d01ecf",
+	"url": "https://github.com/apache/commons-io/commit/9d4777047402f51cb55395887e49cd9b03d01ecf",
+	"refactorings": [{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public equals(o Object) : boolean from class org.apache.commons.io.channels.FilterFileChannel to public equals(o Object) : boolean from class org.apache.commons.io.channels.AbstractDelegateFileChannel",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/channels/FilterFileChannel.java",
+		"startLine": 109,
+		"endLine": 112,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public equals(o Object) : boolean"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/channels/AbstractDelegateFileChannel.java",
+		"startLine": 44,
+		"endLine": 47,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public equals(o Object) : boolean"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public force(metaData boolean) : void from class org.apache.commons.io.channels.FilterFileChannel to public force(metaData boolean) : void from class org.apache.commons.io.channels.AbstractDelegateFileChannel",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/channels/FilterFileChannel.java",
+		"startLine": 114,
+		"endLine": 117,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public force(metaData boolean) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/channels/AbstractDelegateFileChannel.java",
+		"startLine": 49,
+		"endLine": 52,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public force(metaData boolean) : void"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public hashCode() : int from class org.apache.commons.io.channels.FilterFileChannel to public hashCode() : int from class org.apache.commons.io.channels.AbstractDelegateFileChannel",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/channels/FilterFileChannel.java",
+		"startLine": 119,
+		"endLine": 122,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public hashCode() : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/channels/AbstractDelegateFileChannel.java",
+		"startLine": 54,
+		"endLine": 57,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public hashCode() : int"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method protected implCloseChannel() : void from class org.apache.commons.io.channels.FilterFileChannel to protected implCloseChannel() : void from class org.apache.commons.io.channels.AbstractDelegateFileChannel",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/channels/FilterFileChannel.java",
+		"startLine": 124,
+		"endLine": 127,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "protected implCloseChannel() : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/channels/AbstractDelegateFileChannel.java",
+		"startLine": 59,
+		"endLine": 62,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "protected implCloseChannel() : void"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public lock(position long, size long, shared boolean) : FileLock from class org.apache.commons.io.channels.FilterFileChannel to public lock(position long, size long, shared boolean) : FileLock from class org.apache.commons.io.channels.AbstractDelegateFileChannel",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/channels/FilterFileChannel.java",
+		"startLine": 129,
+		"endLine": 132,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public lock(position long, size long, shared boolean) : FileLock"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/channels/AbstractDelegateFileChannel.java",
+		"startLine": 64,
+		"endLine": 67,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public lock(position long, size long, shared boolean) : FileLock"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public map(mode MapMode, position long, size long) : MappedByteBuffer from class org.apache.commons.io.channels.FilterFileChannel to public map(mode MapMode, position long, size long) : MappedByteBuffer from class org.apache.commons.io.channels.AbstractDelegateFileChannel",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/channels/FilterFileChannel.java",
+		"startLine": 134,
+		"endLine": 137,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public map(mode MapMode, position long, size long) : MappedByteBuffer"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/channels/AbstractDelegateFileChannel.java",
+		"startLine": 69,
+		"endLine": 72,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public map(mode MapMode, position long, size long) : MappedByteBuffer"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public position() : long from class org.apache.commons.io.channels.FilterFileChannel to public position() : long from class org.apache.commons.io.channels.AbstractDelegateFileChannel",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/channels/FilterFileChannel.java",
+		"startLine": 139,
+		"endLine": 142,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public position() : long"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/channels/AbstractDelegateFileChannel.java",
+		"startLine": 74,
+		"endLine": 77,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public position() : long"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public position(newPosition long) : FileChannel from class org.apache.commons.io.channels.FilterFileChannel to public position(newPosition long) : FileChannel from class org.apache.commons.io.channels.AbstractDelegateFileChannel",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/channels/FilterFileChannel.java",
+		"startLine": 144,
+		"endLine": 147,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public position(newPosition long) : FileChannel"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/channels/AbstractDelegateFileChannel.java",
+		"startLine": 79,
+		"endLine": 82,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public position(newPosition long) : FileChannel"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public read(dst ByteBuffer) : int from class org.apache.commons.io.channels.FilterFileChannel to public read(dst ByteBuffer) : int from class org.apache.commons.io.channels.AbstractDelegateFileChannel",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/channels/FilterFileChannel.java",
+		"startLine": 149,
+		"endLine": 152,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public read(dst ByteBuffer) : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/channels/AbstractDelegateFileChannel.java",
+		"startLine": 84,
+		"endLine": 87,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public read(dst ByteBuffer) : int"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public read(dst ByteBuffer, position long) : int from class org.apache.commons.io.channels.FilterFileChannel to public read(dst ByteBuffer, position long) : int from class org.apache.commons.io.channels.AbstractDelegateFileChannel",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/channels/FilterFileChannel.java",
+		"startLine": 154,
+		"endLine": 157,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public read(dst ByteBuffer, position long) : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/channels/AbstractDelegateFileChannel.java",
+		"startLine": 89,
+		"endLine": 92,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public read(dst ByteBuffer, position long) : int"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public read(dsts ByteBuffer[], offset int, length int) : long from class org.apache.commons.io.channels.FilterFileChannel to public read(dsts ByteBuffer[], offset int, length int) : long from class org.apache.commons.io.channels.AbstractDelegateFileChannel",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/channels/FilterFileChannel.java",
+		"startLine": 159,
+		"endLine": 162,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public read(dsts ByteBuffer[], offset int, length int) : long"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/channels/AbstractDelegateFileChannel.java",
+		"startLine": 94,
+		"endLine": 97,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public read(dsts ByteBuffer[], offset int, length int) : long"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public size() : long from class org.apache.commons.io.channels.FilterFileChannel to public size() : long from class org.apache.commons.io.channels.AbstractDelegateFileChannel",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/channels/FilterFileChannel.java",
+		"startLine": 164,
+		"endLine": 167,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public size() : long"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/channels/AbstractDelegateFileChannel.java",
+		"startLine": 99,
+		"endLine": 102,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public size() : long"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public toString() : String from class org.apache.commons.io.channels.FilterFileChannel to public toString() : String from class org.apache.commons.io.channels.AbstractDelegateFileChannel",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/channels/FilterFileChannel.java",
+		"startLine": 169,
+		"endLine": 172,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public toString() : String"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/channels/AbstractDelegateFileChannel.java",
+		"startLine": 104,
+		"endLine": 107,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public toString() : String"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public transferFrom(src ReadableByteChannel, position long, count long) : long from class org.apache.commons.io.channels.FilterFileChannel to public transferFrom(src ReadableByteChannel, position long, count long) : long from class org.apache.commons.io.channels.AbstractDelegateFileChannel",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/channels/FilterFileChannel.java",
+		"startLine": 174,
+		"endLine": 177,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public transferFrom(src ReadableByteChannel, position long, count long) : long"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/channels/AbstractDelegateFileChannel.java",
+		"startLine": 109,
+		"endLine": 112,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public transferFrom(src ReadableByteChannel, position long, count long) : long"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public transferTo(position long, count long, target WritableByteChannel) : long from class org.apache.commons.io.channels.FilterFileChannel to public transferTo(position long, count long, target WritableByteChannel) : long from class org.apache.commons.io.channels.AbstractDelegateFileChannel",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/channels/FilterFileChannel.java",
+		"startLine": 179,
+		"endLine": 182,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public transferTo(position long, count long, target WritableByteChannel) : long"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/channels/AbstractDelegateFileChannel.java",
+		"startLine": 114,
+		"endLine": 117,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public transferTo(position long, count long, target WritableByteChannel) : long"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public truncate(size long) : FileChannel from class org.apache.commons.io.channels.FilterFileChannel to public truncate(size long) : FileChannel from class org.apache.commons.io.channels.AbstractDelegateFileChannel",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/channels/FilterFileChannel.java",
+		"startLine": 184,
+		"endLine": 187,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public truncate(size long) : FileChannel"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/channels/AbstractDelegateFileChannel.java",
+		"startLine": 119,
+		"endLine": 122,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public truncate(size long) : FileChannel"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public tryLock(position long, size long, shared boolean) : FileLock from class org.apache.commons.io.channels.FilterFileChannel to public tryLock(position long, size long, shared boolean) : FileLock from class org.apache.commons.io.channels.AbstractDelegateFileChannel",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/channels/FilterFileChannel.java",
+		"startLine": 189,
+		"endLine": 192,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public tryLock(position long, size long, shared boolean) : FileLock"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/channels/AbstractDelegateFileChannel.java",
+		"startLine": 124,
+		"endLine": 127,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public tryLock(position long, size long, shared boolean) : FileLock"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public write(src ByteBuffer) : int from class org.apache.commons.io.channels.FilterFileChannel to public write(src ByteBuffer) : int from class org.apache.commons.io.channels.AbstractDelegateFileChannel",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/channels/FilterFileChannel.java",
+		"startLine": 206,
+		"endLine": 209,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public write(src ByteBuffer) : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/channels/AbstractDelegateFileChannel.java",
+		"startLine": 129,
+		"endLine": 132,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public write(src ByteBuffer) : int"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public write(src ByteBuffer, position long) : int from class org.apache.commons.io.channels.FilterFileChannel to public write(src ByteBuffer, position long) : int from class org.apache.commons.io.channels.AbstractDelegateFileChannel",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/channels/FilterFileChannel.java",
+		"startLine": 211,
+		"endLine": 214,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public write(src ByteBuffer, position long) : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/channels/AbstractDelegateFileChannel.java",
+		"startLine": 134,
+		"endLine": 137,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public write(src ByteBuffer, position long) : int"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public write(srcs ByteBuffer[], offset int, length int) : long from class org.apache.commons.io.channels.FilterFileChannel to public write(srcs ByteBuffer[], offset int, length int) : long from class org.apache.commons.io.channels.AbstractDelegateFileChannel",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/channels/FilterFileChannel.java",
+		"startLine": 216,
+		"endLine": 219,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public write(srcs ByteBuffer[], offset int, length int) : long"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/channels/AbstractDelegateFileChannel.java",
+		"startLine": 139,
+		"endLine": 142,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public write(srcs ByteBuffer[], offset int, length int) : long"
+}]
+},
+{
+	"type": "Pull Up Attribute",
+	"description": "Pull Up Attribute package fileChannel : FileChannel from class org.apache.commons.io.channels.FilterFileChannel to private fileChannel : FileChannel from class org.apache.commons.io.channels.AbstractDelegateFileChannel",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/channels/FilterFileChannel.java",
+		"startLine": 94,
+		"endLine": 94,
+		"startColumn": 23,
+		"endColumn": 34,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "package fileChannel : FileChannel"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/channels/AbstractDelegateFileChannel.java",
+		"startLine": 34,
+		"endLine": 34,
+		"startColumn": 31,
+		"endColumn": 42,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "pulled up attribute declaration",
+		"codeElement": "private fileChannel : FileChannel"
+}]
+},
+{
+	"type": "Change Attribute Access Modifier",
+	"description": "Change Attribute Access Modifier package to private in attribute private fileChannel : FileChannel from class org.apache.commons.io.channels.AbstractDelegateFileChannel",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/channels/FilterFileChannel.java",
+		"startLine": 94,
+		"endLine": 94,
+		"startColumn": 23,
+		"endColumn": 34,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "package fileChannel : FileChannel"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/channels/AbstractDelegateFileChannel.java",
+		"startLine": 34,
+		"endLine": 34,
+		"startColumn": 31,
+		"endColumn": 42,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "attribute declaration with changed access modifier",
+		"codeElement": "private fileChannel : FileChannel"
+}]
+},
+{
+	"type": "Extract Superclass",
+	"description": "Extract Superclass org.apache.commons.io.channels.AbstractDelegateFileChannel from classes [org.apache.commons.io.channels.FilterFileChannel]",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/channels/FilterFileChannel.java",
+		"startLine": 32,
+		"endLine": 220,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original sub-type declaration",
+		"codeElement": "org.apache.commons.io.channels.FilterFileChannel"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/apache/commons/io/channels/FilterFileChannel.java",
+		"startLine": 26,
+		"endLine": 112,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "sub-type declaration after extraction",
+		"codeElement": "org.apache.commons.io.channels.FilterFileChannel"
+}, {
+		"filePath": "src/main/java/org/apache/commons/io/channels/AbstractDelegateFileChannel.java",
+		"startLine": 29,
+		"endLine": 143,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "extracted super-type declaration",
+		"codeElement": "org.apache.commons.io.channels.AbstractDelegateFileChannel"
+}]
+}
+]
+}]
+}

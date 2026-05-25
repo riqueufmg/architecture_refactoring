@@ -1,0 +1,639 @@
+{
+"commits": [
+{
+	"repository": "https://github.com/jhy/jsoup",
+	"sha1": "3d9fdacacc7a9bf61da39e4b0bc6c8dc3ccdfe93",
+	"url": "https://github.com/jhy/jsoup/commit/3d9fdacacc7a9bf61da39e4b0bc6c8dc3ccdfe93",
+	"refactorings": [{
+	"type": "Move Class",
+	"description": "Move Class org.jsoup.helper.Re2jRegex moved to org.jsoup.helper.regex.Re2jRegex",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/helper/Re2jRegex.java",
+		"startLine": 3,
+		"endLine": 48,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original type declaration",
+		"codeElement": "org.jsoup.helper.Re2jRegex"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/helper/regex/Re2jRegex.java",
+		"startLine": 5,
+		"endLine": 50,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "moved type declaration",
+		"codeElement": "org.jsoup.helper.regex.Re2jRegex"
+}]
+},
+{
+	"type": "Move Class",
+	"description": "Move Class org.jsoup.helper.Regex moved to org.jsoup.helper.regex.Regex",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/helper/Regex.java",
+		"startLine": 10,
+		"endLine": 119,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original type declaration",
+		"codeElement": "org.jsoup.helper.Regex"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/helper/regex/Regex.java",
+		"startLine": 11,
+		"endLine": 120,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "moved type declaration",
+		"codeElement": "org.jsoup.helper.regex.Regex"
+}]
+},
+{
+	"type": "Move Class",
+	"description": "Move Class org.jsoup.helper.Validate moved to org.jsoup.helper.validation.Validate",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/helper/Validate.java",
+		"startLine": 5,
+		"endLine": 240,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original type declaration",
+		"codeElement": "org.jsoup.helper.Validate"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/helper/validation/Validate.java",
+		"startLine": 5,
+		"endLine": 240,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "moved type declaration",
+		"codeElement": "org.jsoup.helper.validation.Validate"
+}]
+},
+{
+	"type": "Move Class",
+	"description": "Move Class org.jsoup.helper.ValidationException moved to org.jsoup.helper.validation.ValidationException",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/helper/ValidationException.java",
+		"startLine": 6,
+		"endLine": 34,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original type declaration",
+		"codeElement": "org.jsoup.helper.ValidationException"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/helper/validation/ValidationException.java",
+		"startLine": 6,
+		"endLine": 34,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "moved type declaration",
+		"codeElement": "org.jsoup.helper.validation.ValidationException"
+}]
+},
+{
+	"type": "Move Class",
+	"description": "Move Class org.jsoup.helper.RequestAuthHandler moved to org.jsoup.helper.auth.RequestAuthHandler",
+	"leftSideLocations": [{
+		"filePath": "src/main/java11/org/jsoup/helper/RequestAuthHandler.java",
+		"startLine": 6,
+		"endLine": 35,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original type declaration",
+		"codeElement": "org.jsoup.helper.RequestAuthHandler"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java11/org/jsoup/helper/auth/RequestAuthHandler.java",
+		"startLine": 7,
+		"endLine": 36,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "moved type declaration",
+		"codeElement": "org.jsoup.helper.auth.RequestAuthHandler"
+}]
+},
+{
+	"type": "Move Class",
+	"description": "Move Class org.jsoup.helper.AuthenticationHandler moved to org.jsoup.helper.auth.AuthenticationHandler",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/helper/AuthenticationHandler.java",
+		"startLine": 9,
+		"endLine": 90,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original type declaration",
+		"codeElement": "org.jsoup.helper.AuthenticationHandler"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/helper/auth/AuthenticationHandler.java",
+		"startLine": 10,
+		"endLine": 99,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "moved type declaration",
+		"codeElement": "org.jsoup.helper.auth.AuthenticationHandler"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier package to public in method public Context(url URL, type Authenticator.RequestorType, realm String) from class org.jsoup.helper.RequestAuthenticator.Context",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/helper/RequestAuthenticator.java",
+		"startLine": 34,
+		"endLine": 38,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package Context(url URL, type Authenticator.RequestorType, realm String)"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/helper/RequestAuthenticator.java",
+		"startLine": 34,
+		"endLine": 38,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "public Context(url URL, type Authenticator.RequestorType, realm String)"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier package to protected in method protected Regex(jdkPattern Pattern) from class org.jsoup.helper.regex.Regex",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/helper/Regex.java",
+		"startLine": 24,
+		"endLine": 26,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package Regex(jdkPattern Pattern)"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/helper/regex/Regex.java",
+		"startLine": 25,
+		"endLine": 27,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "protected Regex(jdkPattern Pattern)"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier package to public in method public wantsRe2j() : boolean from class org.jsoup.helper.regex.Regex",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/helper/Regex.java",
+		"startLine": 60,
+		"endLine": 62,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package wantsRe2j() : boolean"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/helper/regex/Regex.java",
+		"startLine": 61,
+		"endLine": 63,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "public wantsRe2j() : boolean"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier package to public in method public wantsRe2j(use boolean) : void from class org.jsoup.helper.regex.Regex",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/helper/Regex.java",
+		"startLine": 64,
+		"endLine": 66,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package wantsRe2j(use boolean) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/helper/regex/Regex.java",
+		"startLine": 65,
+		"endLine": 67,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "public wantsRe2j(use boolean) : void"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier package to public in method public assertFail(msg String) : boolean from class org.jsoup.helper.validation.Validate",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/helper/Validate.java",
+		"startLine": 220,
+		"endLine": 229,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package assertFail(msg String) : boolean"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/helper/validation/Validate.java",
+		"startLine": 220,
+		"endLine": 229,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "public assertFail(msg String) : boolean"
+}]
+},
+{
+	"type": "Change Class Access Modifier",
+	"description": "Change Class Access Modifier package to public in class org.jsoup.helper.auth.AuthenticationHandler",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/helper/AuthenticationHandler.java",
+		"startLine": 9,
+		"endLine": 90,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original class declaration",
+		"codeElement": "org.jsoup.helper.AuthenticationHandler"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/helper/auth/AuthenticationHandler.java",
+		"startLine": 10,
+		"endLine": 99,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "class declaration with changed access modifier",
+		"codeElement": "org.jsoup.helper.auth.AuthenticationHandler"
+}]
+},
+{
+	"type": "Change Attribute Access Modifier",
+	"description": "Change Attribute Access Modifier package to public in attribute public MaxAttempts : int from class org.jsoup.helper.auth.AuthenticationHandler",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/helper/AuthenticationHandler.java",
+		"startLine": 15,
+		"endLine": 15,
+		"startColumn": 22,
+		"endColumn": 37,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "package MaxAttempts : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/helper/auth/AuthenticationHandler.java",
+		"startLine": 16,
+		"endLine": 16,
+		"startColumn": 29,
+		"endColumn": 44,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "attribute declaration with changed access modifier",
+		"codeElement": "public MaxAttempts : int"
+}]
+},
+{
+	"type": "Change Attribute Access Modifier",
+	"description": "Change Attribute Access Modifier package to private in attribute private handler : AuthShim from class org.jsoup.helper.auth.AuthenticationHandler",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/helper/AuthenticationHandler.java",
+		"startLine": 16,
+		"endLine": 16,
+		"startColumn": 21,
+		"endColumn": 28,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "package handler : AuthShim"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/helper/auth/AuthenticationHandler.java",
+		"startLine": 17,
+		"endLine": 17,
+		"startColumn": 29,
+		"endColumn": 36,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "attribute declaration with changed access modifier",
+		"codeElement": "private handler : AuthShim"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier package to public in method public AuthenticationHandler() from class org.jsoup.helper.auth.AuthenticationHandler",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/helper/AuthenticationHandler.java",
+		"startLine": 34,
+		"endLine": 34,
+		"startColumn": 5,
+		"endColumn": 31,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package AuthenticationHandler()"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/helper/auth/AuthenticationHandler.java",
+		"startLine": 35,
+		"endLine": 35,
+		"startColumn": 5,
+		"endColumn": 38,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "public AuthenticationHandler()"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier package to public in method public AuthenticationHandler(auth RequestAuthenticator) from class org.jsoup.helper.auth.AuthenticationHandler",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/helper/AuthenticationHandler.java",
+		"startLine": 36,
+		"endLine": 38,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "package AuthenticationHandler(auth RequestAuthenticator)"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/helper/auth/AuthenticationHandler.java",
+		"startLine": 37,
+		"endLine": 39,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "public AuthenticationHandler(auth RequestAuthenticator)"
+}]
+},
+{
+	"type": "Extract And Move Method",
+	"description": "Extract And Move Method public enable(auth RequestAuthenticator, connOrHttp Object) : void extracted from private createConnection(req HttpConnection.Request) : HttpURLConnection in class org.jsoup.helper.UrlConnectionExecutor & moved to class org.jsoup.helper.auth.AuthenticationHandler",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/helper/UrlConnectionExecutor.java",
+		"startLine": 79,
+		"endLine": 110,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration before extraction",
+		"codeElement": "private createConnection(req HttpConnection.Request) : HttpURLConnection"
+}, {
+		"filePath": "src/main/java/org/jsoup/helper/UrlConnectionExecutor.java",
+		"startLine": 100,
+		"endLine": 100,
+		"startColumn": 13,
+		"endColumn": 75,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "extracted code from source method declaration",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/helper/auth/AuthenticationHandler.java",
+		"startLine": 41,
+		"endLine": 43,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "public enable(auth RequestAuthenticator, connOrHttp Object) : void"
+}, {
+		"filePath": "src/main/java/org/jsoup/helper/auth/AuthenticationHandler.java",
+		"startLine": 42,
+		"endLine": 42,
+		"startColumn": 9,
+		"endColumn": 42,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "extracted code to extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/helper/UrlConnectionExecutor.java",
+		"startLine": 80,
+		"endLine": 111,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration after extraction",
+		"codeElement": "private createConnection(req HttpConnection.Request) : HttpURLConnection"
+}, {
+		"filePath": "src/main/java/org/jsoup/helper/UrlConnectionExecutor.java",
+		"startLine": 101,
+		"endLine": 101,
+		"startColumn": 13,
+		"endColumn": 66,
+		"codeElementType": "METHOD_INVOCATION",
+		"description": "extracted method invocation",
+		"codeElement": "AuthenticationHandler.enable(req.authenticator,conn)"
+}]
+},
+{
+	"type": "Change Variable Type",
+	"description": "Change Variable Type conn : HttpURLConnection to connOrHttp : Object in method public enable(auth RequestAuthenticator, connOrHttp Object) : void from class org.jsoup.helper.auth.AuthenticationHandler",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/helper/UrlConnectionExecutor.java",
+		"startLine": 81,
+		"endLine": 85,
+		"startColumn": 33,
+		"endColumn": 10,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "conn : HttpURLConnection"
+}, {
+		"filePath": "src/main/java/org/jsoup/helper/UrlConnectionExecutor.java",
+		"startLine": 100,
+		"endLine": 100,
+		"startColumn": 13,
+		"endColumn": 75,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/helper/auth/AuthenticationHandler.java",
+		"startLine": 41,
+		"endLine": 41,
+		"startColumn": 58,
+		"endColumn": 75,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "changed-type variable declaration",
+		"codeElement": "connOrHttp : Object"
+}, {
+		"filePath": "src/main/java/org/jsoup/helper/auth/AuthenticationHandler.java",
+		"startLine": 42,
+		"endLine": 42,
+		"startColumn": 9,
+		"endColumn": 42,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}]
+},
+{
+	"type": "Remove Variable Modifier",
+	"description": "Remove Variable Modifier final in variable conn : HttpURLConnection in method private createConnection(req HttpConnection.Request) : HttpURLConnection from class org.jsoup.helper.UrlConnectionExecutor",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/helper/UrlConnectionExecutor.java",
+		"startLine": 81,
+		"endLine": 85,
+		"startColumn": 33,
+		"endColumn": 10,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "conn : HttpURLConnection"
+}, {
+		"filePath": "src/main/java/org/jsoup/helper/UrlConnectionExecutor.java",
+		"startLine": 79,
+		"endLine": 110,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private createConnection(req HttpConnection.Request) : HttpURLConnection"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/helper/auth/AuthenticationHandler.java",
+		"startLine": 41,
+		"endLine": 41,
+		"startColumn": 58,
+		"endColumn": 75,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "variable declaration with removed modifier",
+		"codeElement": "connOrHttp : Object"
+}, {
+		"filePath": "src/main/java/org/jsoup/helper/auth/AuthenticationHandler.java",
+		"startLine": 41,
+		"endLine": 43,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with removed variable modifier",
+		"codeElement": "public enable(auth RequestAuthenticator, connOrHttp Object) : void"
+}]
+},
+{
+	"type": "Parameterize Variable",
+	"description": "Parameterize Variable conn : HttpURLConnection to connOrHttp : Object in method public enable(auth RequestAuthenticator, connOrHttp Object) : void from class org.jsoup.helper.auth.AuthenticationHandler",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/helper/UrlConnectionExecutor.java",
+		"startLine": 81,
+		"endLine": 85,
+		"startColumn": 33,
+		"endColumn": 10,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "conn : HttpURLConnection"
+}, {
+		"filePath": "src/main/java/org/jsoup/helper/UrlConnectionExecutor.java",
+		"startLine": 100,
+		"endLine": 100,
+		"startColumn": 13,
+		"endColumn": 75,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/helper/auth/AuthenticationHandler.java",
+		"startLine": 41,
+		"endLine": 41,
+		"startColumn": 58,
+		"endColumn": 75,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "renamed variable declaration",
+		"codeElement": "connOrHttp : Object"
+}, {
+		"filePath": "src/main/java/org/jsoup/helper/auth/AuthenticationHandler.java",
+		"startLine": 42,
+		"endLine": 42,
+		"startColumn": 9,
+		"endColumn": 42,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the renamed variable",
+		"codeElement": null
+}]
+},
+{
+	"type": "Extract And Move Method",
+	"description": "Extract And Move Method public remove() : void extracted from package execute(req HttpConnection.Request, prevRes Response) : Response in class org.jsoup.helper.HttpConnection.Response & moved to class org.jsoup.helper.auth.AuthenticationHandler",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/helper/HttpConnection.java",
+		"startLine": 871,
+		"endLine": 962,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration before extraction",
+		"codeElement": "package execute(req HttpConnection.Request, prevRes Response) : Response"
+}, {
+		"filePath": "src/main/java/org/jsoup/helper/HttpConnection.java",
+		"startLine": 957,
+		"endLine": 957,
+		"startColumn": 21,
+		"endColumn": 60,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "extracted code from source method declaration",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/helper/auth/AuthenticationHandler.java",
+		"startLine": 45,
+		"endLine": 47,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "public remove() : void"
+}, {
+		"filePath": "src/main/java/org/jsoup/helper/auth/AuthenticationHandler.java",
+		"startLine": 46,
+		"endLine": 46,
+		"startColumn": 9,
+		"endColumn": 26,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "extracted code to extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/helper/HttpConnection.java",
+		"startLine": 873,
+		"endLine": 964,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration after extraction",
+		"codeElement": "package execute(req HttpConnection.Request, prevRes Response) : Response"
+}, {
+		"filePath": "src/main/java/org/jsoup/helper/HttpConnection.java",
+		"startLine": 959,
+		"endLine": 959,
+		"startColumn": 21,
+		"endColumn": 51,
+		"codeElementType": "METHOD_INVOCATION",
+		"description": "extracted method invocation",
+		"codeElement": "AuthenticationHandler.remove()"
+}]
+}
+]
+}]
+}

@@ -1,0 +1,2832 @@
+{
+"commits": [
+{
+	"repository": "https://github.com/jhy/jsoup",
+	"sha1": "62eba4d3e70e84e019ec149c44fbcb6eaab319bf",
+	"url": "https://github.com/jhy/jsoup/commit/62eba4d3e70e84e019ec149c44fbcb6eaab319bf",
+	"refactorings": [{
+	"type": "Move Class",
+	"description": "Move Class org.jsoup.safety.Safelist.TagName moved to org.jsoup.safety.SafelistValues.TagName",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 627,
+		"endLine": 635,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original type declaration",
+		"codeElement": "org.jsoup.safety.Safelist.TagName"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/SafelistValues.java",
+		"startLine": 11,
+		"endLine": 19,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "moved type declaration",
+		"codeElement": "org.jsoup.safety.SafelistValues.TagName"
+}]
+},
+{
+	"type": "Move Class",
+	"description": "Move Class org.jsoup.safety.Safelist.AttributeKey moved to org.jsoup.safety.SafelistValues.AttributeKey",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 637,
+		"endLine": 645,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original type declaration",
+		"codeElement": "org.jsoup.safety.Safelist.AttributeKey"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/SafelistValues.java",
+		"startLine": 21,
+		"endLine": 29,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "moved type declaration",
+		"codeElement": "org.jsoup.safety.SafelistValues.AttributeKey"
+}]
+},
+{
+	"type": "Move Class",
+	"description": "Move Class org.jsoup.safety.Safelist.AttributeValue moved to org.jsoup.safety.SafelistValues.AttributeValue",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 647,
+		"endLine": 655,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original type declaration",
+		"codeElement": "org.jsoup.safety.Safelist.AttributeValue"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/SafelistValues.java",
+		"startLine": 31,
+		"endLine": 39,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "moved type declaration",
+		"codeElement": "org.jsoup.safety.SafelistValues.AttributeValue"
+}]
+},
+{
+	"type": "Move Class",
+	"description": "Move Class org.jsoup.safety.Safelist.Protocol moved to org.jsoup.safety.SafelistValues.Protocol",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 657,
+		"endLine": 665,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original type declaration",
+		"codeElement": "org.jsoup.safety.Safelist.Protocol"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/SafelistValues.java",
+		"startLine": 41,
+		"endLine": 49,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "moved type declaration",
+		"codeElement": "org.jsoup.safety.SafelistValues.Protocol"
+}]
+},
+{
+	"type": "Move Class",
+	"description": "Move Class org.jsoup.safety.Safelist.TypedValue moved to org.jsoup.safety.SafelistValues.TypedValue",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 667,
+		"endLine": 692,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original type declaration",
+		"codeElement": "org.jsoup.safety.Safelist.TypedValue"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/SafelistValues.java",
+		"startLine": 51,
+		"endLine": 78,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "moved type declaration",
+		"codeElement": "org.jsoup.safety.SafelistValues.TypedValue"
+}]
+},
+{
+	"type": "Change Attribute Type",
+	"description": "Change Attribute Type tagNames : Set<TagName> to tagNames : Set<SafelistValues.TagName> in class org.jsoup.safety.Safelist",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 75,
+		"endLine": 75,
+		"startColumn": 32,
+		"endColumn": 40,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "tagNames : Set<TagName>"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 71,
+		"endLine": 71,
+		"startColumn": 51,
+		"endColumn": 59,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "changed-type attribute declaration",
+		"codeElement": "tagNames : Set<SafelistValues.TagName>"
+}]
+},
+{
+	"type": "Change Attribute Type",
+	"description": "Change Attribute Type attributes : Map<TagName,Set<AttributeKey>> to attributes : Map<SafelistValues.TagName,Set<SafelistValues.AttributeKey>> in class org.jsoup.safety.Safelist",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 76,
+		"endLine": 76,
+		"startColumn": 51,
+		"endColumn": 61,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "attributes : Map<TagName,Set<AttributeKey>>"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 72,
+		"endLine": 72,
+		"startColumn": 81,
+		"endColumn": 91,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "changed-type attribute declaration",
+		"codeElement": "attributes : Map<SafelistValues.TagName,Set<SafelistValues.AttributeKey>>"
+}]
+},
+{
+	"type": "Change Attribute Type",
+	"description": "Change Attribute Type enforcedAttributes : Map<TagName,Map<AttributeKey,AttributeValue>> to enforcedAttributes : Map<SafelistValues.TagName,Map<SafelistValues.AttributeKey,SafelistValues.AttributeValue>> in class org.jsoup.safety.Safelist",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 77,
+		"endLine": 77,
+		"startColumn": 67,
+		"endColumn": 85,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "enforcedAttributes : Map<TagName,Map<AttributeKey,AttributeValue>>"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 73,
+		"endLine": 73,
+		"startColumn": 112,
+		"endColumn": 130,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "changed-type attribute declaration",
+		"codeElement": "enforcedAttributes : Map<SafelistValues.TagName,Map<SafelistValues.AttributeKey,SafelistValues.AttributeValue>>"
+}]
+},
+{
+	"type": "Change Attribute Type",
+	"description": "Change Attribute Type protocols : Map<TagName,Map<AttributeKey,Set<Protocol>>> to protocols : Map<SafelistValues.TagName,Map<SafelistValues.AttributeKey,Set<SafelistValues.Protocol>>> in class org.jsoup.safety.Safelist",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 78,
+		"endLine": 78,
+		"startColumn": 66,
+		"endColumn": 75,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "protocols : Map<TagName,Map<AttributeKey,Set<Protocol>>>"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 74,
+		"endLine": 74,
+		"startColumn": 111,
+		"endColumn": 120,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "changed-type attribute declaration",
+		"codeElement": "protocols : Map<SafelistValues.TagName,Map<SafelistValues.AttributeKey,Set<SafelistValues.Protocol>>>"
+}]
+},
+{
+	"type": "Change Variable Type",
+	"description": "Change Variable Type attributeProtocolsCopy : Map<AttributeKey,Set<Protocol>> to attributeProtocolsCopy : Map<SafelistValues.AttributeKey,Set<SafelistValues.Protocol>> in method public Safelist(copy Safelist) from class org.jsoup.safety.Safelist",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 238,
+		"endLine": 238,
+		"startColumn": 46,
+		"endColumn": 86,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "attributeProtocolsCopy : Map<AttributeKey,Set<Protocol>>"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 240,
+		"endLine": 240,
+		"startColumn": 17,
+		"endColumn": 119,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 242,
+		"endLine": 242,
+		"startColumn": 13,
+		"endColumn": 76,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 238,
+		"endLine": 238,
+		"startColumn": 76,
+		"endColumn": 116,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "changed-type variable declaration",
+		"codeElement": "attributeProtocolsCopy : Map<SafelistValues.AttributeKey,Set<SafelistValues.Protocol>>"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 240,
+		"endLine": 240,
+		"startColumn": 17,
+		"endColumn": 119,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 242,
+		"endLine": 242,
+		"startColumn": 13,
+		"endColumn": 76,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}]
+},
+{
+	"type": "Change Variable Type",
+	"description": "Change Variable Type copyTagAttributes : Map.Entry<TagName,Set<AttributeKey>> to copyTagAttributes : Map.Entry<SafelistValues.TagName,Set<SafelistValues.AttributeKey>> in method public Safelist(copy Safelist) from class org.jsoup.safety.Safelist",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 231,
+		"endLine": 231,
+		"startColumn": 14,
+		"endColumn": 69,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "original variable declaration",
+		"codeElement": "copyTagAttributes : Map.Entry<TagName,Set<AttributeKey>>"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 232,
+		"endLine": 232,
+		"startColumn": 13,
+		"endColumn": 101,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 231,
+		"endLine": 231,
+		"startColumn": 14,
+		"endColumn": 99,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "changed-type variable declaration",
+		"codeElement": "copyTagAttributes : Map.Entry<SafelistValues.TagName,Set<SafelistValues.AttributeKey>>"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 232,
+		"endLine": 232,
+		"startColumn": 13,
+		"endColumn": 101,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}]
+},
+{
+	"type": "Change Variable Type",
+	"description": "Change Variable Type enforcedEntry : Map.Entry<TagName,Map<AttributeKey,AttributeValue>> to enforcedEntry : Map.Entry<SafelistValues.TagName,Map<SafelistValues.AttributeKey,SafelistValues.AttributeValue>> in method public Safelist(copy Safelist) from class org.jsoup.safety.Safelist",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 234,
+		"endLine": 234,
+		"startColumn": 14,
+		"endColumn": 81,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "original variable declaration",
+		"codeElement": "enforcedEntry : Map.Entry<TagName,Map<AttributeKey,AttributeValue>>"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 235,
+		"endLine": 235,
+		"startColumn": 13,
+		"endColumn": 101,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 234,
+		"endLine": 234,
+		"startColumn": 14,
+		"endColumn": 126,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "changed-type variable declaration",
+		"codeElement": "enforcedEntry : Map.Entry<SafelistValues.TagName,Map<SafelistValues.AttributeKey,SafelistValues.AttributeValue>>"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 235,
+		"endLine": 235,
+		"startColumn": 13,
+		"endColumn": 101,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}]
+},
+{
+	"type": "Change Variable Type",
+	"description": "Change Variable Type attributeProtocols : Map.Entry<AttributeKey,Set<Protocol>> to attributeProtocols : Map.Entry<SafelistValues.AttributeKey,Set<SafelistValues.Protocol>> in method public Safelist(copy Safelist) from class org.jsoup.safety.Safelist",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 239,
+		"endLine": 239,
+		"startColumn": 18,
+		"endColumn": 75,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "original variable declaration",
+		"codeElement": "attributeProtocols : Map.Entry<AttributeKey,Set<Protocol>>"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 240,
+		"endLine": 240,
+		"startColumn": 17,
+		"endColumn": 119,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 239,
+		"endLine": 239,
+		"startColumn": 18,
+		"endColumn": 105,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "changed-type variable declaration",
+		"codeElement": "attributeProtocols : Map.Entry<SafelistValues.AttributeKey,Set<SafelistValues.Protocol>>"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 240,
+		"endLine": 240,
+		"startColumn": 17,
+		"endColumn": 119,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}]
+},
+{
+	"type": "Change Variable Type",
+	"description": "Change Variable Type protocolsEntry : Map.Entry<TagName,Map<AttributeKey,Set<Protocol>>> to protocolsEntry : Map.Entry<SafelistValues.TagName,Map<SafelistValues.AttributeKey,Set<SafelistValues.Protocol>>> in method public Safelist(copy Safelist) from class org.jsoup.safety.Safelist",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 237,
+		"endLine": 237,
+		"startColumn": 14,
+		"endColumn": 81,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "original variable declaration",
+		"codeElement": "protocolsEntry : Map.Entry<TagName,Map<AttributeKey,Set<Protocol>>>"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 242,
+		"endLine": 242,
+		"startColumn": 13,
+		"endColumn": 76,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 239,
+		"endLine": 241,
+		"startColumn": 13,
+		"endColumn": 14,
+		"codeElementType": "ENHANCED_FOR_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 237,
+		"endLine": 237,
+		"startColumn": 14,
+		"endColumn": 126,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "changed-type variable declaration",
+		"codeElement": "protocolsEntry : Map.Entry<SafelistValues.TagName,Map<SafelistValues.AttributeKey,Set<SafelistValues.Protocol>>>"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 242,
+		"endLine": 242,
+		"startColumn": 13,
+		"endColumn": 76,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 239,
+		"endLine": 241,
+		"startColumn": 13,
+		"endColumn": 14,
+		"codeElementType": "ENHANCED_FOR_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}]
+},
+{
+	"type": "Change Variable Type",
+	"description": "Change Variable Type tagName : TagName to tagName : SafelistValues.TagName in method public removeTags(tags String...) : Safelist from class org.jsoup.safety.Safelist",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 276,
+		"endLine": 276,
+		"startColumn": 21,
+		"endColumn": 51,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "tagName : TagName"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 279,
+		"endLine": 279,
+		"startColumn": 17,
+		"endColumn": 44,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 280,
+		"endLine": 280,
+		"startColumn": 17,
+		"endColumn": 52,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 281,
+		"endLine": 281,
+		"startColumn": 17,
+		"endColumn": 43,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 278,
+		"endLine": 282,
+		"startColumn": 13,
+		"endColumn": 14,
+		"codeElementType": "IF_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 276,
+		"endLine": 276,
+		"startColumn": 36,
+		"endColumn": 81,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "changed-type variable declaration",
+		"codeElement": "tagName : SafelistValues.TagName"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 279,
+		"endLine": 279,
+		"startColumn": 17,
+		"endColumn": 44,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 280,
+		"endLine": 280,
+		"startColumn": 17,
+		"endColumn": 52,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 281,
+		"endLine": 281,
+		"startColumn": 17,
+		"endColumn": 43,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 278,
+		"endLine": 282,
+		"startColumn": 13,
+		"endColumn": 14,
+		"codeElementType": "IF_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}]
+},
+{
+	"type": "Change Variable Type",
+	"description": "Change Variable Type tagName : TagName to tagName : SafelistValues.TagName in method public addAttributes(tag String, attributes String...) : Safelist from class org.jsoup.safety.Safelist",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 308,
+		"endLine": 308,
+		"startColumn": 17,
+		"endColumn": 47,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "tagName : TagName"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 314,
+		"endLine": 314,
+		"startColumn": 9,
+		"endColumn": 103,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 308,
+		"endLine": 308,
+		"startColumn": 32,
+		"endColumn": 77,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "changed-type variable declaration",
+		"codeElement": "tagName : SafelistValues.TagName"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 314,
+		"endLine": 314,
+		"startColumn": 9,
+		"endColumn": 118,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}]
+},
+{
+	"type": "Change Variable Type",
+	"description": "Change Variable Type attributeSet : Set<AttributeKey> to attributeSet : Set<SafelistValues.AttributeKey> in method public addAttributes(tag String, attributes String...) : Safelist from class org.jsoup.safety.Safelist",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 309,
+		"endLine": 309,
+		"startColumn": 27,
+		"endColumn": 57,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "attributeSet : Set<AttributeKey>"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 315,
+		"endLine": 315,
+		"startColumn": 9,
+		"endColumn": 41,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 312,
+		"endLine": 312,
+		"startColumn": 13,
+		"endColumn": 57,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 309,
+		"endLine": 309,
+		"startColumn": 42,
+		"endColumn": 72,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "changed-type variable declaration",
+		"codeElement": "attributeSet : Set<SafelistValues.AttributeKey>"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 315,
+		"endLine": 315,
+		"startColumn": 9,
+		"endColumn": 41,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 312,
+		"endLine": 312,
+		"startColumn": 13,
+		"endColumn": 72,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}]
+},
+{
+	"type": "Change Variable Type",
+	"description": "Change Variable Type currentSet : Set<AttributeKey> to currentSet : Set<SafelistValues.AttributeKey> in method public addAttributes(tag String, attributes String...) : Safelist from class org.jsoup.safety.Safelist",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 314,
+		"endLine": 314,
+		"startColumn": 27,
+		"endColumn": 102,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "currentSet : Set<AttributeKey>"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 315,
+		"endLine": 315,
+		"startColumn": 9,
+		"endColumn": 41,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 314,
+		"endLine": 314,
+		"startColumn": 42,
+		"endColumn": 117,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "changed-type variable declaration",
+		"codeElement": "currentSet : Set<SafelistValues.AttributeKey>"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 315,
+		"endLine": 315,
+		"startColumn": 9,
+		"endColumn": 41,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}]
+},
+{
+	"type": "Change Variable Type",
+	"description": "Change Variable Type tagName : TagName to tagName : SafelistValues.TagName in method public removeAttributes(tag String, attributes String...) : Safelist from class org.jsoup.safety.Safelist",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 339,
+		"endLine": 339,
+		"startColumn": 17,
+		"endColumn": 47,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "tagName : TagName"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 350,
+		"endLine": 350,
+		"startColumn": 17,
+		"endColumn": 49,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 346,
+		"endLine": 346,
+		"startColumn": 13,
+		"endColumn": 73,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 345,
+		"endLine": 351,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "IF_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 339,
+		"endLine": 339,
+		"startColumn": 32,
+		"endColumn": 77,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "changed-type variable declaration",
+		"codeElement": "tagName : SafelistValues.TagName"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 350,
+		"endLine": 350,
+		"startColumn": 17,
+		"endColumn": 49,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 346,
+		"endLine": 346,
+		"startColumn": 13,
+		"endColumn": 88,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 345,
+		"endLine": 351,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "IF_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}]
+},
+{
+	"type": "Change Variable Type",
+	"description": "Change Variable Type attributeSet : Set<AttributeKey> to attributeSet : Set<SafelistValues.AttributeKey> in method public removeAttributes(tag String, attributes String...) : Safelist from class org.jsoup.safety.Safelist",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 340,
+		"endLine": 340,
+		"startColumn": 27,
+		"endColumn": 57,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "attributeSet : Set<AttributeKey>"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 347,
+		"endLine": 347,
+		"startColumn": 13,
+		"endColumn": 48,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 357,
+		"endLine": 357,
+		"startColumn": 17,
+		"endColumn": 52,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 343,
+		"endLine": 343,
+		"startColumn": 13,
+		"endColumn": 57,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 340,
+		"endLine": 340,
+		"startColumn": 42,
+		"endColumn": 72,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "changed-type variable declaration",
+		"codeElement": "attributeSet : Set<SafelistValues.AttributeKey>"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 347,
+		"endLine": 347,
+		"startColumn": 13,
+		"endColumn": 48,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 357,
+		"endLine": 357,
+		"startColumn": 17,
+		"endColumn": 52,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 343,
+		"endLine": 343,
+		"startColumn": 13,
+		"endColumn": 72,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}]
+},
+{
+	"type": "Change Variable Type",
+	"description": "Change Variable Type currentSet : Set<AttributeKey> to currentSet : Set<SafelistValues.AttributeKey> in method public removeAttributes(tag String, attributes String...) : Safelist from class org.jsoup.safety.Safelist",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 346,
+		"endLine": 346,
+		"startColumn": 31,
+		"endColumn": 72,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "currentSet : Set<AttributeKey>"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 347,
+		"endLine": 347,
+		"startColumn": 13,
+		"endColumn": 48,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 349,
+		"endLine": 350,
+		"startColumn": 13,
+		"endColumn": 49,
+		"codeElementType": "IF_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 346,
+		"endLine": 346,
+		"startColumn": 46,
+		"endColumn": 87,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "changed-type variable declaration",
+		"codeElement": "currentSet : Set<SafelistValues.AttributeKey>"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 347,
+		"endLine": 347,
+		"startColumn": 13,
+		"endColumn": 48,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 349,
+		"endLine": 350,
+		"startColumn": 13,
+		"endColumn": 49,
+		"codeElementType": "IF_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}]
+},
+{
+	"type": "Change Variable Type",
+	"description": "Change Variable Type currentSet : Set<AttributeKey> to currentSet : Set<SafelistValues.AttributeKey> in method public removeAttributes(tag String, attributes String...) : Safelist from class org.jsoup.safety.Safelist",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 356,
+		"endLine": 356,
+		"startColumn": 35,
+		"endColumn": 64,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "currentSet : Set<AttributeKey>"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 357,
+		"endLine": 357,
+		"startColumn": 17,
+		"endColumn": 52,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 358,
+		"endLine": 359,
+		"startColumn": 17,
+		"endColumn": 33,
+		"codeElementType": "IF_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 356,
+		"endLine": 356,
+		"startColumn": 50,
+		"endColumn": 79,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "changed-type variable declaration",
+		"codeElement": "currentSet : Set<SafelistValues.AttributeKey>"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 357,
+		"endLine": 357,
+		"startColumn": 17,
+		"endColumn": 52,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 358,
+		"endLine": 359,
+		"startColumn": 17,
+		"endColumn": 33,
+		"codeElementType": "IF_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}]
+},
+{
+	"type": "Change Variable Type",
+	"description": "Change Variable Type it : Iterator<Map.Entry<TagName,Set<AttributeKey>>> to it : Iterator<Map.Entry<SafelistValues.TagName,Set<SafelistValues.AttributeKey>>> in method public removeAttributes(tag String, attributes String...) : Safelist from class org.jsoup.safety.Safelist",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 353,
+		"endLine": 353,
+		"startColumn": 61,
+		"endColumn": 103,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "it : Iterator<Map.Entry<TagName,Set<AttributeKey>>>"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 359,
+		"endLine": 359,
+		"startColumn": 21,
+		"endColumn": 33,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 355,
+		"endLine": 355,
+		"startColumn": 17,
+		"endColumn": 73,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 354,
+		"endLine": 360,
+		"startColumn": 13,
+		"endColumn": 14,
+		"codeElementType": "WHILE_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 353,
+		"endLine": 353,
+		"startColumn": 91,
+		"endColumn": 133,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "changed-type variable declaration",
+		"codeElement": "it : Iterator<Map.Entry<SafelistValues.TagName,Set<SafelistValues.AttributeKey>>>"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 359,
+		"endLine": 359,
+		"startColumn": 21,
+		"endColumn": 33,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 355,
+		"endLine": 355,
+		"startColumn": 17,
+		"endColumn": 103,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 354,
+		"endLine": 360,
+		"startColumn": 13,
+		"endColumn": 14,
+		"codeElementType": "WHILE_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}]
+},
+{
+	"type": "Change Variable Type",
+	"description": "Change Variable Type entry : Map.Entry<TagName,Set<AttributeKey>> to entry : Map.Entry<SafelistValues.TagName,Set<SafelistValues.AttributeKey>> in method public removeAttributes(tag String, attributes String...) : Safelist from class org.jsoup.safety.Safelist",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 355,
+		"endLine": 355,
+		"startColumn": 55,
+		"endColumn": 72,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "entry : Map.Entry<TagName,Set<AttributeKey>>"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 356,
+		"endLine": 356,
+		"startColumn": 17,
+		"endColumn": 65,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 355,
+		"endLine": 355,
+		"startColumn": 85,
+		"endColumn": 102,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "changed-type variable declaration",
+		"codeElement": "entry : Map.Entry<SafelistValues.TagName,Set<SafelistValues.AttributeKey>>"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 356,
+		"endLine": 356,
+		"startColumn": 17,
+		"endColumn": 80,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}]
+},
+{
+	"type": "Change Variable Type",
+	"description": "Change Variable Type tagName : TagName to tagName : SafelistValues.TagName in method public addEnforcedAttribute(tag String, attribute String, value String) : Safelist from class org.jsoup.safety.Safelist",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 383,
+		"endLine": 383,
+		"startColumn": 17,
+		"endColumn": 47,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "tagName : TagName"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 384,
+		"endLine": 384,
+		"startColumn": 9,
+		"endColumn": 31,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 388,
+		"endLine": 388,
+		"startColumn": 9,
+		"endColumn": 119,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 383,
+		"endLine": 383,
+		"startColumn": 32,
+		"endColumn": 77,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "changed-type variable declaration",
+		"codeElement": "tagName : SafelistValues.TagName"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 384,
+		"endLine": 384,
+		"startColumn": 9,
+		"endColumn": 31,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 388,
+		"endLine": 388,
+		"startColumn": 9,
+		"endColumn": 149,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}]
+},
+{
+	"type": "Change Variable Type",
+	"description": "Change Variable Type attrKey : AttributeKey to attrKey : SafelistValues.AttributeKey in method public addEnforcedAttribute(tag String, attribute String, value String) : Safelist from class org.jsoup.safety.Safelist",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 385,
+		"endLine": 385,
+		"startColumn": 22,
+		"endColumn": 63,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "attrKey : AttributeKey"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 389,
+		"endLine": 389,
+		"startColumn": 9,
+		"endColumn": 39,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 385,
+		"endLine": 385,
+		"startColumn": 37,
+		"endColumn": 93,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "changed-type variable declaration",
+		"codeElement": "attrKey : SafelistValues.AttributeKey"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 389,
+		"endLine": 389,
+		"startColumn": 9,
+		"endColumn": 39,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}]
+},
+{
+	"type": "Change Variable Type",
+	"description": "Change Variable Type attrVal : AttributeValue to attrVal : SafelistValues.AttributeValue in method public addEnforcedAttribute(tag String, attribute String, value String) : Safelist from class org.jsoup.safety.Safelist",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 386,
+		"endLine": 386,
+		"startColumn": 24,
+		"endColumn": 63,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "attrVal : AttributeValue"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 389,
+		"endLine": 389,
+		"startColumn": 9,
+		"endColumn": 39,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 386,
+		"endLine": 386,
+		"startColumn": 39,
+		"endColumn": 93,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "changed-type variable declaration",
+		"codeElement": "attrVal : SafelistValues.AttributeValue"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 389,
+		"endLine": 389,
+		"startColumn": 9,
+		"endColumn": 39,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}]
+},
+{
+	"type": "Change Variable Type",
+	"description": "Change Variable Type attrMap : Map<AttributeKey,AttributeValue> to attrMap : Map<SafelistValues.AttributeKey,SafelistValues.AttributeValue> in method public addEnforcedAttribute(tag String, attribute String, value String) : Safelist from class org.jsoup.safety.Safelist",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 388,
+		"endLine": 388,
+		"startColumn": 43,
+		"endColumn": 118,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "attrMap : Map<AttributeKey,AttributeValue>"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 389,
+		"endLine": 389,
+		"startColumn": 9,
+		"endColumn": 39,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 388,
+		"endLine": 388,
+		"startColumn": 73,
+		"endColumn": 148,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "changed-type variable declaration",
+		"codeElement": "attrMap : Map<SafelistValues.AttributeKey,SafelistValues.AttributeValue>"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 389,
+		"endLine": 389,
+		"startColumn": 9,
+		"endColumn": 39,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}]
+},
+{
+	"type": "Change Variable Type",
+	"description": "Change Variable Type tagName : TagName to tagName : SafelistValues.TagName in method public removeEnforcedAttribute(tag String, attribute String) : Safelist from class org.jsoup.safety.Safelist",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 404,
+		"endLine": 404,
+		"startColumn": 17,
+		"endColumn": 47,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "tagName : TagName"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 411,
+		"endLine": 411,
+		"startColumn": 17,
+		"endColumn": 52,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 407,
+		"endLine": 407,
+		"startColumn": 13,
+		"endColumn": 89,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 405,
+		"endLine": 412,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "IF_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 404,
+		"endLine": 404,
+		"startColumn": 32,
+		"endColumn": 77,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "changed-type variable declaration",
+		"codeElement": "tagName : SafelistValues.TagName"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 411,
+		"endLine": 411,
+		"startColumn": 17,
+		"endColumn": 52,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 407,
+		"endLine": 407,
+		"startColumn": 13,
+		"endColumn": 119,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 405,
+		"endLine": 412,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "IF_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}]
+},
+{
+	"type": "Change Variable Type",
+	"description": "Change Variable Type attrKey : AttributeKey to attrKey : SafelistValues.AttributeKey in method public removeEnforcedAttribute(tag String, attribute String) : Safelist from class org.jsoup.safety.Safelist",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 406,
+		"endLine": 406,
+		"startColumn": 26,
+		"endColumn": 67,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "attrKey : AttributeKey"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 408,
+		"endLine": 408,
+		"startColumn": 13,
+		"endColumn": 37,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 406,
+		"endLine": 406,
+		"startColumn": 41,
+		"endColumn": 97,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "changed-type variable declaration",
+		"codeElement": "attrKey : SafelistValues.AttributeKey"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 408,
+		"endLine": 408,
+		"startColumn": 13,
+		"endColumn": 37,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}]
+},
+{
+	"type": "Change Variable Type",
+	"description": "Change Variable Type attrMap : Map<AttributeKey,AttributeValue> to attrMap : Map<SafelistValues.AttributeKey,SafelistValues.AttributeValue> in method public removeEnforcedAttribute(tag String, attribute String) : Safelist from class org.jsoup.safety.Safelist",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 407,
+		"endLine": 407,
+		"startColumn": 47,
+		"endColumn": 88,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "attrMap : Map<AttributeKey,AttributeValue>"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 408,
+		"endLine": 408,
+		"startColumn": 13,
+		"endColumn": 37,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 410,
+		"endLine": 411,
+		"startColumn": 13,
+		"endColumn": 52,
+		"codeElementType": "IF_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 407,
+		"endLine": 407,
+		"startColumn": 77,
+		"endColumn": 118,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "changed-type variable declaration",
+		"codeElement": "attrMap : Map<SafelistValues.AttributeKey,SafelistValues.AttributeValue>"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 408,
+		"endLine": 408,
+		"startColumn": 13,
+		"endColumn": 37,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 410,
+		"endLine": 411,
+		"startColumn": 13,
+		"endColumn": 52,
+		"codeElementType": "IF_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}]
+},
+{
+	"type": "Change Variable Type",
+	"description": "Change Variable Type tagName : TagName to tagName : SafelistValues.TagName in method public addProtocols(tag String, attribute String, protocols String...) : Safelist from class org.jsoup.safety.Safelist",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 459,
+		"endLine": 459,
+		"startColumn": 17,
+		"endColumn": 47,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "tagName : TagName"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 461,
+		"endLine": 461,
+		"startColumn": 9,
+		"endColumn": 114,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 459,
+		"endLine": 459,
+		"startColumn": 32,
+		"endColumn": 77,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "changed-type variable declaration",
+		"codeElement": "tagName : SafelistValues.TagName"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 461,
+		"endLine": 461,
+		"startColumn": 9,
+		"endColumn": 144,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}]
+},
+{
+	"type": "Change Variable Type",
+	"description": "Change Variable Type attrKey : AttributeKey to attrKey : SafelistValues.AttributeKey in method public addProtocols(tag String, attribute String, protocols String...) : Safelist from class org.jsoup.safety.Safelist",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 460,
+		"endLine": 460,
+		"startColumn": 22,
+		"endColumn": 63,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "attrKey : AttributeKey"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 462,
+		"endLine": 462,
+		"startColumn": 9,
+		"endColumn": 88,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 460,
+		"endLine": 460,
+		"startColumn": 37,
+		"endColumn": 93,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "changed-type variable declaration",
+		"codeElement": "attrKey : SafelistValues.AttributeKey"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 462,
+		"endLine": 462,
+		"startColumn": 9,
+		"endColumn": 103,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}]
+},
+{
+	"type": "Change Variable Type",
+	"description": "Change Variable Type attrMap : Map<AttributeKey,Set<Protocol>> to attrMap : Map<SafelistValues.AttributeKey,Set<SafelistValues.Protocol>> in method public addProtocols(tag String, attribute String, protocols String...) : Safelist from class org.jsoup.safety.Safelist",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 461,
+		"endLine": 461,
+		"startColumn": 42,
+		"endColumn": 113,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "attrMap : Map<AttributeKey,Set<Protocol>>"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 462,
+		"endLine": 462,
+		"startColumn": 9,
+		"endColumn": 88,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 461,
+		"endLine": 461,
+		"startColumn": 72,
+		"endColumn": 143,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "changed-type variable declaration",
+		"codeElement": "attrMap : Map<SafelistValues.AttributeKey,Set<SafelistValues.Protocol>>"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 462,
+		"endLine": 462,
+		"startColumn": 9,
+		"endColumn": 103,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}]
+},
+{
+	"type": "Change Variable Type",
+	"description": "Change Variable Type protSet : Set<Protocol> to protSet : Set<SafelistValues.Protocol> in method public addProtocols(tag String, attribute String, protocols String...) : Safelist from class org.jsoup.safety.Safelist",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 462,
+		"endLine": 462,
+		"startColumn": 23,
+		"endColumn": 87,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "protSet : Set<Protocol>"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 467,
+		"endLine": 467,
+		"startColumn": 13,
+		"endColumn": 31,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 462,
+		"endLine": 462,
+		"startColumn": 38,
+		"endColumn": 102,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "changed-type variable declaration",
+		"codeElement": "protSet : Set<SafelistValues.Protocol>"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 467,
+		"endLine": 467,
+		"startColumn": 13,
+		"endColumn": 31,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}]
+},
+{
+	"type": "Change Variable Type",
+	"description": "Change Variable Type prot : Protocol to prot : SafelistValues.Protocol in method public addProtocols(tag String, attribute String, protocols String...) : Safelist from class org.jsoup.safety.Safelist",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 466,
+		"endLine": 466,
+		"startColumn": 22,
+		"endColumn": 55,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "prot : Protocol"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 467,
+		"endLine": 467,
+		"startColumn": 13,
+		"endColumn": 31,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 466,
+		"endLine": 466,
+		"startColumn": 37,
+		"endColumn": 85,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "changed-type variable declaration",
+		"codeElement": "prot : SafelistValues.Protocol"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 467,
+		"endLine": 467,
+		"startColumn": 13,
+		"endColumn": 31,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}]
+},
+{
+	"type": "Change Variable Type",
+	"description": "Change Variable Type tagName : TagName to tagName : SafelistValues.TagName in method public removeProtocols(tag String, attribute String, removeProtocols String...) : Safelist from class org.jsoup.safety.Safelist",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 489,
+		"endLine": 489,
+		"startColumn": 17,
+		"endColumn": 47,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "tagName : TagName"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 494,
+		"endLine": 494,
+		"startColumn": 9,
+		"endColumn": 102,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 507,
+		"endLine": 507,
+		"startColumn": 17,
+		"endColumn": 43,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 495,
+		"endLine": 495,
+		"startColumn": 9,
+		"endColumn": 80,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 489,
+		"endLine": 489,
+		"startColumn": 32,
+		"endColumn": 77,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "changed-type variable declaration",
+		"codeElement": "tagName : SafelistValues.TagName"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 494,
+		"endLine": 494,
+		"startColumn": 9,
+		"endColumn": 102,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 507,
+		"endLine": 507,
+		"startColumn": 17,
+		"endColumn": 43,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 495,
+		"endLine": 495,
+		"startColumn": 9,
+		"endColumn": 110,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}]
+},
+{
+	"type": "Change Variable Type",
+	"description": "Change Variable Type attr : AttributeKey to attr : SafelistValues.AttributeKey in method public removeProtocols(tag String, attribute String, removeProtocols String...) : Safelist from class org.jsoup.safety.Safelist",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 490,
+		"endLine": 490,
+		"startColumn": 22,
+		"endColumn": 60,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "attr : AttributeKey"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 496,
+		"endLine": 496,
+		"startColumn": 9,
+		"endColumn": 102,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 505,
+		"endLine": 505,
+		"startColumn": 13,
+		"endColumn": 39,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 498,
+		"endLine": 498,
+		"startColumn": 9,
+		"endColumn": 62,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 490,
+		"endLine": 490,
+		"startColumn": 37,
+		"endColumn": 90,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "changed-type variable declaration",
+		"codeElement": "attr : SafelistValues.AttributeKey"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 496,
+		"endLine": 496,
+		"startColumn": 9,
+		"endColumn": 102,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 505,
+		"endLine": 505,
+		"startColumn": 13,
+		"endColumn": 39,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 498,
+		"endLine": 498,
+		"startColumn": 9,
+		"endColumn": 77,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}]
+},
+{
+	"type": "Change Variable Type",
+	"description": "Change Variable Type tagProtocols : Map<AttributeKey,Set<Protocol>> to tagProtocols : Map<SafelistValues.AttributeKey,Set<SafelistValues.Protocol>> in method public removeProtocols(tag String, attribute String, removeProtocols String...) : Safelist from class org.jsoup.safety.Safelist",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 495,
+		"endLine": 495,
+		"startColumn": 42,
+		"endColumn": 79,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "tagProtocols : Map<AttributeKey,Set<Protocol>>"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 496,
+		"endLine": 496,
+		"startColumn": 9,
+		"endColumn": 102,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 505,
+		"endLine": 505,
+		"startColumn": 13,
+		"endColumn": 39,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 498,
+		"endLine": 498,
+		"startColumn": 9,
+		"endColumn": 62,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 506,
+		"endLine": 507,
+		"startColumn": 13,
+		"endColumn": 43,
+		"codeElementType": "IF_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 495,
+		"endLine": 495,
+		"startColumn": 72,
+		"endColumn": 109,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "changed-type variable declaration",
+		"codeElement": "tagProtocols : Map<SafelistValues.AttributeKey,Set<SafelistValues.Protocol>>"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 496,
+		"endLine": 496,
+		"startColumn": 9,
+		"endColumn": 102,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 505,
+		"endLine": 505,
+		"startColumn": 13,
+		"endColumn": 39,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 498,
+		"endLine": 498,
+		"startColumn": 9,
+		"endColumn": 77,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 506,
+		"endLine": 507,
+		"startColumn": 13,
+		"endColumn": 43,
+		"codeElementType": "IF_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}]
+},
+{
+	"type": "Change Variable Type",
+	"description": "Change Variable Type attrProtocols : Set<Protocol> to attrProtocols : Set<SafelistValues.Protocol> in method public removeProtocols(tag String, attribute String, removeProtocols String...) : Safelist from class org.jsoup.safety.Safelist",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 498,
+		"endLine": 498,
+		"startColumn": 23,
+		"endColumn": 61,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "attrProtocols : Set<Protocol>"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 501,
+		"endLine": 501,
+		"startColumn": 13,
+		"endColumn": 62,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 504,
+		"endLine": 508,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "IF_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 498,
+		"endLine": 498,
+		"startColumn": 38,
+		"endColumn": 76,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "changed-type variable declaration",
+		"codeElement": "attrProtocols : Set<SafelistValues.Protocol>"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 501,
+		"endLine": 501,
+		"startColumn": 13,
+		"endColumn": 77,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 504,
+		"endLine": 508,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "IF_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier public to protected in method protected isSafeTag(tag String) : boolean from class org.jsoup.safety.Safelist",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 512,
+		"endLine": 519,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public isSafeTag(tag String) : boolean"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 512,
+		"endLine": 519,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "protected isSafeTag(tag String) : boolean"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier public to protected in method protected isSafeAttribute(tagName String, el Element, attr Attribute) : boolean from class org.jsoup.safety.Safelist",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 521,
+		"endLine": 551,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public isSafeAttribute(tagName String, el Element, attr Attribute) : boolean"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 521,
+		"endLine": 531,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "protected isSafeAttribute(tagName String, el Element, attr Attribute) : boolean"
+}]
+},
+{
+	"type": "Change Method Access Modifier",
+	"description": "Change Method Access Modifier public to protected in method protected getEnforcedAttributes(tagName String) : Attributes from class org.jsoup.safety.Safelist",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 608,
+		"endLine": 623,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public getEnforcedAttributes(tagName String) : Attributes"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 544,
+		"endLine": 551,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed access modifier",
+		"codeElement": "protected getEnforcedAttributes(tagName String) : Attributes"
+}]
+},
+{
+	"type": "Add Class Modifier",
+	"description": "Add Class Modifier final in class org.jsoup.safety.SafelistValues.TagName",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 627,
+		"endLine": 635,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original class declaration",
+		"codeElement": "org.jsoup.safety.Safelist.TagName"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/SafelistValues.java",
+		"startLine": 11,
+		"endLine": 19,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "class declaration with added modifier",
+		"codeElement": "org.jsoup.safety.SafelistValues.TagName"
+}]
+},
+{
+	"type": "Add Class Modifier",
+	"description": "Add Class Modifier final in class org.jsoup.safety.SafelistValues.AttributeKey",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 637,
+		"endLine": 645,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original class declaration",
+		"codeElement": "org.jsoup.safety.Safelist.AttributeKey"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/SafelistValues.java",
+		"startLine": 21,
+		"endLine": 29,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "class declaration with added modifier",
+		"codeElement": "org.jsoup.safety.SafelistValues.AttributeKey"
+}]
+},
+{
+	"type": "Add Class Modifier",
+	"description": "Add Class Modifier final in class org.jsoup.safety.SafelistValues.AttributeValue",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 647,
+		"endLine": 655,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original class declaration",
+		"codeElement": "org.jsoup.safety.Safelist.AttributeValue"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/SafelistValues.java",
+		"startLine": 31,
+		"endLine": 39,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "class declaration with added modifier",
+		"codeElement": "org.jsoup.safety.SafelistValues.AttributeValue"
+}]
+},
+{
+	"type": "Add Class Modifier",
+	"description": "Add Class Modifier final in class org.jsoup.safety.SafelistValues.Protocol",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 657,
+		"endLine": 665,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original class declaration",
+		"codeElement": "org.jsoup.safety.Safelist.Protocol"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/SafelistValues.java",
+		"startLine": 41,
+		"endLine": 49,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "class declaration with added modifier",
+		"codeElement": "org.jsoup.safety.SafelistValues.Protocol"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method private getProtocolValue(el Element, attr Attribute) : String from class org.jsoup.safety.Safelist to private getProtocolValue(el Element, attr Attribute) : String from class org.jsoup.safety.SafelistAttributePolicy",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 553,
+		"endLine": 558,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private getProtocolValue(el Element, attr Attribute) : String"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/SafelistAttributePolicy.java",
+		"startLine": 54,
+		"endLine": 58,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "private getProtocolValue(el Element, attr Attribute) : String"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method private isSafeProtocol(value String, protocols Set<Protocol>) : boolean from class org.jsoup.safety.Safelist to private isSafeProtocol(value String, protocols Set<SafelistValues.Protocol>) : boolean from class org.jsoup.safety.SafelistAttributePolicy",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 560,
+		"endLine": 579,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private isSafeProtocol(value String, protocols Set<Protocol>) : boolean"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/SafelistAttributePolicy.java",
+		"startLine": 60,
+		"endLine": 79,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "private isSafeProtocol(value String, protocols Set<SafelistValues.Protocol>) : boolean"
+}]
+},
+{
+	"type": "Change Variable Type",
+	"description": "Change Variable Type protocol : Protocol to protocol : SafelistValues.Protocol in method private isSafeProtocol(value String, protocols Set<SafelistValues.Protocol>) : boolean from class org.jsoup.safety.SafelistAttributePolicy",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 561,
+		"endLine": 561,
+		"startColumn": 14,
+		"endColumn": 31,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "original variable declaration",
+		"codeElement": "protocol : Protocol"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 562,
+		"endLine": 562,
+		"startColumn": 13,
+		"endColumn": 47,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/SafelistAttributePolicy.java",
+		"startLine": 61,
+		"endLine": 61,
+		"startColumn": 14,
+		"endColumn": 46,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "changed-type variable declaration",
+		"codeElement": "protocol : SafelistValues.Protocol"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/SafelistAttributePolicy.java",
+		"startLine": 62,
+		"endLine": 62,
+		"startColumn": 13,
+		"endColumn": 47,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}]
+},
+{
+	"type": "Change Parameter Type",
+	"description": "Change Parameter Type protocols : Set<Protocol> to protocols : Set<SafelistValues.Protocol> in method private isSafeProtocol(value String, protocols Set<SafelistValues.Protocol>) : boolean from class org.jsoup.safety.SafelistAttributePolicy",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 560,
+		"endLine": 560,
+		"startColumn": 50,
+		"endColumn": 73,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "original variable declaration",
+		"codeElement": "protocols : Set<Protocol>"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 561,
+		"endLine": 577,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "ENHANCED_FOR_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/SafelistAttributePolicy.java",
+		"startLine": 60,
+		"endLine": 60,
+		"startColumn": 50,
+		"endColumn": 88,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "changed-type variable declaration",
+		"codeElement": "protocols : Set<SafelistValues.Protocol>"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/SafelistAttributePolicy.java",
+		"startLine": 61,
+		"endLine": 77,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "ENHANCED_FOR_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method private shouldAbsUrl(tag TagName, key AttributeKey) : boolean from class org.jsoup.safety.Safelist to private shouldAbsUrl(tag SafelistValues.TagName, key SafelistValues.AttributeKey) : boolean from class org.jsoup.safety.SafelistAttributePolicy",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 591,
+		"endLine": 602,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private shouldAbsUrl(tag TagName, key AttributeKey) : boolean"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/SafelistAttributePolicy.java",
+		"startLine": 81,
+		"endLine": 92,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "private shouldAbsUrl(tag SafelistValues.TagName, key SafelistValues.AttributeKey) : boolean"
+}]
+},
+{
+	"type": "Change Variable Type",
+	"description": "Change Variable Type allowedAttrs : Set<AttributeKey> to allowedAttrs : Set<SafelistValues.AttributeKey> in method private shouldAbsUrl(tag SafelistValues.TagName, key SafelistValues.AttributeKey) : boolean from class org.jsoup.safety.SafelistAttributePolicy",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 592,
+		"endLine": 592,
+		"startColumn": 27,
+		"endColumn": 61,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "allowedAttrs : Set<AttributeKey>"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 593,
+		"endLine": 596,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "IF_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/SafelistAttributePolicy.java",
+		"startLine": 82,
+		"endLine": 82,
+		"startColumn": 42,
+		"endColumn": 76,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "changed-type variable declaration",
+		"codeElement": "allowedAttrs : Set<SafelistValues.AttributeKey>"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/SafelistAttributePolicy.java",
+		"startLine": 83,
+		"endLine": 86,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "IF_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}]
+},
+{
+	"type": "Change Variable Type",
+	"description": "Change Variable Type protocolsByAttr : Map<AttributeKey,Set<Protocol>> to protocolsByAttr : Map<SafelistValues.AttributeKey,Set<SafelistValues.Protocol>> in method private shouldAbsUrl(tag SafelistValues.TagName, key SafelistValues.AttributeKey) : boolean from class org.jsoup.safety.SafelistAttributePolicy",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 594,
+		"endLine": 594,
+		"startColumn": 46,
+		"endColumn": 82,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "protocolsByAttr : Map<AttributeKey,Set<Protocol>>"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 595,
+		"endLine": 595,
+		"startColumn": 13,
+		"endColumn": 80,
+		"codeElementType": "RETURN_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/SafelistAttributePolicy.java",
+		"startLine": 84,
+		"endLine": 84,
+		"startColumn": 76,
+		"endColumn": 112,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "changed-type variable declaration",
+		"codeElement": "protocolsByAttr : Map<SafelistValues.AttributeKey,Set<SafelistValues.Protocol>>"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/SafelistAttributePolicy.java",
+		"startLine": 85,
+		"endLine": 85,
+		"startColumn": 13,
+		"endColumn": 80,
+		"codeElementType": "RETURN_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}]
+},
+{
+	"type": "Change Variable Type",
+	"description": "Change Variable Type enforcedAttrs : Map<AttributeKey,AttributeValue> to enforcedAttrs : Map<SafelistValues.AttributeKey,SafelistValues.AttributeValue> in method private shouldAbsUrl(tag SafelistValues.TagName, key SafelistValues.AttributeKey) : boolean from class org.jsoup.safety.SafelistAttributePolicy",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 598,
+		"endLine": 598,
+		"startColumn": 43,
+		"endColumn": 86,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "enforcedAttrs : Map<AttributeKey,AttributeValue>"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 599,
+		"endLine": 599,
+		"startColumn": 9,
+		"endColumn": 83,
+		"codeElementType": "IF_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/SafelistAttributePolicy.java",
+		"startLine": 88,
+		"endLine": 88,
+		"startColumn": 73,
+		"endColumn": 116,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "changed-type variable declaration",
+		"codeElement": "enforcedAttrs : Map<SafelistValues.AttributeKey,SafelistValues.AttributeValue>"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/SafelistAttributePolicy.java",
+		"startLine": 89,
+		"endLine": 89,
+		"startColumn": 9,
+		"endColumn": 83,
+		"codeElementType": "IF_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}]
+},
+{
+	"type": "Change Parameter Type",
+	"description": "Change Parameter Type tag : TagName to tag : SafelistValues.TagName in method private shouldAbsUrl(tag SafelistValues.TagName, key SafelistValues.AttributeKey) : boolean from class org.jsoup.safety.SafelistAttributePolicy",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 591,
+		"endLine": 591,
+		"startColumn": 34,
+		"endColumn": 45,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "original variable declaration",
+		"codeElement": "tag : TagName"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 601,
+		"endLine": 601,
+		"startColumn": 9,
+		"endColumn": 65,
+		"codeElementType": "RETURN_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 592,
+		"endLine": 592,
+		"startColumn": 9,
+		"endColumn": 62,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 594,
+		"endLine": 594,
+		"startColumn": 13,
+		"endColumn": 83,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 598,
+		"endLine": 598,
+		"startColumn": 9,
+		"endColumn": 87,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/SafelistAttributePolicy.java",
+		"startLine": 81,
+		"endLine": 81,
+		"startColumn": 34,
+		"endColumn": 60,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "changed-type variable declaration",
+		"codeElement": "tag : SafelistValues.TagName"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/SafelistAttributePolicy.java",
+		"startLine": 91,
+		"endLine": 91,
+		"startColumn": 9,
+		"endColumn": 65,
+		"codeElementType": "RETURN_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/SafelistAttributePolicy.java",
+		"startLine": 82,
+		"endLine": 82,
+		"startColumn": 9,
+		"endColumn": 77,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/SafelistAttributePolicy.java",
+		"startLine": 84,
+		"endLine": 84,
+		"startColumn": 13,
+		"endColumn": 113,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/SafelistAttributePolicy.java",
+		"startLine": 88,
+		"endLine": 88,
+		"startColumn": 9,
+		"endColumn": 117,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}]
+},
+{
+	"type": "Change Parameter Type",
+	"description": "Change Parameter Type key : AttributeKey to key : SafelistValues.AttributeKey in method private shouldAbsUrl(tag SafelistValues.TagName, key SafelistValues.AttributeKey) : boolean from class org.jsoup.safety.SafelistAttributePolicy",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 591,
+		"endLine": 591,
+		"startColumn": 47,
+		"endColumn": 63,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "original variable declaration",
+		"codeElement": "key : AttributeKey"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 595,
+		"endLine": 595,
+		"startColumn": 13,
+		"endColumn": 80,
+		"codeElementType": "RETURN_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 601,
+		"endLine": 601,
+		"startColumn": 9,
+		"endColumn": 65,
+		"codeElementType": "RETURN_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 593,
+		"endLine": 596,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "IF_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 599,
+		"endLine": 599,
+		"startColumn": 9,
+		"endColumn": 83,
+		"codeElementType": "IF_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/SafelistAttributePolicy.java",
+		"startLine": 81,
+		"endLine": 81,
+		"startColumn": 62,
+		"endColumn": 93,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "changed-type variable declaration",
+		"codeElement": "key : SafelistValues.AttributeKey"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/SafelistAttributePolicy.java",
+		"startLine": 85,
+		"endLine": 85,
+		"startColumn": 13,
+		"endColumn": 80,
+		"codeElementType": "RETURN_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/SafelistAttributePolicy.java",
+		"startLine": 91,
+		"endLine": 91,
+		"startColumn": 9,
+		"endColumn": 65,
+		"codeElementType": "RETURN_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/SafelistAttributePolicy.java",
+		"startLine": 83,
+		"endLine": 86,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "IF_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/SafelistAttributePolicy.java",
+		"startLine": 89,
+		"endLine": 89,
+		"startColumn": 9,
+		"endColumn": 83,
+		"codeElementType": "IF_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method private isValidAnchor(value String) : boolean from class org.jsoup.safety.Safelist to private isValidAnchor(value String) : boolean from class org.jsoup.safety.SafelistAttributePolicy",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 604,
+		"endLine": 606,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private isValidAnchor(value String) : boolean"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/SafelistAttributePolicy.java",
+		"startLine": 94,
+		"endLine": 96,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "private isValidAnchor(value String) : boolean"
+}]
+},
+{
+	"type": "Move Attribute",
+	"description": "Move Attribute private AllTag : TagName from class org.jsoup.safety.Safelist to private AllTag : SafelistValues.TagName from class org.jsoup.safety.SafelistAttributePolicy",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 74,
+		"endLine": 74,
+		"startColumn": 34,
+		"endColumn": 63,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "private AllTag : TagName"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/SafelistAttributePolicy.java",
+		"startLine": 13,
+		"endLine": 13,
+		"startColumn": 49,
+		"endColumn": 93,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "moved attribute declaration",
+		"codeElement": "private AllTag : SafelistValues.TagName"
+}]
+},
+{
+	"type": "Change Attribute Type",
+	"description": "Change Attribute Type AllTag : TagName to AllTag : SafelistValues.TagName in class org.jsoup.safety.SafelistAttributePolicy",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 74,
+		"endLine": 74,
+		"startColumn": 34,
+		"endColumn": 63,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "AllTag : TagName"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/SafelistAttributePolicy.java",
+		"startLine": 13,
+		"endLine": 13,
+		"startColumn": 49,
+		"endColumn": 93,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "changed-type attribute declaration",
+		"codeElement": "AllTag : SafelistValues.TagName"
+}]
+},
+{
+	"type": "Extract Class",
+	"description": "Extract Class org.jsoup.safety.SafelistAttributePolicy from class org.jsoup.safety.Safelist",
+	"leftSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 24,
+		"endLine": 693,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original type declaration",
+		"codeElement": "org.jsoup.safety.Safelist"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 553,
+		"endLine": 558,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private getProtocolValue(el Element, attr Attribute) : String"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 560,
+		"endLine": 579,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private isSafeProtocol(value String, protocols Set<Protocol>) : boolean"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 591,
+		"endLine": 602,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private shouldAbsUrl(tag TagName, key AttributeKey) : boolean"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 604,
+		"endLine": 606,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private isValidAnchor(value String) : boolean"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 74,
+		"endLine": 74,
+		"startColumn": 34,
+		"endColumn": 63,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "private AllTag : TagName"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/java/org/jsoup/safety/Safelist.java",
+		"startLine": 21,
+		"endLine": 553,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "type declaration after extraction",
+		"codeElement": "org.jsoup.safety.Safelist"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/SafelistAttributePolicy.java",
+		"startLine": 11,
+		"endLine": 97,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "extracted type declaration",
+		"codeElement": "org.jsoup.safety.SafelistAttributePolicy"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/SafelistAttributePolicy.java",
+		"startLine": 54,
+		"endLine": 58,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "private getProtocolValue(el Element, attr Attribute) : String"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/SafelistAttributePolicy.java",
+		"startLine": 60,
+		"endLine": 79,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "private isSafeProtocol(value String, protocols Set<SafelistValues.Protocol>) : boolean"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/SafelistAttributePolicy.java",
+		"startLine": 81,
+		"endLine": 92,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "private shouldAbsUrl(tag SafelistValues.TagName, key SafelistValues.AttributeKey) : boolean"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/SafelistAttributePolicy.java",
+		"startLine": 94,
+		"endLine": 96,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "private isValidAnchor(value String) : boolean"
+}, {
+		"filePath": "src/main/java/org/jsoup/safety/SafelistAttributePolicy.java",
+		"startLine": 13,
+		"endLine": 13,
+		"startColumn": 49,
+		"endColumn": 93,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "extracted attribute declaration",
+		"codeElement": "private AllTag : SafelistValues.TagName"
+}]
+}
+]
+}]
+}

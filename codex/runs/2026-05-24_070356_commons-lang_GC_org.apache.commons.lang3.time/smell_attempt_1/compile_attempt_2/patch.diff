@@ -1,0 +1,498 @@
+diff --git a/src/main/java/org/apache/commons/lang3/time/DateFormatUtils.java b/src/main/java/org/apache/commons/lang3/time/DateFormatUtils.java
+index 8554c967b..087651f04 100644
+--- a/src/main/java/org/apache/commons/lang3/time/DateFormatUtils.java
++++ b/src/main/java/org/apache/commons/lang3/time/DateFormatUtils.java
+@@ -21,6 +21,8 @@
+ import java.util.Locale;
+ import java.util.TimeZone;
+ 
++import org.apache.commons.lang3.time.tz.FastTimeZone;
++
+ /**
+  * Date and time formatting utilities and constants.
+  *
+diff --git a/src/main/java/org/apache/commons/lang3/time/FastDateParser.java b/src/main/java/org/apache/commons/lang3/time/FastDateParser.java
+index 02da1a4a0..44b0f1666 100644
+--- a/src/main/java/org/apache/commons/lang3/time/FastDateParser.java
++++ b/src/main/java/org/apache/commons/lang3/time/FastDateParser.java
+@@ -47,6 +47,7 @@
+ import org.apache.commons.lang3.CharUtils;
+ import org.apache.commons.lang3.LocaleUtils;
+ import org.apache.commons.lang3.StringUtils;
++import org.apache.commons.lang3.time.tz.FastTimeZone;
+ 
+ /**
+  * FastDateParser is a fast and thread-safe version of {@link java.text.SimpleDateFormat}.
+diff --git a/src/main/java/org/apache/commons/lang3/time/FastTimeZone.java b/src/main/java/org/apache/commons/lang3/time/FastTimeZone.java
+deleted file mode 100644
+index 63e85c3fb..000000000
+--- a/src/main/java/org/apache/commons/lang3/time/FastTimeZone.java
++++ /dev/null
+@@ -1,96 +0,0 @@
+-/*
+- * Licensed to the Apache Software Foundation (ASF) under one or more
+- * contributor license agreements.  See the NOTICE file distributed with
+- * this work for additional information regarding copyright ownership.
+- * The ASF licenses this file to You under the Apache License, Version 2.0
+- * (the "License"); you may not use this file except in compliance with
+- * the License.  You may obtain a copy of the License at
+- *
+- *      https://www.apache.org/licenses/LICENSE-2.0
+- *
+- * Unless required by applicable law or agreed to in writing, software
+- * distributed under the License is distributed on an "AS IS" BASIS,
+- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+- * See the License for the specific language governing permissions and
+- * limitations under the License.
+- */
+-package org.apache.commons.lang3.time;
+-
+-import java.util.TimeZone;
+-import java.util.regex.Matcher;
+-import java.util.regex.Pattern;
+-
+-/**
+- * Faster methods to produce custom time zones.
+- *
+- * @since 3.7
+- */
+-public class FastTimeZone {
+-
+-    private static final Pattern GMT_PATTERN = Pattern.compile("^(?:(?i)GMT)?([+-])?(\\d\\d?)?(:?(\\d\\d?))?$");
+-
+-    private static final TimeZone GREENWICH = new GmtTimeZone(false, 0, 0);
+-
+-    /**
+-     * Gets the GMT TimeZone.
+-     *
+-     * @return A TimeZone with a raw offset of zero.
+-     */
+-    public static TimeZone getGmtTimeZone() {
+-        return GREENWICH;
+-    }
+-
+-    /**
+-     * Gets a TimeZone with GMT offsets.  A GMT offset must be either 'Z', or 'UTC', or match
+-     * <em>(GMT)? hh?(:?mm?)?</em>, where h and m are digits representing hours and minutes.
+-     *
+-     * @param pattern The GMT offset
+-     * @return A TimeZone with offset from GMT or null, if pattern does not match.
+-     */
+-    public static TimeZone getGmtTimeZone(final String pattern) {
+-        if ("Z".equals(pattern) || "UTC".equals(pattern)) {
+-            return GREENWICH;
+-        }
+-
+-        final Matcher m = GMT_PATTERN.matcher(pattern);
+-        if (m.matches()) {
+-            final int hours = parseInt(m.group(2));
+-            final int minutes = parseInt(m.group(4));
+-            if (hours == 0 && minutes == 0) {
+-                return GREENWICH;
+-            }
+-            return new GmtTimeZone(parseSign(m.group(1)), hours, minutes);
+-        }
+-        return null;
+-    }
+-
+-    /**
+-     * Gets a TimeZone, looking first for GMT custom ids, then falling back to Olson ids.
+-     * A GMT custom id can be 'Z', or 'UTC', or has an optional prefix of GMT,
+-     * followed by sign, hours digit(s), optional colon(':'), and optional minutes digits.
+-     * i.e. <em>[GMT] (+|-) Hours [[:] Minutes]</em>
+-     *
+-     * @param id A GMT custom id (or Olson id
+-     * @return A time zone
+-     */
+-    public static TimeZone getTimeZone(final String id) {
+-        final TimeZone tz = getGmtTimeZone(id);
+-        if (tz != null) {
+-            return tz;
+-        }
+-        return TimeZones.getTimeZone(id);
+-    }
+-
+-    private static int parseInt(final String group) {
+-        return group != null ? Integer.parseInt(group) : 0;
+-    }
+-
+-    private static boolean parseSign(final String group) {
+-        return group != null && group.charAt(0) == '-';
+-    }
+-
+-    // do not instantiate
+-    private FastTimeZone() {
+-    }
+-
+-}
+diff --git a/src/main/java/org/apache/commons/lang3/time/GmtTimeZone.java b/src/main/java/org/apache/commons/lang3/time/GmtTimeZone.java
+deleted file mode 100644
+index 4db3bf09c..000000000
+--- a/src/main/java/org/apache/commons/lang3/time/GmtTimeZone.java
++++ /dev/null
+@@ -1,113 +0,0 @@
+-/*
+- * Licensed to the Apache Software Foundation (ASF) under one or more
+- * contributor license agreements.  See the NOTICE file distributed with
+- * this work for additional information regarding copyright ownership.
+- * The ASF licenses this file to You under the Apache License, Version 2.0
+- * (the "License"); you may not use this file except in compliance with
+- * the License.  You may obtain a copy of the License at
+- *
+- *      https://www.apache.org/licenses/LICENSE-2.0
+- *
+- * Unless required by applicable law or agreed to in writing, software
+- * distributed under the License is distributed on an "AS IS" BASIS,
+- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+- * See the License for the specific language governing permissions and
+- * limitations under the License.
+- */
+-package org.apache.commons.lang3.time;
+-
+-import java.util.Date;
+-import java.util.Objects;
+-import java.util.TimeZone;
+-
+-/**
+- * Custom time zone that contains offset from GMT.
+- *
+- * @since 3.7
+- */
+-final class GmtTimeZone extends TimeZone {
+-
+-    private static final int MILLISECONDS_PER_MINUTE = 60 * 1000;
+-    private static final int MINUTES_PER_HOUR = 60;
+-    private static final int HOURS_PER_DAY = 24;
+-
+-    // Serializable!
+-    static final long serialVersionUID = 1L;
+-
+-    private static StringBuilder twoDigits(final StringBuilder sb, final int n) {
+-        return sb.append((char) ('0' + n / 10)).append((char) ('0' + n % 10));
+-    }
+-    private final int offset;
+-
+-    private final String zoneId;
+-
+-    GmtTimeZone(final boolean negate, final int hours, final int minutes) {
+-        if (hours >= HOURS_PER_DAY) {
+-            throw new IllegalArgumentException(hours + " hours out of range");
+-        }
+-        if (minutes >= MINUTES_PER_HOUR) {
+-            throw new IllegalArgumentException(minutes + " minutes out of range");
+-        }
+-        final int milliseconds = (minutes + hours * MINUTES_PER_HOUR) * MILLISECONDS_PER_MINUTE;
+-        offset = negate ? -milliseconds : milliseconds;
+-        // @formatter:off
+-        zoneId = twoDigits(twoDigits(new StringBuilder(9)
+-            .append(TimeZones.GMT_ID)
+-            .append(negate ? '-' : '+'), hours)
+-            .append(':'), minutes)
+-            .toString();
+-        // @formatter:on
+-    }
+-
+-    @Override
+-    public boolean equals(final Object obj) {
+-        if (this == obj) {
+-            return true;
+-        }
+-        if (!(obj instanceof GmtTimeZone)) {
+-            return false;
+-        }
+-        final GmtTimeZone other = (GmtTimeZone) obj;
+-        return offset == other.offset && Objects.equals(zoneId, other.zoneId);
+-    }
+-
+-    @Override
+-    public String getID() {
+-        return zoneId;
+-    }
+-
+-    @Override
+-    public int getOffset(final int era, final int year, final int month, final int day, final int dayOfWeek, final int milliseconds) {
+-        return offset;
+-    }
+-
+-    @Override
+-    public int getRawOffset() {
+-        return offset;
+-    }
+-
+-    @Override
+-    public int hashCode() {
+-        return Objects.hash(offset, zoneId);
+-    }
+-
+-    @Override
+-    public boolean inDaylightTime(final Date date) {
+-        return false;
+-    }
+-
+-    @Override
+-    public void setRawOffset(final int offsetMillis) {
+-        throw new UnsupportedOperationException();
+-    }
+-
+-    @Override
+-    public String toString() {
+-        return "[GmtTimeZone id=\"" + zoneId + "\",offset=" + offset + ']';
+-    }
+-
+-    @Override
+-    public boolean useDaylightTime() {
+-        return false;
+-    }
+-}
+diff --git a/src/test/java/org/apache/commons/lang3/time/DateFormatUtilsTest.java b/src/test/java/org/apache/commons/lang3/time/DateFormatUtilsTest.java
+index 25cbcc7f4..e577c93f6 100644
+--- a/src/test/java/org/apache/commons/lang3/time/DateFormatUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/time/DateFormatUtilsTest.java
+@@ -30,6 +30,7 @@
+ import java.util.TimeZone;
+ 
+ import org.apache.commons.lang3.AbstractLangTest;
++import org.apache.commons.lang3.time.tz.FastTimeZone;
+ import org.junit.jupiter.api.Test;
+ import org.junitpioneer.jupiter.DefaultLocale;
+ import org.junitpioneer.jupiter.DefaultTimeZone;
+diff --git a/src/test/java/org/apache/commons/lang3/time/DurationFormatUtilsTest.java b/src/test/java/org/apache/commons/lang3/time/DurationFormatUtilsTest.java
+index fdadfff98..cc64ddd83 100644
+--- a/src/test/java/org/apache/commons/lang3/time/DurationFormatUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/time/DurationFormatUtilsTest.java
+@@ -33,6 +33,7 @@
+ 
+ import org.apache.commons.lang3.AbstractLangTest;
+ import org.apache.commons.lang3.time.DurationFormatUtils.Token;
++import org.apache.commons.lang3.time.tz.FastTimeZone;
+ import org.junit.jupiter.api.Test;
+ import org.junitpioneer.jupiter.DefaultTimeZone;
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/time/FastDateFormatTest.java b/src/test/java/org/apache/commons/lang3/time/FastDateFormatTest.java
+index 6c084b634..eb0938d4b 100644
+--- a/src/test/java/org/apache/commons/lang3/time/FastDateFormatTest.java
++++ b/src/test/java/org/apache/commons/lang3/time/FastDateFormatTest.java
+@@ -43,6 +43,7 @@
+ import java.util.concurrent.atomic.AtomicLongArray;
+ 
+ import org.apache.commons.lang3.AbstractLangTest;
++import org.apache.commons.lang3.time.tz.FastTimeZone;
+ import org.junit.jupiter.api.Test;
+ import org.junitpioneer.jupiter.DefaultLocale;
+ import org.junitpioneer.jupiter.DefaultTimeZone;
+diff --git a/src/test/java/org/apache/commons/lang3/time/FastDatePrinterTest.java b/src/test/java/org/apache/commons/lang3/time/FastDatePrinterTest.java
+index 3f1ca5938..bce74ba85 100644
+--- a/src/test/java/org/apache/commons/lang3/time/FastDatePrinterTest.java
++++ b/src/test/java/org/apache/commons/lang3/time/FastDatePrinterTest.java
+@@ -32,6 +32,7 @@
+ 
+ import org.apache.commons.lang3.AbstractLangTest;
+ import org.apache.commons.lang3.SerializationUtils;
++import org.apache.commons.lang3.time.tz.FastTimeZone;
+ import org.junit.jupiter.api.Test;
+ import org.junitpioneer.jupiter.DefaultLocale;
+ import org.junitpioneer.jupiter.DefaultTimeZone;
+diff --git a/src/test/java/org/apache/commons/lang3/time/FastTimeZoneTest.java b/src/test/java/org/apache/commons/lang3/time/FastTimeZoneTest.java
+deleted file mode 100644
+index 6135cebfa..000000000
+--- a/src/test/java/org/apache/commons/lang3/time/FastTimeZoneTest.java
++++ /dev/null
+@@ -1,99 +0,0 @@
+-/*
+- * Licensed to the Apache Software Foundation (ASF) under one or more
+- * contributor license agreements.  See the NOTICE file distributed with
+- * this work for additional information regarding copyright ownership.
+- * The ASF licenses this file to You under the Apache License, Version 2.0
+- * (the "License"); you may not use this file except in compliance with
+- * the License.  You may obtain a copy of the License at
+- *
+- *      https://www.apache.org/licenses/LICENSE-2.0
+- *
+- * Unless required by applicable law or agreed to in writing, software
+- * distributed under the License is distributed on an "AS IS" BASIS,
+- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+- * See the License for the specific language governing permissions and
+- * limitations under the License.
+- */
+-package org.apache.commons.lang3.time;
+-
+-import static org.junit.jupiter.api.Assertions.assertEquals;
+-
+-import org.apache.commons.lang3.AbstractLangTest;
+-import org.junit.jupiter.api.Test;
+-
+-/**
+- * Tests for FastTimeZone
+- */
+-class FastTimeZoneTest extends AbstractLangTest {
+-
+-    private static final int HOURS_23 = 23 * 60 * 60 * 1000;
+-    private static final int HOURS_2 = 2 * 60 * 60 * 1000;
+-    private static final int MINUTES_59 = 59 * 60 * 1000;
+-    private static final int MINUTES_5 = 5 * 60 * 1000;
+-
+-    @Test
+-    void testBareGmt() {
+-        assertEquals(FastTimeZone.getGmtTimeZone(), FastTimeZone.getTimeZone(TimeZones.GMT_ID));
+-    }
+-
+-    @Test
+-    void testGetGmtTimeZone() {
+-        assertEquals(0, FastTimeZone.getGmtTimeZone().getRawOffset());
+-    }
+-
+-    @Test
+-    void testGmtPrefix() {
+-        assertEquals(HOURS_23, FastTimeZone.getGmtTimeZone("GMT+23:00").getRawOffset());
+-        assertEquals(-HOURS_23, FastTimeZone.getGmtTimeZone("GMT-23:00").getRawOffset());
+-    }
+-
+-    @Test
+-    void testHoursColonMinutes() {
+-        assertEquals(HOURS_23, FastTimeZone.getGmtTimeZone("23:00").getRawOffset());
+-        assertEquals(HOURS_2, FastTimeZone.getGmtTimeZone("2:00").getRawOffset());
+-        assertEquals(MINUTES_59, FastTimeZone.getGmtTimeZone("00:59").getRawOffset());
+-        assertEquals(MINUTES_5, FastTimeZone.getGmtTimeZone("00:5").getRawOffset());
+-        assertEquals(HOURS_23 + MINUTES_59, FastTimeZone.getGmtTimeZone("23:59").getRawOffset());
+-        assertEquals(HOURS_2 + MINUTES_5, FastTimeZone.getGmtTimeZone("2:5").getRawOffset());
+-    }
+-
+-    @Test
+-    void testHoursMinutes() {
+-        assertEquals(HOURS_23, FastTimeZone.getGmtTimeZone("2300").getRawOffset());
+-        assertEquals(HOURS_2, FastTimeZone.getGmtTimeZone("0200").getRawOffset());
+-        assertEquals(MINUTES_59, FastTimeZone.getGmtTimeZone("0059").getRawOffset());
+-        assertEquals(MINUTES_5, FastTimeZone.getGmtTimeZone("0005").getRawOffset());
+-        assertEquals(HOURS_23 + MINUTES_59, FastTimeZone.getGmtTimeZone("2359").getRawOffset());
+-        assertEquals(HOURS_2 + MINUTES_5, FastTimeZone.getGmtTimeZone("0205").getRawOffset());
+-    }
+-
+-    @Test
+-    void testOlson() {
+-        assertEquals(TimeZones.getTimeZone("America/New_York"), FastTimeZone.getTimeZone("America/New_York"));
+-    }
+-
+-    @Test
+-    void testSign() {
+-        assertEquals(HOURS_23, FastTimeZone.getGmtTimeZone("+23:00").getRawOffset());
+-        assertEquals(HOURS_2, FastTimeZone.getGmtTimeZone("+2:00").getRawOffset());
+-        assertEquals(-HOURS_23, FastTimeZone.getGmtTimeZone("-23:00").getRawOffset());
+-        assertEquals(-HOURS_2, FastTimeZone.getGmtTimeZone("-2:00").getRawOffset());
+-    }
+-
+-    @Test
+-    void testUTC() {
+-        assertEquals(FastTimeZone.getGmtTimeZone(), FastTimeZone.getTimeZone("UTC"));
+-    }
+-
+-    @Test
+-    void testZ() {
+-        assertEquals(FastTimeZone.getGmtTimeZone(), FastTimeZone.getTimeZone("Z"));
+-    }
+-
+-    @Test
+-    void testZeroOffsetsReturnSingleton() {
+-        assertEquals(FastTimeZone.getGmtTimeZone(), FastTimeZone.getTimeZone("+0"));
+-        assertEquals(FastTimeZone.getGmtTimeZone(), FastTimeZone.getTimeZone("-0"));
+-    }
+-
+-}
+diff --git a/src/test/java/org/apache/commons/lang3/time/GmtTimeZoneTest.java b/src/test/java/org/apache/commons/lang3/time/GmtTimeZoneTest.java
+deleted file mode 100644
+index e0f4bbf6c..000000000
+--- a/src/test/java/org/apache/commons/lang3/time/GmtTimeZoneTest.java
++++ /dev/null
+@@ -1,93 +0,0 @@
+-/*
+- * Licensed to the Apache Software Foundation (ASF) under one or more
+- * contributor license agreements.  See the NOTICE file distributed with
+- * this work for additional information regarding copyright ownership.
+- * The ASF licenses this file to You under the Apache License, Version 2.0
+- * (the "License"); you may not use this file except in compliance with
+- * the License.  You may obtain a copy of the License at
+- *
+- *      https://www.apache.org/licenses/LICENSE-2.0
+- *
+- * Unless required by applicable law or agreed to in writing, software
+- * distributed under the License is distributed on an "AS IS" BASIS,
+- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+- * See the License for the specific language governing permissions and
+- * limitations under the License.
+- */
+-package org.apache.commons.lang3.time;
+-
+-import static org.apache.commons.lang3.LangAssertions.assertIllegalArgumentException;
+-import static org.junit.jupiter.api.Assertions.assertEquals;
+-import static org.junit.jupiter.api.Assertions.assertFalse;
+-import static org.junit.jupiter.api.Assertions.assertThrows;
+-
+-import org.apache.commons.lang3.AbstractLangTest;
+-import org.junit.jupiter.api.Test;
+-
+-/**
+- * Tests for GmtTimeZone
+- */
+-class GmtTimeZoneTest extends AbstractLangTest {
+-
+-    @Test
+-    void testGetID() {
+-        assertEquals("GMT+00:00", new GmtTimeZone(false, 0, 0).getID());
+-        assertEquals("GMT+01:02", new GmtTimeZone(false, 1, 2).getID());
+-        assertEquals("GMT+11:22", new GmtTimeZone(false, 11, 22).getID());
+-        assertEquals("GMT-01:02", new GmtTimeZone(true, 1, 2).getID());
+-        assertEquals("GMT-11:22", new GmtTimeZone(true, 11, 22).getID());
+-    }
+-
+-    @Test
+-    void testGetOffset() {
+-        assertEquals(0, new GmtTimeZone(false, 0, 0).getOffset(234304));
+-        assertEquals(-(6 * 60 + 30) * 60 * 1000,
+-                new GmtTimeZone(true, 6, 30).getOffset(1, 1, 1, 1, 1, 1));
+-    }
+-
+-    @Test
+-    void testGetRawOffset() {
+-        assertEquals(0, new GmtTimeZone(false, 0, 0).getRawOffset());
+-    }
+-
+-    @Test
+-    void testHoursInRange() {
+-        assertEquals(23 * 60 * 60 * 1000, new GmtTimeZone(false, 23, 0).getRawOffset());
+-    }
+-
+-    @Test
+-    void testHoursOutOfRange() {
+-        assertIllegalArgumentException(() -> new GmtTimeZone(false, 24, 0));
+-    }
+-
+-    @Test
+-    void testInDaylightTime() {
+-        assertFalse(new GmtTimeZone(false, 0, 0).useDaylightTime());
+-    }
+-
+-    @Test
+-    void testMinutesInRange() {
+-        assertEquals(59 * 60 * 1000, new GmtTimeZone(false, 0, 59).getRawOffset());
+-    }
+-
+-    @Test
+-    void testMinutesOutOfRange() {
+-        assertIllegalArgumentException(() -> new GmtTimeZone(false, 0, 60));
+-    }
+-
+-    @Test
+-    void testSetRawOffset() {
+-        assertThrows(UnsupportedOperationException.class, () -> new GmtTimeZone(false, 0, 0).setRawOffset(0));
+-    }
+-
+-    @Test
+-    void testToString() {
+-        assertEquals("[GmtTimeZone id=\"GMT-12:00\",offset=-43200000]",
+-            new GmtTimeZone(true, 12, 0).toString());
+-    }
+-
+-    @Test
+-    void testUseDaylightTime() {
+-        assertFalse(new GmtTimeZone(false, 0, 0).useDaylightTime());
+-    }
+-}

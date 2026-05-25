@@ -1,0 +1,1233 @@
+diff --git a/src/main/java/org/apache/commons/io/FileUtils.java b/src/main/java/org/apache/commons/io/FileUtils.java
+index 11afd3f5d..1e05811e7 100644
+--- a/src/main/java/org/apache/commons/io/FileUtils.java
++++ b/src/main/java/org/apache/commons/io/FileUtils.java
+@@ -74,7 +74,7 @@
+ import java.util.zip.CheckedInputStream;
+ import java.util.zip.Checksum;
+ 
+-import org.apache.commons.io.file.AccumulatorPathVisitor;
++import org.apache.commons.io.file.visitor.AccumulatorPathVisitor;
+ import org.apache.commons.io.file.Counters;
+ import org.apache.commons.io.file.PathFilter;
+ import org.apache.commons.io.file.PathUtils;
+diff --git a/src/main/java/org/apache/commons/io/file/AccumulatorPathVisitor.java b/src/main/java/org/apache/commons/io/file/AccumulatorPathVisitor.java
+deleted file mode 100644
+index 3be7a3253..000000000
+--- a/src/main/java/org/apache/commons/io/file/AccumulatorPathVisitor.java
++++ /dev/null
+@@ -1,289 +0,0 @@
+-/*
+- * Licensed to the Apache Software Foundation (ASF) under one or more
+- * contributor license agreements.  See the NOTICE file distributed with
+- * this work for additional information regarding copyright ownership.
+- * The ASF licenses this file to You under the Apache License, Version 2.0
+- * (the "License"); you may not use this file except in compliance with
+- * the License.  You may obtain a copy of the License at
+- *
+- *      https://www.apache.org/licenses/LICENSE-2.0
+- *
+- * Unless required by applicable law or agreed to in writing, software
+- * distributed under the License is distributed on an "AS IS" BASIS,
+- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+- * See the License for the specific language governing permissions and
+- * limitations under the License.
+- */
+-
+-package org.apache.commons.io.file;
+-
+-import java.io.IOException;
+-import java.nio.file.FileVisitResult;
+-import java.nio.file.Path;
+-import java.nio.file.attribute.BasicFileAttributes;
+-import java.util.ArrayList;
+-import java.util.Comparator;
+-import java.util.List;
+-import java.util.Objects;
+-
+-import org.apache.commons.io.file.Counters.PathCounters;
+-import org.apache.commons.io.function.IOBiFunction;
+-
+-/**
+- * Accumulates normalized paths during visitation.
+- * <p>
+- * Use with care on large file trees as each visited Path element is remembered.
+- * </p>
+- * <h2>Example</h2>
+- *
+- * <pre>
+- * Path dir = PathUtils.current();
+- * // We are interested in files older than one day
+- * Instant cutoff = Instant.now().minus(Duration.ofDays(1));
+- * AccumulatorPathVisitor visitor = AccumulatorPathVisitor.withLongCounters(new AgeFileFilter(cutoff));
+- * //
+- * // Walk one directory
+- * Files.walkFileTree(dir, Collections.emptySet(), 1, visitor);
+- * System.out.println(visitor.getPathCounters());
+- * System.out.println(visitor.getFileList());
+- * //
+- * visitor.getPathCounters().reset();
+- * //
+- * // Walk directory tree
+- * Files.walkFileTree(dir, visitor);
+- * System.out.println(visitor.getPathCounters());
+- * System.out.println(visitor.getDirList());
+- * System.out.println(visitor.getFileList());
+- * </pre>
+- *
+- * @since 2.7
+- */
+-public class AccumulatorPathVisitor extends CountingPathVisitor {
+-
+-    /**
+-     * Builds instances of {@link AccumulatorPathVisitor}.
+-     *
+-     * @since 2.19.0
+-     */
+-    public static class Builder extends AbstractBuilder<AccumulatorPathVisitor, Builder> {
+-
+-        /**
+-         * Constructs a new builder.
+-         */
+-        public Builder() {
+-            // empty.
+-        }
+-
+-        @Override
+-        public AccumulatorPathVisitor get() {
+-            return new AccumulatorPathVisitor(this);
+-        }
+-
+-    }
+-
+-    /**
+-     * Builds instances of {@link AccumulatorPathVisitor}.
+-     *
+-     * @return a new builder.
+-     * @since 2.19.0
+-     */
+-    public static Builder builder() {
+-        return new Builder();
+-    }
+-
+-    /**
+-     * Constructs a new instance configured with a BigInteger {@link PathCounters}.
+-     *
+-     * @return a new instance configured with a BigInteger {@link PathCounters}.
+-     * @see #builder()
+-     * @see Builder
+-     */
+-    public static AccumulatorPathVisitor withBigIntegerCounters() {
+-        return builder().setPathCounters(Counters.bigIntegerPathCounters()).get();
+-    }
+-
+-    /**
+-     * Constructs a new instance configured with a BigInteger {@link PathCounters}.
+-     *
+-     * @param fileFilter Filters files to accumulate and count.
+-     * @param dirFilter Filters directories to accumulate and count.
+-     * @return a new instance configured with a long {@link PathCounters}.
+-     * @see #builder()
+-     * @see Builder
+-     * @since 2.9.0
+-     */
+-    public static AccumulatorPathVisitor withBigIntegerCounters(final PathFilter fileFilter, final PathFilter dirFilter) {
+-        return builder().setPathCounters(Counters.bigIntegerPathCounters()).setFileFilter(fileFilter).setDirectoryFilter(dirFilter).get();
+-    }
+-
+-    /**
+-     * Constructs a new instance configured with a long {@link PathCounters}.
+-     *
+-     * @return a new instance configured with a long {@link PathCounters}.
+-     * @see #builder()
+-     * @see Builder
+-     */
+-    public static AccumulatorPathVisitor withLongCounters() {
+-        return builder().setPathCounters(Counters.longPathCounters()).get();
+-    }
+-
+-    /**
+-     * Constructs a new instance configured with a long {@link PathCounters}.
+-     *
+-     * @param fileFilter Filters files to accumulate and count.
+-     * @param dirFilter Filters directories to accumulate and count.
+-     * @return a new instance configured with a long {@link PathCounters}.
+-     * @see #builder()
+-     * @see Builder
+-     * @since 2.9.0
+-     */
+-    public static AccumulatorPathVisitor withLongCounters(final PathFilter fileFilter, final PathFilter dirFilter) {
+-        return builder().setPathCounters(Counters.longPathCounters()).setFileFilter(fileFilter).setDirectoryFilter(dirFilter).get();
+-    }
+-
+-    private final List<Path> dirList = new ArrayList<>();
+-
+-    private final List<Path> fileList = new ArrayList<>();
+-
+-    /**
+-     * Constructs a new instance with a noop path counter.
+-     *
+-     * @since 2.9.0
+-     * @deprecated Use {@link #builder()}.
+-     */
+-    @Deprecated
+-    public AccumulatorPathVisitor() {
+-        super(Counters.noopPathCounters());
+-    }
+-
+-    private AccumulatorPathVisitor(final Builder builder) {
+-        super(builder);
+-    }
+-
+-    /**
+-     * Constructs a new instance that counts file system elements.
+-     *
+-     * @param pathCounter How to count path visits.
+-     * @deprecated Use {@link #builder()}.
+-     */
+-    @Deprecated
+-    public AccumulatorPathVisitor(final PathCounters pathCounter) {
+-        super(pathCounter);
+-    }
+-
+-    /**
+-     * Constructs a new instance.
+-     *
+-     * @param pathCounter How to count path visits.
+-     * @param fileFilter Filters which files to count.
+-     * @param dirFilter Filters which directories to count.
+-     * @since 2.9.0
+-     * @deprecated Use {@link #builder()}.
+-     */
+-    @Deprecated
+-    public AccumulatorPathVisitor(final PathCounters pathCounter, final PathFilter fileFilter, final PathFilter dirFilter) {
+-        super(pathCounter, fileFilter, dirFilter);
+-    }
+-
+-    /**
+-     * Constructs a new instance.
+-     *
+-     * @param pathCounter How to count path visits.
+-     * @param fileFilter Filters which files to count.
+-     * @param dirFilter Filters which directories to count.
+-     * @param visitFileFailed Called on {@link #visitFileFailed(Path, IOException)}.
+-     * @since 2.12.0
+-     * @deprecated Use {@link #builder()}.
+-     */
+-    @Deprecated
+-    public AccumulatorPathVisitor(final PathCounters pathCounter, final PathFilter fileFilter, final PathFilter dirFilter,
+-        final IOBiFunction<Path, IOException, FileVisitResult> visitFileFailed) {
+-        super(pathCounter, fileFilter, dirFilter, visitFileFailed);
+-    }
+-
+-    private void add(final List<Path> list, final Path dir) {
+-        list.add(dir.normalize());
+-    }
+-
+-    @Override
+-    public boolean equals(final Object obj) {
+-        if (this == obj) {
+-            return true;
+-        }
+-        if (!super.equals(obj)) {
+-            return false;
+-        }
+-        if (!(obj instanceof AccumulatorPathVisitor)) {
+-            return false;
+-        }
+-        final AccumulatorPathVisitor other = (AccumulatorPathVisitor) obj;
+-        return Objects.equals(dirList, other.dirList) && Objects.equals(fileList, other.fileList);
+-    }
+-
+-    /**
+-     * Gets a copy of the list of visited directories.
+-     *
+-     * @return a copy of the list of visited directories.
+-     */
+-    public List<Path> getDirList() {
+-        return new ArrayList<>(dirList);
+-    }
+-
+-    /**
+-     * Gets a copy of the list of visited files.
+-     *
+-     * @return a copy of the list of visited files.
+-     */
+-    public List<Path> getFileList() {
+-        return new ArrayList<>(fileList);
+-    }
+-
+-    @Override
+-    public int hashCode() {
+-        final int prime = 31;
+-        int result = super.hashCode();
+-        result = prime * result + Objects.hash(dirList, fileList);
+-        return result;
+-    }
+-
+-    /**
+-     * Relativizes each directory path with {@link Path#relativize(Path)} against the given {@code parent}, optionally
+-     * sorting the result.
+-     *
+-     * @param parent A parent path.
+-     * @param sort Whether to sort.
+-     * @param comparator How to sort, null uses default sorting.
+-     * @return A new list.
+-     */
+-    public List<Path> relativizeDirectories(final Path parent, final boolean sort,
+-        final Comparator<? super Path> comparator) {
+-        return PathUtils.relativize(getDirList(), parent, sort, comparator);
+-    }
+-
+-    /**
+-     * Relativizes each file path with {@link Path#relativize(Path)} against the given {@code parent}, optionally
+-     * sorting the result.
+-     *
+-     * @param parent A parent path.
+-     * @param sort Whether to sort.
+-     * @param comparator How to sort, null uses default sorting.
+-     * @return A new list.
+-     */
+-    public List<Path> relativizeFiles(final Path parent, final boolean sort,
+-        final Comparator<? super Path> comparator) {
+-        return PathUtils.relativize(getFileList(), parent, sort, comparator);
+-    }
+-
+-    @Override
+-    protected void updateDirCounter(final Path dir, final IOException exc) {
+-        super.updateDirCounter(dir, exc);
+-        add(dirList, dir);
+-    }
+-
+-    @Override
+-    protected void updateFileCounters(final Path file, final BasicFileAttributes attributes) {
+-        super.updateFileCounters(file, attributes);
+-        add(fileList, file);
+-    }
+-
+-}
+diff --git a/src/main/java/org/apache/commons/io/file/CleaningPathVisitor.java b/src/main/java/org/apache/commons/io/file/CleaningPathVisitor.java
+deleted file mode 100644
+index 2b0654780..000000000
+--- a/src/main/java/org/apache/commons/io/file/CleaningPathVisitor.java
++++ /dev/null
+@@ -1,137 +0,0 @@
+-/*
+- * Licensed to the Apache Software Foundation (ASF) under one or more
+- * contributor license agreements.  See the NOTICE file distributed with
+- * this work for additional information regarding copyright ownership.
+- * The ASF licenses this file to You under the Apache License, Version 2.0
+- * (the "License"); you may not use this file except in compliance with
+- * the License.  You may obtain a copy of the License at
+- *
+- *      https://www.apache.org/licenses/LICENSE-2.0
+- *
+- * Unless required by applicable law or agreed to in writing, software
+- * distributed under the License is distributed on an "AS IS" BASIS,
+- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+- * See the License for the specific language governing permissions and
+- * limitations under the License.
+- */
+-
+-package org.apache.commons.io.file;
+-
+-import java.io.IOException;
+-import java.nio.file.FileVisitResult;
+-import java.nio.file.Files;
+-import java.nio.file.LinkOption;
+-import java.nio.file.Path;
+-import java.nio.file.attribute.BasicFileAttributes;
+-import java.util.Arrays;
+-import java.util.Objects;
+-
+-import org.apache.commons.io.file.Counters.PathCounters;
+-
+-/**
+- * Deletes files but not directories as a visit proceeds.
+- *
+- * @since 2.7
+- */
+-public class CleaningPathVisitor extends CountingPathVisitor {
+-
+-    /**
+-     * Constructs a new instance configured with a BigInteger {@link PathCounters}.
+-     *
+-     * @return a new instance configured with a BigInteger {@link PathCounters}.
+-     */
+-    public static CountingPathVisitor withBigIntegerCounters() {
+-        return new CleaningPathVisitor(Counters.bigIntegerPathCounters());
+-    }
+-
+-    /**
+-     * Constructs a new instance configured with a long {@link PathCounters}.
+-     *
+-     * @return a new instance configured with a long {@link PathCounters}.
+-     */
+-    public static CountingPathVisitor withLongCounters() {
+-        return new CleaningPathVisitor(Counters.longPathCounters());
+-    }
+-
+-    private final String[] skip;
+-    private final boolean overrideReadOnly;
+-
+-    /**
+-     * Constructs a instance that deletes files except for the files and directories explicitly given.
+-     *
+-     * @param pathCounter How to count visits.
+-     * @param deleteOption How deletion is handled.
+-     * @param skip The files to skip deleting.
+-     * @since 2.8.0
+-     */
+-    public CleaningPathVisitor(final PathCounters pathCounter, final DeleteOption[] deleteOption, final String... skip) {
+-        super(pathCounter);
+-        final String[] temp = skip != null ? skip.clone() : EMPTY_STRING_ARRAY;
+-        Arrays.sort(temp);
+-        this.skip = temp;
+-        this.overrideReadOnly = StandardDeleteOption.overrideReadOnly(deleteOption);
+-    }
+-
+-    /**
+-     * Constructs a new instance that deletes files except for the files and directories explicitly given.
+-     *
+-     * @param pathCounter How to count visits.
+-     * @param skip The files to skip deleting.
+-     */
+-    public CleaningPathVisitor(final PathCounters pathCounter, final String... skip) {
+-        this(pathCounter, PathUtils.EMPTY_DELETE_OPTION_ARRAY, skip);
+-    }
+-
+-    /**
+-     * Returns true to process the given path, false if not.
+-     *
+-     * @param path the path to test.
+-     * @return true to process the given path, false if not.
+-     */
+-    private boolean accept(final Path path) {
+-        return Arrays.binarySearch(skip, PathUtils.getFileNameString(path)) < 0;
+-    }
+-
+-    @Override
+-    public boolean equals(final Object obj) {
+-        if (this == obj) {
+-            return true;
+-        }
+-        if (!super.equals(obj)) {
+-            return false;
+-        }
+-        if (getClass() != obj.getClass()) {
+-            return false;
+-        }
+-        final CleaningPathVisitor other = (CleaningPathVisitor) obj;
+-        return overrideReadOnly == other.overrideReadOnly && Arrays.equals(skip, other.skip);
+-    }
+-
+-    @Override
+-    public int hashCode() {
+-        final int prime = 31;
+-        int result = super.hashCode();
+-        result = prime * result + Arrays.hashCode(skip);
+-        result = prime * result + Objects.hash(overrideReadOnly);
+-        return result;
+-    }
+-
+-    @Override
+-    public FileVisitResult preVisitDirectory(final Path dir, final BasicFileAttributes attributes) throws IOException {
+-        super.preVisitDirectory(dir, attributes);
+-        return accept(dir) ? FileVisitResult.CONTINUE : FileVisitResult.SKIP_SUBTREE;
+-    }
+-
+-    @Override
+-    public FileVisitResult visitFile(final Path file, final BasicFileAttributes attributes) throws IOException {
+-        // Files.deleteIfExists() never follows links, so use LinkOption.NOFOLLOW_LINKS in other calls to Files.
+-        if (accept(file) && Files.exists(file, LinkOption.NOFOLLOW_LINKS)) {
+-            if (overrideReadOnly) {
+-                PathUtils.setReadOnly(file, false, LinkOption.NOFOLLOW_LINKS);
+-            }
+-            Files.deleteIfExists(file);
+-        }
+-        updateFileCounters(file, attributes);
+-        return FileVisitResult.CONTINUE;
+-    }
+-}
+\ No newline at end of file
+diff --git a/src/main/java/org/apache/commons/io/file/CopyDirectoryVisitor.java b/src/main/java/org/apache/commons/io/file/CopyDirectoryVisitor.java
+index 45b761c97..d42fefe89 100644
+--- a/src/main/java/org/apache/commons/io/file/CopyDirectoryVisitor.java
++++ b/src/main/java/org/apache/commons/io/file/CopyDirectoryVisitor.java
+@@ -16,6 +16,10 @@
+  */
+ 
+ package org.apache.commons.io.file;
++import org.apache.commons.io.file.visitor.DeletingPathVisitor;
++import org.apache.commons.io.file.visitor.CleaningPathVisitor;
++import org.apache.commons.io.file.visitor.CountingPathVisitor;
++import org.apache.commons.io.file.visitor.AccumulatorPathVisitor;
+ 
+ import java.io.IOException;
+ import java.nio.file.CopyOption;
+diff --git a/src/main/java/org/apache/commons/io/file/CountingPathVisitor.java b/src/main/java/org/apache/commons/io/file/CountingPathVisitor.java
+deleted file mode 100644
+index 3f445010e..000000000
+--- a/src/main/java/org/apache/commons/io/file/CountingPathVisitor.java
++++ /dev/null
+@@ -1,324 +0,0 @@
+-/*
+- * Licensed to the Apache Software Foundation (ASF) under one or more
+- * contributor license agreements.  See the NOTICE file distributed with
+- * this work for additional information regarding copyright ownership.
+- * The ASF licenses this file to You under the Apache License, Version 2.0
+- * (the "License"); you may not use this file except in compliance with
+- * the License.  You may obtain a copy of the License at
+- *
+- *      https://www.apache.org/licenses/LICENSE-2.0
+- *
+- * Unless required by applicable law or agreed to in writing, software
+- * distributed under the License is distributed on an "AS IS" BASIS,
+- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+- * See the License for the specific language governing permissions and
+- * limitations under the License.
+- */
+-
+-package org.apache.commons.io.file;
+-
+-import java.io.IOException;
+-import java.math.BigInteger;
+-import java.nio.file.FileVisitResult;
+-import java.nio.file.Files;
+-import java.nio.file.Path;
+-import java.nio.file.attribute.BasicFileAttributes;
+-import java.util.Objects;
+-import java.util.function.UnaryOperator;
+-
+-import org.apache.commons.io.file.Counters.PathCounters;
+-import org.apache.commons.io.filefilter.IOFileFilter;
+-import org.apache.commons.io.filefilter.TrueFileFilter;
+-import org.apache.commons.io.function.IOBiFunction;
+-
+-/**
+- * Counts files, directories, and sizes, as a visit proceeds.
+- *
+- * @since 2.7
+- */
+-public class CountingPathVisitor extends SimplePathVisitor {
+-
+-    /**
+-     * Builds instances of {@link CountingPathVisitor}.
+-     *
+-     * @param <T> The CountingPathVisitor type.
+-     * @param <B> The AbstractBuilder type.
+-     * @since 2.19.0
+-     */
+-    public abstract static class AbstractBuilder<T, B extends AbstractBuilder<T, B>> extends SimplePathVisitor.AbstractBuilder<T, B> {
+-
+-        private PathCounters pathCounters = defaultPathCounters();
+-        private PathFilter fileFilter = defaultFileFilter();
+-        private PathFilter directoryFilter = defaultDirectoryFilter();
+-        private UnaryOperator<Path> directoryPostTransformer = defaultDirectoryTransformer();
+-
+-        /**
+-         * Constructs a new builder for subclasses.
+-         */
+-        public AbstractBuilder() {
+-            // empty.
+-        }
+-
+-        PathFilter getDirectoryFilter() {
+-            return directoryFilter;
+-        }
+-
+-        UnaryOperator<Path> getDirectoryPostTransformer() {
+-            return directoryPostTransformer;
+-        }
+-
+-        PathFilter getFileFilter() {
+-            return fileFilter;
+-        }
+-
+-        PathCounters getPathCounters() {
+-            return pathCounters;
+-        }
+-
+-        /**
+-         * Sets how to filter directories.
+-         *
+-         * @param directoryFilter how to filter files.
+-         * @return {@code this} instance.
+-         */
+-        public B setDirectoryFilter(final PathFilter directoryFilter) {
+-            this.directoryFilter = directoryFilter != null ? directoryFilter : defaultDirectoryFilter();
+-            return asThis();
+-        }
+-
+-        /**
+-         * Sets how to transform directories, defaults to {@link UnaryOperator#identity()}.
+-         *
+-         * @param directoryTransformer how to filter files.
+-         * @return {@code this} instance.
+-         */
+-        public B setDirectoryPostTransformer(final UnaryOperator<Path> directoryTransformer) {
+-            this.directoryPostTransformer = directoryTransformer != null ? directoryTransformer : defaultDirectoryTransformer();
+-            return asThis();
+-        }
+-
+-        /**
+-         * Sets how to filter files.
+-         *
+-         * @param fileFilter how to filter files.
+-         * @return {@code this} instance.
+-         */
+-        public B setFileFilter(final PathFilter fileFilter) {
+-            this.fileFilter = fileFilter != null ? fileFilter : defaultFileFilter();
+-            return asThis();
+-        }
+-
+-        /**
+-         * Sets how to count path visits.
+-         *
+-         * @param pathCounters How to count path visits.
+-         * @return {@code this} instance.
+-         */
+-        public B setPathCounters(final PathCounters pathCounters) {
+-            this.pathCounters = pathCounters != null ? pathCounters : defaultPathCounters();
+-            return asThis();
+-        }
+-    }
+-
+-    /**
+-     * Builds instances of {@link CountingPathVisitor}.
+-     *
+-     * @since 2.18.0
+-     */
+-    public static class Builder extends AbstractBuilder<CountingPathVisitor, Builder> {
+-
+-        /**
+-         * Constructs a new builder.
+-         */
+-        public Builder() {
+-            // empty.
+-        }
+-
+-        @Override
+-        public CountingPathVisitor get() {
+-            return new CountingPathVisitor(this);
+-        }
+-    }
+-
+-    static final String[] EMPTY_STRING_ARRAY = {};
+-
+-    static IOFileFilter defaultDirectoryFilter() {
+-        return TrueFileFilter.INSTANCE;
+-    }
+-
+-    static UnaryOperator<Path> defaultDirectoryTransformer() {
+-        return UnaryOperator.identity();
+-    }
+-
+-    static IOFileFilter defaultFileFilter() {
+-        return TrueFileFilter.INSTANCE;
+-    }
+-
+-    static PathCounters defaultPathCounters() {
+-        return Counters.longPathCounters();
+-    }
+-
+-    /**
+-     * Constructs a new instance configured with a {@link BigInteger} {@link PathCounters}.
+-     *
+-     * @return a new instance configured with a {@link BigInteger} {@link PathCounters}.
+-     */
+-    public static CountingPathVisitor withBigIntegerCounters() {
+-        return new Builder().setPathCounters(Counters.bigIntegerPathCounters()).get();
+-    }
+-
+-    /**
+-     * Constructs a new instance configured with a {@code long} {@link PathCounters}.
+-     *
+-     * @return a new instance configured with a {@code long} {@link PathCounters}.
+-     */
+-    public static CountingPathVisitor withLongCounters() {
+-        return new Builder().setPathCounters(Counters.longPathCounters()).get();
+-    }
+-
+-    private final PathCounters pathCounters;
+-    private final PathFilter fileFilter;
+-    private final PathFilter directoryFilter;
+-    private final UnaryOperator<Path> directoryPostTransformer;
+-
+-    CountingPathVisitor(final AbstractBuilder<?, ?> builder) {
+-        super(builder);
+-        this.pathCounters = builder.getPathCounters();
+-        this.fileFilter = builder.getFileFilter();
+-        this.directoryFilter = builder.getDirectoryFilter();
+-        this.directoryPostTransformer = builder.getDirectoryPostTransformer();
+-    }
+-
+-    /**
+-     * Constructs a new instance.
+-     *
+-     * @param pathCounters How to count path visits.
+-     * @see Builder
+-     */
+-    public CountingPathVisitor(final PathCounters pathCounters) {
+-        this(new Builder().setPathCounters(pathCounters));
+-    }
+-
+-    /**
+-     * Constructs a new instance.
+-     *
+-     * @param pathCounters    How to count path visits.
+-     * @param fileFilter      Filters which files to count.
+-     * @param directoryFilter Filters which directories to count.
+-     * @see Builder
+-     * @since 2.9.0
+-     */
+-    public CountingPathVisitor(final PathCounters pathCounters, final PathFilter fileFilter, final PathFilter directoryFilter) {
+-        this.pathCounters = Objects.requireNonNull(pathCounters, "pathCounters");
+-        this.fileFilter = Objects.requireNonNull(fileFilter, "fileFilter");
+-        this.directoryFilter = Objects.requireNonNull(directoryFilter, "directoryFilter");
+-        this.directoryPostTransformer = UnaryOperator.identity();
+-    }
+-
+-    /**
+-     * Constructs a new instance.
+-     *
+-     * @param pathCounters    How to count path visits.
+-     * @param fileFilter      Filters which files to count.
+-     * @param directoryFilter Filters which directories to count.
+-     * @param visitFileFailed Called on {@link #visitFileFailed(Path, IOException)}.
+-     * @since 2.12.0
+-     * @deprecated Use {@link Builder}.
+-     */
+-    @Deprecated
+-    public CountingPathVisitor(final PathCounters pathCounters, final PathFilter fileFilter, final PathFilter directoryFilter,
+-            final IOBiFunction<Path, IOException, FileVisitResult> visitFileFailed) {
+-        super(visitFileFailed);
+-        this.pathCounters = Objects.requireNonNull(pathCounters, "pathCounters");
+-        this.fileFilter = Objects.requireNonNull(fileFilter, "fileFilter");
+-        this.directoryFilter = Objects.requireNonNull(directoryFilter, "directoryFilter");
+-        this.directoryPostTransformer = UnaryOperator.identity();
+-    }
+-
+-    /**
+-     * Tests whether the given file is accepted by the file filter.
+-     *
+-     * @param file       the visited file.
+-     * @param attributes the visited file attributes.
+-     * @return true to copy the given file, false if not.
+-     * @since 2.20.0
+-     */
+-    protected boolean accept(final Path file, final BasicFileAttributes attributes) {
+-        // Note: A file can be a symbolic link to a directory.
+-        return Files.exists(file) && fileFilter.accept(file, attributes) == FileVisitResult.CONTINUE;
+-    }
+-
+-    @Override
+-    public boolean equals(final Object obj) {
+-        if (this == obj) {
+-            return true;
+-        }
+-        if (!(obj instanceof CountingPathVisitor)) {
+-            return false;
+-        }
+-        final CountingPathVisitor other = (CountingPathVisitor) obj;
+-        return Objects.equals(pathCounters, other.pathCounters);
+-    }
+-
+-    /**
+-     * Gets the visitation counts.
+-     *
+-     * @return the visitation counts.
+-     */
+-    public PathCounters getPathCounters() {
+-        return pathCounters;
+-    }
+-
+-    @Override
+-    public int hashCode() {
+-        return Objects.hash(pathCounters);
+-    }
+-
+-    @Override
+-    public FileVisitResult postVisitDirectory(final Path dir, final IOException exc) throws IOException {
+-        updateDirCounter(directoryPostTransformer.apply(dir), exc);
+-        return FileVisitResult.CONTINUE;
+-    }
+-
+-    @Override
+-    public FileVisitResult preVisitDirectory(final Path dir, final BasicFileAttributes attributes) throws IOException {
+-        final FileVisitResult accept = directoryFilter.accept(dir, attributes);
+-        return accept != FileVisitResult.CONTINUE ? FileVisitResult.SKIP_SUBTREE : FileVisitResult.CONTINUE;
+-    }
+-
+-    @Override
+-    public String toString() {
+-        return pathCounters.toString();
+-    }
+-
+-    /**
+-     * Updates the counter for visiting the given directory.
+-     *
+-     * @param dir the visited directory.
+-     * @param exc Encountered exception.
+-     * @since 2.9.0
+-     */
+-    protected void updateDirCounter(final Path dir, final IOException exc) {
+-        pathCounters.getDirectoryCounter().increment();
+-    }
+-
+-    /**
+-     * Updates the counters for visiting the given file.
+-     *
+-     * @param file       the visited file.
+-     * @param attributes the visited file attributes.
+-     */
+-    protected void updateFileCounters(final Path file, final BasicFileAttributes attributes) {
+-        pathCounters.getFileCounter().increment();
+-        pathCounters.getByteCounter().add(attributes.size());
+-    }
+-
+-    @Override
+-    public FileVisitResult visitFile(final Path file, final BasicFileAttributes attributes) throws IOException {
+-        if (accept(file, attributes)) {
+-            updateFileCounters(file, attributes);
+-        }
+-        return FileVisitResult.CONTINUE;
+-    }
+-
+-}
+diff --git a/src/main/java/org/apache/commons/io/file/DeletingPathVisitor.java b/src/main/java/org/apache/commons/io/file/DeletingPathVisitor.java
+deleted file mode 100644
+index 7d460d888..000000000
+--- a/src/main/java/org/apache/commons/io/file/DeletingPathVisitor.java
++++ /dev/null
+@@ -1,173 +0,0 @@
+-/*
+- * Licensed to the Apache Software Foundation (ASF) under one or more
+- * contributor license agreements.  See the NOTICE file distributed with
+- * this work for additional information regarding copyright ownership.
+- * The ASF licenses this file to You under the Apache License, Version 2.0
+- * (the "License"); you may not use this file except in compliance with
+- * the License.  You may obtain a copy of the License at
+- *
+- *      https://www.apache.org/licenses/LICENSE-2.0
+- *
+- * Unless required by applicable law or agreed to in writing, software
+- * distributed under the License is distributed on an "AS IS" BASIS,
+- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+- * See the License for the specific language governing permissions and
+- * limitations under the License.
+- */
+-
+-package org.apache.commons.io.file;
+-
+-import java.io.IOException;
+-import java.nio.file.FileVisitResult;
+-import java.nio.file.Files;
+-import java.nio.file.LinkOption;
+-import java.nio.file.NoSuchFileException;
+-import java.nio.file.Path;
+-import java.nio.file.attribute.BasicFileAttributes;
+-import java.util.Arrays;
+-import java.util.Objects;
+-
+-import org.apache.commons.io.file.Counters.PathCounters;
+-
+-/**
+- * Deletes files and directories as a visit proceeds.
+- *
+- * @since 2.7
+- */
+-public class DeletingPathVisitor extends CountingPathVisitor {
+-
+-    /**
+-     * Constructs a new instance configured with a BigInteger {@link PathCounters}.
+-     *
+-     * @return a new instance configured with a BigInteger {@link PathCounters}.
+-     */
+-    public static DeletingPathVisitor withBigIntegerCounters() {
+-        return new DeletingPathVisitor(Counters.bigIntegerPathCounters());
+-    }
+-
+-    /**
+-     * Constructs a new instance configured with a long {@link PathCounters}.
+-     *
+-     * @return a new instance configured with a long {@link PathCounters}.
+-     */
+-    public static DeletingPathVisitor withLongCounters() {
+-        return new DeletingPathVisitor(Counters.longPathCounters());
+-    }
+-
+-    private final String[] skip;
+-    private final boolean overrideReadOnly;
+-    private final LinkOption[] linkOptions;
+-
+-    /**
+-     * Constructs a instance that deletes files except for the files and directories explicitly given.
+-     *
+-     * @param pathCounter How to count visits.
+-     * @param deleteOption How deletion is handled.
+-     * @param skip The files to skip deleting.
+-     * @since 2.8.0
+-     */
+-    public DeletingPathVisitor(final PathCounters pathCounter, final DeleteOption[] deleteOption, final String... skip) {
+-        this(pathCounter, PathUtils.noFollowLinkOptionArray(), deleteOption, skip);
+-    }
+-
+-    /**
+-     * Constructs a instance that deletes files except for the files and directories explicitly given.
+-     *
+-     * @param pathCounter How to count visits.
+-     * @param linkOptions How symbolic links are handled.
+-     * @param deleteOption How deletion is handled.
+-     * @param skip The files to skip deleting.
+-     * @since 2.9.0
+-     */
+-    public DeletingPathVisitor(final PathCounters pathCounter, final LinkOption[] linkOptions, final DeleteOption[] deleteOption, final String... skip) {
+-        super(pathCounter);
+-        final String[] temp = skip != null ? skip.clone() : EMPTY_STRING_ARRAY;
+-        Arrays.sort(temp);
+-        this.skip = temp;
+-        this.overrideReadOnly = StandardDeleteOption.overrideReadOnly(deleteOption);
+-        // TODO Files.deleteIfExists() never follows links, so use LinkOption.NOFOLLOW_LINKS in other calls to Files.
+-        this.linkOptions = linkOptions == null ? PathUtils.noFollowLinkOptionArray() : linkOptions.clone();
+-    }
+-
+-    /**
+-     * Constructs a instance that deletes files except for the files and directories explicitly given.
+-     *
+-     * @param pathCounter How to count visits.
+-     * @param skip The files to skip deleting.
+-     */
+-    public DeletingPathVisitor(final PathCounters pathCounter, final String... skip) {
+-        this(pathCounter, PathUtils.EMPTY_DELETE_OPTION_ARRAY, skip);
+-    }
+-
+-    /**
+-     * Returns true to process the given path, false if not.
+-     *
+-     * @param path the path to test.
+-     * @return true to process the given path, false if not.
+-     */
+-    private boolean accept(final Path path) {
+-        return Arrays.binarySearch(skip, PathUtils.getFileNameString(path)) < 0;
+-    }
+-
+-    @Override
+-    public boolean equals(final Object obj) {
+-        if (this == obj) {
+-            return true;
+-        }
+-        if (!super.equals(obj)) {
+-            return false;
+-        }
+-        if (getClass() != obj.getClass()) {
+-            return false;
+-        }
+-        final DeletingPathVisitor other = (DeletingPathVisitor) obj;
+-        return overrideReadOnly == other.overrideReadOnly && Arrays.equals(skip, other.skip);
+-    }
+-
+-    @Override
+-    public int hashCode() {
+-        final int prime = 31;
+-        int result = super.hashCode();
+-        result = prime * result + Arrays.hashCode(skip);
+-        result = prime * result + Objects.hash(overrideReadOnly);
+-        return result;
+-    }
+-
+-    @Override
+-    public FileVisitResult postVisitDirectory(final Path dir, final IOException exc) throws IOException {
+-        if (PathUtils.isEmptyDirectory(dir)) {
+-            Files.deleteIfExists(dir);
+-        }
+-        return super.postVisitDirectory(dir, exc);
+-    }
+-
+-    @Override
+-    public FileVisitResult preVisitDirectory(final Path dir, final BasicFileAttributes attrs) throws IOException {
+-        super.preVisitDirectory(dir, attrs);
+-        return accept(dir) ? FileVisitResult.CONTINUE : FileVisitResult.SKIP_SUBTREE;
+-    }
+-
+-    @Override
+-    public FileVisitResult visitFile(final Path file, final BasicFileAttributes attrs) throws IOException {
+-        if (accept(file)) {
+-            // delete files and valid links, respecting linkOptions
+-            if (Files.exists(file, linkOptions)) {
+-                if (overrideReadOnly) {
+-                    PathUtils.setReadOnly(file, false, linkOptions);
+-                }
+-                Files.deleteIfExists(file);
+-            }
+-            // invalid links will survive previous delete, different approach needed:
+-            if (Files.isSymbolicLink(file)) {
+-                try {
+-                    // deleteIfExists does not work for this case
+-                    Files.delete(file);
+-                } catch (final NoSuchFileException ignored) {
+-                    // ignore
+-                }
+-            }
+-        }
+-        updateFileCounters(file, attrs);
+-        return FileVisitResult.CONTINUE;
+-    }
+-}
+\ No newline at end of file
+diff --git a/src/main/java/org/apache/commons/io/file/PathUtils.java b/src/main/java/org/apache/commons/io/file/PathUtils.java
+index 305af952a..d698a287f 100644
+--- a/src/main/java/org/apache/commons/io/file/PathUtils.java
++++ b/src/main/java/org/apache/commons/io/file/PathUtils.java
+@@ -16,6 +16,10 @@
+  */
+ 
+ package org.apache.commons.io.file;
++import org.apache.commons.io.file.visitor.DeletingPathVisitor;
++import org.apache.commons.io.file.visitor.CleaningPathVisitor;
++import org.apache.commons.io.file.visitor.CountingPathVisitor;
++import org.apache.commons.io.file.visitor.AccumulatorPathVisitor;
+ 
+ import java.io.File;
+ import java.io.IOException;
+@@ -1565,7 +1569,7 @@ public static String readString(final Path path, final Charset charset) throws I
+      * @param comparator How to sort.
+      * @return A collection of relativized paths, optionally sorted.
+      */
+-    static List<Path> relativize(final Collection<Path> collection, final Path parent, final boolean sort, final Comparator<? super Path> comparator) {
++    public static List<Path> relativize(final Collection<Path> collection, final Path parent, final boolean sort, final Comparator<? super Path> comparator) {
+         Stream<Path> stream = collection.stream().map(parent::relativize);
+         if (sort) {
+             stream = comparator == null ? stream.sorted() : stream.sorted(comparator);
+diff --git a/src/main/java/org/apache/commons/io/file/SimplePathVisitor.java b/src/main/java/org/apache/commons/io/file/SimplePathVisitor.java
+index 3b32cb09c..babb5965a 100644
+--- a/src/main/java/org/apache/commons/io/file/SimplePathVisitor.java
++++ b/src/main/java/org/apache/commons/io/file/SimplePathVisitor.java
+@@ -85,7 +85,7 @@ protected SimplePathVisitor() {
+      *
+      * @param builder The builder provided by a subclass.
+      */
+-    SimplePathVisitor(final AbstractBuilder<?, ?> builder) {
++    protected SimplePathVisitor(final AbstractBuilder<?, ?> builder) {
+         this.visitFileFailedFunction = builder.visitFileFailedFunction != null ? builder.visitFileFailedFunction : super::visitFileFailed;
+     }
+ 
+diff --git a/src/test/java/org/apache/commons/io/file/AccumulatorPathVisitorTest.java b/src/test/java/org/apache/commons/io/file/AccumulatorPathVisitorTest.java
+index 1bfe338db..2cd0adc2b 100644
+--- a/src/test/java/org/apache/commons/io/file/AccumulatorPathVisitorTest.java
++++ b/src/test/java/org/apache/commons/io/file/AccumulatorPathVisitorTest.java
+@@ -16,6 +16,10 @@
+  */
+ 
+ package org.apache.commons.io.file;
++import org.apache.commons.io.file.visitor.DeletingPathVisitor;
++import org.apache.commons.io.file.visitor.CleaningPathVisitor;
++import org.apache.commons.io.file.visitor.CountingPathVisitor;
++import org.apache.commons.io.file.visitor.AccumulatorPathVisitor;
+ 
+ import static org.apache.commons.io.file.CounterAssertions.assertCounts;
+ import static org.junit.jupiter.api.Assertions.assertEquals;
+diff --git a/src/test/java/org/apache/commons/io/file/CleaningPathVisitorTest.java b/src/test/java/org/apache/commons/io/file/CleaningPathVisitorTest.java
+index 1ac7d98c1..1fcd69ba1 100644
+--- a/src/test/java/org/apache/commons/io/file/CleaningPathVisitorTest.java
++++ b/src/test/java/org/apache/commons/io/file/CleaningPathVisitorTest.java
+@@ -16,6 +16,10 @@
+  */
+ 
+ package org.apache.commons.io.file;
++import org.apache.commons.io.file.visitor.DeletingPathVisitor;
++import org.apache.commons.io.file.visitor.CleaningPathVisitor;
++import org.apache.commons.io.file.visitor.CountingPathVisitor;
++import org.apache.commons.io.file.visitor.AccumulatorPathVisitor;
+ 
+ import static org.apache.commons.io.file.CounterAssertions.assertCounts;
+ import static org.junit.jupiter.api.Assertions.assertEquals;
+diff --git a/src/test/java/org/apache/commons/io/file/CopyDirectoryVisitorTest.java b/src/test/java/org/apache/commons/io/file/CopyDirectoryVisitorTest.java
+index 322b23083..ca37f76dd 100644
+--- a/src/test/java/org/apache/commons/io/file/CopyDirectoryVisitorTest.java
++++ b/src/test/java/org/apache/commons/io/file/CopyDirectoryVisitorTest.java
+@@ -16,6 +16,10 @@
+  */
+ 
+ package org.apache.commons.io.file;
++import org.apache.commons.io.file.visitor.DeletingPathVisitor;
++import org.apache.commons.io.file.visitor.CleaningPathVisitor;
++import org.apache.commons.io.file.visitor.CountingPathVisitor;
++import org.apache.commons.io.file.visitor.AccumulatorPathVisitor;
+ 
+ import static org.apache.commons.io.file.CounterAssertions.assertCounts;
+ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+diff --git a/src/test/java/org/apache/commons/io/file/CounterAssertions.java b/src/test/java/org/apache/commons/io/file/CounterAssertions.java
+index 81b68b685..2f7750664 100644
+--- a/src/test/java/org/apache/commons/io/file/CounterAssertions.java
++++ b/src/test/java/org/apache/commons/io/file/CounterAssertions.java
+@@ -16,6 +16,10 @@
+  */
+ 
+ package org.apache.commons.io.file;
++import org.apache.commons.io.file.visitor.DeletingPathVisitor;
++import org.apache.commons.io.file.visitor.CleaningPathVisitor;
++import org.apache.commons.io.file.visitor.CountingPathVisitor;
++import org.apache.commons.io.file.visitor.AccumulatorPathVisitor;
+ 
+ import static org.junit.jupiter.api.Assertions.assertEquals;
+ 
+diff --git a/src/test/java/org/apache/commons/io/file/CountingPathVisitorTest.java b/src/test/java/org/apache/commons/io/file/CountingPathVisitorTest.java
+index 381d898dd..c4680e582 100644
+--- a/src/test/java/org/apache/commons/io/file/CountingPathVisitorTest.java
++++ b/src/test/java/org/apache/commons/io/file/CountingPathVisitorTest.java
+@@ -16,6 +16,10 @@
+  */
+ 
+ package org.apache.commons.io.file;
++import org.apache.commons.io.file.visitor.DeletingPathVisitor;
++import org.apache.commons.io.file.visitor.CleaningPathVisitor;
++import org.apache.commons.io.file.visitor.CountingPathVisitor;
++import org.apache.commons.io.file.visitor.AccumulatorPathVisitor;
+ 
+ import static org.apache.commons.io.file.CounterAssertions.assertCounts;
+ import static org.junit.jupiter.api.Assertions.assertEquals;
+diff --git a/src/test/java/org/apache/commons/io/file/DeletingPathVisitorTest.java b/src/test/java/org/apache/commons/io/file/DeletingPathVisitorTest.java
+index f477c66fa..9a2af24d4 100644
+--- a/src/test/java/org/apache/commons/io/file/DeletingPathVisitorTest.java
++++ b/src/test/java/org/apache/commons/io/file/DeletingPathVisitorTest.java
+@@ -16,6 +16,10 @@
+  */
+ 
+ package org.apache.commons.io.file;
++import org.apache.commons.io.file.visitor.DeletingPathVisitor;
++import org.apache.commons.io.file.visitor.CleaningPathVisitor;
++import org.apache.commons.io.file.visitor.CountingPathVisitor;
++import org.apache.commons.io.file.visitor.AccumulatorPathVisitor;
+ 
+ import static org.apache.commons.io.file.CounterAssertions.assertCounts;
+ import static org.junit.jupiter.api.Assertions.assertEquals;
+diff --git a/src/test/java/org/apache/commons/io/file/PathUtilsCleanDirectoryTest.java b/src/test/java/org/apache/commons/io/file/PathUtilsCleanDirectoryTest.java
+index 7a514d5fd..e371f024d 100644
+--- a/src/test/java/org/apache/commons/io/file/PathUtilsCleanDirectoryTest.java
++++ b/src/test/java/org/apache/commons/io/file/PathUtilsCleanDirectoryTest.java
+@@ -16,6 +16,10 @@
+  */
+ 
+ package org.apache.commons.io.file;
++import org.apache.commons.io.file.visitor.DeletingPathVisitor;
++import org.apache.commons.io.file.visitor.CleaningPathVisitor;
++import org.apache.commons.io.file.visitor.CountingPathVisitor;
++import org.apache.commons.io.file.visitor.AccumulatorPathVisitor;
+ 
+ import static org.apache.commons.io.file.CounterAssertions.assertCounts;
+ import static org.junit.jupiter.api.Assertions.assertTrue;
+diff --git a/src/test/java/org/apache/commons/io/file/PathUtilsDeleteDirectoryTest.java b/src/test/java/org/apache/commons/io/file/PathUtilsDeleteDirectoryTest.java
+index 09f153cb5..4d5f0cd2b 100644
+--- a/src/test/java/org/apache/commons/io/file/PathUtilsDeleteDirectoryTest.java
++++ b/src/test/java/org/apache/commons/io/file/PathUtilsDeleteDirectoryTest.java
+@@ -16,6 +16,10 @@
+  */
+ 
+ package org.apache.commons.io.file;
++import org.apache.commons.io.file.visitor.DeletingPathVisitor;
++import org.apache.commons.io.file.visitor.CleaningPathVisitor;
++import org.apache.commons.io.file.visitor.CountingPathVisitor;
++import org.apache.commons.io.file.visitor.AccumulatorPathVisitor;
+ 
+ import static org.apache.commons.io.file.CounterAssertions.assertCounts;
+ import static org.junit.jupiter.api.Assertions.assertFalse;
+diff --git a/src/test/java/org/apache/commons/io/file/PathUtilsDeleteFileTest.java b/src/test/java/org/apache/commons/io/file/PathUtilsDeleteFileTest.java
+index 4576c77f8..c66f45b73 100644
+--- a/src/test/java/org/apache/commons/io/file/PathUtilsDeleteFileTest.java
++++ b/src/test/java/org/apache/commons/io/file/PathUtilsDeleteFileTest.java
+@@ -16,6 +16,10 @@
+  */
+ 
+ package org.apache.commons.io.file;
++import org.apache.commons.io.file.visitor.DeletingPathVisitor;
++import org.apache.commons.io.file.visitor.CleaningPathVisitor;
++import org.apache.commons.io.file.visitor.CountingPathVisitor;
++import org.apache.commons.io.file.visitor.AccumulatorPathVisitor;
+ 
+ import static org.apache.commons.io.file.CounterAssertions.assertCounts;
+ import static org.junit.jupiter.api.Assertions.assertFalse;
+diff --git a/src/test/java/org/apache/commons/io/file/PathUtilsDeleteTest.java b/src/test/java/org/apache/commons/io/file/PathUtilsDeleteTest.java
+index cf24bdd19..bae6880b0 100644
+--- a/src/test/java/org/apache/commons/io/file/PathUtilsDeleteTest.java
++++ b/src/test/java/org/apache/commons/io/file/PathUtilsDeleteTest.java
+@@ -16,6 +16,10 @@
+  */
+ 
+ package org.apache.commons.io.file;
++import org.apache.commons.io.file.visitor.DeletingPathVisitor;
++import org.apache.commons.io.file.visitor.CleaningPathVisitor;
++import org.apache.commons.io.file.visitor.CountingPathVisitor;
++import org.apache.commons.io.file.visitor.AccumulatorPathVisitor;
+ 
+ import static org.apache.commons.io.file.CounterAssertions.assertCounts;
+ 
+diff --git a/src/test/java/org/apache/commons/io/file/PathUtilsVisitorTest.java b/src/test/java/org/apache/commons/io/file/PathUtilsVisitorTest.java
+index 9f8f8897d..4d32c8b4e 100644
+--- a/src/test/java/org/apache/commons/io/file/PathUtilsVisitorTest.java
++++ b/src/test/java/org/apache/commons/io/file/PathUtilsVisitorTest.java
+@@ -16,6 +16,10 @@
+  */
+ 
+ package org.apache.commons.io.file;
++import org.apache.commons.io.file.visitor.DeletingPathVisitor;
++import org.apache.commons.io.file.visitor.CleaningPathVisitor;
++import org.apache.commons.io.file.visitor.CountingPathVisitor;
++import org.apache.commons.io.file.visitor.AccumulatorPathVisitor;
+ 
+ import static org.apache.commons.io.file.CounterAssertions.assertCounts;
+ 
+diff --git a/src/test/java/org/apache/commons/io/file/TestArguments.java b/src/test/java/org/apache/commons/io/file/TestArguments.java
+index b0784ca2d..50b43dc5b 100644
+--- a/src/test/java/org/apache/commons/io/file/TestArguments.java
++++ b/src/test/java/org/apache/commons/io/file/TestArguments.java
+@@ -16,6 +16,10 @@
+  */
+ 
+ package org.apache.commons.io.file;
++import org.apache.commons.io.file.visitor.DeletingPathVisitor;
++import org.apache.commons.io.file.visitor.CleaningPathVisitor;
++import org.apache.commons.io.file.visitor.CountingPathVisitor;
++import org.apache.commons.io.file.visitor.AccumulatorPathVisitor;
+ 
+ import java.util.stream.Stream;
+ 
+diff --git a/src/test/java/org/apache/commons/io/filefilter/AgeFileFilterTest.java b/src/test/java/org/apache/commons/io/filefilter/AgeFileFilterTest.java
+index 6d372955c..b343c35fe 100644
+--- a/src/test/java/org/apache/commons/io/filefilter/AgeFileFilterTest.java
++++ b/src/test/java/org/apache/commons/io/filefilter/AgeFileFilterTest.java
+@@ -28,7 +28,7 @@
+ import java.util.Collections;
+ 
+ import org.apache.commons.io.FileUtils;
+-import org.apache.commons.io.file.AccumulatorPathVisitor;
++import org.apache.commons.io.file.visitor.AccumulatorPathVisitor;
+ import org.apache.commons.io.file.CounterAssertions;
+ import org.apache.commons.io.file.Counters;
+ import org.junit.jupiter.api.Test;
+diff --git a/src/test/java/org/apache/commons/io/filefilter/DirectoryFileFilterTest.java b/src/test/java/org/apache/commons/io/filefilter/DirectoryFileFilterTest.java
+index 71266d3fe..fee4678d7 100644
+--- a/src/test/java/org/apache/commons/io/filefilter/DirectoryFileFilterTest.java
++++ b/src/test/java/org/apache/commons/io/filefilter/DirectoryFileFilterTest.java
+@@ -29,7 +29,7 @@
+ import java.util.Collections;
+ 
+ import org.apache.commons.io.FileUtils;
+-import org.apache.commons.io.file.AccumulatorPathVisitor;
++import org.apache.commons.io.file.visitor.AccumulatorPathVisitor;
+ import org.apache.commons.io.file.CounterAssertions;
+ import org.apache.commons.io.file.Counters;
+ import org.junit.jupiter.api.Test;
+diff --git a/src/test/java/org/apache/commons/io/filefilter/NameFileFilterTest.java b/src/test/java/org/apache/commons/io/filefilter/NameFileFilterTest.java
+index d3403271f..481a66e7a 100644
+--- a/src/test/java/org/apache/commons/io/filefilter/NameFileFilterTest.java
++++ b/src/test/java/org/apache/commons/io/filefilter/NameFileFilterTest.java
+@@ -29,7 +29,7 @@
+ import java.util.Collections;
+ 
+ import org.apache.commons.io.FileUtils;
+-import org.apache.commons.io.file.AccumulatorPathVisitor;
++import org.apache.commons.io.file.visitor.AccumulatorPathVisitor;
+ import org.apache.commons.io.file.CounterAssertions;
+ import org.apache.commons.io.file.Counters;
+ import org.junit.jupiter.api.Test;

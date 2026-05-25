@@ -1,0 +1,8 @@
+2026-05-23T04:20:45.547870Z ERROR codex_core::tools::router: error=apply_patch verification failed: Failed to find expected lines in /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/main/java/org/jsoup/helper/HttpConnection.java:
+import org.jsoup.UncheckedIOException;
+import org.jsoup.helper.parser.TokenQueue;
+import org.jsoup.internal.ConstrainableInputStream;
+2026-05-23T04:33:50.293246Z ERROR codex_core::tools::router: error=write_stdin failed: stdin is closed for this session; rerun exec_command with tty=true to keep stdin open
+2026-05-23T04:50:14.786249Z ERROR codex_core::session: failed to record rollout items: thread 019e530f-24f1-76c2-8787-ee1b99f06606 not found
+2026-05-23T04:50:14.786248Z ERROR codex_core::session: failed to record rollout items: thread 019e530f-24f1-76c2-8787-ee1b99f06606 not found
+2026-05-23T04:50:14.862599Z ERROR codex_core::session: failed to record rollout items: thread 019e530f-24f1-76c2-8787-ee1b99f06606 not found

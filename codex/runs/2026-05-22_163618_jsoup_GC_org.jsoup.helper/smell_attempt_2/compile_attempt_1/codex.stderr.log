@@ -1,0 +1,8 @@
+2026-05-22T23:30:21.092447Z ERROR codex_core::tools::router: error=write_stdin failed: stdin is closed for this session; rerun exec_command with tty=true to keep stdin open
+2026-05-22T23:32:26.456944Z ERROR codex_core::tools::router: error=apply_patch verification failed: Failed to find expected lines in /data/henrique/langchain_prototype/codex/data/repositories/jsoup/src/main/java/org/jsoup/helper/DataUtil.java:
+import org.jsoup.UncheckedIOException;
+import org.jsoup.internal.ControllableInputStream;
+import org.jsoup.internal.Normalizer;
+import org.jsoup.internal.SharedConstants;
+import org.jsoup.nodes.Comment;
+import org.jsoup.nodes.Document;

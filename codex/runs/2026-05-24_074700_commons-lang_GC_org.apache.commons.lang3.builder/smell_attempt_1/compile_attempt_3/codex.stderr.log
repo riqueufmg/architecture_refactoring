@@ -1,0 +1,1 @@
+2026-05-24T11:08:33.988556Z ERROR codex_core::tools::router: error=exec_command failed for `/bin/bash -lc 'rm -rf /tmp/m2 /tmp/jd'`: CreateProcess { message: "Rejected(\"`/bin/bash -lc 'rm -rf /tmp/m2 /tmp/jd'` rejected: blocked by policy\")" }
