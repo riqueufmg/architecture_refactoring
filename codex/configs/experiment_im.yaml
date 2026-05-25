@@ -6,7 +6,7 @@ smell: IM
 smell_name: Insufficient Modularization
 
 target_type: class
-target_name: org.jsoup.nodes.Attribute
+target_name: org.jsoup.parser.CharacterReader
 
 maven_command:
   - mvn

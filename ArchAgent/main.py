@@ -1,10 +1,10 @@
 import argparse
-import csv
+#import csv
 import dotenv
-import subprocess
+#import subprocess
 import json
 import os
-import shutil
+#import shutil
 import uuid
 
 from collections import defaultdict, deque
@@ -43,76 +43,27 @@ from util.path_utils import (
     _infer_target_type_from_name,
 )
 
+from util.git_utils import _git_current_commit
+
+from util.maven_utils import _run_build
+
+from util.designite_utils import (
+    _run_designite,
+    _designite_smell_present,
+    get_package_dependencies,
+)
+
 from State import State #langgraph state class
 
 from tools.context_builder import extract_observed_external_calls
 
 ## Helper functions
-
-def _git_current_commit(repo_path: Path) -> str:
-    p = _run(["git", "rev-parse", "HEAD"], cwd=repo_path)
-    if p.returncode != 0:
-        raise RuntimeError("git rev-parse HEAD failed:\n" + _tail(p.stderr))
-    return p.stdout.strip()
-
 def _get_plan_dir(state: State) -> Path:
     run_dir = Path(state["run_dir"])
     plan_idx = int(state.get("plan_idx", 0))
     plan_dir = run_dir / f"plan_{plan_idx:02d}"
     plan_dir.mkdir(parents=True, exist_ok=True)
     return plan_dir
-
-def _designite_smell_present(
-    designite_dir: Path,
-    target_name: str,
-    smell_name: str,
-    csv_name: str = "DesignSmells.csv",
-    target_type: str = "class",
-) -> bool:
-    csv_path = designite_dir / csv_name
-    if not csv_path.exists():
-        return False
-
-    target = (target_name or "").strip()
-    smell = (smell_name or "").strip()
-
-    if not target or not smell:
-        return False
-
-    with csv_path.open("r", encoding="utf-8", errors="replace", newline="") as f:
-        reader = csv.DictReader(f)
-
-        for row in reader:
-            row_smell = (row.get("Smell") or "").strip()
-            if row_smell != smell:
-                continue
-
-            pkg = (row.get("Package") or "").strip()
-            cls = (row.get("Class") or "").strip()
-
-            if target_type == "package":
-                # ArchitectureSmells.csv usually identifies package-level smells by Package.
-                if pkg == target:
-                    return True
-
-                # Defensive fallback for possible alternative Designite column names.
-                component = (
-                    row.get("Component")
-                    or row.get("Package Name")
-                    or row.get("Element")
-                    or ""
-                ).strip()
-
-                if component == target:
-                    return True
-
-            else:
-                if pkg and cls:
-                    row_fqn = f"{pkg}.{cls}"
-                    if row_fqn == target:
-                        return True
-
-    return False
 
 # return target type (class or package) on state
 def _get_target_type(state: State) -> str:
@@ -137,56 +88,6 @@ def _resolve_target_scope(state: State) -> dict:
         "target_files": list(state.get("target_files") or []),
         "target_source_root": (state.get("target_source_root") or "").strip(),
     }
-
-def _run_build(repo_path: Path, tmp_dir: Path) -> subprocess.CompletedProcess:
-
-    cmd = [
-        "mvn", "-q",
-        "-Dmaven.test.skip=true",
-        "-Djapicmp.skip=true",
-        "-Drat.skip=true",
-        "-Dcheckstyle.skip=true",
-        "-Dspotbugs.skip=true",
-        "-Dpmd.skip=true",
-        "-DskipITs",
-        "clean", "verify"
-    ]
-
-    env = os.environ.copy()
-    env["MAVEN_OPTS"] = f"-Xshare:off -Djava.io.tmpdir={tmp_dir}"
-
-    return _run(cmd, cwd=repo_path, env=env)
-
-def _run_designite(
-    repo_path: Path,
-    out_dir: Path,
-    jar_path: Path,
-) -> Tuple[Path, list[str]]:
-
-    if out_dir.exists():
-        shutil.rmtree(out_dir)
-
-    out_dir.mkdir(parents=True, exist_ok=True)
-
-    java22 = "/usr/lib/jvm/jdk-22.0.2-oracle-x64/bin/java"
-
-    cmd = [java22, "-jar", str(jar_path), "-g", "-i", str(repo_path), "-o", str(out_dir)]
-
-    p = _run(cmd, cwd=repo_path)
-
-    log = (p.stdout or "") + ("\n" if p.stdout else "") + (p.stderr or "")
-    (out_dir / "designite.log").write_text(log, encoding="utf-8")
-
-    if p.returncode != 0:
-        raise RuntimeError(
-            f"Designite failed (rc={p.returncode}). See log at {out_dir / 'designite.log'}"
-        )
-
-    return out_dir, cmd
-
-def get_package_dependencies(graphml_path: str, target_name: str):
-    deps = Dependencies(target_name)
-    return deps._get_package_dependencies(graphml_path)
 
 ## Function to add visibility update ops to the plan for related classes in the same package that are not moved but have internal dependencies with the moved classes (to keep compilation working after the move)
 def enrich_plan_with_visibility_ops(plan: dict, state: State) -> dict:
