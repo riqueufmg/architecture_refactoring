@@ -1,0 +1,69 @@
+project:
+  name: jsoup
+  repo_path: data/repositories/jsoup
+
+target:
+  smell: IM
+  smell_name: Insufficient Modularization
+  target_type: class
+  target_name: org.jsoup.nodes.Attribute
+
+models:
+  planner: gpt-5-mini
+  executor: gpt-5-mini
+  quality: gpt-5-mini
+
+prompts:
+  planner: data/prompts/planner_IM.prompt
+  executor: data/prompts/executor_IM.prompt
+  quality: data/prompts/quality_IM.prompt
+
+workflow:
+  max_plans: 5
+  max_block_attempts: 5
+  max_compile_repair_attempts: 3
+  max_test_repair_attempts: 2
+  enable_compile_repair: false
+  enable_test_compile: false
+  enable_test_repair: false
+
+maven:
+  compile_command:
+    - mvn
+    - -q
+    - -Dmaven.test.skip=true
+    - -Djapicmp.skip=true
+    - -Drat.skip=true
+    - -Dcheckstyle.skip=true
+    - -Dspotbugs.skip=true
+    - -Dpmd.skip=true
+    - -DskipITs
+    - clean
+    - verify
+
+designite:
+  java_path: /usr/lib/jvm/jdk-22.0.2-oracle-x64/bin/java
+  jar_path: tools/DesigniteJava2.8.3.jar
+  output_dir: designite_output
+  smells_csv: DesignSmells.csv
+
+openrewrite:
+  enabled: false
+  command:
+    - mvn
+    - -U
+    - -Dmaven.test.skip=true
+    - -DskipTests
+    - -DskipITs
+    - -Djapicmp.skip=true
+    - -Drat.skip=true
+    - -Dcheckstyle.skip=true
+    - -Dspotbugs.skip=true
+    - -Dpmd.skip=true
+    - -Danimal.sniffer.skip=true
+    - -Dforbiddenapis.skip=true
+    - -Denforcer.skip=true
+    - -Dlicense.skip=true
+    - -Dskip.npm=true
+    - -Dskip.yarn=true
+    - org.openrewrite.maven:rewrite-maven-plugin:runNoFork

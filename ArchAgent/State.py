@@ -1,9 +1,19 @@
-from typing import TypedDict
+from typing import TypedDict, Any
 
 class State(TypedDict, total=False):
     repo_path: str              # path to the repo to refactor
     msg: str
     run_dir: str                # path for log files
+
+    project_root: str
+
+    # configuration
+    config: dict[str, Any]
+
+    max_plans: int
+    max_block_attempts: int
+    max_compile_repair_attempts: int
+    max_test_repair_attempts: int
 
     target_type: str            # class or package
 

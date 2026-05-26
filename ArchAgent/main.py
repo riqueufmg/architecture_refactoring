@@ -59,6 +59,14 @@ from util.state_utils import (
     _get_target_identity
 )
 
+from util.config_utils import load_config, require_config_value
+
+from util.state_config_utils import (
+    get_config_value,
+    require_config_value as require_state_config_value,
+    resolve_path_from_base,
+)
+
 from State import State #langgraph state class
 
 from tools.context_builder import extract_observed_external_calls
@@ -123,6 +131,7 @@ def init_run_node(state: State) -> State:
         "smell_type": state.get("smell_type", ""),
         "designite_smell_name": state.get("designite_smell_name", ""),
         "designite_smells_csv": state.get("designite_smells_csv", "DesignSmells.csv"),
+        "config": state.get("config", {}),
     }
     (run_dir / "meta.json").write_text(json.dumps(meta, indent=2), encoding="utf-8")
 
@@ -343,18 +352,27 @@ def resolve_target_package_node(state: State) -> State:
     )
     
     ### run Designite for the current package resolution
-    jar_env = os.getenv("DESIGNITE_JAR_PATH")
-    if not jar_env:
-        raise RuntimeError("DESIGNITE_JAR_PATH is not set")
+    designite_jar_cfg = get_config_value(state, "designite.jar_path")
+    if not designite_jar_cfg:
+        raise RuntimeError("designite.jar_path is not set in config")
 
-    designite_jar = Path(jar_env).expanduser().resolve()
+    project_root = Path(state.get("project_root") or Path.cwd()).resolve()
+    designite_jar = resolve_path_from_base(project_root, designite_jar_cfg)
+
     if not designite_jar.exists() or not designite_jar.is_file():
         raise RuntimeError(f"Designite JAR not found at {designite_jar}")
+
+    designite_java = get_config_value(state, "designite.java_path", "java")
 
     plan_dir = _get_plan_dir(state)
     designite_scope_dir = plan_dir / "package_scope_designite"
 
-    out_dir, cmd = _run_designite(repo_path, designite_scope_dir, designite_jar)
+    out_dir, cmd = _run_designite(
+        repo_path=repo_path,
+        output_root=designite_scope_dir,
+        designite_jar=designite_jar,
+        java_path=designite_java,
+    )
 
     graphml_path = out_dir / "DependencyGraph.graphml"
     if not graphml_path.exists():
@@ -1090,6 +1108,19 @@ def openrewrite_node(state: State) -> State:
     blk = state.get("staged_block") or {}
     ops = blk.get("ops") or []
 
+    openrewrite_enabled = bool(get_config_value(state, "openrewrite.enabled", True))
+
+    if not openrewrite_enabled:
+        state["openrewrite_ok"] = True
+        state["msg"] = state.get("msg", "") + " | openrewrite disabled"
+
+        (plan_dir / f"openrewrite.disabled.block.{block_idx}.txt").write_text(
+            "OpenRewrite disabled by config.\n",
+            encoding="utf-8",
+        )
+
+        return state
+
     # Diagnostic log: confirms the node was reached
     (plan_dir / f"openrewrite.enter.block.{block_idx}.json").write_text(
         json.dumps(
@@ -1153,7 +1184,7 @@ def openrewrite_node(state: State) -> State:
     rewrite_path = plan_dir / f"rewrite.block.{block_idx}.yml"
     rewrite_path.write_text(rewrite_yml, encoding="utf-8")
 
-    cmd = [
+    '''cmd = [
         "mvn",
         "-U",
         "-Dmaven.test.skip=true",
@@ -1172,6 +1203,34 @@ def openrewrite_node(state: State) -> State:
         "-Dskip.yarn=true",
         #"org.openrewrite.maven:rewrite-maven-plugin:run",
         "org.openrewrite.maven:rewrite-maven-plugin:runNoFork",
+        f"-Drewrite.configLocation={rewrite_path}",
+        f"-Drewrite.activeRecipes={recipe_name}",
+    ]'''
+
+    base_cmd = get_config_value(state, "openrewrite.command")
+
+    if not base_cmd:
+        base_cmd = [
+            "mvn",
+            "-U",
+            "-Dmaven.test.skip=true",
+            "-DskipTests",
+            "-DskipITs",
+            "-Djapicmp.skip=true",
+            "-Drat.skip=true",
+            "-Dcheckstyle.skip=true",
+            "-Dspotbugs.skip=true",
+            "-Dpmd.skip=true",
+            "-Danimal.sniffer.skip=true",
+            "-Dforbiddenapis.skip=true",
+            "-Denforcer.skip=true",
+            "-Dlicense.skip=true",
+            "-Dskip.npm=true",
+            "-Dskip.yarn=true",
+            "org.openrewrite.maven:rewrite-maven-plugin:runNoFork",
+        ]
+
+    cmd = list(base_cmd) + [
         f"-Drewrite.configLocation={rewrite_path}",
         f"-Drewrite.activeRecipes={recipe_name}",
     ]
@@ -1240,7 +1299,18 @@ def compile_node(state: State) -> State:
     tmp_dir = repo_path / "tmp"
     tmp_dir.mkdir(parents=True, exist_ok=True)
 
-    p = _run_build(repo_path, tmp_dir)
+    compile_command = get_config_value(state, "maven.compile_command")
+
+    (plan_dir / "compile.command.json").write_text(
+        json.dumps(compile_command or [], indent=2),
+        encoding="utf-8",
+    )
+
+    p = _run_build(
+        repo_path=repo_path,
+        tmp_dir=tmp_dir,
+        command=compile_command,
+    )
 
     state["compile_returncode"] = p.returncode
     state["compile_ok"] = (p.returncode == 0)
@@ -1397,17 +1467,26 @@ def designite_node(state: State) -> State:
     analysis_out = plan_dir / "designite_analysis"
 
     try:
-        jar_env = os.getenv("DESIGNITE_JAR_PATH")
-        if not jar_env:
-            raise RuntimeError("DESIGNITE_JAR_PATH is not set")
+        designite_jar_cfg = get_config_value(state, "designite.jar_path")
+        if not designite_jar_cfg:
+            raise RuntimeError("designite.jar_path is not set in config")
 
-        designite_jar = Path(jar_env).expanduser().resolve()
+        project_root = Path(state.get("project_root") or Path.cwd()).resolve()
+        designite_jar = resolve_path_from_base(project_root, designite_jar_cfg)
+
         if not designite_jar.exists() or not designite_jar.is_file():
             raise RuntimeError(f"Designite JAR not found at {designite_jar}")
 
+        designite_java = get_config_value(state, "designite.java_path", "java")
+
         analysis_out.mkdir(parents=True, exist_ok=True)
 
-        out_dir, cmd = _run_designite(repo_path, analysis_out, designite_jar)
+        out_dir, cmd = _run_designite(
+            repo_path=repo_path,
+            output_root=analysis_out,
+            designite_jar=designite_jar,
+            java_path=designite_java,
+        )
 
         # check if smell was removed
         target_type = _get_target_type(state)
@@ -1844,65 +1923,76 @@ if __name__ == "__main__":
     # TODO: check if Java version pass by project build
     # TODO: check if target has designite smell, if not, exit early
 
-    # load environment variables from .env file
+    # load environment variables
     dotenv.load_dotenv()
-    repo_path = Path(os.getenv("REPO_PATH")).resolve()
 
-    # parse arguments
+    # read and load configuration file
     parser = argparse.ArgumentParser()
-    parser.add_argument("--smell", required=True, help="Type of smell (GC, HM or IM)")
-    parser.add_argument("--target", required=True, help="FQN of target class or package")
+    parser.add_argument("--config", required=True, help="Path to YAML experiment config")
     args = parser.parse_args()
-    smell = (args.smell or "").strip() # --smell
-    target_name = (args.target or "").strip() # --target
 
-    # check valid smells
+    cfg = load_config(args.config)
+
+    project_root = Path.cwd().resolve()
+
+    # set main variables with configuration settings
+    repo_path = Path(require_config_value(cfg, "project.repo_path")).resolve()
+
+    smell = str(require_config_value(cfg, "target.smell")).strip()
+    smell_name = str(require_config_value(cfg, "target.smell_name")).strip()
+    target_name = str(require_config_value(cfg, "target.target_name")).strip()
+    target_type = str(
+        cfg.get("target", {}).get("target_type") or _infer_target_type_from_name(target_name)
+    ).strip()
+
     if smell not in {"GC", "HM", "IM"}:
         raise ValueError("Invalid smell type. Must be 'GC', 'HM' or 'IM'.")
 
-    # return target data
-    target_type = _infer_target_type_from_name(target_name)
+    if target_type not in {"class", "package"}:
+        raise ValueError("Invalid target_type. Must be 'class' or 'package'.")
+
     target_path = Fqn(target_name).find_in_repo(repo_path)
 
-    # check valid target FQN
     if target_path is None:
         raise ValueError(f"Target {target_name} not found in {repo_path}.")
 
-    # load planner prompt template
-    # TODO: read template inside planner node
-    with open(f"data/prompts/planner_{smell}.prompt", "r", encoding="utf-8") as f:
+    planner_prompt_path = Path(require_config_value(cfg, "prompts.planner"))
+
+    with planner_prompt_path.open("r", encoding="utf-8") as f:
         PROMPT_TEMPLATE = f.read()
-    
+
     planner_input = {}
 
-    # prepare planner input based on smell type and target type
     if target_type == "class":
-        # check if target path is a file
         if not target_path.is_file():
             raise ValueError(f"Class target must resolve to a file, got: {target_path}")
 
         target_file = str(target_path.relative_to(repo_path)).replace("\\", "/")
         target_rel, target_code = _read_target_file(repo_path, target_file)
 
-        # insufficient modularization
         if smell == "IM":
             planner_input = {
-                "smell": "Insufficient Modularization",
+                "smell": smell_name,
+                "target_type": "class",
+                "target_name": target_name,
                 "target_file": target_rel,
                 "target_code": target_code,
             }
-        # hub-like modularization
+
         elif smell == "HM":
             observed_external_calls = extract_observed_external_calls(target_code)
             planner_input = {
-                "smell": "Hub-like Modularization", # smell type
-                "target_file": target_rel, # path to the target class
-                "target_code": target_code, # raw code of target class
-                "observed_external_calls": observed_external_calls, # list of external calls
+                "smell": smell_name,
+                "target_type": "class",
+                "target_name": target_name,
+                "target_file": target_rel,
+                "target_code": target_code,
+                "observed_external_calls": observed_external_calls,
             }
+
         else:
             raise ValueError("Invalid smell type for class target. Must be 'IM' or 'HM'.")
-        
+
         invoke_input = {
             "repo_path": str(repo_path),
             "target_name": target_name,
@@ -1910,31 +2000,52 @@ if __name__ == "__main__":
             "target_file": target_rel,
             "planner_prompt": PROMPT_TEMPLATE,
             "planner_input_json": json.dumps(planner_input, indent=2),
+            "designite_smell_name": smell_name,
+            "designite_smells_csv": require_config_value(cfg, "designite.smells_csv"),
+            "executor_prompt_path": require_config_value(cfg, "prompts.executor"),
+            "smell_quality_prompt_path": require_config_value(cfg, "prompts.quality"),
+            "max_block_attempts": int(require_config_value(cfg, "workflow.max_block_attempts")),
+            "max_plans": int(require_config_value(cfg, "workflow.max_plans")),
+            "config": cfg,
+            "project_root": str(project_root),
         }
-        
+
     elif target_type == "package":
-        # check if target path is a directory
         if not target_path.is_dir():
             raise ValueError(f"Package target must resolve to a directory, got: {target_path}")
-        
-        # god component
+
         if smell == "GC":
             planner_input = {
-                "smell": "God Component", # smell type
+                "smell": smell_name,
+                "target_type": "package",
                 "target_name": target_name,
             }
         else:
             raise ValueError("Invalid smell type for package target. Must be 'GC'.")
-        
+
         invoke_input = {
             "repo_path": str(repo_path),
             "target_name": target_name,
             "target_type": target_type,
             "planner_prompt": PROMPT_TEMPLATE,
             "planner_input_json": json.dumps(planner_input, indent=2),
+            "designite_smell_name": smell_name,
+            "designite_smells_csv": require_config_value(cfg, "designite.smells_csv"),
+            "executor_prompt_path": require_config_value(cfg, "prompts.executor"),
+            "smell_quality_prompt_path": require_config_value(cfg, "prompts.quality"),
+            "max_block_attempts": int(require_config_value(cfg, "workflow.max_block_attempts")),
+            "max_plans": int(require_config_value(cfg, "workflow.max_plans")),
+            "config": cfg,
+            "project_root": str(project_root),
         }
+
+    else:
+        raise ValueError(f"Unsupported target_type: {target_type}")
 
     app = build_graph()
     out = app.invoke(invoke_input)
 
-    open(f"{repo_path}/state.json", "w", encoding="utf-8").write(json.dumps(out, indent=2))
+    (repo_path / "state.json").write_text(
+        json.dumps(out, indent=2),
+        encoding="utf-8",
+    )

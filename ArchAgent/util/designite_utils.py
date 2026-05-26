@@ -7,42 +7,44 @@ from util.Dependencies import Dependencies
 from util.subprocess_utils import _run
 
 
+from pathlib import Path
+import csv
+import subprocess
+import xml.etree.ElementTree as ET
+
+from util.subprocess_utils import _run
+
 def _run_designite(
     repo_path: Path,
-    out_dir: Path,
-    jar_path: Path,
-) -> Tuple[Path, list[str]]:
+    output_root: Path,
+    designite_jar: Path,
+    java_path: str | None = None,
+) -> tuple[Path, list[str]]:
+    output_root.mkdir(parents=True, exist_ok=True)
 
-    if out_dir.exists():
-        shutil.rmtree(out_dir)
-
-    out_dir.mkdir(parents=True, exist_ok=True)
-
-    java22 = "/usr/lib/jvm/jdk-22.0.2-oracle-x64/bin/java"
+    java_cmd = java_path or "java"
 
     cmd = [
-        java22,
+        java_cmd,
         "-jar",
-        str(jar_path),
+        str(designite_jar),
         "-g",
         "-i",
         str(repo_path),
         "-o",
-        str(out_dir),
+        str(output_root),
     ]
 
     p = _run(cmd, cwd=repo_path)
 
-    log = (p.stdout or "") + ("\n" if p.stdout else "") + (p.stderr or "")
-    (out_dir / "designite.log").write_text(log, encoding="utf-8")
+    log = (p.stdout or "") + "\n" + (p.stderr or "")
+    (output_root / "designite.log").write_text(log, encoding="utf-8")
+    (output_root / "designite.cmd.txt").write_text(" ".join(cmd), encoding="utf-8")
 
     if p.returncode != 0:
-        raise RuntimeError(
-            f"Designite failed (rc={p.returncode}). See log at {out_dir / 'designite.log'}"
-        )
+        raise RuntimeError(f"Designite failed:\n{log}")
 
-    return out_dir, cmd
-
+    return output_root, cmd
 
 def _designite_smell_present(
     designite_dir: Path,
@@ -93,7 +95,6 @@ def _designite_smell_present(
                         return True
 
     return False
-
 
 def get_package_dependencies(graphml_path: str, target_name: str):
     deps = Dependencies(target_name)
