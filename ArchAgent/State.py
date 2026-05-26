@@ -12,8 +12,15 @@ class State(TypedDict, total=False):
 
     max_plans: int
     max_block_attempts: int
+
     max_compile_repair_attempts: int
+    compile_repair_attempt: int
+    enable_compile_repair: bool
+
     max_test_repair_attempts: int
+    test_repair_attempt: int
+    enable_test_compile: bool
+    enable_test_repair: bool
 
     target_type: str            # class or package
 

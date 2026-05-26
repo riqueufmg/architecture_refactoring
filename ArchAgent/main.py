@@ -139,6 +139,34 @@ def init_run_node(state: State) -> State:
 
     # plan lifecycle init
     state.setdefault("plan_idx", 0)
+
+    # attempt counters init
+    state.setdefault("max_plans", int(get_config_value(state, "workflow.max_plans", 5)))
+    state.setdefault("max_block_attempts", int(get_config_value(state, "workflow.max_block_attempts", 5)))
+
+    state.setdefault(
+        "max_compile_repair_attempts",
+        int(get_config_value(state, "workflow.max_compile_repair_attempts", 3)),
+    )
+    state.setdefault("compile_repair_attempt", 0)
+    state.setdefault(
+        "enable_compile_repair",
+        bool(get_config_value(state, "workflow.enable_compile_repair", False)),
+    )
+
+    state.setdefault(
+        "max_test_repair_attempts",
+        int(get_config_value(state, "workflow.max_test_repair_attempts", 2)),
+    )
+    state.setdefault("test_repair_attempt", 0)
+    state.setdefault(
+        "enable_test_compile",
+        bool(get_config_value(state, "workflow.enable_test_compile", False)),
+    )
+    state.setdefault(
+        "enable_test_repair",
+        bool(get_config_value(state, "workflow.enable_test_repair", False)),
+    )
     
     # designite analysis states
     state.setdefault("smell_persist_replans", 0)
@@ -174,6 +202,15 @@ def init_run_node(state: State) -> State:
         "plan_base_commit": state["plan_base_commit"],
         "plan_dir": str(plan_dir),
         "smell_persist_replans": state["smell_persist_replans"],
+        "workflow": {
+            "max_plans": state.get("max_plans"),
+            "max_block_attempts": state.get("max_block_attempts"),
+            "max_compile_repair_attempts": state.get("max_compile_repair_attempts"),
+            "enable_compile_repair": state.get("enable_compile_repair"),
+            "max_test_repair_attempts": state.get("max_test_repair_attempts"),
+            "enable_test_compile": state.get("enable_test_compile"),
+            "enable_test_repair": state.get("enable_test_repair"),
+        },
     })
     (run_dir / "meta.json").write_text(json.dumps(meta, indent=2), encoding="utf-8")
 
@@ -495,6 +532,8 @@ def planner_node(state: State) -> State:
         model=os.getenv("PLANNER_MODEL", "gpt-5-mini"),
         temperature=0.0,
         api_key=os.environ.get("OPENAI_API_KEY"),
+        timeout=120,
+        max_retries=2,
     )
 
     rendered = prompt.replace("{input}", planner_input)
@@ -587,7 +626,10 @@ def stage_block_node(state: State) -> State:
     state["executor_feedback"] = ""
 
     state["block_attempt"] = 0
-    state.setdefault("max_block_attempts", 5)
+    state.setdefault(
+        "max_block_attempts",
+        int(get_config_value(state, "workflow.max_block_attempts", 5)),
+    )
 
     state["done"] = False
     state["staged_block"] = blk
@@ -771,6 +813,8 @@ def executor_node(state: State) -> State:
         model=os.getenv("EXECUTOR_MODEL", "gpt-5-mini"),
         temperature=0.0,
         api_key=os.environ.get("OPENAI_API_KEY"),
+        timeout=120,
+        max_retries=2,
     )
 
     res = llm.invoke([
@@ -780,7 +824,6 @@ def executor_node(state: State) -> State:
 
     raw = (res.content or "").strip()
     state["executor_raw"] = raw
-
 
     (plan_dir / "executor.prompt.json").write_text(state["executor_prompt"], encoding="utf-8")
     (plan_dir / "executor.raw.txt").write_text(raw, encoding="utf-8")
@@ -852,6 +895,33 @@ def executor_node(state: State) -> State:
 
         state["rollback_reason"] = ""
 
+        # if list with empty files (no-op)
+        if not cleaned_writes and not cleaned_deletes:
+            state["rollback_reason"] = "executor_no_changes"
+            state["executor_feedback"] = (
+                "EXECUTOR_NO_CHANGES: The executor returned valid JSON, "
+                "but produced no files_to_write or files_to_delete. "
+                "Revise the same block and generate concrete file changes."
+            )
+
+            state["block_attempt"] = state.get("block_attempt", 0) + 1
+
+            if state["block_attempt"] >= state.get("max_block_attempts", 5):
+                state["rollback_reason"] = "block_attempt_exhausted"
+                state["rollback_commit"] = state["plan_base_commit"]
+                state["replan_trigger"] = "block_attempt_exhausted"
+
+            meta.update({
+                "executor_ok": False,
+                "executor_error": "executor_no_changes",
+                "rollback_reason": state.get("rollback_reason"),
+                "block_attempt": state.get("block_attempt", 0),
+            })
+            meta_path.write_text(json.dumps(meta, indent=2), encoding="utf-8")
+
+            state["msg"] = state.get("msg", "") + " | executor FAIL(no changes)"
+            return state
+
         #update meta file
         meta.update({
             "executor_ok": True,
@@ -859,6 +929,8 @@ def executor_node(state: State) -> State:
             "executor_deletes": len(state.get("files_to_delete") or []),
         })
         meta_path.write_text(json.dumps(meta, indent=2), encoding="utf-8")
+
+
 
         return state
 
@@ -894,16 +966,27 @@ def executor_node(state: State) -> State:
 
 def after_executor(state: State) -> str:
     # if executor not failed parsing JSON, and produced files to write/delete
-    if (state.get("rollback_reason") in (None, "", "unknown")
-        and ((state.get("files_to_write") or []) or (state.get("files_to_delete") or []))):
-        return "apply_files"
+    if state.get("rollback_reason") in (None, "", "unknown"):
+        if (state.get("files_to_write") or []) or (state.get("files_to_delete") or []):
+            return "apply_files"
+
+        state["rollback_reason"] = "executor_no_changes"
+        state["executor_feedback"] = (
+            "EXECUTOR_NO_CHANGES: valid output but no file changes."
+        )
 
     # block attempts are reached
     if state.get("rollback_reason") == "block_attempt_exhausted":
         return "rollback"
 
     # if failed, retry
-    return "retry_executor"
+    if state.get("block_attempt", 0) < state.get("max_block_attempts", 5):
+        return "retry_executor"
+
+    state["rollback_reason"] = "block_attempt_exhausted"
+    state["rollback_commit"] = state.get("plan_base_commit")
+    state["replan_trigger"] = "block_attempt_exhausted"
+    return "rollback"
 
 def retry_executor_node(state: State) -> State:
     run_dir = Path(state["run_dir"])
@@ -1335,6 +1418,9 @@ def compile_node(state: State) -> State:
         {
             "compile_ok": state["compile_ok"],
             "compile_returncode": state["compile_returncode"],
+            "enable_compile_repair": state.get("enable_compile_repair", False),
+            "compile_repair_attempt": state.get("compile_repair_attempt", 0),
+            "max_compile_repair_attempts": state.get("max_compile_repair_attempts", 3),
         }
     )
     meta_path.write_text(json.dumps(meta, indent=2), encoding="utf-8")
@@ -1357,6 +1443,19 @@ def after_compile(state: State) -> str:
     if state.get("compile_ok"):
         return "promote_baseline"
     return "rollback"
+
+'''
+def after_compile(state: State) -> str:
+    if state.get("compile_ok"):
+        state["compile_repair_attempt"] = 0
+        return "promote_baseline"
+
+    if state.get("enable_compile_repair", False):
+        if state.get("compile_repair_attempt", 0) < state.get("max_compile_repair_attempts", 3):
+            return "compile_repair"
+
+    return "rollback"
+'''
 
 def after_stage_block(state: State) -> str:
     if state.get("done"):
@@ -1552,18 +1651,21 @@ def designite_node(state: State) -> State:
 # case smell persists and plans <= 4, replan
 # case smell persists and plans > 4, roolback
 def after_designite(state: State) -> str:
+    max_plans = int(state.get("max_plans", 5))
+    plan_idx = int(state.get("plan_idx", 0))
 
     if state.get("smell_still_present"):
-        
-        # quantity plan tries
-        if state["plan_idx"] <= 4:
+
+        # plan_idx starts at 0.
+        # If max_plans=5, allowed plans are 0,1,2,3,4.
+        if plan_idx < max_plans - 1:
             state["replan_trigger"] = "smell_persist_keep_progress"
             return "smell_quality_check"
-        else:
-            state["rollback_commit"] = state["plan_base_commit"]
-            state["replan_trigger"] = "smell_persist_force_rollback"
-            return "rollback"
-    
+
+        state["rollback_commit"] = state["plan_base_commit"]
+        state["replan_trigger"] = "smell_persist_force_rollback"
+        return "rollback"
+
     if not state.get("designite_ok"):
         return "rollback"
 
@@ -1625,6 +1727,8 @@ def smell_quality_check_node(state: State) -> State:
         model=os.getenv("QUALITY_MODEL", "gpt-5-mini"),
         temperature=0.0,
         api_key=os.environ.get("OPENAI_API_KEY"),
+        timeout=120,
+        max_retries=2,
     )
 
     try:
@@ -1667,12 +1771,12 @@ def prepare_replan_node(state: State) -> State:
     repo_path = Path(state["repo_path"]).resolve()
     run_dir = Path(state["run_dir"])
 
-    # add plan counter
     state["plan_idx"] = state.get("plan_idx", 0) + 1
     state["smell_persist_replans"] += 1
 
-    # check if reach plan threshold
-    if state.get("plan_idx", 0) > 4:
+    max_plans = int(state.get("max_plans", 5))
+
+    if state.get("plan_idx", 0) >= max_plans:
         state["stop_reason"] = "max_plans_reached"
         state["msg"] = state.get("msg", "") + " | stop: max plans reached"
         return state
@@ -2004,8 +2108,15 @@ if __name__ == "__main__":
             "designite_smells_csv": require_config_value(cfg, "designite.smells_csv"),
             "executor_prompt_path": require_config_value(cfg, "prompts.executor"),
             "smell_quality_prompt_path": require_config_value(cfg, "prompts.quality"),
-            "max_block_attempts": int(require_config_value(cfg, "workflow.max_block_attempts")),
             "max_plans": int(require_config_value(cfg, "workflow.max_plans")),
+            "max_block_attempts": int(require_config_value(cfg, "workflow.max_block_attempts")),
+            "max_compile_repair_attempts": int(require_config_value(cfg, "workflow.max_compile_repair_attempts")),
+            "compile_repair_attempt": 0,
+            "enable_compile_repair": bool(require_config_value(cfg, "workflow.enable_compile_repair")),
+            "max_test_repair_attempts": int(require_config_value(cfg, "workflow.max_test_repair_attempts")),
+            "test_repair_attempt": 0,
+            "enable_test_compile": bool(require_config_value(cfg, "workflow.enable_test_compile")),
+            "enable_test_repair": bool(require_config_value(cfg, "workflow.enable_test_repair")),
             "config": cfg,
             "project_root": str(project_root),
         }
@@ -2033,8 +2144,15 @@ if __name__ == "__main__":
             "designite_smells_csv": require_config_value(cfg, "designite.smells_csv"),
             "executor_prompt_path": require_config_value(cfg, "prompts.executor"),
             "smell_quality_prompt_path": require_config_value(cfg, "prompts.quality"),
-            "max_block_attempts": int(require_config_value(cfg, "workflow.max_block_attempts")),
             "max_plans": int(require_config_value(cfg, "workflow.max_plans")),
+            "max_block_attempts": int(require_config_value(cfg, "workflow.max_block_attempts")),
+            "max_compile_repair_attempts": int(require_config_value(cfg, "workflow.max_compile_repair_attempts")),
+            "compile_repair_attempt": 0,
+            "enable_compile_repair": bool(require_config_value(cfg, "workflow.enable_compile_repair")),
+            "max_test_repair_attempts": int(require_config_value(cfg, "workflow.max_test_repair_attempts")),
+            "test_repair_attempt": 0,
+            "enable_test_compile": bool(require_config_value(cfg, "workflow.enable_test_compile")),
+            "enable_test_repair": bool(require_config_value(cfg, "workflow.enable_test_repair")),
             "config": cfg,
             "project_root": str(project_root),
         }
