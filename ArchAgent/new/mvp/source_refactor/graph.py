@@ -13,6 +13,9 @@ from mvp.source_refactor.nodes import (
     resolve_files_context_node,
     execute_plan_node,
     apply_changes_node,
+    compile_source_node,
+    after_compile_source,
+    promote_block_node,
     save_status_node,
 )
 
@@ -30,6 +33,8 @@ def build_source_refactor_graph():
     g.add_node("resolve_files_context", resolve_files_context_node)
     g.add_node("execute_plan", execute_plan_node)
     g.add_node("apply_changes", apply_changes_node)
+    g.add_node("compile_source", compile_source_node)
+    g.add_node("promote_block", promote_block_node)
     g.add_node("save_status", save_status_node)
 
     g.set_entry_point("load_config")
@@ -44,7 +49,17 @@ def build_source_refactor_graph():
     g.add_edge("stage_block", "resolve_files_context")
     g.add_edge("resolve_files_context", "execute_plan")
     g.add_edge("execute_plan", "apply_changes")
-    g.add_edge("apply_changes", "save_status")
+    g.add_edge("apply_changes", "compile_source")
+    g.add_conditional_edges(
+        "compile_source",
+        after_compile_source,
+        {
+            "promote_block": "promote_block",
+            "save_status": "save_status",
+        },
+    )
+
+    g.add_edge("promote_block", "save_status")
     g.add_edge("save_status", END)
 
     return g.compile()

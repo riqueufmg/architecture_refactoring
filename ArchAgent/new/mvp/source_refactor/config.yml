@@ -26,6 +26,7 @@ repair:
   max_repair_rounds: 5
 
 compile:
+  timeout: 300
   command:
     - mvn
     - -q

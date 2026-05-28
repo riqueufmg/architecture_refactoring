@@ -3,13 +3,23 @@ import shutil
 import uuid
 
 from datetime import datetime
-from langchain_openai import ChatOpenAI
-from langchain_core.messages import SystemMessage, HumanMessage
 from pathlib import Path
 
+from langchain_openai import ChatOpenAI
+from langchain_core.messages import SystemMessage, HumanMessage
+
 from mvp.source_refactor.state import SourceRefactorState
-from mvp.source_refactor.lib.config_utils import load_config, require_config_value
-from mvp.source_refactor.lib.json_utils import read_json, write_json
+
+from mvp.source_refactor.lib.config_utils import (
+    load_config,
+    require_config_value,
+    get_config_value,
+)
+from mvp.source_refactor.lib.json_utils import (
+    read_json,
+    write_json,
+    extract_json_object_only,
+)
 from mvp.source_refactor.lib.path_utils import (
     require_absolute_path,
     ensure_file_exists,
@@ -18,16 +28,16 @@ from mvp.source_refactor.lib.path_utils import (
 from mvp.source_refactor.lib.git_utils import (
     ensure_clean_git_workspace,
     git_current_commit,
+    git_status_porcelain,
+    git_commit_all,
 )
-from mvp.source_refactor.lib.config_utils import get_config_value
-from mvp.source_refactor.lib.json_utils import extract_json_object_only
 from mvp.source_refactor.lib.file_ops import (
     load_files_context,
     ensure_path_inside_repo,
     write_text_file,
     delete_file,
 )
-from mvp.source_refactor.lib.git_utils import git_status_porcelain
+from mvp.source_refactor.lib.maven_utils import run_compile_command
 
 def load_config_node(state: SourceRefactorState) -> SourceRefactorState:
     config_path = require_absolute_path(state["config_path"], "config_path")
@@ -409,6 +419,101 @@ def apply_changes_node(state: SourceRefactorState) -> SourceRefactorState:
 
     return state
 
+def compile_source_node(state: SourceRefactorState) -> SourceRefactorState:
+    cfg = state["config"]
+    repo_path = Path(state["repo_path"]).resolve()
+    block_dir = Path(state["current_block_dir"])
+
+    compile_command = get_config_value(cfg, "compile.command", [])
+
+    if not isinstance(compile_command, list):
+        raise ValueError("compile.command must be a list")
+
+    compile_command = [str(part) for part in compile_command]
+
+    timeout = int(get_config_value(cfg, "compile.timeout", 300))
+
+    return_code, output = run_compile_command(
+        repo_path=repo_path,
+        command=compile_command,
+        timeout=timeout,
+    )
+
+    compile_log_path = block_dir / "compile.log"
+    compile_log_path.write_text(output, encoding="utf-8")
+
+    compile_ok = return_code == 0
+
+    state["compile_return_code"] = return_code
+    state["compile_ok"] = compile_ok
+    state["compile_log_path"] = str(compile_log_path)
+    state["compile_log"] = output
+
+    write_json(
+        block_dir / "compile.status.json",
+        {
+            "ok": compile_ok,
+            "return_code": return_code,
+            "command": compile_command,
+            "compile_log": str(compile_log_path),
+        },
+    )
+
+    return state
+
+def after_compile_source(state: SourceRefactorState) -> str:
+    if state.get("compile_ok", False):
+        return "promote_block"
+    return "save_status"
+
+def promote_block_node(state: SourceRefactorState) -> SourceRefactorState:
+    repo_path = Path(state["repo_path"]).resolve()
+    source_refactor_dir = Path(state["source_refactor_dir"])
+
+    block_id = state.get("current_block_id", "")
+    compile_ok = bool(state.get("compile_ok", False))
+
+    if not compile_ok:
+        state["stop_reason"] = "compile_failed"
+        return state
+
+    commit = git_commit_all(
+        repo_path,
+        f"source_refactor: apply block {block_id}",
+    )
+
+    state["current_block_commit"] = commit
+    state["last_good_commit"] = commit
+
+    block_commit = {
+        "block_id": block_id,
+        "commit": commit,
+        "message": f"source_refactor: apply block {block_id}",
+    }
+
+    block_commits = list(state.get("block_commits", []))
+    block_commits.append(block_commit)
+    state["block_commits"] = block_commits
+
+    git_dir = source_refactor_dir / "git"
+    git_dir.mkdir(parents=True, exist_ok=True)
+
+    (git_dir / "last_good_commit.txt").write_text(
+        commit + "\n",
+        encoding="utf-8",
+    )
+
+    write_json(git_dir / "block_commits.json", block_commits)
+
+    write_json(
+        Path(state["current_block_dir"]) / "block.commit.json",
+        block_commit,
+    )
+
+    state["stop_reason"] = "applied_and_compiled_first_block_only"
+
+    return state
+
 def save_status_node(state: SourceRefactorState) -> SourceRefactorState:
     source_refactor_dir = Path(state["source_refactor_dir"])
 
@@ -416,7 +521,7 @@ def save_status_node(state: SourceRefactorState) -> SourceRefactorState:
 
     status = {
         "mvp": "source_refactor",
-        "ok": True,
+        "ok": bool(state.get("compile_ok", False)),
         "run_id": state.get("run_id", ""),
         "project": state.get("project_name", ""),
         "repo_path": state.get("repo_path", ""),
@@ -425,18 +530,22 @@ def save_status_node(state: SourceRefactorState) -> SourceRefactorState:
         "target_type": state.get("target_type", ""),
         "target_name": state.get("target_name", ""),
         "blocks_count": len(blocks),
-        "initial_commit": state.get("initial_commit", ""),
-        "last_good_commit": state.get("last_good_commit", ""),
-        "workspace_clean": state.get("workspace_clean", False),
         "current_block_id": state.get("current_block_id", ""),
         "applied_files": state.get("applied_files", []),
+        "compile_ok": state.get("compile_ok", False),
+        "compile_return_code": state.get("compile_return_code", None),
+        "compile_log_path": state.get("compile_log_path", ""),
+        "initial_commit": state.get("initial_commit", ""),
+        "last_good_commit": state.get("last_good_commit", ""),
+        "current_block_commit": state.get("current_block_commit", ""),
+        "workspace_clean": state.get("workspace_clean", False),
         "stop_reason": state.get("stop_reason", "applied_first_block_only"),
     }
 
     contract = {
         "producer": "source_refactor",
         "version": "1.0",
-        "ok": True,
+        "ok": bool(state.get("compile_ok", False)),
         "run_id": state.get("run_id", ""),
         "input": {
             "planner_contract": state.get("planner_contract_path", ""),
@@ -461,6 +570,8 @@ def save_status_node(state: SourceRefactorState) -> SourceRefactorState:
             "git_dir": str(source_refactor_dir / "git"),
             "initial_commit": str(source_refactor_dir / "git" / "initial_commit.txt"),
             "last_good_commit": str(source_refactor_dir / "git" / "last_good_commit.txt"),
+            "current_block_dir": state.get("current_block_dir", ""),
+            "compile_log": state.get("compile_log_path", ""),
             "current_block_dir": state.get("current_block_dir", ""),
         },
     }

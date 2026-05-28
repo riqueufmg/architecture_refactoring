@@ -9,13 +9,17 @@
   "target_type": "class",
   "target_name": "org.apache.commons.lang3.Functions",
   "blocks_count": 1,
-  "initial_commit": "eb9c5bf0cd8f86da37392f2a6f1c91454f55ce7c",
-  "last_good_commit": "eb9c5bf0cd8f86da37392f2a6f1c91454f55ce7c",
-  "workspace_clean": true,
   "current_block_id": "1",
   "applied_files": [
     "src/main/java/org/apache/commons/lang3/Functions.java",
     "src/main/java/org/apache/commons/lang3/FunctionsInternal.java"
   ],
-  "stop_reason": "applied_first_block_only"
+  "compile_ok": true,
+  "compile_return_code": 0,
+  "compile_log_path": "/data/henrique/langchain_prototype/ArchAgent/new/data/runs/20260528_134954_8a94dbcf/source_refactor/block_001/compile.log",
+  "initial_commit": "eb9c5bf0cd8f86da37392f2a6f1c91454f55ce7c",
+  "last_good_commit": "d36bdd4b8a21e9fd7a84731f701fd37f47513039",
+  "current_block_commit": "d36bdd4b8a21e9fd7a84731f701fd37f47513039",
+  "workspace_clean": true,
+  "stop_reason": "applied_and_compiled_first_block_only"
 }

@@ -8,6 +8,7 @@ class SourceRefactorState(TypedDict, total=False):
     run_dir: str
     source_refactor_dir: str
 
+    # plan data
     planner_contract_path: str
     planner_contract: dict[str, Any]
     planner_dir: str
@@ -20,11 +21,13 @@ class SourceRefactorState(TypedDict, total=False):
     repo_path: str
     project_name: str
 
+    # target data
     smell: str
     smell_name: str
     target_type: str
     target_name: str
 
+    # plan blocks data
     current_block_index: int
     current_block: dict[str, Any]
 
@@ -32,6 +35,7 @@ class SourceRefactorState(TypedDict, total=False):
     contract: dict[str, Any]
     stop_reason: str
 
+    # data
     initial_commit: str
     last_good_commit: str
     final_commit: str
@@ -42,10 +46,12 @@ class SourceRefactorState(TypedDict, total=False):
 
     current_block_dir: str
     current_block_id: str
+    current_block_commit: str
 
     allowed_files: list[str]
     files_context: list[dict[str, str]]
 
+    # executor data
     executor_system_prompt_path: str
     execute_plan_prompt_path: str
     executor_system_prompt: str
@@ -55,3 +61,9 @@ class SourceRefactorState(TypedDict, total=False):
     execute_plan_result: dict[str, Any]
 
     applied_files: list[str]
+
+    # compilation data
+    compile_return_code: int
+    compile_ok: bool
+    compile_log_path: str
+    compile_log: str
