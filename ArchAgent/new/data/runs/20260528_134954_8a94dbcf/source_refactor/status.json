@@ -12,5 +12,10 @@
   "initial_commit": "eb9c5bf0cd8f86da37392f2a6f1c91454f55ce7c",
   "last_good_commit": "eb9c5bf0cd8f86da37392f2a6f1c91454f55ce7c",
   "workspace_clean": true,
-  "stop_reason": "loaded_plan_only"
+  "current_block_id": "1",
+  "applied_files": [
+    "src/main/java/org/apache/commons/lang3/Functions.java",
+    "src/main/java/org/apache/commons/lang3/FunctionsInternal.java"
+  ],
+  "stop_reason": "applied_first_block_only"
 }

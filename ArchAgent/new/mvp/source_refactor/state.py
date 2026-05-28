@@ -39,3 +39,19 @@ class SourceRefactorState(TypedDict, total=False):
     workspace_clean: bool
     block_commits: list[dict[str, str]]
     repair_commits: list[dict[str, str]]
+
+    current_block_dir: str
+    current_block_id: str
+
+    allowed_files: list[str]
+    files_context: list[dict[str, str]]
+
+    executor_system_prompt_path: str
+    execute_plan_prompt_path: str
+    executor_system_prompt: str
+    execute_plan_prompt: str
+    execute_plan_rendered: str
+    execute_plan_raw: str
+    execute_plan_result: dict[str, Any]
+
+    applied_files: list[str]

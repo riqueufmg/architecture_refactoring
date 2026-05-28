@@ -1,0 +1,7 @@
+{
+  "applied_files": [
+    "src/main/java/org/apache/commons/lang3/Functions.java",
+    "src/main/java/org/apache/commons/lang3/FunctionsInternal.java"
+  ],
+  "git_status": "M src/main/java/org/apache/commons/lang3/Functions.java\n?? src/main/java/org/apache/commons/lang3/FunctionsInternal.java"
+}

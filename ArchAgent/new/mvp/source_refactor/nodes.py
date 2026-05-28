@@ -1,6 +1,10 @@
+import json
 import shutil
 import uuid
+
 from datetime import datetime
+from langchain_openai import ChatOpenAI
+from langchain_core.messages import SystemMessage, HumanMessage
 from pathlib import Path
 
 from mvp.source_refactor.state import SourceRefactorState
@@ -15,7 +19,15 @@ from mvp.source_refactor.lib.git_utils import (
     ensure_clean_git_workspace,
     git_current_commit,
 )
-
+from mvp.source_refactor.lib.config_utils import get_config_value
+from mvp.source_refactor.lib.json_utils import extract_json_object_only
+from mvp.source_refactor.lib.file_ops import (
+    load_files_context,
+    ensure_path_inside_repo,
+    write_text_file,
+    delete_file,
+)
+from mvp.source_refactor.lib.git_utils import git_status_porcelain
 
 def load_config_node(state: SourceRefactorState) -> SourceRefactorState:
     config_path = require_absolute_path(state["config_path"], "config_path")
@@ -205,6 +217,197 @@ def prepare_executable_plan_node(state: SourceRefactorState) -> SourceRefactorSt
 
     return state
 
+def stage_block_node(state: SourceRefactorState) -> SourceRefactorState:
+    source_refactor_dir = Path(state["source_refactor_dir"])
+    executable_plan = state["executable_plan"]
+    blocks = executable_plan.get("blocks", [])
+
+    block_index = int(state.get("current_block_index", 0))
+
+    if block_index >= len(blocks):
+        state["stop_reason"] = "no_more_blocks"
+        return state
+
+    block = blocks[block_index]
+    block_id = str(block.get("id", block_index + 1))
+
+    block_dir = source_refactor_dir / f"block_{int(block_id):03d}"
+    block_dir.mkdir(parents=True, exist_ok=True)
+
+    state["current_block"] = block
+    state["current_block_id"] = block_id
+    state["current_block_dir"] = str(block_dir)
+
+    write_json(block_dir / "staged.block.json", block)
+
+    return state
+
+def resolve_files_context_node(state: SourceRefactorState) -> SourceRefactorState:
+    repo_path = Path(state["repo_path"]).resolve()
+    block_dir = Path(state["current_block_dir"])
+    block = state["current_block"]
+
+    files = block.get("files", [])
+
+    if not isinstance(files, list):
+        raise ValueError("current block files must be a list")
+
+    allowed_files = [str(f) for f in files]
+
+    files_context = load_files_context(repo_path, allowed_files)
+
+    state["allowed_files"] = allowed_files
+    state["files_context"] = files_context
+
+    write_json(
+        block_dir / "files_context.json",
+        {
+            "allowed_files": allowed_files,
+            "files_context": files_context,
+        },
+    )
+
+    return state
+
+def execute_plan_node(state: SourceRefactorState) -> SourceRefactorState:
+    cfg = state["config"]
+    block_dir = Path(state["current_block_dir"])
+
+    system_prompt_path = require_absolute_path(
+        str(require_config_value(cfg, "prompts.system")),
+        "prompts.system",
+    )
+    execute_prompt_path = require_absolute_path(
+        str(require_config_value(cfg, "prompts.execute_plan")),
+        "prompts.execute_plan",
+    )
+
+    system_prompt = system_prompt_path.read_text(encoding="utf-8")
+    execute_prompt = execute_prompt_path.read_text(encoding="utf-8")
+
+    executor_input = {
+        "repo_path": state["repo_path"],
+        "target": {
+            "smell": state["smell"],
+            "smell_name": state["smell_name"],
+            "target_type": state["target_type"],
+            "target_name": state["target_name"],
+        },
+        "block": state["current_block"],
+        "allowed_files": state["allowed_files"],
+        "files_context": state["files_context"],
+    }
+
+    rendered = execute_prompt.replace(
+        "{input}",
+        json.dumps(executor_input, indent=2, ensure_ascii=False),
+    )
+
+    state["executor_system_prompt_path"] = str(system_prompt_path)
+    state["execute_plan_prompt_path"] = str(execute_prompt_path)
+    state["executor_system_prompt"] = system_prompt
+    state["execute_plan_prompt"] = execute_prompt
+    state["execute_plan_rendered"] = rendered
+
+    (block_dir / "system.prompt").write_text(system_prompt, encoding="utf-8")
+    (block_dir / "execute_plan.prompt").write_text(execute_prompt, encoding="utf-8")
+    (block_dir / "execute_plan.rendered.md").write_text(rendered, encoding="utf-8")
+
+    model = str(get_config_value(cfg, "models.executor", "gpt-5-mini"))
+    temperature = float(get_config_value(cfg, "executor.temperature", 0.0))
+    timeout = int(get_config_value(cfg, "executor.timeout", 180))
+    max_retries = int(get_config_value(cfg, "executor.max_retries", 2))
+
+    llm = ChatOpenAI(
+        model=model,
+        temperature=temperature,
+        timeout=timeout,
+        max_retries=max_retries,
+    )
+
+    res = llm.invoke(
+        [
+            SystemMessage(content=system_prompt),
+            HumanMessage(content=rendered),
+        ]
+    )
+
+    raw = (res.content or "").strip()
+    state["execute_plan_raw"] = raw
+
+    (block_dir / "execute_plan.raw.txt").write_text(raw, encoding="utf-8")
+
+    json_text = extract_json_object_only(raw)
+    result = json.loads(json_text)
+
+    if not isinstance(result, dict):
+        raise ValueError("Executor result must be a JSON object")
+
+    result.setdefault("files_to_write", [])
+    result.setdefault("files_to_delete", [])
+
+    if not isinstance(result["files_to_write"], list):
+        raise ValueError("files_to_write must be a list")
+
+    if not isinstance(result["files_to_delete"], list):
+        raise ValueError("files_to_delete must be a list")
+
+    state["execute_plan_result"] = result
+
+    write_json(block_dir / "execute_plan.result.json", result)
+
+    return state
+
+def apply_changes_node(state: SourceRefactorState) -> SourceRefactorState:
+    repo_path = Path(state["repo_path"]).resolve()
+    block_dir = Path(state["current_block_dir"])
+
+    result = state["execute_plan_result"]
+    allowed_files = set(state.get("allowed_files", []))
+
+    applied_files: list[str] = []
+
+    for item in result.get("files_to_write", []):
+        if not isinstance(item, dict):
+            raise ValueError("Each files_to_write item must be an object")
+
+        rel_path = str(item.get("path", ""))
+
+        if rel_path not in allowed_files:
+            raise ValueError(f"Executor attempted to write file outside allowed_files: {rel_path}")
+
+        content = item.get("content", None)
+
+        if not isinstance(content, str):
+            raise ValueError(f"Missing content for file: {rel_path}")
+
+        abs_path = ensure_path_inside_repo(repo_path, rel_path)
+        write_text_file(abs_path, content)
+        applied_files.append(rel_path)
+
+    for rel_path in result.get("files_to_delete", []):
+        rel_path = str(rel_path)
+
+        if rel_path not in allowed_files:
+            raise ValueError(f"Executor attempted to delete file outside allowed_files: {rel_path}")
+
+        abs_path = ensure_path_inside_repo(repo_path, rel_path)
+        delete_file(abs_path)
+        applied_files.append(rel_path)
+
+    git_status = git_status_porcelain(repo_path)
+
+    state["applied_files"] = applied_files
+
+    write_json(
+        block_dir / "apply.result.json",
+        {
+            "applied_files": applied_files,
+            "git_status": git_status,
+        },
+    )
+
+    return state
 
 def save_status_node(state: SourceRefactorState) -> SourceRefactorState:
     source_refactor_dir = Path(state["source_refactor_dir"])
@@ -225,7 +428,9 @@ def save_status_node(state: SourceRefactorState) -> SourceRefactorState:
         "initial_commit": state.get("initial_commit", ""),
         "last_good_commit": state.get("last_good_commit", ""),
         "workspace_clean": state.get("workspace_clean", False),
-        "stop_reason": state.get("stop_reason", "loaded_plan_only"),
+        "current_block_id": state.get("current_block_id", ""),
+        "applied_files": state.get("applied_files", []),
+        "stop_reason": state.get("stop_reason", "applied_first_block_only"),
     }
 
     contract = {
@@ -256,6 +461,7 @@ def save_status_node(state: SourceRefactorState) -> SourceRefactorState:
             "git_dir": str(source_refactor_dir / "git"),
             "initial_commit": str(source_refactor_dir / "git" / "initial_commit.txt"),
             "last_good_commit": str(source_refactor_dir / "git" / "last_good_commit.txt"),
+            "current_block_dir": state.get("current_block_dir", ""),
         },
     }
 
