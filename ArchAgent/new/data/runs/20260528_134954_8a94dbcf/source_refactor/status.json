@@ -1,0 +1,16 @@
+{
+  "mvp": "source_refactor",
+  "ok": true,
+  "run_id": "20260528_134954_8a94dbcf",
+  "project": "commons-lang",
+  "repo_path": "/data/henrique/langchain_prototype/ArchAgent/new/data/repositories/commons-lang",
+  "smell": "IM",
+  "smell_name": "Insufficient Modularization",
+  "target_type": "class",
+  "target_name": "org.apache.commons.lang3.Functions",
+  "blocks_count": 1,
+  "initial_commit": "eb9c5bf0cd8f86da37392f2a6f1c91454f55ce7c",
+  "last_good_commit": "eb9c5bf0cd8f86da37392f2a6f1c91454f55ce7c",
+  "workspace_clean": true,
+  "stop_reason": "loaded_plan_only"
+}
