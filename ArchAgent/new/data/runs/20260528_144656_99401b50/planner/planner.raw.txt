@@ -1,0 +1,72 @@
+{
+  "smell_type": "God Component",
+  "target_level": "package",
+  "target": "org.apache.commons.lang3.function",
+  "selected_cluster": [
+    "org.apache.commons.lang3.function.MethodInvokers",
+    "org.apache.commons.lang3.function.FailableBiFunction",
+    "org.apache.commons.lang3.function.FailableFunction"
+  ],
+  "destination_package": "org.apache.commons.lang3.function.invokers",
+  "cluster_reason": "MethodInvokers is tightly coupled to several Failable functional interfaces; FailableBiFunction and FailableFunction are primarily used together with MethodInvokers. Moving these three classes isolates invocation-related utilities into a dedicated subpackage, preserving their close interactions while reducing responsibilities of the parent package.",
+  "risk": "medium",
+  "blocks": [
+    {
+      "id": 1,
+      "goal": "Move one class from the selected cluster.",
+      "files": [
+        "src/main/java/org/apache/commons/lang3/function/MethodInvokers.java",
+        "src/main/java/org/apache/commons/lang3/function/FailableBiFunction.java",
+        "src/main/java/org/apache/commons/lang3/function/FailableFunction.java"
+      ],
+      "ops": [
+        {
+          "op": "CREATE_PACKAGE",
+          "inputs": [],
+          "outputs": [
+            "org.apache.commons.lang3.function.invokers"
+          ],
+          "details": "Create the destination subpackage if it does not exist.",
+          "risk": "low",
+          "api_change": false
+        },
+        {
+          "op": "MOVE_CLASS",
+          "inputs": [
+            "org.apache.commons.lang3.function.MethodInvokers"
+          ],
+          "outputs": [
+            "org.apache.commons.lang3.function.invokers.MethodInvokers"
+          ],
+          "details": "Move this class to the destination package.",
+          "risk": "medium",
+          "api_change": true
+        },
+        {
+          "op": "MOVE_CLASS",
+          "inputs": [
+            "org.apache.commons.lang3.function.FailableBiFunction"
+          ],
+          "outputs": [
+            "org.apache.commons.lang3.function.invokers.FailableBiFunction"
+          ],
+          "details": "Move this class to the destination package.",
+          "risk": "medium",
+          "api_change": true
+        },
+        {
+          "op": "MOVE_CLASS",
+          "inputs": [
+            "org.apache.commons.lang3.function.FailableFunction"
+          ],
+          "outputs": [
+            "org.apache.commons.lang3.function.invokers.FailableFunction"
+          ],
+          "details": "Move this class to the destination package.",
+          "risk": "medium",
+          "api_change": true
+        }
+      ]
+    }
+  ]
+}

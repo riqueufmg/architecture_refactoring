@@ -1,0 +1,61 @@
+{
+  "smell_type": "Insufficient Modularization",
+  "target_level": "class",
+  "target": "org.apache.commons.lang3.function.Failable",
+  "blocks": [
+    {
+      "id": 1,
+      "goal": "Extract cohesive private helper logic out of org.apache.commons.lang3.function.Failable into a new helper class to reduce size and improve modularization while preserving the public API.",
+      "files": [
+        "src/main/java/org/apache/commons/lang3/function/Failable.java",
+        "src/main/java/org/apache/commons/lang3/function/FailableHelpers.java"
+      ],
+      "ops": [
+        {
+          "op": "EXTRACT_CLASS",
+          "inputs": [
+            "src/main/java/org/apache/commons/lang3/function/Failable.java"
+          ],
+          "outputs": [
+            "src/main/java/org/apache/commons/lang3/function/FailableHelpers.java"
+          ],
+          "details": "Create a new class org.apache.commons.lang3.function.FailableHelpers in the same package. The new class will host cohesive private helper logic (private and private static methods and related private static constants) currently implemented inside Failable that are not part of the public API.",
+          "risk": "medium"
+        },
+        {
+          "op": "MOVE_METHOD",
+          "inputs": [
+            "src/main/java/org/apache/commons/lang3/function/Failable.java"
+          ],
+          "outputs": [
+            "src/main/java/org/apache/commons/lang3/function/FailableHelpers.java"
+          ],
+          "details": "Move the non-public helper methods (private and package-private static helper routines used only by Failable) from Failable into FailableHelpers. Do not move any public or protected methods or change signatures of public API.",
+          "risk": "medium"
+        },
+        {
+          "op": "ADD_OR_UPDATE_IMPORTS",
+          "inputs": [
+            "src/main/java/org/apache/commons/lang3/function/Failable.java"
+          ],
+          "outputs": [
+            "src/main/java/org/apache/commons/lang3/function/Failable.java"
+          ],
+          "details": "Ensure Failable references the new FailableHelpers class where needed. Because both classes are in the same package an import is not required, but update imports if the refactoring tooling requires explicit qualification or static imports for moved static helpers.",
+          "risk": "low"
+        },
+        {
+          "op": "UPDATE_CALL_SITES",
+          "inputs": [
+            "src/main/java/org/apache/commons/lang3/function/Failable.java"
+          ],
+          "outputs": [
+            "src/main/java/org/apache/commons/lang3/function/Failable.java"
+          ],
+          "details": "Replace internal calls that previously invoked the moved helper methods directly with delegation to FailableHelpers (either FailableHelpers.method(...) or new FailableHelpers().method(...) depending on helper being static or instance). Preserve behavior and keep all public methods in Failable unchanged so external callers see no API changes.",
+          "risk": "low"
+        }
+      ]
+    }
+  ]
+}

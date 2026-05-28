@@ -1,0 +1,88 @@
+{
+  "smell_type": "Insufficient Modularization",
+  "target_level": "class",
+  "target": "org.apache.commons.lang3.function.MethodInvokers",
+  "blocks": [
+    {
+      "id": 1,
+      "goal": "Reduce the size and responsibility of MethodInvokers by extracting its private helper logic into a new helper class while preserving the public API.",
+      "files": [
+        "src/main/java/org/apache/commons/lang3/function/MethodInvokers.java",
+        "src/main/java/org/apache/commons/lang3/function/MethodInvokersHelper.java"
+      ],
+      "ops": [
+        {
+          "op": "EXTRACT_CLASS",
+          "inputs": [
+            "src/main/java/org/apache/commons/lang3/function/MethodInvokers.java"
+          ],
+          "outputs": [
+            "src/main/java/org/apache/commons/lang3/function/MethodInvokersHelper.java",
+            "src/main/java/org/apache/commons/lang3/function/MethodInvokers.java"
+          ],
+          "details": "Create a new class org.apache.commons.lang3.function.MethodInvokersHelper in the same package and move cohesive private helper implementations from MethodInvokers (such as reflection invocation helpers, argument normalization, and localized exception handling utilities) into the new helper class as package-private or private static methods. Update MethodInvokers to delegate those private helper calls to MethodInvokersHelper. Do not change any public or protected members of MethodInvokers.",
+          "risk": "medium"
+        },
+        {
+          "op": "ADD_OR_UPDATE_IMPORTS",
+          "inputs": [
+            "src/main/java/org/apache/commons/lang3/function/MethodInvokers.java"
+          ],
+          "outputs": [
+            "src/main/java/org/apache/commons/lang3/function/MethodInvokers.java"
+          ],
+          "details": "Add an import for org.apache.commons.lang3.function.MethodInvokersHelper to MethodInvokers.java if needed and update any references to moved helpers to call MethodInvokersHelper.staticHelper(...) so the class compiles after extraction.",
+          "risk": "low"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "goal": "Further modularize distinct helper concerns extracted from MethodInvokers by separating reflection-specific utilities and exception-related utilities into focused classes.",
+      "files": [
+        "src/main/java/org/apache/commons/lang3/function/MethodInvokers.java",
+        "src/main/java/org/apache/commons/lang3/function/MethodInvokersReflection.java",
+        "src/main/java/org/apache/commons/lang3/function/MethodInvokersException.java"
+      ],
+      "ops": [
+        {
+          "op": "EXTRACT_CLASS",
+          "inputs": [
+            "src/main/java/org/apache/commons/lang3/function/MethodInvokersHelper.java"
+          ],
+          "outputs": [
+            "src/main/java/org/apache/commons/lang3/function/MethodInvokersReflection.java",
+            "src/main/java/org/apache/commons/lang3/function/MethodInvokersHelper.java"
+          ],
+          "details": "From the previously created MethodInvokersHelper, extract reflection-centric utilities (method lookup, accessibility adjustments, invocation wrappers) into a focused MethodInvokersReflection class to isolate reflection concerns.",
+          "risk": "medium"
+        },
+        {
+          "op": "EXTRACT_CLASS",
+          "inputs": [
+            "src/main/java/org/apache/commons/lang3/function/MethodInvokersHelper.java"
+          ],
+          "outputs": [
+            "src/main/java/org/apache/commons/lang3/function/MethodInvokersException.java",
+            "src/main/java/org/apache/commons/lang3/function/MethodInvokersHelper.java"
+          ],
+          "details": "Extract exception-handling and exception-wrapping utilities from MethodInvokersHelper into MethodInvokersException to centralize logic that maps/refines reflection exceptions to the library's exception handling behavior.",
+          "risk": "medium"
+        },
+        {
+          "op": "ADD_OR_UPDATE_IMPORTS",
+          "inputs": [
+            "src/main/java/org/apache/commons/lang3/function/MethodInvokers.java",
+            "src/main/java/org/apache/commons/lang3/function/MethodInvokersHelper.java"
+          ],
+          "outputs": [
+            "src/main/java/org/apache/commons/lang3/function/MethodInvokers.java",
+            "src/main/java/org/apache/commons/lang3/function/MethodInvokersHelper.java"
+          ],
+          "details": "Add or update imports in MethodInvokers and MethodInvokersHelper to reference MethodInvokersReflection and MethodInvokersException as needed. Update internal delegations to call the new classes to ensure each class compiles independently.",
+          "risk": "low"
+        }
+      ]
+    }
+  ]
+}

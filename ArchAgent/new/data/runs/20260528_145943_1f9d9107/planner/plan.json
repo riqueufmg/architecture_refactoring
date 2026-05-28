@@ -1,0 +1,113 @@
+{
+  "smell_type": "Hub-like Modularization",
+  "target_level": "class",
+  "target": "org.jsoup.nodes.Element",
+  "blocks": [
+    {
+      "id": 1,
+      "goal": "Reduce Element's outgoing dependencies by moving selection and query-related implementations (which reference many selector/collector/parser classes) into a new package-private helper class in the same file. Leave public API and signatures in Element unchanged by replacing implementations with small delegators that call the helper. This will remove direct references from Element to selection internals and reduce fan-out.",
+      "files": [
+        "src/main/java/org/jsoup/nodes/Element.java"
+      ],
+      "ops": [
+        {
+          "op": "EXTRACT_CLASS",
+          "inputs": [],
+          "outputs": [
+            "org.jsoup.nodes.ElementQueryHelper"
+          ],
+          "details": "Add a new package-private final class ElementQueryHelper in the same Element.java file (below the Element class). Implement static methods that contain the moved logic. The helper should be in package org.jsoup.nodes and reuse existing imports at top of the file. Methods to provide (static):\n- Elements select(Element el, String cssQuery) { return Selector.select(cssQuery, el); }\n- Elements select(Element el, Evaluator evaluator) { return Selector.select(evaluator, el); }\n- Stream<Element> selectStream(Element el, String cssQuery) { return Selector.selectStream(cssQuery, el); }\n- Stream<Element> selectStream(Element el, Evaluator eval) { return Selector.selectStream(eval, el); }\n- Element selectFirst(Element el, String cssQuery) { return Selector.selectFirst(cssQuery, el); }\n- Element selectFirst(Element el, Evaluator evaluator) { return Collector.findFirst(evaluator, el); }\n- Elements selectNodes(Element el, String cssQuery) { return selectNodes(el, evaluatorOf(cssQuery), Node.class); }\n- <T extends Node> Nodes<T> selectNodes(Element el, Evaluator evaluator, Class<T> type) { Validate.notNull(evaluator); return Collector.collectNodes(evaluator, el, type); }\nThe helper methods must be package-private (no modifier) or final static, and must not be public. Keep method names as above. Use exactly the classes and methods referenced in the original implementations.",
+          "risk": "medium"
+        },
+        {
+          "op": "MOVE_METHOD",
+          "inputs": [
+            "org.jsoup.nodes.Element#select(java.lang.String)"
+          ],
+          "outputs": [
+            "org.jsoup.nodes.ElementQueryHelper#select(org.jsoup.nodes.Element, java.lang.String)",
+            "org.jsoup.nodes.Element#select(java.lang.String)"
+          ],
+          "details": "Move the implementation of Element.select(String cssQuery) into ElementQueryHelper.select(Element, String). In Element.select(String) replace the body with: return ElementQueryHelper.select(this, cssQuery); Keep signature and javadoc unchanged.",
+          "risk": "low"
+        },
+        {
+          "op": "MOVE_METHOD",
+          "inputs": [
+            "org.jsoup.nodes.Element#select(org.jsoup.select.Evaluator)"
+          ],
+          "outputs": [
+            "org.jsoup.nodes.ElementQueryHelper#select(org.jsoup.nodes.Element, org.jsoup.select.Evaluator)",
+            "org.jsoup.nodes.Element#select(org.jsoup.select.Evaluator)"
+          ],
+          "details": "Move implementation of Element.select(Evaluator evaluator) to ElementQueryHelper.select(Element, Evaluator). Replace Element.select(Evaluator) body with: return ElementQueryHelper.select(this, evaluator); Keep signature unchanged.",
+          "risk": "low"
+        },
+        {
+          "op": "MOVE_METHOD",
+          "inputs": [
+            "org.jsoup.nodes.Element#selectStream(java.lang.String)"
+          ],
+          "outputs": [
+            "org.jsoup.nodes.ElementQueryHelper#selectStream(org.jsoup.nodes.Element, java.lang.String)",
+            "org.jsoup.nodes.Element#selectStream(java.lang.String)"
+          ],
+          "details": "Move implementation of Element.selectStream(String) to ElementQueryHelper.selectStream(Element, String). Replace Element.selectStream(String) body with: return ElementQueryHelper.selectStream(this, cssQuery); Keep signature unchanged.",
+          "risk": "low"
+        },
+        {
+          "op": "MOVE_METHOD",
+          "inputs": [
+            "org.jsoup.nodes.Element#selectStream(org.jsoup.select.Evaluator)"
+          ],
+          "outputs": [
+            "org.jsoup.nodes.ElementQueryHelper#selectStream(org.jsoup.nodes.Element, org.jsoup.select.Evaluator)",
+            "org.jsoup.nodes.Element#selectStream(org.jsoup.select.Evaluator)"
+          ],
+          "details": "Move implementation of Element.selectStream(Evaluator) to ElementQueryHelper.selectStream(Element, Evaluator). Replace Element.selectStream(Evaluator) body with: return ElementQueryHelper.selectStream(this, evaluator); Keep signature unchanged.",
+          "risk": "low"
+        },
+        {
+          "op": "MOVE_METHOD",
+          "inputs": [
+            "org.jsoup.nodes.Element#selectFirst(java.lang.String)"
+          ],
+          "outputs": [
+            "org.jsoup.nodes.ElementQueryHelper#selectFirst(org.jsoup.nodes.Element, java.lang.String)",
+            "org.jsoup.nodes.Element#selectFirst(java.lang.String)"
+          ],
+          "details": "Move implementation of Element.selectFirst(String) to ElementQueryHelper.selectFirst(Element, String). Replace Element.selectFirst(String) body with: return ElementQueryHelper.selectFirst(this, cssQuery); Keep signature unchanged (including @Nullable annotation).",
+          "risk": "low"
+        },
+        {
+          "op": "MOVE_METHOD",
+          "inputs": [
+            "org.jsoup.nodes.Element#selectFirst(org.jsoup.select.Evaluator)"
+          ],
+          "outputs": [
+            "org.jsoup.nodes.ElementQueryHelper#selectFirst(org.jsoup.nodes.Element, org.jsoup.select.Evaluator)",
+            "org.jsoup.nodes.Element#selectFirst(org.jsoup.select.Evaluator)"
+          ],
+          "details": "Move implementation of Element.selectFirst(Evaluator) to ElementQueryHelper.selectFirst(Element, Evaluator). Replace Element.selectFirst(Evaluator) body with: return ElementQueryHelper.selectFirst(this, evaluator); Keep signature unchanged (including @Nullable annotation).",
+          "risk": "low"
+        },
+        {
+          "op": "MOVE_METHOD",
+          "inputs": [
+            "org.jsoup.nodes.Element#selectNodes(java.lang.String)"
+          ],
+          "outputs": [
+            "org.jsoup.nodes.ElementQueryHelper#selectNodes(org.jsoup.nodes.Element, java.lang.String)",
+            "org.jsoup.nodes.Element#selectNodes(java.lang.String)"
+          ],
+          "details": "Move implementation of Element.selectNodes(String cssQuery) to ElementQueryHelper.selectNodes(Element, String). The helper may call evaluatorOf(cssQuery) and then delegate to Collector.collectNodes. Replace Element.selectNodes(String) body with: return ElementQueryHelper.selectNodes(this, cssQuery); Keep signature unchanged.",
+          "risk": "medium"
+        }
+      ],
+      "verification": [
+        "compile",
+        "tests"
+      ]
+    }
+  ]
+}

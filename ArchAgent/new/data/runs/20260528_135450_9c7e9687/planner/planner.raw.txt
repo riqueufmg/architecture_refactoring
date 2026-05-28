@@ -1,0 +1,94 @@
+{
+  "smell_type": "Insufficient Modularization",
+  "target_level": "class",
+  "target": "org.apache.commons.lang3.ClassUtils",
+  "blocks": [
+    {
+      "id": 1,
+      "goal": "Extract cohesive private helper logic (class-name/array parsing and a recursive interface-collection helper) from ClassUtils into a new helper class to reduce ClassUtils size while preserving public API and call sites.",
+      "files": [
+        "src/main/java/org/apache/commons/lang3/ClassUtils.java",
+        "src/main/java/org/apache/commons/lang3/ClassUtilsHelper.java"
+      ],
+      "ops": [
+        {
+          "op": "EXTRACT_CLASS",
+          "inputs": [
+            "src/main/java/org/apache/commons/lang3/ClassUtils.java"
+          ],
+          "outputs": [
+            "src/main/java/org/apache/commons/lang3/ClassUtilsHelper.java"
+          ],
+          "details": "Create a new helper class org.apache.commons.lang3.ClassUtilsHelper in the same package. This class will contain static utility methods extracted from ClassUtils: getCanonicalName(String), toCleanName(String), useFull(int,int,int,int), and getAllInterfaces(Class<?>, Set<Class<?>>). Methods will be public static (or package-visible if appropriate) so ClassUtils can call them without changing public API. The new file will include required imports (java.util.Set and other std imports) and preserve original logic for these methods.",
+          "risk": "low"
+        },
+        {
+          "op": "MOVE_METHOD",
+          "inputs": [
+            "src/main/java/org/apache/commons/lang3/ClassUtils.java#getCanonicalName(java.lang.String)"
+          ],
+          "outputs": [
+            "src/main/java/org/apache/commons/lang3/ClassUtilsHelper.java#getCanonicalName(java.lang.String)"
+          ],
+          "details": "Move the private static method getCanonicalName(String) from ClassUtils into ClassUtilsHelper as a public static method. Preserve implementation exactly but adjust any references to static maps (REVERSE_ABBREVIATION_MAP) and StringUtils to remain referenced from original package (no changes to those fields).",
+          "risk": "medium"
+        },
+        {
+          "op": "MOVE_METHOD",
+          "inputs": [
+            "src/main/java/org/apache/commons/lang3/ClassUtils.java#toCleanName(java.lang.String)"
+          ],
+          "outputs": [
+            "src/main/java/org/apache/commons/lang3/ClassUtilsHelper.java#toCleanName(java.lang.String)"
+          ],
+          "details": "Move the private static method toCleanName(String) into ClassUtilsHelper as a public static method. Preserve implementation and thrown exceptions. Ensure it references ABBREVIATION_MAP, REVERSE_ABBREVIATION_MAP, MAX_JVM_ARRAY_DIMENSION, MAX_CLASS_NAME_LENGTH unchanged (these remain in ClassUtils).",
+          "risk": "medium"
+        },
+        {
+          "op": "MOVE_METHOD",
+          "inputs": [
+            "src/main/java/org/apache/commons/lang3/ClassUtils.java#useFull(int,int,int,int)"
+          ],
+          "outputs": [
+            "src/main/java/org/apache/commons/lang3/ClassUtilsHelper.java#useFull(int,int,int,int)"
+          ],
+          "details": "Move the private static helper useFull(int runAheadTarget, int source, int originalLength, int desiredLength) into ClassUtilsHelper as a public static method. Preserve logic and contract.",
+          "risk": "low"
+        },
+        {
+          "op": "MOVE_METHOD",
+          "inputs": [
+            "src/main/java/org/apache/commons/lang3/ClassUtils.java#getAllInterfaces(java.lang.Class,java.util.Set)"
+          ],
+          "outputs": [
+            "src/main/java/org/apache/commons/lang3/ClassUtilsHelper.java#getAllInterfaces(java.lang.Class,java.util.Set)"
+          ],
+          "details": "Move the private static recursive helper getAllInterfaces(Class<?> cls, Set<Class<?>> interfacesFound) into ClassUtilsHelper as a public static method. Preserve logic and recursion. This reduces the size of ClassUtils while keeping behavior identical.",
+          "risk": "medium"
+        },
+        {
+          "op": "ADD_OR_UPDATE_IMPORTS",
+          "inputs": [
+            "src/main/java/org/apache/commons/lang3/ClassUtils.java"
+          ],
+          "outputs": [
+            "src/main/java/org/apache/commons/lang3/ClassUtils.java"
+          ],
+          "details": "Add an import for org.apache.commons.lang3.ClassUtilsHelper to ClassUtils and any other required imports if necessary. Because the helper is in the same package, an import is optional; update as needed to ensure references compile.",
+          "risk": "low"
+        },
+        {
+          "op": "UPDATE_CALL_SITES",
+          "inputs": [
+            "src/main/java/org/apache/commons/lang3/ClassUtils.java"
+          ],
+          "outputs": [
+            "src/main/java/org/apache/commons/lang3/ClassUtils.java"
+          ],
+          "details": "Update internal calls in ClassUtils that referenced the moved methods to call them on ClassUtilsHelper. Replace calls: getCanonicalName(String) -> ClassUtilsHelper.getCanonicalName(String); toCleanName(String) -> ClassUtilsHelper.toCleanName(String); useFull(...) -> ClassUtilsHelper.useFull(...); getAllInterfaces(Class, Set) -> ClassUtilsHelper.getAllInterfaces(Class, Set). Preserve method argument order and semantics. Do not modify any public method signatures or external call sites.",
+          "risk": "medium"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "smell_type": "Insufficient Modularization",
+  "target_level": "class",
+  "target": "org.apache.commons.lang3.function.Failable",
+  "blocks": [
+    {
+      "id": 1,
+      "goal": "Extract private helper logic and nested private types from Failable into a new class to reduce the size and responsibilities of Failable while preserving its public API.",
+      "files": [
+        "src/main/java/org/apache/commons/lang3/function/Failable.java",
+        "src/main/java/org/apache/commons/lang3/function/FailableUtils.java"
+      ],
+      "ops": [
+        {
+          "op": "EXTRACT_CLASS",
+          "inputs": [
+            "src/main/java/org/apache/commons/lang3/function/Failable.java"
+          ],
+          "outputs": [
+            "src/main/java/org/apache/commons/lang3/function/FailableUtils.java",
+            "src/main/java/org/apache/commons/lang3/function/Failable.java"
+          ],
+          "details": "Create a new package-private (or public if required) class FailableUtils in org.apache.commons.lang3.function and move cohesive private static helper methods and any nested private types from Failable into FailableUtils. Replace the moved implementations in Failable with delegating calls to FailableUtils. Do not change any public methods or signatures declared by Failable.",
+          "risk": "medium"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "goal": "Update imports and references so Failable delegates to the extracted helper class and compilation remains successful.",
+      "files": [
+        "src/main/java/org/apache/commons/lang3/function/Failable.java",
+        "src/main/java/org/apache/commons/lang3/function/FailableUtils.java"
+      ],
+      "ops": [
+        {
+          "op": "ADD_OR_UPDATE_IMPORTS",
+          "inputs": [
+            "src/main/java/org/apache/commons/lang3/function/Failable.java",
+            "src/main/java/org/apache/commons/lang3/function/FailableUtils.java"
+          ],
+          "outputs": [
+            "src/main/java/org/apache/commons/lang3/function/Failable.java"
+          ],
+          "details": "Add or update imports in Failable.java (if needed) to reference the new FailableUtils class and adjust fully-qualified references so the delegating calls compile. Keep Failable's public API unchanged.",
+          "risk": "low"
+        }
+      ]
+    }
+  ]
+}

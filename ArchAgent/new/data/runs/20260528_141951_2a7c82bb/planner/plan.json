@@ -1,0 +1,40 @@
+{
+  "smell_type": "Insufficient Modularization",
+  "target_level": "class",
+  "target": "org.apache.commons.lang3.ClassUtils",
+  "blocks": [
+    {
+      "id": 1,
+      "goal": "Move low-level class name handling helpers out of ClassUtils into a new helper class to reduce ClassUtils size and group cohesive functionality (canonical/clean name and abbreviation helpers). Preserve ClassUtils public API and update internal call sites to use the new helper.",
+      "files": [
+        "src/main/java/org/apache/commons/lang3/ClassUtils.java",
+        "src/main/java/org/apache/commons/lang3/ClassNameUtils.java"
+      ],
+      "ops": [
+        {
+          "op": "EXTRACT_CLASS",
+          "inputs": [
+            "src/main/java/org/apache/commons/lang3/ClassUtils.java"
+          ],
+          "outputs": [
+            "src/main/java/org/apache/commons/lang3/ClassNameUtils.java"
+          ],
+          "details": "Create a new helper class org.apache.commons.lang3.ClassNameUtils (same package). Implement package-private static methods copied from ClassUtils: getCanonicalName(String), toCleanName(String), and useFull(int runAheadTarget, int source, int originalLength, int desiredLength). Also include the small set of private/static constants and maps necessary for these methods (MAX_CLASS_NAME_LENGTH, MAX_JVM_ARRAY_DIMENSION, MAX_DIMENSIONS, ABBREVIATION_MAP, REVERSE_ABBREVIATION_MAP). The implementation is a direct move of the logic (no behavior change). Make methods package-private static so ClassUtils (same package) can call them without import.",
+          "risk": "low"
+        },
+        {
+          "op": "UPDATE_CALL_SITES",
+          "inputs": [
+            "src/main/java/org/apache/commons/lang3/ClassUtils.java",
+            "src/main/java/org/apache/commons/lang3/ClassNameUtils.java"
+          ],
+          "outputs": [
+            "src/main/java/org/apache/commons/lang3/ClassUtils.java"
+          ],
+          "details": "Update internal references in ClassUtils to call the new helper methods: replace calls to the moved methods with ClassNameUtils.getCanonicalName(...), ClassNameUtils.toCleanName(...), and ClassNameUtils.useFull(...). Because ClassNameUtils is in the same package, no import is required. Do not change any public methods or signatures in ClassUtils. Leave the original private methods in ClassUtils temporarily (they become unused) to keep this change focused and safe for an incremental refactor.",
+          "risk": "medium"
+        }
+      ]
+    }
+  ]
+}

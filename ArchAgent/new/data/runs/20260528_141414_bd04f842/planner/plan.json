@@ -1,0 +1,72 @@
+{
+  "smell_type": "Insufficient Modularization",
+  "target_level": "class",
+  "target": "org.apache.commons.lang3.ClassUtils",
+  "blocks": [
+    {
+      "id": 1,
+      "goal": "Introduce a small helper class to host select private helper methods (getAllInterfaces and useFull) to begin reducing ClassUtils size and modularize helper logic.",
+      "files": [
+        "src/main/java/org/apache/commons/lang3/ClassUtils.java",
+        "src/main/java/org/apache/commons/lang3/ClassUtilsHelper.java"
+      ],
+      "ops": [
+        {
+          "op": "EXTRACT_CLASS",
+          "inputs": [
+            "src/main/java/org/apache/commons/lang3/ClassUtils.java#getAllInterfaces(Class<?>,java.util.Set)",
+            "src/main/java/org/apache/commons/lang3/ClassUtils.java#useFull(int,int,int,int)"
+          ],
+          "outputs": [
+            "src/main/java/org/apache/commons/lang3/ClassUtilsHelper.java"
+          ],
+          "details": "Create a new package-private helper class org.apache.commons.lang3.ClassUtilsHelper containing static methods getAllInterfaces(Class<?>, Set<Class<?>>) and useFull(int, int, int, int). Methods should have identical signatures and bodies as in ClassUtils but placed in the new helper class in package org.apache.commons.lang3. Add necessary imports (java.util.Set). Keep methods package-private static so ClassUtils (same package) can access them.",
+          "risk": "low"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "goal": "Redirect internal calls in ClassUtils to the new helper and remove the original private helper implementations from ClassUtils to reduce class size.",
+      "files": [
+        "src/main/java/org/apache/commons/lang3/ClassUtils.java",
+        "src/main/java/org/apache/commons/lang3/ClassUtilsHelper.java"
+      ],
+      "ops": [
+        {
+          "op": "UPDATE_CALL_SITES",
+          "inputs": [
+            "src/main/java/org/apache/commons/lang3/ClassUtils.java"
+          ],
+          "outputs": [
+            "src/main/java/org/apache/commons/lang3/ClassUtils.java"
+          ],
+          "details": "Update internal usages inside ClassUtils to call the helper methods: replace calls to getAllInterfaces(cls, interfacesFound) with ClassUtilsHelper.getAllInterfaces(cls, interfacesFound), and replace calls to useFull(...) with ClassUtilsHelper.useFull(...). Ensure fully qualified or package-access calls are used (same package, so ClassUtilsHelper.getAllInterfaces(...) is acceptable).",
+          "risk": "low"
+        },
+        {
+          "op": "MOVE_METHOD",
+          "inputs": [
+            "src/main/java/org/apache/commons/lang3/ClassUtils.java#getAllInterfaces(Class<?>,java.util.Set)"
+          ],
+          "outputs": [
+            "src/main/java/org/apache/commons/lang3/ClassUtilsHelper.java#getAllInterfaces(Class<?>,java.util.Set)"
+          ],
+          "details": "Remove the private static getAllInterfaces(Class<?>, Set<Class<?>>) implementation from ClassUtils (its logic is already present in ClassUtilsHelper from block 1). Deletion avoids duplicate implementations and reduces ClassUtils size. The method in the helper remains package-private static.",
+          "risk": "medium"
+        },
+        {
+          "op": "MOVE_METHOD",
+          "inputs": [
+            "src/main/java/org/apache/commons/lang3/ClassUtils.java#useFull(int,int,int,int)"
+          ],
+          "outputs": [
+            "src/main/java/org/apache/commons/lang3/ClassUtilsHelper.java#useFull(int,int,int,int)"
+          ],
+          "details": "Remove the private static useFull(int, int, int, int) implementation from ClassUtils (its logic is already present in ClassUtilsHelper from block 1). The helper's version remains package-private static. This reduces ClassUtils private helper surface.",
+          "risk": "medium"
+        }
+      ]
+    }
+  ]
+}
