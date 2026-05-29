@@ -275,6 +275,20 @@ def stage_block_node(state: SourceRefactorState) -> SourceRefactorState:
 
     write_json(block_dir / "staged.block.json", block)
 
+    cfg = state["config"]
+
+    state["block_attempt"] = 0
+    state["max_block_attempts"] = int(
+        get_config_value(cfg, "executor.max_block_attempts", 5)
+    )
+
+    state["executor_feedback"] = ""
+    state["executor_ok"] = False
+    state["executor_error"] = ""
+    state["apply_ok"] = False
+    state["apply_error"] = ""
+    state["rollback_reason"] = ""
+
     return state
 
 def lock_workspace_node(state: SourceRefactorState) -> SourceRefactorState:
@@ -309,8 +323,16 @@ def lock_workspace_node(state: SourceRefactorState) -> SourceRefactorState:
     # Limpa estado transitório da tentativa atual.
     state["allowed_files"] = []
     state["files_context"] = []
+
+    state["executor_ok"] = False
+    state["executor_error"] = ""
+    state["execute_plan_raw"] = ""
     state["execute_plan_result"] = {}
+
+    state["apply_ok"] = False
+    state["apply_error"] = ""
     state["applied_files"] = []
+
     state["compile_ok"] = False
     state["compile_return_code"] = -1
     state["compile_log_path"] = ""
@@ -531,12 +553,14 @@ def execute_plan_node(state: SourceRefactorState) -> SourceRefactorState:
             "target_type": state["target_type"],
             "target_name": state["target_name"],
         },
-        "block": state["current_block"],    
+        "block": state["current_block"],
         "allowed_files": state["allowed_files"],
         "executor_existing_files": state.get("executor_existing_files", []),
         "executor_new_files": state.get("executor_new_files", []),
         "executor_rejected_files": state.get("executor_rejected_files", []),
         "files_context": state["files_context"],
+        "feedback": state.get("executor_feedback", ""),
+        "attempt": state.get("block_attempt", 0),
     }
 
     rendered = execute_prompt.replace(
@@ -550,9 +574,12 @@ def execute_plan_node(state: SourceRefactorState) -> SourceRefactorState:
     state["execute_plan_prompt"] = execute_prompt
     state["execute_plan_rendered"] = rendered
 
-    (block_dir / "system.prompt").write_text(system_prompt, encoding="utf-8")
-    (block_dir / "execute_plan.prompt").write_text(execute_prompt, encoding="utf-8")
-    (block_dir / "execute_plan.rendered.md").write_text(rendered, encoding="utf-8")
+    attempt = int(state.get("block_attempt", 0))
+
+    (block_dir / f"execute_plan.attempt_{attempt}.rendered.md").write_text(
+        rendered,
+        encoding="utf-8",
+    )
 
     model = str(get_config_value(cfg, "models.executor", "gpt-5-mini"))
     temperature = float(get_config_value(cfg, "executor.temperature", 0.0))
@@ -566,89 +593,254 @@ def execute_plan_node(state: SourceRefactorState) -> SourceRefactorState:
         max_retries=max_retries,
     )
 
-    res = llm.invoke(
-        [
-            SystemMessage(content=system_prompt),
-            HumanMessage(content=rendered),
-        ]
+    try:
+        res = llm.invoke(
+            [
+                SystemMessage(content=system_prompt),
+                HumanMessage(content=rendered),
+            ]
+        )
+
+        raw = (res.content or "").strip()
+        state["execute_plan_raw"] = raw
+
+        (block_dir / f"execute_plan.attempt_{attempt}.raw.txt").write_text(
+            raw,
+            encoding="utf-8",
+        )
+
+        json_text = extract_json_object_only(raw)
+        result = json.loads(json_text)
+
+        if not isinstance(result, dict):
+            raise ValueError("Executor result must be a JSON object")
+
+        result.setdefault("files_to_write", [])
+        result.setdefault("files_to_delete", [])
+
+        if not isinstance(result["files_to_write"], list):
+            raise ValueError("files_to_write must be a list")
+
+        if not isinstance(result["files_to_delete"], list):
+            raise ValueError("files_to_delete must be a list")
+
+        files_to_write = result.get("files_to_write", [])
+        files_to_delete = result.get("files_to_delete", [])
+
+        state["files_to_write"] = files_to_write
+        state["files_to_delete"] = files_to_delete
+
+        if not files_to_write and not files_to_delete:
+            state["execute_plan_result"] = result
+            state["files_to_write"] = []
+            state["files_to_delete"] = []
+
+            state["executor_ok"] = False
+            state["executor_error"] = "executor_no_changes"
+            state["rollback_reason"] = "executor_no_changes"
+            state["executor_feedback"] = (
+                "EXECUTOR_NO_CHANGES: The executor returned valid JSON, "
+                "but produced no files_to_write or files_to_delete. "
+                "Revise the same block and generate concrete file changes."
+            )
+
+            write_json(
+                block_dir / f"execute_plan.attempt_{attempt}.result.json",
+                result,
+            )
+
+            return state
+
+        state["execute_plan_result"] = result
+        state["executor_ok"] = True
+        state["executor_error"] = ""
+        state["rollback_reason"] = ""
+
+        write_json(
+            block_dir / f"execute_plan.attempt_{attempt}.result.json",
+            result,
+        )
+
+        # Mantém também o nome antigo apontando para a última tentativa.
+        write_json(block_dir / "execute_plan.result.json", result)
+        (block_dir / "execute_plan.raw.txt").write_text(raw, encoding="utf-8")
+
+        return state
+
+    except Exception as e:
+        err = str(e)
+
+        state["execute_plan_result"] = {}
+        state["executor_ok"] = False
+        state["executor_error"] = err
+        state["rollback_reason"] = "invalid_executor_json"
+        state["executor_feedback"] = f"EXECUTOR_INVALID_JSON: {err}"
+
+        (block_dir / f"execute_plan.attempt_{attempt}.parse_error.txt").write_text(
+            err + "\n",
+            encoding="utf-8",
+        )
+
+        return state
+    
+def after_execute_plan(state: SourceRefactorState) -> str:
+    if state.get("executor_ok", False):
+        return "apply_changes"
+
+    current_attempt = int(state.get("block_attempt", 0))
+    max_attempts = int(state.get("max_block_attempts", 5))
+
+    if current_attempt + 1 < max_attempts:
+        return "retry_executor"
+
+    state["rollback_reason"] = "block_attempt_exhausted"
+    return "save_status"
+
+def retry_executor_node(state: SourceRefactorState) -> SourceRefactorState:
+    block_dir = Path(state["current_block_dir"])
+
+    current_attempt = int(state.get("block_attempt", 0))
+    next_attempt = current_attempt + 1
+
+    reason = state.get("rollback_reason", "")
+    feedback = state.get("executor_feedback", "")
+
+    ts = datetime.now().strftime("%Y%m%d_%H%M%S_%f")
+    rid = uuid.uuid4().hex[:8]
+    fname = f"retry.block_attempt{next_attempt}.{ts}_{rid}.txt"
+
+    content = (
+        f"previous_attempt={current_attempt}\n"
+        f"next_attempt={next_attempt}\n"
+        f"reason={reason}\n"
+        f"feedback={feedback}\n"
     )
 
-    raw = (res.content or "").strip()
-    state["execute_plan_raw"] = raw
+    (block_dir / fname).write_text(content, encoding="utf-8")
 
-    (block_dir / "execute_plan.raw.txt").write_text(raw, encoding="utf-8")
+    with (block_dir / "retry.index.jsonl").open("a", encoding="utf-8") as f:
+        f.write(
+            json.dumps(
+                {
+                    "file": fname,
+                    "previous_attempt": current_attempt,
+                    "next_attempt": next_attempt,
+                    "reason": reason,
+                    "ts": ts,
+                },
+                ensure_ascii=False,
+            )
+            + "\n"
+        )
 
-    json_text = extract_json_object_only(raw)
-    result = json.loads(json_text)
+    state["block_attempt"] = next_attempt
 
-    if not isinstance(result, dict):
-        raise ValueError("Executor result must be a JSON object")
-
-    result.setdefault("files_to_write", [])
-    result.setdefault("files_to_delete", [])
-
-    if not isinstance(result["files_to_write"], list):
-        raise ValueError("files_to_write must be a list")
-
-    if not isinstance(result["files_to_delete"], list):
-        raise ValueError("files_to_delete must be a list")
-
-    state["execute_plan_result"] = result
-
-    write_json(block_dir / "execute_plan.result.json", result)
-
+    # A próxima tentativa deve começar do baseline limpo.
     return state
 
 def apply_changes_node(state: SourceRefactorState) -> SourceRefactorState:
     repo_path = Path(state["repo_path"]).resolve()
     block_dir = Path(state["current_block_dir"])
 
-    result = state["execute_plan_result"]
+    result = state.get("execute_plan_result", {})
     allowed_files = set(state.get("allowed_files", []))
+
+    attempt = int(state.get("block_attempt", 0))
 
     applied_files: list[str] = []
 
-    for item in result.get("files_to_write", []):
-        if not isinstance(item, dict):
-            raise ValueError("Each files_to_write item must be an object")
+    try:
+        for item in result.get("files_to_write", []):
+            if not isinstance(item, dict):
+                raise ValueError("Each files_to_write item must be an object")
 
-        rel_path = str(item.get("path", ""))
+            rel_path = str(item.get("path", "")).strip()
 
-        if rel_path not in allowed_files:
-            raise ValueError(f"Executor attempted to write file outside allowed_files: {rel_path}")
+            if rel_path not in allowed_files:
+                raise ValueError(
+                    f"Executor attempted to write file outside allowed_files: {rel_path}"
+                )
 
-        content = item.get("content", None)
+            content = item.get("content", None)
 
-        if not isinstance(content, str):
-            raise ValueError(f"Missing content for file: {rel_path}")
+            if not isinstance(content, str):
+                raise ValueError(f"Missing content for file: {rel_path}")
 
-        abs_path = ensure_path_inside_repo(repo_path, rel_path)
-        write_text_file(abs_path, content)
-        applied_files.append(rel_path)
+            abs_path = ensure_path_inside_repo(repo_path, rel_path)
+            write_text_file(abs_path, content)
+            applied_files.append(rel_path)
 
-    for rel_path in result.get("files_to_delete", []):
-        rel_path = str(rel_path)
+        for rel_path in result.get("files_to_delete", []):
+            rel_path = str(rel_path).strip()
 
-        if rel_path not in allowed_files:
-            raise ValueError(f"Executor attempted to delete file outside allowed_files: {rel_path}")
+            if rel_path not in allowed_files:
+                raise ValueError(
+                    f"Executor attempted to delete file outside allowed_files: {rel_path}"
+                )
 
-        abs_path = ensure_path_inside_repo(repo_path, rel_path)
-        delete_file(abs_path)
-        applied_files.append(rel_path)
+            abs_path = ensure_path_inside_repo(repo_path, rel_path)
+            delete_file(abs_path)
+            applied_files.append(rel_path)
 
-    git_status = git_status_porcelain(repo_path)
+        git_status = git_status_porcelain(repo_path)
 
-    state["applied_files"] = applied_files
+        state["applied_files"] = applied_files
+        state["apply_ok"] = True
+        state["apply_error"] = ""
+        state["rollback_reason"] = ""
 
-    write_json(
-        block_dir / "apply.result.json",
-        {
-            "applied_files": applied_files,
-            "git_status": git_status,
-        },
-    )
+        write_json(
+            block_dir / f"apply.attempt_{attempt}.result.json",
+            {
+                "ok": True,
+                "applied_files": applied_files,
+                "git_status": git_status,
+            },
+        )
 
-    return state
+        write_json(
+            block_dir / "apply.result.json",
+            {
+                "ok": True,
+                "applied_files": applied_files,
+                "git_status": git_status,
+            },
+        )
+
+        return state
+
+    except Exception as e:
+        err = str(e)
+
+        state["applied_files"] = []
+        state["apply_ok"] = False
+        state["apply_error"] = err
+        state["rollback_reason"] = "apply_changes_failed"
+        state["executor_feedback"] = f"APPLY_CHANGES_FAILED: {err}"
+
+        write_json(
+            block_dir / f"apply.attempt_{attempt}.error.json",
+            {
+                "ok": False,
+                "error": err,
+                "rollback_reason": state["rollback_reason"],
+            },
+        )
+
+        return state
+
+def after_apply_changes(state: SourceRefactorState) -> str:
+    if state.get("apply_ok", False):
+        return "compile_source"
+
+    current_attempt = int(state.get("block_attempt", 0))
+    max_attempts = int(state.get("max_block_attempts", 5))
+
+    if current_attempt + 1 < max_attempts:
+        return "retry_executor"
+
+    state["rollback_reason"] = "block_attempt_exhausted"
+    return "save_status"
 
 def compile_source_node(state: SourceRefactorState) -> SourceRefactorState:
     cfg = state["config"]
@@ -770,6 +962,13 @@ def save_status_node(state: SourceRefactorState) -> SourceRefactorState:
         "last_good_commit": state.get("last_good_commit", ""),
         "current_block_commit": state.get("current_block_commit", ""),
         "workspace_clean": state.get("workspace_clean", False),
+        "block_attempt": state.get("block_attempt", 0),
+        "max_block_attempts": state.get("max_block_attempts", 0),
+        "executor_ok": state.get("executor_ok", False),
+        "executor_error": state.get("executor_error", ""),
+        "apply_ok": state.get("apply_ok", False),
+        "apply_error": state.get("apply_error", ""),
+        "rollback_reason": state.get("rollback_reason", ""),
         "stop_reason": state.get("stop_reason", "applied_first_block_only"),
     }
 

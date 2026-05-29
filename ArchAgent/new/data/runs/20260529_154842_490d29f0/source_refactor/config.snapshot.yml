@@ -18,6 +18,7 @@ executor:
   temperature: 0.0
   timeout: 180
   max_retries: 5
+  max_block_attempts: 5
 
 repair:
   temperature: 0.0

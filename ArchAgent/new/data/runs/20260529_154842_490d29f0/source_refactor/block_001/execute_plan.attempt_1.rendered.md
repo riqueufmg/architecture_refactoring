@@ -14,6 +14,9 @@ You must implement the requested block while preserving behavior.
 - Do not undo previous refactorings.
 - If the block cannot be safely applied, return an empty files_to_write list and explain the reason in "notes".
 
+- On the first attempt, return valid JSON with empty files_to_write and files_to_delete.
+- On attempts greater than 0, perform the requested refactoring normally.
+
 # OUTPUT FORMAT
 
 Return ONLY valid JSON in this format:
@@ -100,7 +103,9 @@ Return ONLY valid JSON in this format:
     {
       "path": "src/main/java/org/apache/commons/lang3/function/FailableHelper.java",
       "exists": "true",
-      "content": "/*\n * Licensed to the Apache Software Foundation (ASF) under one or more\n * contributor license agreements.  See the NOTICE file distributed with\n * this work for additional information regarding copyright ownership.\n * The ASF licenses this file to You under the Apache License, Version 2.0\n * (the \"License\"); you may not use this file except in compliance with\n * the License.  You may obtain a copy of the License at\n *\n *      https://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */\n\npackage org.apache.commons.lang3.function;\n\nfinal class FailableHelper {\n\n    static <E extends Throwable> void run(final Object test, final FailableRunnable<E> runnable) {\n        if (runnable != null && test != null) {\n            try {\n                runnable.run();\n            } catch (final Throwable t) {\n                throw Failable.rethrow(t);\n            }\n        }\n    }\n\n    private FailableHelper() {\n        // helper\n    }\n}\n"
+      "content": "/*\n * Licensed to the Apache Software Foundation (ASF) under one or more\n * contributor license agreements.  See the NOTICE file distributed with\n * this work for additional information regarding copyright ownership.\n * The ASF licenses this file to You under the Apache License, Version 2.0\n * (the \"License\"); you may not use this file except in compliance with\n * the License.  You may obtain a copy of the License at\n *\n *      https://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */\n\npackage org.apache.commons.lang3.function;\n\nfinal class FailableHelper {\n\n    static <E extends Throwable> void run(final Object test, final FailableRunnable<E> runnable) {\n        if (runnable != null && test != null) {\n            try {\n                runnable.run();\n            } catch (final Throwable t) {\n                throw Failable.rethrow(t);\n            }\n        }\n    }\n\n    private FailableHelper() {\n        // empty\n    }\n}\n"
     }
-  ]
+  ],
+  "feedback": "EXECUTOR_NO_CHANGES: The executor returned valid JSON, but produced no files_to_write or files_to_delete. Revise the same block and generate concrete file changes.",
+  "attempt": 1
 }

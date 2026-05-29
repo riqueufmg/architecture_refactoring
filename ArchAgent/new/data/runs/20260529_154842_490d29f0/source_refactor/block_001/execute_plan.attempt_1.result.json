@@ -1,0 +1,5 @@
+{
+  "files_to_write": [],
+  "files_to_delete": [],
+  "notes": "No changes necessary: the requested refactoring has already been applied. FailableHelper contains the moved static run(Object, FailableRunnable) helper and Failable's call sites already invoke FailableHelper.run. No files were modified."
+}

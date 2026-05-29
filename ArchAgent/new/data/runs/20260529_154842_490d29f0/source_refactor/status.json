@@ -10,13 +10,23 @@
   "target_name": "org.apache.commons.lang3.function.Failable",
   "blocks_count": 1,
   "current_block_id": "1",
-  "applied_files": [],
+  "applied_files": [
+    "src/main/java/org/apache/commons/lang3/function/Failable.java",
+    "src/main/java/org/apache/commons/lang3/function/FailableHelper.java"
+  ],
   "compile_ok": true,
   "compile_return_code": 0,
   "compile_log_path": "/data/henrique/langchain_prototype/ArchAgent/new/data/runs/20260529_154842_490d29f0/source_refactor/block_001/compile.log",
-  "initial_commit": "c3db09b1a3f017584540c37a6d96cdf6a2c3776f",
-  "last_good_commit": "c3db09b1a3f017584540c37a6d96cdf6a2c3776f",
-  "current_block_commit": "c3db09b1a3f017584540c37a6d96cdf6a2c3776f",
+  "initial_commit": "15e6b99355dc27e8afb87246c02f8fe2e21d6203",
+  "last_good_commit": "15e6b99355dc27e8afb87246c02f8fe2e21d6203",
+  "current_block_commit": "15e6b99355dc27e8afb87246c02f8fe2e21d6203",
   "workspace_clean": true,
+  "block_attempt": 3,
+  "max_block_attempts": 5,
+  "executor_ok": true,
+  "executor_error": "",
+  "apply_ok": true,
+  "apply_error": "",
+  "rollback_reason": "",
   "stop_reason": "applied_and_compiled_first_block_only"
 }

@@ -1,0 +1,5 @@
+{
+  "files_to_write": [],
+  "files_to_delete": [],
+  "notes": "Per task instructions, on the first attempt no refactoring is applied. Returning empty change set."
+}

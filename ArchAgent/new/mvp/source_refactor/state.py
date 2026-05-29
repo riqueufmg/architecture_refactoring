@@ -56,6 +56,9 @@ class SourceRefactorState(TypedDict, total=False):
     allowed_files: list[str]
     files_context: list[dict[str, str]]
 
+    files_to_write: list
+    files_to_delete: list
+
     # executor data
     executor_system_prompt_path: str
     execute_plan_prompt_path: str
@@ -77,3 +80,16 @@ class SourceRefactorState(TypedDict, total=False):
     compile_ok: bool
     compile_log_path: str
     compile_log: str
+
+    # retry data
+    block_attempt: int
+    max_block_attempts: int
+
+    executor_ok: bool
+    executor_error: str
+    executor_feedback: str
+
+    apply_ok: bool
+    apply_error: str
+
+    rollback_reason: str

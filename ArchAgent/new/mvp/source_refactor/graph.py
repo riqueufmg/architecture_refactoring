@@ -13,6 +13,9 @@ from mvp.source_refactor.nodes import (
     lock_workspace_node,
     resolve_files_context_node,
     execute_plan_node,
+    after_execute_plan,
+    retry_executor_node,
+    after_apply_changes,
     apply_changes_node,
     compile_source_node,
     after_compile_source,
@@ -34,6 +37,7 @@ def build_source_refactor_graph():
     g.add_node("lock_workspace", lock_workspace_node)
     g.add_node("resolve_files_context", resolve_files_context_node)
     g.add_node("execute_plan", execute_plan_node)
+    g.add_node("retry_executor", retry_executor_node)
     g.add_node("apply_changes", apply_changes_node)
     g.add_node("compile_source", compile_source_node)
     g.add_node("promote_block", promote_block_node)
@@ -51,8 +55,25 @@ def build_source_refactor_graph():
     g.add_edge("stage_block", "lock_workspace")
     g.add_edge("lock_workspace", "resolve_files_context")
     g.add_edge("resolve_files_context", "execute_plan")
-    g.add_edge("execute_plan", "apply_changes")
-    g.add_edge("apply_changes", "compile_source")
+    g.add_conditional_edges(
+        "execute_plan",
+        after_execute_plan,
+        {
+            "apply_changes": "apply_changes",
+            "retry_executor": "retry_executor",
+            "save_status": "save_status",
+        },
+    )
+    g.add_conditional_edges(
+        "apply_changes",
+        after_apply_changes,
+        {
+            "compile_source": "compile_source",
+            "retry_executor": "retry_executor",
+            "save_status": "save_status",
+        },
+    )
+    g.add_edge("retry_executor", "lock_workspace")
     g.add_conditional_edges(
         "compile_source",
         after_compile_source,
@@ -61,7 +82,6 @@ def build_source_refactor_graph():
             "save_status": "save_status",
         },
     )
-
     g.add_edge("promote_block", "save_status")
     g.add_edge("save_status", END)
 

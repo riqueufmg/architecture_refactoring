@@ -1,0 +1,32 @@
+{
+  "producer": "source_refactor",
+  "version": "1.0",
+  "ok": true,
+  "run_id": "20260529_173632_d6f34ab4",
+  "input": {
+    "planner_contract": "/data/henrique/langchain_prototype/ArchAgent/new/data/runs/20260529_173632_d6f34ab4/planner/contract.json",
+    "planner_plan": "/data/henrique/langchain_prototype/ArchAgent/new/data/runs/20260529_173632_d6f34ab4/planner/plan.json"
+  },
+  "project": {
+    "name": "jsoup",
+    "repo_path": "/data/henrique/langchain_prototype/ArchAgent/new/data/repositories/jsoup"
+  },
+  "target": {
+    "smell": "IM",
+    "smell_name": "Insufficient Modularization",
+    "target_type": "class",
+    "target_name": "org.jsoup.Jsoup"
+  },
+  "artifacts": {
+    "source_refactor_dir": "/data/henrique/langchain_prototype/ArchAgent/new/data/runs/20260529_173632_d6f34ab4/source_refactor",
+    "input_contract": "/data/henrique/langchain_prototype/ArchAgent/new/data/runs/20260529_173632_d6f34ab4/source_refactor/input_contract.json",
+    "input_plan": "/data/henrique/langchain_prototype/ArchAgent/new/data/runs/20260529_173632_d6f34ab4/source_refactor/input_plan.json",
+    "executable_plan": "/data/henrique/langchain_prototype/ArchAgent/new/data/runs/20260529_173632_d6f34ab4/source_refactor/executable_plan.json",
+    "status": "/data/henrique/langchain_prototype/ArchAgent/new/data/runs/20260529_173632_d6f34ab4/source_refactor/status.json",
+    "git_dir": "/data/henrique/langchain_prototype/ArchAgent/new/data/runs/20260529_173632_d6f34ab4/source_refactor/git",
+    "initial_commit": "/data/henrique/langchain_prototype/ArchAgent/new/data/runs/20260529_173632_d6f34ab4/source_refactor/git/initial_commit.txt",
+    "last_good_commit": "/data/henrique/langchain_prototype/ArchAgent/new/data/runs/20260529_173632_d6f34ab4/source_refactor/git/last_good_commit.txt",
+    "current_block_dir": "/data/henrique/langchain_prototype/ArchAgent/new/data/runs/20260529_173632_d6f34ab4/source_refactor/block_001",
+    "compile_log": "/data/henrique/langchain_prototype/ArchAgent/new/data/runs/20260529_173632_d6f34ab4/source_refactor/block_001/compile.log"
+  }
+}
