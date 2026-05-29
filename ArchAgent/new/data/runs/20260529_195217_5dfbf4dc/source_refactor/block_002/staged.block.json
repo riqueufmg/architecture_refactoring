@@ -1,0 +1,54 @@
+{
+  "id": 2,
+  "goal": "Extract nth-child parsing logic and regex patterns into a dedicated helper to isolate complex parsing logic and reduce QueryParser internal complexity.",
+  "files": [
+    "src/main/java/org/jsoup/select/QueryParser.java",
+    "src/main/java/org/jsoup/select/QueryParserNthHelper.java"
+  ],
+  "ops": [
+    {
+      "op": "EXTRACT_CLASS",
+      "inputs": [],
+      "outputs": [
+        "src/main/java/org/jsoup/select/QueryParserNthHelper.java"
+      ],
+      "details": "Create a new package-private helper class org.jsoup.select.QueryParserNthHelper containing the two Pattern fields (NthStepOffset and NthOffset) and a single static method cssNthChildFromArg(String arg, boolean last, boolean ofType) that implements the parsing of the 'arg' and returns the appropriate Evaluator.",
+      "risk": "low"
+    },
+    {
+      "op": "MOVE_FIELD",
+      "inputs": [
+        "src/main/java/org/jsoup/select/QueryParser.java:NthStepOffset",
+        "src/main/java/org/jsoup/select/QueryParser.java:NthOffset"
+      ],
+      "outputs": [
+        "src/main/java/org/jsoup/select/QueryParserNthHelper.java:NthStepOffset",
+        "src/main/java/org/jsoup/select/QueryParserNthHelper.java:NthOffset"
+      ],
+      "details": "Move the two private static final Pattern fields from QueryParser into QueryParserNthHelper.",
+      "risk": "low"
+    },
+    {
+      "op": "MOVE_METHOD",
+      "inputs": [
+        "src/main/java/org/jsoup/select/QueryParser.java:cssNthChild(boolean, boolean)"
+      ],
+      "outputs": [
+        "src/main/java/org/jsoup/select/QueryParserNthHelper.java:cssNthChildFromArg(String, boolean, boolean)"
+      ],
+      "details": "Move the core logic that converts an already-normalized 'arg' string into an Evaluator into QueryParserNthHelper.cssNthChildFromArg. The new helper expects the arg string (already normalized) and the two booleans. It will return the appropriate Evaluator instances (using existing Evaluator types).",
+      "risk": "low"
+    },
+    {
+      "op": "UPDATE_CALL_SITES",
+      "inputs": [
+        "src/main/java/org/jsoup/select/QueryParser.java:cssNthChild(boolean, boolean)"
+      ],
+      "outputs": [
+        "src/main/java/org/jsoup/select/QueryParser.java:cssNthChild(boolean, boolean)"
+      ],
+      "details": "Modify QueryParser.cssNthChild to keep obtaining the argument string (String arg = normalize(consumeParens());) and then delegate to QueryParserNthHelper.cssNthChildFromArg(arg, last, ofType). Remove the moved parsing logic and the two Pattern fields from QueryParser.",
+      "risk": "low"
+    }
+  ]
+}

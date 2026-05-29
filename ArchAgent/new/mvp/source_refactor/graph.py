@@ -15,6 +15,7 @@ from mvp.source_refactor.nodes import (
     execute_plan_node,
     after_execute_plan,
     retry_executor_node,
+    rollback_final_node,
     after_apply_changes,
     apply_changes_node,
     compile_source_node,
@@ -40,6 +41,7 @@ def build_source_refactor_graph():
     g.add_node("resolve_files_context", resolve_files_context_node)
     g.add_node("execute_plan", execute_plan_node)
     g.add_node("retry_executor", retry_executor_node)
+    g.add_node("rollback_final", rollback_final_node)
     g.add_node("apply_changes", apply_changes_node)
     g.add_node("compile_source", compile_source_node)
     g.add_node("promote_block", promote_block_node)
@@ -64,7 +66,7 @@ def build_source_refactor_graph():
         {
             "apply_changes": "apply_changes",
             "retry_executor": "retry_executor",
-            "save_status": "save_status",
+            "rollback_final": "rollback_final",
         },
     )
     g.add_conditional_edges(
@@ -73,7 +75,7 @@ def build_source_refactor_graph():
         {
             "compile_source": "compile_source",
             "retry_executor": "retry_executor",
-            "save_status": "save_status",
+            "rollback_final": "rollback_final",
         },
     )
     g.add_edge("retry_executor", "lock_workspace")
@@ -82,9 +84,10 @@ def build_source_refactor_graph():
         after_compile_source,
         {
             "promote_block": "promote_block",
-            "save_status": "save_status",
+            "rollback_final": "rollback_final",
         },
     )
+    g.add_edge("rollback_final", "save_status")
     g.add_edge("promote_block", "advance_block")
     g.add_conditional_edges(
         "advance_block",

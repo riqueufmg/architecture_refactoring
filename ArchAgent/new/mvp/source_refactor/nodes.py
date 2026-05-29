@@ -694,7 +694,8 @@ def after_execute_plan(state: SourceRefactorState) -> str:
         return "retry_executor"
 
     state["rollback_reason"] = "block_attempt_exhausted"
-    return "save_status"
+    state["stop_reason"] = "executor_failed_after_retries"
+    return "rollback_final"
 
 def retry_executor_node(state: SourceRefactorState) -> SourceRefactorState:
     block_dir = Path(state["current_block_dir"])
@@ -736,6 +737,54 @@ def retry_executor_node(state: SourceRefactorState) -> SourceRefactorState:
     state["block_attempt"] = next_attempt
 
     # A próxima tentativa deve começar do baseline limpo.
+    return state
+
+def rollback_final_node(state: SourceRefactorState) -> SourceRefactorState:
+    repo_path = Path(state["repo_path"]).resolve()
+    source_refactor_dir = Path(state["source_refactor_dir"])
+
+    current_block_dir = state.get("current_block_dir", "")
+    block_dir = Path(current_block_dir) if current_block_dir else source_refactor_dir
+
+    rollback_to = state.get("last_good_commit") or state.get("initial_commit")
+
+    if not rollback_to:
+        raise RuntimeError("rollback_final_node: missing last_good_commit/initial_commit")
+
+    before_commit = git_current_commit(repo_path)
+    before_status = git_status_porcelain(repo_path)
+
+    reset_output = git_reset_hard(repo_path, rollback_to)
+    git_clean_workspace(repo_path)
+
+    after_commit = git_current_commit(repo_path)
+    after_status = git_status_porcelain(repo_path)
+
+    rollback_info = {
+        "ok": True,
+        "rollback_to": rollback_to,
+        "before_commit": before_commit,
+        "after_commit": after_commit,
+        "before_status": before_status,
+        "after_status": after_status,
+        "reason": state.get("rollback_reason", ""),
+        "current_block_id": state.get("current_block_id", ""),
+        "compile_ok": state.get("compile_ok", False),
+        "compile_return_code": state.get("compile_return_code", None),
+        "executor_ok": state.get("executor_ok", False),
+        "executor_error": state.get("executor_error", ""),
+        "apply_ok": state.get("apply_ok", False),
+        "apply_error": state.get("apply_error", ""),
+        "reset_output": reset_output,
+    }
+
+    write_json(block_dir / "rollback.final.json", rollback_info)
+    write_json(source_refactor_dir / "rollback.final.json", rollback_info)
+
+    state["workspace_clean"] = True
+    state["final_commit"] = after_commit
+    state["stop_reason"] = state.get("stop_reason") or "rolled_back_after_failure"
+
     return state
 
 def apply_changes_node(state: SourceRefactorState) -> SourceRefactorState:
@@ -840,7 +889,8 @@ def after_apply_changes(state: SourceRefactorState) -> str:
         return "retry_executor"
 
     state["rollback_reason"] = "block_attempt_exhausted"
-    return "save_status"
+    state["stop_reason"] = "apply_failed_after_retries"
+    return "rollback_final"
 
 def compile_source_node(state: SourceRefactorState) -> SourceRefactorState:
     cfg = state["config"]
@@ -872,6 +922,10 @@ def compile_source_node(state: SourceRefactorState) -> SourceRefactorState:
     state["compile_log_path"] = str(compile_log_path)
     state["compile_log"] = output
 
+    if not compile_ok:
+        state["rollback_reason"] = "compile_failed"
+        state["stop_reason"] = "compile_failed"
+
     write_json(
         block_dir / "compile.status.json",
         {
@@ -887,7 +941,8 @@ def compile_source_node(state: SourceRefactorState) -> SourceRefactorState:
 def after_compile_source(state: SourceRefactorState) -> str:
     if state.get("compile_ok", False):
         return "promote_block"
-    return "save_status"
+
+    return "rollback_final"
 
 def promote_block_node(state: SourceRefactorState) -> SourceRefactorState:
     repo_path = Path(state["repo_path"]).resolve()
@@ -968,11 +1023,9 @@ def save_status_node(state: SourceRefactorState) -> SourceRefactorState:
 
     final_ok = (
         state.get("stop_reason") == "all_blocks_applied"
-        or (
-            bool(state.get("compile_ok", False))
-            and bool(state.get("executor_ok", False))
-            and bool(state.get("apply_ok", False))
-        )
+        and bool(state.get("compile_ok", False))
+        and bool(state.get("executor_ok", False))
+        and bool(state.get("apply_ok", False))
     )
 
     status = {
@@ -994,6 +1047,7 @@ def save_status_node(state: SourceRefactorState) -> SourceRefactorState:
         "initial_commit": state.get("initial_commit", ""),
         "last_good_commit": state.get("last_good_commit", ""),
         "current_block_commit": state.get("current_block_commit", ""),
+        "final_commit": state.get("final_commit", ""),
         "workspace_clean": state.get("workspace_clean", False),
         "block_attempt": state.get("block_attempt", 0),
         "max_block_attempts": state.get("max_block_attempts", 0),
