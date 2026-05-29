@@ -1,0 +1,17 @@
+{
+  "ok": true,
+  "return_code": 0,
+  "command": [
+    "mvn",
+    "-q",
+    "-Dmaven.test.skip=true",
+    "-Djapicmp.skip=true",
+    "-Drat.skip=true",
+    "-Dcheckstyle.skip=true",
+    "-Dspotbugs.skip=true",
+    "-Dpmd.skip=true",
+    "-DskipITs",
+    "compile"
+  ],
+  "compile_log": "/data/henrique/langchain_prototype/ArchAgent/new/data/runs/20260529_144458_30efca4e/source_refactor/block_001/compile.log"
+}

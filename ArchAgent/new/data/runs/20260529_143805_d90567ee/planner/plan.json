@@ -1,0 +1,61 @@
+{
+  "smell_type": "Insufficient Modularization",
+  "target_level": "class",
+  "target": "org.apache.commons.lang3.ClassUtils",
+  "blocks": [
+    {
+      "id": 1,
+      "goal": "Extract cohesive, low-dependency private helper logic from ClassUtils into a new helper class to reduce size/complexity while preserving the public API.",
+      "files": [
+        "src/main/java/org/apache/commons/lang3/ClassUtils.java",
+        "src/main/java/org/apache/commons/lang3/ClassUtilsHelper.java"
+      ],
+      "ops": [
+        {
+          "op": "EXTRACT_CLASS",
+          "inputs": [
+            "src/main/java/org/apache/commons/lang3/ClassUtils.java"
+          ],
+          "outputs": [
+            "src/main/java/org/apache/commons/lang3/ClassUtilsHelper.java"
+          ],
+          "details": "Create a new helper class org.apache.commons.lang3.ClassUtilsHelper containing static helper methods: getAllInterfaces(Class<?>, Set<Class<?>>), useFull(int,int,int,int), and walkInterfaces(Set<Class<?>>, Class<?>). The methods are implemented with the same logic as the corresponding private logic moved from ClassUtils, but declared static and package-private so ClassUtils can call them without changing its public API.",
+          "risk": "low"
+        },
+        {
+          "op": "MOVE_METHOD",
+          "inputs": [
+            "src/main/java/org/apache/commons/lang3/ClassUtils.java#getAllInterfaces(Class<?>,Set<Class<?>>)"
+          ],
+          "outputs": [
+            "src/main/java/org/apache/commons/lang3/ClassUtilsHelper.java#getAllInterfaces(Class<?>,Set<Class<?>>)"
+          ],
+          "details": "Move private static void getAllInterfaces(Class<?> cls, Set<Class<?>> interfacesFound) implementation into ClassUtilsHelper as a static method with identical behavior.",
+          "risk": "low"
+        },
+        {
+          "op": "MOVE_METHOD",
+          "inputs": [
+            "src/main/java/org/apache/commons/lang3/ClassUtils.java#useFull(int,int,int,int)"
+          ],
+          "outputs": [
+            "src/main/java/org/apache/commons/lang3/ClassUtilsHelper.java#useFull(int,int,int,int)"
+          ],
+          "details": "Move private static boolean useFull(int runAheadTarget, int source, int originalLength, int desiredLength) into ClassUtilsHelper as a static method with identical behavior.",
+          "risk": "low"
+        },
+        {
+          "op": "UPDATE_CALL_SITES",
+          "inputs": [
+            "src/main/java/org/apache/commons/lang3/ClassUtils.java"
+          ],
+          "outputs": [
+            "src/main/java/org/apache/commons/lang3/ClassUtils.java"
+          ],
+          "details": "Update internal calls in ClassUtils to reference the new helper methods: replace calls to getAllInterfaces(...) with ClassUtilsHelper.getAllInterfaces(...), replace useFull(...) with ClassUtilsHelper.useFull(...), and replace the anonymous-iterator-local walkInterfaces recursion by invoking ClassUtilsHelper.walkInterfaces(addTo, c). Keep all public methods and signatures unchanged.",
+          "risk": "low"
+        }
+      ]
+    }
+  ]
+}

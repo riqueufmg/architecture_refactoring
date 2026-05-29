@@ -30,6 +30,8 @@ from mvp.source_refactor.lib.git_utils import (
     git_current_commit,
     git_status_porcelain,
     git_commit_all,
+    git_reset_hard,
+    git_clean_workspace,
 )
 from mvp.source_refactor.lib.file_ops import (
     load_files_context,
@@ -133,6 +135,29 @@ def load_planner_contract_node(state: SourceRefactorState) -> SourceRefactorStat
     ensure_file_exists(plan_path, "planner.artifacts.plan")
     ensure_file_exists(planner_input_path, "planner.artifacts.planner_input")
     ensure_dir_exists(repo_path, "planner.project.repo_path")
+
+    planner_input = read_json(planner_input_path)
+    state["planner_input"] = planner_input
+
+    target_source_root = str(
+        target.get("target_source_root")
+        or planner_input.get("target_source_root")
+        or ""
+    ).strip()
+
+    state["target_source_root"] = target_source_root
+
+    if "target_file" in planner_input:
+        state["target_file"] = str(planner_input.get("target_file", ""))
+
+    if "target_files" in planner_input:
+        target_files = planner_input.get("target_files", [])
+        if isinstance(target_files, list):
+            state["target_files"] = [str(f) for f in target_files]
+        else:
+            state["target_files"] = []
+        
+    shutil.copyfile(planner_input_path, source_refactor_dir / "planner_input.json")
 
     state["planner_contract"] = contract
     state["planner_dir"] = str(contract_path.parent)
@@ -252,27 +277,230 @@ def stage_block_node(state: SourceRefactorState) -> SourceRefactorState:
 
     return state
 
+def lock_workspace_node(state: SourceRefactorState) -> SourceRefactorState:
+    repo_path = Path(state["repo_path"]).resolve()
+    block_dir = Path(state["current_block_dir"])
+
+    base = state.get("last_good_commit") or state.get("initial_commit")
+
+    if not base:
+        raise RuntimeError("lock_workspace_node: missing last_good_commit/initial_commit")
+
+    before_commit = git_current_commit(repo_path)
+
+    reset_output = git_reset_hard(repo_path, base)
+    git_clean_workspace(repo_path)
+
+    after_commit = git_current_commit(repo_path)
+
+    write_json(
+        block_dir / "workspace.lock.json",
+        {
+            "base_commit": base,
+            "before_commit": before_commit,
+            "after_commit": after_commit,
+            "reset_output": reset_output,
+        },
+    )
+
+    state["workspace_clean"] = True
+    state["last_good_commit"] = base
+
+    # Limpa estado transitório da tentativa atual.
+    state["allowed_files"] = []
+    state["files_context"] = []
+    state["execute_plan_result"] = {}
+    state["applied_files"] = []
+    state["compile_ok"] = False
+    state["compile_return_code"] = -1
+    state["compile_log_path"] = ""
+
+    return state
+
 def resolve_files_context_node(state: SourceRefactorState) -> SourceRefactorState:
     repo_path = Path(state["repo_path"]).resolve()
     block_dir = Path(state["current_block_dir"])
     block = state["current_block"]
 
-    files = block.get("files", [])
+    from mvp.source_refactor.lib.java_path_utils import (
+        resolve_java_fqn_to_path,
+        looks_like_java_class_fqn,
+        normalize_repo_relative_path,
+    )
 
-    if not isinstance(files, list):
+    block_files = block.get("files", [])
+
+    if not isinstance(block_files, list):
         raise ValueError("current block files must be a list")
 
-    allowed_files = [str(f) for f in files]
+    ops = block.get("ops", [])
 
-    files_context = load_files_context(repo_path, allowed_files)
+    if not isinstance(ops, list):
+        raise ValueError("current block ops must be a list")
 
-    state["allowed_files"] = allowed_files
+    existing_files: set[str] = set()
+    new_files: set[str] = set()
+    rejected_files: list[str] = []
+
+    # 1. Primeiro, aceitar arquivos declarados diretamente em block.files.
+    #    Se o arquivo existe, ele é existing_file.
+    #    Se não existe, mas é .java e está dentro do repo, ele é new_file.
+    for f in block_files:
+        rel = normalize_repo_relative_path(str(f))
+
+        if not rel:
+            continue
+
+        if not rel.endswith(".java"):
+            rejected_files.append(rel)
+            continue
+
+        abs_path = (repo_path / rel).resolve()
+
+        try:
+            abs_path.relative_to(repo_path)
+        except ValueError:
+            rejected_files.append(rel)
+            continue
+
+        if abs_path.exists():
+            existing_files.add(rel)
+        else:
+            new_files.add(rel)
+
+    # 2. Resolver source root.
+    #    Idealmente vem do Planner. Se estiver ausente, usamos fallback.
+    source_root = normalize_repo_relative_path(
+        str(state.get("target_source_root", "") or "src/main/java")
+    )
+
+    # 3. Descobrir pacote alvo para quando outputs tiverem só nome simples.
+    #    Exemplo: "CharUtilsConstants" em vez de
+    #    "org.apache.commons.lang3.CharUtilsConstants".
+    target_package = ""
+    target_name = str(state.get("target_name", "") or "")
+
+    if state.get("target_type") == "class" and "." in target_name:
+        target_package = ".".join(target_name.split(".")[:-1])
+    elif state.get("target_type") == "package":
+        target_package = target_name
+
+    # 4. Além de block.files, também aceitar arquivos novos derivados das ops.
+    #    Isso cobre planos que colocam o novo arquivo em op.outputs.
+    for op in ops:
+        if not isinstance(op, dict):
+            continue
+
+        op_name = str(op.get("op", "")).strip()
+
+        if op_name not in {"EXTRACT_CLASS", "EXTRACT_INTERFACE", "MOVE_CLASS"}:
+            continue
+
+        outputs = op.get("outputs") or []
+
+        if not isinstance(outputs, list):
+            continue
+
+        for out in outputs:
+            if not isinstance(out, str):
+                continue
+
+            out = out.strip()
+
+            if not out:
+                continue
+
+            # Caso 1: output já é caminho repo-relativo.
+            # Exemplo: src/main/java/org/apache/commons/lang3/CharUtilsConstants.java
+            if out.endswith(".java"):
+                rel = normalize_repo_relative_path(out)
+                abs_path = (repo_path / rel).resolve()
+
+                try:
+                    abs_path.relative_to(repo_path)
+                except ValueError:
+                    rejected_files.append(rel)
+                    continue
+
+                if abs_path.exists():
+                    existing_files.add(rel)
+                else:
+                    new_files.add(rel)
+
+                continue
+
+            # Caso 2: output é FQN completo.
+            # Exemplo: org.apache.commons.lang3.CharUtilsConstants
+            if looks_like_java_class_fqn(out):
+                rel = resolve_java_fqn_to_path(repo_path, out, source_root)
+                rel = normalize_repo_relative_path(rel)
+
+                abs_path = (repo_path / rel).resolve()
+
+                try:
+                    abs_path.relative_to(repo_path)
+                except ValueError:
+                    rejected_files.append(rel)
+                    continue
+
+                if abs_path.exists():
+                    existing_files.add(rel)
+                else:
+                    new_files.add(rel)
+
+                continue
+
+            # Caso 3: output é apenas nome simples de classe.
+            # Exemplo: CharUtilsConstants
+            if out[0].isupper() and "." not in out and target_package:
+                new_fqn = f"{target_package}.{out}"
+                rel = resolve_java_fqn_to_path(repo_path, new_fqn, source_root)
+                rel = normalize_repo_relative_path(rel)
+
+                abs_path = (repo_path / rel).resolve()
+
+                try:
+                    abs_path.relative_to(repo_path)
+                except ValueError:
+                    rejected_files.append(rel)
+                    continue
+
+                if abs_path.exists():
+                    existing_files.add(rel)
+                else:
+                    new_files.add(rel)
+
+                continue
+
+    # 5. Se algum arquivo foi classificado como existing, ele não deve ficar em new.
+    new_files = new_files - existing_files
+
+    all_files = sorted(existing_files.union(new_files))
+
+    files_context = load_files_context(repo_path, all_files)
+
+    state["executor_existing_files"] = sorted(existing_files)
+    state["executor_new_files"] = sorted(new_files)
+    state["executor_files"] = all_files
+    state["executor_rejected_files"] = rejected_files
+
+    state["allowed_files"] = all_files
     state["files_context"] = files_context
+
+    write_json(
+        block_dir / "executor.files.json",
+        {
+            "executor_existing_files": sorted(existing_files),
+            "executor_new_files": sorted(new_files),
+            "executor_files": all_files,
+            "executor_rejected_files": rejected_files,
+        },
+    )
 
     write_json(
         block_dir / "files_context.json",
         {
-            "allowed_files": allowed_files,
+            "allowed_files": all_files,
             "files_context": files_context,
         },
     )
@@ -303,8 +531,11 @@ def execute_plan_node(state: SourceRefactorState) -> SourceRefactorState:
             "target_type": state["target_type"],
             "target_name": state["target_name"],
         },
-        "block": state["current_block"],
+        "block": state["current_block"],    
         "allowed_files": state["allowed_files"],
+        "executor_existing_files": state.get("executor_existing_files", []),
+        "executor_new_files": state.get("executor_new_files", []),
+        "executor_rejected_files": state.get("executor_rejected_files", []),
         "files_context": state["files_context"],
     }
 

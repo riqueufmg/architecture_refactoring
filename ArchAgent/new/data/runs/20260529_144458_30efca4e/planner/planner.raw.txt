@@ -1,0 +1,103 @@
+{
+  "smell_type": "Insufficient Modularization",
+  "target_level": "class",
+  "target": "org.apache.commons.lang3.CharUtils",
+  "blocks": [
+    {
+      "id": 1,
+      "goal": "Extract large constant arrays from CharUtils into a small helper class to reduce class size and centralize constant data.",
+      "files": [
+        "src/main/java/org/apache/commons/lang3/CharUtils.java",
+        "src/main/java/org/apache/commons/lang3/CharUtilsConstants.java"
+      ],
+      "ops": [
+        {
+          "op": "EXTRACT_CLASS",
+          "inputs": [
+            "src/main/java/org/apache/commons/lang3/CharUtils.java"
+          ],
+          "outputs": [
+            "src/main/java/org/apache/commons/lang3/CharUtilsConstants.java",
+            "src/main/java/org/apache/commons/lang3/CharUtils.java"
+          ],
+          "details": "Create a new class org.apache.commons.lang3.CharUtilsConstants containing the two static arrays moved from CharUtils: CHAR_STRING_ARRAY and HEX_DIGITS. The new class declares: public final class CharUtilsConstants { public static final String[] CHAR_STRING_ARRAY = ArrayUtils.setAll(new String[128], i -> String.valueOf((char) i)); public static final char[] HEX_DIGITS = {'0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f'}; } Remove these two field declarations from CharUtils.",
+          "risk": "low"
+        },
+        {
+          "op": "UPDATE_CALL_SITES",
+          "inputs": [
+            "src/main/java/org/apache/commons/lang3/CharUtils.java"
+          ],
+          "outputs": [
+            "src/main/java/org/apache/commons/lang3/CharUtils.java"
+          ],
+          "details": "Update internal references in CharUtils to the moved fields to use CharUtilsConstants.CHAR_STRING_ARRAY and CharUtilsConstants.HEX_DIGITS where appropriate (e.g. in toString(char) and unicodeEscaped(char)). No public API changes; CharUtils still exposes the same public methods.",
+          "risk": "low"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "goal": "Extract caching and formatting helpers (string creation and unicode escaping) into a dedicated helper class to reduce CharUtils implementation size while preserving public API.",
+      "files": [
+        "src/main/java/org/apache/commons/lang3/CharUtils.java",
+        "src/main/java/org/apache/commons/lang3/CharUtilsStrings.java"
+      ],
+      "ops": [
+        {
+          "op": "EXTRACT_CLASS",
+          "inputs": [
+            "src/main/java/org/apache/commons/lang3/CharUtils.java",
+            "src/main/java/org/apache/commons/lang3/CharUtilsConstants.java"
+          ],
+          "outputs": [
+            "src/main/java/org/apache/commons/lang3/CharUtilsStrings.java",
+            "src/main/java/org/apache/commons/lang3/CharUtils.java"
+          ],
+          "details": "Create a new helper class org.apache.commons.lang3.CharUtilsStrings with two public static methods used internally by CharUtils: public static String toCachedString(char ch) { if (ch < CharUtilsConstants.CHAR_STRING_ARRAY.length) { return CharUtilsConstants.CHAR_STRING_ARRAY[ch]; } return String.valueOf(ch); } and public static String unicodeEscapedChar(char ch) { return \"\\\\u\" + CharUtilsConstants.HEX_DIGITS[ch >> 12 & 15] + CharUtilsConstants.HEX_DIGITS[ch >> 8 & 15] + CharUtilsConstants.HEX_DIGITS[ch >> 4 & 15] + CharUtilsConstants.HEX_DIGITS[ch & 15]; } The new class is placed in the same package.",
+          "risk": "low"
+        },
+        {
+          "op": "UPDATE_CALL_SITES",
+          "inputs": [
+            "src/main/java/org/apache/commons/lang3/CharUtils.java"
+          ],
+          "outputs": [
+            "src/main/java/org/apache/commons/lang3/CharUtils.java"
+          ],
+          "details": "Modify CharUtils implementations to delegate to the new helper methods without changing their signatures. Specifically: replace the body of public static String toString(char ch) to return CharUtilsStrings.toCachedString(ch); replace unicodeEscaped(char ch) implementation to return CharUtilsStrings.unicodeEscapedChar(ch); keep public API unchanged.",
+          "risk": "low"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "goal": "Ensure imports and packaging remain correct and that newly created types are in the same package so no external API or call sites need modification.",
+      "files": [
+        "src/main/java/org/apache/commons/lang3/CharUtilsConstants.java",
+        "src/main/java/org/apache/commons/lang3/CharUtilsStrings.java",
+        "src/main/java/org/apache/commons/lang3/CharUtils.java"
+      ],
+      "ops": [
+        {
+          "op": "ADD_OR_UPDATE_IMPORTS",
+          "inputs": [
+            "src/main/java/org/apache/commons/lang3/CharUtils.java"
+          ],
+          "outputs": [
+            "src/main/java/org/apache/commons/lang3/CharUtils.java"
+          ],
+          "details": "No external imports are required because new helper classes are in the same package. Verify and remove any now-unused imports in CharUtils (if any). Ensure new files declare package org.apache.commons.lang3.",
+          "risk": "low"
+        },
+        {
+          "op": "CREATE_PACKAGE",
+          "inputs": [],
+          "outputs": [],
+          "details": "No new package creation required; new helper classes are created in the existing package org.apache.commons.lang3. This op is included as a no-op confirmation that package placement was considered.",
+          "risk": "low"
+        }
+      ]
+    }
+  ]
+}

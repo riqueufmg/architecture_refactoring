@@ -63,6 +63,16 @@ def git_commit_all(repo_path: str | Path, message: str) -> str:
     return git_current_commit(repo_path)
 
 
+def git_clean_workspace(repo_path: str | Path) -> None:
+    code, out = run_command(
+        ["git", "clean", "-fd"],
+        cwd=repo_path,
+    )
+
+    if code != 0:
+        raise RuntimeError(f"Could not clean repository:\n{out}")
+
+
 def git_reset_hard(repo_path: str | Path, commit: str) -> str:
     code, out = run_command(
         ["git", "reset", "--hard", commit],

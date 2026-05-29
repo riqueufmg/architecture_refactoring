@@ -14,6 +14,7 @@ class SourceRefactorState(TypedDict, total=False):
     planner_dir: str
     planner_plan_path: str
     planner_input_path: str
+    planner_input: dict[str, Any]
 
     input_plan: dict[str, Any]
     executable_plan: dict[str, Any]
@@ -26,6 +27,10 @@ class SourceRefactorState(TypedDict, total=False):
     smell_name: str
     target_type: str
     target_name: str
+    target_source_root: str
+    target_file: str
+    target_files: list[str]
+
 
     # plan blocks data
     current_block_index: int
@@ -59,6 +64,11 @@ class SourceRefactorState(TypedDict, total=False):
     execute_plan_rendered: str
     execute_plan_raw: str
     execute_plan_result: dict[str, Any]
+
+    executor_existing_files: list[str]
+    executor_new_files: list[str]
+    executor_files: list[str]
+    executor_rejected_files: list[str]
 
     applied_files: list[str]
 

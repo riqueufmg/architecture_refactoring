@@ -1,0 +1,42 @@
+{
+  "id": 1,
+  "goal": "Extract the private overloaded run(Object, FailableRunnable) helper from Failable into a small helper class to reduce class size and improve modularization while preserving the public API.",
+  "files": [
+    "src/main/java/org/apache/commons/lang3/function/Failable.java",
+    "src/main/java/org/apache/commons/lang3/function/FailableHelper.java"
+  ],
+  "ops": [
+    {
+      "op": "CREATE_CLASS",
+      "inputs": [],
+      "outputs": [
+        "src/main/java/org/apache/commons/lang3/function/FailableHelper.java"
+      ],
+      "details": "Create a new package-private final helper class FailableHelper in package org.apache.commons.lang3.function. Provide a single static helper method with the same behavior as the original private run(Object, FailableRunnable) method: static <E extends Throwable> void run(Object test, FailableRunnable<E> runnable) { if (runnable != null && test != null) { try { runnable.run(); } catch (Throwable t) { throw Failable.rethrow(t); } } }",
+      "risk": "low"
+    },
+    {
+      "op": "MOVE_METHOD",
+      "inputs": [
+        "src/main/java/org/apache/commons/lang3/function/Failable.java::private static <E extends Throwable> void run(java.lang.Object, org.apache.commons.lang3.function.FailableRunnable<E>)"
+      ],
+      "outputs": [
+        "src/main/java/org/apache/commons/lang3/function/Failable.java::(method removed)",
+        "src/main/java/org/apache/commons/lang3/function/FailableHelper.java::static <E extends Throwable> void run(java.lang.Object, org.apache.commons.lang3.function.FailableRunnable<E>)"
+      ],
+      "details": "Remove the private overloaded run(Object, FailableRunnable) implementation from Failable and add it to FailableHelper as a static method. The implementation is preserved exactly, except it delegates to Failable.rethrow for throwing behavior.",
+      "risk": "medium"
+    },
+    {
+      "op": "UPDATE_CALL_SITES",
+      "inputs": [
+        "src/main/java/org/apache/commons/lang3/function/Failable.java"
+      ],
+      "outputs": [
+        "src/main/java/org/apache/commons/lang3/function/Failable.java"
+      ],
+      "details": "Update all internal calls within Failable that invoked the moved private helper using the signature run(test, runnable) to call FailableHelper.run(test, runnable) instead. This preserves the public API and requires no external call-site changes because Failable's public methods are unchanged.",
+      "risk": "low"
+    }
+  ]
+}

@@ -292,6 +292,7 @@ def build_planner_context_node(state: PlannerState) -> PlannerState:
         planner_input.update(
             {
                 "target_file": state["target_file"],
+                "target_source_root": state["target_source_root"],
                 "target_code": state["target_code"],
             }
         )
@@ -478,6 +479,9 @@ def save_status_node(state: PlannerState) -> PlannerState:
             "smell_name": state.get("smell_name", ""),
             "target_type": state.get("target_type", ""),
             "target_name": state.get("target_name", ""),
+            "target_file": state.get("target_file", ""),
+            "target_files": state.get("target_files", []),
+            "target_source_root": state.get("target_source_root", ""),
         },
         "artifacts": {
             "planner_dir": str(planner_dir),

@@ -1,0 +1,5 @@
+{
+  "files_to_write": [],
+  "files_to_delete": [],
+  "notes": "No changes made: the requested refactoring has already been applied. The private helper was removed from Failable, FailableHelper contains the static run(Object, FailableRunnable) method, and Failable's internal call sites have been updated to call FailableHelper.run."
+}

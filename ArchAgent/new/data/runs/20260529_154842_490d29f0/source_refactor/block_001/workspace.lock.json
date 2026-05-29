@@ -1,0 +1,6 @@
+{
+  "base_commit": "c3db09b1a3f017584540c37a6d96cdf6a2c3776f",
+  "before_commit": "c3db09b1a3f017584540c37a6d96cdf6a2c3776f",
+  "after_commit": "c3db09b1a3f017584540c37a6d96cdf6a2c3776f",
+  "reset_output": "HEAD is now at c3db09b1a source_refactor: apply block 1\n"
+}
