@@ -1,0 +1,10 @@
+{
+  "files_to_write": [
+    {
+      "path": "src/main/java/org/jsoup/select/ElementsHelper.java",
+      "content": "package org.jsoup.select;\n\nimport org.jsoup.nodes.Element;\nimport org.jsoup.nodes.Node;\n\nimport java.util.ArrayList;\nimport java.util.List;\n\nclass ElementsHelper {\n\n    static Elements siblings(String query, boolean next, boolean all, Elements elements) {\n        Elements els = new Elements();\n        Evaluator eval = query != null ? Selector.evaluatorOf(query) : null;\n        for (Element e : elements) {\n            do {\n                Element sib = next ? e.nextElementSibling() : e.previousElementSibling();\n                if (sib == null) break;\n                if (eval == null || sib.is(eval)) els.add(sib);\n                e = sib;\n            } while (all);\n        }\n        return els;\n    }\n\n    static <T extends Node> List<T> childNodesOfType(Elements elements, Class<T> tClass) {\n        ArrayList<T> nodes = new ArrayList<>();\n        for (Element el : elements) {\n            for (int i = 0; i < el.childNodeSize(); i++) {\n                Node node = el.childNode(i);\n                if (tClass.isInstance(node))\n                    nodes.add(tClass.cast(node));\n            }\n        }\n        return nodes;\n    }\n}\n"
+    }
+  ],
+  "files_to_delete": [],
+  "notes": "Added ElementsHelper with package-visible static helpers siblings and childNodesOfType mirroring private methods from Elements. Elements.java was not modified as requested."
+}

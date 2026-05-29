@@ -933,18 +933,51 @@ def promote_block_node(state: SourceRefactorState) -> SourceRefactorState:
         block_commit,
     )
 
-    state["stop_reason"] = "applied_and_compiled_first_block_only"
+    state["stop_reason"] = "block_applied"
 
     return state
+
+def advance_block_node(state: SourceRefactorState) -> SourceRefactorState:
+    blocks = state.get("executable_plan", {}).get("blocks", [])
+
+    current_index = int(state.get("current_block_index", 0))
+    next_index = current_index + 1
+
+    state["current_block_index"] = next_index
+
+    if next_index >= len(blocks):
+        state["stop_reason"] = "all_blocks_applied"
+    else:
+        state["stop_reason"] = "block_applied"
+
+    return state
+
+def after_advance_block(state: SourceRefactorState) -> str:
+    blocks = state.get("executable_plan", {}).get("blocks", [])
+    current_index = int(state.get("current_block_index", 0))
+
+    if current_index >= len(blocks):
+        return "save_status"
+
+    return "stage_block"
 
 def save_status_node(state: SourceRefactorState) -> SourceRefactorState:
     source_refactor_dir = Path(state["source_refactor_dir"])
 
     blocks = state.get("executable_plan", {}).get("blocks", [])
 
+    final_ok = (
+        state.get("stop_reason") == "all_blocks_applied"
+        or (
+            bool(state.get("compile_ok", False))
+            and bool(state.get("executor_ok", False))
+            and bool(state.get("apply_ok", False))
+        )
+    )
+
     status = {
         "mvp": "source_refactor",
-        "ok": bool(state.get("compile_ok", False)),
+        "ok": final_ok,
         "run_id": state.get("run_id", ""),
         "project": state.get("project_name", ""),
         "repo_path": state.get("repo_path", ""),
@@ -975,7 +1008,7 @@ def save_status_node(state: SourceRefactorState) -> SourceRefactorState:
     contract = {
         "producer": "source_refactor",
         "version": "1.0",
-        "ok": bool(state.get("compile_ok", False)),
+        "ok": final_ok,
         "run_id": state.get("run_id", ""),
         "input": {
             "planner_contract": state.get("planner_contract_path", ""),

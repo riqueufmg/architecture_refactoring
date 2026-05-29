@@ -1,0 +1,75 @@
+{
+  "smell_type": "Insufficient Modularization",
+  "target_level": "class",
+  "target": "org.jsoup.select.Elements",
+  "blocks": [
+    {
+      "id": 1,
+      "goal": "Introduce a small helper class to host Elements' private helper logic (siblings and childNodesOfType). Keep the existing Elements class unchanged in this step.",
+      "files": [
+        "src/main/java/org/jsoup/select/Elements.java",
+        "src/main/java/org/jsoup/select/ElementsHelper.java"
+      ],
+      "ops": [
+        {
+          "op": "EXTRACT_CLASS",
+          "inputs": [
+            "src/main/java/org/jsoup/select/Elements.java"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/select/ElementsHelper.java"
+          ],
+          "details": "Create a new helper class org.jsoup.select.ElementsHelper in the same package. The class provides two package-visible static methods mirroring the behavior of the current private helpers in Elements: siblings(Elements elements, String query, boolean next, boolean all) and <T extends org.jsoup.nodes.Node> List<T> childNodesOfType(Elements elements, Class<T> tClass). Implementation should be a near-copy of the existing private methods, but accept the calling Elements instance as the first parameter. Add necessary imports: java.util.ArrayList, java.util.List, java.util.HashSet/LinkedHashSet only if used; use org.jsoup.nodes.Node and org.jsoup.nodes.Element and org.jsoup.select.Selector/Evaluator as needed. Do not modify Elements.java in this op.",
+          "risk": "low"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "goal": "Move the two private helper methods from Elements into ElementsHelper and update all call sites in Elements to use the new static helper methods without changing any public API.",
+      "files": [
+        "src/main/java/org/jsoup/select/Elements.java",
+        "src/main/java/org/jsoup/select/ElementsHelper.java"
+      ],
+      "ops": [
+        {
+          "op": "MOVE_METHOD",
+          "inputs": [
+            "src/main/java/org/jsoup/select/Elements.java::private Elements siblings(@Nullable String query, boolean next, boolean all)",
+            "src/main/java/org/jsoup/select/ElementsHelper.java"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/select/Elements.java",
+            "src/main/java/org/jsoup/select/ElementsHelper.java"
+          ],
+          "details": "Remove the private siblings(...) method from Elements and keep its implementation in ElementsHelper as a package-visible static method with signature: static Elements siblings(Elements elements, @Nullable String query, boolean next, boolean all). The implementation should use the provided Elements parameter instead of 'this'.",
+          "risk": "medium"
+        },
+        {
+          "op": "MOVE_METHOD",
+          "inputs": [
+            "src/main/java/org/jsoup/select/Elements.java::private <T extends Node> List<T> childNodesOfType(Class<T> tClass)",
+            "src/main/java/org/jsoup/select/ElementsHelper.java"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/select/Elements.java",
+            "src/main/java/org/jsoup/select/ElementsHelper.java"
+          ],
+          "details": "Remove the private childNodesOfType(...) method from Elements and keep its implementation in ElementsHelper as a package-visible static method with signature: static <T extends org.jsoup.nodes.Node> List<T> childNodesOfType(Elements elements, Class<T> tClass). The implementation should iterate over the provided Elements parameter rather than 'this'.",
+          "risk": "medium"
+        },
+        {
+          "op": "UPDATE_CALL_SITES",
+          "inputs": [
+            "src/main/java/org/jsoup/select/Elements.java"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/select/Elements.java"
+          ],
+          "details": "Update all internal calls inside Elements that invoked the removed private helpers to call the new ElementsHelper static methods, passing 'this' as the first argument. Specifically: replace calls to siblings(query, next, all) with ElementsHelper.siblings(this, query, next, all); replace calls to childNodesOfType(X.class) with ElementsHelper.childNodesOfType(this, X.class). Ensure no public method signatures change and Elements remains in the same package so no import is required.",
+          "risk": "low"
+        }
+      ]
+    }
+  ]
+}

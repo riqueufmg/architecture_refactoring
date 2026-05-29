@@ -1,0 +1,12 @@
+{
+  "executor_existing_files": [
+    "src/main/java/org/jsoup/Jsoup.java",
+    "src/main/java/org/jsoup/JsoupCleaner.java"
+  ],
+  "executor_new_files": [],
+  "executor_files": [
+    "src/main/java/org/jsoup/Jsoup.java",
+    "src/main/java/org/jsoup/JsoupCleaner.java"
+  ],
+  "executor_rejected_files": []
+}

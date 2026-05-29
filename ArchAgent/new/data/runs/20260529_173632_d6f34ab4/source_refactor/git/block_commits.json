@@ -1,7 +1,12 @@
 [
   {
     "block_id": "1",
-    "commit": "c018ad89fb81742688d736a8350bfbc5deb9b022",
+    "commit": "4c642b038e58d45a597adb16295d891c628eca6f",
     "message": "source_refactor: apply block 1"
+  },
+  {
+    "block_id": "2",
+    "commit": "47f035d7b262a3f47b96768fcd685de13c2d4aae",
+    "message": "source_refactor: apply block 2"
   }
 ]

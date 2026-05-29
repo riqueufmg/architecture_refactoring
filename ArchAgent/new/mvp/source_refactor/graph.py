@@ -20,6 +20,8 @@ from mvp.source_refactor.nodes import (
     compile_source_node,
     after_compile_source,
     promote_block_node,
+    advance_block_node,
+    after_advance_block,
     save_status_node,
 )
 
@@ -41,6 +43,7 @@ def build_source_refactor_graph():
     g.add_node("apply_changes", apply_changes_node)
     g.add_node("compile_source", compile_source_node)
     g.add_node("promote_block", promote_block_node)
+    g.add_node("advance_block", advance_block_node)
     g.add_node("save_status", save_status_node)
 
     g.set_entry_point("load_config")
@@ -82,7 +85,15 @@ def build_source_refactor_graph():
             "save_status": "save_status",
         },
     )
-    g.add_edge("promote_block", "save_status")
+    g.add_edge("promote_block", "advance_block")
+    g.add_conditional_edges(
+        "advance_block",
+        after_advance_block,
+        {
+            "stage_block": "stage_block",
+            "save_status": "save_status",
+        },
+    )
     g.add_edge("save_status", END)
 
     return g.compile()

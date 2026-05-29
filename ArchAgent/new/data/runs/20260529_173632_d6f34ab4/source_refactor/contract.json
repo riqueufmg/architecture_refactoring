@@ -26,7 +26,7 @@
     "git_dir": "/data/henrique/langchain_prototype/ArchAgent/new/data/runs/20260529_173632_d6f34ab4/source_refactor/git",
     "initial_commit": "/data/henrique/langchain_prototype/ArchAgent/new/data/runs/20260529_173632_d6f34ab4/source_refactor/git/initial_commit.txt",
     "last_good_commit": "/data/henrique/langchain_prototype/ArchAgent/new/data/runs/20260529_173632_d6f34ab4/source_refactor/git/last_good_commit.txt",
-    "current_block_dir": "/data/henrique/langchain_prototype/ArchAgent/new/data/runs/20260529_173632_d6f34ab4/source_refactor/block_001",
-    "compile_log": "/data/henrique/langchain_prototype/ArchAgent/new/data/runs/20260529_173632_d6f34ab4/source_refactor/block_001/compile.log"
+    "current_block_dir": "/data/henrique/langchain_prototype/ArchAgent/new/data/runs/20260529_173632_d6f34ab4/source_refactor/block_002",
+    "compile_log": "/data/henrique/langchain_prototype/ArchAgent/new/data/runs/20260529_173632_d6f34ab4/source_refactor/block_002/compile.log"
   }
 }
