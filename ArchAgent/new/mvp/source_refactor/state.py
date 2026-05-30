@@ -48,6 +48,7 @@ class SourceRefactorState(TypedDict, total=False):
     workspace_clean: bool
     block_commits: list[dict[str, str]]
     repair_commits: list[dict[str, str]]
+    block_summaries: list[dict[str, Any]]
 
     current_block_dir: str
     current_block_id: str

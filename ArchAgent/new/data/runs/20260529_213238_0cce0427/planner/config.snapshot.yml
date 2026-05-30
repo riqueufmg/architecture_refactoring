@@ -10,7 +10,7 @@ target:
   smell: IM
   smell_name: Insufficient Modularization
   target_type: class
-  target_name: org.jsoup.safety.Safelist
+  target_name: org.jsoupConnection
 
 models:
   planner: gpt-5-mini

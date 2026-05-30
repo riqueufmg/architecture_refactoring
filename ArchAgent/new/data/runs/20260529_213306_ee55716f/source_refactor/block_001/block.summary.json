@@ -1,0 +1,29 @@
+{
+  "block_id": "1",
+  "block_index": 0,
+  "attempt": 2,
+  "max_block_attempts": 5,
+  "executor_ok": true,
+  "executor_error": "",
+  "apply_ok": true,
+  "apply_error": "",
+  "applied_files": [
+    "src/main/java/org/jsoup/Connection.java"
+  ],
+  "compile_ok": true,
+  "compile_return_code": 0,
+  "compile_log_path": "/data/henrique/langchain_prototype/ArchAgent/new/data/runs/20260529_213306_ee55716f/source_refactor/block_001/compile.log",
+  "commit": "8bc776a1635574343d8abd90ed97f54b08c85e40",
+  "rollback_reason": "",
+  "stop_reason": "block_applied",
+  "files": {
+    "executor_existing_files": [
+      "src/main/java/org/jsoup/Connection.java"
+    ],
+    "executor_new_files": [],
+    "executor_files": [
+      "src/main/java/org/jsoup/Connection.java"
+    ],
+    "executor_rejected_files": []
+  }
+}

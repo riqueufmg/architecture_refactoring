@@ -1,0 +1,5 @@
+{
+  "files_to_write": [],
+  "files_to_delete": [],
+  "notes": "NO_OP: The target is a public interface (org.jsoup.Connection) whose nested types and methods are part of the public API. Any modularization change would alter FQNs or require call-site updates. To preserve API and behavior, no files were modified."
+}

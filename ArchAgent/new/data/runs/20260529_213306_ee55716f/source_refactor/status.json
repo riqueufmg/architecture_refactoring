@@ -1,0 +1,64 @@
+{
+  "mvp": "source_refactor",
+  "ok": true,
+  "run_id": "20260529_213306_ee55716f",
+  "project": "jsoup",
+  "repo_path": "/data/henrique/langchain_prototype/ArchAgent/new/data/repositories/jsoup",
+  "smell": "IM",
+  "smell_name": "Insufficient Modularization",
+  "target_type": "class",
+  "target_name": "org.jsoup.Connection",
+  "blocks_count": 1,
+  "blocks_applied": 1,
+  "block_summaries": [
+    {
+      "block_id": "1",
+      "block_index": 0,
+      "attempt": 2,
+      "max_block_attempts": 5,
+      "executor_ok": true,
+      "executor_error": "",
+      "apply_ok": true,
+      "apply_error": "",
+      "applied_files": [
+        "src/main/java/org/jsoup/Connection.java"
+      ],
+      "compile_ok": true,
+      "compile_return_code": 0,
+      "compile_log_path": "/data/henrique/langchain_prototype/ArchAgent/new/data/runs/20260529_213306_ee55716f/source_refactor/block_001/compile.log",
+      "commit": "8bc776a1635574343d8abd90ed97f54b08c85e40",
+      "rollback_reason": "",
+      "stop_reason": "block_applied",
+      "files": {
+        "executor_existing_files": [
+          "src/main/java/org/jsoup/Connection.java"
+        ],
+        "executor_new_files": [],
+        "executor_files": [
+          "src/main/java/org/jsoup/Connection.java"
+        ],
+        "executor_rejected_files": []
+      }
+    }
+  ],
+  "current_block_id": "1",
+  "applied_files": [
+    "src/main/java/org/jsoup/Connection.java"
+  ],
+  "compile_ok": true,
+  "compile_return_code": 0,
+  "compile_log_path": "/data/henrique/langchain_prototype/ArchAgent/new/data/runs/20260529_213306_ee55716f/source_refactor/block_001/compile.log",
+  "initial_commit": "4bb20767058182da72afd04636cabc6c53b2b808",
+  "last_good_commit": "8bc776a1635574343d8abd90ed97f54b08c85e40",
+  "current_block_commit": "8bc776a1635574343d8abd90ed97f54b08c85e40",
+  "final_commit": "",
+  "workspace_clean": true,
+  "block_attempt": 2,
+  "max_block_attempts": 5,
+  "executor_ok": true,
+  "executor_error": "",
+  "apply_ok": true,
+  "apply_error": "",
+  "rollback_reason": "",
+  "stop_reason": "all_blocks_applied"
+}

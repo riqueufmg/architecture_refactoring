@@ -220,6 +220,7 @@ def record_initial_commit_node(state: SourceRefactorState) -> SourceRefactorStat
     state["last_good_commit"] = initial_commit
     state["block_commits"] = []
     state["repair_commits"] = []
+    state["block_summaries"] = []
 
     git_dir = source_refactor_dir / "git"
     git_dir.mkdir(parents=True, exist_ok=True)
@@ -236,6 +237,7 @@ def record_initial_commit_node(state: SourceRefactorState) -> SourceRefactorStat
 
     write_json(git_dir / "block_commits.json", [])
     write_json(git_dir / "repair_commits.json", [])
+    write_json(source_refactor_dir / "block_summaries.json", [])
 
     return state
 
@@ -949,6 +951,9 @@ def promote_block_node(state: SourceRefactorState) -> SourceRefactorState:
     source_refactor_dir = Path(state["source_refactor_dir"])
 
     block_id = state.get("current_block_id", "")
+    block_index = int(state.get("current_block_index", 0))
+    block_dir = Path(state["current_block_dir"])
+
     compile_ok = bool(state.get("compile_ok", False))
 
     if not compile_ok:
@@ -965,6 +970,7 @@ def promote_block_node(state: SourceRefactorState) -> SourceRefactorState:
 
     block_commit = {
         "block_id": block_id,
+        "block_index": block_index,
         "commit": commit,
         "message": f"source_refactor: apply block {block_id}",
     }
@@ -984,8 +990,48 @@ def promote_block_node(state: SourceRefactorState) -> SourceRefactorState:
     write_json(git_dir / "block_commits.json", block_commits)
 
     write_json(
-        Path(state["current_block_dir"]) / "block.commit.json",
+        block_dir / "block.commit.json",
         block_commit,
+    )
+
+    block_summary = {
+        "block_id": block_id,
+        "block_index": block_index,
+        "attempt": int(state.get("block_attempt", 0)),
+        "max_block_attempts": int(state.get("max_block_attempts", 0)),
+
+        "executor_ok": bool(state.get("executor_ok", False)),
+        "executor_error": state.get("executor_error", ""),
+
+        "apply_ok": bool(state.get("apply_ok", False)),
+        "apply_error": state.get("apply_error", ""),
+        "applied_files": state.get("applied_files", []),
+
+        "compile_ok": bool(state.get("compile_ok", False)),
+        "compile_return_code": state.get("compile_return_code", None),
+        "compile_log_path": state.get("compile_log_path", ""),
+
+        "commit": commit,
+        "rollback_reason": state.get("rollback_reason", ""),
+        "stop_reason": "block_applied",
+
+        "files": {
+            "executor_existing_files": state.get("executor_existing_files", []),
+            "executor_new_files": state.get("executor_new_files", []),
+            "executor_files": state.get("executor_files", []),
+            "executor_rejected_files": state.get("executor_rejected_files", []),
+        },
+    }
+
+    write_json(block_dir / "block.summary.json", block_summary)
+
+    block_summaries = list(state.get("block_summaries", []))
+    block_summaries.append(block_summary)
+    state["block_summaries"] = block_summaries
+
+    write_json(
+        source_refactor_dir / "block_summaries.json",
+        block_summaries,
     )
 
     state["stop_reason"] = "block_applied"
@@ -1039,6 +1085,8 @@ def save_status_node(state: SourceRefactorState) -> SourceRefactorState:
         "target_type": state.get("target_type", ""),
         "target_name": state.get("target_name", ""),
         "blocks_count": len(blocks),
+        "blocks_applied": len(state.get("block_summaries", [])),
+        "block_summaries": state.get("block_summaries", []),
         "current_block_id": state.get("current_block_id", ""),
         "applied_files": state.get("applied_files", []),
         "compile_ok": state.get("compile_ok", False),
@@ -1090,6 +1138,14 @@ def save_status_node(state: SourceRefactorState) -> SourceRefactorState:
             "current_block_dir": state.get("current_block_dir", ""),
             "compile_log": state.get("compile_log_path", ""),
             "current_block_dir": state.get("current_block_dir", ""),
+            "block_summaries": str(source_refactor_dir / "block_summaries.json"),
+        },
+        "commits": {
+            "initial_commit": state.get("initial_commit", ""),
+            "last_good_commit": state.get("last_good_commit", ""),
+            "final_commit": state.get("final_commit", ""),
+            "current_block_commit": state.get("current_block_commit", ""),
+            "block_commits": state.get("block_commits", []),
         },
     }
 
