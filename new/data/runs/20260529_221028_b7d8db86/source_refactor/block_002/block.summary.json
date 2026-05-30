@@ -1,0 +1,31 @@
+{
+  "block_id": "2",
+  "block_index": 1,
+  "attempt": 0,
+  "max_block_attempts": 5,
+  "executor_ok": true,
+  "executor_error": "",
+  "apply_ok": true,
+  "apply_error": "",
+  "applied_files": [
+    "src/main/java/org/jsoup/nodes/Attribute.java"
+  ],
+  "compile_ok": true,
+  "compile_return_code": 0,
+  "compile_log_path": "/data/henrique/langchain_prototype/new/data/runs/20260529_221028_b7d8db86/source_refactor/block_002/compile.log",
+  "commit": "6719f583f28d1765f215b67112bf3cd96eeaaf27",
+  "rollback_reason": "",
+  "stop_reason": "block_applied",
+  "files": {
+    "executor_existing_files": [
+      "src/main/java/org/jsoup/nodes/Attribute.java",
+      "src/main/java/org/jsoup/nodes/AttributeKeyUtil.java"
+    ],
+    "executor_new_files": [],
+    "executor_files": [
+      "src/main/java/org/jsoup/nodes/Attribute.java",
+      "src/main/java/org/jsoup/nodes/AttributeKeyUtil.java"
+    ],
+    "executor_rejected_files": []
+  }
+}

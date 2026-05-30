@@ -1,0 +1,58 @@
+{
+  "id": 2,
+  "goal": "Move Attribute's internal regex patterns and validation helper methods into the new AttributeKeyUtil and update Attribute.getValidKey to delegate to the helper, preserving Attribute's public API.",
+  "files": [
+    "src/main/java/org/jsoup/nodes/Attribute.java",
+    "src/main/java/org/jsoup/nodes/AttributeKeyUtil.java"
+  ],
+  "ops": [
+    {
+      "op": "MOVE_FIELD",
+      "inputs": [
+        "src/main/java/org/jsoup/nodes/Attribute.java:private static final Pattern xmlKeyReplace",
+        "src/main/java/org/jsoup/nodes/Attribute.java:private static final Pattern htmlKeyReplace"
+      ],
+      "outputs": [
+        "src/main/java/org/jsoup/nodes/AttributeKeyUtil.java:static final Pattern xmlKeyReplace",
+        "src/main/java/org/jsoup/nodes/AttributeKeyUtil.java:static final Pattern htmlKeyReplace"
+      ],
+      "details": "Remove the two Pattern fields (xmlKeyReplace and htmlKeyReplace) from Attribute and rely on the definitions added to AttributeKeyUtil. Patterns are package-private in the helper to avoid changing Attribute's public API.",
+      "risk": "medium"
+    },
+    {
+      "op": "MOVE_METHOD",
+      "inputs": [
+        "src/main/java/org/jsoup/nodes/Attribute.java:private static boolean isValidXmlKey(String key)",
+        "src/main/java/org/jsoup/nodes/Attribute.java:private static boolean isValidHtmlKey(String key)"
+      ],
+      "outputs": [
+        "src/main/java/org/jsoup/nodes/AttributeKeyUtil.java:static boolean isValidXmlKey(String key)",
+        "src/main/java/org/jsoup/nodes/AttributeKeyUtil.java:static boolean isValidHtmlKey(String key)"
+      ],
+      "details": "Remove the two private validation methods from Attribute; AttributeKeyUtil already contains equivalent implementations. Keeping them in the helper centralizes key validation.",
+      "risk": "medium"
+    },
+    {
+      "op": "UPDATE_CALL_SITES",
+      "inputs": [
+        "src/main/java/org/jsoup/nodes/Attribute.java:public static String getValidKey(String key, Syntax syntax)"
+      ],
+      "outputs": [
+        "src/main/java/org/jsoup/nodes/Attribute.java:public static String getValidKey(String key, Syntax syntax) (updated)"
+      ],
+      "details": "Update the implementation of Attribute.getValidKey to delegate coercion/validation to AttributeKeyUtil. The method signature remains unchanged (preserves public API). New body example:\n\npublic static String getValidKey(String key, Syntax syntax) {\n    if (syntax == Syntax.xml && !AttributeKeyUtil.isValidXmlKey(key)) {\n        return AttributeKeyUtil.coerceXmlKey(key);\n    } else if (syntax == Syntax.html && !AttributeKeyUtil.isValidHtmlKey(key)) {\n        return AttributeKeyUtil.coerceHtmlKey(key);\n    }\n    return key;\n}\n\nThis keeps behavior equivalent while removing implementation detail from Attribute.",
+      "risk": "low"
+    },
+    {
+      "op": "ADD_OR_UPDATE_IMPORTS",
+      "inputs": [
+        "src/main/java/org/jsoup/nodes/Attribute.java"
+      ],
+      "outputs": [
+        "src/main/java/org/jsoup/nodes/Attribute.java (updated imports if needed)"
+      ],
+      "details": "No new external imports are required because AttributeKeyUtil is in the same package. Ensure imports remain minimal and compile.",
+      "risk": "low"
+    }
+  ]
+}
