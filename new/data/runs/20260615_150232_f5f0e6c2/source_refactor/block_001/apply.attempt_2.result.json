@@ -1,0 +1,9 @@
+{
+  "ok": true,
+  "applied_files": [
+    "src/main/java/org/apache/commons/lang3/function/failable/Failable.java",
+    "src/main/java/org/apache/commons/lang3/function/failable/FailableHelper.java",
+    "src/main/java/org/apache/commons/lang3/function/failable/FailableRunnable.java"
+  ],
+  "git_status": "M src/main/java/org/apache/commons/lang3/Functions.java\n M src/main/java/org/apache/commons/lang3/concurrent/locks/LockingVisitors.java\n D src/main/java/org/apache/commons/lang3/function/Failable.java\n D src/main/java/org/apache/commons/lang3/function/FailableHelper.java\n D src/main/java/org/apache/commons/lang3/function/FailableRunnable.java\n M src/main/java/org/apache/commons/lang3/stream/Streams.java\n M src/main/java/org/apache/commons/lang3/time/DurationUtils.java\n M src/main/java/org/apache/commons/lang3/time/StopWatch.java\n?? src/main/java/org/apache/commons/lang3/function/failable/"
+}

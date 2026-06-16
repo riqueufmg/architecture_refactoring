@@ -1,0 +1,72 @@
+{
+  "smell_type": "God Component",
+  "target_level": "package",
+  "target": "org.apache.commons.lang3.function",
+  "selected_cluster": [
+    "org.apache.commons.lang3.function.MethodInvokers",
+    "org.apache.commons.lang3.function.FailableBiFunction",
+    "org.apache.commons.lang3.function.FailableBiConsumer"
+  ],
+  "destination_package": "org.apache.commons.lang3.function.invoker",
+  "cluster_reason": "MethodInvokers is closely tied to the bi-arity failable interfaces: FailableBiFunction and FailableBiConsumer. These three form a cohesive cluster implementing/referring to reflective invocation and Bi-type failable functional contracts. Moving them together isolates invocation logic and related bi-arity functional types into a focused subpackage, reducing the size and responsibility of the parent package while keeping tightly related types together.",
+  "risk": "medium",
+  "blocks": [
+    {
+      "id": 1,
+      "goal": "Move the cohesive invoker + bi-arity failable interfaces cluster to a new subpackage to reduce God Component size.",
+      "files": [
+        "src/main/java/org/apache/commons/lang3/function/MethodInvokers.java",
+        "src/main/java/org/apache/commons/lang3/function/FailableBiFunction.java",
+        "src/main/java/org/apache/commons/lang3/function/FailableBiConsumer.java"
+      ],
+      "ops": [
+        {
+          "op": "CREATE_PACKAGE",
+          "inputs": [],
+          "outputs": [
+            "org.apache.commons.lang3.function.invoker"
+          ],
+          "details": "Create the destination subpackage for invocation-related types.",
+          "risk": "low",
+          "api_change": false
+        },
+        {
+          "op": "MOVE_CLASS",
+          "inputs": [
+            "org.apache.commons.lang3.function.MethodInvokers"
+          ],
+          "outputs": [
+            "org.apache.commons.lang3.function.invoker.MethodInvokers"
+          ],
+          "details": "Move MethodInvokers to the invoker subpackage alongside the bi-arity failable interfaces it uses.",
+          "risk": "medium",
+          "api_change": true
+        },
+        {
+          "op": "MOVE_CLASS",
+          "inputs": [
+            "org.apache.commons.lang3.function.FailableBiFunction"
+          ],
+          "outputs": [
+            "org.apache.commons.lang3.function.invoker.FailableBiFunction"
+          ],
+          "details": "Move the FailableBiFunction interface to the invoker subpackage to keep bi-arity failable contracts with their invoker utilities.",
+          "risk": "medium",
+          "api_change": true
+        },
+        {
+          "op": "MOVE_CLASS",
+          "inputs": [
+            "org.apache.commons.lang3.function.FailableBiConsumer"
+          ],
+          "outputs": [
+            "org.apache.commons.lang3.function.invoker.FailableBiConsumer"
+          ],
+          "details": "Move the FailableBiConsumer interface to the invoker subpackage to group related bi-arity failable interfaces and utilities.",
+          "risk": "medium",
+          "api_change": true
+        }
+      ]
+    }
+  ]
+}

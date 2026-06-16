@@ -1,0 +1,46 @@
+{
+  "producer": "planner",
+  "version": "1.0",
+  "ok": true,
+  "run_id": "20260616_105452_ab1479a5",
+  "project": {
+    "name": "commons-lang",
+    "repo_path": "/data/henrique/langchain_prototype/new/data/repositories/jsoup"
+  },
+  "target": {
+    "smell": "GC",
+    "smell_name": "God Component",
+    "target_type": "package",
+    "target_name": "org.jsoup.parser",
+    "target_file": "",
+    "target_files": [
+      "src/main/java/org/jsoup/parser/CharacterReader.java",
+      "src/main/java/org/jsoup/parser/HtmlTagOptions.java",
+      "src/main/java/org/jsoup/parser/HtmlTreeBuilder.java",
+      "src/main/java/org/jsoup/parser/HtmlTreeBuilderState.java",
+      "src/main/java/org/jsoup/parser/ParseError.java",
+      "src/main/java/org/jsoup/parser/ParseErrorList.java",
+      "src/main/java/org/jsoup/parser/ParseSettings.java",
+      "src/main/java/org/jsoup/parser/Parser.java",
+      "src/main/java/org/jsoup/parser/StreamParser.java",
+      "src/main/java/org/jsoup/parser/Tag.java",
+      "src/main/java/org/jsoup/parser/TagSet.java",
+      "src/main/java/org/jsoup/parser/Token.java",
+      "src/main/java/org/jsoup/parser/TokenData.java",
+      "src/main/java/org/jsoup/parser/TokenQueue.java",
+      "src/main/java/org/jsoup/parser/Tokeniser.java",
+      "src/main/java/org/jsoup/parser/TokeniserState.java",
+      "src/main/java/org/jsoup/parser/TreeBuilder.java",
+      "src/main/java/org/jsoup/parser/XmlTreeBuilder.java",
+      "src/main/java/org/jsoup/parser/package-info.java"
+    ],
+    "target_source_root": "src/main/java"
+  },
+  "artifacts": {
+    "planner_dir": "/data/henrique/langchain_prototype/new/data/runs/20260616_105452_ab1479a5/planner",
+    "plan": "/data/henrique/langchain_prototype/new/data/runs/20260616_105452_ab1479a5/planner/plan.json",
+    "planner_input": "/data/henrique/langchain_prototype/new/data/runs/20260616_105452_ab1479a5/planner/planner.input.json",
+    "designite_dir": "/data/henrique/langchain_prototype/new/data/runs/20260616_105452_ab1479a5/planner/designite",
+    "status": "/data/henrique/langchain_prototype/new/data/runs/20260616_105452_ab1479a5/planner/status.json"
+  }
+}

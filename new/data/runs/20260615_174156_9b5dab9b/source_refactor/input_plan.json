@@ -1,0 +1,71 @@
+{
+  "smell_type": "God Component",
+  "target_level": "package",
+  "target": "org.apache.commons.lang3.function",
+  "selected_cluster": [
+    "org.apache.commons.lang3.function.TriConsumer",
+    "org.apache.commons.lang3.function.TriFunction"
+  ],
+  "destination_package": "org.apache.commons.lang3.function.triple",
+  "cluster_reason": "TriConsumer and TriFunction are both arity-3 functional interfaces that form a small, cohesive group (related purpose and likely similar usage). They are not heavily referenced by the many Failable classes and have no strong central parser/state-machine role, so moving them together reduces the size of the original package with minimal collateral visibility changes.",
+  "risk": "low",
+  "blocks": [
+    {
+      "id": 1,
+      "goal": "Move the small cohesive cluster of arity-3 functional interfaces to a new subpackage to reduce package size.",
+      "files": [
+        "src/main/java/org/apache/commons/lang3/function/TriConsumer.java",
+        "src/main/java/org/apache/commons/lang3/function/TriFunction.java",
+        "src/main/java/org/apache/commons/lang3/function/triple/TriConsumer.java",
+        "src/main/java/org/apache/commons/lang3/function/triple/TriFunction.java"
+      ],
+      "ops": [
+        {
+          "op": "CREATE_PACKAGE",
+          "inputs": [],
+          "outputs": [
+            "org.apache.commons.lang3.function.triple"
+          ],
+          "details": "Create the destination subpackage if it does not exist.",
+          "risk": "low",
+          "api_change": false
+        },
+        {
+          "op": "MOVE_CLASS",
+          "inputs": [
+            "org.apache.commons.lang3.function.TriConsumer"
+          ],
+          "outputs": [
+            "org.apache.commons.lang3.function.triple.TriConsumer"
+          ],
+          "details": "Move this arity-3 consumer functional interface to the destination package.",
+          "risk": "low",
+          "api_change": true
+        },
+        {
+          "op": "MOVE_CLASS",
+          "inputs": [
+            "org.apache.commons.lang3.function.TriFunction"
+          ],
+          "outputs": [
+            "org.apache.commons.lang3.function.triple.TriFunction"
+          ],
+          "details": "Move this arity-3 function functional interface to the destination package.",
+          "risk": "low",
+          "api_change": true
+        },
+        {
+          "op": "UPDATE_VISIBILITY",
+          "inputs": [
+            "org.apache.commons.lang3.function.triple.TriConsumer",
+            "org.apache.commons.lang3.function.triple.TriFunction"
+          ],
+          "outputs": [],
+          "details": "After moving the whole cluster to the destination package, update only the minimum required visibility in moved classes and related remaining classes so the project can compile. Do not change behavior. Do not move additional classes.",
+          "risk": "medium",
+          "api_change": true
+        }
+      ]
+    }
+  ]
+}

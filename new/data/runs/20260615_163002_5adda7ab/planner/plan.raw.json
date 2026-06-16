@@ -1,0 +1,58 @@
+{
+  "smell_type": "God Component",
+  "target_level": "package",
+  "target": "org.apache.commons.lang3.concurrent",
+  "selected_cluster": [
+    "org.apache.commons.lang3.concurrent.BackgroundInitializer",
+    "org.apache.commons.lang3.concurrent.MultiBackgroundInitializer"
+  ],
+  "destination_package": "org.apache.commons.lang3.concurrent.initializer",
+  "cluster_reason": "MultiBackgroundInitializer coordinates and composes BackgroundInitializer instances (internal dependency MultiBackgroundInitializer -> BackgroundInitializer). These two classes form a small cohesive initializer-related cluster with many interactions between them; moving them together keeps their package-private interactions internal and minimizes the need to expose members to the remaining package.",
+  "risk": "medium",
+  "blocks": [
+    {
+      "id": 1,
+      "goal": "Move the BackgroundInitializer cluster (BackgroundInitializer and MultiBackgroundInitializer) into a new subpackage to reduce god component coupling.",
+      "files": [
+        "src/main/java/org/apache/commons/lang3/concurrent/BackgroundInitializer.java",
+        "src/main/java/org/apache/commons/lang3/concurrent/MultiBackgroundInitializer.java"
+      ],
+      "ops": [
+        {
+          "op": "CREATE_PACKAGE",
+          "inputs": [],
+          "outputs": [
+            "org.apache.commons.lang3.concurrent.initializer"
+          ],
+          "details": "Create the destination subpackage org.apache.commons.lang3.concurrent.initializer to hold initializer-related classes.",
+          "risk": "low",
+          "api_change": false
+        },
+        {
+          "op": "MOVE_CLASS",
+          "inputs": [
+            "org.apache.commons.lang3.concurrent.BackgroundInitializer"
+          ],
+          "outputs": [
+            "org.apache.commons.lang3.concurrent.initializer.BackgroundInitializer"
+          ],
+          "details": "Move BackgroundInitializer to org.apache.commons.lang3.concurrent.initializer to group initializer responsibilities and reduce package-level coupling.",
+          "risk": "medium",
+          "api_change": true
+        },
+        {
+          "op": "MOVE_CLASS",
+          "inputs": [
+            "org.apache.commons.lang3.concurrent.MultiBackgroundInitializer"
+          ],
+          "outputs": [
+            "org.apache.commons.lang3.concurrent.initializer.MultiBackgroundInitializer"
+          ],
+          "details": "Move MultiBackgroundInitializer alongside BackgroundInitializer to preserve internal composition and package-private interactions.",
+          "risk": "medium",
+          "api_change": true
+        }
+      ]
+    }
+  ]
+}

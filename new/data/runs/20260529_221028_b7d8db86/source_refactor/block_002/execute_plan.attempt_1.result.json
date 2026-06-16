@@ -1,0 +1,5 @@
+{
+  "files_to_write": [],
+  "files_to_delete": [],
+  "notes": "No changes necessary: the requested refactoring is already applied. AttributeKeyUtil contains the regex patterns and validation/coercion helper methods, and Attribute.getValidKey delegates to AttributeKeyUtil."
+}

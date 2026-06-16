@@ -1,0 +1,12 @@
+type: specs.openrewrite.org/v1beta/recipe
+name: source_refactor.MoveClassBlock1
+recipeList:
+  - org.openrewrite.java.ChangeType:
+      oldFullyQualifiedTypeName: org.apache.commons.lang3.function.BooleanConsumer
+      newFullyQualifiedTypeName: org.apache.commons.lang3.function.primitives.BooleanConsumer
+  - org.openrewrite.java.ChangeType:
+      oldFullyQualifiedTypeName: org.apache.commons.lang3.function.ByteConsumer
+      newFullyQualifiedTypeName: org.apache.commons.lang3.function.primitives.ByteConsumer
+  - org.openrewrite.java.ChangeType:
+      oldFullyQualifiedTypeName: org.apache.commons.lang3.function.ByteSupplier
+      newFullyQualifiedTypeName: org.apache.commons.lang3.function.primitives.ByteSupplier

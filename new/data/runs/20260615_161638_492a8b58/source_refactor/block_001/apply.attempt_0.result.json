@@ -1,0 +1,8 @@
+{
+  "ok": true,
+  "applied_files": [
+    "src/main/java/org/apache/commons/lang3/function/invoker/FailableBiFunction.java",
+    "src/main/java/org/apache/commons/lang3/function/invoker/MethodInvokers.java"
+  ],
+  "git_status": "M src/main/java/org/apache/commons/lang3/AppendableJoiner.java\n M src/main/java/org/apache/commons/lang3/function/Failable.java\n D src/main/java/org/apache/commons/lang3/function/FailableBiConsumer.java\n D src/main/java/org/apache/commons/lang3/function/FailableBiFunction.java\n D src/main/java/org/apache/commons/lang3/function/MethodInvokers.java\n M src/main/java/org/apache/commons/lang3/time/DurationUtils.java\n M src/main/java/org/apache/commons/lang3/tuple/Pair.java\n?? src/main/java/org/apache/commons/lang3/function/invoker/"
+}

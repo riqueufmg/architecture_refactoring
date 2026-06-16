@@ -1,0 +1,7 @@
+{
+  "ok": true,
+  "applied_files": [
+    "src/main/java/org/jsoup/parser/tags/HtmlTagOptions.java"
+  ],
+  "git_status": "M src/main/java/org/jsoup/nodes/Document.java\n M src/main/java/org/jsoup/nodes/Element.java\n M src/main/java/org/jsoup/nodes/FormElement.java\n M src/main/java/org/jsoup/nodes/Printer.java\n M src/main/java/org/jsoup/nodes/PseudoTextElement.java\n D src/main/java/org/jsoup/parser/HtmlTagOptions.java\n M src/main/java/org/jsoup/parser/HtmlTreeBuilder.java\n M src/main/java/org/jsoup/parser/HtmlTreeBuilderState.java\n M src/main/java/org/jsoup/parser/Parser.java\n D src/main/java/org/jsoup/parser/Tag.java\n D src/main/java/org/jsoup/parser/TagSet.java\n M src/main/java/org/jsoup/parser/TreeBuilder.java\n M src/main/java/org/jsoup/parser/XmlTreeBuilder.java\n M src/main/java/org/jsoup/select/Evaluator.java\n?? src/main/java/org/jsoup/parser/tags/"
+}

@@ -1,0 +1,47 @@
+{
+  "executor_existing_files": [
+    "src/main/java/org/jsoup/parser/HtmlTagOptions.java",
+    "src/main/java/org/jsoup/parser/HtmlTreeBuilder.java",
+    "src/main/java/org/jsoup/parser/HtmlTreeBuilderState.java",
+    "src/main/java/org/jsoup/parser/ParseSettings.java",
+    "src/main/java/org/jsoup/parser/Parser.java",
+    "src/main/java/org/jsoup/parser/Tag.java",
+    "src/main/java/org/jsoup/parser/TagSet.java",
+    "src/main/java/org/jsoup/parser/Tokeniser.java",
+    "src/main/java/org/jsoup/parser/TokeniserState.java",
+    "src/main/java/org/jsoup/parser/TreeBuilder.java",
+    "src/main/java/org/jsoup/parser/XmlTreeBuilder.java"
+  ],
+  "executor_new_files": [
+    "src/main/java/org/jsoup/parser/tags/HtmlTagOptions.java",
+    "src/main/java/org/jsoup/parser/tags/Tag.java",
+    "src/main/java/org/jsoup/parser/tags/TagSet.java"
+  ],
+  "executor_files": [
+    "src/main/java/org/jsoup/parser/HtmlTagOptions.java",
+    "src/main/java/org/jsoup/parser/HtmlTreeBuilder.java",
+    "src/main/java/org/jsoup/parser/HtmlTreeBuilderState.java",
+    "src/main/java/org/jsoup/parser/ParseSettings.java",
+    "src/main/java/org/jsoup/parser/Parser.java",
+    "src/main/java/org/jsoup/parser/Tag.java",
+    "src/main/java/org/jsoup/parser/TagSet.java",
+    "src/main/java/org/jsoup/parser/Tokeniser.java",
+    "src/main/java/org/jsoup/parser/TokeniserState.java",
+    "src/main/java/org/jsoup/parser/TreeBuilder.java",
+    "src/main/java/org/jsoup/parser/XmlTreeBuilder.java",
+    "src/main/java/org/jsoup/parser/tags/HtmlTagOptions.java",
+    "src/main/java/org/jsoup/parser/tags/Tag.java",
+    "src/main/java/org/jsoup/parser/tags/TagSet.java"
+  ],
+  "executor_rejected_files": [],
+  "moved_old_files": [
+    "src/main/java/org/jsoup/parser/HtmlTagOptions.java",
+    "src/main/java/org/jsoup/parser/Tag.java",
+    "src/main/java/org/jsoup/parser/TagSet.java"
+  ],
+  "moved_new_files": [
+    "src/main/java/org/jsoup/parser/tags/HtmlTagOptions.java",
+    "src/main/java/org/jsoup/parser/tags/Tag.java",
+    "src/main/java/org/jsoup/parser/tags/TagSet.java"
+  ]
+}

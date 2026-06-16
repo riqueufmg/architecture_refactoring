@@ -96,3 +96,27 @@ def _infer_target_type_from_name(target_name: str) -> str:
         return "class"
 
     return "package"
+
+def java_file_to_fqn(rel_path: str, source_root: str) -> str:
+    path = Path(rel_path).with_suffix("")
+    root = Path(source_root)
+
+    try:
+        rel = path.relative_to(root)
+    except ValueError as exc:
+        raise ValueError(
+            "Java file path is not under source_root: "
+            f"rel_path={rel_path}, source_root={source_root}"
+        ) from exc
+
+    return ".".join(rel.parts)
+
+def java_files_to_fqns(rel_paths: list[str], source_root: str) -> set[str]:
+    return {
+        java_file_to_fqn(path, source_root)
+        for path in rel_paths
+        if path.endswith(".java") and not path.endswith("package-info.java")
+    }
+
+def fqn_to_java_path(fqn: str, source_root: str) -> str:
+    return str(Path(source_root) / Path(*fqn.split("."))) + ".java"

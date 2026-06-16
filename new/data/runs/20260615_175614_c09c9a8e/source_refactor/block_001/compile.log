@@ -1,0 +1,30 @@
+[ERROR] COMPILATION ERROR : 
+[ERROR] /data/henrique/langchain_prototype/new/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/Functions.java:[634,17] no suitable method found for tryWithResources(action::run,errorHandl[...] null,org.apache.commons.lang3.Functions.FailableRunnable<?>[])
+    method org.apache.commons.lang3.function.Failable.tryWithResources(org.apache.commons.lang3.function.helper.FailableRunnable<? extends java.lang.Throwable>,org.apache.commons.lang3.function.FailableConsumer<java.lang.Throwable,? extends java.lang.Throwable>,org.apache.commons.lang3.function.helper.FailableRunnable<? extends java.lang.Throwable>...) is not applicable
+      (varargs mismatch; org.apache.commons.lang3.Functions.FailableRunnable<?>[] cannot be converted to org.apache.commons.lang3.function.helper.FailableRunnable<? extends java.lang.Throwable>)
+    method org.apache.commons.lang3.function.Failable.tryWithResources(org.apache.commons.lang3.function.helper.FailableRunnable<? extends java.lang.Throwable>,org.apache.commons.lang3.function.helper.FailableRunnable<? extends java.lang.Throwable>...) is not applicable
+      (varargs mismatch; bad type in conditional expression
+          invalid method reference
+            method accept in interface org.apache.commons.lang3.Functions.FailableConsumer<O,T> cannot be applied to given types
+              required: java.lang.Throwable
+              found:    no arguments
+              reason: actual and formal argument lists differ in length)
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.15.0:compile (default-compile) on project commons-lang3: Compilation failure
+[ERROR] /data/henrique/langchain_prototype/new/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/Functions.java:[634,17] no suitable method found for tryWithResources(action::run,errorHandl[...] null,org.apache.commons.lang3.Functions.FailableRunnable<?>[])
+[ERROR]     method org.apache.commons.lang3.function.Failable.tryWithResources(org.apache.commons.lang3.function.helper.FailableRunnable<? extends java.lang.Throwable>,org.apache.commons.lang3.function.FailableConsumer<java.lang.Throwable,? extends java.lang.Throwable>,org.apache.commons.lang3.function.helper.FailableRunnable<? extends java.lang.Throwable>...) is not applicable
+[ERROR]       (varargs mismatch; org.apache.commons.lang3.Functions.FailableRunnable<?>[] cannot be converted to org.apache.commons.lang3.function.helper.FailableRunnable<? extends java.lang.Throwable>)
+[ERROR]     method org.apache.commons.lang3.function.Failable.tryWithResources(org.apache.commons.lang3.function.helper.FailableRunnable<? extends java.lang.Throwable>,org.apache.commons.lang3.function.helper.FailableRunnable<? extends java.lang.Throwable>...) is not applicable
+[ERROR]       (varargs mismatch; bad type in conditional expression
+[ERROR]           invalid method reference
+[ERROR]             method accept in interface org.apache.commons.lang3.Functions.FailableConsumer<O,T> cannot be applied to given types
+[ERROR]               required: java.lang.Throwable
+[ERROR]               found:    no arguments
+[ERROR]               reason: actual and formal argument lists differ in length)
+[ERROR] 
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException

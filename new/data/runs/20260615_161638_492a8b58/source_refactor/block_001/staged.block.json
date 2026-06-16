@@ -1,0 +1,78 @@
+{
+  "id": 1,
+  "goal": "Move the cohesive invoker + bi-arity failable interfaces cluster to a new subpackage to reduce God Component size.",
+  "files": [
+    "src/main/java/org/apache/commons/lang3/function/Failable.java",
+    "src/main/java/org/apache/commons/lang3/function/FailableBiConsumer.java",
+    "src/main/java/org/apache/commons/lang3/function/FailableBiFunction.java",
+    "src/main/java/org/apache/commons/lang3/function/FailableFunction.java",
+    "src/main/java/org/apache/commons/lang3/function/FailableSupplier.java",
+    "src/main/java/org/apache/commons/lang3/function/MethodInvokers.java",
+    "src/main/java/org/apache/commons/lang3/function/invoker/FailableBiConsumer.java",
+    "src/main/java/org/apache/commons/lang3/function/invoker/FailableBiFunction.java",
+    "src/main/java/org/apache/commons/lang3/function/invoker/MethodInvokers.java"
+  ],
+  "ops": [
+    {
+      "op": "CREATE_PACKAGE",
+      "inputs": [],
+      "outputs": [
+        "org.apache.commons.lang3.function.invoker"
+      ],
+      "details": "Create the destination subpackage for invocation-related types.",
+      "risk": "low",
+      "api_change": false
+    },
+    {
+      "op": "MOVE_CLASS",
+      "inputs": [
+        "org.apache.commons.lang3.function.MethodInvokers"
+      ],
+      "outputs": [
+        "org.apache.commons.lang3.function.invoker.MethodInvokers"
+      ],
+      "details": "Move MethodInvokers to the invoker subpackage alongside the bi-arity failable interfaces it uses.",
+      "risk": "medium",
+      "api_change": true
+    },
+    {
+      "op": "MOVE_CLASS",
+      "inputs": [
+        "org.apache.commons.lang3.function.FailableBiFunction"
+      ],
+      "outputs": [
+        "org.apache.commons.lang3.function.invoker.FailableBiFunction"
+      ],
+      "details": "Move the FailableBiFunction interface to the invoker subpackage to keep bi-arity failable contracts with their invoker utilities.",
+      "risk": "medium",
+      "api_change": true
+    },
+    {
+      "op": "MOVE_CLASS",
+      "inputs": [
+        "org.apache.commons.lang3.function.FailableBiConsumer"
+      ],
+      "outputs": [
+        "org.apache.commons.lang3.function.invoker.FailableBiConsumer"
+      ],
+      "details": "Move the FailableBiConsumer interface to the invoker subpackage to group related bi-arity failable interfaces and utilities.",
+      "risk": "medium",
+      "api_change": true
+    },
+    {
+      "op": "UPDATE_VISIBILITY",
+      "inputs": [
+        "org.apache.commons.lang3.function.Failable",
+        "org.apache.commons.lang3.function.FailableFunction",
+        "org.apache.commons.lang3.function.FailableSupplier",
+        "org.apache.commons.lang3.function.invoker.FailableBiConsumer",
+        "org.apache.commons.lang3.function.invoker.FailableBiFunction",
+        "org.apache.commons.lang3.function.invoker.MethodInvokers"
+      ],
+      "outputs": [],
+      "details": "After moving the whole cluster to the destination package, update only the minimum required visibility in moved classes and related remaining classes so the project can compile. Do not change behavior. Do not move additional classes.",
+      "risk": "medium",
+      "api_change": true
+    }
+  ]
+}

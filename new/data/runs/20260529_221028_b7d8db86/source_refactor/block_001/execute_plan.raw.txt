@@ -6,5 +6,5 @@
     }
   ],
   "files_to_delete": [],
-  "notes": "Added package-private helper class AttributeKeyUtil to centralize attribute key validation and coercion logic."
+  "notes": "Introduced package-private AttributeKeyUtil helper class (file created/updated) centralizing attribute key validation and coercion logic as specified."
 }

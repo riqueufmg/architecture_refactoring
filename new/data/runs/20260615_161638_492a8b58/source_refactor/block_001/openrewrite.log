@@ -1,0 +1,69 @@
+[INFO] Scanning for projects...
+Downloading from central: https://repo.maven.apache.org/maven2/org/openrewrite/maven/rewrite-maven-plugin/maven-metadata.xml
+Progress (1): 4.7 kB
+Progress (1): 8.8 kB
+Progress (1): 9.1 kB
+                    
+Downloaded from central: https://repo.maven.apache.org/maven2/org/openrewrite/maven/rewrite-maven-plugin/maven-metadata.xml (9.1 kB at 26 kB/s)
+[INFO] 
+[INFO] ------------------< org.apache.commons:commons-lang3 >------------------
+[INFO] Building Apache Commons Lang 3.21.0-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- rewrite:6.41.0:runNoFork (default-cli) @ commons-lang3 ---
+[INFO] Using active recipe(s) [source_refactor.MoveClassBlock1]
+[INFO] Using active styles(s) []
+[INFO] Validating active recipes...
+[INFO] Project [Apache Commons Lang] Resolving Poms...
+[INFO] Project [Apache Commons Lang] Parsing source files
+[INFO] Running recipe(s)...
+[WARNING] File has been moved from src/main/java/org/apache/commons/lang3/function/FailableBiConsumer.java to src/main/java/org/apache/commons/lang3/function/invoker/FailableBiConsumer.java by:
+[WARNING]     org.openrewrite.java.ChangeType: {oldFullyQualifiedTypeName=org.apache.commons.lang3.function.FailableBiConsumer, newFullyQualifiedTypeName=org.apache.commons.lang3.function.invoker.FailableBiConsumer}
+[WARNING] File has been moved from src/main/java/org/apache/commons/lang3/function/FailableBiFunction.java to src/main/java/org/apache/commons/lang3/function/invoker/FailableBiFunction.java by:
+[WARNING]     org.openrewrite.java.ChangeType: {oldFullyQualifiedTypeName=org.apache.commons.lang3.function.FailableBiFunction, newFullyQualifiedTypeName=org.apache.commons.lang3.function.invoker.FailableBiFunction}
+[WARNING] File has been moved from src/main/java/org/apache/commons/lang3/function/MethodInvokers.java to src/main/java/org/apache/commons/lang3/function/invoker/MethodInvokers.java by:
+[WARNING]     org.openrewrite.java.ChangeType: {oldFullyQualifiedTypeName=org.apache.commons.lang3.function.MethodInvokers, newFullyQualifiedTypeName=org.apache.commons.lang3.function.invoker.MethodInvokers}
+[WARNING]         org.openrewrite.java.ChangeType: {oldFullyQualifiedTypeName=org.apache.commons.lang3.function.FailableBiFunction, newFullyQualifiedTypeName=org.apache.commons.lang3.function.invoker.FailableBiFunction}
+[WARNING]             org.openrewrite.java.ChangeType: {oldFullyQualifiedTypeName=org.apache.commons.lang3.function.FailableBiConsumer, newFullyQualifiedTypeName=org.apache.commons.lang3.function.invoker.FailableBiConsumer}
+[WARNING] Changes have been made to src/main/java/org/apache/commons/lang3/AppendableJoiner.java by:
+[WARNING]     org.openrewrite.java.ChangeType: {oldFullyQualifiedTypeName=org.apache.commons.lang3.function.FailableBiConsumer, newFullyQualifiedTypeName=org.apache.commons.lang3.function.invoker.FailableBiConsumer}
+[WARNING] Changes have been made to src/main/java/org/apache/commons/lang3/function/Failable.java by:
+[WARNING]     org.openrewrite.java.ChangeType: {oldFullyQualifiedTypeName=org.apache.commons.lang3.function.FailableBiFunction, newFullyQualifiedTypeName=org.apache.commons.lang3.function.invoker.FailableBiFunction}
+[WARNING]         org.openrewrite.java.ChangeType: {oldFullyQualifiedTypeName=org.apache.commons.lang3.function.FailableBiConsumer, newFullyQualifiedTypeName=org.apache.commons.lang3.function.invoker.FailableBiConsumer}
+[WARNING] Changes have been made to src/main/java/org/apache/commons/lang3/time/DurationUtils.java by:
+[WARNING]     org.openrewrite.java.ChangeType: {oldFullyQualifiedTypeName=org.apache.commons.lang3.function.FailableBiConsumer, newFullyQualifiedTypeName=org.apache.commons.lang3.function.invoker.FailableBiConsumer}
+[WARNING] Changes have been made to src/main/java/org/apache/commons/lang3/tuple/Pair.java by:
+[WARNING]     org.openrewrite.java.ChangeType: {oldFullyQualifiedTypeName=org.apache.commons.lang3.function.FailableBiFunction, newFullyQualifiedTypeName=org.apache.commons.lang3.function.invoker.FailableBiFunction}
+[WARNING]         org.openrewrite.java.ChangeType: {oldFullyQualifiedTypeName=org.apache.commons.lang3.function.FailableBiConsumer, newFullyQualifiedTypeName=org.apache.commons.lang3.function.invoker.FailableBiConsumer}
+[WARNING] Changes have been made to src/test/java/org/apache/commons/lang3/function/FailableTest.java by:
+[WARNING]     org.openrewrite.java.ChangeType: {oldFullyQualifiedTypeName=org.apache.commons.lang3.function.FailableBiFunction, newFullyQualifiedTypeName=org.apache.commons.lang3.function.invoker.FailableBiFunction}
+[WARNING]         org.openrewrite.java.ChangeType: {oldFullyQualifiedTypeName=org.apache.commons.lang3.function.FailableBiConsumer, newFullyQualifiedTypeName=org.apache.commons.lang3.function.invoker.FailableBiConsumer}
+[WARNING] Changes have been made to src/test/java/org/apache/commons/lang3/function/MethodInvokersFailableBiConsumerTest.java by:
+[WARNING]     org.openrewrite.java.ChangeType: {oldFullyQualifiedTypeName=org.apache.commons.lang3.function.MethodInvokers, newFullyQualifiedTypeName=org.apache.commons.lang3.function.invoker.MethodInvokers}
+[WARNING]         org.openrewrite.java.ChangeType: {oldFullyQualifiedTypeName=org.apache.commons.lang3.function.FailableBiConsumer, newFullyQualifiedTypeName=org.apache.commons.lang3.function.invoker.FailableBiConsumer}
+[WARNING] Changes have been made to src/test/java/org/apache/commons/lang3/function/MethodInvokersBiConsumerTest.java by:
+[WARNING]     org.openrewrite.java.ChangeType: {oldFullyQualifiedTypeName=org.apache.commons.lang3.function.MethodInvokers, newFullyQualifiedTypeName=org.apache.commons.lang3.function.invoker.MethodInvokers}
+[WARNING] Changes have been made to src/test/java/org/apache/commons/lang3/function/MethodInvokersFunctionTest.java by:
+[WARNING]     org.openrewrite.java.ChangeType: {oldFullyQualifiedTypeName=org.apache.commons.lang3.function.MethodInvokers, newFullyQualifiedTypeName=org.apache.commons.lang3.function.invoker.MethodInvokers}
+[WARNING] Changes have been made to src/test/java/org/apache/commons/lang3/function/MethodInvokersBiFunctionTest.java by:
+[WARNING]     org.openrewrite.java.ChangeType: {oldFullyQualifiedTypeName=org.apache.commons.lang3.function.MethodInvokers, newFullyQualifiedTypeName=org.apache.commons.lang3.function.invoker.MethodInvokers}
+[WARNING] Changes have been made to src/test/java/org/apache/commons/lang3/function/MethodInvokersFailableFunctionTest.java by:
+[WARNING]     org.openrewrite.java.ChangeType: {oldFullyQualifiedTypeName=org.apache.commons.lang3.function.MethodInvokers, newFullyQualifiedTypeName=org.apache.commons.lang3.function.invoker.MethodInvokers}
+[WARNING] Changes have been made to src/test/java/org/apache/commons/lang3/function/MethodInvokersFailableBiFunctionTest.java by:
+[WARNING]     org.openrewrite.java.ChangeType: {oldFullyQualifiedTypeName=org.apache.commons.lang3.function.MethodInvokers, newFullyQualifiedTypeName=org.apache.commons.lang3.function.invoker.MethodInvokers}
+[WARNING]         org.openrewrite.java.ChangeType: {oldFullyQualifiedTypeName=org.apache.commons.lang3.function.FailableBiFunction, newFullyQualifiedTypeName=org.apache.commons.lang3.function.invoker.FailableBiFunction}
+[WARNING] Changes have been made to src/test/java/org/apache/commons/lang3/function/MethodInvokersSupplierTest.java by:
+[WARNING]     org.openrewrite.java.ChangeType: {oldFullyQualifiedTypeName=org.apache.commons.lang3.function.MethodInvokers, newFullyQualifiedTypeName=org.apache.commons.lang3.function.invoker.MethodInvokers}
+[WARNING] Changes have been made to src/test/java/org/apache/commons/lang3/function/FailableBiFunctionTest.java by:
+[WARNING]     org.openrewrite.java.ChangeType: {oldFullyQualifiedTypeName=org.apache.commons.lang3.function.FailableBiFunction, newFullyQualifiedTypeName=org.apache.commons.lang3.function.invoker.FailableBiFunction}
+[WARNING] Changes have been made to src/test/java/org/apache/commons/lang3/function/MethodInvokersFailableSupplierTest.java by:
+[WARNING]     org.openrewrite.java.ChangeType: {oldFullyQualifiedTypeName=org.apache.commons.lang3.function.MethodInvokers, newFullyQualifiedTypeName=org.apache.commons.lang3.function.invoker.MethodInvokers}
+[WARNING] Please review and commit the results.
+[WARNING] Estimate time saved: 2h
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  21.040 s
+[INFO] Finished at: 2026-06-15T17:24:08-03:00
+[INFO] ------------------------------------------------------------------------

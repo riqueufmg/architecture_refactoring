@@ -1,6 +1,6 @@
 {
   "mvp": "source_refactor",
-  "ok": true,
+  "ok": false,
   "run_id": "20260529_221028_b7d8db86",
   "project": "jsoup",
   "repo_path": "/data/henrique/langchain_prototype/new/data/repositories/jsoup",
@@ -9,12 +9,12 @@
   "target_type": "class",
   "target_name": "org.jsoup.nodes.Attribute",
   "blocks_count": 2,
-  "blocks_applied": 2,
-  "blocks_failed": 0,
-  "failed_block_id": "",
-  "failed_stage": "",
-  "rolled_back": false,
-  "rollback_to": "",
+  "blocks_applied": 1,
+  "blocks_failed": 1,
+  "failed_block_id": "2",
+  "failed_stage": "execute_plan",
+  "rolled_back": true,
+  "rollback_to": "6719f583f28d1765f215b67112bf3cd96eeaaf27",
   "block_summaries": [
     {
       "block_id": "1",
@@ -31,70 +31,48 @@
       "compile_ok": true,
       "compile_return_code": 0,
       "compile_log_path": "/data/henrique/langchain_prototype/new/data/runs/20260529_221028_b7d8db86/source_refactor/block_001/compile.log",
-      "commit": "24dae50b2d9b62b51d736dab126b9b80c4438de3",
-      "rollback_reason": "",
-      "stop_reason": "block_applied",
-      "files": {
-        "executor_existing_files": [],
-        "executor_new_files": [
-          "src/main/java/org/jsoup/nodes/AttributeKeyUtil.java"
-        ],
-        "executor_files": [
-          "src/main/java/org/jsoup/nodes/AttributeKeyUtil.java"
-        ],
-        "executor_rejected_files": []
-      }
-    },
-    {
-      "block_id": "2",
-      "block_index": 1,
-      "attempt": 0,
-      "max_block_attempts": 5,
-      "executor_ok": true,
-      "executor_error": "",
-      "apply_ok": true,
-      "apply_error": "",
-      "applied_files": [
-        "src/main/java/org/jsoup/nodes/Attribute.java"
-      ],
-      "compile_ok": true,
-      "compile_return_code": 0,
-      "compile_log_path": "/data/henrique/langchain_prototype/new/data/runs/20260529_221028_b7d8db86/source_refactor/block_002/compile.log",
       "commit": "6719f583f28d1765f215b67112bf3cd96eeaaf27",
       "rollback_reason": "",
       "stop_reason": "block_applied",
       "files": {
         "executor_existing_files": [
-          "src/main/java/org/jsoup/nodes/Attribute.java",
           "src/main/java/org/jsoup/nodes/AttributeKeyUtil.java"
         ],
         "executor_new_files": [],
         "executor_files": [
-          "src/main/java/org/jsoup/nodes/Attribute.java",
           "src/main/java/org/jsoup/nodes/AttributeKeyUtil.java"
         ],
         "executor_rejected_files": []
+      },
+      "openrewrite": {
+        "ok": false,
+        "return_code": -1,
+        "recipe_path": "",
+        "log_path": "",
+        "command": []
       }
     }
   ],
   "current_block_id": "2",
-  "applied_files": [
-    "src/main/java/org/jsoup/nodes/Attribute.java"
-  ],
-  "compile_ok": true,
-  "compile_return_code": 0,
-  "compile_log_path": "/data/henrique/langchain_prototype/new/data/runs/20260529_221028_b7d8db86/source_refactor/block_002/compile.log",
-  "initial_commit": "8bc776a1635574343d8abd90ed97f54b08c85e40",
+  "applied_files": [],
+  "compile_ok": false,
+  "compile_return_code": -1,
+  "compile_log_path": "",
+  "initial_commit": "6719f583f28d1765f215b67112bf3cd96eeaaf27",
   "last_good_commit": "6719f583f28d1765f215b67112bf3cd96eeaaf27",
   "current_block_commit": "6719f583f28d1765f215b67112bf3cd96eeaaf27",
   "final_commit": "6719f583f28d1765f215b67112bf3cd96eeaaf27",
   "workspace_clean": true,
-  "block_attempt": 0,
+  "block_attempt": 4,
   "max_block_attempts": 5,
-  "executor_ok": true,
-  "executor_error": "",
-  "apply_ok": true,
+  "executor_ok": false,
+  "executor_error": "executor_no_changes",
+  "apply_ok": false,
   "apply_error": "",
-  "rollback_reason": "",
-  "stop_reason": "all_blocks_applied"
+  "rollback_reason": "executor_no_changes",
+  "stop_reason": "block_applied",
+  "openrewrite_ok": false,
+  "openrewrite_return_code": -1,
+  "openrewrite_log_path": "",
+  "openrewrite_recipe_path": ""
 }

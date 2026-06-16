@@ -1,0 +1,5 @@
+{
+  "files_to_write": [],
+  "files_to_delete": [],
+  "notes": "No changes required: the memoizer-related classes have already been moved into org.apache.commons.lang3.concurrent.memoizer and their visibility is sufficient for compilation. No further updates needed."
+}

@@ -1,0 +1,5 @@
+{
+  "files_to_write": [],
+  "files_to_delete": [],
+  "notes": "No changes made: the TriConsumer and TriFunction interfaces have already been moved to package org.apache.commons.lang3.function.triple and are public. No visibility updates or other edits are necessary to preserve behavior or compilation."
+}

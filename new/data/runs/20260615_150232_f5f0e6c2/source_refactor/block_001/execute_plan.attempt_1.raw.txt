@@ -1,0 +1,5 @@
+{
+  "files_to_write": [],
+  "files_to_delete": [],
+  "notes": "Cannot safely apply the staged refactoring: moving the large Failable class into a new subpackage would require extensive, error-prone updates (many static methods and internal references) to preserve API compatibility or to provide comprehensive delegating wrappers in the original package. Because only the three files listed are allowed to be modified and to avoid breaking behavior or making incomplete adapters, the refactoring cannot be completed safely with the given constraints."
+}

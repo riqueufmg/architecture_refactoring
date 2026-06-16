@@ -24,7 +24,7 @@ from mvp.planner.lib.path_utils import (
     _infer_target_type_from_name,
 )
 from mvp.planner.lib.java_context import extract_observed_external_calls
-
+from mvp.planner.lib.plan_utils import enrich_plan_with_visibility_ops
 from mvp.planner.state import PlannerState
 
 
@@ -380,6 +380,31 @@ def call_planner_node(state: PlannerState) -> PlannerState:
         json_text = _extract_json_object_only(raw)
         plan = json.loads(json_text)
 
+        (planner_dir / "plan.raw.json").write_text(
+            json.dumps(plan, indent=2),
+            encoding="utf-8",
+        )
+
+        planner_input = state.get("planner_input", {})
+
+        if (
+            state.get("target_type") == "package"
+            and state.get("smell_name") == "God Component"
+        ):
+            plan = enrich_plan_with_visibility_ops(
+                plan,
+                {
+                    "internal_deps": planner_input.get("internal_deps", []),
+                    "target_files": planner_input.get("target_files", []),
+                    "target_source_root": planner_input.get("target_source_root", ""),
+                },
+            )
+
+            (planner_dir / "plan.enriched.json").write_text(
+                json.dumps(plan, indent=2),
+                encoding="utf-8",
+            )
+
         state["plan"] = plan
         state["plan_ok"] = True
         state["plan_error"] = ""
@@ -425,6 +450,11 @@ def validate_plan_node(state: PlannerState) -> PlannerState:
 
         state["plan_ok"] = True
         state["plan_error"] = ""
+
+        (planner_dir / "plan.validated.json").write_text(
+            json.dumps(state["plan"], indent=2),
+            encoding="utf-8",
+        )
 
     except Exception as e:
         state["plan_ok"] = False

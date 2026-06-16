@@ -39,7 +39,13 @@ from mvp.source_refactor.lib.file_ops import (
     write_text_file,
     delete_file,
 )
+from mvp.source_refactor.lib.java_path_utils import (
+        resolve_java_fqn_to_path,
+        looks_like_java_class_fqn,
+        normalize_repo_relative_path,
+)
 from mvp.source_refactor.lib.maven_utils import run_compile_command
+from mvp.source_refactor.lib.subprocess_utils import run_command
 
 def load_config_node(state: SourceRefactorState) -> SourceRefactorState:
     config_path = require_absolute_path(state["config_path"], "config_path")
@@ -339,18 +345,18 @@ def lock_workspace_node(state: SourceRefactorState) -> SourceRefactorState:
     state["compile_return_code"] = -1
     state["compile_log_path"] = ""
 
+    state["openrewrite_ok"] = False
+    state["openrewrite_return_code"] = -1
+    state["openrewrite_log_path"] = ""
+    state["openrewrite_recipe_path"] = ""
+    state["openrewrite_command"] = []
+
     return state
 
 def resolve_files_context_node(state: SourceRefactorState) -> SourceRefactorState:
     repo_path = Path(state["repo_path"]).resolve()
     block_dir = Path(state["current_block_dir"])
     block = state["current_block"]
-
-    from mvp.source_refactor.lib.java_path_utils import (
-        resolve_java_fqn_to_path,
-        looks_like_java_class_fqn,
-        normalize_repo_relative_path,
-    )
 
     block_files = block.get("files", [])
 
@@ -398,6 +404,9 @@ def resolve_files_context_node(state: SourceRefactorState) -> SourceRefactorStat
         str(state.get("target_source_root", "") or "src/main/java")
     )
 
+    moved_old_files: set[str] = set()
+    moved_new_files: set[str] = set()
+
     # 3. Descobrir pacote alvo para quando outputs tiverem só nome simples.
     #    Exemplo: "CharUtilsConstants" em vez de
     #    "org.apache.commons.lang3.CharUtilsConstants".
@@ -419,6 +428,30 @@ def resolve_files_context_node(state: SourceRefactorState) -> SourceRefactorStat
 
         if op_name not in {"EXTRACT_CLASS", "EXTRACT_INTERFACE", "MOVE_CLASS"}:
             continue
+
+        if op_name == "MOVE_CLASS":
+            inputs = op.get("inputs") or []
+            outputs = op.get("outputs") or []
+
+            if isinstance(inputs, list):
+                for inp in inputs:
+                    if isinstance(inp, str) and looks_like_java_class_fqn(inp.strip()):
+                        old_rel = resolve_java_fqn_to_path(
+                            repo_path,
+                            inp.strip(),
+                            source_root,
+                        )
+                        moved_old_files.add(normalize_repo_relative_path(old_rel))
+
+            if isinstance(outputs, list):
+                for out in outputs:
+                    if isinstance(out, str) and looks_like_java_class_fqn(out.strip()):
+                        new_rel = resolve_java_fqn_to_path(
+                            repo_path,
+                            out.strip(),
+                            source_root,
+                        )
+                        moved_new_files.add(normalize_repo_relative_path(new_rel))
 
         outputs = op.get("outputs") or []
 
@@ -511,6 +544,9 @@ def resolve_files_context_node(state: SourceRefactorState) -> SourceRefactorStat
     state["allowed_files"] = all_files
     state["files_context"] = files_context
 
+    state["moved_old_files"] = sorted(moved_old_files)
+    state["moved_new_files"] = sorted(moved_new_files)
+
     write_json(
         block_dir / "executor.files.json",
         {
@@ -518,6 +554,8 @@ def resolve_files_context_node(state: SourceRefactorState) -> SourceRefactorStat
             "executor_new_files": sorted(new_files),
             "executor_files": all_files,
             "executor_rejected_files": rejected_files,
+            "moved_old_files": sorted(moved_old_files),
+            "moved_new_files": sorted(moved_new_files),
         },
     )
 
@@ -530,6 +568,257 @@ def resolve_files_context_node(state: SourceRefactorState) -> SourceRefactorStat
     )
 
     return state
+
+def after_resolve_files_context(state: SourceRefactorState) -> str:
+    block = state.get("current_block", {})
+    ops = block.get("ops", []) or []
+
+    has_move_class = any(
+        isinstance(op, dict) and str(op.get("op", "")).strip() == "MOVE_CLASS"
+        for op in ops
+    )
+
+    if has_move_class:
+        return "openrewrite"
+
+    return "execute_plan"
+
+def openrewrite_node(state: SourceRefactorState) -> SourceRefactorState:
+    cfg = state["config"]
+    repo_path = Path(state["repo_path"]).resolve()
+    block_dir = Path(state["current_block_dir"])
+    block = state.get("current_block", {})
+
+    ops = block.get("ops", []) or []
+
+    enabled = bool(
+        get_config_value(cfg, "mechanical_tools.openrewrite_enabled", False)
+    )
+
+    block_id = state.get("current_block_id", "")
+    block_index = int(state.get("current_block_index", 0))
+
+    write_json(
+        block_dir / "openrewrite.enter.json",
+        {
+            "enabled": enabled,
+            "block_id": block_id,
+            "block_index": block_index,
+            "ops": ops,
+        },
+    )
+
+    if not enabled:
+        state["openrewrite_ok"] = True
+        state["openrewrite_return_code"] = 0
+        state["openrewrite_log_path"] = ""
+        state["openrewrite_recipe_path"] = ""
+        state["openrewrite_command"] = []
+
+        (block_dir / "openrewrite.disabled.txt").write_text(
+            "OpenRewrite disabled by config.\n",
+            encoding="utf-8",
+        )
+
+        return state
+
+    move_ops = [
+        op for op in ops
+        if isinstance(op, dict) and str(op.get("op", "")).strip() == "MOVE_CLASS"
+    ]
+
+    if not move_ops:
+        state["openrewrite_ok"] = True
+        state["openrewrite_return_code"] = 0
+        state["openrewrite_log_path"] = ""
+        state["openrewrite_recipe_path"] = ""
+        state["openrewrite_command"] = []
+
+        (block_dir / "openrewrite.skipped.txt").write_text(
+            "No MOVE_CLASS operation found. Skipping OpenRewrite.\n",
+            encoding="utf-8",
+        )
+
+        return state
+
+    recipe_items: list[str] = []
+    invalid_ops: list[dict] = []
+
+    for op in move_ops:
+        inputs = op.get("inputs") or []
+        outputs = op.get("outputs") or []
+
+        if not isinstance(inputs, list) or not isinstance(outputs, list):
+            invalid_ops.append(op)
+            continue
+
+        if not inputs or not outputs:
+            invalid_ops.append(op)
+            continue
+
+        old_fqn = str(inputs[0]).strip()
+        new_fqn = str(outputs[0]).strip()
+
+        if not old_fqn or not new_fqn:
+            invalid_ops.append(op)
+            continue
+
+        if old_fqn.endswith(".java") or new_fqn.endswith(".java"):
+            invalid_ops.append(op)
+            continue
+
+        recipe_items.append(
+            "  - org.openrewrite.java.ChangeType:\n"
+            f"      oldFullyQualifiedTypeName: {old_fqn}\n"
+            f"      newFullyQualifiedTypeName: {new_fqn}"
+        )
+
+    if invalid_ops:
+        write_json(block_dir / "openrewrite.invalid_move_ops.json", invalid_ops)
+
+        state["openrewrite_ok"] = False
+        state["openrewrite_return_code"] = -1
+        state["rollback_reason"] = "openrewrite_invalid_move_class"
+        state["stop_reason"] = "openrewrite_invalid_move_class"
+        state["executor_feedback"] = (
+            "OPENREWRITE_INVALID_MOVE_CLASS: MOVE_CLASS operations must provide "
+            "input/output Java FQNs, not file paths."
+        )
+
+        return state
+
+    recipe_name = f"source_refactor.MoveClassBlock{block_id or block_index}"
+
+    rewrite_yml = (
+        "type: specs.openrewrite.org/v1beta/recipe\n"
+        f"name: {recipe_name}\n"
+        "recipeList:\n"
+        + "\n".join(recipe_items)
+        + "\n"
+    )
+
+    rewrite_path = block_dir / "rewrite.yml"
+    rewrite_path.write_text(rewrite_yml, encoding="utf-8")
+
+    base_cmd = get_config_value(cfg, "mechanical_tools.openrewrite_command", None)
+
+    if not base_cmd:
+        base_cmd = [
+            "mvn",
+            "-U",
+            "-Dmaven.test.skip=true",
+            "-DskipTests",
+            "-DskipITs",
+            "-Djapicmp.skip=true",
+            "-Drat.skip=true",
+            "-Dcheckstyle.skip=true",
+            "-Dspotbugs.skip=true",
+            "-Dpmd.skip=true",
+            "-Danimal.sniffer.skip=true",
+            "-Dforbiddenapis.skip=true",
+            "-Denforcer.skip=true",
+            "-Dlicense.skip=true",
+            "-Dskip.npm=true",
+            "-Dskip.yarn=true",
+            "org.openrewrite.maven:rewrite-maven-plugin:runNoFork",
+        ]
+
+    if not isinstance(base_cmd, list):
+        raise ValueError("mechanical_tools.openrewrite_command must be a list")
+
+    cmd = [str(x) for x in base_cmd] + [
+        f"-Drewrite.configLocation={rewrite_path}",
+        f"-Drewrite.activeRecipes={recipe_name}",
+    ]
+
+    timeout = int(get_config_value(cfg, "mechanical_tools.openrewrite_timeout", 300))
+
+    (block_dir / "openrewrite.command.txt").write_text(
+        " ".join(cmd) + "\n",
+        encoding="utf-8",
+    )
+
+    return_code, output = run_command(
+        cmd,
+        cwd=repo_path,
+        timeout=timeout,
+    )
+
+    log_path = block_dir / "openrewrite.log"
+    log_path.write_text(output, encoding="utf-8")
+
+    openrewrite_ok = return_code == 0
+
+    state["openrewrite_ok"] = openrewrite_ok
+    state["openrewrite_return_code"] = return_code
+    state["openrewrite_log_path"] = str(log_path)
+    state["openrewrite_recipe_path"] = str(rewrite_path)
+    state["openrewrite_command"] = cmd
+
+    write_json(
+        block_dir / "openrewrite.status.json",
+        {
+            "ok": openrewrite_ok,
+            "return_code": return_code,
+            "recipe_name": recipe_name,
+            "recipe_path": str(rewrite_path),
+            "command": cmd,
+            "log_path": str(log_path),
+        },
+    )
+
+    if openrewrite_ok:
+        test_dir = repo_path / "src" / "test"
+
+        checkout_tests = {
+            "attempted": False,
+            "return_code": None,
+            "output": "",
+        }
+
+        if test_dir.exists():
+            checkout_tests["attempted"] = True
+            co_return_code, co_output = run_command(
+                ["git", "checkout", "--", "src/test"],
+                cwd=repo_path,
+                timeout=60,
+            )
+            checkout_tests["return_code"] = co_return_code
+            checkout_tests["output"] = co_output
+
+        write_json(block_dir / "openrewrite.checkout_tests.json", checkout_tests)
+
+        refreshed_files_context = load_files_context(
+            repo_path,
+            state.get("allowed_files", []),
+        )
+
+        state["files_context"] = refreshed_files_context
+
+        write_json(
+            block_dir / "files_context.after_openrewrite.json",
+            {
+                "allowed_files": state.get("allowed_files", []),
+                "files_context": refreshed_files_context,
+            },
+        )
+
+        state["rollback_reason"] = ""
+        return state
+
+    log_tail = "\n".join(output.splitlines()[-80:])
+
+    state["rollback_reason"] = "openrewrite_failed"
+    state["stop_reason"] = "openrewrite_failed"
+    state["executor_feedback"] = "OPENREWRITE_FAILED:\n" + log_tail
+
+    return state
+
+def after_openrewrite(state: SourceRefactorState) -> str:
+    if state.get("openrewrite_ok", False):
+        return "execute_plan"
+
+    return "rollback_final"
 
 def execute_plan_node(state: SourceRefactorState) -> SourceRefactorState:
     cfg = state["config"]
@@ -563,6 +852,16 @@ def execute_plan_node(state: SourceRefactorState) -> SourceRefactorState:
         "files_context": state["files_context"],
         "feedback": state.get("executor_feedback", ""),
         "attempt": state.get("block_attempt", 0),
+        "move_class_constraints": {
+            "moved_old_files": state.get("moved_old_files", []),
+            "moved_new_files": state.get("moved_new_files", []),
+            "rule": (
+                "When MOVE_CLASS is present, OpenRewrite has already moved the "
+                "classes before this executor runs. Do not recreate or write files "
+                "listed in moved_old_files. Edit destination files and related "
+                "remaining files only."
+            ),
+        },
     }
 
     rendered = execute_prompt.replace(
@@ -797,6 +1096,7 @@ def apply_changes_node(state: SourceRefactorState) -> SourceRefactorState:
 
     result = state.get("execute_plan_result", {})
     allowed_files = set(state.get("allowed_files", []))
+    moved_old_files = set(state.get("moved_old_files", []))
 
     attempt = int(state.get("block_attempt", 0))
 
@@ -812,6 +1112,12 @@ def apply_changes_node(state: SourceRefactorState) -> SourceRefactorState:
             if rel_path not in allowed_files:
                 raise ValueError(
                     f"Executor attempted to write file outside allowed_files: {rel_path}"
+                )
+        
+            if rel_path in moved_old_files:
+                raise ValueError(
+                    "Executor attempted to recreate a file already moved by "
+                    f"OpenRewrite: {rel_path}. Do not write old MOVE_CLASS paths."
                 )
 
             content = item.get("content", None)
@@ -1023,6 +1329,14 @@ def promote_block_node(state: SourceRefactorState) -> SourceRefactorState:
             "executor_files": state.get("executor_files", []),
             "executor_rejected_files": state.get("executor_rejected_files", []),
         },
+
+        "openrewrite": {
+            "ok": state.get("openrewrite_ok", None),
+            "return_code": state.get("openrewrite_return_code", None),
+            "recipe_path": state.get("openrewrite_recipe_path", ""),
+            "log_path": state.get("openrewrite_log_path", ""),
+            "command": state.get("openrewrite_command", []),
+        },
     }
 
     write_json(block_dir / "block.summary.json", block_summary)
@@ -1098,7 +1412,10 @@ def save_status_node(state: SourceRefactorState) -> SourceRefactorState:
             "apply_files_invalid_delete_paths",
         }:
             failed_stage = "apply_changes"
-        elif rollback_reason == "openrewrite_failed":
+        elif rollback_reason in {
+            "openrewrite_failed",
+            "openrewrite_invalid_move_class",
+        }:
             failed_stage = "openrewrite"
         else:
             failed_stage = "unknown"
@@ -1149,6 +1466,10 @@ def save_status_node(state: SourceRefactorState) -> SourceRefactorState:
         "apply_error": state.get("apply_error", ""),
         "rollback_reason": state.get("rollback_reason", ""),
         "stop_reason": state.get("stop_reason", "applied_first_block_only"),
+        "openrewrite_ok": state.get("openrewrite_ok", None),
+        "openrewrite_return_code": state.get("openrewrite_return_code", None),
+        "openrewrite_log_path": state.get("openrewrite_log_path", ""),
+        "openrewrite_recipe_path": state.get("openrewrite_recipe_path", ""),
     }
 
     contract = {

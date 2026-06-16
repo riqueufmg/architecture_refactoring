@@ -1,0 +1,73 @@
+{
+  "enabled": true,
+  "block_id": "1",
+  "block_index": 0,
+  "ops": [
+    {
+      "op": "CREATE_PACKAGE",
+      "inputs": [],
+      "outputs": [
+        "org.jsoup.parser.tags"
+      ],
+      "details": "Create the destination subpackage org.jsoup.parser.tags to hold tag-related classes.",
+      "risk": "low",
+      "api_change": false
+    },
+    {
+      "op": "MOVE_CLASS",
+      "inputs": [
+        "org.jsoup.parser.Tag"
+      ],
+      "outputs": [
+        "org.jsoup.parser.tags.Tag"
+      ],
+      "details": "Move Tag to org.jsoup.parser.tags to group tag metadata with related classes.",
+      "risk": "medium",
+      "api_change": true
+    },
+    {
+      "op": "MOVE_CLASS",
+      "inputs": [
+        "org.jsoup.parser.TagSet"
+      ],
+      "outputs": [
+        "org.jsoup.parser.tags.TagSet"
+      ],
+      "details": "Move TagSet to the new tags subpackage alongside Tag for cohesive API grouping.",
+      "risk": "medium",
+      "api_change": true
+    },
+    {
+      "op": "MOVE_CLASS",
+      "inputs": [
+        "org.jsoup.parser.HtmlTagOptions"
+      ],
+      "outputs": [
+        "org.jsoup.parser.tags.HtmlTagOptions"
+      ],
+      "details": "Move HtmlTagOptions to org.jsoup.parser.tags since it is used by Tag and HtmlTreeBuilder for tag options.",
+      "risk": "medium",
+      "api_change": true
+    },
+    {
+      "op": "UPDATE_VISIBILITY",
+      "inputs": [
+        "org.jsoup.parser.HtmlTreeBuilder",
+        "org.jsoup.parser.HtmlTreeBuilderState",
+        "org.jsoup.parser.ParseSettings",
+        "org.jsoup.parser.Parser",
+        "org.jsoup.parser.Tokeniser",
+        "org.jsoup.parser.TokeniserState",
+        "org.jsoup.parser.TreeBuilder",
+        "org.jsoup.parser.XmlTreeBuilder",
+        "org.jsoup.parser.tags.HtmlTagOptions",
+        "org.jsoup.parser.tags.Tag",
+        "org.jsoup.parser.tags.TagSet"
+      ],
+      "outputs": [],
+      "details": "After moving the whole cluster to the destination package, update only the minimum required visibility in moved classes and related remaining classes so the project can compile. Do not change behavior. Do not move additional classes.",
+      "risk": "medium",
+      "api_change": true
+    }
+  ]
+}

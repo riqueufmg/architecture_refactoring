@@ -1,0 +1,92 @@
+{
+  "enabled": true,
+  "block_id": "1",
+  "block_index": 0,
+  "ops": [
+    {
+      "op": "CREATE_PACKAGE",
+      "inputs": [],
+      "outputs": [
+        "org.apache.commons.lang3.function.failable"
+      ],
+      "details": "Create the destination subpackage if it does not exist.",
+      "risk": "low",
+      "api_change": false
+    },
+    {
+      "op": "MOVE_CLASS",
+      "inputs": [
+        "org.apache.commons.lang3.function.Failable"
+      ],
+      "outputs": [
+        "org.apache.commons.lang3.function.failable.Failable"
+      ],
+      "details": "Move this core abstraction to the failable subpackage along with its closely related helpers and specializations.",
+      "risk": "medium",
+      "api_change": true
+    },
+    {
+      "op": "MOVE_CLASS",
+      "inputs": [
+        "org.apache.commons.lang3.function.FailableHelper"
+      ],
+      "outputs": [
+        "org.apache.commons.lang3.function.failable.FailableHelper"
+      ],
+      "details": "Move helper logic that supports the Failable abstraction into the same subpackage to preserve package-private interactions.",
+      "risk": "low",
+      "api_change": true
+    },
+    {
+      "op": "MOVE_CLASS",
+      "inputs": [
+        "org.apache.commons.lang3.function.FailableRunnable"
+      ],
+      "outputs": [
+        "org.apache.commons.lang3.function.failable.FailableRunnable"
+      ],
+      "details": "Move the runnable specialization that is used by the Failable helper/abstraction.",
+      "risk": "low",
+      "api_change": true
+    },
+    {
+      "op": "MOVE_CLASS",
+      "inputs": [
+        "org.apache.commons.lang3.function.FailableConsumer"
+      ],
+      "outputs": [
+        "org.apache.commons.lang3.function.failable.FailableConsumer"
+      ],
+      "details": "Move the consumer specialization to keep related failable functional types together.",
+      "risk": "low",
+      "api_change": true
+    },
+    {
+      "op": "UPDATE_VISIBILITY",
+      "inputs": [
+        "org.apache.commons.lang3.function.FailableBiPredicate",
+        "org.apache.commons.lang3.function.FailableBooleanSupplier",
+        "org.apache.commons.lang3.function.FailableCallable",
+        "org.apache.commons.lang3.function.FailableDoubleBinaryOperator",
+        "org.apache.commons.lang3.function.FailableDoubleConsumer",
+        "org.apache.commons.lang3.function.FailableDoubleSupplier",
+        "org.apache.commons.lang3.function.FailableFunction",
+        "org.apache.commons.lang3.function.FailableIntConsumer",
+        "org.apache.commons.lang3.function.FailableIntSupplier",
+        "org.apache.commons.lang3.function.FailableLongConsumer",
+        "org.apache.commons.lang3.function.FailableLongSupplier",
+        "org.apache.commons.lang3.function.FailablePredicate",
+        "org.apache.commons.lang3.function.FailableShortSupplier",
+        "org.apache.commons.lang3.function.FailableSupplier",
+        "org.apache.commons.lang3.function.failable.Failable",
+        "org.apache.commons.lang3.function.failable.FailableConsumer",
+        "org.apache.commons.lang3.function.failable.FailableHelper",
+        "org.apache.commons.lang3.function.failable.FailableRunnable"
+      ],
+      "outputs": [],
+      "details": "After moving the whole cluster to the destination package, update only the minimum required visibility in moved classes and related remaining classes so the project can compile. Do not change behavior. Do not move additional classes.",
+      "risk": "medium",
+      "api_change": true
+    }
+  ]
+}

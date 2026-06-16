@@ -1,0 +1,72 @@
+{
+  "smell_type": "God Component",
+  "target_level": "package",
+  "target": "org.apache.commons.lang3.function",
+  "selected_cluster": [
+    "org.apache.commons.lang3.function.Failable",
+    "org.apache.commons.lang3.function.FailableHelper",
+    "org.apache.commons.lang3.function.FailableRunnable"
+  ],
+  "destination_package": "org.apache.commons.lang3.function.failable",
+  "cluster_reason": "Failable, FailableHelper and FailableRunnable form a tight cohesive group: the helper and runnable are closely tied to the Failable abstraction and show direct internal dependencies. Moving them together isolates failable-related utilities into a dedicated subpackage, reducing the size and responsibilities of the root package while keeping package-private interactions mostly local to the moved cluster.",
+  "risk": "medium",
+  "blocks": [
+    {
+      "id": 1,
+      "goal": "Move the cohesive failable-related cluster (Failable, FailableHelper, FailableRunnable) into a dedicated subpackage to reduce God Component size.",
+      "files": [
+        "src/main/java/org/apache/commons/lang3/function/Failable.java",
+        "src/main/java/org/apache/commons/lang3/function/FailableHelper.java",
+        "src/main/java/org/apache/commons/lang3/function/FailableRunnable.java"
+      ],
+      "ops": [
+        {
+          "op": "CREATE_PACKAGE",
+          "inputs": [],
+          "outputs": [
+            "org.apache.commons.lang3.function.failable"
+          ],
+          "details": "Create the destination subpackage if it does not exist.",
+          "risk": "low",
+          "api_change": false
+        },
+        {
+          "op": "MOVE_CLASS",
+          "inputs": [
+            "org.apache.commons.lang3.function.Failable"
+          ],
+          "outputs": [
+            "org.apache.commons.lang3.function.failable.Failable"
+          ],
+          "details": "Move the Failable abstraction to the failable subpackage alongside its closely related helpers.",
+          "risk": "medium",
+          "api_change": true
+        },
+        {
+          "op": "MOVE_CLASS",
+          "inputs": [
+            "org.apache.commons.lang3.function.FailableHelper"
+          ],
+          "outputs": [
+            "org.apache.commons.lang3.function.failable.FailableHelper"
+          ],
+          "details": "Move the helper utilities that collaborate with Failable to keep package-private interactions local.",
+          "risk": "medium",
+          "api_change": true
+        },
+        {
+          "op": "MOVE_CLASS",
+          "inputs": [
+            "org.apache.commons.lang3.function.FailableRunnable"
+          ],
+          "outputs": [
+            "org.apache.commons.lang3.function.failable.FailableRunnable"
+          ],
+          "details": "Move the runnable variant tied to the Failable abstraction so related types remain together.",
+          "risk": "low",
+          "api_change": true
+        }
+      ]
+    }
+  ]
+}

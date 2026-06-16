@@ -1,0 +1,31 @@
+{
+  "executor_existing_files": [
+    "src/main/java/org/apache/commons/lang3/concurrent/Computable.java",
+    "src/main/java/org/apache/commons/lang3/concurrent/FutureTasks.java",
+    "src/main/java/org/apache/commons/lang3/concurrent/Memoizer.java"
+  ],
+  "executor_new_files": [
+    "src/main/java/org/apache/commons/lang3/concurrent/memoizer/Computable.java",
+    "src/main/java/org/apache/commons/lang3/concurrent/memoizer/FutureTasks.java",
+    "src/main/java/org/apache/commons/lang3/concurrent/memoizer/Memoizer.java"
+  ],
+  "executor_files": [
+    "src/main/java/org/apache/commons/lang3/concurrent/Computable.java",
+    "src/main/java/org/apache/commons/lang3/concurrent/FutureTasks.java",
+    "src/main/java/org/apache/commons/lang3/concurrent/Memoizer.java",
+    "src/main/java/org/apache/commons/lang3/concurrent/memoizer/Computable.java",
+    "src/main/java/org/apache/commons/lang3/concurrent/memoizer/FutureTasks.java",
+    "src/main/java/org/apache/commons/lang3/concurrent/memoizer/Memoizer.java"
+  ],
+  "executor_rejected_files": [],
+  "moved_old_files": [
+    "src/main/java/org/apache/commons/lang3/concurrent/Computable.java",
+    "src/main/java/org/apache/commons/lang3/concurrent/FutureTasks.java",
+    "src/main/java/org/apache/commons/lang3/concurrent/Memoizer.java"
+  ],
+  "moved_new_files": [
+    "src/main/java/org/apache/commons/lang3/concurrent/memoizer/Computable.java",
+    "src/main/java/org/apache/commons/lang3/concurrent/memoizer/FutureTasks.java",
+    "src/main/java/org/apache/commons/lang3/concurrent/memoizer/Memoizer.java"
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "producer": "source_refactor",
+  "version": "1.0",
+  "ok": true,
+  "run_id": "20260615_162235_927fa467",
+  "input": {
+    "planner_contract": "/data/henrique/langchain_prototype/new/data/runs/20260615_162235_927fa467/planner/contract.json",
+    "planner_plan": "/data/henrique/langchain_prototype/new/data/runs/20260615_162235_927fa467/planner/plan.json"
+  },
+  "project": {
+    "name": "commons-lang",
+    "repo_path": "/data/henrique/langchain_prototype/new/data/repositories/commons-lang"
+  },
+  "target": {
+    "smell": "GC",
+    "smell_name": "God Component",
+    "target_type": "package",
+    "target_name": "org.apache.commons.lang3.function"
+  },
+  "commits": {
+    "initial_commit": "826b18d199ce32537794432bbe0f3ca4ae3533e3",
+    "last_good_commit": "3cf97086d9f89e7657abc9eb7f143e6e74c93916",
+    "final_commit": "3cf97086d9f89e7657abc9eb7f143e6e74c93916",
+    "current_block_commit": "3cf97086d9f89e7657abc9eb7f143e6e74c93916",
+    "block_commits": [
+      {
+        "block_id": "1",
+        "block_index": 0,
+        "commit": "3cf97086d9f89e7657abc9eb7f143e6e74c93916",
+        "message": "source_refactor: apply block 1"
+      }
+    ]
+  },
+  "execution": {
+    "blocks_count": 1,
+    "blocks_applied": 1,
+    "blocks_failed": 0,
+    "failed_block_id": "",
+    "failed_stage": "",
+    "rolled_back": false,
+    "rollback_reason": "",
+    "rollback_to": "",
+    "stop_reason": "all_blocks_applied"
+  },
+  "artifacts": {
+    "source_refactor_dir": "/data/henrique/langchain_prototype/new/data/runs/20260615_162235_927fa467/source_refactor",
+    "input_contract": "/data/henrique/langchain_prototype/new/data/runs/20260615_162235_927fa467/source_refactor/input_contract.json",
+    "input_plan": "/data/henrique/langchain_prototype/new/data/runs/20260615_162235_927fa467/source_refactor/input_plan.json",
+    "executable_plan": "/data/henrique/langchain_prototype/new/data/runs/20260615_162235_927fa467/source_refactor/executable_plan.json",
+    "status": "/data/henrique/langchain_prototype/new/data/runs/20260615_162235_927fa467/source_refactor/status.json",
+    "git_dir": "/data/henrique/langchain_prototype/new/data/runs/20260615_162235_927fa467/source_refactor/git",
+    "initial_commit": "/data/henrique/langchain_prototype/new/data/runs/20260615_162235_927fa467/source_refactor/git/initial_commit.txt",
+    "last_good_commit": "/data/henrique/langchain_prototype/new/data/runs/20260615_162235_927fa467/source_refactor/git/last_good_commit.txt",
+    "current_block_dir": "/data/henrique/langchain_prototype/new/data/runs/20260615_162235_927fa467/source_refactor/block_001",
+    "compile_log": "/data/henrique/langchain_prototype/new/data/runs/20260615_162235_927fa467/source_refactor/block_001/compile.log",
+    "block_summaries": "/data/henrique/langchain_prototype/new/data/runs/20260615_162235_927fa467/source_refactor/block_summaries.json",
+    "rollback_final": "/data/henrique/langchain_prototype/new/data/runs/20260615_162235_927fa467/source_refactor/rollback.final.json"
+  }
+}

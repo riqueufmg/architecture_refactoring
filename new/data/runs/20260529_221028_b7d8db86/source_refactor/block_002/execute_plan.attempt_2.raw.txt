@@ -1,0 +1,5 @@
+{
+  "files_to_write": [],
+  "files_to_delete": [],
+  "notes": "Refactoring already applied: Attribute no longer contains xmlKeyReplace/htmlKeyReplace or the private isValidXmlKey/isValidHtmlKey methods, and getValidKey already delegates to AttributeKeyUtil. No changes necessary."
+}

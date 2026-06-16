@@ -1,0 +1,25 @@
+{
+  "executor_existing_files": [
+    "src/main/java/org/apache/commons/lang3/function/TriConsumer.java",
+    "src/main/java/org/apache/commons/lang3/function/TriFunction.java"
+  ],
+  "executor_new_files": [
+    "src/main/java/org/apache/commons/lang3/function/triple/TriConsumer.java",
+    "src/main/java/org/apache/commons/lang3/function/triple/TriFunction.java"
+  ],
+  "executor_files": [
+    "src/main/java/org/apache/commons/lang3/function/TriConsumer.java",
+    "src/main/java/org/apache/commons/lang3/function/TriFunction.java",
+    "src/main/java/org/apache/commons/lang3/function/triple/TriConsumer.java",
+    "src/main/java/org/apache/commons/lang3/function/triple/TriFunction.java"
+  ],
+  "executor_rejected_files": [],
+  "moved_old_files": [
+    "src/main/java/org/apache/commons/lang3/function/TriConsumer.java",
+    "src/main/java/org/apache/commons/lang3/function/TriFunction.java"
+  ],
+  "moved_new_files": [
+    "src/main/java/org/apache/commons/lang3/function/triple/TriConsumer.java",
+    "src/main/java/org/apache/commons/lang3/function/triple/TriFunction.java"
+  ]
+}

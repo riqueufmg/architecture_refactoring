@@ -13,17 +13,24 @@
   "compile_ok": true,
   "compile_return_code": 0,
   "compile_log_path": "/data/henrique/langchain_prototype/new/data/runs/20260529_221028_b7d8db86/source_refactor/block_001/compile.log",
-  "commit": "24dae50b2d9b62b51d736dab126b9b80c4438de3",
+  "commit": "6719f583f28d1765f215b67112bf3cd96eeaaf27",
   "rollback_reason": "",
   "stop_reason": "block_applied",
   "files": {
-    "executor_existing_files": [],
-    "executor_new_files": [
+    "executor_existing_files": [
       "src/main/java/org/jsoup/nodes/AttributeKeyUtil.java"
     ],
+    "executor_new_files": [],
     "executor_files": [
       "src/main/java/org/jsoup/nodes/AttributeKeyUtil.java"
     ],
     "executor_rejected_files": []
+  },
+  "openrewrite": {
+    "ok": false,
+    "return_code": -1,
+    "recipe_path": "",
+    "log_path": "",
+    "command": []
   }
 }

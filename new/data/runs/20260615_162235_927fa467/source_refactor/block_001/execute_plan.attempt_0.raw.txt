@@ -1,0 +1,5 @@
+{
+  "files_to_write": [],
+  "files_to_delete": [],
+  "notes": "No changes necessary: the MOVE_CLASS operations have already been applied (the primitive interfaces exist in org.apache.commons.lang3.function.primitives). There are no required visibility updates to make for the project to compile, so no files were modified."
+}

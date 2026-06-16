@@ -1,0 +1,31 @@
+{
+  "executor_existing_files": [
+    "src/main/java/org/apache/commons/lang3/function/BooleanConsumer.java",
+    "src/main/java/org/apache/commons/lang3/function/ByteConsumer.java",
+    "src/main/java/org/apache/commons/lang3/function/ByteSupplier.java"
+  ],
+  "executor_new_files": [
+    "src/main/java/org/apache/commons/lang3/function/primitives/BooleanConsumer.java",
+    "src/main/java/org/apache/commons/lang3/function/primitives/ByteConsumer.java",
+    "src/main/java/org/apache/commons/lang3/function/primitives/ByteSupplier.java"
+  ],
+  "executor_files": [
+    "src/main/java/org/apache/commons/lang3/function/BooleanConsumer.java",
+    "src/main/java/org/apache/commons/lang3/function/ByteConsumer.java",
+    "src/main/java/org/apache/commons/lang3/function/ByteSupplier.java",
+    "src/main/java/org/apache/commons/lang3/function/primitives/BooleanConsumer.java",
+    "src/main/java/org/apache/commons/lang3/function/primitives/ByteConsumer.java",
+    "src/main/java/org/apache/commons/lang3/function/primitives/ByteSupplier.java"
+  ],
+  "executor_rejected_files": [],
+  "moved_old_files": [
+    "src/main/java/org/apache/commons/lang3/function/BooleanConsumer.java",
+    "src/main/java/org/apache/commons/lang3/function/ByteConsumer.java",
+    "src/main/java/org/apache/commons/lang3/function/ByteSupplier.java"
+  ],
+  "moved_new_files": [
+    "src/main/java/org/apache/commons/lang3/function/primitives/BooleanConsumer.java",
+    "src/main/java/org/apache/commons/lang3/function/primitives/ByteConsumer.java",
+    "src/main/java/org/apache/commons/lang3/function/primitives/ByteSupplier.java"
+  ]
+}

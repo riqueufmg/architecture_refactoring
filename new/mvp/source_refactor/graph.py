@@ -12,6 +12,9 @@ from mvp.source_refactor.nodes import (
     stage_block_node,
     lock_workspace_node,
     resolve_files_context_node,
+    openrewrite_node,
+    after_resolve_files_context,
+    after_openrewrite,
     execute_plan_node,
     after_execute_plan,
     retry_executor_node,
@@ -39,6 +42,7 @@ def build_source_refactor_graph():
     g.add_node("stage_block", stage_block_node)
     g.add_node("lock_workspace", lock_workspace_node)
     g.add_node("resolve_files_context", resolve_files_context_node)
+    g.add_node("openrewrite", openrewrite_node)
     g.add_node("execute_plan", execute_plan_node)
     g.add_node("retry_executor", retry_executor_node)
     g.add_node("rollback_final", rollback_final_node)
@@ -59,7 +63,22 @@ def build_source_refactor_graph():
     g.add_edge("record_initial_commit", "stage_block")
     g.add_edge("stage_block", "lock_workspace")
     g.add_edge("lock_workspace", "resolve_files_context")
-    g.add_edge("resolve_files_context", "execute_plan")
+    g.add_conditional_edges(
+        "resolve_files_context",
+        after_resolve_files_context,
+        {
+            "openrewrite": "openrewrite",
+            "execute_plan": "execute_plan",
+        },
+    )
+    g.add_conditional_edges(
+        "openrewrite",
+        after_openrewrite,
+        {
+            "execute_plan": "execute_plan",
+            "rollback_final": "rollback_final",
+        },
+    )
     g.add_conditional_edges(
         "execute_plan",
         after_execute_plan,

@@ -96,3 +96,10 @@ class SourceRefactorState(TypedDict, total=False):
     rollback_reason: str
     rolled_back: bool
     rollback_to: str
+
+    # open rewrite
+    openrewrite_ok: bool
+    openrewrite_return_code: int
+    openrewrite_log_path: str
+    openrewrite_recipe_path: str
+    openrewrite_command: list[str]
