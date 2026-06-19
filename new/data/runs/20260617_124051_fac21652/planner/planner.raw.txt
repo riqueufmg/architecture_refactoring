@@ -1,0 +1,87 @@
+{
+  "smell_type": "Insufficient Modularization",
+  "target_level": "class",
+  "target": "org.jsoup.safety.Safelist",
+  "blocks": [
+    {
+      "id": 1,
+      "goal": "Extract the nested TypedValue and its concrete typed subclasses (TagName, AttributeKey, AttributeValue, Protocol) from Safelist into separate top-level classes in the same package to reduce Safelist's size and improve modularity while preserving behavior and API used within Safelist.",
+      "files": [
+        "src/main/java/org/jsoup/safety/Safelist.java",
+        "src/main/java/org/jsoup/safety/TypedValue.java",
+        "src/main/java/org/jsoup/safety/TagName.java",
+        "src/main/java/org/jsoup/safety/AttributeKey.java",
+        "src/main/java/org/jsoup/safety/AttributeValue.java",
+        "src/main/java/org/jsoup/safety/Protocol.java"
+      ],
+      "ops": [
+        {
+          "op": "EXTRACT_CLASS",
+          "inputs": [
+            "src/main/java/org/jsoup/safety/Safelist.java"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/safety/TypedValue.java"
+          ],
+          "details": "Extract the nested abstract static class TypedValue from Safelist into a new top-level, package-private class TypedValue in package org.jsoup.safety. Preserve constructor, Validate.notNull, hashCode, equals, and toString implementations exactly as in the original. Remove the TypedValue nested declaration from Safelist.",
+          "risk": "low"
+        },
+        {
+          "op": "EXTRACT_CLASS",
+          "inputs": [
+            "src/main/java/org/jsoup/safety/Safelist.java"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/safety/TagName.java"
+          ],
+          "details": "Extract the nested static class TagName from Safelist into a new top-level class TagName in package org.jsoup.safety. Make TagName extend the new TypedValue class and preserve the constructor and static valueOf(String) method (which calls Normalizer.lowerCase). Add the necessary import for org.jsoup.internal.Normalizer in the new file. Remove the TagName nested declaration from Safelist.",
+          "risk": "low"
+        },
+        {
+          "op": "EXTRACT_CLASS",
+          "inputs": [
+            "src/main/java/org/jsoup/safety/Safelist.java"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/safety/AttributeKey.java"
+          ],
+          "details": "Extract the nested static class AttributeKey from Safelist into a new top-level class AttributeKey in package org.jsoup.safety. Make AttributeKey extend the new TypedValue class and preserve the constructor and static valueOf(String) method (which calls Normalizer.lowerCase). Add the necessary import for org.jsoup.internal.Normalizer in the new file. Remove the AttributeKey nested declaration from Safelist.",
+          "risk": "low"
+        },
+        {
+          "op": "EXTRACT_CLASS",
+          "inputs": [
+            "src/main/java/org/jsoup/safety/Safelist.java"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/safety/AttributeValue.java"
+          ],
+          "details": "Extract the nested static class AttributeValue from Safelist into a new top-level class AttributeValue in package org.jsoup.safety. Make AttributeValue extend the new TypedValue class and preserve the constructor and static valueOf(String) method. Remove the AttributeValue nested declaration from Safelist.",
+          "risk": "low"
+        },
+        {
+          "op": "EXTRACT_CLASS",
+          "inputs": [
+            "src/main/java/org/jsoup/safety/Safelist.java"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/safety/Protocol.java"
+          ],
+          "details": "Extract the nested static class Protocol from Safelist into a new top-level class Protocol in package org.jsoup.safety. Make Protocol extend the new TypedValue class and preserve the constructor and static valueOf(String) method. Remove the Protocol nested declaration from Safelist.",
+          "risk": "low"
+        },
+        {
+          "op": "UPDATE_CALL_SITES",
+          "inputs": [
+            "src/main/java/org/jsoup/safety/Safelist.java"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/safety/Safelist.java"
+          ],
+          "details": "Update Safelist.java to remove the now-extracted nested class declarations (TypedValue, TagName, AttributeKey, AttributeValue, Protocol). Adjust any references if necessary (no package changes required since new classes are in the same package). Keep all existing Safelist logic and member references to TagName, AttributeKey, AttributeValue, Protocol and TypedValue unchanged so behavior is preserved.",
+          "risk": "low"
+        }
+      ]
+    }
+  ]
+}

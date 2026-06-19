@@ -1,0 +1,17 @@
+{
+  "ok": true,
+  "rollback_to": "b2ad42f9296c280566e0f69c0e2d5779e24b8071",
+  "before_commit": "b2ad42f9296c280566e0f69c0e2d5779e24b8071",
+  "after_commit": "b2ad42f9296c280566e0f69c0e2d5779e24b8071",
+  "before_status": "M src/main/java/org/apache/commons/lang3/ThreadUtils.java\n?? src/main/java/org/apache/commons/lang3/ThreadFinder.java",
+  "after_status": "",
+  "reason": "compile_failed",
+  "current_block_id": "1",
+  "compile_ok": false,
+  "compile_return_code": 1,
+  "executor_ok": true,
+  "executor_error": "",
+  "apply_ok": true,
+  "apply_error": "",
+  "reset_output": "HEAD is now at b2ad42f92 source_refactor: apply block 1\n"
+}

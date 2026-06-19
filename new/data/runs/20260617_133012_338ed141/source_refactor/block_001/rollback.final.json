@@ -1,0 +1,17 @@
+{
+  "ok": true,
+  "rollback_to": "f92f7e3ffe0f3cf09b28765a07aff28b50a6b9cf",
+  "before_commit": "f92f7e3ffe0f3cf09b28765a07aff28b50a6b9cf",
+  "after_commit": "f92f7e3ffe0f3cf09b28765a07aff28b50a6b9cf",
+  "before_status": "M src/main/java/org/jsoup/safety/Safelist.java\n?? src/main/java/org/jsoup/safety/SafelistProtocols.java",
+  "after_status": "",
+  "reason": "compile_failed",
+  "current_block_id": "1",
+  "compile_ok": false,
+  "compile_return_code": 1,
+  "executor_ok": true,
+  "executor_error": "",
+  "apply_ok": true,
+  "apply_error": "",
+  "reset_output": "HEAD is now at f92f7e3f source_refactor: apply block 1\n"
+}

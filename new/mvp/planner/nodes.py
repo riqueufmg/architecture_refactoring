@@ -24,7 +24,10 @@ from mvp.planner.lib.path_utils import (
     _infer_target_type_from_name,
 )
 from mvp.planner.lib.java_context import extract_observed_external_calls
-from mvp.planner.lib.plan_utils import enrich_plan_with_visibility_ops
+from mvp.planner.lib.plan_utils import (
+    enrich_plan_with_visibility_ops,
+    enrich_plan_with_related_tests,
+)
 from mvp.planner.state import PlannerState
 
 
@@ -357,6 +360,7 @@ def call_planner_node(state: PlannerState) -> PlannerState:
     timeout = int(_cfg(state, "planner.timeout", 120))
     max_retries = int(_cfg(state, "planner.max_retries", 2))
 
+    ## model object instance
     llm = ChatOpenAI(
         model=model,
         temperature=temperature,
@@ -364,6 +368,7 @@ def call_planner_node(state: PlannerState) -> PlannerState:
         max_retries=max_retries,
     )
 
+    ## model's inference
     res = llm.invoke(
         [
             SystemMessage(content=system_prompt),
@@ -387,6 +392,8 @@ def call_planner_node(state: PlannerState) -> PlannerState:
 
         planner_input = state.get("planner_input", {})
 
+        ## plan's mechanical enrichment to UPDATE_VISIBILITY when MOVE_CLASS
+        ## exists in the plan
         if (
             state.get("target_type") == "package"
             and state.get("smell_name") == "God Component"
@@ -404,6 +411,23 @@ def call_planner_node(state: PlannerState) -> PlannerState:
                 json.dumps(plan, indent=2),
                 encoding="utf-8",
             )
+        
+        ## enrich plan with UPDATE_TESTS
+        plan = enrich_plan_with_related_tests(
+            plan,
+            {
+                "repo_path": state.get("repo_path", ""),
+                "target_source_root": planner_input.get(
+                    "target_source_root",
+                    state.get("target_source_root", ""),
+                ),
+            },
+        )
+
+        (planner_dir / "plan.enriched.tests.json").write_text(
+            json.dumps(plan, indent=2),
+            encoding="utf-8",
+        )
 
         state["plan"] = plan
         state["plan_ok"] = True

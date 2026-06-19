@@ -1,0 +1,96 @@
+{
+  "id": 1,
+  "goal": "Introduce a helper class to host attribute-related utility functions (validation, boolean-attribute table, HTML emit helper) so Attribute can be smaller and focused on instance behavior.",
+  "files": [
+    "src/main/java/org/jsoup/nodes/Attribute.java",
+    "src/main/java/org/jsoup/nodes/AttributeUtil.java",
+    "src/test/java/org/jsoup/integration/SafelistExtensionTest.java",
+    "src/test/java/org/jsoup/integration/netty/TestRequest.java",
+    "src/test/java/org/jsoup/nodes/AttributeTest.java",
+    "src/test/java/org/jsoup/nodes/AttributesTest.java",
+    "src/test/java/org/jsoup/nodes/ElementTest.java",
+    "src/test/java/org/jsoup/nodes/NodeTest.java",
+    "src/test/java/org/jsoup/parser/AttributeParseTest.java",
+    "src/test/java/org/jsoup/parser/HtmlParserTest.java",
+    "src/test/java/org/jsoup/parser/ParserSettingsTest.java",
+    "src/test/java/org/jsoup/parser/PositionTest.java",
+    "src/test/java/org/jsoup/parser/TokeniserTest.java",
+    "src/test/java/org/jsoup/parser/XmlTreeBuilderTest.java",
+    "src/test/java/org/jsoup/safety/SafelistTest.java",
+    "src/test/java/org/jsoup/select/EvaluatorTest.java"
+  ],
+  "ops": [
+    {
+      "op": "EXTRACT_CLASS",
+      "inputs": [
+        "src/main/java/org/jsoup/nodes/Attribute.java"
+      ],
+      "outputs": [
+        "src/main/java/org/jsoup/nodes/AttributeUtil.java"
+      ],
+      "details": "Create a new class org.jsoup.nodes.AttributeUtil containing static helpers: booleanAttributes array, xmlKeyReplace/htmlKeyReplace Patterns, getValidKey(String,Syntax), isValidXmlKey(String), isValidHtmlKey(String), isBooleanAttribute(String), shouldCollapseAttribute(String,String,Document.OutputSettings), and htmlNoValidate(String,String,QuietAppendable,Document.OutputSettings). Implement these methods by copying the equivalent logic from Attribute into AttributeUtil. Place the new class in package org.jsoup.nodes.",
+      "risk": "medium"
+    },
+    {
+      "op": "ADD_OR_UPDATE_IMPORTS",
+      "inputs": [
+        "src/main/java/org/jsoup/nodes/Attribute.java"
+      ],
+      "outputs": [
+        "src/main/java/org/jsoup/nodes/Attribute.java"
+      ],
+      "details": "Add an import reference for org.jsoup.nodes.AttributeUtil in Attribute.java (same-package import; redundant but explicit). This makes subsequent edits clearly reference the helper.",
+      "risk": "low"
+    },
+    {
+      "op": "ADD_OR_UPDATE_IMPORTS",
+      "inputs": [
+        "src/main/java/org/jsoup/nodes/AttributeUtil.java"
+      ],
+      "outputs": [
+        "src/main/java/org/jsoup/nodes/AttributeUtil.java"
+      ],
+      "details": "Add needed imports in AttributeUtil.java for java.util.Arrays, java.util.regex.Pattern, and any other types referenced (e.g., org.jsoup.internal.Normalizer, org.jsoup.internal.QuietAppendable, org.jsoup.nodes.Document.OutputSettings, org.jsoup.internal.StringUtil) copied from Attribute as required.",
+      "risk": "low"
+    },
+    {
+      "op": "UPDATE_TESTS",
+      "inputs": [
+        "src/test/java/org/jsoup/integration/SafelistExtensionTest.java",
+        "src/test/java/org/jsoup/integration/netty/TestRequest.java",
+        "src/test/java/org/jsoup/nodes/AttributeTest.java",
+        "src/test/java/org/jsoup/nodes/AttributesTest.java",
+        "src/test/java/org/jsoup/nodes/ElementTest.java",
+        "src/test/java/org/jsoup/nodes/NodeTest.java",
+        "src/test/java/org/jsoup/parser/AttributeParseTest.java",
+        "src/test/java/org/jsoup/parser/HtmlParserTest.java",
+        "src/test/java/org/jsoup/parser/ParserSettingsTest.java",
+        "src/test/java/org/jsoup/parser/PositionTest.java",
+        "src/test/java/org/jsoup/parser/TokeniserTest.java",
+        "src/test/java/org/jsoup/parser/XmlTreeBuilderTest.java",
+        "src/test/java/org/jsoup/safety/SafelistTest.java",
+        "src/test/java/org/jsoup/select/EvaluatorTest.java"
+      ],
+      "outputs": [],
+      "details": "Update related tests affected by this refactoring block so the configured build command passes. Adjust imports, package references, moved class references, constructors, and assertions only when required. Do not change production behavior through tests.",
+      "risk": "medium",
+      "api_change": false
+    }
+  ],
+  "test_files": [
+    "src/test/java/org/jsoup/integration/SafelistExtensionTest.java",
+    "src/test/java/org/jsoup/integration/netty/TestRequest.java",
+    "src/test/java/org/jsoup/nodes/AttributeTest.java",
+    "src/test/java/org/jsoup/nodes/AttributesTest.java",
+    "src/test/java/org/jsoup/nodes/ElementTest.java",
+    "src/test/java/org/jsoup/nodes/NodeTest.java",
+    "src/test/java/org/jsoup/parser/AttributeParseTest.java",
+    "src/test/java/org/jsoup/parser/HtmlParserTest.java",
+    "src/test/java/org/jsoup/parser/ParserSettingsTest.java",
+    "src/test/java/org/jsoup/parser/PositionTest.java",
+    "src/test/java/org/jsoup/parser/TokeniserTest.java",
+    "src/test/java/org/jsoup/parser/XmlTreeBuilderTest.java",
+    "src/test/java/org/jsoup/safety/SafelistTest.java",
+    "src/test/java/org/jsoup/select/EvaluatorTest.java"
+  ]
+}

@@ -1,0 +1,10 @@
+commit ab68154880a5f4f6f01d508ae1f2d6dcad285751
+Author: Henrique Nunes <rique@face.ufmg.br>
+Date:   Thu Jun 18 16:08:46 2026 -0300
+
+    source_refactor: apply block 1
+
+ .../org/jsoup/parser/HtmlTreeBuilderState.java     | 85 +++++-----------------
+ .../parser/HtmlTreeBuilderStateConstants.java      | 49 +++++++++++++
+ .../org/jsoup/parser/HtmlTreeBuilderStateTest.java |  8 +-
+ 3 files changed, 72 insertions(+), 70 deletions(-)

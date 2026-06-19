@@ -1,0 +1,505 @@
+commit a3524034eac6886aade355a838ef027d8a3483d9
+Author: Henrique Nunes <rique@face.ufmg.br>
+Date:   Thu Jun 18 16:00:46 2026 -0300
+
+    source_refactor: apply block 1
+
+diff --git a/src/main/java/org/jsoup/parser/TokeniserState.java b/src/main/java/org/jsoup/parser/TokeniserState.java
+index e61b8c27..f4df00fd 100644
+--- a/src/main/java/org/jsoup/parser/TokeniserState.java
++++ b/src/main/java/org/jsoup/parser/TokeniserState.java
+@@ -1,6 +1,5 @@
+ package org.jsoup.parser;
+ 
+-import org.jsoup.internal.StringUtil;
+ import org.jsoup.nodes.DocumentType;
+ 
+ import static org.jsoup.nodes.Document.OutputSettings.Syntax.xml;
+@@ -36,7 +35,7 @@ enum TokeniserState {
+     CharacterReferenceInData {
+         // from & in data
+         @Override void read(Tokeniser t, CharacterReader r) {
+-            readCharRef(t, Data);
++            TokeniserStateReader.readCharRef(t, Data);
+         }
+     },
+     Rcdata { // Rcdata has text with character references
+@@ -66,17 +65,17 @@ enum TokeniserState {
+     },
+     CharacterReferenceInRcdata {
+         @Override void read(Tokeniser t, CharacterReader r) {
+-            readCharRef(t, Rcdata);
++            TokeniserStateReader.readCharRef(t, Rcdata);
+         }
+     },
+     Rawtext {
+         @Override void read(Tokeniser t, CharacterReader r) {
+-            readRawData(t, r, this, RawtextLessthanSign);
++            TokeniserStateReader.readRawData(t, r, this, RawtextLessthanSign);
+         }
+     },
+     ScriptData {
+         @Override void read(Tokeniser t, CharacterReader r) {
+-            readRawData(t, r, this, ScriptDataLessthanSign);
++            TokeniserStateReader.readRawData(t, r, this, ScriptDataLessthanSign);
+         }
+     },
+     PLAINTEXT {
+@@ -274,12 +273,12 @@ enum TokeniserState {
+     },
+     RawtextEndTagOpen {
+         @Override void read(Tokeniser t, CharacterReader r) {
+-            readEndTag(t, r, RawtextEndTagName, Rawtext);
++            TokeniserStateReader.readEndTag(t, r, RawtextEndTagName, Rawtext);
+         }
+     },
+     RawtextEndTagName {
+         @Override void read(Tokeniser t, CharacterReader r) {
+-            handleDataEndTag(t, r, Rawtext);
++            TokeniserStateReader.handleDataEndTag(t, r, Rawtext);
+         }
+     },
+     ScriptDataLessthanSign {
+@@ -307,12 +306,12 @@ enum TokeniserState {
+     },
+     ScriptDataEndTagOpen {
+         @Override void read(Tokeniser t, CharacterReader r) {
+-            readEndTag(t, r, ScriptDataEndTagName, ScriptData);
++            TokeniserStateReader.readEndTag(t, r, ScriptDataEndTagName, ScriptData);
+         }
+     },
+     ScriptDataEndTagName {
+         @Override void read(Tokeniser t, CharacterReader r) {
+-            handleDataEndTag(t, r, ScriptData);
++            TokeniserStateReader.handleDataEndTag(t, r, ScriptData);
+         }
+     },
+     ScriptDataEscapeStart {
+@@ -453,12 +452,12 @@ enum TokeniserState {
+     },
+     ScriptDataEscapedEndTagName {
+         @Override void read(Tokeniser t, CharacterReader r) {
+-            handleDataEndTag(t, r, ScriptDataEscaped);
++            TokeniserStateReader.handleDataEndTag(t, r, ScriptDataEscaped);
+         }
+     },
+     ScriptDataDoubleEscapeStart {
+         @Override void read(Tokeniser t, CharacterReader r) {
+-            handleDataDoubleEscapeTag(t, r, ScriptDataDoubleEscaped, ScriptDataEscaped);
++            TokeniserStateReader.handleDataDoubleEscapeTag(t, r, ScriptDataDoubleEscaped, ScriptDataEscaped);
+         }
+     },
+     ScriptDataDoubleEscaped {
+@@ -558,7 +557,7 @@ enum TokeniserState {
+     },
+     ScriptDataDoubleEscapeEnd {
+         @Override void read(Tokeniser t, CharacterReader r) {
+-            handleDataDoubleEscapeTag(t,r, ScriptDataEscaped, ScriptDataDoubleEscaped);
++            TokeniserStateReader.handleDataDoubleEscapeTag(t,r, ScriptDataEscaped, ScriptDataDoubleEscaped);
+         }
+     },
+     BeforeAttributeName {
+@@ -1671,7 +1670,7 @@ enum TokeniserState {
+     },
+     DoctypeInternalSubset {
+         @Override void read(Tokeniser t, CharacterReader r) {
+-            readDoctypeInternalSubset(t, r, this);
++            TokeniserStateReader.readDoctypeInternalSubset(t, r, this);
+         }
+     },
+     CdataSection {
+@@ -1697,196 +1696,4 @@ enum TokeniserState {
+     private static final String replacementStr = String.valueOf(Tokeniser.replacementChar);
+     private static final char eof = CharacterReader.EOF;
+ 
+-    /**
+-     * Handles RawtextEndTagName, ScriptDataEndTagName, and ScriptDataEscapedEndTagName. Same body impl, just
+-     * different else exit transitions.
+-     */
+-    private static void handleDataEndTag(Tokeniser t, CharacterReader r, TokeniserState elseTransition) {
+-        if (r.matchesAsciiAlpha()) {
+-            String name = r.consumeTagName();
+-            t.tagPending.appendTagName(name);
+-            t.dataBuffer.append(name);
+-            return;
+-        }
+-
+-        boolean needsExitTransition = false;
+-        if (t.isAppropriateEndTagToken() && !r.isEmpty()) {
+-            char c = r.consume();
+-            switch (c) {
+-                case '\t':
+-                case '\n':
+-                case '\r':
+-                case '\f':
+-                case ' ':
+-                    t.transition(BeforeAttributeName);
+-                    break;
+-                case '/':
+-                    t.transition(SelfClosingStartTag);
+-                    break;
+-                case '>':
+-                    t.emitTagPending();
+-                    t.transition(Data);
+-                    break;
+-                default:
+-                    t.dataBuffer.append(c);
+-                    needsExitTransition = true;
+-            }
+-        } else {
+-            needsExitTransition = true;
+-        }
+-
+-        if (needsExitTransition) {
+-            t.emit("</");
+-            t.emit(t.dataBuffer.value());
+-            t.transition(elseTransition);
+-        }
+-    }
+-
+-    private static void readRawData(Tokeniser t, CharacterReader r, TokeniserState current, TokeniserState advance) {
+-        switch (r.current()) {
+-            case '<':
+-                t.advanceTransition(advance);
+-                break;
+-            case nullChar:
+-                t.error(current);
+-                r.advance();
+-                t.emit(replacementChar);
+-                break;
+-            case eof:
+-                t.emit(new Token.EOF());
+-                break;
+-            default:
+-                String data = r.consumeRawData();
+-                t.emit(data);
+-                break;
+-        }
+-    }
+-
+-    private static void readCharRef(Tokeniser t, TokeniserState advance) {
+-        int[] c = t.consumeCharacterReference(null, false);
+-        if (c == null)
+-            t.emit('&');
+-        else
+-            t.emit(c);
+-        t.transition(advance);
+-    }
+-
+-    private static void readEndTag(Tokeniser t, CharacterReader r, TokeniserState a, TokeniserState b) {
+-        if (r.matchesAsciiAlpha()) {
+-            t.createTagPending(false);
+-            t.transition(a);
+-        } else {
+-            t.emit("</");
+-            t.transition(b);
+-        }
+-    }
+-
+-    private static void handleDataDoubleEscapeTag(Tokeniser t, CharacterReader r, TokeniserState primary, TokeniserState fallback) {
+-        if (r.matchesAsciiAlpha()) {
+-            String name = r.consumeLetterSequence();
+-            t.dataBuffer.append(name);
+-            t.emit(name);
+-            return;
+-        }
+-
+-        char c = r.consume();
+-        switch (c) {
+-            case '\t':
+-            case '\n':
+-            case '\r':
+-            case '\f':
+-            case ' ':
+-            case '/':
+-            case '>':
+-                if (t.dataBuffer.value().equals("script"))
+-                    t.transition(primary);
+-                else
+-                    t.transition(fallback);
+-                t.emit(c);
+-                break;
+-            default:
+-                r.unconsume();
+-                t.transition(fallback);
+-        }
+-    }
+-
+-    /**
+-     Reads an XML doctype internal subset as opaque text so it can be re-emitted without parsing declarations.
+-     Only used when in XML mode; HTML spec will drop these as Bogus.
+-     */
+-    private static void readDoctypeInternalSubset(Tokeniser t, CharacterReader r, TokeniserState current) {
+-        final byte None = 0, SingleQuote = 1, DoubleQuote = 2, Comment = 3, ProcessingInstruction = 4;
+-        byte context = None;
+-        TokenData subset = t.doctypePending.internalSubset;
+-
+-        while (true) {
+-            char c = r.consume();
+-            switch (c) {
+-                case '\'':
+-                    subset.append(c);
+-                    if  (context == None) context = SingleQuote;
+-                    else if (context == SingleQuote) context = None;
+-                    break;
+-                case '"':
+-                    subset.append(c);
+-                    if (context == None) context = DoubleQuote;
+-                    else if (context == DoubleQuote) context = None;
+-                    break;
+-                case '<':
+-                    subset.append(c);
+-                    if (context == None) {
+-                        if (r.matchConsume("!--")) {
+-                            subset.append("!--");
+-                            context = Comment;
+-                        } else if (r.matchConsume("?")) {
+-                            subset.append('?');
+-                            context = ProcessingInstruction;
+-                        }
+-                    }
+-                    break;
+-                case '-':
+-                    subset.append(c);
+-                    if (context == Comment && r.matchConsume("->")) {
+-                        subset.append("->");
+-                        context = None;
+-                    }
+-                    break;
+-                case '?':
+-                    subset.append(c);
+-                    if (context == ProcessingInstruction && r.matches('>')) {
+-                        r.advance();
+-                        subset.append('>');
+-                        context = None;
+-                    }
+-                    break;
+-                case ']':
+-                    if (context == None) {
+-                        String ws = r.consumeMatching(StringUtil::isWhitespace);
+-                        if (r.matches('>')) {
+-                            r.advance();
+-                            t.emitDoctypePending();
+-                            t.transition(Data);
+-                            return;
+-                        }
+-                        subset.append(c);
+-                        subset.append(ws);
+-                        break;
+-                    }
+-                    subset.append(c);
+-                    break;
+-                case nullChar:
+-                    t.error(current);
+-                    subset.append(replacementChar);
+-                    break;
+-                case eof:
+-                    t.eofError(current);
+-                    t.emitDoctypePending();
+-                    t.transition(Data);
+-                    return;
+-                default:
+-                    subset.append(c);
+-                    break;
+-            }
+-        }
+-    }
+ }
+diff --git a/src/main/java/org/jsoup/parser/TokeniserStateReader.java b/src/main/java/org/jsoup/parser/TokeniserStateReader.java
+new file mode 100644
+index 00000000..c605a3eb
+--- /dev/null
++++ b/src/main/java/org/jsoup/parser/TokeniserStateReader.java
+@@ -0,0 +1,192 @@
++package org.jsoup.parser;
++
++import org.jsoup.internal.StringUtil;
++
++final class TokeniserStateReader {
++    private TokeniserStateReader() {}
++
++    static void handleDataEndTag(Tokeniser t, CharacterReader r, TokeniserState elseTransition) {
++        if (r.matchesAsciiAlpha()) {
++            String name = r.consumeTagName();
++            t.tagPending.appendTagName(name);
++            t.dataBuffer.append(name);
++            return;
++        }
++
++        boolean needsExitTransition = false;
++        if (t.isAppropriateEndTagToken() && !r.isEmpty()) {
++            char c = r.consume();
++            switch (c) {
++                case '\t':
++                case '\n':
++                case '\r':
++                case '\f':
++                case ' ':
++                    t.transition(TokeniserState.BeforeAttributeName);
++                    break;
++                case '/':
++                    t.transition(TokeniserState.SelfClosingStartTag);
++                    break;
++                case '>':
++                    t.emitTagPending();
++                    t.transition(TokeniserState.Data);
++                    break;
++                default:
++                    t.dataBuffer.append(c);
++                    needsExitTransition = true;
++            }
++        } else {
++            needsExitTransition = true;
++        }
++
++        if (needsExitTransition) {
++            t.emit("</");
++            t.emit(t.dataBuffer.value());
++            t.transition(elseTransition);
++        }
++    }
++
++    static void readRawData(Tokeniser t, CharacterReader r, TokeniserState current, TokeniserState advance) {
++        switch (r.current()) {
++            case '<':
++                t.advanceTransition(advance);
++                break;
++            case '\u0000':
++                t.error(current);
++                r.advance();
++                t.emit(Tokeniser.replacementChar);
++                break;
++            case CharacterReader.EOF:
++                t.emit(new Token.EOF());
++                break;
++            default:
++                String data = r.consumeRawData();
++                t.emit(data);
++                break;
++        }
++    }
++
++    static void readCharRef(Tokeniser t, TokeniserState advance) {
++        int[] c = t.consumeCharacterReference(null, false);
++        if (c == null)
++            t.emit('&');
++        else
++            t.emit(c);
++        t.transition(advance);
++    }
++
++    static void readEndTag(Tokeniser t, CharacterReader r, TokeniserState a, TokeniserState b) {
++        if (r.matchesAsciiAlpha()) {
++            t.createTagPending(false);
++            t.transition(a);
++        } else {
++            t.emit("</");
++            t.transition(b);
++        }
++    }
++
++    static void handleDataDoubleEscapeTag(Tokeniser t, CharacterReader r, TokeniserState primary, TokeniserState fallback) {
++        if (r.matchesAsciiAlpha()) {
++            String name = r.consumeLetterSequence();
++            t.dataBuffer.append(name);
++            t.emit(name);
++            return;
++        }
++
++        char c = r.consume();
++        switch (c) {
++            case '\t':
++            case '\n':
++            case '\r':
++            case '\f':
++            case ' ':
++            case '/':
++            case '>':
++                if (t.dataBuffer.value().equals("script"))
++                    t.transition(primary);
++                else
++                    t.transition(fallback);
++                t.emit(c);
++                break;
++            default:
++                r.unconsume();
++                t.transition(fallback);
++        }
++    }
++
++    static void readDoctypeInternalSubset(Tokeniser t, CharacterReader r, TokeniserState current) {
++        final byte None = 0, SingleQuote = 1, DoubleQuote = 2, Comment = 3, ProcessingInstruction = 4;
++        byte context = None;
++        TokenData subset = t.doctypePending.internalSubset;
++
++        while (true) {
++            char c = r.consume();
++            switch (c) {
++                case '\'':
++                    subset.append(c);
++                    if  (context == None) context = SingleQuote;
++                    else if (context == SingleQuote) context = None;
++                    break;
++                case '"':
++                    subset.append(c);
++                    if (context == None) context = DoubleQuote;
++                    else if (context == DoubleQuote) context = None;
++                    break;
++                case '<':
++                    subset.append(c);
++                    if (context == None) {
++                        if (r.matchConsume("!--")) {
++                            subset.append("!--");
++                            context = Comment;
++                        } else if (r.matchConsume("?")) {
++                            subset.append('?');
++                            context = ProcessingInstruction;
++                        }
++                    }
++                    break;
++                case '-':
++                    subset.append(c);
++                    if (context == Comment && r.matchConsume("->")) {
++                        subset.append("->");
++                        context = None;
++                    }
++                    break;
++                case '?':
++                    subset.append(c);
++                    if (context == ProcessingInstruction && r.matches('>')) {
++                        r.advance();
++                        subset.append('>');
++                        context = None;
++                    }
++                    break;
++                case ']':
++                    if (context == None) {
++                        String ws = r.consumeMatching(StringUtil::isWhitespace);
++                        if (r.matches('>')) {
++                            r.advance();
++                            t.emitDoctypePending();
++                            t.transition(TokeniserState.Data);
++                            return;
++                        }
++                        subset.append(c);
++                        subset.append(ws);
++                        break;
++                    }
++                    subset.append(c);
++                    break;
++                case '\u0000':
++                    t.error(current);
++                    subset.append(Tokeniser.replacementChar);
++                    break;
++                case CharacterReader.EOF:
++                    t.eofError(current);
++                    t.emitDoctypePending();
++                    t.transition(TokeniserState.Data);
++                    return;
++                default:
++                    subset.append(c);
++                    break;
++            }
++        }
++    }
++}

@@ -1,0 +1,90 @@
+{
+  "smell_type": "Insufficient Modularization",
+  "target_level": "class",
+  "target": "org.jsoup.parser.HtmlTreeBuilderState",
+  "blocks": [
+    {
+      "id": 1,
+      "goal": "Extract small cohesive helper responsibilities (whitespace detection, text-state transition handling, and attribute-merge logic) out of HtmlTreeBuilderState into a new handler class to reduce total methods and LOC in the enum and centralize related helper logic.",
+      "expected_impact": {
+        "primary_metric": "total_methods",
+        "public_methods_moved": 0,
+        "total_methods_moved": 3,
+        "loc_reduction_expected": "medium",
+        "rationale": "Three private static helper methods (mergeAttributes, isWhitespace, HandleTextState) are moved to a dedicated class. This reduces the method count in the target enum and removes helper implementation details from the large enum, improving modularization and reducing LOC in the enum. No public API surface on the enum is changed; moved members are private helpers so public method count is unaffected."
+      },
+      "files": [
+        "src/main/java/org/jsoup/parser/HtmlTreeBuilderState.java",
+        "src/main/java/org/jsoup/parser/HtmlTreeBuilderStateHandlers.java"
+      ],
+      "ops": [
+        {
+          "op": "EXTRACT_CLASS",
+          "inputs": [
+            "src/main/java/org/jsoup/parser/HtmlTreeBuilderState.java"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/parser/HtmlTreeBuilderStateHandlers.java"
+          ],
+          "details": "Create new class org.jsoup.parser.HtmlTreeBuilderStateHandlers in the same package. This class will expose three public static helper methods, migrated from HtmlTreeBuilderState: mergeAttributes(Token.StartTag source, Element dest), isWhitespace(Token t), and handleTextState(Token.StartTag startTag, HtmlTreeBuilder tb, @Nullable TokeniserState state). The implementations will be identical to the moved private static methods from the enum, with necessary imports. The new class centralizes helper responsibilities related to state transitions and reduces the enum's LOC and method count.",
+          "risk": "low"
+        },
+        {
+          "op": "MOVE_METHOD",
+          "inputs": [
+            "src/main/java/org/jsoup/parser/HtmlTreeBuilderState.java:private static void mergeAttributes(Token.StartTag source, Element dest)"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/parser/HtmlTreeBuilderStateHandlers.java:public static void mergeAttributes(Token.StartTag source, Element dest)"
+          ],
+          "details": "Move the mergeAttributes implementation which finalises attribute ranges and merges attributes from a StartTag into an Element if keys are not present. Preserve the same logic and behavior. Make the method public static on the new handler class so enum code can call it.",
+          "risk": "low"
+        },
+        {
+          "op": "MOVE_METHOD",
+          "inputs": [
+            "src/main/java/org/jsoup/parser/HtmlTreeBuilderState.java:private static boolean isWhitespace(Token t)"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/parser/HtmlTreeBuilderStateHandlers.java:public static boolean isWhitespace(Token t)"
+          ],
+          "details": "Move the isWhitespace helper that inspects Token.Character data for blankness. Preserve behavior and make it public static on the handler class.",
+          "risk": "low"
+        },
+        {
+          "op": "MOVE_METHOD",
+          "inputs": [
+            "src/main/java/org/jsoup/parser/HtmlTreeBuilderState.java:private static void HandleTextState(Token.StartTag startTag, HtmlTreeBuilder tb, @Nullable TokeniserState state)"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/parser/HtmlTreeBuilderStateHandlers.java:public static void handleTextState(Token.StartTag startTag, HtmlTreeBuilder tb, @Nullable TokeniserState state)"
+          ],
+          "details": "Move the HandleTextState helper (renamed to handleTextState to follow Java conventions) that transitions the tokeniser state, marks insertion mode, transitions the tree builder state to Text, and inserts an element for the start tag. Preserve all semantics and make it public static on the handler class.",
+          "risk": "low"
+        },
+        {
+          "op": "ADD_OR_UPDATE_IMPORTS",
+          "inputs": [
+            "src/main/java/org/jsoup/parser/HtmlTreeBuilderStateHandlers.java"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/parser/HtmlTreeBuilderStateHandlers.java"
+          ],
+          "details": "Add necessary imports to the new handler class (org.jsoup.nodes.Attribute, org.jsoup.nodes.Attributes, org.jsoup.nodes.Element, org.jsoup.nodes.NodeInternals, org.jsoup.nodes.Range, org.jspecify.annotations.Nullable, and any other types referenced by the moved methods such as Token, TokeniserState, HtmlTreeBuilder). Keep the new class in package org.jsoup.parser.",
+          "risk": "low"
+        },
+        {
+          "op": "UPDATE_CALL_SITES",
+          "inputs": [
+            "src/main/java/org/jsoup/parser/HtmlTreeBuilderState.java"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/parser/HtmlTreeBuilderState.java"
+          ],
+          "details": "Replace calls inside HtmlTreeBuilderState that referenced the moved private helpers with calls to the new handlers: mergeAttributes(...) => HtmlTreeBuilderStateHandlers.mergeAttributes(...), isWhitespace(...) => HtmlTreeBuilderStateHandlers.isWhitespace(...), and HandleTextState(...) => HtmlTreeBuilderStateHandlers.handleTextState(...). Remove the original private static method definitions from the enum.",
+          "risk": "low"
+        }
+      ]
+    }
+  ]
+}

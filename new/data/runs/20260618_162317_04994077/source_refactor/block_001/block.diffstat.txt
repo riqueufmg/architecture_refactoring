@@ -1,0 +1,9 @@
+commit 0155fb6ab4b45d7f3f59e0c879624f113b75887a
+Author: Henrique Nunes <rique@face.ufmg.br>
+Date:   Thu Jun 18 16:31:06 2026 -0300
+
+    source_refactor: apply block 1
+
+ src/main/java/org/jsoup/parser/CssIdentifier.java | 176 +++++++++++++++++++
+ src/main/java/org/jsoup/parser/TokenQueue.java    | 196 +---------------------
+ 2 files changed, 179 insertions(+), 193 deletions(-)

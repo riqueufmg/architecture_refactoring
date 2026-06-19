@@ -1,0 +1,74 @@
+{
+  "smell_type": "Insufficient Modularization",
+  "target_level": "class",
+  "target": "org.apache.commons.lang3.Strings",
+  "blocks": [
+    {
+      "id": 1,
+      "goal": "Extract the cohesive prefix/suffix responsibility (startsWith/endsWith, their Any variants, appendIfMissing, prependIfMissing, removeStart, removeEnd) into a new class to reduce the number of public methods and total methods in Strings.",
+      "expected_impact": {
+        "primary_metric": "public_methods",
+        "public_methods_moved": 8,
+        "total_methods_moved": 8,
+        "loc_reduction_expected": "medium",
+        "rationale": "The extracted class will encapsulate all prefix/suffix-related public APIs: appendIfMissing, prependIfMissing, startsWith, startsWithAny, endsWith, endsWithAny, removeStart, removeEnd. Moving these 8 public methods out of Strings reduces its public method count and total method count and removes related implementation LOC (string checks and loops) from the target, improving modularization and single-responsibility separation."
+      },
+      "files": [
+        "src/main/java/org/apache/commons/lang3/Strings.java",
+        "src/main/java/org/apache/commons/lang3/StringsPrefixSuffix.java",
+        "src/test/java/org/apache/commons/lang3/StringsTest.java"
+      ],
+      "ops": [
+        {
+          "op": "EXTRACT_CLASS",
+          "inputs": [
+            "src/main/java/org/apache/commons/lang3/Strings.java"
+          ],
+          "outputs": [
+            "src/main/java/org/apache/commons/lang3/StringsPrefixSuffix.java",
+            "src/main/java/org/apache/commons/lang3/Strings.java"
+          ],
+          "details": "Create new class org.apache.commons.lang3.StringsPrefixSuffix that encapsulates prefix/suffix related operations. Move the following public methods from Strings into StringsPrefixSuffix (preserving logic): appendIfMissing(String, CharSequence, CharSequence...), prependIfMissing(String, CharSequence, CharSequence...), startsWith(CharSequence, CharSequence), startsWithAny(CharSequence, CharSequence...), endsWith(CharSequence, CharSequence), endsWithAny(CharSequence, CharSequence...), removeStart(String, CharSequence), removeEnd(String, CharSequence). The new class will hold an immutable ignoreCase flag (passed from Strings) and use CharSequenceUtils, ArrayUtils, and StringUtils as needed. Update Strings: remove these methods and add a private final StringsPrefixSuffix prefixSuffix field initialized in the Strings constructor (new StringsPrefixSuffix(ignoreCase)). Any internal usages within Strings that previously called these moved methods are updated to call the handler where necessary. No compatibility wrappers are added on Strings; the moved APIs are now available on the new class. Both files remain in package org.apache.commons.lang3.",
+          "risk": "medium"
+        },
+        {
+          "op": "ADD_OR_UPDATE_IMPORTS",
+          "inputs": [
+            "src/main/java/org/apache/commons/lang3/StringsPrefixSuffix.java",
+            "src/main/java/org/apache/commons/lang3/Strings.java"
+          ],
+          "outputs": [
+            "src/main/java/org/apache/commons/lang3/StringsPrefixSuffix.java",
+            "src/main/java/org/apache/commons/lang3/Strings.java"
+          ],
+          "details": "Add necessary imports in the new class for CharSequenceUtils, ArrayUtils, StringUtils and any static imports required. Ensure Strings.java imports remain consistent. No changes to external packages; all classes are in org.apache.commons.lang3 package.",
+          "risk": "low"
+        },
+        {
+          "op": "UPDATE_CALL_SITES",
+          "inputs": [
+            "src/main/java/org/apache/commons/lang3/Strings.java"
+          ],
+          "outputs": [
+            "src/main/java/org/apache/commons/lang3/Strings.java"
+          ],
+          "details": "Update internal references in Strings to use the new StringsPrefixSuffix instance where previously calling moved methods. Initialize a private final StringsPrefixSuffix prefixSuffix in the Strings constructor: this.prefixSuffix = new StringsPrefixSuffix(ignoreCase); Remove the moved methods from Strings to avoid duplication. Ensure nested subclasses (CiStrings, CsStrings) still call super(ignoreCase, nullIsLess) and compilation succeeds.",
+          "risk": "low"
+        },
+        {
+          "op": "UPDATE_TESTS",
+          "inputs": [
+            "src/test/java/org/apache/commons/lang3/StringsTest.java"
+          ],
+          "outputs": [],
+          "details": "Update related tests affected by this refactoring block so the configured build command passes. Adjust imports, package references, moved class references, constructors, and assertions only when required. Do not change production behavior through tests.",
+          "risk": "medium",
+          "api_change": false
+        }
+      ],
+      "test_files": [
+        "src/test/java/org/apache/commons/lang3/StringsTest.java"
+      ]
+    }
+  ]
+}

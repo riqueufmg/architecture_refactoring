@@ -2,7 +2,7 @@ from mvp.planner.lib.path_utils import (
     java_file_to_fqn,
     fqn_to_java_path,
 )
-
+from mvp.planner.lib.test_utils import find_related_tests_for_classes
 
 def enrich_plan_with_visibility_ops(plan: dict, context: dict) -> dict:
     internal_deps = context.get("internal_deps") or []
@@ -115,4 +115,79 @@ def enrich_plan_with_visibility_ops(plan: dict, context: dict) -> dict:
         next_id += 1
 
     plan["blocks"] = enriched_blocks
+    return plan
+
+## enrich plan with related tests for source code files
+def enrich_plan_with_related_tests(plan: dict, context: dict) -> dict:
+    
+    repo_path = context.get("repo_path", "")
+    source_root = context.get("target_source_root", "")
+
+    if not repo_path or not source_root:
+        return plan
+
+    blocks = plan.get("blocks") or []
+
+    ## the tests will checked block by block
+    ## tests refactoring occurs only in the mentioned classes in the block
+    for block in blocks:
+        files = block.get("files") or []
+
+        production_files = [
+            str(file)
+            for file in files
+            if str(file).startswith("src/main/")
+            and str(file).endswith(".java")
+        ]
+
+        ## check existing classes in block's plan
+        if not production_files:
+            continue
+
+        ## get tests from classes out of block's plan
+        related_tests = find_related_tests_for_classes(
+            repo_path=repo_path,
+            production_files=production_files,
+            source_root=source_root,
+        )
+
+        if not related_tests:
+            block["test_files"] = []
+            continue
+
+        merged_files = sorted(set(files) | set(related_tests))
+
+        block["files"] = merged_files
+        block["test_files"] = related_tests
+
+        ops = block.get("ops") or []
+
+        has_update_tests = any(
+            isinstance(op, dict)
+            and str(op.get("op", "")).strip() == "UPDATE_TESTS"
+            for op in ops
+        )
+
+        ## add new block operation to update tests
+        if not has_update_tests:
+            ops.append(
+                {
+                    "op": "UPDATE_TESTS",
+                    "inputs": related_tests,
+                    "outputs": [],
+                    "details": (
+                        "Update related tests affected by this refactoring block "
+                        "so the configured build command passes. Adjust imports, "
+                        "package references, moved class references, constructors, "
+                        "and assertions only when required. Do not change production "
+                        "behavior through tests."
+                    ),
+                    "risk": "medium",
+                    "api_change": False,
+                }
+            )
+
+        block["ops"] = ops
+
+    plan["blocks"] = blocks
     return plan

@@ -1,0 +1,6 @@
+{
+  "base_commit": "cac9ec71ee4cd3082f5b53548299a4c95752bf25",
+  "before_commit": "cac9ec71ee4cd3082f5b53548299a4c95752bf25",
+  "after_commit": "cac9ec71ee4cd3082f5b53548299a4c95752bf25",
+  "reset_output": "HEAD is now at cac9ec71e Fix int mask sign extension in BitField long methods (#1711).\n"
+}

@@ -1,0 +1,7 @@
+{
+  "ok": true,
+  "applied_files": [
+    "src/main/java/org/jsoup/safety/SafelistEnforcedAttributes.java"
+  ],
+  "git_status": "M src/main/java/org/jsoup/safety/SafelistEnforcedAttributes.java"
+}

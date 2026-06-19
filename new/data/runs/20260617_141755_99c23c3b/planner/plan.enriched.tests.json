@@ -1,0 +1,111 @@
+{
+  "smell_type": "Insufficient Modularization",
+  "target_level": "class",
+  "target": "org.jsoup.safety.Safelist",
+  "blocks": [
+    {
+      "id": 1,
+      "goal": "Extract the URL-protocols responsibility from Safelist into a dedicated SafelistProtocols class to reduce the number of public methods on Safelist and concentrate protocol-related logic and data into a cohesive component.",
+      "expected_impact": {
+        "primary_metric": "public_methods",
+        "public_methods_moved": 2,
+        "total_methods_moved": 4,
+        "loc_reduction_expected": "medium",
+        "rationale": "The extraction moves the two public protocol-management methods (addProtocols, removeProtocols) out of Safelist along with supporting private helpers (isSafeProtocol, getProtocolValue) and the protocols data structure. This reduces Safelist's public API surface and centralizes protocol handling, lowering total method count and LOC in the target class."
+      },
+      "files": [
+        "src/main/java/org/jsoup/safety/Safelist.java",
+        "src/main/java/org/jsoup/safety/SafelistProtocols.java",
+        "src/test/java/org/jsoup/integration/SafelistExtensionTest.java",
+        "src/test/java/org/jsoup/parser/HtmlParserTest.java",
+        "src/test/java/org/jsoup/safety/CleanerTest.java",
+        "src/test/java/org/jsoup/safety/SafelistTest.java"
+      ],
+      "ops": [
+        {
+          "op": "EXTRACT_CLASS",
+          "inputs": [
+            "src/main/java/org/jsoup/safety/Safelist.java"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/safety/SafelistProtocols.java",
+            "src/main/java/org/jsoup/safety/Safelist.java"
+          ],
+          "details": "Create a new production class org.jsoup.safety.SafelistProtocols in the same package. Move the protocols data structure (Map<TagName, Map<AttributeKey, Set<Protocol>>>) and the public methods addProtocols(String tag, String attribute, String... protocols) and removeProtocols(String tag, String attribute, String... removeProtocols) into SafelistProtocols. Also move the helper logic that interprets protocol values (getProtocolValue) and the protocol-check logic (isSafeProtocol) to SafelistProtocols. Provide public API on SafelistProtocols used by Safelist for protocol checks: boolean hasProtocolsFor(Safelist.TagName tag, Safelist.AttributeKey key), boolean isSafeProtocolValue(String value, Set<Safelist.Protocol> protocols), and boolean removeProtocols(...)/addProtocols(...). Update Safelist to hold a private final SafelistProtocols protocolsManager instance, initialized in constructors (default and copy), and update isSafeAttribute and shouldAbsUrl usage to delegate protocol checks to protocolsManager. Remove the moved protocols field and its nested Protocol class from Safelist. The extraction keeps all moved types in the same package so nested types (TagName, AttributeKey, AttributeValue) remain usable. This operation produces the new SafelistProtocols.java and an updated Safelist.java that delegates protocol concerns to the new class.",
+          "risk": "medium"
+        },
+        {
+          "op": "MOVE_FIELD",
+          "inputs": [
+            "src/main/java/org/jsoup/safety/Safelist.java#protocols"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/safety/SafelistProtocols.java#protocols"
+          ],
+          "details": "Move the field 'private final Map<TagName, Map<AttributeKey, Set<Protocol>>> protocols;' out of Safelist into SafelistProtocols as a private final field. Safelist will no longer declare this field; instead it will instantiate SafelistProtocols and pass any necessary references during construction (e.g., references to enforcedAttributes or attributes maps only if required by the delegation API).",
+          "risk": "medium"
+        },
+        {
+          "op": "MOVE_METHOD",
+          "inputs": [
+            "src/main/java/org/jsoup/safety/Safelist.java#addProtocols(java.lang.String,java.lang.String,java.lang.String[])",
+            "src/main/java/org/jsoup/safety/Safelist.java#removeProtocols(java.lang.String,java.lang.String,java.lang.String[])",
+            "src/main/java/org/jsoup/safety/Safelist.java#getProtocolValue(org.jsoup.nodes.Element,org.jsoup.nodes.Attribute)",
+            "src/main/java/org/jsoup/safety/Safelist.java#isSafeProtocol(java.lang.String,java.util.Set)"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/safety/SafelistProtocols.java#addProtocols(java.lang.String,java.lang.String,java.lang.String[])",
+            "src/main/java/org/jsoup/safety/SafelistProtocols.java#removeProtocols(java.lang.String,java.lang.String,java.lang.String[])",
+            "src/main/java/org/jsoup/safety/SafelistProtocols.java#getProtocolValue(org.jsoup.nodes.Element,org.jsoup.nodes.Attribute)",
+            "src/main/java/org/jsoup/safety/SafelistProtocols.java#isSafeProtocol(java.lang.String,java.util.Set)"
+          ],
+          "details": "Move the two public protocol management methods and their supporting private helpers into SafelistProtocols. The moved methods retain their original signatures for add/remove protocols and the helpers become package-private or private within SafelistProtocols as needed. Update Safelist.isSafeAttribute to call into protocolsManager to determine protocol acceptance (replacing direct access to the protocols map and isSafeProtocol/getProtocolValue), and update Safelist.shouldAbsUrl to delegate the protocol presence check to protocolsManager. This reduces Safelist's public method count by removing addProtocols and removeProtocols from Safelist.",
+          "risk": "medium"
+        },
+        {
+          "op": "ADD_OR_UPDATE_IMPORTS",
+          "inputs": [
+            "src/main/java/org/jsoup/safety/Safelist.java",
+            "src/main/java/org/jsoup/safety/SafelistProtocols.java"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/safety/Safelist.java",
+            "src/main/java/org/jsoup/safety/SafelistProtocols.java"
+          ],
+          "details": "Add any needed imports to the new SafelistProtocols file (e.g., java.util.* and org.jsoup.nodes.*) and update Safelist imports if the new class reference requires none (same package). Ensure both files compile in isolation.",
+          "risk": "low"
+        },
+        {
+          "op": "UPDATE_CALL_SITES",
+          "inputs": [
+            "src/main/java/org/jsoup/safety/Safelist.java"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/safety/Safelist.java"
+          ],
+          "details": "Within the updated Safelist.java, replace direct references to the moved protocols field and moved helper methods with calls to the protocolsManager instance. For example, where code used 'protocols.containsKey(tag)' and 'isSafeProtocol(getProtocolValue(el, attr), attrProts.get(key))', update to use protocolsManager.hasProtocolsFor(tag, key) and protocolsManager.isAllowed(el, attr, tag, key) (or similar delegation methods implemented on SafelistProtocols). Also update constructors to initialize protocolsManager and copy constructor to deep-copy or rewrap underlying protocol structures appropriately (using SafelistProtocols copy semantics).",
+          "risk": "medium"
+        },
+        {
+          "op": "UPDATE_TESTS",
+          "inputs": [
+            "src/test/java/org/jsoup/integration/SafelistExtensionTest.java",
+            "src/test/java/org/jsoup/parser/HtmlParserTest.java",
+            "src/test/java/org/jsoup/safety/CleanerTest.java",
+            "src/test/java/org/jsoup/safety/SafelistTest.java"
+          ],
+          "outputs": [],
+          "details": "Update related tests affected by this refactoring block so the configured build command passes. Adjust imports, package references, moved class references, constructors, and assertions only when required. Do not change production behavior through tests.",
+          "risk": "medium",
+          "api_change": false
+        }
+      ],
+      "test_files": [
+        "src/test/java/org/jsoup/integration/SafelistExtensionTest.java",
+        "src/test/java/org/jsoup/parser/HtmlParserTest.java",
+        "src/test/java/org/jsoup/safety/CleanerTest.java",
+        "src/test/java/org/jsoup/safety/SafelistTest.java"
+      ]
+    }
+  ]
+}

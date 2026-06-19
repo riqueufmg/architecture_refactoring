@@ -1,0 +1,91 @@
+{
+  "smell_type": "Insufficient Modularization",
+  "target_level": "class",
+  "target": "org.jsoup.safety.Safelist",
+  "blocks": [
+    {
+      "id": 1,
+      "goal": "Extract the tag-and-attribute configuration responsibility from Safelist into a new class SafelistTagAttributes to reduce the number of public methods and overall method concentration in Safelist.",
+      "expected_impact": {
+        "primary_metric": "public_methods",
+        "public_methods_moved": 5,
+        "total_methods_moved": 5,
+        "loc_reduction_expected": "medium",
+        "rationale": "Moves the cohesive tag/attribute management API (addTags, removeTags, addAttributes, removeAttributes, isSafeTag) and the backing fields (tagNames, attributes) into a new class. This reduces Safelist's public-method count by 5, lowers its total method count, and removes a sizeable chunk of configuration logic and related lines from the target class."
+      },
+      "files": [
+        "src/main/java/org/jsoup/safety/Safelist.java",
+        "src/main/java/org/jsoup/safety/SafelistTagAttributes.java"
+      ],
+      "ops": [
+        {
+          "op": "EXTRACT_CLASS",
+          "inputs": [
+            "src/main/java/org/jsoup/safety/Safelist.java"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/safety/SafelistTagAttributes.java"
+          ],
+          "details": "Create a new class org.jsoup.safety.SafelistTagAttributes that encapsulates the tag-and-attribute configuration responsibility. The new class will own: - fields: Set<TagName> tagNames and Map<TagName, Set<AttributeKey>> attributes (migrated from Safelist) - public methods: addTags(String...), removeTags(String...), addAttributes(String, String...), removeAttributes(String, String...), isSafeTag(String) - package-visible helpers: getAllowedAttributes(Safelist.TagName) and copyFrom(SafelistTagAttributes) to support Safelist internals The extracted class will be placed in the same package (org.jsoup.safety) so it can reference Safelist's nested types (TagName, AttributeKey, Protocol). The new class will accept references to SafelistEnforcedAttributes and SafelistProtocols as constructor parameters when it needs to interact with enforcement/protocols functionality during operations such as removeTags. The new class will maintain the same validation behavior (using org.jsoup.helper.Validate) and will preserve lower-casing by using Safelist.TagName.valueOf / AttributeKey.valueOf where appropriate.",
+          "risk": "medium"
+        },
+        {
+          "op": "MOVE_FIELD",
+          "inputs": [
+            "src/main/java/org/jsoup/safety/Safelist.java:tagNames",
+            "src/main/java/org/jsoup/safety/Safelist.java:attributes"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/safety/SafelistTagAttributes.java:tagNames",
+            "src/main/java/org/jsoup/safety/SafelistTagAttributes.java:attributes"
+          ],
+          "details": "Move the two configuration fields from Safelist into SafelistTagAttributes. In Safelist, replace the removed fields with a single final field: private final SafelistTagAttributes tagAttributes; Initialize tagAttributes in Safelist constructors after creating enforcedAttributesManager and protocolsManager. Provide a copyFrom(...) helper on SafelistTagAttributes to allow Safelist(Safelist) to deep-copy the tag/attribute data.",
+          "risk": "low"
+        },
+        {
+          "op": "MOVE_METHOD",
+          "inputs": [
+            "src/main/java/org/jsoup/safety/Safelist.java:addTags(java.lang.String...)",
+            "src/main/java/org/jsoup/safety/Safelist.java:removeTags(java.lang.String...)",
+            "src/main/java/org/jsoup/safety/Safelist.java:addAttributes(java.lang.String,java.lang.String...)",
+            "src/main/java/org/jsoup/safety/Safelist.java:removeAttributes(java.lang.String,java.lang.String...)",
+            "src/main/java/org/jsoup/safety/Safelist.java:isSafeTag(java.lang.String)"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/safety/SafelistTagAttributes.java:addTags(java.lang.String...)",
+            "src/main/java/org/jsoup/safety/SafelistTagAttributes.java:removeTags(java.lang.String...)",
+            "src/main/java/org/jsoup/safety/SafelistTagAttributes.java:addAttributes(java.lang.String,java.lang.String...)",
+            "src/main/java/org/jsoup/safety/SafelistTagAttributes.java:removeAttributes(java.lang.String,java.lang.String...)",
+            "src/main/java/org/jsoup/safety/SafelistTagAttributes.java:isSafeTag(java.lang.String)"
+          ],
+          "details": "Move these five public methods to the extracted class. The implementations are preserved but references to the moved fields are adjusted to use the extracted class's fields. Methods that need to interact with enforcement or protocol maps (e.g., removeTags) will call the provided SafelistEnforcedAttributes and SafelistProtocols instances passed into the SafelistTagAttributes constructor. The moved methods should continue to return Safelist-like chaining where the factory methods in Safelist expect chaining; however, to avoid adding delegating wrappers on Safelist, update Safelist's internal factory/static methods to construct a Safelist instance and call instance.tagAttributes.addTags(...)/addAttributes(...) directly, then return the Safelist instance.",
+          "risk": "medium"
+        },
+        {
+          "op": "UPDATE_CALL_SITES",
+          "inputs": [
+            "src/main/java/org/jsoup/safety/Safelist.java"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/safety/Safelist.java"
+          ],
+          "details": "Update all internal references within Safelist that previously accessed tagNames or attributes or called the moved methods to use the new SafelistTagAttributes instance (tagAttributes). Specific updates include: - Replace direct accesses to tagNames and attributes with tagAttributes.getAllowedAttributes(...) or tagAttributes.isTagAllowed(...) as appropriate. - In the default and copy constructors: initialize and/or copy tagAttributes (use tagAttributes.copyFrom(copy.tagAttributes) inside the Safelist(Safelist) copy ctor). - Update all static factory methods (none(), simpleText(), basic(), basicWithImages(), relaxed()) to create a Safelist s = new Safelist(); then call s.tagAttributes.addTags(...); s.tagAttributes.addAttributes(...); s.protocolsManager.addProtocols(...); s.enforcedAttributesManager.addEnforcedAttribute(...); and then return s. - Replace calls to isSafeTag(...) to call tagAttributes.isSafeTag(...). - Update private helper shouldAbsUrl(...) and isSafeAttribute(...) to retrieve allowed attributes via tagAttributes.getAllowedAttributes(tag) instead of the old attributes map. These are mechanical changes localized to Safelist.java and preserve behavior.",
+          "risk": "medium"
+        },
+        {
+          "op": "ADD_OR_UPDATE_IMPORTS",
+          "inputs": [
+            "src/main/java/org/jsoup/safety/SafelistTagAttributes.java",
+            "src/main/java/org/jsoup/safety/Safelist.java"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/safety/SafelistTagAttributes.java",
+            "src/main/java/org/jsoup/safety/Safelist.java"
+          ],
+          "details": "Add or update imports if the new class requires any additional imports (e.g., java.util.*). Since both classes are in the same package, fully-qualified references to nested types (Safelist.TagName, Safelist.AttributeKey, Safelist.Protocol) may be used; ensure Validate and Normalizer usages remain available.",
+          "risk": "low"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "smell_type": "Insufficient Modularization",
+  "target_level": "class",
+  "target": "org.jsoup.safety.Safelist",
+  "blocks": [
+    {
+      "id": 1,
+      "goal": "Extract the small, cohesive 'typed value' hierarchy (TypedValue and its specific typed subclasses TagName, AttributeKey, AttributeValue, Protocol) out of Safelist into a dedicated top-level class to reduce Safelist size and concentrate type-wrapper responsibilities.",
+      "files": [
+        "src/main/java/org/jsoup/safety/Safelist.java",
+        "src/main/java/org/jsoup/safety/TypedValue.java"
+      ],
+      "ops": [
+        {
+          "op": "EXTRACT_CLASS",
+          "inputs": [
+            "src/main/java/org/jsoup/safety/Safelist.java"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/safety/TypedValue.java",
+            "src/main/java/org/jsoup/safety/Safelist.java"
+          ],
+          "details": "Extract the nested static classes from Safelist: the abstract class TypedValue and its concrete typed wrappers TagName, AttributeKey, AttributeValue, and Protocol into a new top-level source file org.jsoup.safety.TypedValue. The new file will declare public abstract class TypedValue and public static classes TagName, AttributeKey, AttributeValue, and Protocol with the exact same constructors, valueOf factory methods, and implementations as in the original Safelist. Remove those nested class declarations from Safelist.java. This isolates the simple typed-wrapper responsibility (holding and comparing string values used as map keys) into its own class, reducing Safelist's size and responsibility concentration while preserving behavior.",
+          "risk": "low"
+        },
+        {
+          "op": "ADD_OR_UPDATE_IMPORTS",
+          "inputs": [
+            "src/main/java/org/jsoup/safety/Safelist.java"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/safety/Safelist.java"
+          ],
+          "details": "Add imports for the extracted nested types to Safelist.java (for example: import org.jsoup.safety.TypedValue.TagName; import org.jsoup.safety.TypedValue.AttributeKey; import org.jsoup.safety.TypedValue.AttributeValue; import org.jsoup.safety.TypedValue.Protocol). Remove the now-duplicated nested class definitions from Safelist and clean up any unused imports introduced by the extraction.",
+          "risk": "low"
+        },
+        {
+          "op": "UPDATE_CALL_SITES",
+          "inputs": [
+            "src/main/java/org/jsoup/safety/Safelist.java"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/safety/Safelist.java"
+          ],
+          "details": "Update all references inside Safelist.java that previously referred to the nested types (e.g. Safelist.TagName, Safelist.AttributeKey, Safelist.AttributeValue, Safelist.Protocol, and TypedValue) to refer to the extracted types via the added imports (TagName, AttributeKey, AttributeValue, Protocol) or with fully-qualified names if necessary. Ensure all occurrences in method signatures, field declarations, generics, and method bodies are updated so the modified Safelist compiles against the new top-level TypedValue.java without behavioral changes.",
+          "risk": "low"
+        }
+      ]
+    }
+  ]
+}

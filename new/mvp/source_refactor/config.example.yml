@@ -61,5 +61,8 @@ mechanical_tools:
     - -Dskip.yarn=true
     - org.openrewrite.maven:rewrite-maven-plugin:runNoFork
 
+tests:
+  update_tests: true
+
 output:
   runs_dir: /absolute/path/to/data/runs

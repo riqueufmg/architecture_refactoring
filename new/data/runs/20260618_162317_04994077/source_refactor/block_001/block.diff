@@ -1,0 +1,416 @@
+commit 0155fb6ab4b45d7f3f59e0c879624f113b75887a
+Author: Henrique Nunes <rique@face.ufmg.br>
+Date:   Thu Jun 18 16:31:06 2026 -0300
+
+    source_refactor: apply block 1
+
+diff --git a/src/main/java/org/jsoup/parser/CssIdentifier.java b/src/main/java/org/jsoup/parser/CssIdentifier.java
+new file mode 100644
+index 00000000..bdcb6a50
+--- /dev/null
++++ b/src/main/java/org/jsoup/parser/CssIdentifier.java
+@@ -0,0 +1,176 @@
++package org.jsoup.parser;
++
++import org.jsoup.internal.StringUtil;
++
++/**
++ * Helper class extracted from TokenQueue to handle CSS identifier parsing and escaping.
++ */
++public final class CssIdentifier {
++    private static final char Esc = '\\';
++    private static final char Hyphen_Minus = '-';
++    private static final char Unicode_Null = '\u0000';
++    private static final char Replacement = '\uFFFD';
++
++    private CssIdentifier() {}
++
++    public static String escapeCssIdentifier(String in) {
++        if (in.isEmpty()) return in;
++
++        StringBuilder out = StringUtil.borrowBuilder();
++        CharacterReader q = new CharacterReader(in);
++
++        char firstChar = q.current();
++        if (firstChar == Hyphen_Minus) {
++            q.advance();
++            if (q.isEmpty()) {
++                appendEscaped(out, Hyphen_Minus);
++            } else {
++                out.append(Hyphen_Minus);
++
++                char secondChar = q.current();
++                if (StringUtil.isDigit(secondChar)) {
++                    appendEscapedCodepoint(out, q.consume());
++                }
++            }
++        } else if (StringUtil.isDigit(firstChar)) {
++            appendEscapedCodepoint(out, q.consume());
++        }
++
++        while (!q.isEmpty()) {
++            char c = q.consume();
++            if (c == Unicode_Null) {
++                out.append(Replacement);
++            } else if (c <= '\u001F' || c == '\u007F') {
++                appendEscapedCodepoint(out, c);
++            } else if (isIdent(c)) {
++                out.append(c);
++            } else {
++                appendEscaped(out, c);
++            }
++        }
++
++        q.close();
++        return StringUtil.releaseBuilder(out);
++    }
++
++    public static String consumeCssIdentifier(CharacterReader reader) {
++        if (reader.isEmpty()) throw new IllegalArgumentException("CSS identifier expected, but end of input found");
++
++        String identifier = reader.consumeMatching(CssIdentifier::isIdent);
++        char c = reader.current();
++        if (c != Esc && c != Unicode_Null) {
++            return identifier;
++        }
++
++        StringBuilder out = StringUtil.borrowBuilder();
++        if (!identifier.isEmpty()) out.append(identifier);
++
++        while (!reader.isEmpty()) {
++            c = reader.current();
++            if (isIdent(c)) {
++                out.append(reader.consume());
++            } else if (c == Unicode_Null) {
++                reader.advance();
++                out.append(Replacement);
++            } else if (c == Esc) {
++                reader.advance();
++                if (!reader.isEmpty() && isNewline(reader.current())) {
++                    reader.unconsume();
++                    break;
++                } else {
++                    consumeCssEscapeSequenceInto(reader, out);
++                }
++            } else {
++                break;
++            }
++        }
++        return StringUtil.releaseBuilder(out);
++    }
++
++    public static String consumeEscapedCssIdentifier(CharacterReader reader, char... matches) {
++        StringBuilder sb = StringUtil.borrowBuilder();
++        while (!reader.isEmpty()) {
++            char c = reader.current();
++            if (c == Esc) {
++                reader.advance();
++                if (!reader.isEmpty()) sb.append(reader.consume());
++                else break;
++            } else if (matchesCssIdentifier(reader, matches)) {
++                sb.append(c);
++                reader.advance();
++            } else {
++                break;
++            }
++        }
++        return StringUtil.releaseBuilder(sb);
++    }
++
++    private static void consumeCssEscapeSequenceInto(CharacterReader reader, StringBuilder out) {
++        if (reader.isEmpty()) {
++            out.append(Replacement);
++            return;
++        }
++
++        char firstEscaped = reader.consume();
++        if (!StringUtil.isHexDigit(firstEscaped)) {
++            out.append(firstEscaped);
++        } else {
++            reader.unconsume();
++            String hexString = reader.consumeMatching(StringUtil::isHexDigit, 6);
++            int codePoint;
++            try {
++                codePoint = Integer.parseInt(hexString, 16);
++            } catch (NumberFormatException e) {
++                throw new IllegalArgumentException("Invalid escape sequence: " + hexString, e);
++            }
++            if (isValidCodePoint(codePoint)) {
++                out.appendCodePoint(codePoint);
++            } else {
++                out.append(Replacement);
++            }
++
++            if (!reader.isEmpty()) {
++                char c = reader.current();
++                if (c == '\r') {
++                    reader.advance();
++                    if (!reader.isEmpty() && reader.current() == '\n') reader.advance();
++                } else if (c == ' ' || c == '\t' || isNewline(c)) {
++                    reader.advance();
++                }
++            }
++        }
++    }
++
++    private static void appendEscaped(StringBuilder out, char c) {
++        out.append(Esc).append(c);
++    }
++
++    private static void appendEscapedCodepoint(StringBuilder out, char c) {
++        out.append(Esc).append(Integer.toHexString(c)).append(' ');
++    }
++
++    private static boolean matchesCssIdentifier(CharacterReader reader, char... matches) {
++        return Character.isLetterOrDigit(reader.current()) || reader.matchesAny(matches);
++    }
++
++    // statics below specifically for CSS identifiers:
++    private static boolean isNonAscii(char c) {
++        return c >= '\u0080';
++    }
++
++    private static boolean isIdentStart(char c) {
++        return c == '_' || StringUtil.isAsciiLetter(c) || isNonAscii(c);
++    }
++
++    private static boolean isIdent(char c) {
++        return c == Hyphen_Minus || StringUtil.isDigit(c) || isIdentStart(c);
++    }
++
++    private static boolean isNewline(char c) {
++        return c == '\n' || c == '\r' || c == '\f';
++    }
++
++    private static boolean isValidCodePoint(int codePoint) {
++        return codePoint != 0 && Character.isValidCodePoint(codePoint) && !Character.isSurrogate((char) codePoint);
++    }
++}
+diff --git a/src/main/java/org/jsoup/parser/TokenQueue.java b/src/main/java/org/jsoup/parser/TokenQueue.java
+index f81da33b..ebf5c279 100644
+--- a/src/main/java/org/jsoup/parser/TokenQueue.java
++++ b/src/main/java/org/jsoup/parser/TokenQueue.java
+@@ -9,9 +9,6 @@ import org.jsoup.helper.Validate;
+ 
+ public class TokenQueue implements AutoCloseable {
+     private static final char Esc = '\\'; // escape char for chomp balanced.
+-    private static final char Hyphen_Minus = '-';
+-    private static final char Unicode_Null = '\u0000';
+-    private static final char Replacement = '\uFFFD';
+ 
+     private final CharacterReader reader;
+ 
+@@ -227,66 +224,7 @@ public class TokenQueue implements AutoCloseable {
+      @see <a href="https://www.w3.org/TR/cssom-1/#serialize-an-identifier">CSS Object Model, serialize an identifier</a>
+      */
+     public static String escapeCssIdentifier(String in) {
+-        if (in.isEmpty()) return in;
+-
+-        StringBuilder out = StringUtil.borrowBuilder();
+-        TokenQueue q = new TokenQueue(in);
+-
+-        char firstChar = q.current();
+-        if (firstChar == Hyphen_Minus) {
+-            q.advance();
+-            if (q.isEmpty()) {
+-                // If the character is the first character and is a "-" (U+002D), and there is no second character, then
+-                // the escaped character.
+-                appendEscaped(out, Hyphen_Minus);
+-            } else {
+-                out.append(Hyphen_Minus);
+-
+-                char secondChar = q.current();
+-                if (StringUtil.isDigit(secondChar)) {
+-                    // If the character is the second character and is in the range [0-9] (U+0030 to U+0039) and the
+-                    // first character is a "-" (U+002D), then the character escaped as code point.
+-                    appendEscapedCodepoint(out, q.consume());
+-                }
+-            }
+-        } else if (StringUtil.isDigit(firstChar)) {
+-            // If the character is the first character and is in the range [0-9] (U+0030 to U+0039), then the character
+-            // escaped as code point.
+-            appendEscapedCodepoint(out, q.consume());
+-        }
+-
+-        while (!q.isEmpty()) {
+-            // Note: It's fine to iterate on chars because non-ASCII characters are never escaped. So surrogate pairs
+-            // are kept intact.
+-            char c = q.consume();
+-            if (c == Unicode_Null) {
+-                // If the character is NULL (U+0000), then the REPLACEMENT CHARACTER (U+FFFD).
+-                out.append(Replacement);
+-            } else if (c <= '\u001F' || c == '\u007F') {
+-                // If the character is in the range [\1-\1f] (U+0001 to U+001F) or is U+007F, then the character
+-                // escaped as code point.
+-                appendEscapedCodepoint(out, c);
+-            } else if (isIdent(c)) {
+-                // If the character is not handled by one of the above rules and is greater than or equal to U+0080,
+-                // is "-" (U+002D) or "_" (U+005F), or is in one of the ranges [0-9] (U+0030 to U+0039),
+-                // [A-Z] (U+0041 to U+005A), or [a-z] (U+0061 to U+007A), then the character itself.
+-                out.append(c);
+-            } else {
+-                // Otherwise, the escaped character.
+-                appendEscaped(out, c);
+-            }
+-        }
+-
+-        q.close();
+-        return StringUtil.releaseBuilder(out);
+-    }
+-
+-    private static void appendEscaped(StringBuilder out, char c) {
+-        out.append(Esc).append(c);
+-    }
+-
+-    private static void appendEscapedCodepoint(StringBuilder out, char c) {
+-        out.append(Esc).append(Integer.toHexString(c)).append(' ');
++        return CssIdentifier.escapeCssIdentifier(in);
+     }
+ 
+     /**
+@@ -308,7 +246,7 @@ public class TokenQueue implements AutoCloseable {
+      * @return tag name
+      */
+     public String consumeElementSelector() {
+-        return consumeEscapedCssIdentifier(ElementSelectorChars);
++        return CssIdentifier.consumeEscapedCssIdentifier(reader, ElementSelectorChars);
+     }
+     private static final char[] ElementSelectorChars = {'*', '|', '_', '-'};
+ 
+@@ -324,135 +262,7 @@ public class TokenQueue implements AutoCloseable {
+      @see <a href="https://www.w3.org/TR/css-syntax-3/#typedef-ident-token">CSS Syntax Module Level 3, ident-token</a>
+      */
+     public String consumeCssIdentifier() {
+-        if (isEmpty()) throw new IllegalArgumentException("CSS identifier expected, but end of input found");
+-
+-        // Fast path for CSS identifiers that don't contain escape sequences.
+-        String identifier = reader.consumeMatching(TokenQueue::isIdent);
+-        char c = current();
+-        if (c != Esc && c != Unicode_Null) {
+-            // If we didn't end on an Esc or a Null, we consumed the whole identifier
+-            return identifier;
+-        }
+-
+-        // An escape sequence was found. Use a StringBuilder to store the decoded CSS identifier.
+-        StringBuilder out = StringUtil.borrowBuilder();
+-        if (!identifier.isEmpty()) {
+-            // Copy the CSS identifier up to the first escape sequence.
+-            out.append(identifier);
+-        }
+-
+-        while (!isEmpty()) {
+-            c = current();
+-            if (isIdent(c)) {
+-                out.append(consume());
+-            } else if (c == Unicode_Null) {
+-                // https://www.w3.org/TR/css-syntax-3/#input-preprocessing
+-                advance();
+-                out.append(Replacement);
+-            } else if (c == Esc) {
+-                advance();
+-                if (!isEmpty() && isNewline(current())) {
+-                    // Not a valid escape sequence. This is treated as the end of the CSS identifier.
+-                    reader.unconsume();
+-                    break;
+-                } else {
+-                    consumeCssEscapeSequenceInto(out);
+-                }
+-            } else {
+-                break;
+-            }
+-        }
+-        return StringUtil.releaseBuilder(out);
+-    }
+-
+-    private void consumeCssEscapeSequenceInto(StringBuilder out) {
+-        if (isEmpty()) {
+-            out.append(Replacement);
+-            return;
+-        }
+-
+-        char firstEscaped = consume();
+-        if (!StringUtil.isHexDigit(firstEscaped)) {
+-            out.append(firstEscaped);
+-        } else {
+-            reader.unconsume(); // put back the first hex digit
+-            String hexString = reader.consumeMatching(StringUtil::isHexDigit, 6); // consume up to 6 hex digits
+-            int codePoint;
+-            try {
+-                codePoint = Integer.parseInt(hexString, 16);
+-            } catch (NumberFormatException e) {
+-                throw new IllegalArgumentException("Invalid escape sequence: " + hexString, e);
+-            }
+-            if (isValidCodePoint(codePoint)) {
+-                out.appendCodePoint(codePoint);
+-            } else {
+-                out.append(Replacement);
+-            }
+-
+-            if (!isEmpty()) {
+-                char c = current();
+-                if (c == '\r') {
+-                    // Since there's currently no input preprocessing, check for CRLF here.
+-                    // https://www.w3.org/TR/css-syntax-3/#input-preprocessing
+-                    advance();
+-                    if (!isEmpty() && current() == '\n') advance();
+-                } else if (c == ' ' || c == '\t' || isNewline(c)) {
+-                    advance();
+-                }
+-            }
+-        }
+-    }
+-
+-    // statics below specifically for CSS identifiers:
+-
+-    // https://www.w3.org/TR/css-syntax-3/#non-ascii-code-point
+-    private static boolean isNonAscii(char c) {
+-        return c >= '\u0080';
+-    }
+-
+-    // https://www.w3.org/TR/css-syntax-3/#ident-start-code-point
+-    private static boolean isIdentStart(char c) {
+-        return c == '_' || StringUtil.isAsciiLetter(c) || isNonAscii(c);
+-    }
+-
+-    // https://www.w3.org/TR/css-syntax-3/#ident-code-point
+-    private static boolean isIdent(char c) {
+-        return c == Hyphen_Minus || StringUtil.isDigit(c) || isIdentStart(c);
+-    }
+-
+-    // https://www.w3.org/TR/css-syntax-3/#newline
+-    // Note: currently there's no preprocessing happening.
+-    private static boolean isNewline(char c) {
+-        return c == '\n' || c == '\r' || c == '\f';
+-    }
+-
+-    // https://www.w3.org/TR/css-syntax-3/#consume-an-escaped-code-point
+-    private static boolean isValidCodePoint(int codePoint) {
+-        return codePoint != 0 && Character.isValidCodePoint(codePoint) && !Character.isSurrogate((char) codePoint);
+-    }
+-
+-    private static final char[] CssIdentifierChars = {'-', '_'};
+-
+-    private String consumeEscapedCssIdentifier(char... matches) {
+-        StringBuilder sb = StringUtil.borrowBuilder();
+-        while (!isEmpty()) {
+-            char c = current();
+-            if (c == Esc) {
+-                advance();
+-                if (!isEmpty()) sb.append(consume());
+-                else break;
+-            } else if (matchesCssIdentifier(matches)) {
+-                sb.append(c);
+-                advance();
+-            } else {
+-                break;
+-            }
+-        }
+-        return StringUtil.releaseBuilder(sb);
+-    }
+-
+-    private boolean matchesCssIdentifier(char... matches) {
+-        return matchesWord() || reader.matchesAny(matches);
++        return CssIdentifier.consumeCssIdentifier(reader);
+     }
+ 
+     /**

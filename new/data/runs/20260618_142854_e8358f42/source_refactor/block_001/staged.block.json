@@ -1,0 +1,90 @@
+{
+  "id": 1,
+  "goal": "Extract the numeric range and primitive-number random-generation responsibility from RandomUtils into a new coherent class to reduce the number of public methods on RandomUtils and to encapsulate range/validation logic.",
+  "expected_impact": {
+    "primary_metric": "public_methods",
+    "public_methods_moved": 8,
+    "total_methods_moved": 9,
+    "loc_reduction_expected": "medium",
+    "rationale": "The instance numeric random methods (randomDouble, randomDouble(range), randomFloat, randomFloat(range), randomInt, randomInt(range), randomLong, randomLong(range)) and the private helper randomLong(long) form a cohesive responsibility (numeric-range generation and validation). Moving them into RangeRandomGenerator removes 8 public instance methods from RandomUtils and one private helper, lowering the class's public method count and total method count and concentrating numeric-range logic in a single dedicated class."
+  },
+  "files": [
+    "src/main/java/org/apache/commons/lang3/RandomUtils.java",
+    "src/main/java/org/apache/commons/lang3/RangeRandomGenerator.java",
+    "src/test/java/org/apache/commons/lang3/RandomUtilsTest.java"
+  ],
+  "ops": [
+    {
+      "op": "EXTRACT_CLASS",
+      "inputs": [
+        "src/main/java/org/apache/commons/lang3/RandomUtils.java"
+      ],
+      "outputs": [
+        "src/main/java/org/apache/commons/lang3/RangeRandomGenerator.java"
+      ],
+      "details": "Create a new production class org.apache.commons.lang3.RangeRandomGenerator that encapsulates numeric random generation and range-validation. The new class will live in the same package and have a constructor RangeRandomGenerator(java.util.function.Supplier<java.util.Random> randomSupplier). It will declare a private final Supplier<Random> random supplier field and implement the following instance methods (signatures kept consistent with the originals):\n- public double randomDouble()\n- public double randomDouble(double startInclusive, double endExclusive)\n- public float randomFloat()\n- public float randomFloat(float startInclusive, float endExclusive)\n- public int randomInt()\n- public int randomInt(int startInclusive, int endExclusive)\n- public long randomLong()\n- public long randomLong(long startInclusive, long endExclusive)\nAdditionally, include the private helper long randomLong(long n) that was in RandomUtils. The methods will use Validate.isTrue(...) for argument checks and the supplier for random instances (randomSupplier.get()). The class will import java.util.Random and java.util.function.Supplier and be package-private or public as needed; make it public so RandomUtils can instantiate it without visibility issues. No logic changes are introduced; code is moved and adjusted to reference the internal supplier field instead of RandomUtils.random().",
+      "risk": "low"
+    },
+    {
+      "op": "MOVE_FIELD",
+      "inputs": [
+        "src/main/java/org/apache/commons/lang3/RandomUtils.java"
+      ],
+      "outputs": [
+        "src/main/java/org/apache/commons/lang3/RangeRandomGenerator.java",
+        "src/main/java/org/apache/commons/lang3/RandomUtils.java"
+      ],
+      "details": "Move the private final Supplier<Random> random field's responsibility into the new RangeRandomGenerator. In practice, add a private final Supplier<Random> randomSupplier field to RangeRandomGenerator (set via constructor) and remove that field from RandomUtils. To preserve behavior, add a private final RangeRandomGenerator rangeGenerator field to RandomUtils which is initialized from the existing Supplier<Random> passed to RandomUtils's private constructor and the deprecated public no-arg constructor. Update RandomUtils constructors to instantiate rangeGenerator = new RangeRandomGenerator(this.random) or new RangeRandomGenerator(SECURE_STRONG_SUPPLIER) as appropriate. This keeps RandomUtils lightweight while transferring the supplier ownership to the extracted class.",
+      "risk": "medium"
+    },
+    {
+      "op": "MOVE_METHOD",
+      "inputs": [
+        "src/main/java/org/apache/commons/lang3/RandomUtils.java"
+      ],
+      "outputs": [
+        "src/main/java/org/apache/commons/lang3/RangeRandomGenerator.java",
+        "src/main/java/org/apache/commons/lang3/RandomUtils.java"
+      ],
+      "details": "Move the following instance methods from RandomUtils to RangeRandomGenerator (keeping signatures): public double randomDouble(), public double randomDouble(double, double), public float randomFloat(), public float randomFloat(float, float), public int randomInt(), public int randomInt(int, int), public long randomLong(), public long randomLong(long, long), and the private helper long randomLong(long n). Update moved method bodies to use the local supplier field (randomSupplier.get()) instead of RandomUtils.random(). Remove these methods from RandomUtils.",
+      "risk": "low"
+    },
+    {
+      "op": "UPDATE_CALL_SITES",
+      "inputs": [
+        "src/main/java/org/apache/commons/lang3/RandomUtils.java"
+      ],
+      "outputs": [
+        "src/main/java/org/apache/commons/lang3/RandomUtils.java"
+      ],
+      "details": "Update internal call sites inside RandomUtils that previously invoked the moved methods to call through the new rangeGenerator field. Specifically, update the deprecated static convenience methods (nextBoolean wrappers already call randomBoolean; the deprecated static numeric methods that previously delegated to secure().randomX(...) must now call secure().rangeGenerator.randomX(...)). Since rangeGenerator is a private instance field on RandomUtils, calls within RandomUtils will use secure().rangeGenerator.randomInt(...), secure().rangeGenerator.randomDouble(...), secure().rangeGenerator.randomFloat(...), secure().rangeGenerator.randomLong(...). Also update any constructor initialization to instantiate rangeGenerator so these call sites remain valid. No external call sites are changed in this block.",
+      "risk": "low"
+    },
+    {
+      "op": "ADD_OR_UPDATE_IMPORTS",
+      "inputs": [
+        "src/main/java/org/apache/commons/lang3/RangeRandomGenerator.java",
+        "src/main/java/org/apache/commons/lang3/RandomUtils.java"
+      ],
+      "outputs": [
+        "src/main/java/org/apache/commons/lang3/RangeRandomGenerator.java",
+        "src/main/java/org/apache/commons/lang3/RandomUtils.java"
+      ],
+      "details": "Ensure imports for java.util.Random and java.util.function.Supplier are present in the new RangeRandomGenerator and that RandomUtils still imports required classes. No new external dependencies are introduced. Keep org.apache.commons.lang3.Validate usage as-is (existing package class).",
+      "risk": "low"
+    },
+    {
+      "op": "UPDATE_TESTS",
+      "inputs": [
+        "src/test/java/org/apache/commons/lang3/RandomUtilsTest.java"
+      ],
+      "outputs": [],
+      "details": "Update related tests affected by this refactoring block so the configured build command passes. Adjust imports, package references, moved class references, constructors, and assertions only when required. Do not change production behavior through tests.",
+      "risk": "medium",
+      "api_change": false
+    }
+  ],
+  "test_files": [
+    "src/test/java/org/apache/commons/lang3/RandomUtilsTest.java"
+  ]
+}

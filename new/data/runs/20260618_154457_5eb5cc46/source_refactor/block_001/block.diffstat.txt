@@ -1,0 +1,9 @@
+commit a3524034eac6886aade355a838ef027d8a3483d9
+Author: Henrique Nunes <rique@face.ufmg.br>
+Date:   Thu Jun 18 16:00:46 2026 -0300
+
+    source_refactor: apply block 1
+
+ src/main/java/org/jsoup/parser/TokeniserState.java | 217 ++-------------------
+ .../org/jsoup/parser/TokeniserStateReader.java     | 192 ++++++++++++++++++
+ 2 files changed, 204 insertions(+), 205 deletions(-)

@@ -1,0 +1,5 @@
+{
+  "files_to_write": [],
+  "files_to_delete": [],
+  "notes": "No files required changes: the requested refactoring (moving helper fields/methods from Attribute into AttributeUtil and delegating stubs in Attribute) is already applied in the provided sources. Attribute delegates to AttributeUtil for getValidKey, isBooleanAttribute, html emission helpers, and the booleanAttributes list lives in AttributeUtil. Tests did not require updates."
+}

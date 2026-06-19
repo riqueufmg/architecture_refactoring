@@ -1,0 +1,60 @@
+{
+  "smell_type": "Insufficient Modularization",
+  "target_level": "class",
+  "target": "org.jsoup.internal.StringUtil",
+  "blocks": [
+    {
+      "id": 1,
+      "goal": "Extract the string-joining responsibility (join helpers, the StringJoiner implementation, and the joining Collector) from StringUtil into a new cohesive class to reduce the number of public methods and total methods in StringUtil.",
+      "expected_impact": {
+        "primary_metric": "public_methods",
+        "public_methods_moved": 4,
+        "total_methods_moved": 8,
+        "loc_reduction_expected": "medium",
+        "rationale": "Moving the join overloads (join(Collection, sep), join(Iterator, sep), join(String[], sep)), the StringJoiner implementation (constructor, add, append, complete) and the joining( String ) Collector removes a cohesive chunk of public API and implementation from StringUtil. This reduces the target class public method count and overall LOC significantly, concentrating join-related responsibilities into a dedicated class."
+      },
+      "files": [
+        "src/main/java/org/jsoup/internal/StringUtil.java",
+        "src/main/java/org/jsoup/internal/StringJoiner.java"
+      ],
+      "ops": [
+        {
+          "op": "EXTRACT_CLASS",
+          "inputs": [
+            "src/main/java/org/jsoup/internal/StringUtil.java"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/internal/StringJoiner.java",
+            "src/main/java/org/jsoup/internal/StringUtil.java"
+          ],
+          "details": "Extract a new top-level class org.jsoup.internal.StringJoiner that contains: 1) the public static class StringJoiner implementation (constructor, add, append, complete) moved from StringUtil; 2) the public static join methods: join(Collection<?> strings, String sep), join(Iterator<?> strings, String sep), join(String[] strings, String sep); and 3) the public static Collector<CharSequence, ?, String> joining(String delimiter). The extracted StringJoiner will use StringUtil.borrowBuilder() and StringUtil.releaseBuilder(StringBuilder) (fully-qualified calls to avoid moving builder pool logic). Remove the moved methods and the inner class from StringUtil. The remaining StringUtil methods (e.g., borrowBuilder/releaseBuilder, padding, whitespace utilities, normaliseWhitespace, resolve, etc.) are left in place.",
+          "risk": "low"
+        },
+        {
+          "op": "ADD_OR_UPDATE_IMPORTS",
+          "inputs": [
+            "src/main/java/org/jsoup/internal/StringJoiner.java"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/internal/StringJoiner.java"
+          ],
+          "details": "Add required imports to the new StringJoiner.java: java.util.Arrays, java.util.Collection, java.util.Iterator, java.util.stream.Collector. Ensure package declaration is 'package org.jsoup.internal;'.",
+          "risk": "low"
+        },
+        {
+          "op": "UPDATE_CALL_SITES",
+          "inputs": [
+            "src/main/java/org/jsoup/internal/StringUtil.java",
+            "src/main/java/org/jsoup/internal/StringJoiner.java"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/internal/StringUtil.java",
+            "src/main/java/org/jsoup/internal/StringJoiner.java"
+          ],
+          "details": "Update any references that previously relied on the nested class or join methods inside StringUtil. In particular: remove internal usage of the old inner-type qualifier (StringUtil.StringJoiner) and ensure moved code compiles as a top-level class. Update any references within the moved code to call StringUtil.borrowBuilder() and StringUtil.releaseBuilder(...) explicitly. No external call sites outside these files are modified in this block.",
+          "risk": "medium"
+        }
+      ]
+    }
+  ]
+}

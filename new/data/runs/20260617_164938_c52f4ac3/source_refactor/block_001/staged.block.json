@@ -1,0 +1,106 @@
+{
+  "id": 1,
+  "goal": "Extract the CSS identifier parsing responsibility from TokenQueue into a new CssIdentifierParser class. This will remove a cohesive cluster of methods (including a public API method) from TokenQueue, reducing its public method count and overall size.",
+  "expected_impact": {
+    "primary_metric": "public_methods",
+    "public_methods_moved": 1,
+    "total_methods_moved": 5,
+    "loc_reduction_expected": "medium",
+    "rationale": "The extraction removes the public consumeCssIdentifier() method (reducing TokenQueue public method count by 1) along with several private helper methods and constants that implement CSS identifier parsing. This reduces TokenQueue's total methods and lines of code by moving a cohesive responsibility into a dedicated class."
+  },
+  "files": [
+    "src/main/java/org/jsoup/parser/CssIdentifierParser.java",
+    "src/main/java/org/jsoup/parser/TokenQueue.java",
+    "src/test/java/org/jsoup/parser/TokenQueueTest.java",
+    "src/test/java/org/jsoup/select/SelectorTest.java"
+  ],
+  "ops": [
+    {
+      "op": "EXTRACT_CLASS",
+      "inputs": [
+        "src/main/java/org/jsoup/parser/TokenQueue.java"
+      ],
+      "outputs": [
+        "src/main/java/org/jsoup/parser/CssIdentifierParser.java",
+        "src/main/java/org/jsoup/parser/TokenQueue.java"
+      ],
+      "details": "Create new class org.jsoup.parser.CssIdentifierParser that encapsulates the CSS identifier parsing logic. Moved members: public String consumeCssIdentifier(), private void consumeCssEscapeSequenceInto(StringBuilder), private String consumeEscapedCssIdentifier(char...), private boolean matchesCssIdentifier(char...), and private static boolean isNewline(char). Also move related constants used exclusively by this logic: Esc, Unicode_Null, Replacement, and CssIdentifierChars. The new class takes a CharacterReader in its constructor and uses it to operate on the same underlying reader as TokenQueue. TokenQueue will be updated to hold a private final CssIdentifierParser cssParser field initialized in its constructor and will delegate calls where necessary (e.g. consumeElementSelector will delegate to cssParser.consumeEscapedCssIdentifier(ElementSelectorChars)).",
+      "risk": "low"
+    },
+    {
+      "op": "MOVE_METHOD",
+      "inputs": [
+        "src/main/java/org/jsoup/parser/TokenQueue.java:public String consumeCssIdentifier()",
+        "src/main/java/org/jsoup/parser/TokenQueue.java:private void consumeCssEscapeSequenceInto(StringBuilder)",
+        "src/main/java/org/jsoup/parser/TokenQueue.java:private String consumeEscapedCssIdentifier(char...)",
+        "src/main/java/org/jsoup/parser/TokenQueue.java:private boolean matchesCssIdentifier(char...)",
+        "src/main/java/org/jsoup/parser/TokenQueue.java:private static boolean isNewline(char)"
+      ],
+      "outputs": [
+        "src/main/java/org/jsoup/parser/CssIdentifierParser.java:public String consumeCssIdentifier()",
+        "src/main/java/org/jsoup/parser/CssIdentifierParser.java:private void consumeCssEscapeSequenceInto(StringBuilder)",
+        "src/main/java/org/jsoup/parser/CssIdentifierParser.java:private String consumeEscapedCssIdentifier(char...)",
+        "src/main/java/org/jsoup/parser/CssIdentifierParser.java:private boolean matchesCssIdentifier(char...)",
+        "src/main/java/org/jsoup/parser/CssIdentifierParser.java:private static boolean isNewline(char)"
+      ],
+      "details": "Move the listed methods from TokenQueue into CssIdentifierParser. Adjust visibility where appropriate (preserve public for consumeCssIdentifier). Internal helper methods remain private in the new class.",
+      "risk": "low"
+    },
+    {
+      "op": "MOVE_FIELD",
+      "inputs": [
+        "src/main/java/org/jsoup/parser/TokenQueue.java:private static final char Esc",
+        "src/main/java/org/jsoup/parser/TokenQueue.java:private static final char Unicode_Null",
+        "src/main/java/org/jsoup/parser/TokenQueue.java:private static final char Replacement",
+        "src/main/java/org/jsoup/parser/TokenQueue.java:private static final char[] CssIdentifierChars"
+      ],
+      "outputs": [
+        "src/main/java/org/jsoup/parser/CssIdentifierParser.java:private static final char Esc",
+        "src/main/java/org/jsoup/parser/CssIdentifierParser.java:private static final char Unicode_Null",
+        "src/main/java/org/jsoup/parser/CssIdentifierParser.java:private static final char Replacement",
+        "src/main/java/org/jsoup/parser/CssIdentifierParser.java:private static final char[] CssIdentifierChars"
+      ],
+      "details": "Move constants that are exclusively used by the CSS identifier parsing methods into the new class so the moved methods remain self-contained.",
+      "risk": "low"
+    },
+    {
+      "op": "ADD_OR_UPDATE_IMPORTS",
+      "inputs": [
+        "src/main/java/org/jsoup/parser/CssIdentifierParser.java",
+        "src/main/java/org/jsoup/parser/TokenQueue.java"
+      ],
+      "outputs": [
+        "src/main/java/org/jsoup/parser/CssIdentifierParser.java",
+        "src/main/java/org/jsoup/parser/TokenQueue.java"
+      ],
+      "details": "Add necessary imports in the new class: org.jsoup.internal.StringUtil, org.jsoup.helper.Validate (as used by moved code). Update TokenQueue imports if needed after removals.",
+      "risk": "low"
+    },
+    {
+      "op": "UPDATE_CALL_SITES",
+      "inputs": [
+        "src/main/java/org/jsoup/parser/TokenQueue.java"
+      ],
+      "outputs": [
+        "src/main/java/org/jsoup/parser/TokenQueue.java"
+      ],
+      "details": "Update TokenQueue to hold a private final CssIdentifierParser cssParser field initialized in the constructor (cssParser = new CssIdentifierParser(reader)). Replace the body of consumeElementSelector() to delegate to cssParser.consumeEscapedCssIdentifier(ElementSelectorChars). Remove the moved methods from TokenQueue. Ensure TokenQueue constructor is updated to initialize the parser. No external call sites outside TokenQueue are modified in this block.",
+      "risk": "low"
+    },
+    {
+      "op": "UPDATE_TESTS",
+      "inputs": [
+        "src/test/java/org/jsoup/parser/TokenQueueTest.java",
+        "src/test/java/org/jsoup/select/SelectorTest.java"
+      ],
+      "outputs": [],
+      "details": "Update related tests affected by this refactoring block so the configured build command passes. Adjust imports, package references, moved class references, constructors, and assertions only when required. Do not change production behavior through tests.",
+      "risk": "medium",
+      "api_change": false
+    }
+  ],
+  "test_files": [
+    "src/test/java/org/jsoup/parser/TokenQueueTest.java",
+    "src/test/java/org/jsoup/select/SelectorTest.java"
+  ]
+}

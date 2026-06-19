@@ -1,0 +1,90 @@
+{
+  "smell_type": "Insufficient Modularization",
+  "target_level": "class",
+  "target": "org.jsoup.safety.Safelist",
+  "blocks": [
+    {
+      "id": 1,
+      "goal": "Extract the enforced-attribute responsibility from Safelist into a new class SafelistEnforcedAttributes to reduce the number of public methods on Safelist and isolate enforcement logic.",
+      "expected_impact": {
+        "primary_metric": "public_methods",
+        "public_methods_moved": 3,
+        "total_methods_moved": 3,
+        "loc_reduction_expected": "medium",
+        "rationale": "The public API methods addEnforcedAttribute, removeEnforcedAttribute, and getEnforcedAttributes (three public methods) are a cohesive responsibility (managing enforced attributes). Moving them and the backing map into a dedicated class reduces Safelist's public method count and removes related internal map manipulation code, reducing LOC and responsibility concentration."
+      },
+      "files": [
+        "src/main/java/org/jsoup/safety/Safelist.java",
+        "src/main/java/org/jsoup/safety/SafelistEnforcedAttributes.java"
+      ],
+      "ops": [
+        {
+          "op": "EXTRACT_CLASS",
+          "inputs": [
+            "src/main/java/org/jsoup/safety/Safelist.java"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/safety/SafelistEnforcedAttributes.java"
+          ],
+          "details": "Create new package-level class org.jsoup.safety.SafelistEnforcedAttributes that encapsulates the Map<TagName, Map<AttributeKey, AttributeValue>> enforcedAttributes and provides methods: addEnforcedAttribute(String tag, String attribute, String value), removeEnforcedAttribute(String tag, String attribute), Attributes getEnforcedAttributes(String tagName), a copy constructor SafelistEnforcedAttributes(SafelistEnforcedAttributes copy), plus helper accessors getEnforcedValue(Safelist.TagName tag, Safelist.AttributeKey key) and hasEnforcedAttribute(Safelist.TagName tag, Safelist.AttributeKey key). The new class uses Safelist.TagName, Safelist.AttributeKey, and Safelist.AttributeValue nested types (referenced as Safelist.TagName etc.).",
+          "risk": "low"
+        },
+        {
+          "op": "MOVE_FIELD",
+          "inputs": [
+            "src/main/java/org/jsoup/safety/Safelist.java#enforcedAttributes"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/safety/SafelistEnforcedAttributes.java#enforcedAttributes"
+          ],
+          "details": "Move the enforcedAttributes field (Map<TagName, Map<AttributeKey, AttributeValue>>) out of Safelist into SafelistEnforcedAttributes as a private field. Initialize it in Safelist constructors via a new enforcedAttributesManager field of type SafelistEnforcedAttributes.",
+          "risk": "low"
+        },
+        {
+          "op": "MOVE_METHOD",
+          "inputs": [
+            "src/main/java/org/jsoup/safety/Safelist.java#addEnforcedAttribute(java.lang.String,java.lang.String,java.lang.String)"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/safety/SafelistEnforcedAttributes.java#addEnforcedAttribute(java.lang.String,java.lang.String,java.lang.String)"
+          ],
+          "details": "Move implementation of addEnforcedAttribute into SafelistEnforcedAttributes. The moved method will perform TagName/AttributeKey/AttributeValue normalization and update the internal map. Returns SafelistEnforcedAttributes for chaining within the new manager.",
+          "risk": "low"
+        },
+        {
+          "op": "MOVE_METHOD",
+          "inputs": [
+            "src/main/java/org/jsoup/safety/Safelist.java#removeEnforcedAttribute(java.lang.String,java.lang.String)"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/safety/SafelistEnforcedAttributes.java#removeEnforcedAttribute(java.lang.String,java.lang.String)"
+          ],
+          "details": "Move implementation of removeEnforcedAttribute into SafelistEnforcedAttributes; remove handling of empty maps when appropriate.",
+          "risk": "low"
+        },
+        {
+          "op": "MOVE_METHOD",
+          "inputs": [
+            "src/main/java/org/jsoup/safety/Safelist.java#getEnforcedAttributes(java.lang.String)"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/safety/SafelistEnforcedAttributes.java#getEnforcedAttributes(java.lang.String)"
+          ],
+          "details": "Move getEnforcedAttributes into SafelistEnforcedAttributes; it will build and return an org.jsoup.nodes.Attributes object from the internal map for the requested tag.",
+          "risk": "low"
+        },
+        {
+          "op": "UPDATE_CALL_SITES",
+          "inputs": [
+            "src/main/java/org/jsoup/safety/Safelist.java"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/safety/Safelist.java"
+          ],
+          "details": "Update Safelist to remove the moved methods and field. Add a new private final field: SafelistEnforcedAttributes enforcedAttributesManager; initialize it in the default constructor and copy constructor (new SafelistEnforcedAttributes(copy.enforcedAttributesManager)). Replace internal usages of the old enforcedAttributes map:\n- In isSafeAttribute, replace the enforcedAttributes lookup with AttributeValue enforced = enforcedAttributesManager.getEnforcedValue(tag, key); if enforced != null return enforced.equals(AttributeValue.valueOf(attr.getValue()));\n- In shouldAbsUrl, replace enforcedAttributes check with enforcedAttributesManager.hasEnforcedAttribute(tag, key) to preserve prior behavior.\nAdjust Safelist constructors to delegate copy of enforced attributes via the new manager. Remove the three public methods from Safelist after moving them.\nThese updates are internal to Safelist and keep behavior equivalent.\n",
+          "risk": "low"
+        }
+      ]
+    }
+  ]
+}

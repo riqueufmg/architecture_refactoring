@@ -1,0 +1,143 @@
+{
+  "smell_type": "Insufficient Modularization",
+  "target_level": "class",
+  "target": "org.jsoup.internal.StringUtil",
+  "blocks": [
+    {
+      "id": 1,
+      "goal": "Move private regex patterns and the stripControlChars utility out of StringUtil into a new helper class to reduce class size and isolate URL-related helpers.",
+      "files": [
+        "src/main/java/org/jsoup/internal/StringUtil.java",
+        "src/main/java/org/jsoup/internal/StringUtilPatterns.java",
+        "src/test/java/org/jsoup/integration/routes/EchoRoute.java",
+        "src/test/java/org/jsoup/internal/StringUtilTest.java",
+        "src/test/java/org/jsoup/nodes/ElementTest.java",
+        "src/test/java/org/jsoup/nodes/TextNodeTest.java",
+        "src/test/java/org/jsoup/parser/CharacterReaderTest.java",
+        "src/test/java/org/jsoup/parser/HtmlParserTest.java",
+        "src/test/java/org/jsoup/parser/HtmlTreeBuilderStateTest.java",
+        "src/test/java/org/jsoup/select/EvaluatorDebug.java"
+      ],
+      "ops": [
+        {
+          "op": "EXTRACT_CLASS",
+          "inputs": [
+            "src/main/java/org/jsoup/internal/StringUtil.java"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/internal/StringUtilPatterns.java"
+          ],
+          "details": "Create a new package-private helper class org.jsoup.internal.StringUtilPatterns that contains the Pattern constants and small helper methods moved out of StringUtil: private static final Pattern extraDotSegmentsPattern, private static final Pattern validUriScheme, private static final Pattern controlChars. Provide public static helper methods: String stripControlChars(String input), String fixExtraDotSegments(String file), and boolean isValidUriScheme(String s). Place the new class in the same package (org.jsoup.internal) and import java.util.regex.Pattern.",
+          "risk": "low"
+        },
+        {
+          "op": "UPDATE_CALL_SITES",
+          "inputs": [
+            "src/main/java/org/jsoup/internal/StringUtil.java",
+            "src/main/java/org/jsoup/internal/StringUtilPatterns.java"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/internal/StringUtil.java"
+          ],
+          "details": "Modify StringUtil.java to remove the private Pattern fields (extraDotSegmentsPattern, validUriScheme, controlChars) and the private static method stripControlChars. Replace internal calls: stripControlChars(x) -> StringUtilPatterns.stripControlChars(x); extraDotSegmentsPattern.matcher(...).replaceFirst(\"/\") -> StringUtilPatterns.fixExtraDotSegments(...); validUriScheme.matcher(...).find() -> StringUtilPatterns.isValidUriScheme(...). Keep all public APIs in StringUtil unchanged (method signatures unchanged); only update method bodies to delegate to the new helper class.",
+          "risk": "medium"
+        },
+        {
+          "op": "UPDATE_TESTS",
+          "inputs": [
+            "src/test/java/org/jsoup/integration/routes/EchoRoute.java",
+            "src/test/java/org/jsoup/internal/StringUtilTest.java",
+            "src/test/java/org/jsoup/nodes/ElementTest.java",
+            "src/test/java/org/jsoup/nodes/TextNodeTest.java",
+            "src/test/java/org/jsoup/parser/CharacterReaderTest.java",
+            "src/test/java/org/jsoup/parser/HtmlParserTest.java",
+            "src/test/java/org/jsoup/parser/HtmlTreeBuilderStateTest.java",
+            "src/test/java/org/jsoup/select/EvaluatorDebug.java"
+          ],
+          "outputs": [],
+          "details": "Update related tests affected by this refactoring block so the configured build command passes. Adjust imports, package references, moved class references, constructors, and assertions only when required. Do not change production behavior through tests.",
+          "risk": "medium",
+          "api_change": false
+        }
+      ],
+      "test_files": [
+        "src/test/java/org/jsoup/integration/routes/EchoRoute.java",
+        "src/test/java/org/jsoup/internal/StringUtilTest.java",
+        "src/test/java/org/jsoup/nodes/ElementTest.java",
+        "src/test/java/org/jsoup/nodes/TextNodeTest.java",
+        "src/test/java/org/jsoup/parser/CharacterReaderTest.java",
+        "src/test/java/org/jsoup/parser/HtmlParserTest.java",
+        "src/test/java/org/jsoup/parser/HtmlTreeBuilderStateTest.java",
+        "src/test/java/org/jsoup/select/EvaluatorDebug.java"
+      ]
+    },
+    {
+      "id": 2,
+      "goal": "Isolate the StringBuilder pooling implementation into a dedicated class to reduce StringUtil size and clarify responsibilities while preserving the public borrow/release API.",
+      "files": [
+        "src/main/java/org/jsoup/internal/StringUtil.java",
+        "src/main/java/org/jsoup/internal/StringUtilBuilderPool.java",
+        "src/test/java/org/jsoup/integration/routes/EchoRoute.java",
+        "src/test/java/org/jsoup/internal/StringUtilTest.java",
+        "src/test/java/org/jsoup/nodes/ElementTest.java",
+        "src/test/java/org/jsoup/nodes/TextNodeTest.java",
+        "src/test/java/org/jsoup/parser/CharacterReaderTest.java",
+        "src/test/java/org/jsoup/parser/HtmlParserTest.java",
+        "src/test/java/org/jsoup/parser/HtmlTreeBuilderStateTest.java",
+        "src/test/java/org/jsoup/select/EvaluatorDebug.java"
+      ],
+      "ops": [
+        {
+          "op": "EXTRACT_CLASS",
+          "inputs": [
+            "src/main/java/org/jsoup/internal/StringUtil.java"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/internal/StringUtilBuilderPool.java"
+          ],
+          "details": "Create a new class org.jsoup.internal.StringUtilBuilderPool in the same package that owns the builder pool implementation. Move the constants InitBuilderSize and MaxBuilderSize and the SoftPool<StringBuilder> BuilderPool into this class. Provide public static methods: borrowBuilder():StringBuilder, releaseBuilder(StringBuilder):String, and releaseBuilderVoid(StringBuilder):void. The new class will construct the SoftPool with the same lambda: () -> new StringBuilder(InitBuilderSize).",
+          "risk": "low"
+        },
+        {
+          "op": "UPDATE_CALL_SITES",
+          "inputs": [
+            "src/main/java/org/jsoup/internal/StringUtil.java",
+            "src/main/java/org/jsoup/internal/StringUtilBuilderPool.java"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/internal/StringUtil.java"
+          ],
+          "details": "Modify StringUtil's public static methods borrowBuilder(), releaseBuilder(StringBuilder) and releaseBuilderVoid(StringBuilder) to delegate to StringUtilBuilderPool.borrowBuilder(), StringUtilBuilderPool.releaseBuilder(...), and StringUtilBuilderPool.releaseBuilderVoid(...). Remove the moved constants and BuilderPool field from StringUtil. Keep method signatures and behavior identical so public API is preserved and existing callers (including the nested StringJoiner) function without change.",
+          "risk": "medium"
+        },
+        {
+          "op": "UPDATE_TESTS",
+          "inputs": [
+            "src/test/java/org/jsoup/integration/routes/EchoRoute.java",
+            "src/test/java/org/jsoup/internal/StringUtilTest.java",
+            "src/test/java/org/jsoup/nodes/ElementTest.java",
+            "src/test/java/org/jsoup/nodes/TextNodeTest.java",
+            "src/test/java/org/jsoup/parser/CharacterReaderTest.java",
+            "src/test/java/org/jsoup/parser/HtmlParserTest.java",
+            "src/test/java/org/jsoup/parser/HtmlTreeBuilderStateTest.java",
+            "src/test/java/org/jsoup/select/EvaluatorDebug.java"
+          ],
+          "outputs": [],
+          "details": "Update related tests affected by this refactoring block so the configured build command passes. Adjust imports, package references, moved class references, constructors, and assertions only when required. Do not change production behavior through tests.",
+          "risk": "medium",
+          "api_change": false
+        }
+      ],
+      "test_files": [
+        "src/test/java/org/jsoup/integration/routes/EchoRoute.java",
+        "src/test/java/org/jsoup/internal/StringUtilTest.java",
+        "src/test/java/org/jsoup/nodes/ElementTest.java",
+        "src/test/java/org/jsoup/nodes/TextNodeTest.java",
+        "src/test/java/org/jsoup/parser/CharacterReaderTest.java",
+        "src/test/java/org/jsoup/parser/HtmlParserTest.java",
+        "src/test/java/org/jsoup/parser/HtmlTreeBuilderStateTest.java",
+        "src/test/java/org/jsoup/select/EvaluatorDebug.java"
+      ]
+    }
+  ]
+}

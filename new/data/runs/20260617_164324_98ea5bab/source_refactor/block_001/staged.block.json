@@ -1,0 +1,174 @@
+{
+  "id": 1,
+  "goal": "Extract CSS identifier and escaping responsibilities (escape/unescape and related helpers) from TokenQueue into a new class org.jsoup.parser.CssIdentifier to reduce TokenQueue's public and total method counts and concentrate related logic.",
+  "expected_impact": {
+    "primary_metric": "public_methods",
+    "public_methods_moved": 2,
+    "total_methods_moved": 9,
+    "loc_reduction_expected": "medium",
+    "rationale": "This extraction moves the two public static methods escapeCssIdentifier and unescape plus seven private/static helper methods that solely support CSS identifier serialization/parsing. That reduces TokenQueue's public method count by 2 and its total method count by ~9, and groups all CSS identifier/escaping responsibilities into a single coherent class."
+  },
+  "files": [
+    "src/main/java/org/jsoup/parser/CssIdentifier.java",
+    "src/main/java/org/jsoup/parser/TokenQueue.java",
+    "src/test/java/org/jsoup/parser/TokenQueueTest.java",
+    "src/test/java/org/jsoup/select/SelectorTest.java"
+  ],
+  "ops": [
+    {
+      "op": "EXTRACT_CLASS",
+      "inputs": [
+        "src/main/java/org/jsoup/parser/TokenQueue.java: public static String escapeCssIdentifier(String in)",
+        "src/main/java/org/jsoup/parser/TokenQueue.java: public static String unescape(String in)",
+        "src/main/java/org/jsoup/parser/TokenQueue.java: private static void appendEscaped(StringBuilder out, char c)",
+        "src/main/java/org/jsoup/parser/TokenQueue.java: private static void appendEscapedCodepoint(StringBuilder out, char c)",
+        "src/main/java/org/jsoup/parser/TokenQueue.java: private static boolean isNonAscii(char c)",
+        "src/main/java/org/jsoup/parser/TokenQueue.java: private static boolean isIdentStart(char c)",
+        "src/main/java/org/jsoup/parser/TokenQueue.java: private static boolean isIdent(char c)",
+        "src/main/java/org/jsoup/parser/TokenQueue.java: private static boolean isNewline(char c)",
+        "src/main/java/org/jsoup/parser/TokenQueue.java: private static boolean isValidCodePoint(int codePoint)"
+      ],
+      "outputs": [
+        "src/main/java/org/jsoup/parser/CssIdentifier.java"
+      ],
+      "details": "Create new package-visible class org.jsoup.parser.CssIdentifier containing the two public static methods (escapeCssIdentifier, unescape) and the private/static helper methods that they need. The new class will live in the same package and will reuse org.jsoup.internal.StringUtil and org.jsoup.helper.Validate imports. Helper constants required by escaping (such as ESC, Hyphen_Minus, Unicode_Null, Replacement) will be declared privately inside the new class to keep the extraction self-contained and avoid coupling TokenQueue internals. The extraction groups the CSS identifier serialization and escaping concern into a single coherent class.",
+      "risk": "medium"
+    },
+    {
+      "op": "MOVE_METHOD",
+      "inputs": [
+        "src/main/java/org/jsoup/parser/TokenQueue.java: public static String escapeCssIdentifier(String in)"
+      ],
+      "outputs": [
+        "src/main/java/org/jsoup/parser/CssIdentifier.java: public static String escapeCssIdentifier(String in)"
+      ],
+      "details": "Move escapeCssIdentifier implementation into CssIdentifier. The implementation will be identical but will reference the helper methods moved into CssIdentifier instead of TokenQueue.",
+      "risk": "medium"
+    },
+    {
+      "op": "MOVE_METHOD",
+      "inputs": [
+        "src/main/java/org/jsoup/parser/TokenQueue.java: public static String unescape(String in)"
+      ],
+      "outputs": [
+        "src/main/java/org/jsoup/parser/CssIdentifier.java: public static String unescape(String in)"
+      ],
+      "details": "Move unescape implementation into CssIdentifier unchanged except for any private-helper references that are also moved.",
+      "risk": "low"
+    },
+    {
+      "op": "MOVE_METHOD",
+      "inputs": [
+        "src/main/java/org/jsoup/parser/TokenQueue.java: private static void appendEscaped(StringBuilder out, char c)"
+      ],
+      "outputs": [
+        "src/main/java/org/jsoup/parser/CssIdentifier.java: private static void appendEscaped(StringBuilder out, char c)"
+      ],
+      "details": "Move small helper used by escapeCssIdentifier into CssIdentifier.",
+      "risk": "low"
+    },
+    {
+      "op": "MOVE_METHOD",
+      "inputs": [
+        "src/main/java/org/jsoup/parser/TokenQueue.java: private static void appendEscapedCodepoint(StringBuilder out, char c)"
+      ],
+      "outputs": [
+        "src/main/java/org/jsoup/parser/CssIdentifier.java: private static void appendEscapedCodepoint(StringBuilder out, char c)"
+      ],
+      "details": "Move codepoint-escaping helper into CssIdentifier.",
+      "risk": "low"
+    },
+    {
+      "op": "MOVE_METHOD",
+      "inputs": [
+        "src/main/java/org/jsoup/parser/TokenQueue.java: private static boolean isNonAscii(char c)"
+      ],
+      "outputs": [
+        "src/main/java/org/jsoup/parser/CssIdentifier.java: private static boolean isNonAscii(char c)"
+      ],
+      "details": "Move non-ascii check used by escaping rules.",
+      "risk": "low"
+    },
+    {
+      "op": "MOVE_METHOD",
+      "inputs": [
+        "src/main/java/org/jsoup/parser/TokenQueue.java: private static boolean isIdentStart(char c)"
+      ],
+      "outputs": [
+        "src/main/java/org/jsoup/parser/CssIdentifier.java: private static boolean isIdentStart(char c)"
+      ],
+      "details": "Move ident-start predicate into CssIdentifier.",
+      "risk": "low"
+    },
+    {
+      "op": "MOVE_METHOD",
+      "inputs": [
+        "src/main/java/org/jsoup/parser/TokenQueue.java: private static boolean isIdent(char c)"
+      ],
+      "outputs": [
+        "src/main/java/org/jsoup/parser/CssIdentifier.java: static boolean isIdent(char c)"
+      ],
+      "details": "Move isIdent predicate and make it package-private (no modifier) so TokenQueue can reference it as CssIdentifier::isIdent. This avoids keeping helper logic in TokenQueue while preserving usage from other methods (reader.consumeMatching).",
+      "risk": "medium"
+    },
+    {
+      "op": "MOVE_METHOD",
+      "inputs": [
+        "src/main/java/org/jsoup/parser/TokenQueue.java: private static boolean isNewline(char c)"
+      ],
+      "outputs": [
+        "src/main/java/org/jsoup/parser/CssIdentifier.java: private static boolean isNewline(char c)"
+      ],
+      "details": "Move newline predicate used by escaping semantics.",
+      "risk": "low"
+    },
+    {
+      "op": "MOVE_METHOD",
+      "inputs": [
+        "src/main/java/org/jsoup/parser/TokenQueue.java: private static boolean isValidCodePoint(int codePoint)"
+      ],
+      "outputs": [
+        "src/main/java/org/jsoup/parser/CssIdentifier.java: static boolean isValidCodePoint(int codePoint)"
+      ],
+      "details": "Move codepoint validation helper into CssIdentifier and make it package-private so existing TokenQueue methods that validate code points can call CssIdentifier.isValidCodePoint(...) after call-site updates.",
+      "risk": "medium"
+    },
+    {
+      "op": "UPDATE_CALL_SITES",
+      "inputs": [
+        "src/main/java/org/jsoup/parser/TokenQueue.java"
+      ],
+      "outputs": [
+        "src/main/java/org/jsoup/parser/TokenQueue.java"
+      ],
+      "details": "Update references in TokenQueue that previously referenced moved helpers. Replace reader.consumeMatching(TokenQueue::isIdent) with reader.consumeMatching(CssIdentifier::isIdent). Replace uses of isValidCodePoint(...) with CssIdentifier.isValidCodePoint(...). No behavioral change intended; only the static target of method references/ calls is updated to the new class.",
+      "risk": "low"
+    },
+    {
+      "op": "ADD_OR_UPDATE_IMPORTS",
+      "inputs": [
+        "src/main/java/org/jsoup/parser/CssIdentifier.java"
+      ],
+      "outputs": [
+        "src/main/java/org/jsoup/parser/CssIdentifier.java"
+      ],
+      "details": "Add imports org.jsoup.internal.StringUtil and org.jsoup.helper.Validate to the new CssIdentifier class file as they are required by the moved implementations.",
+      "risk": "low"
+    },
+    {
+      "op": "UPDATE_TESTS",
+      "inputs": [
+        "src/test/java/org/jsoup/parser/TokenQueueTest.java",
+        "src/test/java/org/jsoup/select/SelectorTest.java"
+      ],
+      "outputs": [],
+      "details": "Update related tests affected by this refactoring block so the configured build command passes. Adjust imports, package references, moved class references, constructors, and assertions only when required. Do not change production behavior through tests.",
+      "risk": "medium",
+      "api_change": false
+    }
+  ],
+  "test_files": [
+    "src/test/java/org/jsoup/parser/TokenQueueTest.java",
+    "src/test/java/org/jsoup/select/SelectorTest.java"
+  ]
+}

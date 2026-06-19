@@ -1,0 +1,5 @@
+{
+  "files_to_write": [],
+  "files_to_delete": [],
+  "notes": "No source or test changes required: the protocol-related helper methods were already extracted into org.jsoup.safety.SafelistProtocolUtil and Safelist already calls its public static methods. Therefore no modifications to the allowed files were necessary."
+}

@@ -1,0 +1,113 @@
+{
+  "mvp": "source_refactor",
+  "ok": true,
+  "run_id": "20260616_182328_8b29504c",
+  "project": "jsoup",
+  "repo_path": "/data/henrique/langchain_prototype/new/data/repositories/jsoup",
+  "smell": "IM",
+  "smell_name": "Insufficient Modularization",
+  "target_type": "class",
+  "target_name": "org.jsoup.nodes.Attribute",
+  "blocks_count": 1,
+  "blocks_applied": 1,
+  "blocks_failed": 0,
+  "failed_block_id": "",
+  "failed_stage": "",
+  "rolled_back": false,
+  "rollback_to": "",
+  "block_summaries": [
+    {
+      "block_id": "1",
+      "block_index": 0,
+      "attempt": 0,
+      "max_block_attempts": 5,
+      "executor_ok": true,
+      "executor_error": "",
+      "apply_ok": true,
+      "apply_error": "",
+      "applied_files": [
+        "src/main/java/org/jsoup/nodes/Attribute.java",
+        "src/main/java/org/jsoup/nodes/AttributeUtil.java"
+      ],
+      "compile_ok": true,
+      "compile_return_code": 0,
+      "compile_log_path": "/data/henrique/langchain_prototype/new/data/runs/20260616_182328_8b29504c/source_refactor/block_001/compile.log",
+      "commit": "93432b77dbe5066fa6d96f9c336024d690e9d5af",
+      "rollback_reason": "",
+      "stop_reason": "block_applied",
+      "files": {
+        "executor_existing_files": [
+          "src/main/java/org/jsoup/nodes/Attribute.java",
+          "src/test/java/org/jsoup/integration/SafelistExtensionTest.java",
+          "src/test/java/org/jsoup/integration/netty/TestRequest.java",
+          "src/test/java/org/jsoup/nodes/AttributeTest.java",
+          "src/test/java/org/jsoup/nodes/AttributesTest.java",
+          "src/test/java/org/jsoup/nodes/ElementTest.java",
+          "src/test/java/org/jsoup/nodes/NodeTest.java",
+          "src/test/java/org/jsoup/parser/AttributeParseTest.java",
+          "src/test/java/org/jsoup/parser/HtmlParserTest.java",
+          "src/test/java/org/jsoup/parser/ParserSettingsTest.java",
+          "src/test/java/org/jsoup/parser/PositionTest.java",
+          "src/test/java/org/jsoup/parser/TokeniserTest.java",
+          "src/test/java/org/jsoup/parser/XmlTreeBuilderTest.java",
+          "src/test/java/org/jsoup/safety/SafelistTest.java",
+          "src/test/java/org/jsoup/select/EvaluatorTest.java"
+        ],
+        "executor_new_files": [
+          "src/main/java/org/jsoup/nodes/AttributeUtil.java"
+        ],
+        "executor_files": [
+          "src/main/java/org/jsoup/nodes/Attribute.java",
+          "src/main/java/org/jsoup/nodes/AttributeUtil.java",
+          "src/test/java/org/jsoup/integration/SafelistExtensionTest.java",
+          "src/test/java/org/jsoup/integration/netty/TestRequest.java",
+          "src/test/java/org/jsoup/nodes/AttributeTest.java",
+          "src/test/java/org/jsoup/nodes/AttributesTest.java",
+          "src/test/java/org/jsoup/nodes/ElementTest.java",
+          "src/test/java/org/jsoup/nodes/NodeTest.java",
+          "src/test/java/org/jsoup/parser/AttributeParseTest.java",
+          "src/test/java/org/jsoup/parser/HtmlParserTest.java",
+          "src/test/java/org/jsoup/parser/ParserSettingsTest.java",
+          "src/test/java/org/jsoup/parser/PositionTest.java",
+          "src/test/java/org/jsoup/parser/TokeniserTest.java",
+          "src/test/java/org/jsoup/parser/XmlTreeBuilderTest.java",
+          "src/test/java/org/jsoup/safety/SafelistTest.java",
+          "src/test/java/org/jsoup/select/EvaluatorTest.java"
+        ],
+        "executor_rejected_files": []
+      },
+      "openrewrite": {
+        "ok": false,
+        "return_code": -1,
+        "recipe_path": "",
+        "log_path": "",
+        "command": []
+      }
+    }
+  ],
+  "current_block_id": "1",
+  "applied_files": [
+    "src/main/java/org/jsoup/nodes/Attribute.java",
+    "src/main/java/org/jsoup/nodes/AttributeUtil.java"
+  ],
+  "compile_ok": true,
+  "compile_return_code": 0,
+  "compile_log_path": "/data/henrique/langchain_prototype/new/data/runs/20260616_182328_8b29504c/source_refactor/block_001/compile.log",
+  "initial_commit": "a57f14febb20f7887227598193781a290585a39d",
+  "last_good_commit": "93432b77dbe5066fa6d96f9c336024d690e9d5af",
+  "current_block_commit": "93432b77dbe5066fa6d96f9c336024d690e9d5af",
+  "final_commit": "93432b77dbe5066fa6d96f9c336024d690e9d5af",
+  "workspace_clean": true,
+  "block_attempt": 0,
+  "max_block_attempts": 5,
+  "executor_ok": true,
+  "executor_error": "",
+  "apply_ok": true,
+  "apply_error": "",
+  "rollback_reason": "",
+  "stop_reason": "all_blocks_applied",
+  "openrewrite_ok": false,
+  "openrewrite_return_code": -1,
+  "openrewrite_log_path": "",
+  "openrewrite_recipe_path": ""
+}

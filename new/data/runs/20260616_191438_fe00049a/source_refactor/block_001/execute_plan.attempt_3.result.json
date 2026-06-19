@@ -1,0 +1,5 @@
+{
+  "files_to_write": [],
+  "files_to_delete": [],
+  "notes": "Cannot safely apply the refactoring: the block requires moving several private static helper method implementations from org.jsoup.parser.TokeniserState into a new helper class. The repository snapshot provided to the executor did not include the source of TokeniserState (and the new helper's exact implementations are unknown), so I cannot reproduce the methods with guaranteed identical semantics. To avoid changing behavior or introducing compilation errors, no files were modified. Please provide the current org/jsoup/parser/TokeniserState.java source so the helper methods can be moved verbatim into TokeniserStateHelper."
+}

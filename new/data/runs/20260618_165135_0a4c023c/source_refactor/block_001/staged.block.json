@@ -1,0 +1,71 @@
+{
+  "id": 1,
+  "goal": "Extract the cohesive \"append diffs\" responsibility (all public append(...) overloads and their helper add(...) logic and the SDiff/SerializableSupplier nested types) from DiffBuilder into a new class DiffAppender so that DiffBuilder's public API surface is reduced and the diff-appending logic is modularized.",
+  "expected_impact": {
+    "primary_metric": "public_methods",
+    "public_methods_moved": 19,
+    "total_methods_moved": 20,
+    "loc_reduction_expected": "medium",
+    "rationale": "All public append(...) overloads (19 methods) implement a single cohesive responsibility: computing and recording field-level diffs. Moving them into DiffAppender removes 19 public methods from DiffBuilder (primary goal) and also moves the private add(...) helper and the SDiff/SerializableSupplier nested types (total ~20 methods/types moved), reducing DiffBuilder's LOC and total method count. The new DiffAppender will take the DiffBuilder diffs list and the already-evaluated equals flag so behavior is preserved."
+  },
+  "files": [
+    "src/main/java/org/apache/commons/lang3/builder/DiffAppender.java",
+    "src/main/java/org/apache/commons/lang3/builder/DiffBuilder.java",
+    "src/test/java/org/apache/commons/lang3/builder/DiffBuilderTest.java",
+    "src/test/java/org/apache/commons/lang3/builder/DiffResultTest.java",
+    "src/test/java/org/apache/commons/lang3/builder/ReflectionDiffBuilderTest.java"
+  ],
+  "ops": [
+    {
+      "op": "EXTRACT_CLASS",
+      "inputs": [
+        "src/main/java/org/apache/commons/lang3/builder/DiffBuilder.java"
+      ],
+      "outputs": [
+        "src/main/java/org/apache/commons/lang3/builder/DiffAppender.java"
+      ],
+      "details": "Create a new production class org.apache.commons.lang3.builder.DiffAppender<T> in the same package. DiffAppender will encapsulate the append(...) API formerly on DiffBuilder: append(String, boolean), append(String, boolean[]), append(String, byte), append(String, byte[]), append(String, char), append(String, char[]), append(String, DiffResult<?>), append(String, double), append(String, double[]), append(String, float), append(String, float[]), append(String, int), append(String, int[]), append(String, long), append(String, long[]), append(String, Object), append(String, Object[]), append(String, short), append(String, short[]). It will also include the private add(...) helper logic (moved and made package-private/private in the new class) and the nested SDiff<T> class and the SerializableSupplier<T> interface required to create SDiff instances. DiffAppender will be constructed with a reference to the target DiffBuilder instance (to return it for chaining), the diffs list (List<Diff<?>>) and the precomputed equals flag so behavior is unchanged. All moved methods will return the original DiffBuilder<T> instance for chaining (same fluent style). The new class will include the needed imports (Arrays, ArrayUtils, ObjectUtils, Objects, Supplier, Serializable).",
+      "risk": "medium"
+    },
+    {
+      "op": "MOVE_METHOD",
+      "inputs": [
+        "src/main/java/org/apache/commons/lang3/builder/DiffBuilder.java"
+      ],
+      "outputs": [
+        "src/main/java/org/apache/commons/lang3/builder/DiffAppender.java",
+        "src/main/java/org/apache/commons/lang3/builder/DiffBuilder.java"
+      ],
+      "details": "Move the following public append methods from DiffBuilder into DiffAppender (they will be removed from DiffBuilder):\n- append(String fieldName, boolean lhs, boolean rhs)\n- append(String fieldName, boolean[] lhs, boolean[] rhs)\n- append(String fieldName, byte lhs, byte rhs)\n- append(String fieldName, byte[] lhs, byte[] rhs)\n- append(String fieldName, char lhs, char rhs)\n- append(String fieldName, char[] lhs, char[] rhs)\n- append(String fieldName, DiffResult<?> diffResult)\n- append(String fieldName, double lhs, double rhs)\n- append(String fieldName, double[] lhs, double[] rhs)\n- append(String fieldName, float lhs, float rhs)\n- append(String fieldName, float[] lhs, float[] rhs)\n- append(String fieldName, int lhs, int rhs)\n- append(String fieldName, int[] lhs, int[] rhs)\n- append(String fieldName, long lhs, long rhs)\n- append(String fieldName, long[] lhs, long[] rhs)\n- append(String fieldName, Object lhs, Object rhs)\n- append(String fieldName, Object[] lhs, Object[] rhs)\n- append(String fieldName, short lhs, short rhs)\n- append(String fieldName, short[] lhs, short[] rhs)\n\nAlso move the helper method add(String, SerializableSupplier<F>, SerializableSupplier<F>, Class<F>) and the nested types:\n- SDiff<T> (private static final class)\n- SerializableSupplier<T> (private interface)\n\nThe updated DiffBuilder.java will have those methods and nested types removed. The new DiffAppender methods will accept the needed state (List<Diff<?>> diffs and boolean equals) via constructor and will return the original DiffBuilder<T> instance for chaining. This preserves behavior while moving the responsibility out of DiffBuilder. No compatibility delegating wrappers are kept on DiffBuilder for the moved append overloads (the methods are removed).",
+      "risk": "medium"
+    },
+    {
+      "op": "ADD_OR_UPDATE_IMPORTS",
+      "inputs": [
+        "src/main/java/org/apache/commons/lang3/builder/DiffAppender.java"
+      ],
+      "outputs": [
+        "src/main/java/org/apache/commons/lang3/builder/DiffAppender.java"
+      ],
+      "details": "Add necessary imports to DiffAppender.java: java.io.Serializable, java.util.Arrays, java.util.Objects, java.util.function.Supplier, org.apache.commons.lang3.ArrayUtils, org.apache.commons.lang3.ObjectUtils. Ensure the file compiles in the same package as DiffBuilder.",
+      "risk": "low"
+    },
+    {
+      "op": "UPDATE_TESTS",
+      "inputs": [
+        "src/test/java/org/apache/commons/lang3/builder/DiffBuilderTest.java",
+        "src/test/java/org/apache/commons/lang3/builder/DiffResultTest.java",
+        "src/test/java/org/apache/commons/lang3/builder/ReflectionDiffBuilderTest.java"
+      ],
+      "outputs": [],
+      "details": "Update related tests affected by this refactoring block so the configured build command passes. Adjust imports, package references, moved class references, constructors, and assertions only when required. Do not change production behavior through tests.",
+      "risk": "medium",
+      "api_change": false
+    }
+  ],
+  "test_files": [
+    "src/test/java/org/apache/commons/lang3/builder/DiffBuilderTest.java",
+    "src/test/java/org/apache/commons/lang3/builder/DiffResultTest.java",
+    "src/test/java/org/apache/commons/lang3/builder/ReflectionDiffBuilderTest.java"
+  ]
+}

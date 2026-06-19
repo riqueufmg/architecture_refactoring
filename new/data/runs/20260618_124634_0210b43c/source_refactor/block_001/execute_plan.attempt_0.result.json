@@ -1,0 +1,5 @@
+{
+  "files_to_write": [],
+  "files_to_delete": [],
+  "notes": "The refactoring cannot be safely applied as requested because the source context shows the entire ThreadUtils implementation and nested deprecated types still present in one file, but creating ThreadFinder while preserving all current references requires coordinated edits beyond the provided file set and likely additional API migration updates not justified by the available context. I am returning no changes to avoid breaking behavior."
+}

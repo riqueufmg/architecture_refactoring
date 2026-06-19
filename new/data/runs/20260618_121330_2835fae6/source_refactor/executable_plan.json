@@ -1,0 +1,107 @@
+{
+  "smell_type": "Insufficient Modularization",
+  "target_level": "class",
+  "target": "org.apache.commons.lang3.RandomUtils",
+  "blocks": [
+    {
+      "id": 1,
+      "goal": "Extract the instance-level random generation responsibility from RandomUtils into a new class RandomGenerator to reduce the number of public instance methods in RandomUtils and improve modularization.",
+      "expected_impact": {
+        "primary_metric": "public_methods",
+        "public_methods_moved": 10,
+        "total_methods_moved": 12,
+        "loc_reduction_expected": "medium",
+        "rationale": "All instance-level public methods that implement random value generation (randomBoolean, randomBytes, randomDouble variants, randomFloat variants, randomInt variants, randomLong variants) are moved to a new cohesive class RandomGenerator together with supporting package-private and private helpers (random() accessor and private randomLong(n)). This removes 10 public instance methods from RandomUtils and extracts ~12 methods total, reducing RandomUtils public method count and overall LOC by consolidating implementation into a dedicated class."
+      },
+      "files": [
+        "src/main/java/org/apache/commons/lang3/RandomGenerator.java",
+        "src/main/java/org/apache/commons/lang3/RandomUtils.java",
+        "src/test/java/org/apache/commons/lang3/RandomUtilsTest.java"
+      ],
+      "ops": [
+        {
+          "op": "EXTRACT_CLASS",
+          "inputs": [
+            "src/main/java/org/apache/commons/lang3/RandomUtils.java"
+          ],
+          "outputs": [
+            "src/main/java/org/apache/commons/lang3/RandomGenerator.java",
+            "src/main/java/org/apache/commons/lang3/RandomUtils.java"
+          ],
+          "details": "Create a new class org.apache.commons.lang3.RandomGenerator that encapsulates the instance-level random-generation responsibilities. The new class has a private final Supplier<Random> random supplier, a package-private Random random() accessor, public methods: randomBoolean(), randomBytes(int), randomDouble(), randomDouble(double,double), randomFloat(), randomFloat(float,float), randomInt(), randomInt(int,int), randomLong(), randomLong(long,long); and a private helper randomLong(long n) extracted from RandomUtils. The RandomGenerator constructor accepts Supplier<Random>. Update RandomUtils to remove the moved methods and Supplier<Random> field; add a private final RandomGenerator generator field initialized from the existing Supplier-based constructor. Update static deprecated wrapper methods in RandomUtils (nextBoolean, nextBytes, nextDouble, nextFloat, nextInt, nextLong and their overloads) to call the corresponding methods on the singleton instance's generator (e.g., secure().generator.randomDouble()). Keep secure()/secureStrong()/insecure() singletons and constructors but delegate instance behavior to RandomGenerator. This extraction groups a coherent responsibility (instance random value generation) into a dedicated class.",
+          "risk": "medium"
+        },
+        {
+          "op": "MOVE_FIELD",
+          "inputs": [
+            "src/main/java/org/apache/commons/lang3/RandomUtils.java:private final Supplier<Random> random"
+          ],
+          "outputs": [
+            "src/main/java/org/apache/commons/lang3/RandomGenerator.java:private final Supplier<Random> random"
+          ],
+          "details": "Move the instance Supplier<Random> field from RandomUtils into RandomGenerator so the generator owns its source of Random instances.",
+          "risk": "low"
+        },
+        {
+          "op": "MOVE_METHOD",
+          "inputs": [
+            "src/main/java/org/apache/commons/lang3/RandomUtils.java:Random random()",
+            "src/main/java/org/apache/commons/lang3/RandomUtils.java:public boolean randomBoolean()",
+            "src/main/java/org/apache/commons/lang3/RandomUtils.java:public byte[] randomBytes(int)",
+            "src/main/java/org/apache/commons/lang3/RandomUtils.java:public double randomDouble()",
+            "src/main/java/org/apache/commons/lang3/RandomUtils.java:public double randomDouble(double,double)",
+            "src/main/java/org/apache/commons/lang3/RandomUtils.java:public float randomFloat()",
+            "src/main/java/org/apache/commons/lang3/RandomUtils.java:public float randomFloat(float,float)",
+            "src/main/java/org/apache/commons/lang3/RandomUtils.java:public int randomInt()",
+            "src/main/java/org/apache/commons/lang3/RandomUtils.java:public int randomInt(int,int)",
+            "src/main/java/org/apache/commons/lang3/RandomUtils.java:public long randomLong()",
+            "src/main/java/org/apache/commons/lang3/RandomUtils.java:public long randomLong(long,long)",
+            "src/main/java/org/apache/commons/lang3/RandomUtils.java:private long randomLong(long)"
+          ],
+          "outputs": [
+            "src/main/java/org/apache/commons/lang3/RandomGenerator.java:Random random()",
+            "src/main/java/org/apache/commons/lang3/RandomGenerator.java:public boolean randomBoolean()",
+            "src/main/java/org/apache/commons/lang3/RandomGenerator.java:public byte[] randomBytes(int)",
+            "src/main/java/org/apache/commons/lang3/RandomGenerator.java:public double randomDouble()",
+            "src/main/java/org/apache/commons/lang3/RandomGenerator.java:public double randomDouble(double,double)",
+            "src/main/java/org/apache/commons/lang3/RandomGenerator.java:public float randomFloat()",
+            "src/main/java/org/apache/commons/lang3/RandomGenerator.java:public float randomFloat(float,float)",
+            "src/main/java/org/apache/commons/lang3/RandomGenerator.java:public int randomInt()",
+            "src/main/java/org/apache/commons/lang3/RandomGenerator.java:public int randomInt(int,int)",
+            "src/main/java/org/apache/commons/lang3/RandomGenerator.java:public long randomLong()",
+            "src/main/java/org/apache/commons/lang3/RandomGenerator.java:public long randomLong(long,long)",
+            "src/main/java/org/apache/commons/lang3/RandomGenerator.java:private long randomLong(long)"
+          ],
+          "details": "Move all instance-level random generation methods (public and their supporting package-private/private helpers) into RandomGenerator. Remove these methods from RandomUtils. The moved private helper randomLong(long) is required by the moved public randomLong(long,long) implementation.",
+          "risk": "medium"
+        },
+        {
+          "op": "ADD_OR_UPDATE_IMPORTS",
+          "inputs": [
+            "src/main/java/org/apache/commons/lang3/RandomGenerator.java",
+            "src/main/java/org/apache/commons/lang3/RandomUtils.java"
+          ],
+          "outputs": [
+            "src/main/java/org/apache/commons/lang3/RandomGenerator.java",
+            "src/main/java/org/apache/commons/lang3/RandomUtils.java"
+          ],
+          "details": "Ensure imports for java.util.Random, java.util.function.Supplier and any other required types are present in both files after extraction.",
+          "risk": "low"
+        },
+        {
+          "op": "UPDATE_TESTS",
+          "inputs": [
+            "src/test/java/org/apache/commons/lang3/RandomUtilsTest.java"
+          ],
+          "outputs": [],
+          "details": "Update related tests affected by this refactoring block so the configured build command passes. Adjust imports, package references, moved class references, constructors, and assertions only when required. Do not change production behavior through tests.",
+          "risk": "medium",
+          "api_change": false
+        }
+      ],
+      "test_files": [
+        "src/test/java/org/apache/commons/lang3/RandomUtilsTest.java"
+      ]
+    }
+  ]
+}

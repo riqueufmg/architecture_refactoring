@@ -1,0 +1,16 @@
+[ERROR] COMPILATION ERROR : 
+[ERROR] /data/henrique/langchain_prototype/new/data/repositories/jsoup/src/main/java/org/jsoup/safety/Cleaner.java:[212,44] cannot find symbol
+  symbol:   method getEnforcedAttributes(java.lang.String)
+  location: variable safelist of type org.jsoup.safety.Safelist
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.15.0:compile (compile-java8-base) on project jsoup: Compilation failure
+[ERROR] /data/henrique/langchain_prototype/new/data/repositories/jsoup/src/main/java/org/jsoup/safety/Cleaner.java:[212,44] cannot find symbol
+[ERROR]   symbol:   method getEnforcedAttributes(java.lang.String)
+[ERROR]   location: variable safelist of type org.jsoup.safety.Safelist
+[ERROR] 
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException

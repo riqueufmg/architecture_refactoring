@@ -1,0 +1,33 @@
+{
+  "commit": "0155fb6ab4b45d7f3f59e0c879624f113b75887a",
+  "ok": true,
+  "return_codes": {
+    "diff": 0,
+    "diffstat": 0,
+    "name_status": 0
+  },
+  "paths": {
+    "diff": "/data/henrique/langchain_prototype/new/data/runs/20260618_162317_04994077/source_refactor/block_001/block.diff",
+    "diffstat": "/data/henrique/langchain_prototype/new/data/runs/20260618_162317_04994077/source_refactor/block_001/block.diffstat.txt",
+    "name_status": "/data/henrique/langchain_prototype/new/data/runs/20260618_162317_04994077/source_refactor/block_001/block.name_status.txt",
+    "changed_files": "/data/henrique/langchain_prototype/new/data/runs/20260618_162317_04994077/source_refactor/block_001/block.changed_files.json"
+  },
+  "changed_files": [
+    {
+      "status": "A",
+      "path": "src/main/java/org/jsoup/parser/CssIdentifier.java"
+    },
+    {
+      "status": "M",
+      "path": "src/main/java/org/jsoup/parser/TokenQueue.java"
+    }
+  ],
+  "production_files": [
+    "src/main/java/org/jsoup/parser/CssIdentifier.java",
+    "src/main/java/org/jsoup/parser/TokenQueue.java"
+  ],
+  "test_files": [],
+  "changed_files_count": 2,
+  "production_files_count": 2,
+  "test_files_count": 0
+}

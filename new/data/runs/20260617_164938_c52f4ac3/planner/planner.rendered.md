@@ -1,0 +1,132 @@
+# GOAL
+
+Remove the design smell: Insufficient Modularization from the TARGET CLASS.
+
+Insufficient Modularization is characterized by one or more of the following conditions:
+
+1. Too many public methods.
+2. Too many total methods.
+3. Excessive lines of code.
+
+For this MVP, the remediation priority is hierarchical:
+
+1. First, reduce the number of public methods in the target class.
+2. If reducing public methods is not safe or not applicable, reduce the total number of methods in the target class.
+3. If reducing methods is not safe or not sufficient, reduce LOC by extracting cohesive implementation details.
+
+The main objective is to extract cohesive responsibilities from the target class into new classes. Each extracted class must represent a coherent responsibility, not merely a generic utility holder.
+
+Behavior must be preserved. However, preserving the original target-class API is not mandatory when changing that API is necessary to remove Insufficient Modularization and the required updates can be handled within the files in the block and mechanically added related tests.
+
+# ALLOWED STRATEGY
+
+- Each block must contain exactly one EXTRACT_CLASS operation.
+- Consequently, each block may create at most one new production class.
+- The EXTRACT_CLASS operation must represent a cohesive cluster of methods and fields that belong to the same responsibility.
+- Prefer extracting members in this priority order:
+  1. public methods that form a cohesive responsibility;
+  2. package-private or protected methods and fields that support that responsibility;
+  3. private methods and fields that support that responsibility;
+  4. fields, nested classes, or helper-only logic, only when they meaningfully reduce LOC or support the extracted responsibility.
+- The broader goal is to reduce the number of methods remaining in the target class, especially public methods.
+- Do not prefer private-helper extraction when a cohesive cluster of public methods can be moved safely.
+- Move public methods when they clearly belong to the extracted responsibility and moving them reduces the target class public method count.
+- Move methods and fields to the extracted class when doing so reduces the target class size, method count, complexity, or responsibility concentration.
+- Do not keep delegating wrappers solely to preserve the original target-class API if the corresponding call sites can be updated within the block or by mechanically added related tests.
+- Create compatibility wrappers only when they are strictly necessary to preserve behavior for production code that cannot be updated within the block.
+- Avoid generic utility classes. Prefer responsibility-oriented names such as SafelistProtocols, SafelistEnforcedAttributes, AttributeValidation, TokeniserRawDataReader, etc.
+- New classes must usually be placed in the same package as the target class unless the input clearly justifies otherwise.
+- Plan only production-code refactorings.
+- Do not include src/test files, UPDATE_TESTS operations, or test-specific changes. Related tests will be added by a deterministic post-processing step.
+- The deterministic post-processing step will append UPDATE_TESTS as the final operation of each block when related tests are found.
+
+# REFACTORING PRIORITY
+
+When choosing what to extract, follow this decision process:
+
+1. If the target class has too many public methods, identify a cohesive responsibility implemented by public methods and extract that responsibility first.
+2. If no safe public-method cluster exists, identify a cohesive cluster of methods that reduces the total method count.
+3. If method extraction is not safe or insufficient, extract cohesive fields, nested classes, or helper logic to reduce LOC.
+4. Avoid extracting only fields or nested value objects when the target class still has a cohesive group of movable public methods.
+5. A successful plan should aim to reduce at least one of the following, in this order:
+   - public method count;
+   - total method count;
+   - LOC.
+
+# ALLOWED OPS
+
+EXTRACT_CLASS, MOVE_METHOD, MOVE_FIELD, ADD_OR_UPDATE_IMPORTS, UPDATE_CALL_SITES
+
+Use NO_OP only when no safe refactoring plan can be produced at all.
+Do not include NO_OP inside a block that already contains real refactoring operations.
+Do not use NO_OP as a placeholder, filler, or block-size adjustment.
+
+# CONSTRAINTS
+
+1. Reference only packages, classes, methods, and fields present in the input.
+2. Each block must be small and independently compilable.
+3. Each block must contain exactly one EXTRACT_CLASS operation.
+4. Each EXTRACT_CLASS operation must output exactly one new production class.
+5. Do not create multiple new classes in the same block.
+6. Do not split a single cohesive responsibility across multiple blocks.
+7. Do not create generic utility classes unless the extracted responsibility is genuinely utility-like.
+8. Do not duplicate moved logic between the target class and the extracted class.
+9. Remove moved methods and fields from the target class unless a compatibility wrapper is strictly required.
+10. Keep blocks small: one cohesive extraction per block.
+11. The files list must include only production files. Do not include src/test files.
+12. The ops list must not include UPDATE_TESTS; it will be added mechanically after planning.
+13. Each block must explain how the extraction is expected to reduce the target class public method count, total method count, or LOC.
+
+# INPUT
+
+{
+  "smell": "Insufficient Modularization",
+  "target_type": "class",
+  "target_name": "org.jsoup.parser.TokenQueue",
+  "designite": {
+    "dir": "/data/henrique/langchain_prototype/new/data/runs/20260617_164938_c52f4ac3/planner/designite",
+    "smells_csv": "DesignSmells.csv",
+    "target_has_smell": true
+  },
+  "target_file": "src/main/java/org/jsoup/parser/TokenQueue.java",
+  "target_source_root": "src/main/java",
+  "target_code": "package org.jsoup.parser;\n\nimport org.jsoup.internal.StringUtil;\nimport org.jsoup.helper.Validate;\n\n/**\n A character reader with helpers focusing on parsing CSS selectors. Used internally by jsoup. API subject to changes.\n */\n\npublic class TokenQueue implements AutoCloseable {\n    private static final char Esc = '\\\\'; // escape char for chomp balanced.\n    private static final char Unicode_Null = '\\u0000';\n    private static final char Replacement = '\\uFFFD';\n\n    private final CharacterReader reader;\n\n    /**\n     Create a new TokenQueue.\n     @param data string of data to back queue.\n     */\n    public TokenQueue(String data) {\n        reader = new CharacterReader(data);\n    }\n\n    /**\n     Is the queue empty?\n     @return true if no data left in queue.\n     */\n    public boolean isEmpty() {\n        return reader.isEmpty();\n    }\n\n    /**\n     Consume one character off queue.\n     @return first character on queue.\n     */\n    public char consume() {\n        return reader.consume();\n    }\n\n    /**\n     Drops the next character off the queue.\n     */\n    public void advance() {\n        if (!isEmpty()) reader.advance();\n    }\n\n    char current() {\n        return reader.current();\n    }\n\n    /**\n     Tests if the next characters on the queue match the sequence, case-insensitively.\n     @param seq String to check queue for.\n     @return true if the next characters match.\n     */\n    public boolean matches(String seq) {\n        return reader.matchesIgnoreCase(seq);\n    }\n\n    /** Tests if the next character on the queue matches the character, case-sensitively. */\n    public boolean matches(char c) {\n        return reader.matches(c);\n    }\n\n    /**\n     Tests if the next characters match any of the sequences, case-<b>sensitively</b>.\n     @param seq list of chars to case-sensitively check for\n     @return true of any matched, false if none did\n     */\n    public boolean matchesAny(char... seq) {\n        return reader.matchesAny(seq);\n    }\n\n    /**\n     If the queue case-insensitively matches the supplied string, consume it off the queue.\n     @param seq String to search for, and if found, remove from queue.\n     @return true if found and removed, false if not found.\n     */\n    public boolean matchChomp(String seq) {\n        return reader.matchConsumeIgnoreCase(seq);\n    }\n\n    /** If the queue matches the supplied (case-sensitive) character, consume it off the queue. */\n    public boolean matchChomp(char c) {\n        if (reader.matches(c)) {\n            consume();\n            return true;\n        }\n        return false;\n    }\n\n    /**\n     Tests if queue starts with a whitespace character.\n     @return if starts with whitespace\n     */\n    public boolean matchesWhitespace() {\n        return StringUtil.isWhitespace(reader.current());\n    }\n\n    /**\n     Test if the queue matches a tag word character (letter or digit).\n     @return if matches a word character\n     */\n    public boolean matchesWord() {\n        return Character.isLetterOrDigit(reader.current());\n    }\n\n    /**\n     Consumes the supplied sequence of the queue, case-insensitively. If the queue does not start with the supplied\n     sequence, will throw an illegal state exception -- but you should be running match() against that condition.\n\n     @param seq sequence to remove from head of queue.\n     */\n    public void consume(String seq) {\n        boolean found = reader.matchConsumeIgnoreCase(seq);\n        if (!found) throw new IllegalStateException(\"Queue did not match expected sequence\");\n    }\n\n    /**\n     Pulls a string off the queue, up to but exclusive of the match sequence, or to the queue running out.\n     @param seq String to end on (and not include in return, but leave on queue). <b>Case-sensitive.</b>\n     @return The matched data consumed from queue.\n     */\n    public String consumeTo(String seq) {\n        return reader.consumeTo(seq);\n    }\n\n    /**\n     Consumes to the first sequence provided, or to the end of the queue. Leaves the terminator on the queue.\n     @param seq any number of terminators to consume to. <b>Case-insensitive.</b>\n     @return consumed string\n     */\n    public String consumeToAny(String... seq) {\n        StringBuilder sb = StringUtil.borrowBuilder();\n        OUT: while (!isEmpty()) {\n            for (String s : seq) {\n                if (reader.matchesIgnoreCase(s)) break OUT;\n            }\n            sb.append(consume());\n        }\n        return StringUtil.releaseBuilder(sb);\n    }\n\n    /**\n     Pulls a balanced string off the queue. E.g. if queue is \"(one (two) three) four\", (,) will return \"one (two) three\",\n     and leave \" four\" on the queue. Unbalanced openers and closers can be quoted (with ' or \") or escaped (with \\).\n     Those escapes will be left in the returned string, which is suitable for regexes (where we need to preserve the\n     escape), but unsuitable for contains text strings; use unescape for that.\n\n     @param open opener\n     @param close closer\n     @return data matched from the queue\n     */\n    public String chompBalanced(char open, char close) {\n        StringBuilder accum = StringUtil.borrowBuilder();\n        int depth = 0;\n        char prev = 0;\n        boolean inSingle = false;\n        boolean inDouble = false;\n        boolean inRegexQE = false; // regex \\Q .. \\E escapes from Pattern.quote()\n        reader.mark(); // mark the initial position to restore if needed\n\n        do {\n            if (isEmpty()) break;\n            char c = consume();\n            if (prev == Esc) {\n                if      (c == 'Q') inRegexQE = true;\n                else if (c == 'E') inRegexQE = false;\n                accum.append(c);\n            } else {\n                if      (c == '\\'' && c != open && !inDouble) inSingle = !inSingle;\n                else if (c == '\"'  && c != open && !inSingle) inDouble = !inDouble;\n\n                if (inSingle || inDouble || inRegexQE) {\n                    accum.append(c);\n                } else if (c == open) {\n                    depth++;\n                    if (depth > 1) accum.append(c); // don't include the outer match pair in the return\n                } else if (c == close) {\n                    depth--;\n                    if (depth > 0) accum.append(c);\n                } else {\n                    accum.append(c);\n                }\n            }\n            prev = c;\n        } while (depth > 0);\n\n        String out = StringUtil.releaseBuilder(accum);\n        if (depth > 0) {// ran out of queue before seeing enough )\n            reader.rewindToMark(); // restore position if we don't have a balanced string\n            Validate.fail(\"Did not find balanced marker at '\" + out + \"'\");\n        }\n        return out;\n    }\n\n    /**\n     * Unescape a \\ escaped string.\n     * @param in backslash escaped string\n     * @return unescaped string\n     */\n    public static String unescape(String in) {\n        return CssIdentifier.unescape(in);\n    }\n\n    /**\n     Given a CSS identifier (such as a tag, ID, or class), escape any CSS special characters that would otherwise not be\n     valid in a selector.\n\n     @see <a href=\"https://www.w3.org/TR/cssom-1/#serialize-an-identifier\">CSS Object Model, serialize an identifier</a>\n     */\n    public static String escapeCssIdentifier(String in) {\n        return CssIdentifier.escapeCssIdentifier(in);\n    }\n\n    /**\n     * Pulls the next run of whitespace characters of the queue.\n     * @return Whether consuming whitespace or not\n     */\n    public boolean consumeWhitespace() {\n        boolean seen = false;\n        while (matchesWhitespace()) {\n            advance();\n            seen = true;\n        }\n        return seen;\n    }\n\n    /**\n     * Consume a CSS element selector (tag name, but | instead of : for namespaces (or *| for wildcard namespace), to not conflict with :pseudo selects).\n     * \n     * @return tag name\n     */\n    public String consumeElementSelector() {\n        return consumeEscapedCssIdentifier(ElementSelectorChars);\n    }\n    private static final char[] ElementSelectorChars = {'*', '|', '_', '-'};\n\n    /**\n     Consume a CSS identifier (ID or class) off the queue.\n     <p>Note: For backwards compatibility this method supports improperly formatted CSS identifiers, e.g. {@code 1} instead\n     of {@code \\31}.</p>\n\n     @return The unescaped identifier.\n     @throws IllegalArgumentException if an invalid escape sequence was found. Afterward, the state of the TokenQueue\n     is undefined.\n     @see <a href=\"https://www.w3.org/TR/css-syntax-3/#consume-name\">CSS Syntax Module Level 3, Consume an ident sequence</a>\n     @see <a href=\"https://www.w3.org/TR/css-syntax-3/#typedef-ident-token\">CSS Syntax Module Level 3, ident-token</a>\n     */\n    public String consumeCssIdentifier() {\n        if (isEmpty()) throw new IllegalArgumentException(\"CSS identifier expected, but end of input found\");\n\n        String identifier = reader.consumeMatching(CssIdentifier::isIdent);\n        char c = current();\n        if (c != Esc && c != Unicode_Null) {\n            return identifier;\n        }\n\n        StringBuilder out = StringUtil.borrowBuilder();\n        if (!identifier.isEmpty()) {\n            out.append(identifier);\n        }\n\n        while (!isEmpty()) {\n            c = current();\n            if (CssIdentifier.isIdent(c)) {\n                out.append(consume());\n            } else if (c == Unicode_Null) {\n                advance();\n                out.append(Replacement);\n            } else if (c == Esc) {\n                advance();\n                if (!isEmpty() && isNewline(current())) {\n                    reader.unconsume();\n                    break;\n                } else {\n                    consumeCssEscapeSequenceInto(out);\n                }\n            } else {\n                break;\n            }\n        }\n        return StringUtil.releaseBuilder(out);\n    }\n\n    private void consumeCssEscapeSequenceInto(StringBuilder out) {\n        if (isEmpty()) {\n            out.append(Replacement);\n            return;\n        }\n\n        char firstEscaped = consume();\n        if (!StringUtil.isHexDigit(firstEscaped)) {\n            out.append(firstEscaped);\n        } else {\n            reader.unconsume();\n            String hexString = reader.consumeMatching(StringUtil::isHexDigit, 6);\n            int codePoint;\n            try {\n                codePoint = Integer.parseInt(hexString, 16);\n            } catch (NumberFormatException e) {\n                throw new IllegalArgumentException(\"Invalid escape sequence: \" + hexString, e);\n            }\n            if (CssIdentifier.isValidCodePoint(codePoint)) {\n                out.appendCodePoint(codePoint);\n            } else {\n                out.append(Replacement);\n            }\n\n            if (!isEmpty()) {\n                char c = current();\n                if (c == '\\r') {\n                    advance();\n                    if (!isEmpty() && current() == '\\n') advance();\n                } else if (c == ' ' || c == '\\t' || isNewline(c)) {\n                    advance();\n                }\n            }\n        }\n    }\n\n    private static boolean isNewline(char c) {\n        return c == '\\n' || c == '\\r' || c == '\\f';\n    }\n\n    private static final char[] CssIdentifierChars = {'-', '_'};\n\n    private String consumeEscapedCssIdentifier(char... matches) {\n        StringBuilder sb = StringUtil.borrowBuilder();\n        while (!isEmpty()) {\n            char c = current();\n            if (c == Esc) {\n                advance();\n                if (!isEmpty()) sb.append(consume());\n                else break;\n            } else if (matchesCssIdentifier(matches)) {\n                sb.append(c);\n                advance();\n            } else {\n                break;\n            }\n        }\n        return StringUtil.releaseBuilder(sb);\n    }\n\n    private boolean matchesCssIdentifier(char... matches) {\n        return matchesWord() || reader.matchesAny(matches);\n    }\n\n    /**\n     Consume and return whatever is left on the queue.\n     @return remainder of queue.\n     */\n    public String remainder() {\n        return reader.consumeToEnd();\n    }\n\n    @Override\n    public String toString() {\n        return reader.toString();\n    }\n\n    @Override\n    public void close() {\n        reader.close(); // releases buffer back to pool\n    }\n}\n"
+}
+
+# OUTPUT SCHEMA
+
+{
+  "smell_type": "Insufficient Modularization",
+  "target_level": "class",
+  "target": "<class FQN from input>",
+  "blocks": [
+    {
+      "id": 1,
+      "goal": "...",
+      "expected_impact": {
+        "primary_metric": "public_methods|total_methods|loc",
+        "public_methods_moved": 0,
+        "total_methods_moved": 0,
+        "loc_reduction_expected": "low|medium|high",
+        "rationale": "..."
+      },
+      "files": ["..."],
+      "ops": [
+        {
+          "op": "EXTRACT_CLASS",
+          "inputs": ["..."],
+          "outputs": ["..."],
+          "details": "...",
+          "risk": "low|medium|high"
+        },
+        {
+          "op": "<allowed op>",
+          "inputs": ["..."],
+          "outputs": ["..."],
+          "details": "...",
+          "risk": "low|medium|high"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+[ERROR] COMPILATION ERROR : 
+[ERROR] /data/henrique/langchain_prototype/new/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/RandomStringUtils.java:[1062,29] cannot find symbol
+  symbol:   method random()
+  location: class org.apache.commons.lang3.RandomUtils
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.15.0:compile (default-compile) on project commons-lang3: Compilation failure
+[ERROR] /data/henrique/langchain_prototype/new/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/RandomStringUtils.java:[1062,29] cannot find symbol
+[ERROR]   symbol:   method random()
+[ERROR]   location: class org.apache.commons.lang3.RandomUtils
+[ERROR] 
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException

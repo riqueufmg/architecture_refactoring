@@ -1,0 +1,157 @@
+{
+  "mvp": "source_refactor",
+  "ok": true,
+  "run_id": "20260616_185656_7e6fd1d4",
+  "project": "jsoup",
+  "repo_path": "/data/henrique/langchain_prototype/new/data/repositories/jsoup",
+  "smell": "IM",
+  "smell_name": "Insufficient Modularization",
+  "target_type": "class",
+  "target_name": "org.jsoup.internal.StringUtil",
+  "blocks_count": 2,
+  "blocks_applied": 2,
+  "blocks_failed": 0,
+  "failed_block_id": "",
+  "failed_stage": "",
+  "rolled_back": false,
+  "rollback_to": "",
+  "block_summaries": [
+    {
+      "block_id": "1",
+      "block_index": 0,
+      "attempt": 0,
+      "max_block_attempts": 5,
+      "executor_ok": true,
+      "executor_error": "",
+      "apply_ok": true,
+      "apply_error": "",
+      "applied_files": [
+        "src/main/java/org/jsoup/internal/StringUtilPatterns.java",
+        "src/main/java/org/jsoup/internal/StringUtil.java"
+      ],
+      "compile_ok": true,
+      "compile_return_code": 0,
+      "compile_log_path": "/data/henrique/langchain_prototype/new/data/runs/20260616_185656_7e6fd1d4/source_refactor/block_001/compile.log",
+      "commit": "bc71113630a1af6511c531a5319d3797a327f429",
+      "rollback_reason": "",
+      "stop_reason": "block_applied",
+      "files": {
+        "executor_existing_files": [
+          "src/main/java/org/jsoup/internal/StringUtil.java",
+          "src/test/java/org/jsoup/integration/routes/EchoRoute.java",
+          "src/test/java/org/jsoup/internal/StringUtilTest.java",
+          "src/test/java/org/jsoup/nodes/ElementTest.java",
+          "src/test/java/org/jsoup/nodes/TextNodeTest.java",
+          "src/test/java/org/jsoup/parser/CharacterReaderTest.java",
+          "src/test/java/org/jsoup/parser/HtmlParserTest.java",
+          "src/test/java/org/jsoup/parser/HtmlTreeBuilderStateTest.java",
+          "src/test/java/org/jsoup/select/EvaluatorDebug.java"
+        ],
+        "executor_new_files": [
+          "src/main/java/org/jsoup/internal/StringUtilPatterns.java"
+        ],
+        "executor_files": [
+          "src/main/java/org/jsoup/internal/StringUtil.java",
+          "src/main/java/org/jsoup/internal/StringUtilPatterns.java",
+          "src/test/java/org/jsoup/integration/routes/EchoRoute.java",
+          "src/test/java/org/jsoup/internal/StringUtilTest.java",
+          "src/test/java/org/jsoup/nodes/ElementTest.java",
+          "src/test/java/org/jsoup/nodes/TextNodeTest.java",
+          "src/test/java/org/jsoup/parser/CharacterReaderTest.java",
+          "src/test/java/org/jsoup/parser/HtmlParserTest.java",
+          "src/test/java/org/jsoup/parser/HtmlTreeBuilderStateTest.java",
+          "src/test/java/org/jsoup/select/EvaluatorDebug.java"
+        ],
+        "executor_rejected_files": []
+      },
+      "openrewrite": {
+        "ok": false,
+        "return_code": -1,
+        "recipe_path": "",
+        "log_path": "",
+        "command": []
+      }
+    },
+    {
+      "block_id": "2",
+      "block_index": 1,
+      "attempt": 0,
+      "max_block_attempts": 5,
+      "executor_ok": true,
+      "executor_error": "",
+      "apply_ok": true,
+      "apply_error": "",
+      "applied_files": [
+        "src/main/java/org/jsoup/internal/StringUtil.java",
+        "src/main/java/org/jsoup/internal/StringUtilBuilderPool.java"
+      ],
+      "compile_ok": true,
+      "compile_return_code": 0,
+      "compile_log_path": "/data/henrique/langchain_prototype/new/data/runs/20260616_185656_7e6fd1d4/source_refactor/block_002/compile.log",
+      "commit": "f98b3525646c0d59aa58cc037aaabd4338421e02",
+      "rollback_reason": "",
+      "stop_reason": "block_applied",
+      "files": {
+        "executor_existing_files": [
+          "src/main/java/org/jsoup/internal/StringUtil.java",
+          "src/test/java/org/jsoup/integration/routes/EchoRoute.java",
+          "src/test/java/org/jsoup/internal/StringUtilTest.java",
+          "src/test/java/org/jsoup/nodes/ElementTest.java",
+          "src/test/java/org/jsoup/nodes/TextNodeTest.java",
+          "src/test/java/org/jsoup/parser/CharacterReaderTest.java",
+          "src/test/java/org/jsoup/parser/HtmlParserTest.java",
+          "src/test/java/org/jsoup/parser/HtmlTreeBuilderStateTest.java",
+          "src/test/java/org/jsoup/select/EvaluatorDebug.java"
+        ],
+        "executor_new_files": [
+          "src/main/java/org/jsoup/internal/StringUtilBuilderPool.java"
+        ],
+        "executor_files": [
+          "src/main/java/org/jsoup/internal/StringUtil.java",
+          "src/main/java/org/jsoup/internal/StringUtilBuilderPool.java",
+          "src/test/java/org/jsoup/integration/routes/EchoRoute.java",
+          "src/test/java/org/jsoup/internal/StringUtilTest.java",
+          "src/test/java/org/jsoup/nodes/ElementTest.java",
+          "src/test/java/org/jsoup/nodes/TextNodeTest.java",
+          "src/test/java/org/jsoup/parser/CharacterReaderTest.java",
+          "src/test/java/org/jsoup/parser/HtmlParserTest.java",
+          "src/test/java/org/jsoup/parser/HtmlTreeBuilderStateTest.java",
+          "src/test/java/org/jsoup/select/EvaluatorDebug.java"
+        ],
+        "executor_rejected_files": []
+      },
+      "openrewrite": {
+        "ok": false,
+        "return_code": -1,
+        "recipe_path": "",
+        "log_path": "",
+        "command": []
+      }
+    }
+  ],
+  "current_block_id": "2",
+  "applied_files": [
+    "src/main/java/org/jsoup/internal/StringUtil.java",
+    "src/main/java/org/jsoup/internal/StringUtilBuilderPool.java"
+  ],
+  "compile_ok": true,
+  "compile_return_code": 0,
+  "compile_log_path": "/data/henrique/langchain_prototype/new/data/runs/20260616_185656_7e6fd1d4/source_refactor/block_002/compile.log",
+  "initial_commit": "93432b77dbe5066fa6d96f9c336024d690e9d5af",
+  "last_good_commit": "f98b3525646c0d59aa58cc037aaabd4338421e02",
+  "current_block_commit": "f98b3525646c0d59aa58cc037aaabd4338421e02",
+  "final_commit": "f98b3525646c0d59aa58cc037aaabd4338421e02",
+  "workspace_clean": true,
+  "block_attempt": 0,
+  "max_block_attempts": 5,
+  "executor_ok": true,
+  "executor_error": "",
+  "apply_ok": true,
+  "apply_error": "",
+  "rollback_reason": "",
+  "stop_reason": "all_blocks_applied",
+  "openrewrite_ok": false,
+  "openrewrite_return_code": -1,
+  "openrewrite_log_path": "",
+  "openrewrite_recipe_path": ""
+}

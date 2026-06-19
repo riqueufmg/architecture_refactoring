@@ -1,0 +1,17 @@
+{
+  "ok": false,
+  "return_code": 1,
+  "command": [
+    "mvn",
+    "-q",
+    "-Dmaven.test.skip=true",
+    "-Djapicmp.skip=true",
+    "-Drat.skip=true",
+    "-Dcheckstyle.skip=true",
+    "-Dspotbugs.skip=true",
+    "-Dpmd.skip=true",
+    "-DskipITs",
+    "compile"
+  ],
+  "compile_log": "/data/henrique/langchain_prototype/new/data/runs/20260617_133012_338ed141/source_refactor/block_001/compile.log"
+}

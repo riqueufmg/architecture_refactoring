@@ -9,7 +9,6 @@ from langchain_openai import ChatOpenAI
 from langchain_core.messages import SystemMessage, HumanMessage
 
 from mvp.source_refactor.state import SourceRefactorState
-
 from mvp.source_refactor.lib.config_utils import (
     load_config,
     require_config_value,
@@ -32,6 +31,7 @@ from mvp.source_refactor.lib.git_utils import (
     git_commit_all,
     git_reset_hard,
     git_clean_workspace,
+    write_commit_diff_artifacts,
 )
 from mvp.source_refactor.lib.file_ops import (
     load_files_context,
@@ -1254,6 +1254,7 @@ def after_compile_source(state: SourceRefactorState) -> str:
 
     return "rollback_final"
 
+## Executed when block changes have been applied and compiled successfully
 def promote_block_node(state: SourceRefactorState) -> SourceRefactorState:
     repo_path = Path(state["repo_path"]).resolve()
     source_refactor_dir = Path(state["source_refactor_dir"])
@@ -1272,9 +1273,16 @@ def promote_block_node(state: SourceRefactorState) -> SourceRefactorState:
         repo_path,
         f"source_refactor: apply block {block_id}",
     )
-
     state["current_block_commit"] = commit
     state["last_good_commit"] = commit
+
+    ## save code diff
+    diff_info = write_commit_diff_artifacts(
+        repo_path=repo_path,
+        commit=commit,
+        output_dir=block_dir,
+    )
+    state["current_block_diff"] = diff_info
 
     block_commit = {
         "block_id": block_id,
@@ -1322,6 +1330,18 @@ def promote_block_node(state: SourceRefactorState) -> SourceRefactorState:
         "commit": commit,
         "rollback_reason": state.get("rollback_reason", ""),
         "stop_reason": "block_applied",
+
+        "diff": {
+            "diff_path": diff_info["paths"]["diff"],
+            "diffstat_path": diff_info["paths"]["diffstat"],
+            "name_status_path": diff_info["paths"]["name_status"],
+            "changed_files_path": diff_info["paths"]["changed_files"],
+            "changed_files_count": diff_info["changed_files_count"],
+            "production_files_count": diff_info["production_files_count"],
+            "test_files_count": diff_info["test_files_count"],
+            "production_files": diff_info["production_files"],
+            "test_files": diff_info["test_files"],
+        },
 
         "files": {
             "executor_existing_files": state.get("executor_existing_files", []),

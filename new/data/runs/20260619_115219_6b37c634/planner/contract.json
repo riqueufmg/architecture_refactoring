@@ -1,0 +1,26 @@
+{
+  "producer": "planner",
+  "version": "1.0",
+  "ok": true,
+  "run_id": "20260619_115219_6b37c634",
+  "project": {
+    "name": "commons-lang",
+    "repo_path": "/data/henrique/langchain_prototype/new/data/repositories/commons-lang"
+  },
+  "target": {
+    "smell": "IM",
+    "smell_name": "Insufficient Modularization",
+    "target_type": "class",
+    "target_name": "org.apache.commons.lang3.mutable.MutableByte",
+    "target_file": "src/main/java/org/apache/commons/lang3/mutable/MutableByte.java",
+    "target_files": [],
+    "target_source_root": "src/main/java"
+  },
+  "artifacts": {
+    "planner_dir": "/data/henrique/langchain_prototype/new/data/runs/20260619_115219_6b37c634/planner",
+    "plan": "/data/henrique/langchain_prototype/new/data/runs/20260619_115219_6b37c634/planner/plan.json",
+    "planner_input": "/data/henrique/langchain_prototype/new/data/runs/20260619_115219_6b37c634/planner/planner.input.json",
+    "designite_dir": "/data/henrique/langchain_prototype/new/data/runs/20260619_115219_6b37c634/planner/designite",
+    "status": "/data/henrique/langchain_prototype/new/data/runs/20260619_115219_6b37c634/planner/status.json"
+  }
+}

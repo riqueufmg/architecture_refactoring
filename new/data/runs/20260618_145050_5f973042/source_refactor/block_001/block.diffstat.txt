@@ -1,0 +1,9 @@
+commit b5f883b651652de104d0aa2623d73999534c247d
+Author: Henrique Nunes <rique@face.ufmg.br>
+Date:   Thu Jun 18 14:55:21 2026 -0300
+
+    source_refactor: apply block 1
+
+ src/main/java/org/jsoup/parser/Parser.java       |  71 +++++----
+ src/main/java/org/jsoup/parser/ParserConfig.java | 190 +++++++++++++++++++++++
+ 2 files changed, 232 insertions(+), 29 deletions(-)

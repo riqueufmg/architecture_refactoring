@@ -1,0 +1,50 @@
+{
+  "smell_type": "Insufficient Modularization",
+  "target_level": "class",
+  "target": "org.jsoup.parser.Parser",
+  "blocks": [
+    {
+      "id": 1,
+      "goal": "Extract the repetitive lock/unlock usage into a small helper class and update Parser to use it so Parser is smaller and has less duplicated locking logic.",
+      "files": [
+        "src/main/java/org/jsoup/parser/Parser.java",
+        "src/main/java/org/jsoup/parser/ParserUtils.java"
+      ],
+      "ops": [
+        {
+          "op": "EXTRACT_CLASS",
+          "inputs": [
+            "src/main/java/org/jsoup/parser/Parser.java"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/parser/ParserUtils.java"
+          ],
+          "details": "Create a new helper class org.jsoup.parser.ParserUtils with a single public static generic method <T> T withLock(java.util.concurrent.locks.ReentrantLock lock, java.util.concurrent.Callable<T> callable) that acquires the lock, calls callable.call(), unlocks in finally, and rethrows exceptions as RuntimeException. Place the class in the same package org.jsoup.parser.",
+          "risk": "low"
+        },
+        {
+          "op": "UPDATE_CALL_SITES",
+          "inputs": [
+            "src/main/java/org/jsoup/parser/Parser.java"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/parser/Parser.java"
+          ],
+          "details": "Replace the explicit try { lock.lock(); return treeBuilder.parse(inputHtml, baseUri, this); } finally { lock.unlock(); } in the public Document parseInput(Reader inputHtml, String baseUri) method with: return ParserUtils.withLock(lock, () -> treeBuilder.parse(inputHtml, baseUri, this)); Keep method signature and visibility unchanged. No change to public API.",
+          "risk": "low"
+        },
+        {
+          "op": "UPDATE_CALL_SITES",
+          "inputs": [
+            "src/main/java/org/jsoup/parser/Parser.java"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/parser/Parser.java"
+          ],
+          "details": "Replace the explicit try { lock.lock(); return treeBuilder.parseFragment(fragment, context, baseUri, this); } finally { lock.unlock(); } in the public List<Node> parseFragmentInput(Reader fragment, @Nullable Element context, String baseUri) method with: return ParserUtils.withLock(lock, () -> treeBuilder.parseFragment(fragment, context, baseUri, this)); Keep method signature and visibility unchanged. No change to public API.",
+          "risk": "low"
+        }
+      ]
+    }
+  ]
+}

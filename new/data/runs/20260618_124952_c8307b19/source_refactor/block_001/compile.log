@@ -1,0 +1,27 @@
+[ERROR] COMPILATION ERROR : 
+[ERROR] /data/henrique/langchain_prototype/new/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/RegExUtils.java:[117,16] cannot find symbol
+  symbol:   method replaceAll(java.lang.String,java.lang.String,java.lang.String)
+  location: class org.apache.commons.lang3.RegExUtils
+[ERROR] /data/henrique/langchain_prototype/new/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/StringUtils.java:[6297,26] cannot find symbol
+  symbol:   method replaceAll(java.lang.String,java.lang.String,java.lang.String)
+  location: class org.apache.commons.lang3.RegExUtils
+[ERROR] /data/henrique/langchain_prototype/new/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/StringUtils.java:[6660,26] cannot find symbol
+  symbol:   method replaceFirst(java.lang.String,java.lang.String,java.lang.String)
+  location: class org.apache.commons.lang3.RegExUtils
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.15.0:compile (default-compile) on project commons-lang3: Compilation failure: Compilation failure: 
+[ERROR] /data/henrique/langchain_prototype/new/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/RegExUtils.java:[117,16] cannot find symbol
+[ERROR]   symbol:   method replaceAll(java.lang.String,java.lang.String,java.lang.String)
+[ERROR]   location: class org.apache.commons.lang3.RegExUtils
+[ERROR] /data/henrique/langchain_prototype/new/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/StringUtils.java:[6297,26] cannot find symbol
+[ERROR]   symbol:   method replaceAll(java.lang.String,java.lang.String,java.lang.String)
+[ERROR]   location: class org.apache.commons.lang3.RegExUtils
+[ERROR] /data/henrique/langchain_prototype/new/data/repositories/commons-lang/src/main/java/org/apache/commons/lang3/StringUtils.java:[6660,26] cannot find symbol
+[ERROR]   symbol:   method replaceFirst(java.lang.String,java.lang.String,java.lang.String)
+[ERROR]   location: class org.apache.commons.lang3.RegExUtils
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException

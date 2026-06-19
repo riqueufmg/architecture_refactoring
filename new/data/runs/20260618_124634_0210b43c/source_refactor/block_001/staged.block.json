@@ -1,0 +1,119 @@
+{
+  "id": 1,
+  "goal": "Extract the thread- and thread-group-finding responsibility from ThreadUtils into a new class org.apache.commons.lang3.ThreadFinder to reduce the number of public methods and total methods in ThreadUtils and concentrate related helpers and deprecated predicate types in a cohesive place.",
+  "expected_impact": {
+    "primary_metric": "public_methods",
+    "public_methods_moved": 18,
+    "total_methods_moved": 21,
+    "loc_reduction_expected": "high",
+    "rationale": "All public APIs and supporting helpers related to finding threads and thread groups (findThreadById*, findThreads*, findThreadGroups*, find*ByName, getAllThreads/Groups, getSystemThreadGroup) plus the private predicate helpers and the deprecated predicate nested types/field will be moved into ThreadFinder. This reduces ThreadUtils public method count significantly (by 18) and moves a large coherent chunk of LOC into a dedicated class, improving modularization."
+  },
+  "files": [
+    "src/main/java/org/apache/commons/lang3/ThreadFinder.java",
+    "src/main/java/org/apache/commons/lang3/ThreadUtils.java",
+    "src/test/java/org/apache/commons/lang3/ThreadUtilsTest.java",
+    "src/test/java/org/apache/commons/lang3/concurrent/BackgroundInitializerTest.java",
+    "src/test/java/org/apache/commons/lang3/concurrent/TimedSemaphoreTest.java",
+    "src/test/java/org/apache/commons/lang3/concurrent/locks/LockingVisitorsTest.java",
+    "src/test/java/org/apache/commons/lang3/time/StopWatchTest.java"
+  ],
+  "ops": [
+    {
+      "op": "EXTRACT_CLASS",
+      "inputs": [
+        "src/main/java/org/apache/commons/lang3/ThreadUtils.java"
+      ],
+      "outputs": [
+        "src/main/java/org/apache/commons/lang3/ThreadFinder.java"
+      ],
+      "details": "Create new class org.apache.commons.lang3.ThreadFinder containing the cohesive responsibility of locating threads and thread groups. The following public static methods will be moved into ThreadFinder with their existing implementations: findThreadById(long), findThreadById(long, String), findThreadById(long, ThreadGroup), findThreadGroups(Predicate<ThreadGroup>), findThreadGroups(ThreadGroup, boolean, Predicate<ThreadGroup>), findThreadGroups(ThreadGroup, boolean, ThreadGroupPredicate) [@Deprecated], findThreadGroups(ThreadGroupPredicate) [@Deprecated], findThreadGroupsByName(String), findThreads(Predicate<Thread>), findThreads(ThreadGroup, boolean, Predicate<Thread>), findThreads(ThreadGroup, boolean, ThreadPredicate) [@Deprecated], findThreads(ThreadPredicate) [@Deprecated], findThreadsByName(String), findThreadsByName(String, String), findThreadsByName(String, ThreadGroup), getAllThreadGroups(), getAllThreads(), getSystemThreadGroup(). Also move the private helpers namePredicate, predicateThread, predicateThreadGroup, the nested predicate types and classes that support these APIs: AlwaysTruePredicate (and its public static final instance ALWAYS_TRUE_PREDICATE), NamePredicate, ThreadGroupPredicate, ThreadIdPredicate, ThreadPredicate. The new class will be placed in the same package (org.apache.commons.lang3) and will import the same JDK and commons classes it needs (java.time.Duration not needed here). The moved deprecated predicate types remain public in ThreadFinder to preserve deprecated API surface that belonged to the finding responsibility.",
+      "risk": "medium"
+    },
+    {
+      "op": "MOVE_METHOD",
+      "inputs": [
+        "src/main/java/org/apache/commons/lang3/ThreadUtils.java:public static Thread findThreadById(long)",
+        "src/main/java/org/apache/commons/lang3/ThreadUtils.java:public static Thread findThreadById(long, java.lang.String)",
+        "src/main/java/org/apache/commons/lang3/ThreadUtils.java:public static Thread findThreadById(long, java.lang.ThreadGroup)",
+        "src/main/java/org/apache/commons/lang3/ThreadUtils.java:public static java.util.Collection findThreadGroups(java.util.function.Predicate)",
+        "src/main/java/org/apache/commons/lang3/ThreadUtils.java:public static java.util.Collection findThreadGroups(java.lang.ThreadGroup, boolean, java.util.function.Predicate)",
+        "src/main/java/org/apache/commons/lang3/ThreadUtils.java:public static java.util.Collection findThreadGroups(java.lang.ThreadGroup, boolean, org.apache.commons.lang3.ThreadUtils.ThreadGroupPredicate) @Deprecated",
+        "src/main/java/org/apache/commons/lang3/ThreadUtils.java:public static java.util.Collection findThreadGroups(org.apache.commons.lang3.ThreadUtils.ThreadGroupPredicate) @Deprecated",
+        "src/main/java/org/apache/commons/lang3/ThreadUtils.java:public static java.util.Collection findThreadGroupsByName(java.lang.String)",
+        "src/main/java/org/apache/commons/lang3/ThreadUtils.java:public static java.util.Collection findThreads(java.util.function.Predicate)",
+        "src/main/java/org/apache/commons/lang3/ThreadUtils.java:public static java.util.Collection findThreads(java.lang.ThreadGroup, boolean, java.util.function.Predicate)",
+        "src/main/java/org/apache/commons/lang3/ThreadUtils.java:public static java.util.Collection findThreads(java.lang.ThreadGroup, boolean, org.apache.commons.lang3.ThreadUtils.ThreadPredicate) @Deprecated",
+        "src/main/java/org/apache/commons/lang3/ThreadUtils.java:public static java.util.Collection findThreads(org.apache.commons.lang3.ThreadUtils.ThreadPredicate) @Deprecated",
+        "src/main/java/org/apache/commons/lang3/ThreadUtils.java:public static java.util.Collection findThreadsByName(java.lang.String)",
+        "src/main/java/org/apache/commons/lang3/ThreadUtils.java:public static java.util.Collection findThreadsByName(java.lang.String, java.lang.String)",
+        "src/main/java/org/apache/commons/lang3/ThreadUtils.java:public static java.util.Collection findThreadsByName(java.lang.String, java.lang.ThreadGroup)",
+        "src/main/java/org/apache/commons/lang3/ThreadUtils.java:public static java.util.Collection getAllThreadGroups()",
+        "src/main/java/org/apache/commons/lang3/ThreadUtils.java:public static java.util.Collection getAllThreads()",
+        "src/main/java/org/apache/commons/lang3/ThreadUtils.java:public static java.lang.ThreadGroup getSystemThreadGroup()"
+      ],
+      "outputs": [
+        "src/main/java/org/apache/commons/lang3/ThreadFinder.java"
+      ],
+      "details": "Move the listed public methods from ThreadUtils into ThreadFinder preserving their implementation and JavaDoc. Deprecated overloads that accept the legacy ThreadPredicate/ThreadGroupPredicate remain and are moved together. Internal references among the moved methods remain within ThreadFinder.",
+      "risk": "medium"
+    },
+    {
+      "op": "MOVE_FIELD",
+      "inputs": [
+        "src/main/java/org/apache/commons/lang3/ThreadUtils.java:public static final org.apache.commons.lang3.ThreadUtils.AlwaysTruePredicate ALWAYS_TRUE_PREDICATE"
+      ],
+      "outputs": [
+        "src/main/java/org/apache/commons/lang3/ThreadFinder.java"
+      ],
+      "details": "Move the ALWAYS_TRUE_PREDICATE field (and its backing AlwaysTruePredicate nested class) to ThreadFinder so deprecated predicate utilities remain colocated with the finding APIs.",
+      "risk": "low"
+    },
+    {
+      "op": "MOVE_METHOD",
+      "inputs": [
+        "src/main/java/org/apache/commons/lang3/ThreadUtils.java:private static <T> java.util.function.Predicate namePredicate(java.lang.String, java.util.function.Function)",
+        "src/main/java/org/apache/commons/lang3/ThreadUtils.java:private static java.util.function.Predicate predicateThread(java.lang.String)",
+        "src/main/java/org/apache/commons/lang3/ThreadUtils.java:private static java.util.function.Predicate predicateThreadGroup(java.lang.String)"
+      ],
+      "outputs": [
+        "src/main/java/org/apache/commons/lang3/ThreadFinder.java"
+      ],
+      "details": "Move the private helper methods that create name-based Predicates into ThreadFinder because they are only used by the moved finding methods.",
+      "risk": "low"
+    },
+    {
+      "op": "ADD_OR_UPDATE_IMPORTS",
+      "inputs": [
+        "src/main/java/org/apache/commons/lang3/ThreadFinder.java",
+        "src/main/java/org/apache/commons/lang3/ThreadUtils.java"
+      ],
+      "outputs": [
+        "src/main/java/org/apache/commons/lang3/ThreadFinder.java",
+        "src/main/java/org/apache/commons/lang3/ThreadUtils.java"
+      ],
+      "details": "Add or adjust imports in both ThreadFinder (new) and ThreadUtils (updated) so each file imports only what it needs after extraction. ThreadFinder will import: java.util.Collection, java.util.Collections, java.util.Objects, java.util.function.Function, java.util.function.Predicate, java.util.stream.Collectors, java.util.stream.Stream, and org.apache.commons.lang3.function.Predicates. ThreadUtils retains imports required by remaining methods (Duration, org.apache.commons.lang3.time.DurationUtils) and will remove imports no longer needed.",
+      "risk": "low"
+    },
+    {
+      "op": "UPDATE_TESTS",
+      "inputs": [
+        "src/test/java/org/apache/commons/lang3/ThreadUtilsTest.java",
+        "src/test/java/org/apache/commons/lang3/concurrent/BackgroundInitializerTest.java",
+        "src/test/java/org/apache/commons/lang3/concurrent/TimedSemaphoreTest.java",
+        "src/test/java/org/apache/commons/lang3/concurrent/locks/LockingVisitorsTest.java",
+        "src/test/java/org/apache/commons/lang3/time/StopWatchTest.java"
+      ],
+      "outputs": [],
+      "details": "Update related tests affected by this refactoring block so the configured build command passes. Adjust imports, package references, moved class references, constructors, and assertions only when required. Do not change production behavior through tests.",
+      "risk": "medium",
+      "api_change": false
+    }
+  ],
+  "test_files": [
+    "src/test/java/org/apache/commons/lang3/ThreadUtilsTest.java",
+    "src/test/java/org/apache/commons/lang3/concurrent/BackgroundInitializerTest.java",
+    "src/test/java/org/apache/commons/lang3/concurrent/TimedSemaphoreTest.java",
+    "src/test/java/org/apache/commons/lang3/concurrent/locks/LockingVisitorsTest.java",
+    "src/test/java/org/apache/commons/lang3/time/StopWatchTest.java"
+  ]
+}

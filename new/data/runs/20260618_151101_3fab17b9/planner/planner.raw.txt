@@ -1,0 +1,36 @@
+{
+  "smell_type": "Insufficient Modularization",
+  "target_level": "class",
+  "target": "org.jsoup.parser.Parser",
+  "blocks": [
+    {
+      "id": 1,
+      "goal": "Extract the static parsing/factory and convenience helper responsibilities from org.jsoup.parser.Parser into a new org.jsoup.parser.Parsers class. This clusters all public static parse/factory/unescape helper methods into a dedicated class, reducing the number of public methods on Parser and improving modularization.",
+      "expected_impact": {
+        "primary_metric": "public_methods",
+        "public_methods_moved": 8,
+        "total_methods_moved": 8,
+        "loc_reduction_expected": "medium",
+        "rationale": "The extraction moves the public static convenience methods (parse, parseFragment overloads, parseXmlFragment, parseBodyFragment, unescapeEntities, htmlParser, xmlParser) out of Parser into a new Parsers class. This reduces the public surface of Parser by 8 methods, reduces its total method count by 8, and centralizes factory/utility behaviour into a cohesive class, lowering Parser's LOC and responsibility concentration."
+      },
+      "files": [
+        "src/main/java/org/jsoup/parser/Parser.java",
+        "src/main/java/org/jsoup/parser/Parsers.java"
+      ],
+      "ops": [
+        {
+          "op": "EXTRACT_CLASS",
+          "inputs": [
+            "src/main/java/org/jsoup/parser/Parser.java"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/parser/Parsers.java",
+            "src/main/java/org/jsoup/parser/Parser.java"
+          ],
+          "details": "Create a new class org.jsoup.parser.Parsers in the same package and move the following public static methods from Parser into Parsers, preserving their implementation but updating internal calls to refer to Parsers where necessary: - parse(String html, String baseUri) - parseFragment(String fragmentHtml, Element context, String baseUri) - parseFragment(String fragmentHtml, Element context, String baseUri, ParseErrorList errorList) - parseXmlFragment(String fragmentXml, String baseUri) - parseBodyFragment(String bodyHtml, String baseUri) - unescapeEntities(String string, boolean inAttribute) - htmlParser() - xmlParser()\n\nThe moved methods will be implemented as public static methods in Parsers. References within the moved cluster that previously referenced other moved methods (for example parseBodyFragment calling parseFragment) will be updated to call the new methods within Parsers. Calls that construct a Parser (new Parser(treeBuilder)) remain unchanged and refer to org.jsoup.parser.Parser. Remove the moved methods from Parser. Keep the instance API of Parser (non-static methods and constructors) unchanged. No compatibility delegating wrappers on Parser are added; external call-sites will be updated by the deterministic post-processing step if required.",
+          "risk": "low"
+        }
+      ]
+    }
+  ]
+}

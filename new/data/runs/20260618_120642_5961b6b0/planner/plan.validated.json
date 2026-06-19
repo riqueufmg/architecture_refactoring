@@ -1,0 +1,85 @@
+{
+  "smell_type": "Insufficient Modularization",
+  "target_level": "class",
+  "target": "org.apache.commons.lang3.ThreadUtils",
+  "blocks": [
+    {
+      "id": 1,
+      "goal": "Extract the thread- and thread-group-finding responsibility from ThreadUtils into a dedicated ThreadFinder class to significantly reduce the number of public methods in ThreadUtils and improve modularization.",
+      "expected_impact": {
+        "primary_metric": "public_methods",
+        "public_methods_moved": 13,
+        "total_methods_moved": 16,
+        "loc_reduction_expected": "medium",
+        "rationale": "Most public methods related to locating threads and thread groups (predicate-based lookups, name-based lookups, id-based lookups, and helper predicates) are moved to ThreadFinder. This reduces ThreadUtils' public API surface by 13 public methods, reduces the total method count by ~16 (including private helpers), and removes a cohesive responsibility from ThreadUtils thereby lowering its LOC and complexity."
+      },
+      "files": [
+        "src/main/java/org/apache/commons/lang3/ThreadFinder.java",
+        "src/main/java/org/apache/commons/lang3/ThreadUtils.java",
+        "src/test/java/org/apache/commons/lang3/ThreadUtilsTest.java",
+        "src/test/java/org/apache/commons/lang3/concurrent/BackgroundInitializerTest.java",
+        "src/test/java/org/apache/commons/lang3/concurrent/TimedSemaphoreTest.java",
+        "src/test/java/org/apache/commons/lang3/concurrent/locks/LockingVisitorsTest.java",
+        "src/test/java/org/apache/commons/lang3/time/StopWatchTest.java"
+      ],
+      "ops": [
+        {
+          "op": "EXTRACT_CLASS",
+          "inputs": [
+            "src/main/java/org/apache/commons/lang3/ThreadUtils.java"
+          ],
+          "outputs": [
+            "src/main/java/org/apache/commons/lang3/ThreadFinder.java"
+          ],
+          "details": "Create a new class org.apache.commons.lang3.ThreadFinder which implements the cohesive 'finding/locating threads and thread groups' responsibility. Move the following static methods (and the private helpers they depend on) from ThreadUtils into ThreadFinder with identical behaviour, adjusting internal references to call ThreadUtils.getSystemThreadGroup() where the former code relied on the current class' getSystemThreadGroup():\n- public static Thread findThreadById(long)\n- public static Thread findThreadById(long, String)\n- public static Thread findThreadById(long, ThreadGroup)\n- public static Collection<ThreadGroup> findThreadGroups(Predicate<ThreadGroup>)\n- public static Collection<ThreadGroup> findThreadGroups(ThreadGroup, boolean, Predicate<ThreadGroup>)\n- public static Collection<ThreadGroup> findThreadGroupsByName(String)\n- public static Collection<Thread> findThreads(Predicate<Thread>)\n- public static Collection<Thread> findThreads(ThreadGroup, boolean, Predicate<Thread>)\n- public static Collection<Thread> findThreadsByName(String)\n- public static Collection<Thread> findThreadsByName(String, String)\n- public static Collection<Thread> findThreadsByName(String, ThreadGroup)\n- public static Collection<ThreadGroup> getAllThreadGroups()\n- public static Collection<Thread> getAllThreads()\n\nAdditionally move the supporting private helpers used by these methods:\n- private static <T> Predicate<T> namePredicate(String, Function<T, String>)\n- private static Predicate<Thread> predicateThread(String)\n- private static Predicate<ThreadGroup> predicateThreadGroup(String)\n\nThreadFinder will live in package org.apache.commons.lang3 and will import the same JDK and commons classes required for compilation (java.util.*, java.util.function.*, java.util.stream.*, org.apache.commons.lang3.function.Predicates). The behaviour is preserved; ThreadFinder.find* methods produce the same results as the original implementations.",
+          "risk": "medium"
+        },
+        {
+          "op": "MOVE_METHOD",
+          "inputs": [
+            "src/main/java/org/apache/commons/lang3/ThreadUtils.java"
+          ],
+          "outputs": [
+            "src/main/java/org/apache/commons/lang3/ThreadUtils.java"
+          ],
+          "details": "Remove the moved methods and private helpers from ThreadUtils source. The removed public methods are the 13 listed in the EXTRACT_CLASS details; the removed private helpers are the 3 helper predicate methods. Deprecated overloads that accept the old ThreadPredicate and ThreadGroupPredicate types are left in ThreadUtils only if they reference moved functionality; in such cases those deprecated overloads will be updated (within ThreadUtils) to delegate to ThreadFinder equivalents that accept java.util.function.Predicate by wrapping the deprecated predicate (e.g., (Predicate<Thread>) predicate::test). However, the primary modern predicate-based and name/id-based implementations are removed from ThreadUtils to reduce its public method count.",
+          "risk": "low"
+        },
+        {
+          "op": "ADD_OR_UPDATE_IMPORTS",
+          "inputs": [
+            "src/main/java/org/apache/commons/lang3/ThreadFinder.java",
+            "src/main/java/org/apache/commons/lang3/ThreadUtils.java"
+          ],
+          "outputs": [
+            "src/main/java/org/apache/commons/lang3/ThreadFinder.java",
+            "src/main/java/org/apache/commons/lang3/ThreadUtils.java"
+          ],
+          "details": "Ensure ThreadFinder.java has the necessary imports: java.util.Collection, java.util.Collections, java.util.Objects, java.util.function.Function, java.util.function.Predicate, java.util.stream.Collectors, java.util.stream.Stream, and org.apache.commons.lang3.function.Predicates. ThreadUtils.java should retain imports needed for its remaining methods (Duration, DurationUtils) and remove any now-unused imports if desired. Compilation must succeed after imports are adjusted.",
+          "risk": "low"
+        },
+        {
+          "op": "UPDATE_TESTS",
+          "inputs": [
+            "src/test/java/org/apache/commons/lang3/ThreadUtilsTest.java",
+            "src/test/java/org/apache/commons/lang3/concurrent/BackgroundInitializerTest.java",
+            "src/test/java/org/apache/commons/lang3/concurrent/TimedSemaphoreTest.java",
+            "src/test/java/org/apache/commons/lang3/concurrent/locks/LockingVisitorsTest.java",
+            "src/test/java/org/apache/commons/lang3/time/StopWatchTest.java"
+          ],
+          "outputs": [],
+          "details": "Update related tests affected by this refactoring block so the configured build command passes. Adjust imports, package references, moved class references, constructors, and assertions only when required. Do not change production behavior through tests.",
+          "risk": "medium",
+          "api_change": false
+        }
+      ],
+      "test_files": [
+        "src/test/java/org/apache/commons/lang3/ThreadUtilsTest.java",
+        "src/test/java/org/apache/commons/lang3/concurrent/BackgroundInitializerTest.java",
+        "src/test/java/org/apache/commons/lang3/concurrent/TimedSemaphoreTest.java",
+        "src/test/java/org/apache/commons/lang3/concurrent/locks/LockingVisitorsTest.java",
+        "src/test/java/org/apache/commons/lang3/time/StopWatchTest.java"
+      ]
+    }
+  ]
+}

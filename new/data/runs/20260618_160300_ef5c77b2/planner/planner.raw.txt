@@ -1,0 +1,58 @@
+{
+  "smell_type": "Insufficient Modularization",
+  "target_level": "class",
+  "target": "org.jsoup.parser.HtmlTreeBuilderState",
+  "blocks": [
+    {
+      "id": 1,
+      "goal": "Extract the large nested Constants holder from HtmlTreeBuilderState into a dedicated HtmlTreeBuilderStateConstants class to reduce the enum's LOC and surface area, improving modularization and readability.",
+      "expected_impact": {
+        "primary_metric": "loc",
+        "public_methods_moved": 0,
+        "total_methods_moved": 0,
+        "loc_reduction_expected": "medium",
+        "rationale": "The nested Constants class contains many large static String[] arrays which contribute significant lines of code to HtmlTreeBuilderState. Moving these arrays into a separate class reduces the enum source size and groups related static constants into a single responsibility class (tag-list constants). This does not move behavioural methods, so public method counts remain unchanged, but total LOC and file complexity are reduced."
+      },
+      "files": [
+        "src/main/java/org/jsoup/parser/HtmlTreeBuilderState.java",
+        "src/main/java/org/jsoup/parser/HtmlTreeBuilderStateConstants.java"
+      ],
+      "ops": [
+        {
+          "op": "EXTRACT_CLASS",
+          "inputs": [
+            "src/main/java/org/jsoup/parser/HtmlTreeBuilderState.java"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/parser/HtmlTreeBuilderStateConstants.java"
+          ],
+          "details": "Create a new class org.jsoup.parser.HtmlTreeBuilderStateConstants in the same package. The new class will contain the static final String[] fields previously defined in the nested static class Constants inside HtmlTreeBuilderState. Fields to extract: InHeadEmpty, InHeadRaw, InHeadEnd, AfterHeadBody, BeforeHtmlToHead, InHeadNoScriptHead, InBodyStartToHead, InBodyStartPClosers, Headings, InBodyStartLiBreakers, DdDt, InBodyStartApplets, InBodyStartMedia, InBodyStartInputAttribs, InBodyStartDrop, InBodyEndClosers, InBodyEndOtherErrors, InBodyEndAdoptionFormatters, InTableToBody, InTableAddBody, InTableToHead, InCellNames, InCellBody, InCellTable, InCellCol, InTableEndErr, InTableFoster, InTableBodyExit, InTableBodyEndIgnore, InRowMissing, InRowIgnore, InSelectEnd, InSelectTableEnd, InTableEndIgnore, InHeadNoscriptIgnore, InCaptionIgnore, InTemplateToHead, InTemplateToTable, InForeignToHtml. The extracted class will be a simple holder of these arrays (public static final) with the same values. The nested Constants class will be removed from HtmlTreeBuilderState; references will be updated to point to HtmlTreeBuilderStateConstants.",
+          "risk": "low"
+        },
+        {
+          "op": "MOVE_FIELD",
+          "inputs": [
+            "src/main/java/org/jsoup/parser/HtmlTreeBuilderState.java"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/parser/HtmlTreeBuilderStateConstants.java",
+            "src/main/java/org/jsoup/parser/HtmlTreeBuilderState.java"
+          ],
+          "details": "Move the static final String[] fields listed in the EXTRACT_CLASS details from the nested Constants class in HtmlTreeBuilderState into the new HtmlTreeBuilderStateConstants class. Remove the nested Constants class from HtmlTreeBuilderState after the move. Preserve exact array contents and names. Ensure fields in the new class are declared public static final String[] so existing code using static import can continue to work after import update.",
+          "risk": "low"
+        },
+        {
+          "op": "ADD_OR_UPDATE_IMPORTS",
+          "inputs": [
+            "src/main/java/org/jsoup/parser/HtmlTreeBuilderState.java"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/parser/HtmlTreeBuilderState.java"
+          ],
+          "details": "Replace the static import 'import static org.jsoup.parser.HtmlTreeBuilderState.Constants.*;' with 'import static org.jsoup.parser.HtmlTreeBuilderStateConstants.*;'. If any fully-qualified references to HtmlTreeBuilderState.Constants.* exist, update them to HtmlTreeBuilderStateConstants.*. No other imports should change.",
+          "risk": "low"
+        }
+      ]
+    }
+  ]
+}

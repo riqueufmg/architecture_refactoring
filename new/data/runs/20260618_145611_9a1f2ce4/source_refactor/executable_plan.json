@@ -1,0 +1,269 @@
+{
+  "smell_type": "Insufficient Modularization",
+  "target_level": "class",
+  "target": "org.jsoup.parser.Parser",
+  "blocks": [
+    {
+      "id": 1,
+      "goal": "Extract the deprecated Parser configuration wrapper API into a dedicated ParserConfigApi class to reduce the number of public methods on Parser and consolidate configuration-related responsibilities.",
+      "expected_impact": {
+        "primary_metric": "public_methods",
+        "public_methods_moved": 11,
+        "total_methods_moved": 11,
+        "loc_reduction_expected": "medium",
+        "rationale": "Move 11 public, deprecated configuration wrapper methods (that simply delegate to ParserConfig) out of Parser into a cohesive ParserConfigApi class. This reduces Parser's public method count and groups configuration accessors/setters into a dedicated responsibility class, improving modularization and lowering Parser LOC."
+      },
+      "files": [
+        "src/main/java/org/jsoup/parser/Parser.java",
+        "src/main/java/org/jsoup/parser/ParserConfigApi.java",
+        "src/test/java/org/jsoup/JsoupTest.java",
+        "src/test/java/org/jsoup/helper/DataUtilTest.java",
+        "src/test/java/org/jsoup/helper/W3CDomTest.java",
+        "src/test/java/org/jsoup/integration/ConnectTest.java",
+        "src/test/java/org/jsoup/integration/FuzzFixesTest.java",
+        "src/test/java/org/jsoup/integration/ParseTest.java",
+        "src/test/java/org/jsoup/integration/ParserSoakIT.java",
+        "src/test/java/org/jsoup/integration/SessionTest.java",
+        "src/test/java/org/jsoup/internal/ReaderTest.java",
+        "src/test/java/org/jsoup/nodes/AttributeTest.java",
+        "src/test/java/org/jsoup/nodes/AttributesTest.java",
+        "src/test/java/org/jsoup/nodes/DocumentTest.java",
+        "src/test/java/org/jsoup/nodes/DocumentTypeTest.java",
+        "src/test/java/org/jsoup/nodes/ElementIT.java",
+        "src/test/java/org/jsoup/nodes/ElementTest.java",
+        "src/test/java/org/jsoup/nodes/EntitiesTest.java",
+        "src/test/java/org/jsoup/nodes/NodeTest.java",
+        "src/test/java/org/jsoup/parser/AttributeParseTest.java",
+        "src/test/java/org/jsoup/parser/HtmlParserTest.java",
+        "src/test/java/org/jsoup/parser/HtmlTreeBuilderTest.java",
+        "src/test/java/org/jsoup/parser/ParserIT.java",
+        "src/test/java/org/jsoup/parser/ParserTest.java",
+        "src/test/java/org/jsoup/parser/PositionTest.java",
+        "src/test/java/org/jsoup/parser/StreamParserTest.java",
+        "src/test/java/org/jsoup/parser/TagSetTest.java",
+        "src/test/java/org/jsoup/parser/TagTest.java",
+        "src/test/java/org/jsoup/parser/TokeniserStateTest.java",
+        "src/test/java/org/jsoup/parser/TokeniserTest.java",
+        "src/test/java/org/jsoup/parser/XmlTreeBuilderTest.java",
+        "src/test/java/org/jsoup/safety/CleanerTest.java",
+        "src/test/java/org/jsoup/select/QueryParserTest.java",
+        "src/test/java/org/jsoup/select/SelectorIT.java",
+        "src/test/java/org/jsoup/select/SelectorTest.java",
+        "src/test/java/org/jsoup/select/XpathTest.java"
+      ],
+      "ops": [
+        {
+          "op": "EXTRACT_CLASS",
+          "inputs": [
+            "src/main/java/org/jsoup/parser/Parser.java"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/parser/ParserConfigApi.java"
+          ],
+          "details": "Create new class org.jsoup.parser.ParserConfigApi which encapsulates the deprecated configuration accessors and mutators previously on Parser. The new class is located in the same package and holds a reference to a Parser instance; methods delegate to parser.config(). Methods moved are all the deprecated configuration wrappers (isTrackErrors, setTrackErrors, getErrors, isTrackPosition, setTrackPosition, settings(ParseSettings), settings(), setMaxDepth, getMaxDepth, tagSet(TagSet), tagSet()). All moved methods keep their original signatures and deprecation annotations but are now members of ParserConfigApi. This extraction groups the configuration API into a single responsibility: providing the legacy configuration facade.",
+          "risk": "low"
+        },
+        {
+          "op": "MOVE_METHOD",
+          "inputs": [
+            "src/main/java/org/jsoup/parser/Parser.java::isTrackErrors()"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/parser/ParserConfigApi.java::isTrackErrors()"
+          ],
+          "details": "Move public @Deprecated boolean isTrackErrors() from Parser to ParserConfigApi. Implementation delegates to parser.config().isTrackErrors().",
+          "risk": "low"
+        },
+        {
+          "op": "MOVE_METHOD",
+          "inputs": [
+            "src/main/java/org/jsoup/parser/Parser.java::setTrackErrors(int)"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/parser/ParserConfigApi.java::setTrackErrors(int)"
+          ],
+          "details": "Move public @Deprecated Parser setTrackErrors(int) from Parser to ParserConfigApi. Implementation calls parser.config().setTrackErrors(maxErrors) and returns the parser instance for chaining.",
+          "risk": "low"
+        },
+        {
+          "op": "MOVE_METHOD",
+          "inputs": [
+            "src/main/java/org/jsoup/parser/Parser.java::getErrors()"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/parser/ParserConfigApi.java::getErrors()"
+          ],
+          "details": "Move public @Deprecated ParseErrorList getErrors() from Parser to ParserConfigApi. Implementation returns parser.config().getErrors().",
+          "risk": "low"
+        },
+        {
+          "op": "MOVE_METHOD",
+          "inputs": [
+            "src/main/java/org/jsoup/parser/Parser.java::isTrackPosition()"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/parser/ParserConfigApi.java::isTrackPosition()"
+          ],
+          "details": "Move public @Deprecated boolean isTrackPosition() from Parser to ParserConfigApi. Implementation delegates to parser.config().isTrackPosition().",
+          "risk": "low"
+        },
+        {
+          "op": "MOVE_METHOD",
+          "inputs": [
+            "src/main/java/org/jsoup/parser/Parser.java::setTrackPosition(boolean)"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/parser/ParserConfigApi.java::setTrackPosition(boolean)"
+          ],
+          "details": "Move public @Deprecated Parser setTrackPosition(boolean) from Parser to ParserConfigApi. Implementation calls parser.config().setTrackPosition(trackPosition) and returns parser.",
+          "risk": "low"
+        },
+        {
+          "op": "MOVE_METHOD",
+          "inputs": [
+            "src/main/java/org/jsoup/parser/Parser.java::settings(org.jsoup.parser.ParseSettings)"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/parser/ParserConfigApi.java::settings(org.jsoup.parser.ParseSettings)"
+          ],
+          "details": "Move public @Deprecated Parser settings(ParseSettings) from Parser to ParserConfigApi. Implementation delegates to parser.config().settings(settings) and returns parser.",
+          "risk": "low"
+        },
+        {
+          "op": "MOVE_METHOD",
+          "inputs": [
+            "src/main/java/org/jsoup/parser/Parser.java::settings()"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/parser/ParserConfigApi.java::settings()"
+          ],
+          "details": "Move public @Deprecated ParseSettings settings() from Parser to ParserConfigApi. Implementation returns parser.config().settings().",
+          "risk": "low"
+        },
+        {
+          "op": "MOVE_METHOD",
+          "inputs": [
+            "src/main/java/org/jsoup/parser/Parser.java::setMaxDepth(int)"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/parser/ParserConfigApi.java::setMaxDepth(int)"
+          ],
+          "details": "Move public @Deprecated Parser setMaxDepth(int) from Parser to ParserConfigApi. Implementation delegates to parser.config().setMaxDepth(maxDepth) and returns parser.",
+          "risk": "low"
+        },
+        {
+          "op": "MOVE_METHOD",
+          "inputs": [
+            "src/main/java/org/jsoup/parser/Parser.java::getMaxDepth()"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/parser/ParserConfigApi.java::getMaxDepth()"
+          ],
+          "details": "Move public @Deprecated int getMaxDepth() from Parser to ParserConfigApi. Implementation returns parser.config().getMaxDepth().",
+          "risk": "low"
+        },
+        {
+          "op": "MOVE_METHOD",
+          "inputs": [
+            "src/main/java/org/jsoup/parser/Parser.java::tagSet(org.jsoup.parser.TagSet)"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/parser/ParserConfigApi.java::tagSet(org.jsoup.parser.TagSet)"
+          ],
+          "details": "Move public @Deprecated Parser tagSet(TagSet) from Parser to ParserConfigApi. Implementation delegates to parser.config().tagSet(tagSet) and returns parser.",
+          "risk": "low"
+        },
+        {
+          "op": "MOVE_METHOD",
+          "inputs": [
+            "src/main/java/org/jsoup/parser/Parser.java::tagSet()"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/parser/ParserConfigApi.java::tagSet()"
+          ],
+          "details": "Move public @Deprecated TagSet tagSet() from Parser to ParserConfigApi. Implementation returns parser.config().tagSet().",
+          "risk": "low"
+        },
+        {
+          "op": "UPDATE_TESTS",
+          "inputs": [
+            "src/test/java/org/jsoup/JsoupTest.java",
+            "src/test/java/org/jsoup/helper/DataUtilTest.java",
+            "src/test/java/org/jsoup/helper/W3CDomTest.java",
+            "src/test/java/org/jsoup/integration/ConnectTest.java",
+            "src/test/java/org/jsoup/integration/FuzzFixesTest.java",
+            "src/test/java/org/jsoup/integration/ParseTest.java",
+            "src/test/java/org/jsoup/integration/ParserSoakIT.java",
+            "src/test/java/org/jsoup/integration/SessionTest.java",
+            "src/test/java/org/jsoup/internal/ReaderTest.java",
+            "src/test/java/org/jsoup/nodes/AttributeTest.java",
+            "src/test/java/org/jsoup/nodes/AttributesTest.java",
+            "src/test/java/org/jsoup/nodes/DocumentTest.java",
+            "src/test/java/org/jsoup/nodes/DocumentTypeTest.java",
+            "src/test/java/org/jsoup/nodes/ElementIT.java",
+            "src/test/java/org/jsoup/nodes/ElementTest.java",
+            "src/test/java/org/jsoup/nodes/EntitiesTest.java",
+            "src/test/java/org/jsoup/nodes/NodeTest.java",
+            "src/test/java/org/jsoup/parser/AttributeParseTest.java",
+            "src/test/java/org/jsoup/parser/HtmlParserTest.java",
+            "src/test/java/org/jsoup/parser/HtmlTreeBuilderTest.java",
+            "src/test/java/org/jsoup/parser/ParserIT.java",
+            "src/test/java/org/jsoup/parser/ParserTest.java",
+            "src/test/java/org/jsoup/parser/PositionTest.java",
+            "src/test/java/org/jsoup/parser/StreamParserTest.java",
+            "src/test/java/org/jsoup/parser/TagSetTest.java",
+            "src/test/java/org/jsoup/parser/TagTest.java",
+            "src/test/java/org/jsoup/parser/TokeniserStateTest.java",
+            "src/test/java/org/jsoup/parser/TokeniserTest.java",
+            "src/test/java/org/jsoup/parser/XmlTreeBuilderTest.java",
+            "src/test/java/org/jsoup/safety/CleanerTest.java",
+            "src/test/java/org/jsoup/select/QueryParserTest.java",
+            "src/test/java/org/jsoup/select/SelectorIT.java",
+            "src/test/java/org/jsoup/select/SelectorTest.java",
+            "src/test/java/org/jsoup/select/XpathTest.java"
+          ],
+          "outputs": [],
+          "details": "Update related tests affected by this refactoring block so the configured build command passes. Adjust imports, package references, moved class references, constructors, and assertions only when required. Do not change production behavior through tests.",
+          "risk": "medium",
+          "api_change": false
+        }
+      ],
+      "test_files": [
+        "src/test/java/org/jsoup/JsoupTest.java",
+        "src/test/java/org/jsoup/helper/DataUtilTest.java",
+        "src/test/java/org/jsoup/helper/W3CDomTest.java",
+        "src/test/java/org/jsoup/integration/ConnectTest.java",
+        "src/test/java/org/jsoup/integration/FuzzFixesTest.java",
+        "src/test/java/org/jsoup/integration/ParseTest.java",
+        "src/test/java/org/jsoup/integration/ParserSoakIT.java",
+        "src/test/java/org/jsoup/integration/SessionTest.java",
+        "src/test/java/org/jsoup/internal/ReaderTest.java",
+        "src/test/java/org/jsoup/nodes/AttributeTest.java",
+        "src/test/java/org/jsoup/nodes/AttributesTest.java",
+        "src/test/java/org/jsoup/nodes/DocumentTest.java",
+        "src/test/java/org/jsoup/nodes/DocumentTypeTest.java",
+        "src/test/java/org/jsoup/nodes/ElementIT.java",
+        "src/test/java/org/jsoup/nodes/ElementTest.java",
+        "src/test/java/org/jsoup/nodes/EntitiesTest.java",
+        "src/test/java/org/jsoup/nodes/NodeTest.java",
+        "src/test/java/org/jsoup/parser/AttributeParseTest.java",
+        "src/test/java/org/jsoup/parser/HtmlParserTest.java",
+        "src/test/java/org/jsoup/parser/HtmlTreeBuilderTest.java",
+        "src/test/java/org/jsoup/parser/ParserIT.java",
+        "src/test/java/org/jsoup/parser/ParserTest.java",
+        "src/test/java/org/jsoup/parser/PositionTest.java",
+        "src/test/java/org/jsoup/parser/StreamParserTest.java",
+        "src/test/java/org/jsoup/parser/TagSetTest.java",
+        "src/test/java/org/jsoup/parser/TagTest.java",
+        "src/test/java/org/jsoup/parser/TokeniserStateTest.java",
+        "src/test/java/org/jsoup/parser/TokeniserTest.java",
+        "src/test/java/org/jsoup/parser/XmlTreeBuilderTest.java",
+        "src/test/java/org/jsoup/safety/CleanerTest.java",
+        "src/test/java/org/jsoup/select/QueryParserTest.java",
+        "src/test/java/org/jsoup/select/SelectorIT.java",
+        "src/test/java/org/jsoup/select/SelectorTest.java",
+        "src/test/java/org/jsoup/select/XpathTest.java"
+      ]
+    }
+  ]
+}

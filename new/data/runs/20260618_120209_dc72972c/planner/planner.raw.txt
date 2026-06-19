@@ -1,0 +1,79 @@
+{
+  "smell_type": "Insufficient Modularization",
+  "target_level": "class",
+  "target": "org.apache.commons.lang3.RandomUtils",
+  "blocks": [
+    {
+      "id": 1,
+      "goal": "Extract the responsibility for producing random values (boolean, bytes, double, float, int, long and the low-level randomLong algorithm) from RandomUtils into a new cohesive class RandomValueGenerator. This will reduce the number of public instance methods in RandomUtils by moving the random value generation API and its supporting state (the Supplier<Random> instance and the package-private random access) into the extracted class. Update RandomUtils to delegate to the new class so behavior is preserved.",
+      "expected_impact": {
+        "primary_metric": "public_methods",
+        "public_methods_moved": 10,
+        "total_methods_moved": 12,
+        "loc_reduction_expected": "medium",
+        "rationale": "Ten public instance methods (randomBoolean, randomBytes, randomDouble(), randomDouble(start,end), randomFloat(), randomFloat(start,end), randomInt(), randomInt(start,end), randomLong(), randomLong(start,end)) are moved to RandomValueGenerator along with two supporting methods/fields (package-private random() and private randomLong(long)). Moving these responsibilities reduces RandomUtils' public API surface and decreases its total method count and lines of code by extracting a cohesive responsibility (value generation). RandomUtils remains a factory/holder of shared singletons but delegates generation to the new class."
+      },
+      "files": [
+        "src/main/java/org/apache/commons/lang3/RandomUtils.java",
+        "src/main/java/org/apache/commons/lang3/RandomValueGenerator.java"
+      ],
+      "ops": [
+        {
+          "op": "EXTRACT_CLASS",
+          "inputs": [
+            "src/main/java/org/apache/commons/lang3/RandomUtils.java"
+          ],
+          "outputs": [
+            "src/main/java/org/apache/commons/lang3/RandomValueGenerator.java"
+          ],
+          "details": "Create new class org.apache.commons.lang3.RandomValueGenerator. The new class encapsulates a Supplier<Random> and provides the following moved methods (signatures preserved): boolean randomBoolean(); byte[] randomBytes(int); double randomDouble(); double randomDouble(double, double); float randomFloat(); float randomFloat(float, float); int randomInt(); int randomInt(int, int); long randomLong(); long randomLong(long, long). It also contains the package-private Random random() { return randomSupplier.get(); } and the private long randomLong(long n) algorithm used to support randomLong range generation. The class is placed in the same package (org.apache.commons.lang3) so it can use Validate and package-private access as needed. The class includes a constructor RandomValueGenerator(Supplier<Random> randomSupplier).",
+          "risk": "low"
+        },
+        {
+          "op": "MOVE_FIELD",
+          "inputs": [
+            "src/main/java/org/apache/commons/lang3/RandomUtils.java:private final Supplier<Random> random"
+          ],
+          "outputs": [
+            "src/main/java/org/apache/commons/lang3/RandomValueGenerator.java:private final Supplier<Random> randomSupplier"
+          ],
+          "details": "Move the instance field that holds the Supplier<Random> from RandomUtils into RandomValueGenerator (renamed to randomSupplier). This centralizes the state required for random value generation inside the extracted class.",
+          "risk": "low"
+        },
+        {
+          "op": "MOVE_METHOD",
+          "inputs": [
+            "src/main/java/org/apache/commons/lang3/RandomUtils.java:public boolean randomBoolean()",
+            "src/main/java/org/apache/commons/lang3/RandomUtils.java:public byte[] randomBytes(int)",
+            "src/main/java/org/apache/commons/lang3/RandomUtils.java:public double randomDouble()",
+            "src/main/java/org/apache/commons/lang3/RandomUtils.java:public double randomDouble(double,double)",
+            "src/main/java/org/apache/commons/lang3/RandomUtils.java:public float randomFloat()",
+            "src/main/java/org/apache/commons/lang3/RandomUtils.java:public float randomFloat(float,float)",
+            "src/main/java/org/apache/commons/lang3/RandomUtils.java:public int randomInt()",
+            "src/main/java/org/apache/commons/lang3/RandomUtils.java:public int randomInt(int,int)",
+            "src/main/java/org/apache/commons/lang3/RandomUtils.java:public long randomLong()",
+            "src/main/java/org/apache/commons/lang3/RandomUtils.java:public long randomLong(long,long)",
+            "src/main/java/org/apache/commons/lang3/RandomUtils.java:Random random()",
+            "src/main/java/org/apache/commons/lang3/RandomUtils.java:private long randomLong(long)"
+          ],
+          "outputs": [
+            "src/main/java/org/apache/commons/lang3/RandomValueGenerator.java"
+          ],
+          "details": "Move the listed instance methods from RandomUtils into RandomValueGenerator, preserving signatures and implementation. Package-private random() is moved to provide internal access to the underlying Random instance. The private helper randomLong(long) (the algorithm used to produce a uniform long in [0,n)) is moved as a private method of the new class. The moved methods will reference the moved field randomSupplier (previously random) to obtain Random instances. Implementations remain unchanged aside from referencing randomSupplier.random() accessors as appropriate.",
+          "risk": "low"
+        },
+        {
+          "op": "UPDATE_CALL_SITES",
+          "inputs": [
+            "src/main/java/org/apache/commons/lang3/RandomUtils.java"
+          ],
+          "outputs": [
+            "src/main/java/org/apache/commons/lang3/RandomUtils.java"
+          ],
+          "details": "Update RandomUtils to hold a RandomValueGenerator instance instead of exposing the instance random methods directly. Change the RandomUtils constructors (including the private Supplier<Random> constructor) to instantiate a RandomValueGenerator with the provided Supplier<Random>. Replace internal calls that previously invoked instance methods (e.g. secure().randomInt()) to call the generator delegation (e.g. secure().generator().randomInt()). Provide a package-private or private getter generator() in RandomUtils if needed to access the RandomValueGenerator for existing static wrappers. Update RandomUtils.toString() to reflect the delegated generator (e.g. return \"RandomUtils [generator=\" + generator + \"]\"). Remove the moved methods from RandomUtils to shrink its public and total method counts.",
+          "risk": "medium"
+        }
+      ]
+    }
+  ]
+}

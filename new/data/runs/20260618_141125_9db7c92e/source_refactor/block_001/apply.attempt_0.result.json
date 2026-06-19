@@ -1,0 +1,8 @@
+{
+  "ok": true,
+  "applied_files": [
+    "src/main/java/org/jsoup/internal/StringBuilderPool.java",
+    "src/main/java/org/jsoup/internal/StringUtil.java"
+  ],
+  "git_status": "M src/main/java/org/jsoup/internal/StringUtil.java\n?? src/main/java/org/jsoup/internal/StringBuilderPool.java"
+}

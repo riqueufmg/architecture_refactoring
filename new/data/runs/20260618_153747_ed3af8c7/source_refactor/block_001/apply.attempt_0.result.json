@@ -1,0 +1,8 @@
+{
+  "ok": true,
+  "applied_files": [
+    "src/main/java/org/jsoup/nodes/Document.java",
+    "src/main/java/org/jsoup/nodes/DocumentOutputSettings.java"
+  ],
+  "git_status": "M src/main/java/org/jsoup/nodes/Document.java\n?? src/main/java/org/jsoup/nodes/DocumentOutputSettings.java"
+}

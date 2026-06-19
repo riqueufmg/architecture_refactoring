@@ -1,0 +1,31 @@
+{
+  "executor_existing_files": [
+    "src/main/java/org/jsoup/internal/StringUtil.java",
+    "src/test/java/org/jsoup/integration/routes/EchoRoute.java",
+    "src/test/java/org/jsoup/internal/StringUtilTest.java",
+    "src/test/java/org/jsoup/nodes/ElementTest.java",
+    "src/test/java/org/jsoup/nodes/TextNodeTest.java",
+    "src/test/java/org/jsoup/parser/CharacterReaderTest.java",
+    "src/test/java/org/jsoup/parser/HtmlParserTest.java",
+    "src/test/java/org/jsoup/parser/HtmlTreeBuilderStateTest.java",
+    "src/test/java/org/jsoup/select/EvaluatorDebug.java"
+  ],
+  "executor_new_files": [
+    "src/main/java/org/jsoup/internal/StringJoiner.java"
+  ],
+  "executor_files": [
+    "src/main/java/org/jsoup/internal/StringJoiner.java",
+    "src/main/java/org/jsoup/internal/StringUtil.java",
+    "src/test/java/org/jsoup/integration/routes/EchoRoute.java",
+    "src/test/java/org/jsoup/internal/StringUtilTest.java",
+    "src/test/java/org/jsoup/nodes/ElementTest.java",
+    "src/test/java/org/jsoup/nodes/TextNodeTest.java",
+    "src/test/java/org/jsoup/parser/CharacterReaderTest.java",
+    "src/test/java/org/jsoup/parser/HtmlParserTest.java",
+    "src/test/java/org/jsoup/parser/HtmlTreeBuilderStateTest.java",
+    "src/test/java/org/jsoup/select/EvaluatorDebug.java"
+  ],
+  "executor_rejected_files": [],
+  "moved_old_files": [],
+  "moved_new_files": []
+}

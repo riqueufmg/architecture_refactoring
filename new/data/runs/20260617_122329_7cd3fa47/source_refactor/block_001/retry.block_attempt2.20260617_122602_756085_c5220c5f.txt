@@ -1,0 +1,4 @@
+previous_attempt=1
+next_attempt=2
+reason=invalid_executor_json
+feedback=EXECUTOR_INVALID_JSON: Error code: 400 - {'error': {'message': 'Input tokens exceed the configured limit of 272000 tokens. Your messages resulted in 278897 tokens. Please reduce the length of the messages.', 'type': 'invalid_request_error', 'param': 'messages', 'code': 'context_length_exceeded'}}

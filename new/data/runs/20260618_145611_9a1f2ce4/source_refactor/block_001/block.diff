@@ -1,0 +1,89 @@
+commit 90c70318b657a858345fae1477c6a4ea02b54770
+Author: Henrique Nunes <rique@face.ufmg.br>
+Date:   Thu Jun 18 14:59:36 2026 -0300
+
+    source_refactor: apply block 1
+
+diff --git a/src/main/java/org/jsoup/parser/ParserConfigApi.java b/src/main/java/org/jsoup/parser/ParserConfigApi.java
+new file mode 100644
+index 00000000..ac9f154c
+--- /dev/null
++++ b/src/main/java/org/jsoup/parser/ParserConfigApi.java
+@@ -0,0 +1,77 @@
++package org.jsoup.parser;
++
++/**
++ * A legacy compatibility facade that exposes the deprecated Parser configuration wrapper API.
++ *
++ * <p>This object is a tiny delegate that forwards calls to the underlying Parser's ParserConfig
++ * holder (parser.config()). It exists to centralise the deprecated wrappers in a single type.
++ * Methods are marked as {@code @Deprecated} to indicate the legacy surface.
++ */
++public final class ParserConfigApi {
++    private final Parser parser;
++
++    /** Create a new ParserConfigApi bound to the supplied parser. */
++    public ParserConfigApi(Parser parser) {
++        this.parser = parser;
++    }
++
++    @Deprecated
++    public boolean isTrackErrors() {
++        return parser.config().isTrackErrors();
++    }
++
++    @Deprecated
++    public Parser setTrackErrors(int maxErrors) {
++        parser.config().setTrackErrors(maxErrors);
++        return parser;
++    }
++
++    @Deprecated
++    public ParseErrorList getErrors() {
++        return parser.config().getErrors();
++    }
++
++    @Deprecated
++    public boolean isTrackPosition() {
++        return parser.config().isTrackPosition();
++    }
++
++    @Deprecated
++    public Parser setTrackPosition(boolean trackPosition) {
++        parser.config().setTrackPosition(trackPosition);
++        return parser;
++    }
++
++    @Deprecated
++    public Parser settings(ParseSettings settings) {
++        parser.config().settings(settings);
++        return parser;
++    }
++
++    @Deprecated
++    public ParseSettings settings() {
++        return parser.config().settings();
++    }
++
++    @Deprecated
++    public Parser setMaxDepth(int maxDepth) {
++        parser.config().setMaxDepth(maxDepth);
++        return parser;
++    }
++
++    @Deprecated
++    public int getMaxDepth() {
++        return parser.config().getMaxDepth();
++    }
++
++    @Deprecated
++    public Parser tagSet(TagSet tagSet) {
++        parser.config().tagSet(tagSet);
++        return parser;
++    }
++
++    @Deprecated
++    public TagSet tagSet() {
++        return parser.config().tagSet();
++    }
++}

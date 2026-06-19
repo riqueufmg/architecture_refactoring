@@ -1,0 +1,47 @@
+{
+  "smell_type": "Insufficient Modularization",
+  "target_level": "class",
+  "target": "org.jsoup.safety.Safelist",
+  "blocks": [
+    {
+      "id": 1,
+      "goal": "Extract the nested typed-value helper classes (TagName, AttributeKey, AttributeValue, Protocol, TypedValue) from Safelist into a new cohesive helper class SafelistValueTypes to reduce Safelist's LOC and move helper logic out of the large class.",
+      "expected_impact": {
+        "primary_metric": "loc",
+        "public_methods_moved": 0,
+        "total_methods_moved": 7,
+        "loc_reduction_expected": "medium",
+        "rationale": "The nested static classes (TypedValue and its 4 concrete typed subclasses) contain constructors, valueOf factory methods, and equals/hashCode/toString implementations. Moving them to a cohesive new class reduces Safelist.java lines of code and the number of methods defined inside Safelist (the helper methods are preserved but now live in SafelistValueTypes). No public Safelist API methods are moved, so public method count remains unchanged; total method count in Safelist is reduced by removal of the nested helper methods, and LOC is reduced by relocating their definitions."
+      },
+      "files": [
+        "src/main/java/org/jsoup/safety/Safelist.java",
+        "src/main/java/org/jsoup/safety/SafelistValueTypes.java"
+      ],
+      "ops": [
+        {
+          "op": "EXTRACT_CLASS",
+          "inputs": [
+            "src/main/java/org/jsoup/safety/Safelist.java"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/safety/SafelistValueTypes.java",
+            "src/main/java/org/jsoup/safety/Safelist.java"
+          ],
+          "details": "Create a new top-level class org.jsoup.safety.SafelistValueTypes containing the nested helper types previously defined inside Safelist: TypedValue (abstract) and its concrete typed subclasses TagName, AttributeKey, AttributeValue, Protocol. Move their constructors, static valueOf factory methods, and overrides (hashCode, equals, toString) into the new class as public static nested types (e.g., SafelistValueTypes.TagName). Update Safelist.java to remove the original nested class definitions and reference the moved types via SafelistValueTypes.TagName, SafelistValueTypes.AttributeKey, SafelistValueTypes.AttributeValue, SafelistValueTypes.Protocol, and SafelistValueTypes.TypedValue. Keep package the same (org.jsoup.safety) so no import changes are required. No public Safelist API methods are relocated; only helper types and their methods are moved.",
+          "risk": "low"
+        },
+        {
+          "op": "UPDATE_CALL_SITES",
+          "inputs": [
+            "src/main/java/org/jsoup/safety/Safelist.java"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/safety/Safelist.java"
+          ],
+          "details": "Within the modified Safelist.java, update all references to the inner types to use the new container: replace occurrences of TagName with SafelistValueTypes.TagName, AttributeKey with SafelistValueTypes.AttributeKey, AttributeValue with SafelistValueTypes.AttributeValue, Protocol with SafelistValueTypes.Protocol, and TypedValue with SafelistValueTypes.TypedValue. Adjust code where constructors and static factory methods are used (e.g., TagName.valueOf(...) -> SafelistValueTypes.TagName.valueOf(...)). Remove the original nested class declarations from Safelist.java.",
+          "risk": "low"
+        }
+      ]
+    }
+  ]
+}

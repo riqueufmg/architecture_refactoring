@@ -1,0 +1,75 @@
+{
+  "smell_type": "Insufficient Modularization",
+  "target_level": "class",
+  "target": "org.jsoup.parser.TokenQueue",
+  "blocks": [
+    {
+      "id": 1,
+      "goal": "Extract static CSS identifier utility functions from TokenQueue into a dedicated responsibility class to reduce the TokenQueue public API surface and move related logic out of the class.",
+      "expected_impact": {
+        "primary_metric": "public_methods",
+        "public_methods_moved": 2,
+        "total_methods_moved": 2,
+        "loc_reduction_expected": "low",
+        "rationale": "Two public static utility methods (unescape and escapeCssIdentifier) are simple CSS identifier utilities that do not depend on TokenQueue instance state. Moving them to a dedicated class reduces the TokenQueue public method count by 2 and centralizes identifier-related utilities. This is a conservative extraction with low risk and small LOC reduction."
+      },
+      "files": [
+        "src/main/java/org/jsoup/parser/CssIdentifierUtil.java",
+        "src/main/java/org/jsoup/parser/TokenQueue.java",
+        "src/test/java/org/jsoup/parser/TokenQueueTest.java",
+        "src/test/java/org/jsoup/select/SelectorTest.java"
+      ],
+      "ops": [
+        {
+          "op": "EXTRACT_CLASS",
+          "inputs": [
+            "src/main/java/org/jsoup/parser/TokenQueue.java"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/parser/CssIdentifierUtil.java"
+          ],
+          "details": "Create new class org.jsoup.parser.CssIdentifierUtil containing the two static utility methods previously offered by TokenQueue: public static String unescape(String) and public static String escapeCssIdentifier(String). Both methods will delegate to the existing CssIdentifier helper (preserving behavior). The new class is placed in the same package org.jsoup.parser.",
+          "risk": "low"
+        },
+        {
+          "op": "MOVE_METHOD",
+          "inputs": [
+            "src/main/java/org/jsoup/parser/TokenQueue.java"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/parser/CssIdentifierUtil.java",
+            "src/main/java/org/jsoup/parser/TokenQueue.java"
+          ],
+          "details": "Remove the following public static methods from TokenQueue and add them to CssIdentifierUtil with identical behavior (delegating to CssIdentifier):\n- public static String unescape(String in)\n- public static String escapeCssIdentifier(String in)\nTokenQueue will have these methods removed so its public method count decreases. Behavior is preserved because the new methods delegate to the same underlying CssIdentifier implementations.",
+          "risk": "low"
+        },
+        {
+          "op": "UPDATE_CALL_SITES",
+          "inputs": [
+            "All project sources (update references to moved static methods)"
+          ],
+          "outputs": [
+            "All impacted source files where TokenQueue.unescape(...) and TokenQueue.escapeCssIdentifier(...) are referenced"
+          ],
+          "details": "Update all call sites that referenced TokenQueue.unescape(...) to reference CssIdentifierUtil.unescape(...), and TokenQueue.escapeCssIdentifier(...) to CssIdentifierUtil.escapeCssIdentifier(...). This preserves behavior and removes dependence on the removed TokenQueue static methods. Since the moved methods are static utilities, updates are mechanical and low-risk.",
+          "risk": "low"
+        },
+        {
+          "op": "UPDATE_TESTS",
+          "inputs": [
+            "src/test/java/org/jsoup/parser/TokenQueueTest.java",
+            "src/test/java/org/jsoup/select/SelectorTest.java"
+          ],
+          "outputs": [],
+          "details": "Update related tests affected by this refactoring block so the configured build command passes. Adjust imports, package references, moved class references, constructors, and assertions only when required. Do not change production behavior through tests.",
+          "risk": "medium",
+          "api_change": false
+        }
+      ],
+      "test_files": [
+        "src/test/java/org/jsoup/parser/TokenQueueTest.java",
+        "src/test/java/org/jsoup/select/SelectorTest.java"
+      ]
+    }
+  ]
+}

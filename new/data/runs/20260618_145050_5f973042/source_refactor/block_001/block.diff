@@ -1,0 +1,398 @@
+commit b5f883b651652de104d0aa2623d73999534c247d
+Author: Henrique Nunes <rique@face.ufmg.br>
+Date:   Thu Jun 18 14:55:21 2026 -0300
+
+    source_refactor: apply block 1
+
+diff --git a/src/main/java/org/jsoup/parser/Parser.java b/src/main/java/org/jsoup/parser/Parser.java
+index 5dd8eb7f..d08e9fdd 100644
+--- a/src/main/java/org/jsoup/parser/Parser.java
++++ b/src/main/java/org/jsoup/parser/Parser.java
+@@ -25,12 +25,8 @@ public class Parser implements Cloneable {
+     public static final String NamespaceSvg = "http://www.w3.org/2000/svg";
+ 
+     private final TreeBuilder treeBuilder;
+-    private ParseErrorList errors;
+-    private ParseSettings settings;
+-    private boolean trackPosition = false;
+-    private @Nullable TagSet tagSet;
++    private final ParserConfig config;
+     private final ReentrantLock lock = new ReentrantLock();
+-    private int maxDepth;
+ 
+     /**
+      * Create a new Parser, using the specified TreeBuilder
+@@ -38,9 +34,13 @@ public class Parser implements Cloneable {
+      */
+     public Parser(TreeBuilder treeBuilder) {
+         this.treeBuilder = treeBuilder;
+-        settings = treeBuilder.defaultSettings();
+-        errors = ParseErrorList.noTracking();
+-        maxDepth = treeBuilder.defaultMaxDepth();
++        this.config = new ParserConfig();
++        // initialize defaults from the treeBuilder
++        this.config.settings(treeBuilder.defaultSettings())
++                   .setTrackErrors(0)
++                   .setMaxDepth(treeBuilder.defaultMaxDepth());
++        // supply default tag set supplier so config.tagSet() can fall back to the builder's default
++        this.config.setDefaultTagSetSupplier(() -> treeBuilder.defaultTagSet());
+     }
+ 
+     /**
+@@ -59,11 +59,9 @@ public class Parser implements Cloneable {
+ 
+     private Parser(Parser copy) {
+         treeBuilder = copy.treeBuilder.newInstance(); // because extended
+-        errors = new ParseErrorList(copy.errors); // only copies size, not contents
+-        settings = new ParseSettings(copy.settings);
+-        trackPosition = copy.trackPosition;
+-        maxDepth = copy.maxDepth;
+-        tagSet = new TagSet(copy.tagSet());
++        config = new ParserConfig(copy.config);
++        // ensure default supplier uses our (new) treeBuilder
++        this.config.setDefaultTagSetSupplier(() -> treeBuilder.defaultTagSet());
+     }
+ 
+     /**
+@@ -133,12 +131,21 @@ public class Parser implements Cloneable {
+         return treeBuilder;
+     }
+ 
++    /**
++     * Access the Parser configuration holder. This consolidated object contains parse settings, error tracking,
++     * position tracking, tag set and max depth. Use this to configure parser behaviour.
++     *
++     * Example: Parser html = Parser.htmlParser(); html.config().setTrackErrors(100);
++     */
++    public ParserConfig config() { return config; }
++
+     /**
+      * Check if parse error tracking is enabled.
+      * @return current track error state.
+      */
++    @Deprecated
+     public boolean isTrackErrors() {
+-        return errors.getMaxSize() > 0;
++        return config.isTrackErrors();
+     }
+ 
+     /**
+@@ -146,8 +153,9 @@ public class Parser implements Cloneable {
+      * @param maxErrors the maximum number of errors to track. Set to 0 to disable.
+      * @return this, for chaining
+      */
++    @Deprecated
+     public Parser setTrackErrors(int maxErrors) {
+-        errors = maxErrors > 0 ? ParseErrorList.tracking(maxErrors) : ParseErrorList.noTracking();
++        config.setTrackErrors(maxErrors);
+         return this;
+     }
+ 
+@@ -156,8 +164,9 @@ public class Parser implements Cloneable {
+      * @return list of parse errors, up to the size of the maximum errors tracked.
+      * @see #setTrackErrors(int)
+      */
++    @Deprecated
+     public ParseErrorList getErrors() {
+-        return errors;
++        return config.getErrors();
+     }
+ 
+     /**
+@@ -165,8 +174,9 @@ public class Parser implements Cloneable {
+      source they were created from. By default, tracking is not enabled.
+      * @return current track position setting
+      */
++    @Deprecated
+     public boolean isTrackPosition() {
+-        return trackPosition;
++        return config.isTrackPosition();
+     }
+ 
+     /**
+@@ -175,8 +185,9 @@ public class Parser implements Cloneable {
+      @param trackPosition position tracking setting; {@code true} to enable
+      @return this Parser, for chaining
+      */
++    @Deprecated
+     public Parser setTrackPosition(boolean trackPosition) {
+-        this.trackPosition = trackPosition;
++        config.setTrackPosition(trackPosition);
+         return this;
+     }
+ 
+@@ -185,8 +196,9 @@ public class Parser implements Cloneable {
+      * @param settings the new settings
+      * @return this Parser
+      */
++    @Deprecated
+     public Parser settings(ParseSettings settings) {
+-        this.settings = settings;
++        config.settings(settings);
+         return this;
+     }
+ 
+@@ -194,8 +206,9 @@ public class Parser implements Cloneable {
+      Gets the current ParseSettings for this Parser
+      * @return current ParseSettings
+      */
++    @Deprecated
+     public ParseSettings settings() {
+-        return settings;
++        return config.settings();
+     }
+ 
+     /**
+@@ -206,9 +219,9 @@ public class Parser implements Cloneable {
+      @param maxDepth maximum parser depth; must be >= 1
+      @return this Parser, for chaining
+      */
++    @Deprecated
+     public Parser setMaxDepth(int maxDepth) {
+-        Validate.isTrue(maxDepth >= 1, "maxDepth must be >= 1");
+-        this.maxDepth = maxDepth;
++        config.setMaxDepth(maxDepth);
+         return this;
+     }
+ 
+@@ -216,8 +229,9 @@ public class Parser implements Cloneable {
+      * Get the maximum parser depth (maximum number of open elements).
+      * @return the current max parser depth
+      */
++    @Deprecated
+     public int getMaxDepth() {
+-        return maxDepth;
++        return config.getMaxDepth();
+     }
+ 
+     /**
+@@ -229,9 +243,9 @@ public class Parser implements Cloneable {
+      @return this Parser
+      @since 1.20.1
+      */
++    @Deprecated
+     public Parser tagSet(TagSet tagSet) {
+-        Validate.notNull(tagSet);
+-        this.tagSet = new TagSet(tagSet); // copy it as we are going to mutate it
++        config.tagSet(tagSet);
+         return this;
+     }
+ 
+@@ -240,10 +254,9 @@ public class Parser implements Cloneable {
+      @return the current TagSet. After the parse, this will contain any new tags that were found in the document.
+      @since 1.20.1
+      */
++    @Deprecated
+     public TagSet tagSet() {
+-        if (tagSet == null)
+-            tagSet = treeBuilder.defaultTagSet();
+-        return tagSet;
++        return config.tagSet();
+     }
+ 
+     public String defaultNamespace() {
+@@ -293,7 +306,7 @@ public class Parser implements Cloneable {
+     public static List<Node> parseFragment(String fragmentHtml, Element context, String baseUri, ParseErrorList errorList) {
+         HtmlTreeBuilder treeBuilder = new HtmlTreeBuilder();
+         Parser parser = new Parser(treeBuilder);
+-        parser.errors = errorList;
++        parser.config().setErrors(errorList);
+         return treeBuilder.parseFragment(new StringReader(fragmentHtml), context, baseUri, parser);
+     }
+ 
+diff --git a/src/main/java/org/jsoup/parser/ParserConfig.java b/src/main/java/org/jsoup/parser/ParserConfig.java
+new file mode 100644
+index 00000000..809ab867
+--- /dev/null
++++ b/src/main/java/org/jsoup/parser/ParserConfig.java
+@@ -0,0 +1,190 @@
++package org.jsoup.parser;
++
++import org.jsoup.helper.Validate;
++import org.jspecify.annotations.Nullable;
++
++import java.util.function.Supplier;
++
++/**
++ * Consolidated parser configuration and tracking holder.
++ *
++ * This class centralises the Parser configuration and tracking state (error tracking, parse settings,
++ * position tracking, tag set, and maximum depth). It provides a fluent API for configuring those
++ * aspects. Parser instances hold a ParserConfig instance to manage that state.
++ */
++public class ParserConfig {
++    private ParseErrorList errors;
++    private ParseSettings settings;
++    private boolean trackPosition = false;
++    private @Nullable TagSet tagSet;
++    private int maxDepth;
++
++    // Supplier to provide a default TagSet when requested; populated by Parser so that ParserConfig
++    // can be independent of TreeBuilder while still providing the same semantics as before.
++    private transient Supplier<TagSet> defaultTagSetSupplier;
++
++    /**
++     * Create a new ParserConfig with conservative defaults. Typically, a Parser will immediately
++     * populate more appropriate defaults (for example, from its TreeBuilder) after constructing
++     * a ParserConfig.
++     */
++    public ParserConfig() {
++        this.errors = ParseErrorList.noTracking();
++        this.settings = ParseSettings.htmlDefault; // placeholder until Parser sets its own default
++        this.trackPosition = false;
++        this.tagSet = null;
++        this.maxDepth = Integer.MAX_VALUE;
++    }
++
++    /**
++     * Copy constructor: create a deep-ish copy of the provided ParserConfig. This is used when
++     * duplicating an existing Parser (for newInstance/clone behaviour).
++     *
++     * @param copy the config to copy
++     */
++    public ParserConfig(ParserConfig copy) {
++        // copy error list (may copy only size, per ParseErrorList implementation semantics)
++        this.errors = new ParseErrorList(copy.errors);
++        this.settings = copy.settings != null ? new ParseSettings(copy.settings) : null;
++        this.trackPosition = copy.trackPosition;
++        this.tagSet = copy.tagSet != null ? new TagSet(copy.tagSet) : null;
++        this.maxDepth = copy.maxDepth;
++        this.defaultTagSetSupplier = copy.defaultTagSetSupplier;
++    }
++
++    /**
++     * Internal: set a supplier for the default TagSet. Parser will set this to the TreeBuilder's
++     * default tag set supplier so that {@link #tagSet()} can return the same default semantics as
++     * the prior Parser implementation.
++     */
++    void setDefaultTagSetSupplier(Supplier<TagSet> supplier) {
++        this.defaultTagSetSupplier = supplier;
++    }
++
++    /**
++     * Check if parse error tracking is enabled.
++     * @return current track error state.
++     */
++    public boolean isTrackErrors() {
++        return errors != null && errors.getMaxSize() > 0;
++    }
++
++    /**
++     * Enable or disable parse error tracking for the next parse.
++     * @param maxErrors the maximum number of errors to track. Set to 0 to disable.
++     * @return this config, for chaining
++     */
++    public ParserConfig setTrackErrors(int maxErrors) {
++        this.errors = maxErrors > 0 ? ParseErrorList.tracking(maxErrors) : ParseErrorList.noTracking();
++        return this;
++    }
++
++    /**
++     * Set the underlying ParseErrorList instance (used by some APIs that pass in a concrete list).
++     * @param errors the ParseErrorList to use
++     * @return this config, for chaining
++     */
++    public ParserConfig setErrors(ParseErrorList errors) {
++        Validate.notNull(errors);
++        this.errors = errors;
++        return this;
++    }
++
++    /**
++     * Retrieve the parse errors, if any, from the last parse.
++     * @return list of parse errors, up to the size of the maximum errors tracked.
++     */
++    public ParseErrorList getErrors() {
++        return errors;
++    }
++
++    /**
++     * Test if position tracking is enabled. If it is, Nodes will have a Position to track where in the original input
++     * source they were created from. By default, tracking is not enabled.
++     * @return current track position setting
++     */
++    public boolean isTrackPosition() {
++        return trackPosition;
++    }
++
++    /**
++     * Enable or disable source position tracking.
++     * @param trackPosition position tracking setting; {@code true} to enable
++     * @return this config, for chaining
++     */
++    public ParserConfig setTrackPosition(boolean trackPosition) {
++        this.trackPosition = trackPosition;
++        return this;
++    }
++
++    /**
++     * Update the ParseSettings of this ParserConfig, to control the case sensitivity of tags and attributes.
++     * @param settings the new settings
++     * @return this config
++     */
++    public ParserConfig settings(ParseSettings settings) {
++        Validate.notNull(settings);
++        this.settings = settings;
++        return this;
++    }
++
++    /**
++     * Gets the current ParseSettings for this ParserConfig
++     * @return current ParseSettings
++     */
++    public ParseSettings settings() {
++        return settings;
++    }
++
++    /**
++     * Set the parser's maximum stack depth (maximum number of open elements). When reached, new open elements will be
++     * removed to prevent excessive nesting.
++     *
++     * @param maxDepth maximum parser depth; must be >= 1
++     * @return this config, for chaining
++     */
++    public ParserConfig setMaxDepth(int maxDepth) {
++        Validate.isTrue(maxDepth >= 1, "maxDepth must be >= 1");
++        this.maxDepth = maxDepth;
++        return this;
++    }
++
++    /**
++     * Get the maximum parser depth (maximum number of open elements).
++     * @return the current max parser depth
++     */
++    public int getMaxDepth() {
++        return maxDepth;
++    }
++
++    /**
++     * Set a custom TagSet to use for this ParserConfig. This allows you to define your own tags, and control how they are
++     * parsed. The TagSet is copied when set to avoid external mutation affecting this parser's internal state.
++     *
++     * @param tagSet the TagSet to use. This gets copied, so that changes that the parse makes do not clobber the original TagSet.
++     * @return this config, for chaining
++     */
++    public ParserConfig tagSet(TagSet tagSet) {
++        Validate.notNull(tagSet);
++        this.tagSet = new TagSet(tagSet);
++        return this;
++    }
++
++    /**
++     * Get the current TagSet for this ParserConfig. If no TagSet has been explicitly set, this will obtain the default
++     * TagSet via the configured supplier (typically supplied by Parser from its TreeBuilder). If no supplier is set,
++     * a copy of the standard Html TagSet will be returned.
++     *
++     * @return the current TagSet. After the parse, this may contain any new tags that were found in the document.
++     */
++    public TagSet tagSet() {
++        if (tagSet == null) {
++            if (defaultTagSetSupplier != null) {
++                tagSet = defaultTagSetSupplier.get();
++            } else {
++                tagSet = TagSet.Html();
++            }
++        }
++        return tagSet;
++    }
++}

@@ -1,0 +1,137 @@
+{
+  "smell_type": "Insufficient Modularization",
+  "target_level": "class",
+  "target": "org.jsoup.parser.TokeniserState",
+  "blocks": [
+    {
+      "id": 1,
+      "goal": "Extract TokeniserState's private static helper routines (char/ref/raw/doctype helpers) into a dedicated helper class to reduce the TokeniserState total method count and LOC, and concentrate parsing helper responsibilities into a single cohesive class.",
+      "expected_impact": {
+        "primary_metric": "total_methods",
+        "public_methods_moved": 0,
+        "total_methods_moved": 6,
+        "loc_reduction_expected": "medium",
+        "rationale": "Six private static helper methods (handleDataEndTag, readRawData, readCharRef, readEndTag, handleDataDoubleEscapeTag, readDoctypeInternalSubset) are moved out of the enum into a new TokeniserStateReader class. This reduces TokeniserState's total method count and its LOC, extracting the cohesive responsibility of low-level character/doctype/raw-data handling into a single class."
+      },
+      "files": [
+        "src/main/java/org/jsoup/parser/TokeniserState.java",
+        "src/main/java/org/jsoup/parser/TokeniserStateReader.java",
+        "src/test/java/org/jsoup/parser/TokeniserStateTest.java"
+      ],
+      "ops": [
+        {
+          "op": "EXTRACT_CLASS",
+          "inputs": [
+            "src/main/java/org/jsoup/parser/TokeniserState.java"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/parser/TokeniserStateReader.java"
+          ],
+          "details": "Create new production class org.jsoup.parser.TokeniserStateReader that contains the extracted helper methods previously implemented as private static methods inside TokeniserState. The new class will be package-private (no explicit modifier) or public if needed, final with a private constructor, and provide the following static methods with signatures matching the original usages: handleDataEndTag(Tokeniser t, CharacterReader r, TokeniserState elseTransition), readRawData(Tokeniser t, CharacterReader r, TokeniserState current, TokeniserState advance), readCharRef(Tokeniser t, TokeniserState advance), readEndTag(Tokeniser t, CharacterReader r, TokeniserState a, TokeniserState b), handleDataDoubleEscapeTag(Tokeniser t, CharacterReader r, TokeniserState primary, TokeniserState fallback), readDoctypeInternalSubset(Tokeniser t, CharacterReader r, TokeniserState current). Implementations are adapted to reference Tokeniser.replacementChar and CharacterReader.EOF directly and use '\\u0000' literal where appropriate. The class will import org.jsoup.internal.StringUtil for doctype whitespace matching. This extraction groups the cohesive responsibility of low-level tokeniser helper logic into one class.",
+          "risk": "low"
+        },
+        {
+          "op": "MOVE_METHOD",
+          "inputs": [
+            "src/main/java/org/jsoup/parser/TokeniserState.java"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/parser/TokeniserStateReader.java"
+          ],
+          "details": "Move private static method handleDataEndTag(Tokeniser t, CharacterReader r, TokeniserState elseTransition) from TokeniserState into TokeniserStateReader as a package-private static method with the same signature and adapted references (no dependence on TokeniserState's private fields). Remove the original method from TokeniserState.",
+          "risk": "low"
+        },
+        {
+          "op": "MOVE_METHOD",
+          "inputs": [
+            "src/main/java/org/jsoup/parser/TokeniserState.java"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/parser/TokeniserStateReader.java"
+          ],
+          "details": "Move private static method readRawData(Tokeniser t, CharacterReader r, TokeniserState current, TokeniserState advance) into TokeniserStateReader. Replace references to TokeniserState replacement fields with Tokeniser.replacementChar and CharacterReader.EOF or literals as needed. Remove the original method from TokeniserState.",
+          "risk": "low"
+        },
+        {
+          "op": "MOVE_METHOD",
+          "inputs": [
+            "src/main/java/org/jsoup/parser/TokeniserState.java"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/parser/TokeniserStateReader.java"
+          ],
+          "details": "Move private static method readCharRef(Tokeniser t, TokeniserState advance) into TokeniserStateReader, preserving behavior (call t.consumeCharacterReference and emit accordingly). Remove the original method from TokeniserState.",
+          "risk": "low"
+        },
+        {
+          "op": "MOVE_METHOD",
+          "inputs": [
+            "src/main/java/org/jsoup/parser/TokeniserState.java"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/parser/TokeniserStateReader.java"
+          ],
+          "details": "Move private static method readEndTag(Tokeniser t, CharacterReader r, TokeniserState a, TokeniserState b) into TokeniserStateReader. Remove the original method from TokeniserState.",
+          "risk": "low"
+        },
+        {
+          "op": "MOVE_METHOD",
+          "inputs": [
+            "src/main/java/org/jsoup/parser/TokeniserState.java"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/parser/TokeniserStateReader.java"
+          ],
+          "details": "Move private static method handleDataDoubleEscapeTag(Tokeniser t, CharacterReader r, TokeniserState primary, TokeniserState fallback) into TokeniserStateReader. Remove the original method from TokeniserState.",
+          "risk": "low"
+        },
+        {
+          "op": "MOVE_METHOD",
+          "inputs": [
+            "src/main/java/org/jsoup/parser/TokeniserState.java"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/parser/TokeniserStateReader.java"
+          ],
+          "details": "Move private static method readDoctypeInternalSubset(Tokeniser t, CharacterReader r, TokeniserState current) into TokeniserStateReader. The implementation will import org.jsoup.internal.StringUtil and otherwise preserve behavior. Remove the original method from TokeniserState.",
+          "risk": "medium"
+        },
+        {
+          "op": "UPDATE_CALL_SITES",
+          "inputs": [
+            "src/main/java/org/jsoup/parser/TokeniserState.java"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/parser/TokeniserState.java"
+          ],
+          "details": "Within TokeniserState, replace calls to the moved helper methods with calls to TokeniserStateReader.<methodName>(...). For example, replace handleDataEndTag(t, r, Rawtext) with TokeniserStateReader.handleDataEndTag(t, r, Rawtext). Remove the moved private static method declarations from TokeniserState (they have been relocated). Because the new helper class lives in the same package, no import is required. Ensure all references compile by using the fully qualified class name if necessary.",
+          "risk": "low"
+        },
+        {
+          "op": "ADD_OR_UPDATE_IMPORTS",
+          "inputs": [
+            "src/main/java/org/jsoup/parser/TokeniserStateReader.java"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/parser/TokeniserStateReader.java"
+          ],
+          "details": "Add required imports to TokeniserStateReader: import org.jsoup.internal.StringUtil; (others are in the same package and need no import).",
+          "risk": "low"
+        },
+        {
+          "op": "UPDATE_TESTS",
+          "inputs": [
+            "src/test/java/org/jsoup/parser/TokeniserStateTest.java"
+          ],
+          "outputs": [],
+          "details": "Update related tests affected by this refactoring block so the configured build command passes. Adjust imports, package references, moved class references, constructors, and assertions only when required. Do not change production behavior through tests.",
+          "risk": "medium",
+          "api_change": false
+        }
+      ],
+      "test_files": [
+        "src/test/java/org/jsoup/parser/TokeniserStateTest.java"
+      ]
+    }
+  ]
+}

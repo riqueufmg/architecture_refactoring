@@ -1,0 +1,112 @@
+{
+  "smell_type": "Insufficient Modularization",
+  "target_level": "class",
+  "target": "org.jsoup.safety.Safelist",
+  "blocks": [
+    {
+      "id": 1,
+      "goal": "Extract the protocol management responsibility (allowed URL protocols, protocol validation, and protocol-based abs-url decisions) from Safelist into a new class SafelistProtocols to reduce the number of public methods on Safelist and reduce its overall method/LOC concentration.",
+      "expected_impact": {
+        "primary_metric": "public_methods",
+        "public_methods_moved": 2,
+        "total_methods_moved": 4,
+        "loc_reduction_expected": "medium",
+        "rationale": "This extraction moves the public methods addProtocols(...) and removeProtocols(...) out of Safelist into a new cohesive class (SafelistProtocols), reducing Safelist's public method count by two. Additionally, related private helpers (isSafeProtocol, shouldAbsUrl(TagName, AttributeKey)) and the protocols map field are moved, decreasing Safelist's total method count and LOC meaningfully while grouping protocol-related logic into a focused responsibility class."
+      },
+      "files": [
+        "src/main/java/org/jsoup/safety/Safelist.java",
+        "src/main/java/org/jsoup/safety/SafelistProtocols.java"
+      ],
+      "ops": [
+        {
+          "op": "EXTRACT_CLASS",
+          "inputs": [
+            "src/main/java/org/jsoup/safety/Safelist.java"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/safety/SafelistProtocols.java"
+          ],
+          "details": "Create a new class org.jsoup.safety.SafelistProtocols that encapsulates the protocols map and all logic for adding/removing protocols, protocol validation (isSafeProtocol), and determining whether a tag+attribute should be treated as having absolute URLs (shouldAbsUrl). The new class holds a Map<Safelist.TagName, Map<Safelist.AttributeKey, Set<Protocol>>> protocols and provides methods with signatures: public SafelistProtocols addProtocols(String tag, String attribute, String... protocols), public SafelistProtocols removeProtocols(String tag, String attribute, String... removeProtocols), boolean isSafeProtocol(String value, Set<Protocol> protocols), and boolean shouldAbsUrl(Safelist.TagName tag, Safelist.AttributeKey key). It also defines a static nested Protocol class that extends Safelist.TypedValue (mirroring the original Protocol type). The implementation follows the moved logic from Safelist (protocol parsing, '#' anchor handling, lookup semantics). A copy-constructor is provided so Safelist(Safelist copy) can copy protocol settings. The class is placed in the same package org.jsoup.safety so it can use Safelist.TagName, Safelist.AttributeKey, and Safelist.TypedValue types.",
+          "risk": "medium"
+        },
+        {
+          "op": "MOVE_FIELD",
+          "inputs": [
+            "src/main/java/org/jsoup/safety/Safelist.java:private final Map<TagName, Map<AttributeKey, Set<Protocol>>> protocols;"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/safety/SafelistProtocols.java:private final Map<Safelist.TagName, Map<Safelist.AttributeKey, Set<Protocol>>> protocols;"
+          ],
+          "details": "Move the 'protocols' field (the Map<TagName, Map<AttributeKey, Set<Protocol>>>) out of Safelist into the new SafelistProtocols class. In Safelist, replace the moved map with a new field of type SafelistProtocols (named 'protocols' to minimize call-site changes), initialized in the Safelist() constructor and copied in Safelist(Safelist copy). This preserves internal access patterns but centralizes protocol storage and semantics in SafelistProtocols.",
+          "risk": "medium"
+        },
+        {
+          "op": "MOVE_METHOD",
+          "inputs": [
+            "src/main/java/org/jsoup/safety/Safelist.java:public Safelist addProtocols(String tag, String attribute, String... protocols) { ... }"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/safety/SafelistProtocols.java:public SafelistProtocols addProtocols(String tag, String attribute, String... protocols) { ... }"
+          ],
+          "details": "Move the public addProtocols(...) method implementation from Safelist into SafelistProtocols. The method returns SafelistProtocols (for fluent configuration on the new responsibilities holder). Callers configuring protocols will need to obtain the SafelistProtocols instance (Safelist.protocols) if they want to continue chaining; tests and internal call sites will be updated accordingly.",
+          "risk": "medium"
+        },
+        {
+          "op": "MOVE_METHOD",
+          "inputs": [
+            "src/main/java/org/jsoup/safety/Safelist.java:public Safelist removeProtocols(String tag, String attribute, String... removeProtocols) { ... }"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/safety/SafelistProtocols.java:public SafelistProtocols removeProtocols(String tag, String attribute, String... removeProtocols) { ... }"
+          ],
+          "details": "Move the public removeProtocols(...) method implementation from Safelist into SafelistProtocols. The method returns SafelistProtocols to match fluent usage on the new class. The moved logic preserves the same validation and removal semantics, including the same validation checks (Validate.isTrue(...)) as in the original method.",
+          "risk": "medium"
+        },
+        {
+          "op": "MOVE_METHOD",
+          "inputs": [
+            "src/main/java/org/jsoup/safety/Safelist.java:private boolean isSafeProtocol(String value, Set<Protocol> protocols) { ... }"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/safety/SafelistProtocols.java:private boolean isSafeProtocol(String value, Set<Protocol> protocols) { ... }"
+          ],
+          "details": "Move the helper isSafeProtocol(...) from Safelist into SafelistProtocols since it directly pertains to protocol validation and uses the protocols sets stored in the new class.",
+          "risk": "low"
+        },
+        {
+          "op": "MOVE_METHOD",
+          "inputs": [
+            "src/main/java/org/jsoup/safety/Safelist.java:private boolean shouldAbsUrl(TagName tag, AttributeKey key) { ... }"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/safety/SafelistProtocols.java:private boolean shouldAbsUrl(Safelist.TagName tag, Safelist.AttributeKey key) { ... }"
+          ],
+          "details": "Move the TagName/AttributeKey-based shouldAbsUrl implementation into SafelistProtocols. The public/package-private Safelist.shouldAbsUrl(String, String) will be kept in Safelist as a delegator that calls the new protocols.shouldAbsUrl(...), preserving external behavior while centralizing the lower-level logic.",
+          "risk": "medium"
+        },
+        {
+          "op": "MOVE_METHOD",
+          "inputs": [
+            "src/main/java/org/jsoup/safety/Safelist.java:static class Protocol extends TypedValue { Protocol(String value) { super(value); } static Protocol valueOf(String value) { return new Protocol(value); } }"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/safety/SafelistProtocols.java:static class Protocol extends Safelist.TypedValue { Protocol(String value) { super(value); } static Protocol valueOf(String value) { return new Protocol(value); } }"
+          ],
+          "details": "Move the Protocol nested type into SafelistProtocols as a static nested class that extends Safelist.TypedValue. This keeps protocol-specific typed values colocated with protocol management logic while reusing the existing TypedValue implementation from Safelist.",
+          "risk": "low"
+        },
+        {
+          "op": "UPDATE_CALL_SITES",
+          "inputs": [
+            "src/main/java/org/jsoup/safety/Safelist.java"
+          ],
+          "outputs": [
+            "src/main/java/org/jsoup/safety/Safelist.java"
+          ],
+          "details": "Update internal references in Safelist to use the new SafelistProtocols instance and methods. Specifically: replace direct access to the moved 'protocols' map with calls to protocols (the SafelistProtocols instance); update isSafeAttribute to call protocols.isSafeProtocol(...) where appropriate; keep the package-private shouldAbsUrl(String, String) method as a delegator to protocols.shouldAbsUrl(TagName, AttributeKey). Initialize the new protocols field in Safelist constructors and copy constructors (use a copy constructor on SafelistProtocols). Remove the moved methods and Protocol nested class from Safelist. These are internal call-site updates within the same file, so behavior is preserved.",
+          "risk": "medium"
+        }
+      ]
+    }
+  ]
+}

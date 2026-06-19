@@ -1,0 +1,32 @@
+{
+  "id": 1,
+  "goal": "Introduce a small helper class to house TokeniserState's private static helper routines (reduce enum size while preserving API).",
+  "files": [
+    "src/main/java/org/jsoup/parser/TokeniserStateHelper.java"
+  ],
+  "ops": [
+    {
+      "op": "EXTRACT_CLASS",
+      "inputs": [
+        "src/main/java/org/jsoup/parser/TokeniserState.java"
+      ],
+      "outputs": [
+        "src/main/java/org/jsoup/parser/TokeniserStateHelper.java"
+      ],
+      "details": "Create new class org.jsoup.parser.TokeniserStateHelper in same package. Move implementations of the following private static helper methods into this helper as public static methods with identical signatures (but in TokeniserStateHelper): handleDataEndTag(Tokeniser, CharacterReader, TokeniserState), readRawData(Tokeniser, CharacterReader, TokeniserState, TokeniserState), readCharRef(Tokeniser, TokeniserState), readEndTag(Tokeniser, CharacterReader, TokeniserState, TokeniserState), handleDataDoubleEscapeTag(Tokeniser, CharacterReader, TokeniserState, TokeniserState), readDoctypeInternalSubset(Tokeniser, CharacterReader, TokeniserState). Add an import for org.jsoup.internal.StringUtil for readDoctypeInternalSubset. Methods should reference Tokeniser.replacementChar directly where needed (instead of TokeniserState's replacementChar), and otherwise use only types present in the original source. Do not change method semantics or visibility for Tokeniser (keep helper methods static so they can be called from TokeniserState).",
+      "risk": "medium"
+    },
+    {
+      "op": "ADD_OR_UPDATE_IMPORTS",
+      "inputs": [
+        "src/main/java/org/jsoup/parser/TokeniserStateHelper.java"
+      ],
+      "outputs": [
+        "src/main/java/org/jsoup/parser/TokeniserStateHelper.java"
+      ],
+      "details": "Ensure TokeniserStateHelper has 'package org.jsoup.parser;' and imports required: org.jsoup.internal.StringUtil (used by readDoctypeInternalSubset). No other external imports required because types are in same package.",
+      "risk": "low"
+    }
+  ],
+  "test_files": []
+}

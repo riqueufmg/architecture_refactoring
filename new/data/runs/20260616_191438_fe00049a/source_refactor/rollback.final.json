@@ -1,0 +1,17 @@
+{
+  "ok": true,
+  "rollback_to": "4f2714a2465486abef0d38ce0e8618b873cf287b",
+  "before_commit": "4f2714a2465486abef0d38ce0e8618b873cf287b",
+  "after_commit": "4f2714a2465486abef0d38ce0e8618b873cf287b",
+  "before_status": "",
+  "after_status": "",
+  "reason": "executor_no_changes",
+  "current_block_id": "1",
+  "compile_ok": false,
+  "compile_return_code": -1,
+  "executor_ok": false,
+  "executor_error": "executor_no_changes",
+  "apply_ok": false,
+  "apply_error": "",
+  "reset_output": "HEAD is now at 4f2714a2 source_refactor: apply block 2\n"
+}

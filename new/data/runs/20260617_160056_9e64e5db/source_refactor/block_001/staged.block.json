@@ -1,0 +1,105 @@
+{
+  "id": 1,
+  "goal": "Extract the tag-and-attribute management responsibility from Safelist into a dedicated SafelistTagRules class to reduce the number of public methods and total methods on Safelist and concentrate related state (tag set and attribute map) in one cohesive helper.",
+  "expected_impact": {
+    "primary_metric": "public_methods",
+    "public_methods_moved": 5,
+    "total_methods_moved": 5,
+    "loc_reduction_expected": "medium",
+    "rationale": "The extraction moves five public API methods (addTags, removeTags, addAttributes, removeAttributes, isSafeTag) plus the backing fields (tagNames, attributes) into a new class. Safelist will keep thin compatibility delegating methods, so external behavior is preserved while the target class's implementation and method count are reduced, and related LOC are removed from Safelist into the new class."
+  },
+  "files": [
+    "src/main/java/org/jsoup/safety/Safelist.java",
+    "src/main/java/org/jsoup/safety/SafelistTagRules.java",
+    "src/test/java/org/jsoup/integration/SafelistExtensionTest.java",
+    "src/test/java/org/jsoup/parser/HtmlParserTest.java",
+    "src/test/java/org/jsoup/safety/CleanerTest.java",
+    "src/test/java/org/jsoup/safety/SafelistTest.java"
+  ],
+  "ops": [
+    {
+      "op": "EXTRACT_CLASS",
+      "inputs": [
+        "src/main/java/org/jsoup/safety/Safelist.java"
+      ],
+      "outputs": [
+        "src/main/java/org/jsoup/safety/SafelistTagRules.java"
+      ],
+      "details": "Create a new class org.jsoup.safety.SafelistTagRules in the same package. The new class will encapsulate the Set<TagName> tagNames and Map<TagName, Set<AttributeKey>> attributes state and implement the public methods: addTags(String...), removeTags(String...), addAttributes(String, String...), removeAttributes(String, String...), and isSafeTag(String). The class will provide a copy constructor SafelistTagRules(SafelistTagRules) for deep-copying state. The class will depend on Safelist.TagName and Safelist.AttributeKey (kept as nested types in Safelist) and will accept SafelistEnforcedAttributes and SafelistProtocols references when needed for operations that must coordinate with those managers. The implementation preserves the original semantics (validation, :all handling, interaction with attributes map). The new class is placed in org.jsoup.safety and uses package-private access where appropriate.",
+      "risk": "medium"
+    },
+    {
+      "op": "MOVE_FIELD",
+      "inputs": [
+        "src/main/java/org/jsoup/safety/Safelist.java:private final Set<TagName> tagNames",
+        "src/main/java/org/jsoup/safety/Safelist.java:private final Map<TagName, Set<AttributeKey>> attributes"
+      ],
+      "outputs": [
+        "src/main/java/org/jsoup/safety/SafelistTagRules.java:private final Set<Safelist.TagName> tagNames",
+        "src/main/java/org/jsoup/safety/SafelistTagRules.java:private final Map<Safelist.TagName, Set<Safelist.AttributeKey>> attributes"
+      ],
+      "details": "Move the two fields that hold allowed tag names and per-tag attribute sets into the extracted SafelistTagRules class. Fields become private final and are initialized in SafelistTagRules constructors. Remove these fields from Safelist and add a new private final SafelistTagRules tagRulesManager field in Safelist to hold the instance.",
+      "risk": "low"
+    },
+    {
+      "op": "MOVE_METHOD",
+      "inputs": [
+        "src/main/java/org/jsoup/safety/Safelist.java:public Safelist addTags(String... tags)",
+        "src/main/java/org/jsoup/safety/Safelist.java:public Safelist removeTags(String... tags)",
+        "src/main/java/org/jsoup/safety/Safelist.java:public Safelist addAttributes(String tag, String... attributes)",
+        "src/main/java/org/jsoup/safety/Safelist.java:public Safelist removeAttributes(String tag, String... attributes)",
+        "src/main/java/org/jsoup/safety/Safelist.java:public boolean isSafeTag(String tag)"
+      ],
+      "outputs": [
+        "src/main/java/org/jsoup/safety/SafelistTagRules.java:public SafelistTagRules addTags(String... tags)",
+        "src/main/java/org/jsoup/safety/SafelistTagRules.java:public SafelistTagRules removeTags(String... tags)",
+        "src/main/java/org/jsoup/safety/SafelistTagRules.java:public SafelistTagRules addAttributes(String tag, String... attributes)",
+        "src/main/java/org/jsoup/safety/SafelistTagRules.java:public SafelistTagRules removeAttributes(String tag, String... attributes)",
+        "src/main/java/org/jsoup/safety/SafelistTagRules.java:public boolean isSafeTag(String tag)"
+      ],
+      "details": "Move the implementations of the five public methods that manage tags and attributes into SafelistTagRules. The moved methods will operate on the tagNames and attributes fields now owned by SafelistTagRules. Validation (Validate.*) and Normalizer/tag/attribute key construction (TagName.valueOf, AttributeKey.valueOf) are preserved. Each moved mutating method returns the SafelistTagRules instance to allow chaining from Safelist; Safelist will provide compatibility chaining by delegating and returning 'this' to preserve the original Safelist fluent API. The moved removeTags method will accept/remove related attributes from its internal attributes map; it will also call back to provided SafelistEnforcedAttributes and SafelistProtocols only if necessary via references passed to SafelistTagRules when constructed (to keep coordination intact).",
+      "risk": "medium"
+    },
+    {
+      "op": "ADD_OR_UPDATE_IMPORTS",
+      "inputs": [
+        "src/main/java/org/jsoup/safety/SafelistTagRules.java"
+      ],
+      "outputs": [
+        "src/main/java/org/jsoup/safety/SafelistTagRules.java"
+      ],
+      "details": "Add necessary imports (java.util.* and org.jsoup.helper.Validate) to the new SafelistTagRules class file. No other files require import changes because Safelist keeps compatibility wrappers.",
+      "risk": "low"
+    },
+    {
+      "op": "UPDATE_CALL_SITES",
+      "inputs": [
+        "src/main/java/org/jsoup/safety/Safelist.java"
+      ],
+      "outputs": [
+        "src/main/java/org/jsoup/safety/Safelist.java"
+      ],
+      "details": "Update Safelist to use the new SafelistTagRules instance: - Remove declarations/initializations of tagNames and attributes. - Add private final SafelistTagRules tagRulesManager; initialize in Safelist() constructor (tagRulesManager = new SafelistTagRules(enforcedAttributesManager, protocolsManager)). - Update Safelist(Safelist copy) to create a defensive copy: this.tagRulesManager = new SafelistTagRules(copy.tagRulesManager). - Replace original logic that referenced tagNames/attributes within Safelist with calls to tagRulesManager methods where appropriate. - Add thin compatibility delegating methods in Safelist with the original signatures (addTags, removeTags, addAttributes, removeAttributes, isSafeTag) that call through to tagRulesManager and then return 'this' where appropriate to preserve fluent API behavior. Other Safelist internal methods that previously accessed attributes (e.g., shouldAbsUrl) will be updated to query tagRulesManager for the attribute sets as needed (e.g., add package-private accessors on SafelistTagRules for internal queries if required).",
+      "risk": "medium"
+    },
+    {
+      "op": "UPDATE_TESTS",
+      "inputs": [
+        "src/test/java/org/jsoup/integration/SafelistExtensionTest.java",
+        "src/test/java/org/jsoup/parser/HtmlParserTest.java",
+        "src/test/java/org/jsoup/safety/CleanerTest.java",
+        "src/test/java/org/jsoup/safety/SafelistTest.java"
+      ],
+      "outputs": [],
+      "details": "Update related tests affected by this refactoring block so the configured build command passes. Adjust imports, package references, moved class references, constructors, and assertions only when required. Do not change production behavior through tests.",
+      "risk": "medium",
+      "api_change": false
+    }
+  ],
+  "test_files": [
+    "src/test/java/org/jsoup/integration/SafelistExtensionTest.java",
+    "src/test/java/org/jsoup/parser/HtmlParserTest.java",
+    "src/test/java/org/jsoup/safety/CleanerTest.java",
+    "src/test/java/org/jsoup/safety/SafelistTest.java"
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "block_id": "1",
+  "block_index": 0,
+  "attempt": 0,
+  "max_block_attempts": 5,
+  "executor_ok": true,
+  "executor_error": "",
+  "apply_ok": true,
+  "apply_error": "",
+  "applied_files": [
+    "src/main/java/org/jsoup/safety/SafelistEnforcedAttributes.java",
+    "src/main/java/org/jsoup/safety/Safelist.java"
+  ],
+  "compile_ok": true,
+  "compile_return_code": 0,
+  "compile_log_path": "/data/henrique/langchain_prototype/new/data/runs/20260617_135012_1e65670d/source_refactor/block_001/compile.log",
+  "commit": "7e592740a6536ff10fb3bec5ff6c0f32d3d5fa85",
+  "rollback_reason": "",
+  "stop_reason": "block_applied",
+  "files": {
+    "executor_existing_files": [
+      "src/main/java/org/jsoup/safety/Safelist.java",
+      "src/test/java/org/jsoup/integration/SafelistExtensionTest.java",
+      "src/test/java/org/jsoup/parser/HtmlParserTest.java",
+      "src/test/java/org/jsoup/safety/CleanerTest.java",
+      "src/test/java/org/jsoup/safety/SafelistTest.java"
+    ],
+    "executor_new_files": [
+      "src/main/java/org/jsoup/safety/SafelistEnforcedAttributes.java"
+    ],
+    "executor_files": [
+      "src/main/java/org/jsoup/safety/Safelist.java",
+      "src/main/java/org/jsoup/safety/SafelistEnforcedAttributes.java",
+      "src/test/java/org/jsoup/integration/SafelistExtensionTest.java",
+      "src/test/java/org/jsoup/parser/HtmlParserTest.java",
+      "src/test/java/org/jsoup/safety/CleanerTest.java",
+      "src/test/java/org/jsoup/safety/SafelistTest.java"
+    ],
+    "executor_rejected_files": []
+  },
+  "openrewrite": {
+    "ok": false,
+    "return_code": -1,
+    "recipe_path": "",
+    "log_path": "",
+    "command": []
+  }
+}

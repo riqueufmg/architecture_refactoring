@@ -1,0 +1,476 @@
+commit 483fe0ff1a02f60cf1881f03097010bd88d529c0
+Author: Henrique Nunes <rique@face.ufmg.br>
+Date:   Fri Jun 19 11:59:47 2026 -0300
+
+    source_refactor: apply block 1
+
+diff --git a/src/main/java/org/apache/commons/lang3/mutable/MutableByte.java b/src/main/java/org/apache/commons/lang3/mutable/MutableByte.java
+index 9e5da5fff..f318eaf44 100644
+--- a/src/main/java/org/apache/commons/lang3/mutable/MutableByte.java
++++ b/src/main/java/org/apache/commons/lang3/mutable/MutableByte.java
+@@ -40,13 +40,14 @@ public class MutableByte extends Number implements Comparable<MutableByte>, Muta
+      */
+     private static final long serialVersionUID = -1585823265L;
+ 
+-    /** The mutable value. */
+-    private byte value;
++    /** Delegate that encapsulates the mutable value and arithmetic operations. */
++    private final MutableByteArithmetic arithmetic;
+ 
+     /**
+      * Constructs a new MutableByte with the default value of zero.
+      */
+     public MutableByte() {
++        this.arithmetic = new MutableByteArithmetic();
+     }
+ 
+     /**
+@@ -55,7 +56,7 @@ public MutableByte() {
+      * @param value  the initial value to store
+      */
+     public MutableByte(final byte value) {
+-        this.value = value;
++        this.arithmetic = new MutableByteArithmetic(value);
+     }
+ 
+     /**
+@@ -65,7 +66,7 @@ public MutableByte(final byte value) {
+      * @throws NullPointerException if the object is null.
+      */
+     public MutableByte(final Number value) {
+-        this.value = value.byteValue();
++        this.arithmetic = new MutableByteArithmetic(value);
+     }
+ 
+     /**
+@@ -76,7 +77,7 @@ public MutableByte(final Number value) {
+      * @since 2.5
+      */
+     public MutableByte(final String value) {
+-        this.value = Byte.parseByte(value);
++        this.arithmetic = new MutableByteArithmetic(value);
+     }
+ 
+     /**
+@@ -86,7 +87,7 @@ public MutableByte(final String value) {
+      * @since 2.2
+      */
+     public void add(final byte operand) {
+-        this.value += operand;
++        this.arithmetic.add(operand);
+     }
+ 
+     /**
+@@ -97,7 +98,7 @@ public void add(final byte operand) {
+      * @since 2.2
+      */
+     public void add(final Number operand) {
+-        this.value += operand.byteValue();
++        this.arithmetic.add(operand);
+     }
+ 
+     /**
+@@ -109,8 +110,7 @@ public void add(final Number operand) {
+      * @since 3.5
+      */
+     public byte addAndGet(final byte operand) {
+-        this.value += operand;
+-        return value;
++        return this.arithmetic.addAndGet(operand);
+     }
+ 
+     /**
+@@ -123,8 +123,7 @@ public byte addAndGet(final byte operand) {
+      * @since 3.5
+      */
+     public byte addAndGet(final Number operand) {
+-        this.value += operand.byteValue();
+-        return value;
++        return this.arithmetic.addAndGet(operand);
+     }
+ 
+     // shortValue relies on Number implementation
+@@ -135,7 +134,7 @@ public byte addAndGet(final Number operand) {
+      */
+     @Override
+     public byte byteValue() {
+-        return value;
++        return this.arithmetic.byteValue();
+     }
+ 
+     /**
+@@ -146,7 +145,7 @@ public byte byteValue() {
+      */
+     @Override
+     public int compareTo(final MutableByte other) {
+-        return Byte.compare(this.value, other.value);
++        return Byte.compare(this.arithmetic.byteValue(), other.arithmetic.byteValue());
+     }
+ 
+     /**
+@@ -155,7 +154,7 @@ public int compareTo(final MutableByte other) {
+      * @since 2.2
+      */
+     public void decrement() {
+-        value--;
++        this.arithmetic.decrement();
+     }
+ 
+     /**
+@@ -166,8 +165,7 @@ public void decrement() {
+      * @since 3.5
+      */
+     public byte decrementAndGet() {
+-        value--;
+-        return value;
++        return this.arithmetic.decrementAndGet();
+     }
+ 
+     /**
+@@ -177,7 +175,7 @@ public byte decrementAndGet() {
+      */
+     @Override
+     public double doubleValue() {
+-        return value;
++        return this.arithmetic.byteValue();
+     }
+ 
+     /**
+@@ -191,7 +189,7 @@ public double doubleValue() {
+     @Override
+     public boolean equals(final Object obj) {
+         if (obj instanceof MutableByte) {
+-            return value == ((MutableByte) obj).byteValue();
++            return this.arithmetic.byteValue() == ((MutableByte) obj).byteValue();
+         }
+         return false;
+     }
+@@ -203,7 +201,7 @@ public boolean equals(final Object obj) {
+      */
+     @Override
+     public float floatValue() {
+-        return value;
++        return this.arithmetic.byteValue();
+     }
+ 
+     /**
+@@ -215,9 +213,7 @@ public float floatValue() {
+      * @since 3.5
+      */
+     public byte getAndAdd(final byte operand) {
+-        final byte last = value;
+-        this.value += operand;
+-        return last;
++        return this.arithmetic.getAndAdd(operand);
+     }
+ 
+     /**
+@@ -230,9 +226,7 @@ public byte getAndAdd(final byte operand) {
+      * @since 3.5
+      */
+     public byte getAndAdd(final Number operand) {
+-        final byte last = value;
+-        this.value += operand.byteValue();
+-        return last;
++        return this.arithmetic.getAndAdd(operand);
+     }
+ 
+     /**
+@@ -243,9 +237,7 @@ public byte getAndAdd(final Number operand) {
+      * @since 3.5
+      */
+     public byte getAndDecrement() {
+-        final byte last = value;
+-        value--;
+-        return last;
++        return this.arithmetic.getAndDecrement();
+     }
+ 
+     /**
+@@ -256,9 +248,7 @@ public byte getAndDecrement() {
+      * @since 3.5
+      */
+     public byte getAndIncrement() {
+-        final byte last = value;
+-        value++;
+-        return last;
++        return this.arithmetic.getAndIncrement();
+     }
+ 
+     /**
+@@ -270,7 +260,7 @@ public byte getAndIncrement() {
+     @Deprecated
+     @Override
+     public Byte getValue() {
+-        return Byte.valueOf(this.value);
++        return this.arithmetic.getValue();
+     }
+ 
+     /**
+@@ -280,7 +270,7 @@ public Byte getValue() {
+      */
+     @Override
+     public int hashCode() {
+-        return value;
++        return this.arithmetic.byteValue();
+     }
+ 
+     /**
+@@ -289,7 +279,7 @@ public int hashCode() {
+      * @since 2.2
+      */
+     public void increment() {
+-        value++;
++        this.arithmetic.increment();
+     }
+ 
+     /**
+@@ -300,8 +290,7 @@ public void increment() {
+      * @since 3.5
+      */
+     public byte incrementAndGet() {
+-        value++;
+-        return value;
++        return this.arithmetic.incrementAndGet();
+     }
+ 
+     /**
+@@ -311,7 +300,7 @@ public byte incrementAndGet() {
+      */
+     @Override
+     public int intValue() {
+-        return value;
++        return this.arithmetic.byteValue();
+     }
+ 
+     /**
+@@ -321,7 +310,7 @@ public int intValue() {
+      */
+     @Override
+     public long longValue() {
+-        return value;
++        return this.arithmetic.byteValue();
+     }
+ 
+     /**
+@@ -330,7 +319,7 @@ public long longValue() {
+      * @param value  the value to set.
+      */
+     public void setValue(final byte value) {
+-        this.value = value;
++        this.arithmetic.setValue(value);
+     }
+ 
+     /**
+@@ -341,7 +330,7 @@ public void setValue(final byte value) {
+      */
+     @Override
+     public void setValue(final Number value) {
+-        this.value = value.byteValue();
++        this.arithmetic.setValue(value);
+     }
+ 
+     /**
+@@ -351,7 +340,7 @@ public void setValue(final Number value) {
+      * @since 2.2
+      */
+     public void subtract(final byte operand) {
+-        this.value -= operand;
++        this.arithmetic.subtract(operand);
+     }
+ 
+     /**
+@@ -362,7 +351,7 @@ public void subtract(final byte operand) {
+      * @since 2.2
+      */
+     public void subtract(final Number operand) {
+-        this.value -= operand.byteValue();
++        this.arithmetic.subtract(operand);
+     }
+ 
+     /**
+@@ -371,7 +360,7 @@ public void subtract(final Number operand) {
+      * @return a Byte instance containing the value from this mutable.
+      */
+     public Byte toByte() {
+-        return Byte.valueOf(byteValue());
++        return this.arithmetic.toByte();
+     }
+ 
+     /**
+@@ -381,7 +370,7 @@ public Byte toByte() {
+      */
+     @Override
+     public String toString() {
+-        return String.valueOf(value);
++        return String.valueOf(this.arithmetic.byteValue());
+     }
+ 
+ }
+diff --git a/src/main/java/org/apache/commons/lang3/mutable/MutableByteArithmetic.java b/src/main/java/org/apache/commons/lang3/mutable/MutableByteArithmetic.java
+new file mode 100644
+index 000000000..89214682e
+--- /dev/null
++++ b/src/main/java/org/apache/commons/lang3/mutable/MutableByteArithmetic.java
+@@ -0,0 +1,161 @@
++/*
++ * Licensed to the Apache Software Foundation (ASF) under one or more
++ * contributor license agreements.  See the NOTICE file distributed with
++ * this work for additional information regarding copyright ownership.
++ * The ASF licenses this file to You under the Apache License, Version 2.0
++ * (the "License"); you may not use this file except in compliance with
++ * the License.  You may obtain a copy of the License at
++ *
++ *      https://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++package org.apache.commons.lang3.mutable;
++
++/**
++ * Encapsulates the mutable byte value and provides arithmetic and mutation operations.
++ * This class is a helper used by {@link MutableByte} to concentrate mutation logic.
++ *
++ * @since 3.12 (extracted)
++ */
++public class MutableByteArithmetic {
++
++    /**
++     * Required for serialization support.
++     */
++    private static final long serialVersionUID = -1585823265L;
++
++    /** The mutable value. */
++    private byte value;
++
++    /**
++     * Constructs a new MutableByteArithmetic with the default value of zero.
++     */
++    public MutableByteArithmetic() {
++    }
++
++    /**
++     * Constructs a new MutableByteArithmetic with the specified value.
++     *
++     * @param value the initial value to store
++     */
++    public MutableByteArithmetic(final byte value) {
++        this.value = value;
++    }
++
++    /**
++     * Constructs a new MutableByteArithmetic with the specified value.
++     *
++     * @param value the initial value to store, not null.
++     */
++    public MutableByteArithmetic(final Number value) {
++        this.value = value.byteValue();
++    }
++
++    /**
++     * Constructs a new MutableByteArithmetic parsing the given string.
++     *
++     * @param value the string to parse, not null.
++     */
++    public MutableByteArithmetic(final String value) {
++        this.value = Byte.parseByte(value);
++    }
++
++    public void add(final byte operand) {
++        this.value += operand;
++    }
++
++    public void add(final Number operand) {
++        this.value += operand.byteValue();
++    }
++
++    public byte addAndGet(final byte operand) {
++        this.value += operand;
++        return this.value;
++    }
++
++    public byte addAndGet(final Number operand) {
++        this.value += operand.byteValue();
++        return this.value;
++    }
++
++    public byte getAndAdd(final byte operand) {
++        final byte last = this.value;
++        this.value += operand;
++        return last;
++    }
++
++    public byte getAndAdd(final Number operand) {
++        final byte last = this.value;
++        this.value += operand.byteValue();
++        return last;
++    }
++
++    public void increment() {
++        this.value++;
++    }
++
++    public byte incrementAndGet() {
++        this.value++;
++        return this.value;
++    }
++
++    public byte getAndIncrement() {
++        final byte last = this.value;
++        this.value++;
++        return last;
++    }
++
++    public void decrement() {
++        this.value--;
++    }
++
++    public byte decrementAndGet() {
++        this.value--;
++        return this.value;
++    }
++
++    public byte getAndDecrement() {
++        final byte last = this.value;
++        this.value--;
++        return last;
++    }
++
++    public void subtract(final byte operand) {
++        this.value -= operand;
++    }
++
++    public void subtract(final Number operand) {
++        this.value -= operand.byteValue();
++    }
++
++    public void setValue(final byte value) {
++        this.value = value;
++    }
++
++    public void setValue(final Number value) {
++        this.value = value.byteValue();
++    }
++
++    @Deprecated
++    public Byte getValue() {
++        return Byte.valueOf(this.value);
++    }
++
++    public Byte toByte() {
++        return Byte.valueOf(this.value);
++    }
++
++    /**
++     * Returns the primitive byte value.
++     *
++     * @return the primitive byte value
++     */
++    public byte byteValue() {
++        return this.value;
++    }
++}

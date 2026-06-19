@@ -1,0 +1,77 @@
+{
+  "id": 1,
+  "goal": "Extract the CSS identifier parsing and escaping responsibility from TokenQueue into a dedicated class (org.jsoup.parser.CssIdentifier) to reduce TokenQueue's total method count and LOC by moving cohesive helper and parsing logic related to CSS identifiers and escaping into a single, focused class. Preserve TokenQueue's external API by keeping small delegating wrappers where needed so the change is independently compilable.",
+  "expected_impact": {
+    "primary_metric": "total_methods",
+    "public_methods_moved": 0,
+    "total_methods_moved": 11,
+    "loc_reduction_expected": "medium",
+    "rationale": "The extraction moves the cohesive cluster of methods that implement CSS identifier parsing and escaping (including private helpers and static helpers) into a new class. TokenQueue keeps small delegating wrappers for the original public API to preserve compatibility. This reduces TokenQueue's total number of methods (by removing private helpers and large implementation bodies) and decreases its LOC significantly, while avoiding breakage of other production code."
+  },
+  "files": [
+    "src/main/java/org/jsoup/parser/CssIdentifier.java",
+    "src/main/java/org/jsoup/parser/TokenQueue.java",
+    "src/test/java/org/jsoup/parser/TokenQueueTest.java",
+    "src/test/java/org/jsoup/select/SelectorTest.java"
+  ],
+  "ops": [
+    {
+      "op": "EXTRACT_CLASS",
+      "inputs": [
+        "src/main/java/org/jsoup/parser/TokenQueue.java"
+      ],
+      "outputs": [
+        "src/main/java/org/jsoup/parser/CssIdentifier.java"
+      ],
+      "details": "Create new class org.jsoup.parser.CssIdentifier containing the implementation of CSS identifier parsing and escaping. The new class provides:\n- public static String escapeCssIdentifier(String in)\n- public static String consumeCssIdentifier(CharacterReader reader)\n- public static String consumeEscapedCssIdentifier(CharacterReader reader, char... matches)\n\nAnd private/static helpers moved into the new class:\n- consumeCssEscapeSequenceInto(CharacterReader reader, StringBuilder out)\n- isNonAscii(char), isIdentStart(char), isIdent(char), isNewline(char), isValidCodePoint(int)\n- appendEscaped(StringBuilder, char), appendEscapedCodepoint(StringBuilder, char)\n\nThe new class reproduces the original logic but operates on a supplied CharacterReader (or creates one for escapeCssIdentifier) and uses its own necessary constants (Esc, Unicode_Null, Replacement, Hyphen_Minus). The extraction centralizes CSS identifier responsibilities into a single file.",
+      "risk": "low"
+    },
+    {
+      "op": "MOVE_METHOD",
+      "inputs": [
+        "public static String escapeCssIdentifier(String in) // implementation",
+        "public String consumeCssIdentifier() // implementation (moved to static consumeCssIdentifier(CharacterReader))",
+        "private String consumeEscapedCssIdentifier(char... matches)",
+        "private void consumeCssEscapeSequenceInto(StringBuilder out)",
+        "private static boolean isNonAscii(char c)",
+        "private static boolean isIdentStart(char c)",
+        "private static boolean isIdent(char c)",
+        "private static boolean isNewline(char c)",
+        "private static boolean isValidCodePoint(int codePoint)",
+        "private static void appendEscaped(StringBuilder out, char c)",
+        "private static void appendEscapedCodepoint(StringBuilder out, char c)"
+      ],
+      "outputs": [
+        "src/main/java/org/jsoup/parser/CssIdentifier.java"
+      ],
+      "details": "Move the implementations of the listed methods from TokenQueue into the new CssIdentifier class. The moved methods are logically cohesive: they implement parsing and escaping behavior for CSS identifiers, including the handling of escapes and hex codepoints. Implementations are adapted to operate on a CharacterReader parameter (for consume* methods) or create their own CharacterReader (for escapeCssIdentifier).",
+      "risk": "medium"
+    },
+    {
+      "op": "UPDATE_CALL_SITES",
+      "inputs": [
+        "src/main/java/org/jsoup/parser/TokenQueue.java"
+      ],
+      "outputs": [
+        "src/main/java/org/jsoup/parser/TokenQueue.java"
+      ],
+      "details": "Update TokenQueue to remove the moved helper implementations and call into CssIdentifier instead. Changes:\n- Replace the body of TokenQueue.consumeCssIdentifier() with a delegating call to return CssIdentifier.consumeCssIdentifier(this.reader); (keeps public API but delegates implementation).\n- Replace the body of TokenQueue.escapeCssIdentifier(String in) with a call to return CssIdentifier.escapeCssIdentifier(in); (keep static delegating wrapper to preserve API).\n- Update TokenQueue.consumeElementSelector() to delegate to CssIdentifier.consumeEscapedCssIdentifier(reader, ElementSelectorChars).\n- Remove private helper methods in TokenQueue that were moved to CssIdentifier.\nThese updates keep the TokenQueue API intact while delegating the heavy logic to the new class, reducing TokenQueue LOC and its internal method count.",
+      "risk": "low"
+    },
+    {
+      "op": "UPDATE_TESTS",
+      "inputs": [
+        "src/test/java/org/jsoup/parser/TokenQueueTest.java",
+        "src/test/java/org/jsoup/select/SelectorTest.java"
+      ],
+      "outputs": [],
+      "details": "Update related tests affected by this refactoring block so the configured build command passes. Adjust imports, package references, moved class references, constructors, and assertions only when required. Do not change production behavior through tests.",
+      "risk": "medium",
+      "api_change": false
+    }
+  ],
+  "test_files": [
+    "src/test/java/org/jsoup/parser/TokenQueueTest.java",
+    "src/test/java/org/jsoup/select/SelectorTest.java"
+  ]
+}

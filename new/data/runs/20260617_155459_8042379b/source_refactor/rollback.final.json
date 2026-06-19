@@ -1,0 +1,17 @@
+{
+  "ok": true,
+  "rollback_to": "97d1f4502ebdf3e3171a890f029a2f94561fc54c",
+  "before_commit": "97d1f4502ebdf3e3171a890f029a2f94561fc54c",
+  "after_commit": "97d1f4502ebdf3e3171a890f029a2f94561fc54c",
+  "before_status": "M src/main/java/org/jsoup/safety/Safelist.java\n M src/test/java/org/jsoup/safety/CleanerTest.java\n M src/test/java/org/jsoup/safety/SafelistTest.java\n?? src/main/java/org/jsoup/safety/SafelistTagAttributes.java",
+  "after_status": "",
+  "reason": "compile_failed",
+  "current_block_id": "1",
+  "compile_ok": false,
+  "compile_return_code": 1,
+  "executor_ok": true,
+  "executor_error": "",
+  "apply_ok": true,
+  "apply_error": "",
+  "reset_output": "HEAD is now at 97d1f450 source_refactor: apply block 1\n"
+}
