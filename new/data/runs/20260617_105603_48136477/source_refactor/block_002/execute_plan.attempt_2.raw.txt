@@ -1,5 +1,0 @@
-{
-  "files_to_write": [],
-  "files_to_delete": [],
-  "notes": "No files were changed because the requested refactoring has already been applied in the repository: Attribute no longer contains the moved helpers and delegates to AttributeUtil, and AttributeUtil contains the helper fields and methods. Tests did not require updates."
-}

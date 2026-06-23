@@ -1,8 +1,0 @@
-commit 90c70318b657a858345fae1477c6a4ea02b54770
-Author: Henrique Nunes <rique@face.ufmg.br>
-Date:   Thu Jun 18 14:59:36 2026 -0300
-
-    source_refactor: apply block 1
-
- .../java/org/jsoup/parser/ParserConfigApi.java     | 77 ++++++++++++++++++++++
- 1 file changed, 77 insertions(+)

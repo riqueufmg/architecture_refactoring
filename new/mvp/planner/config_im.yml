@@ -10,14 +10,14 @@ target:
   smell: IM
   smell_name: Insufficient Modularization
   target_type: class
-  target_name: org.apache.commons.lang3.mutable.MutableByte
+  target_name: org.jsoup.parser.TokeniserState
 
 models:
   planner: gpt-5-mini
 
 prompts:
-  system: /data/henrique/langchain_prototype/new/mvp/planner/prompts/system.prompt
-  smell: /data/henrique/langchain_prototype/new/mvp/planner/prompts/planner_IM.prompt
+  system: /data/henrique/langchain_prototype/new/mvp/planner/prompts/system.md
+  smell: /data/henrique/langchain_prototype/new/mvp/planner/prompts/planner.md
 
 planner:
   temperature: 0.0

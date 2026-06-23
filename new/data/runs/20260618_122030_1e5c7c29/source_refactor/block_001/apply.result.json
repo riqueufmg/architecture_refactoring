@@ -1,8 +1,0 @@
-{
-  "ok": true,
-  "applied_files": [
-    "src/main/java/org/apache/commons/lang3/RegExDotAllUtils.java",
-    "src/main/java/org/apache/commons/lang3/RegExUtils.java"
-  ],
-  "git_status": "M src/main/java/org/apache/commons/lang3/RegExUtils.java\n?? src/main/java/org/apache/commons/lang3/RegExDotAllUtils.java"
-}

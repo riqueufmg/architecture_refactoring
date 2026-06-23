@@ -1,7 +1,0 @@
-{
-  "target_type": "class",
-  "target_name": "org.jsoup.internal.StringUtil",
-  "target_file": "src/main/java/org/jsoup/internal/StringUtil.java",
-  "target_files": [],
-  "target_source_root": "src/main/java"
-}

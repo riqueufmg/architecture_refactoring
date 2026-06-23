@@ -1,9 +1,0 @@
-type: specs.openrewrite.org/v1beta/recipe
-name: source_refactor.MoveClassBlock1
-recipeList:
-  - org.openrewrite.java.ChangeType:
-      oldFullyQualifiedTypeName: org.apache.commons.lang3.concurrent.BackgroundInitializer
-      newFullyQualifiedTypeName: org.apache.commons.lang3.concurrent.initializer.BackgroundInitializer
-  - org.openrewrite.java.ChangeType:
-      oldFullyQualifiedTypeName: org.apache.commons.lang3.concurrent.MultiBackgroundInitializer
-      newFullyQualifiedTypeName: org.apache.commons.lang3.concurrent.initializer.MultiBackgroundInitializer

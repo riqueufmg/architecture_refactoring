@@ -1,7 +1,0 @@
-{
-  "ok": true,
-  "applied_files": [
-    "src/main/java/org/jsoup/select/ElementsHelper.java"
-  ],
-  "git_status": "?? src/main/java/org/jsoup/select/ElementsHelper.java"
-}

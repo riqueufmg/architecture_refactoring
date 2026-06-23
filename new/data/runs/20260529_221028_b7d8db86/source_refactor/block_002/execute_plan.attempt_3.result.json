@@ -1,5 +1,0 @@
-{
-  "files_to_write": [],
-  "files_to_delete": [],
-  "notes": "No changes made: the requested refactoring has already been applied. Attribute does not contain the moved fields or methods and getValidKey already delegates to AttributeKeyUtil, so no file modifications are necessary."
-}

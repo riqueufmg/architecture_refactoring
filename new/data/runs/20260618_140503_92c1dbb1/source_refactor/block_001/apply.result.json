@@ -1,8 +1,0 @@
-{
-  "ok": true,
-  "applied_files": [
-    "src/main/java/org/apache/commons/lang3/Strings.java",
-    "src/main/java/org/apache/commons/lang3/StringsPrefixSuffix.java"
-  ],
-  "git_status": "M src/main/java/org/apache/commons/lang3/Strings.java\n?? src/main/java/org/apache/commons/lang3/StringsPrefixSuffix.java"
-}

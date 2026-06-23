@@ -1,5 +1,0 @@
-{
-  "files_to_write": [],
-  "files_to_delete": [],
-  "notes": "No changes necessary: the requested extraction has already been applied in the repository (SafelistProtocolUtil exists and Safelist already calls its static methods). Tests did not require updates."
-}

@@ -1,7 +1,0 @@
-{
-  "ok": true,
-  "applied_files": [
-    "src/main/java/org/apache/commons/lang3/concurrent/ConcurrentException.java"
-  ],
-  "git_status": "D src/main/java/org/apache/commons/lang3/concurrent/BackgroundInitializer.java\n M src/main/java/org/apache/commons/lang3/concurrent/CallableBackgroundInitializer.java\n M src/main/java/org/apache/commons/lang3/concurrent/ConcurrentException.java\n D src/main/java/org/apache/commons/lang3/concurrent/MultiBackgroundInitializer.java\n?? src/main/java/org/apache/commons/lang3/concurrent/initializer/"
-}

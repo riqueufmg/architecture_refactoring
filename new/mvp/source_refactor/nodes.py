@@ -46,6 +46,12 @@ from mvp.source_refactor.lib.java_path_utils import (
 )
 from mvp.source_refactor.lib.maven_utils import run_compile_command
 from mvp.source_refactor.lib.subprocess_utils import run_command
+from mvp.source_refactor.lib.repair_utils import (
+    build_repair_allowed_files,
+    extract_java_files_from_build_log,
+    tail_text,
+)
+from mvp.source_refactor.lib.file_ops import apply_llm_file_changes
 
 def load_config_node(state: SourceRefactorState) -> SourceRefactorState:
     config_path = require_absolute_path(state["config_path"], "config_path")
@@ -297,6 +303,13 @@ def stage_block_node(state: SourceRefactorState) -> SourceRefactorState:
     state["apply_error"] = ""
     state["rollback_reason"] = ""
 
+    state["repair_compile_attempt"] = 0
+    state["repair_compile_ok"] = False
+    state["repair_compile_error"] = ""
+    state["repair_compile_result"] = {}
+    state["repair_compile_files"] = []
+    state["repair_allowed_files"] = []
+
     return state
 
 def lock_workspace_node(state: SourceRefactorState) -> SourceRefactorState:
@@ -344,6 +357,12 @@ def lock_workspace_node(state: SourceRefactorState) -> SourceRefactorState:
     state["compile_ok"] = False
     state["compile_return_code"] = -1
     state["compile_log_path"] = ""
+
+    state["repair_compile_ok"] = False
+    state["repair_compile_error"] = ""
+    state["repair_compile_result"] = {}
+    state["repair_compile_files"] = []
+    state["repair_allowed_files"] = []
 
     state["openrewrite_ok"] = False
     state["openrewrite_return_code"] = -1
@@ -1248,9 +1267,235 @@ def compile_source_node(state: SourceRefactorState) -> SourceRefactorState:
 
     return state
 
+def repair_compile_node(state: SourceRefactorState) -> SourceRefactorState:
+    cfg = state["config"]
+    repo_path = Path(state["repo_path"]).resolve()
+    block_dir = Path(state["current_block_dir"])
+
+    repair_attempt = int(state.get("repair_compile_attempt", 0)) + 1
+    state["repair_compile_attempt"] = repair_attempt
+
+    system_prompt_path = ensure_file_exists(
+        require_absolute_path(
+            str(require_config_value(cfg, "prompts.system")),
+            "prompts.system",
+        ),
+        "prompts.system",
+    )
+
+    repair_prompt_path = ensure_file_exists(
+        require_absolute_path(
+            str(require_config_value(cfg, "prompts.repair_compile")),
+            "prompts.repair_compile",
+        ),
+        "prompts.repair_compile",
+    )
+
+    system_prompt = system_prompt_path.read_text(encoding="utf-8")
+    repair_prompt = repair_prompt_path.read_text(encoding="utf-8")
+
+    compile_log = str(state.get("compile_log", "") or "")
+    compile_log_tail = tail_text(compile_log, max_lines=180)
+
+    files_mentioned_by_log = extract_java_files_from_build_log(
+        build_log=compile_log,
+        repo_path=repo_path,
+    )
+
+    original_allowed_files = [
+        str(path).strip().replace("\\", "/")
+        for path in state.get("allowed_files", [])
+        if str(path).strip()
+    ]
+
+    applied_files = [
+        str(path).strip().replace("\\", "/")
+        for path in state.get("applied_files", [])
+        if str(path).strip()
+    ]
+
+    repair_allowed_files = build_repair_allowed_files(
+        original_allowed_files=original_allowed_files,
+        applied_files=applied_files,
+        files_mentioned_by_build_log=files_mentioned_by_log,
+    )
+
+    repair_files_context = load_files_context(
+        repo_path,
+        repair_allowed_files,
+    )
+
+    repair_input = {
+        "repo_path": state["repo_path"],
+        "target": {
+            "smell": state.get("smell", ""),
+            "smell_name": state.get("smell_name", ""),
+            "target_type": state.get("target_type", ""),
+            "target_name": state.get("target_name", ""),
+        },
+        "block": state.get("current_block", {}),
+        "repair_attempt": repair_attempt,
+        "max_repair_attempts": int(get_config_value(cfg, "repair.max_attempts", 1)),
+        "compile": {
+            "ok": bool(state.get("compile_ok", False)),
+            "return_code": state.get("compile_return_code", None),
+            "log_path": state.get("compile_log_path", ""),
+            "log_tail": compile_log_tail,
+        },
+        "original_allowed_files": original_allowed_files,
+        "applied_files": applied_files,
+        "files_mentioned_by_build_log": files_mentioned_by_log,
+        "allowed_files": repair_allowed_files,
+        "files_context": repair_files_context,
+    }
+
+    rendered = repair_prompt.replace(
+        "{input}",
+        json.dumps(repair_input, indent=2, ensure_ascii=False),
+    )
+
+    artifact_prefix = f"repair_compile.attempt_{repair_attempt}"
+
+    write_json(
+        block_dir / f"{artifact_prefix}.input.json",
+        repair_input,
+    )
+
+    (block_dir / f"{artifact_prefix}.rendered.md").write_text(
+        rendered,
+        encoding="utf-8",
+    )
+
+    model = str(get_config_value(cfg, "models.executor", "gpt-5-mini"))
+    temperature = float(get_config_value(cfg, "executor.temperature", 0.0))
+    timeout = int(get_config_value(cfg, "executor.timeout", 180))
+    max_retries = int(get_config_value(cfg, "executor.max_retries", 2))
+
+    llm = ChatOpenAI(
+        model=model,
+        temperature=temperature,
+        timeout=timeout,
+        max_retries=max_retries,
+    )
+
+    try:
+        response = llm.invoke(
+            [
+                SystemMessage(content=system_prompt),
+                HumanMessage(content=rendered),
+            ]
+        )
+
+        raw = (response.content or "").strip()
+
+        (block_dir / f"{artifact_prefix}.raw.txt").write_text(
+            raw,
+            encoding="utf-8",
+        )
+
+        json_text = extract_json_object_only(raw)
+        result = json.loads(json_text)
+
+        if not isinstance(result, dict):
+            raise ValueError("Repair result must be a JSON object")
+
+        result.setdefault("files_to_write", [])
+        result.setdefault("files_to_delete", [])
+
+        write_json(
+            block_dir / f"{artifact_prefix}.result.json",
+            result,
+        )
+
+        files_to_write = result.get("files_to_write", [])
+        files_to_delete = result.get("files_to_delete", [])
+
+        if not files_to_write and not files_to_delete:
+            state["repair_compile_ok"] = False
+            state["repair_compile_error"] = "repair_no_changes"
+            state["repair_compile_result"] = result
+            state["repair_compile_files"] = []
+            state["repair_allowed_files"] = repair_allowed_files
+            state["stop_reason"] = "compile_repair_no_changes"
+            state["rollback_reason"] = "compile_failed_after_repair"
+            return state
+
+        ok, repaired_files, error = apply_llm_file_changes(
+            repo_path=repo_path,
+            result=result,
+            allowed_files=set(repair_allowed_files),
+            artifact_dir=block_dir,
+            artifact_prefix=artifact_prefix,
+        )
+
+        state["repair_compile_ok"] = ok
+        state["repair_compile_error"] = error
+        state["repair_compile_result"] = result
+        state["repair_compile_files"] = repaired_files
+        state["repair_allowed_files"] = repair_allowed_files
+
+        if ok:
+            state["rollback_reason"] = ""
+            state["stop_reason"] = "compile_repair_applied"
+        else:
+            state["rollback_reason"] = "compile_repair_apply_failed"
+            state["stop_reason"] = "compile_repair_apply_failed"
+
+        return state
+
+    except Exception as exc:
+        error = str(exc)
+
+        state["repair_compile_ok"] = False
+        state["repair_compile_error"] = error
+        state["repair_compile_result"] = {}
+        state["repair_compile_files"] = []
+        state["repair_allowed_files"] = repair_allowed_files
+        state["rollback_reason"] = "compile_repair_failed"
+        state["stop_reason"] = "compile_repair_failed"
+
+        (block_dir / f"{artifact_prefix}.error.txt").write_text(
+            error + "\n",
+            encoding="utf-8",
+        )
+
+        return state
+
+def after_repair_compile(state: SourceRefactorState) -> str:
+    if state.get("repair_compile_ok", False):
+        return "compile_after_repair"
+
+    state["rollback_reason"] = state.get("rollback_reason") or "compile_repair_failed"
+    state["stop_reason"] = state.get("stop_reason") or "compile_repair_failed"
+
+    return "rollback_final"
+
+def after_compile_after_repair(state: SourceRefactorState) -> str:
+    if state.get("compile_ok", False):
+        state["rollback_reason"] = ""
+        state["stop_reason"] = "compile_repair_verified"
+        return "promote_block"
+
+    state["rollback_reason"] = "compile_failed_after_repair"
+    state["stop_reason"] = "compile_failed_after_repair"
+
+    return "rollback_final"
+
 def after_compile_source(state: SourceRefactorState) -> str:
     if state.get("compile_ok", False):
         return "promote_block"
+
+    cfg = state["config"]
+
+    repair_enabled = bool(get_config_value(cfg, "repair.enabled", False))
+    max_repair_attempts = int(get_config_value(cfg, "repair.max_attempts", 1))
+    repair_attempt = int(state.get("repair_compile_attempt", 0))
+
+    if repair_enabled and repair_attempt < max_repair_attempts:
+        return "repair_compile"
+
+    state["rollback_reason"] = state.get("rollback_reason") or "compile_failed"
+    state["stop_reason"] = state.get("stop_reason") or "compile_failed"
 
     return "rollback_final"
 
@@ -1326,6 +1571,13 @@ def promote_block_node(state: SourceRefactorState) -> SourceRefactorState:
         "compile_ok": bool(state.get("compile_ok", False)),
         "compile_return_code": state.get("compile_return_code", None),
         "compile_log_path": state.get("compile_log_path", ""),
+
+        "repair_compile": {
+            "attempt": int(state.get("repair_compile_attempt", 0)),
+            "ok": bool(state.get("repair_compile_ok", False)),
+            "error": state.get("repair_compile_error", ""),
+            "files": state.get("repair_compile_files", []),
+        },
 
         "commit": commit,
         "rollback_reason": state.get("rollback_reason", ""),
@@ -1437,6 +1689,12 @@ def save_status_node(state: SourceRefactorState) -> SourceRefactorState:
             "openrewrite_invalid_move_class",
         }:
             failed_stage = "openrewrite"
+        elif rollback_reason in {
+            "compile_repair_failed",
+            "compile_repair_apply_failed",
+            "compile_failed_after_repair",
+        }:
+            failed_stage = "repair_compile"
         else:
             failed_stage = "unknown"
 

@@ -1,5 +1,0 @@
-{
-  "files_to_write": [],
-  "files_to_delete": [],
-  "notes": "NO_OP: The target is a public interface (org.jsoup.Connection) exposing nested public types and public methods that are part of the public API. Any movement or extraction would change fully-qualified names or require call-site updates, breaking API compatibility. To preserve behavior and tests, no changes are applied."
-}

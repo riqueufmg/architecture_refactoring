@@ -1,5 +1,0 @@
-{
-  "files_to_write": [],
-  "files_to_delete": [],
-  "notes": "No changes made: the refactoring block has already been applied. Attribute.java delegates validation/coercion to AttributeKeyUtil, and AttributeKeyUtil contains the moved regex patterns and validation methods."
-}

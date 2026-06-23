@@ -1,5 +1,0 @@
-{
-  "files_to_write": [],
-  "files_to_delete": [],
-  "notes": "Cannot safely apply the refactoring: the block requires moving several private static helper method implementations from TokeniserState into a new TokeniserStateHelper class. Only the new helper file is allowed to be modified in this task, but the exact implementations of those private methods are not provided here. Creating placeholder or approximate implementations risks changing behavior and breaking the build/tests. Because preserving behavior is required and TokeniserState itself (the source of the original method bodies) is not available for editing or inspection in this task, I cannot safely implement the helper methods. No files were changed."
-}

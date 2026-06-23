@@ -1,5 +1,0 @@
-{
-  "files_to_write": [],
-  "files_to_delete": [],
-  "notes": "No changes necessary: the protocol-related methods have already been extracted into org.jsoup.safety.SafelistProtocolUtil and Safelist already calls the static methods (getProtocolValue and isSafeProtocol). Tests do not require updates. No files modified."
-}

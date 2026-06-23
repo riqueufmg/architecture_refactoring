@@ -1,5 +1,0 @@
-{
-  "files_to_write": [],
-  "files_to_delete": [],
-  "notes": "No changes necessary: the protocol-related helpers have already been extracted into org.jsoup.safety.SafelistProtocolUtil and Safelist has been updated to call its static methods. Tests do not reference the moved helpers and require no updates."
-}

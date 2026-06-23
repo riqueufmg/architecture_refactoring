@@ -1,8 +1,0 @@
-{
-  "ok": true,
-  "applied_files": [
-    "src/main/java/org/jsoup/parser/ParserUtils.java",
-    "src/main/java/org/jsoup/parser/Parser.java"
-  ],
-  "git_status": "M src/main/java/org/jsoup/parser/Parser.java\n?? src/main/java/org/jsoup/parser/ParserUtils.java"
-}

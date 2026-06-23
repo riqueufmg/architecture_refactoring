@@ -1,5 +1,0 @@
-{
-  "files_to_write": [],
-  "files_to_delete": [],
-  "notes": "No changes required: the refactoring (moved helpers from Attribute into AttributeUtil and added delegating methods in Attribute) already exists in the provided source. All tests reference the public API preserved on Attribute, so no test updates are necessary."
-}

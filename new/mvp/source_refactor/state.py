@@ -31,7 +31,6 @@ class SourceRefactorState(TypedDict, total=False):
     target_file: str
     target_files: list[str]
 
-
     # plan blocks data
     current_block_index: int
     current_block: dict[str, Any]
@@ -81,6 +80,14 @@ class SourceRefactorState(TypedDict, total=False):
     compile_ok: bool
     compile_log_path: str
     compile_log: str
+
+    # repair data
+    repair_compile_attempt: int
+    repair_compile_ok: bool
+    repair_compile_error: str
+    repair_compile_result: dict[str, Any]
+    repair_compile_files: list[str]
+    repair_allowed_files: list[str]
 
     # retry data
     block_attempt: int

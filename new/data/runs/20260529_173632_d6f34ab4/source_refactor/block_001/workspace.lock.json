@@ -1,6 +1,0 @@
-{
-  "base_commit": "8fb8eb5633901f535b8867a1c5a6fcc07df266c3",
-  "before_commit": "8fb8eb5633901f535b8867a1c5a6fcc07df266c3",
-  "after_commit": "8fb8eb5633901f535b8867a1c5a6fcc07df266c3",
-  "reset_output": "HEAD is now at 8fb8eb56 Bump github/codeql-action from 4.35.3 to 4.35.4 (#2509)\n"
-}

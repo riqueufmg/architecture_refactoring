@@ -1,7 +1,0 @@
-{
-  "target_type": "class",
-  "target_name": "org.jsoup.select.QueryParser",
-  "target_file": "src/main/java/org/jsoup/select/QueryParser.java",
-  "target_files": [],
-  "target_source_root": "src/main/java"
-}

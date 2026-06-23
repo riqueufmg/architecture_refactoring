@@ -1,6 +1,0 @@
-{
-  "base_commit": "15e6b99355dc27e8afb87246c02f8fe2e21d6203",
-  "before_commit": "15e6b99355dc27e8afb87246c02f8fe2e21d6203",
-  "after_commit": "15e6b99355dc27e8afb87246c02f8fe2e21d6203",
-  "reset_output": "HEAD is now at 15e6b9935 source_refactor: apply block 1\n"
-}

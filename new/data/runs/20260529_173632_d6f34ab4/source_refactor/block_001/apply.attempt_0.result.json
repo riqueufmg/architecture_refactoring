@@ -1,8 +1,0 @@
-{
-  "ok": true,
-  "applied_files": [
-    "src/main/java/org/jsoup/Jsoup.java",
-    "src/main/java/org/jsoup/JsoupCleaner.java"
-  ],
-  "git_status": "M src/main/java/org/jsoup/Jsoup.java\n?? src/main/java/org/jsoup/JsoupCleaner.java"
-}

@@ -1,5 +1,0 @@
-{
-  "files_to_write": [],
-  "files_to_delete": [],
-  "notes": "No source or test modifications required: the refactoring (moving helpers from Attribute into AttributeUtil and adding delegating stubs) has already been applied in the provided files. Attribute delegates to AttributeUtil and AttributeUtil contains the moved fields/methods, so public APIs remain compatible and tests do not require updates."
-}

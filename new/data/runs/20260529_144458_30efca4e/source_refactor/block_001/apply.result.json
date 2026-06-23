@@ -1,7 +1,0 @@
-{
-  "applied_files": [
-    "src/main/java/org/apache/commons/lang3/CharUtils.java",
-    "src/main/java/org/apache/commons/lang3/CharUtilsConstants.java"
-  ],
-  "git_status": "M src/main/java/org/apache/commons/lang3/CharUtils.java\n?? src/main/java/org/apache/commons/lang3/CharUtilsConstants.java"
-}

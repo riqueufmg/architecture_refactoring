@@ -23,6 +23,9 @@ from mvp.source_refactor.nodes import (
     apply_changes_node,
     compile_source_node,
     after_compile_source,
+    repair_compile_node,
+    after_repair_compile,
+    after_compile_after_repair,
     promote_block_node,
     advance_block_node,
     after_advance_block,
@@ -48,6 +51,8 @@ def build_source_refactor_graph():
     g.add_node("rollback_final", rollback_final_node)
     g.add_node("apply_changes", apply_changes_node)
     g.add_node("compile_source", compile_source_node)
+    g.add_node("compile_after_repair", compile_source_node)
+    g.add_node("repair_compile", repair_compile_node)
     g.add_node("promote_block", promote_block_node)
     g.add_node("advance_block", advance_block_node)
     g.add_node("save_status", save_status_node)
@@ -101,6 +106,23 @@ def build_source_refactor_graph():
     g.add_conditional_edges(
         "compile_source",
         after_compile_source,
+        {
+            "promote_block": "promote_block",
+            "repair_compile": "repair_compile",
+            "rollback_final": "rollback_final",
+        },
+    )
+    g.add_conditional_edges(
+        "repair_compile",
+        after_repair_compile,
+        {
+            "compile_after_repair": "compile_after_repair",
+            "rollback_final": "rollback_final",
+        },
+    )
+    g.add_conditional_edges(
+        "compile_after_repair",
+        after_compile_after_repair,
         {
             "promote_block": "promote_block",
             "rollback_final": "rollback_final",

@@ -1,5 +1,0 @@
-{
-  "files_to_write": [],
-  "files_to_delete": [],
-  "notes": "No changes necessary: the refactoring block is already applied. Attribute.java already delegates key validation/coercion to AttributeKeyUtil, and AttributeKeyUtil contains the moved Pattern fields and validation/coercion methods. Therefore there are no safe modifications to make."
-}

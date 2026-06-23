@@ -1,2 +1,0 @@
-A	src/main/java/org/jsoup/parser/CssIdentifier.java
-M	src/main/java/org/jsoup/parser/TokenQueue.java

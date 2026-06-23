@@ -1,5 +1,0 @@
-{
-  "files_to_write": [],
-  "files_to_delete": [],
-  "notes": "Cannot safely apply the requested move for all three classes. Moving Failable (a large utility class with many static methods) into a new subpackage would break all existing package-local and unqualified references across the package and the codebase; preserving behavior would require either duplicating or forwarding every static method in the original class (a large, error-prone change) or updating all callers across the repository (not permitted within the scoped allowed_files). Because the allowed_files do not permit safely updating all dependent sources and preserving behavior, the block cannot be applied safely."
-}

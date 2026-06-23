@@ -1,5 +1,0 @@
-{
-  "files_to_write": [],
-  "files_to_delete": [],
-  "notes": "No files were changed: the refactoring described (moving attribute helper fields/methods into AttributeUtil and delegating from Attribute) is already present in the current source, so no edits were necessary."
-}

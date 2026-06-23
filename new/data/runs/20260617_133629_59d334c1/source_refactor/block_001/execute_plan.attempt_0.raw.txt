@@ -1,5 +1,0 @@
-{
-  "files_to_write": [],
-  "files_to_delete": [],
-  "notes": "No changes necessary: the protocol-related helpers (getProtocolValue, isSafeProtocol, isValidAnchor) have already been extracted from Safelist into org.jsoup.safety.SafelistProtocolUtil and Safelist has been updated to call the static methods on SafelistProtocolUtil. No test updates are required because no public API or test-referenced symbols changed."
-}

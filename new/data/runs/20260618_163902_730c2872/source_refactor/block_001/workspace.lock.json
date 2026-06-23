@@ -1,6 +1,0 @@
-{
-  "base_commit": "04df64b765d5817c04454e343007cb4c091c5c20",
-  "before_commit": "04df64b765d5817c04454e343007cb4c091c5c20",
-  "after_commit": "04df64b765d5817c04454e343007cb4c091c5c20",
-  "reset_output": "HEAD is now at 04df64b76 Extract loop limit into a local final variable.\n"
-}

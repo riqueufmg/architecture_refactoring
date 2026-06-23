@@ -1,9 +1,0 @@
-{
-  "ok": true,
-  "applied_files": [
-    "src/main/java/org/jsoup/parser/CssIdentifierUtil.java",
-    "src/main/java/org/jsoup/parser/TokenQueue.java",
-    "src/test/java/org/jsoup/parser/TokenQueueTest.java"
-  ],
-  "git_status": "M src/main/java/org/jsoup/parser/TokenQueue.java\n M src/test/java/org/jsoup/parser/TokenQueueTest.java\n?? src/main/java/org/jsoup/parser/CssIdentifierUtil.java"
-}

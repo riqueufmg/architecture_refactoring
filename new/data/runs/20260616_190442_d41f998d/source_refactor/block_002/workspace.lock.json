@@ -1,6 +1,0 @@
-{
-  "base_commit": "b64dcc9470b719b15bf95bfa306093b9213ac873",
-  "before_commit": "b64dcc9470b719b15bf95bfa306093b9213ac873",
-  "after_commit": "b64dcc9470b719b15bf95bfa306093b9213ac873",
-  "reset_output": "HEAD is now at b64dcc94 source_refactor: apply block 1\n"
-}
